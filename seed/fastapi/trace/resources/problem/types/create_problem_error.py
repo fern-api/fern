@@ -50,7 +50,7 @@ class CreateProblemError(pydantic.BaseModel):
 
 class _CreateProblemError:
     class Generic(GenericCreateProblemError):
-        error_type: typing.Literal["generic"] = pydantic.Field(alias="_type")
+        error_type: typing.Literal["generic"] = pydantic.Field(alias="_type", default="generic")
 
         class Config:
             allow_population_by_field_name = True

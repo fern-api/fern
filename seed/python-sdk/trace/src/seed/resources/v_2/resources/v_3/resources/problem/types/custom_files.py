@@ -16,7 +16,7 @@ except ImportError:
 
 
 class CustomFiles_Basic(BasicCustomFiles):
-    type: typing.Literal["basic"]
+    type: typing.Literal["basic"] = "basic"
 
     class Config:
         frozen = True
@@ -26,7 +26,7 @@ class CustomFiles_Basic(BasicCustomFiles):
 
 
 class CustomFiles_Custom(pydantic.BaseModel):
-    type: typing.Literal["custom"]
+    type: typing.Literal["custom"] = "custom"
     value: typing.Dict[Language, Files]
 
     class Config:

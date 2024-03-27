@@ -334,7 +334,7 @@ See [noSerdeLayer](#noSerdeLayer) under SDK Configuration
 
 See [outputSourceFiles](#outputSourceFiles) under SDK Configuration
 
-#### ✨ `areImplementationsOptional`
+#### ✨ `optionalImplementations`
 
 **Type:** boolean
 
@@ -343,7 +343,7 @@ See [outputSourceFiles](#outputSourceFiles) under SDK Configuration
 By default, the generated `register()` will require an implementatiion for every
 service defined in your Fern Definition.
 
-If `areImplementationsOptional` is enabled, then `register()` won't require any
+If `optionalImplementations` is enabled, then `register()` won't require any
 implementations. Note that this is mildly dangerous, if you forget to include
 an implementation, then your server behavior may drift from your docs and clients.
 

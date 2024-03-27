@@ -31,7 +31,7 @@ except ImportError:
 
 
 class TestSubmissionStatus_Stopped(pydantic.BaseModel):
-    type: typing.Literal["stopped"]
+    type: typing.Literal["stopped"] = "stopped"
 
     class Config:
         frozen = True
@@ -39,7 +39,7 @@ class TestSubmissionStatus_Stopped(pydantic.BaseModel):
 
 
 class TestSubmissionStatus_Errored(pydantic.BaseModel):
-    type: typing.Literal["errored"]
+    type: typing.Literal["errored"] = "errored"
     value: ErrorInfo
 
     class Config:
@@ -48,7 +48,7 @@ class TestSubmissionStatus_Errored(pydantic.BaseModel):
 
 
 class TestSubmissionStatus_Running(pydantic.BaseModel):
-    type: typing.Literal["running"]
+    type: typing.Literal["running"] = "running"
     value: RunningSubmissionState
 
     class Config:
@@ -57,7 +57,7 @@ class TestSubmissionStatus_Running(pydantic.BaseModel):
 
 
 class TestSubmissionStatus_TestCaseIdToState(pydantic.BaseModel):
-    type: typing.Literal["testCaseIdToState"]
+    type: typing.Literal["testCaseIdToState"] = "testCaseIdToState"
     value: typing.Dict[str, SubmissionStatusForTestCase]
 
     class Config:

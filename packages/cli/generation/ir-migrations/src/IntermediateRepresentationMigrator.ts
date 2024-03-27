@@ -240,7 +240,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
 
         if (minVersionToExclude == null) {
             throw new Error(
-                `Cannot migrate intermediate representation. Unrecognized generator: ${targetGenerator.name}.`
+                `Cannot migrate intermediate representation. Unrecognized generator: ${targetGenerator.name}. If leveraging a custom generator, ensure you are specifying "ir-version" within the generator configuration.`
             );
         }
 

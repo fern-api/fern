@@ -15,7 +15,7 @@ except ImportError:
 
 
 class SubmissionStatusForTestCase_Graded(TestCaseResultWithStdout):
-    type: typing.Literal["graded"]
+    type: typing.Literal["graded"] = "graded"
 
     class Config:
         frozen = True
@@ -25,7 +25,7 @@ class SubmissionStatusForTestCase_Graded(TestCaseResultWithStdout):
 
 
 class SubmissionStatusForTestCase_GradedV2(pydantic.BaseModel):
-    type: typing.Literal["gradedV2"]
+    type: typing.Literal["gradedV2"] = "gradedV2"
     value: TestCaseGrade
 
     class Config:
@@ -34,7 +34,7 @@ class SubmissionStatusForTestCase_GradedV2(pydantic.BaseModel):
 
 
 class SubmissionStatusForTestCase_Traced(TracedTestCase):
-    type: typing.Literal["traced"]
+    type: typing.Literal["traced"] = "traced"
 
     class Config:
         frozen = True

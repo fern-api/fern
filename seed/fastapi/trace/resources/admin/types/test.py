@@ -52,11 +52,11 @@ class Test(pydantic.BaseModel):
 
 class _Test:
     class And(pydantic.BaseModel):
-        type: typing.Literal["and"]
+        type: typing.Literal["and"] = "and"
         value: bool
 
     class Or(pydantic.BaseModel):
-        type: typing.Literal["or"]
+        type: typing.Literal["or"] = "or"
         value: bool
 
 

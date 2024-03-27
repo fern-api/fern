@@ -100,8 +100,6 @@ navigation:
                 path: ./docs/pages/overview/cli/cli-commands/fern-token.mdx
               - page: fern login
                 path: ./docs/pages/overview/cli/cli-commands/fern-login.mdx
-              - page: fern register
-                path: ./docs/pages/overview/cli/cli-commands/fern-register.mdx
               - page: fern format
                 path: ./docs/pages/overview/cli/cli-commands/fern-format.mdx
               - page: fern help
@@ -205,9 +203,6 @@ navigation:
           - page: Use a Fern Definition
             slug: ferndef
             path: ./docs/pages/fern-docs/docs-quickstarts/docs-quickstart-ferndef.mdx
-      - page: PR previews
-        slug: previews
-        path: ./docs/pages/fern-docs/previews.mdx
       - section: Configuration
         slug: config
         contents:
@@ -215,6 +210,9 @@ navigation:
             path: ./docs/pages/fern-docs/config/config-overview.mdx
           - page: Navigation
             path: ./docs/pages/fern-docs/config/navigation.mdx
+          - page: PR previews
+            slug: previews
+            path: ./docs/pages/fern-docs/config/previews.mdx
           - section: Customize branding
             slug: branding
             contents:
@@ -253,24 +251,24 @@ navigation:
         slug: components
         contents:
           - page: Cards
-            path: ./docs/pages/fern-docs/content/components/card.mdx
+            path: ./docs/pages/fern-docs/components/card.mdx
           - page: CodeBlocks
-            path: ./docs/pages/fern-docs/content/components/codeblocks.mdx
+            path: ./docs/pages/fern-docs/components/codeblocks.mdx
             slug: codeblocks
           - page: Callout
-            path: ./docs/pages/fern-docs/content/components/callout.mdx
+            path: ./docs/pages/fern-docs/components/callout.mdx
           - page: Icons
-            path: ./docs/pages/fern-docs/content/components/icons.mdx
+            path: ./docs/pages/fern-docs/components/icons.mdx
           - page: Availability
-            path: ./docs/pages/fern-docs/content/components/availability.mdx
+            path: ./docs/pages/fern-docs/components/availability.mdx
           - page: Tabs
-            path: ./docs/pages/fern-docs/content/components/tabs.mdx
+            path: ./docs/pages/fern-docs/components/tabs.mdx
           - page: Accordion
-            path: ./docs/pages/fern-docs/content/components/accordion.mdx
+            path: ./docs/pages/fern-docs/components/accordion.mdx
           - page: Steps
-            path: ./docs/pages/fern-docs/content/components/steps.mdx
+            path: ./docs/pages/fern-docs/components/steps.mdx
           - page: Endpoint snippets
-            path: ./docs/pages/fern-docs/content/components/endpoint-snippets.mdx
+            path: ./docs/pages/fern-docs/components/endpoint-snippets.mdx
 
 navbar-links:
   - type: minimal

@@ -85,7 +85,8 @@ export function convertUndiscriminatedOneOf({
             fernEnum: enumDescriptions,
             enumVarNames: undefined,
             enumValues,
-            groupName
+            groupName,
+            context
         });
     }
 

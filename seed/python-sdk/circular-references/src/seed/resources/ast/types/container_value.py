@@ -14,7 +14,7 @@ except ImportError:
 
 
 class ContainerValue_List(pydantic.BaseModel):
-    type: typing.Literal["list"]
+    type: typing.Literal["list"] = "list"
     value: typing.List[FieldValue]
 
     class Config:
@@ -23,7 +23,7 @@ class ContainerValue_List(pydantic.BaseModel):
 
 
 class ContainerValue_Optional(pydantic.BaseModel):
-    type: typing.Literal["optional"]
+    type: typing.Literal["optional"] = "optional"
     value: typing.Optional[FieldValue]
 
     class Config:

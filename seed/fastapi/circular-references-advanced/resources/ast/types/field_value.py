@@ -74,18 +74,18 @@ from .container_value import ContainerValue as resources_ast_types_container_val
 
 class _FieldValue:
     class PrimitiveValue(pydantic.BaseModel):
-        type: typing.Literal["primitive_value"]
+        type: typing.Literal["primitive_value"] = "primitive_value"
         value: resources_ast_types_primitive_value_PrimitiveValue
 
     class ObjectValue(resources_ast_types_object_value_ObjectValue):
-        type: typing.Literal["object_value"]
+        type: typing.Literal["object_value"] = "object_value"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class ContainerValue(pydantic.BaseModel):
-        type: typing.Literal["container_value"]
+        type: typing.Literal["container_value"] = "container_value"
         value: resources_ast_types_container_value_ContainerValue
 
 

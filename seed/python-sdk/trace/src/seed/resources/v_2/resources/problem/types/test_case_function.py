@@ -9,7 +9,7 @@ from .void_function_definition import VoidFunctionDefinition
 
 
 class TestCaseFunction_WithActualResult(TestCaseWithActualResultImplementation):
-    type: typing.Literal["withActualResult"]
+    type: typing.Literal["withActualResult"] = "withActualResult"
 
     class Config:
         frozen = True
@@ -19,7 +19,7 @@ class TestCaseFunction_WithActualResult(TestCaseWithActualResultImplementation):
 
 
 class TestCaseFunction_Custom(VoidFunctionDefinition):
-    type: typing.Literal["custom"]
+    type: typing.Literal["custom"] = "custom"
 
     class Config:
         frozen = True

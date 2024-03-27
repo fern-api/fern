@@ -62,11 +62,11 @@ class Union(pydantic.BaseModel):
 
 class _Union:
     class Foo(pydantic.BaseModel):
-        type: typing.Literal["foo"]
+        type: typing.Literal["foo"] = "foo"
         foo: resources_types_types_foo_Foo
 
     class Bar(pydantic.BaseModel):
-        type: typing.Literal["bar"]
+        type: typing.Literal["bar"] = "bar"
         bar: resources_types_types_bar_Bar
 
 

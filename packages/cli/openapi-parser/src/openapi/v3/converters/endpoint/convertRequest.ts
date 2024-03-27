@@ -138,11 +138,15 @@ interface ResolvedSchema {
     schema: OpenAPIV3.SchemaObject;
 }
 
+// Hack: update to call context.resolveSchema()
 function resolveSchema(schema: OpenAPIV3.ReferenceObject, document: OpenAPIV3.Document): ResolvedSchema {
     if (!schema.$ref.startsWith(SCHEMA_REFERENCE_PREFIX)) {
         throw new Error(`Failed to resolve schema reference because of unsupported prefix: ${schema.$ref}`);
     }
     const schemaId = getSchemaIdFromReference(schema);
+    if (schemaId == null) {
+        throw new Error(`Failed to resolve schema reference because missing schema id: ${schema.$ref}`);
+    }
     const resolvedSchema = document.components?.schemas?.[schemaId];
     if (resolvedSchema == null) {
         throw new Error(`Failed to resolve schema reference because missing: ${schema.$ref}`);

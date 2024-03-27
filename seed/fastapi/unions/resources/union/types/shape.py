@@ -62,14 +62,14 @@ class Shape(pydantic.BaseModel):
 
 class _Shape:
     class Circle(resources_union_types_circle_Circle):
-        type: typing.Literal["circle"]
+        type: typing.Literal["circle"] = "circle"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class Square(resources_union_types_square_Square):
-        type: typing.Literal["square"]
+        type: typing.Literal["square"] = "square"
 
         class Config:
             allow_population_by_field_name = True

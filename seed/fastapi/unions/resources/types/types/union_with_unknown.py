@@ -57,14 +57,14 @@ class UnionWithUnknown(pydantic.BaseModel):
 
 class _UnionWithUnknown:
     class Foo(resources_types_types_foo_Foo):
-        type: typing.Literal["foo"]
+        type: typing.Literal["foo"] = "foo"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class Unknown(pydantic.BaseModel):
-        type: typing.Literal["unknown"]
+        type: typing.Literal["unknown"] = "unknown"
 
 
 UnionWithUnknown.update_forward_refs()

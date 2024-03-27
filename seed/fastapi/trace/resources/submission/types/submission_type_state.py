@@ -62,14 +62,14 @@ class SubmissionTypeState(pydantic.BaseModel):
 
 class _SubmissionTypeState:
     class Test(TestSubmissionState):
-        type: typing.Literal["test"]
+        type: typing.Literal["test"] = "test"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class Workspace(WorkspaceSubmissionState):
-        type: typing.Literal["workspace"]
+        type: typing.Literal["workspace"] = "workspace"
 
         class Config:
             allow_population_by_field_name = True

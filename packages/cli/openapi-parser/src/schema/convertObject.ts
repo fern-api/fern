@@ -16,6 +16,7 @@ import { SchemaParserContext } from "./SchemaParserContext";
 import { getGeneratedPropertyName } from "./utils/getSchemaName";
 import { isReferenceObject } from "./utils/isReferenceObject";
 import { isSchemaWithExampleEqual } from "./utils/isSchemaEqual";
+import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
 
 interface ReferencedAllOfInfo {
     schemaId: SchemaId;
@@ -94,6 +95,10 @@ export function convertObject({
             }
 
             const schemaId = getSchemaIdFromReference(allOfElement);
+            // HACK: when the allOf is a non schema refere, we can skip for now
+            if (schemaId == null) {
+                continue;
+            }
             parents.push({
                 schemaId,
                 convertedSchema: convertToReferencedSchema(allOfElement, [schemaId]),
@@ -265,7 +270,7 @@ function getAllProperties({
 }): Record<string, SchemaWithExample> {
     let properties: Record<string, SchemaWithExample> = {};
     const [resolvedSchema, resolvedBreadCrumbs] = isReferenceObject(schema)
-        ? [context.resolveSchemaReference(schema), [getSchemaIdFromReference(schema)]]
+        ? [context.resolveSchemaReference(schema), getBreadcrumbsFromReference(schema.$ref)]
         : [schema, breadcrumbs];
     for (const allOfElement of resolvedSchema.allOf ?? []) {
         properties = {

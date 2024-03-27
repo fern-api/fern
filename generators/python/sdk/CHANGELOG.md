@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.13.1] - 2024-03-26
+
+- Improvement: discriminant values in unions are now defaulted such that callers no longer need to specify the discriminant:
+
+  ```python
+  # Before
+  shape = Circle(discriminant="circle", radius=2.0)
+
+  # After
+  shape = Circle(radius=2.0)
+  ```
+
+## [0.13.0] - 2024-03-25
+
+- Improvement: the python SDK now exposes it's version through `__version__` to match module standards and expectations.
+
+```python
+import seed
+
+print(seed.__version__)  # prints 0.0.1 or whatever version is contained within the pyproject.toml
+```
+
 ## [0.12.5] - 2024-03-22
 
 - Fix: the python SDK uses the timeout provided to the top level client as the default per-request, previously if there was no timeout override in the RequestOptions, we'd default to 60s, even if a timeout was provided at the client level.

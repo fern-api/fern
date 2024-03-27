@@ -13,7 +13,7 @@ except ImportError:
 
 
 class UnionWithUnknown_Foo(Foo):
-    type: typing.Literal["foo"]
+    type: typing.Literal["foo"] = "foo"
 
     class Config:
         frozen = True
@@ -23,7 +23,7 @@ class UnionWithUnknown_Foo(Foo):
 
 
 class UnionWithUnknown_Unknown(pydantic.BaseModel):
-    type: typing.Literal["unknown"]
+    type: typing.Literal["unknown"] = "unknown"
 
     class Config:
         frozen = True

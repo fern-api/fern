@@ -12,7 +12,7 @@ except ImportError:
 
 
 class UnionWithOptionalTime_Date(pydantic.BaseModel):
-    type: typing.Literal["date"]
+    type: typing.Literal["date"] = "date"
     value: typing.Optional[dt.date]
 
     class Config:
@@ -21,7 +21,7 @@ class UnionWithOptionalTime_Date(pydantic.BaseModel):
 
 
 class UnionWithOptionalTime_Dateimte(pydantic.BaseModel):
-    type: typing.Literal["dateimte"]
+    type: typing.Literal["dateimte"] = "dateimte"
     value: typing.Optional[dt.datetime]
 
     class Config:

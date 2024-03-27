@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -249,13 +250,13 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
 
         // run publish
         if (!generatorConfig.getDryRun()) {
-            Map<String, String> publishEnvVars = Map.of(
+            HashMap<String, String> publishEnvVars = new HashMap<>(Map.of(
                     GeneratedBuildGradle.MAVEN_USERNAME_ENV_VAR,
                     mavenRegistryConfigV2.getUsername(),
                     GeneratedBuildGradle.MAVEN_PASSWORD_ENV_VAR,
                     mavenRegistryConfigV2.getPassword(),
                     GeneratedBuildGradle.MAVEN_PUBLISH_REGISTRY_URL_ENV_VAR,
-                    mavenRegistryConfigV2.getRegistryUrl());
+                    mavenRegistryConfigV2.getRegistryUrl()));
             if (addSignatureBlock) {
                 MavenCentralSignature signature = mavenRegistryConfigV2.getSignature().get();
                 publishEnvVars.put(GeneratedBuildGradle.MAVEN_SIGNING_KEY_ID, signature.getKeyId());
@@ -296,7 +297,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends Do
     }
 
     private void addRootProjectFiles(Optional<MavenCoordinate> maybeMavenCoordinate, boolean addTestBlock,
-            boolean addSignaturePlugin, GeneratorConfig generatorConfig) {
+                                     boolean addSignaturePlugin, GeneratorConfig generatorConfig) {
         String repositoryUrl = addSignaturePlugin ? "https://oss.sonatype.org/service/local/staging/deploy/maven2/" : "https://s01.oss.sonatype.org/content/repositories/releases/";
 
         ImmutableGeneratedBuildGradle.Builder buildGradle = GeneratedBuildGradle.builder()

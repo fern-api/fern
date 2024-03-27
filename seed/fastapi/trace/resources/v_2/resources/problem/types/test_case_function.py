@@ -64,14 +64,14 @@ class TestCaseFunction(pydantic.BaseModel):
 
 class _TestCaseFunction:
     class WithActualResult(TestCaseWithActualResultImplementation):
-        type: typing.Literal["withActualResult"]
+        type: typing.Literal["withActualResult"] = "withActualResult"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class Custom(VoidFunctionDefinition):
-        type: typing.Literal["custom"]
+        type: typing.Literal["custom"] = "custom"
 
         class Config:
             allow_population_by_field_name = True

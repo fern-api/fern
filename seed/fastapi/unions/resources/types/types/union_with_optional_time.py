@@ -58,11 +58,11 @@ class UnionWithOptionalTime(pydantic.BaseModel):
 
 class _UnionWithOptionalTime:
     class Date(pydantic.BaseModel):
-        type: typing.Literal["date"]
+        type: typing.Literal["date"] = "date"
         value: typing.Optional[dt.date]
 
     class Dateimte(pydantic.BaseModel):
-        type: typing.Literal["dateimte"]
+        type: typing.Literal["dateimte"] = "dateimte"
         value: typing.Optional[dt.datetime]
 
 

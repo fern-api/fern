@@ -13,7 +13,7 @@ except ImportError:
 
 
 class Exception_Generic(ExceptionInfo):
-    type: typing.Literal["generic"]
+    type: typing.Literal["generic"] = "generic"
 
     class Config:
         frozen = True
@@ -23,7 +23,7 @@ class Exception_Generic(ExceptionInfo):
 
 
 class Exception_Timeout(pydantic.BaseModel):
-    type: typing.Literal["timeout"]
+    type: typing.Literal["timeout"] = "timeout"
 
     class Config:
         frozen = True
@@ -34,7 +34,6 @@ class Exception_Timeout(pydantic.BaseModel):
 from seed import Exception_Generic
 
 Exception_Generic(
-    type="generic",
     exception_type="Unavailable",
     exception_message="This component is unavailable!",
     exception_stacktrace="<logs>",

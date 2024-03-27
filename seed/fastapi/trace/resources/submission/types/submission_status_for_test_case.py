@@ -80,18 +80,18 @@ class SubmissionStatusForTestCase(pydantic.BaseModel):
 
 class _SubmissionStatusForTestCase:
     class Graded(TestCaseResultWithStdout):
-        type: typing.Literal["graded"]
+        type: typing.Literal["graded"] = "graded"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class GradedV2(pydantic.BaseModel):
-        type: typing.Literal["gradedV2"]
+        type: typing.Literal["gradedV2"] = "gradedV2"
         value: TestCaseGrade
 
     class Traced(TracedTestCase):
-        type: typing.Literal["traced"]
+        type: typing.Literal["traced"] = "traced"
 
         class Config:
             allow_population_by_field_name = True

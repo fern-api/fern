@@ -69,11 +69,11 @@ class TestCaseImplementationReference(pydantic.BaseModel):
 
 class _TestCaseImplementationReference:
     class TemplateId(pydantic.BaseModel):
-        type: typing.Literal["templateId"]
+        type: typing.Literal["templateId"] = "templateId"
         value: TestCaseTemplateId
 
     class Implementation(TestCaseImplementation):
-        type: typing.Literal["implementation"]
+        type: typing.Literal["implementation"] = "implementation"
 
         class Config:
             allow_population_by_field_name = True
