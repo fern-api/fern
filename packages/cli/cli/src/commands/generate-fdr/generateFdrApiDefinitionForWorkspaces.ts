@@ -36,7 +36,11 @@ export async function generateFdrApiDefinitionForWorkspaces({
                     disableExamples: false
                 });
 
-                const apiDefinition = convertIrToFdrApi(intermediateRepresentation, {});
+                const apiDefinition = convertIrToFdrApi(
+                    intermediateRepresentation,
+                    {},
+                    workspace.generatorsConfiguration?.api?.navigation
+                );
 
                 const resolvedOutputFilePath = path.resolve(outputFilepath);
                 await writeFile(resolvedOutputFilePath, await stringifyLargeObject(apiDefinition, { pretty: true }));

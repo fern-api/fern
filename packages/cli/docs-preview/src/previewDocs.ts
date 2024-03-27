@@ -94,7 +94,7 @@ class ReferencedAPICollector {
                 smartCasing: false,
                 disableExamples: false
             });
-            const apiDefinition = convertIrToFdrApi(ir, {});
+            const apiDefinition = convertIrToFdrApi(ir, {}, undefined);
             const dbApiDefinition = convertAPIDefinitionToDb(
                 apiDefinition,
                 "",
