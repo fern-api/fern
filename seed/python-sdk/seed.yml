@@ -57,6 +57,10 @@ fixtures:
     - customConfig:
         improved_imports: true
       outputFolder: improved_imports
+    - customConfig:
+        pydantic_config:
+          skip_validation: true
+      outputFolder: skip-pydantic-validation
 scripts:
   # Tests now run a mock server, you can always run seed with --skip-scripts to save time
   - docker: fernapi/python-seed

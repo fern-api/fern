@@ -2,7 +2,7 @@ import os
 from typing import Optional, Set
 
 from fern_python.codegen import AST, Filepath, Project
-from fern_python.external_dependencies.pydantic import PYDANTIC_DEPENDENCY
+from fern_python.external_dependencies.pydantic import PYDANTIC_DEPENDENCY, Pydantic, PydanticVersionCompatibility
 from fern_python.external_dependencies.typing_extensions import (
     TYPING_EXTENSIONS_DEPENDENCY,
 )
@@ -82,6 +82,15 @@ class CoreUtilities:
                 file=Filepath.FilepathPart(module_name="http_client"),
             ),
             exports={"HttpClient", "AsyncHttpClient"},
+        )
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="unchecked_base_model.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="unchecked_base_model"),
+            ),
+            exports={"UncheckedBaseModel"},
         )
         project.add_dependency(TYPING_EXTENSIONS_DEPENDENCY)
         project.add_dependency(PYDANTIC_DEPENDENCY)
@@ -234,6 +243,17 @@ class CoreUtilities:
             )
         )
 
+    def get_construct(self, is_unchecked: bool, type_of_obj: AST.TypeHint, obj: AST.Expression) -> AST.Expression:
+        return AST.Expression(
+                    AST.FunctionInvocation(
+                        function_definition=AST.Reference(
+                            import_=type_of_obj._type.import_,
+                            qualified_name_excluding_import=("construct",),
+                        ),
+                        args=[obj],
+                    )
+                ) if is_unchecked else Pydantic.parse_obj_as(PydanticVersionCompatibility.Both, type_of_obj, obj)
+    
     def http_client(self, obj: AST.Expression, is_async: bool) -> AST.Expression:
         return AST.Expression(
             AST.FunctionInvocation(

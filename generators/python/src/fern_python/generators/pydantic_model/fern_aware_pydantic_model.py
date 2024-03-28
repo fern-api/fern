@@ -1,4 +1,5 @@
 from __future__ import annotations
+from email.mime import base
 
 from types import TracebackType
 from typing import List, Optional, Sequence, Tuple, Type
@@ -6,6 +7,7 @@ from typing import List, Optional, Sequence, Tuple, Type
 import fern.ir.resources as ir_types
 
 from fern_python.codegen import AST, LocalClassReference, SourceFile
+from fern_python.external_dependencies.pydantic import Pydantic
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
 
 from ..context import PydanticGeneratorContext
@@ -65,6 +67,7 @@ class FernAwarePydanticModel:
             frozen=custom_config.frozen,
             orm_mode=custom_config.orm_mode,
             smart_union=custom_config.smart_union,
+            base_model=self._context.core_utilities.get_unchecked_pydantic_base_model() if custom_config.skip_validation else Pydantic.BaseModel(self._custom_config.version)
         )
         self._pydantic_model.add_json_encoder(
             key=AST.Expression(
