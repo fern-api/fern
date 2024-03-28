@@ -47,6 +47,13 @@ exports[`open api parser streaming simple 1`] = `
         "user_stream": {
           "auth": false,
           "docs": undefined,
+          "examples": [
+            {
+              "request": {
+                "stream": true,
+              },
+            },
+          ],
           "method": "POST",
           "path": "/v1/users",
           "request": {
@@ -109,6 +116,13 @@ exports[`open api parser streaming simple 1`] = `
         "user_v2_stream": {
           "auth": false,
           "docs": undefined,
+          "examples": [
+            {
+              "request": {
+                "stream": true,
+              },
+            },
+          ],
           "method": "POST",
           "path": "/v2/users",
           "request": {
@@ -170,6 +184,13 @@ exports[`open api parser streaming simple 1`] = `
         "user_v3_stream": {
           "auth": false,
           "docs": undefined,
+          "examples": [
+            {
+              "request": {
+                "stream": true,
+              },
+            },
+          ],
           "method": "POST",
           "path": "/v3/users",
           "request": {

@@ -12,6 +12,13 @@ exports[`open api parser file-upload simple 1`] = `
           "auth": false,
           "display-name": "Upload a file",
           "docs": undefined,
+          "examples": [
+            {
+              "request": {
+                "file": "file",
+              },
+            },
+          ],
           "method": "POST",
           "path": "/upload",
           "request": {
@@ -21,6 +28,7 @@ exports[`open api parser file-upload simple 1`] = `
                 "maybe_file": "optional<file>",
               },
             },
+            "content-type": "multipart/form-data",
             "headers": undefined,
             "name": "UploadFileRequest",
             "query-parameters": undefined,
