@@ -12,6 +12,7 @@ export declare namespace PersistedTypescriptProject {
         directory: AbsoluteFilePath;
         srcDirectory: RelativeFilePath;
         distDirectory: RelativeFilePath;
+        testDirectory: RelativeFilePath;
         yarnBuildCommand: string[];
         yarnFormatCommand: string[];
     }
@@ -21,6 +22,7 @@ export class PersistedTypescriptProject {
     private directory: AbsoluteFilePath;
     private srcDirectory: RelativeFilePath;
     private distDirectory: RelativeFilePath;
+    private testDirectory: RelativeFilePath;
     private yarnBuildCommand: string[];
     private yarnFormatCommand: string[];
 
@@ -32,12 +34,14 @@ export class PersistedTypescriptProject {
         directory,
         srcDirectory,
         distDirectory,
+        testDirectory,
         yarnBuildCommand,
         yarnFormatCommand
     }: PersistedTypescriptProject.Init) {
         this.directory = directory;
         this.srcDirectory = srcDirectory;
         this.distDirectory = distDirectory;
+        this.testDirectory = testDirectory;
         this.yarnBuildCommand = yarnBuildCommand;
         this.yarnFormatCommand = yarnFormatCommand;
     }

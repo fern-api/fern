@@ -5,6 +5,10 @@ import { ExportDeclaration } from "./ExportsManager";
 export interface ExportedFilePath {
     directories: ExportedDirectory[];
     file: ExportedFilePathPart | undefined;
+    /**
+     * @default "src"
+     */
+    rootDir?: "src" | "tests" | "";
 }
 
 export interface ExportedDirectory extends ExportedFilePathPart {
@@ -19,7 +23,10 @@ export interface ExportedFilePathPart {
 }
 
 export function convertExportedFilePathToFilePath(exportedFilePath: ExportedFilePath): string {
-    const directoryPath = convertExportedDirectoryPathToFilePath(exportedFilePath.directories);
+    const directoryPath = convertExportedDirectoryPathToFilePath(
+        exportedFilePath.directories,
+        exportedFilePath.rootDir
+    );
     if (exportedFilePath.file == null) {
         return directoryPath;
     } else {
@@ -27,10 +34,13 @@ export function convertExportedFilePathToFilePath(exportedFilePath: ExportedFile
     }
 }
 
-export function convertExportedDirectoryPathToFilePath(exportedDirectoryPath: ExportedDirectory[]): string {
+export function convertExportedDirectoryPathToFilePath(
+    exportedDirectoryPath: ExportedDirectory[],
+    rootDir: "src" | "tests" | "" = "src"
+): string {
     return path.join(
-        // within a ts-morph Project, we treat "/" as the root of the project
-        "/",
+        // within a ts-morph Project, we treat "/src" as the root of the project
+        "/" + rootDir,
         ...exportedDirectoryPath.map((directory) => RelativeFilePath.of(directory.nameOnDisk))
     );
 }

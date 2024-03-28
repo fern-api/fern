@@ -1,9 +1,3 @@
 node_modules
 .DS_Store
 /dist
-/index.d.ts
-/index.js
-/api
-/core
-/errors
-/serialization

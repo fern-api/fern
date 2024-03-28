@@ -111,7 +111,7 @@ function getRequestHandler(endpoint: HttpEndpoint): RequestHandler {
         for (const example of endpoint.examples) {
             if (isRequestMatch(req, example)) {
                 if (example.response.body == null) {
-                    res.sendStatus(200);
+                    res.sendStatus(204); // no content
                     return;
                 }
 

@@ -74,7 +74,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             intermediateRepresentation,
             context: generatorContext,
             npmPackage,
-            generateJestTests: config.output.mode.type === "github",
+            generateJestTests: config.output.mode.type === "github" && config.writeUnitTests,
             config: {
                 whitelabel: config.whitelabel,
                 snippetFilepath:

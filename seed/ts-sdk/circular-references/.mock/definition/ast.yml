@@ -1,0 +1,16 @@
+types:
+  FieldValue:
+    union:
+      primitive_value: PrimitiveValue
+      object_value: ObjectValue
+      container_value: ContainerValue
+  ContainerValue:
+    union:
+      list: list<FieldValue>
+      optional: optional<FieldValue>
+  PrimitiveValue:
+    enum:
+      - STRING
+      - NUMBER
+  ObjectValue:
+    properties: {}

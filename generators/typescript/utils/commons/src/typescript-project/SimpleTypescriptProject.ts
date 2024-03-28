@@ -52,12 +52,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
     private async generateGitIgnore(): Promise<void> {
         await this.writeFileToVolume(
             RelativeFilePath.of(".gitignore"),
-            [
-                "node_modules",
-                ".DS_Store",
-                `/${SimpleTypescriptProject.DIST_DIRECTORY}`,
-                ...this.getDistFiles().map((distFile) => `/${distFile}`)
-            ].join("\n")
+            ["node_modules", ".DS_Store", `/${SimpleTypescriptProject.DIST_DIRECTORY}`].join("\n")
         );
     }
 
@@ -67,6 +62,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
             [
                 "node_modules",
                 SimpleTypescriptProject.SRC_DIRECTORY,
+                SimpleTypescriptProject.TEST_DIRECTORY,
                 ".gitignore",
                 ".github",
                 FERN_IGNORE_FILENAME,
@@ -143,7 +139,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
             main: "./index.js",
             types: "./index.d.ts",
             scripts: {
-                [SimpleTypescriptProject.FORMAT_SCRIPT_NAME]: `prettier --write '${SimpleTypescriptProject.SRC_DIRECTORY}/**/*.ts'`,
+                [SimpleTypescriptProject.FORMAT_SCRIPT_NAME]: "prettier . --write --ignore-unknown",
                 [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: "tsc",
                 prepack: `cp -rv ${SimpleTypescriptProject.DIST_DIRECTORY}/. .`
             }
@@ -183,20 +179,5 @@ export class SimpleTypescriptProject extends TypescriptProject {
             prettier: "2.7.1",
             typescript: "4.6.4"
         };
-    }
-
-    private getDistFiles(): string[] {
-        const rootDirectory = this.tsMorphProject.getDirectory(".");
-        if (rootDirectory == null) {
-            throw new Error("Root ts-morph directory does not exist");
-        }
-
-        return [
-            ...rootDirectory.getSourceFiles().flatMap((file) => {
-                const baseName = file.getBaseNameWithoutExtension();
-                return [`${baseName}.d.ts`, `${baseName}.js`];
-            }),
-            ...rootDirectory.getDirectories().map((directory) => directory.getBaseName())
-        ];
     }
 }

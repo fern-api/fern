@@ -103,6 +103,10 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
 
                     if (config.writeUnitTests) {
                         try {
+                            await typescriptProject.copyProjectAsZipTo({
+                                logger,
+                                destinationZip
+                            });
                             // Write .mock folder if present
                             await typescriptProject.writeArbitraryFiles(async (pathToProject) => {
                                 cp(
@@ -126,10 +130,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                                         );
                                     }
                                 });
-                            });
-                            await typescriptProject.copyProjectAsZipTo({
-                                logger,
-                                destinationZip
                             });
                         } catch {
                             generatorContext.logger.debug("Could not write .mock folder to project");

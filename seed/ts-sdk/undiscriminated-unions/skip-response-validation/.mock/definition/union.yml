@@ -1,0 +1,21 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    get:
+      path: ""
+      method: POST
+      request: MyUnion
+      response: MyUnion
+
+types:
+  MyUnion:
+    docs: |
+      Several different types are accepted.
+    discriminated: false
+    union:
+      - string
+      - list<string>
+      - integer
+      - list<integer>
+      - list<list<integer>>

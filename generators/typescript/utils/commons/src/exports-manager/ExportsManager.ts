@@ -47,7 +47,7 @@ export class ExportsManager {
     }
 
     public addExportsForDirectories(directories: ExportedDirectory[]): void {
-        let directoryFilepath = "/";
+        let directoryFilepath = "/src";
         for (const part of directories) {
             const nextDirectoryPath = path.join(directoryFilepath, part.nameOnDisk);
             this.addExportDeclarationForDirectory({

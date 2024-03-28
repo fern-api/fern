@@ -1,0 +1,367 @@
+{
+    "apiName": {
+        "originalName": "single-url-environment-no-default",
+        "camelCase": {
+            "unsafeName": "singleUrlEnvironmentNoDefault",
+            "safeName": "singleUrlEnvironmentNoDefault"
+        },
+        "snakeCase": {
+            "unsafeName": "single_url_environment_no_default",
+            "safeName": "single_url_environment_no_default"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "SINGLE_URL_ENVIRONMENT_NO_DEFAULT",
+            "safeName": "SINGLE_URL_ENVIRONMENT_NO_DEFAULT"
+        },
+        "pascalCase": {
+            "unsafeName": "SingleUrlEnvironmentNoDefault",
+            "safeName": "SingleUrlEnvironmentNoDefault"
+        }
+    },
+    "apiDisplayName": null,
+    "apiDocs": null,
+    "auth": {
+        "requirement": "ALL",
+        "schemes": [
+            {
+                "_type": "bearer",
+                "token": {
+                    "originalName": "token",
+                    "camelCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "token",
+                        "safeName": "token"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "TOKEN",
+                        "safeName": "TOKEN"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Token",
+                        "safeName": "Token"
+                    }
+                },
+                "tokenEnvVar": null,
+                "docs": null
+            }
+        ],
+        "docs": null
+    },
+    "headers": [],
+    "idempotencyHeaders": [],
+    "types": {},
+    "errors": {},
+    "services": {
+        "service_dummy": {
+            "availability": null,
+            "name": {
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "dummy",
+                            "camelCase": {
+                                "unsafeName": "dummy",
+                                "safeName": "dummy"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "dummy",
+                                "safeName": "dummy"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "DUMMY",
+                                "safeName": "DUMMY"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Dummy",
+                                "safeName": "Dummy"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "dummy",
+                        "camelCase": {
+                            "unsafeName": "dummy",
+                            "safeName": "dummy"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "dummy",
+                            "safeName": "dummy"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DUMMY",
+                            "safeName": "DUMMY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Dummy",
+                            "safeName": "Dummy"
+                        }
+                    }
+                }
+            },
+            "displayName": null,
+            "basePath": {
+                "head": "",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "endpoints": [
+                {
+                    "id": "endpoint_dummy.getDummy",
+                    "name": {
+                        "originalName": "getDummy",
+                        "camelCase": {
+                            "unsafeName": "getDummy",
+                            "safeName": "getDummy"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_dummy",
+                            "safeName": "get_dummy"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_DUMMY",
+                            "safeName": "GET_DUMMY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetDummy",
+                            "safeName": "GetDummy"
+                        }
+                    },
+                    "displayName": null,
+                    "auth": true,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "method": "GET",
+                    "path": {
+                        "head": "/dummy",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "dummy",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": null,
+                    "sdkRequest": null,
+                    "response": {
+                        "type": "json",
+                        "value": {
+                            "type": "response",
+                            "responseBodyType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "docs": null
+                        }
+                    },
+                    "errors": [],
+                    "examples": [],
+                    "availability": null,
+                    "docs": null
+                }
+            ]
+        }
+    },
+    "constants": {
+        "errorInstanceIdKey": {
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceId",
+                    "safeName": "errorInstanceId"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceId",
+                    "safeName": "ErrorInstanceId"
+                }
+            },
+            "wireValue": "errorInstanceId"
+        }
+    },
+    "environments": {
+        "defaultEnvironment": null,
+        "environments": {
+            "type": "singleBaseUrl",
+            "environments": [
+                {
+                    "id": "Production",
+                    "name": {
+                        "originalName": "Production",
+                        "camelCase": {
+                            "unsafeName": "production",
+                            "safeName": "production"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "production",
+                            "safeName": "production"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "PRODUCTION",
+                            "safeName": "PRODUCTION"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Production",
+                            "safeName": "Production"
+                        }
+                    },
+                    "url": "https://production.com/api",
+                    "docs": null
+                },
+                {
+                    "id": "Staging",
+                    "name": {
+                        "originalName": "Staging",
+                        "camelCase": {
+                            "unsafeName": "staging",
+                            "safeName": "staging"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "staging",
+                            "safeName": "staging"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "STAGING",
+                            "safeName": "STAGING"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Staging",
+                            "safeName": "Staging"
+                        }
+                    },
+                    "url": "https://staging.com/api",
+                    "docs": null
+                }
+            ]
+        }
+    },
+    "errorDiscriminationStrategy": {
+        "type": "statusCode"
+    },
+    "basePath": null,
+    "pathParameters": [],
+    "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": []
+    },
+    "webhookGroups": {},
+    "websocketChannels": {},
+    "subpackages": {
+        "subpackage_dummy": {
+            "name": {
+                "originalName": "dummy",
+                "camelCase": {
+                    "unsafeName": "dummy",
+                    "safeName": "dummy"
+                },
+                "snakeCase": {
+                    "unsafeName": "dummy",
+                    "safeName": "dummy"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "DUMMY",
+                    "safeName": "DUMMY"
+                },
+                "pascalCase": {
+                    "unsafeName": "Dummy",
+                    "safeName": "Dummy"
+                }
+            },
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "dummy",
+                        "camelCase": {
+                            "unsafeName": "dummy",
+                            "safeName": "dummy"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "dummy",
+                            "safeName": "dummy"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DUMMY",
+                            "safeName": "DUMMY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Dummy",
+                            "safeName": "Dummy"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "dummy",
+                    "camelCase": {
+                        "unsafeName": "dummy",
+                        "safeName": "dummy"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "dummy",
+                        "safeName": "dummy"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "DUMMY",
+                        "safeName": "DUMMY"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Dummy",
+                        "safeName": "Dummy"
+                    }
+                }
+            },
+            "service": "service_dummy",
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": true,
+            "docs": null
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": [],
+            "file": null
+        },
+        "websocket": null,
+        "service": null,
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "subpackage_dummy"
+        ],
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": true,
+        "docs": null
+    },
+    "sdkConfig": {
+        "isAuthMandatory": true,
+        "hasStreamingEndpoints": false,
+        "hasFileDownloadEndpoints": false,
+        "platformHeaders": {
+            "language": "X-Fern-Language",
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version"
+        }
+    }
+}

@@ -1,0 +1,13 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    echo:
+      method: POST
+      path: ""
+      request: string
+      response: string
+      examples:
+        - request: Hello world!\n\nwith\n\tnewlines
+          response:
+            body: Hello world!\n\nwith\n\tnewlines

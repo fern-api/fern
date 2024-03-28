@@ -1,0 +1,10 @@
+name: literal
+docs: | 
+  Test definition for literal schemas. 
+headers:
+  X-API-Version:
+    name: version
+    type: literal<"02-02-2024">
+  X-API-Enable-Audit-Logging:
+    name: audit_logging
+    type: literal<true>
