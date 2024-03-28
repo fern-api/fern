@@ -4,12 +4,14 @@ exports[`open api parser apiture simple 1`] = `
 {
   "definitionFiles": {
     "accountJointOwners.yml": {
+      "docs": "Account Joint Owners",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Account Joint Owners",
         "endpoints": {
           "listAccountJointOwners": {
             "auth": true,
@@ -55,12 +57,14 @@ exports[`open api parser apiture simple 1`] = `
       },
     },
     "accounts.yml": {
+      "docs": "Banking Accounts",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Accounts",
         "endpoints": {
           "getAccount": {
             "auth": true,
@@ -316,12 +320,14 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
       },
     },
     "institutions.yml": {
+      "docs": "Banking Institutions",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Institutions",
         "endpoints": {
           "getCutoffTimes": {
             "auth": true,
@@ -807,12 +813,14 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
       },
     },
     "overdraftProtection.yml": {
+      "docs": "Overdraft Protection Settings",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Overdraft Protection",
         "endpoints": {
           "getOverdraftProtection": {
             "auth": true,
@@ -977,12 +985,14 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
       },
     },
     "transactionCategories.yml": {
+      "docs": "Banking Account Transaction Categories",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Transaction Categories",
         "endpoints": {
           "listTransactionCategories": {
             "auth": true,
@@ -1032,12 +1042,14 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
       },
     },
     "transactions.yml": {
+      "docs": "Banking Account Transactions",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Transactions",
         "endpoints": {
           "listTransactions": {
             "auth": true,
@@ -1192,12 +1204,14 @@ The default response lists only recent transactions. Normally, this is transacti
       },
     },
     "transfers.yml": {
+      "docs": "Banking Transfers",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "Transfers",
         "endpoints": {
           "createTransfer": {
             "auth": true,

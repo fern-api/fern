@@ -38,12 +38,14 @@ exports[`open api parser assembly simple 1`] = `
       },
     },
     "lemur.yml": {
+      "docs": "LeMUR related operations",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "LeMUR",
         "endpoints": {
           "actionItems": {
             "auth": true,
@@ -352,12 +354,14 @@ The parameter should map to a JSON encoded list of strings.
           },
         },
       },
+      "docs": "Real-time transcription",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "realtime",
         "endpoints": {
           "createTemporaryToken": {
             "auth": true,
@@ -428,12 +432,14 @@ The parameter should map to a JSON encoded list of strings.
       },
     },
     "transcript.yml": {
+      "docs": "Transcript related operations",
       "imports": {
         "root": "__package__.yml",
       },
       "service": {
         "auth": false,
         "base-path": "",
+        "display-name": "transcript",
         "endpoints": {
           "create": {
             "auth": true,
