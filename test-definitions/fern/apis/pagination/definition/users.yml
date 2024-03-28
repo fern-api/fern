@@ -1,0 +1,65 @@
+types: 
+  Order: 
+    enum: 
+      - asc
+      - desc
+  
+  ListUsersResponse: 
+    properties: 
+      pages: optional<Page>
+      total_count: 
+        type: integer
+        docs: The totall number of /users
+      data: list<User>
+  
+  Page: 
+    properties: 
+      page: 
+        type: integer
+        docs: The current page
+      next: optional<NextPage>
+      per_page: integer
+      total_page: integer
+
+  NextPage: 
+    properties: 
+      page: integer
+      starting_after: string
+  
+  User: 
+    properties: 
+      name: string
+      id: integer
+
+service:
+  auth: false
+  base-path: /users
+  endpoints:
+    listWithCursorPagination:
+      pagination: 
+        cursor: $query.starting_after
+        next_cursor: $response.pages.next.starting_after
+        results: $response.data
+      method: GET
+      path: ""
+      request: 
+        name: ListUsersCursorPaginationRequest
+        query-parameters: 
+          page: 
+            type: optional<integer>
+            docs: Defaults to first page
+          per_page: 
+            type: optional<integer>
+            docs: Defaults to per page
+          order: 
+            type: optional<Order> 
+          starting_after: 
+            type: optional<string>
+            docs: | 
+              The cursor used for pagination in order to fetch 
+              the next page of results.
+      response: ListUsersCursorPaginationResponse
+      examples: 
+        - response: 
+            
+    
