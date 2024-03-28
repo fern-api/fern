@@ -30,7 +30,7 @@ class Base(pydantic.BaseModel):
 
 
 class UnionWithBaseProperties_Integer(Base):
-    type: typing.Literal["integer"]
+    type: typing.Literal["integer"] = "integer"
     value: int
 
     class Config:
@@ -39,7 +39,7 @@ class UnionWithBaseProperties_Integer(Base):
 
 
 class UnionWithBaseProperties_String(Base):
-    type: typing.Literal["string"]
+    type: typing.Literal["string"] = "string"
     value: str
 
     class Config:

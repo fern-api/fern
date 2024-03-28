@@ -14,12 +14,12 @@ except ImportError:
 
 
 class TestCaseImplementationReference_TemplateId(pydantic.BaseModel):
-    type: typing.Literal["templateId"]
+    type: typing.Literal["templateId"] = "templateId"
     value: TestCaseTemplateId
 
 
 class TestCaseImplementationReference_Implementation(TestCaseImplementation):
-    type: typing.Literal["implementation"]
+    type: typing.Literal["implementation"] = "implementation"
 
     class Config:
         allow_population_by_field_name = True

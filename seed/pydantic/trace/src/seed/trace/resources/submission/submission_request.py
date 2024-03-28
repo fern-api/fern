@@ -16,7 +16,7 @@ except ImportError:
 
 
 class SubmissionRequest_InitializeProblemRequest(InitializeProblemRequest):
-    type: typing.Literal["initializeProblemRequest"]
+    type: typing.Literal["initializeProblemRequest"] = "initializeProblemRequest"
 
     class Config:
         allow_population_by_field_name = True
@@ -24,11 +24,11 @@ class SubmissionRequest_InitializeProblemRequest(InitializeProblemRequest):
 
 
 class SubmissionRequest_InitializeWorkspaceRequest(pydantic.BaseModel):
-    type: typing.Literal["initializeWorkspaceRequest"]
+    type: typing.Literal["initializeWorkspaceRequest"] = "initializeWorkspaceRequest"
 
 
 class SubmissionRequest_SubmitV2(SubmitRequestV2):
-    type: typing.Literal["submitV2"]
+    type: typing.Literal["submitV2"] = "submitV2"
 
     class Config:
         allow_population_by_field_name = True
@@ -36,7 +36,7 @@ class SubmissionRequest_SubmitV2(SubmitRequestV2):
 
 
 class SubmissionRequest_WorkspaceSubmit(WorkspaceSubmitRequest):
-    type: typing.Literal["workspaceSubmit"]
+    type: typing.Literal["workspaceSubmit"] = "workspaceSubmit"
 
     class Config:
         allow_population_by_field_name = True
@@ -44,7 +44,7 @@ class SubmissionRequest_WorkspaceSubmit(WorkspaceSubmitRequest):
 
 
 class SubmissionRequest_Stop(StopRequest):
-    type: typing.Literal["stop"]
+    type: typing.Literal["stop"] = "stop"
 
     class Config:
         allow_population_by_field_name = True

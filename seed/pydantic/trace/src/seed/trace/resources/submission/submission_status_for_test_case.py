@@ -15,7 +15,7 @@ except ImportError:
 
 
 class SubmissionStatusForTestCase_Graded(TestCaseResultWithStdout):
-    type: typing.Literal["graded"]
+    type: typing.Literal["graded"] = "graded"
 
     class Config:
         allow_population_by_field_name = True
@@ -23,12 +23,12 @@ class SubmissionStatusForTestCase_Graded(TestCaseResultWithStdout):
 
 
 class SubmissionStatusForTestCase_GradedV2(pydantic.BaseModel):
-    type: typing.Literal["gradedV2"]
+    type: typing.Literal["gradedV2"] = "gradedV2"
     value: TestCaseGrade
 
 
 class SubmissionStatusForTestCase_Traced(TracedTestCase):
-    type: typing.Literal["traced"]
+    type: typing.Literal["traced"] = "traced"
 
     class Config:
         allow_population_by_field_name = True

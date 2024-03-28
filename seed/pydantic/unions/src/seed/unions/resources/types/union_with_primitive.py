@@ -11,12 +11,12 @@ except ImportError:
 
 
 class UnionWithPrimitive_Integer(pydantic.BaseModel):
-    type: typing.Literal["integer"]
+    type: typing.Literal["integer"] = "integer"
     value: int
 
 
 class UnionWithPrimitive_String(pydantic.BaseModel):
-    type: typing.Literal["string"]
+    type: typing.Literal["string"] = "string"
     value: str
 
 

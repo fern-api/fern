@@ -44,6 +44,7 @@
     "root-package:check": "yarn fern-script check-root-package",
     "root-package:fix": "yarn root-package:check --fix",
     "demo-setup": "yarn workspace @fern-api/demo-setup dist:cli && node $(yarn workspace @fern-api/demo-setup bin demo-setup)",
+    "seed": "node $(yarn workspace @fern-api/seed-cli bin seed)",
     "seed:local": "yarn workspace @fern-api/seed-cli dist:cli && node $(yarn workspace @fern-api/seed-cli bin seed)",
     "ir:generate": "yarn workspace @fern-api/ir-sdk generate",
     "openapi-ir:generate": "yarn workspace @fern-api/openapi-ir-sdk generate",

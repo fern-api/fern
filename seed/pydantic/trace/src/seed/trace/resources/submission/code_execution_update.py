@@ -18,7 +18,7 @@ from .workspace_ran_response import WorkspaceRanResponse
 
 
 class CodeExecutionUpdate_BuildingExecutor(BuildingExecutorResponse):
-    type: typing.Literal["buildingExecutor"]
+    type: typing.Literal["buildingExecutor"] = "buildingExecutor"
 
     class Config:
         allow_population_by_field_name = True
@@ -26,7 +26,7 @@ class CodeExecutionUpdate_BuildingExecutor(BuildingExecutorResponse):
 
 
 class CodeExecutionUpdate_Running(RunningResponse):
-    type: typing.Literal["running"]
+    type: typing.Literal["running"] = "running"
 
     class Config:
         allow_population_by_field_name = True
@@ -34,7 +34,7 @@ class CodeExecutionUpdate_Running(RunningResponse):
 
 
 class CodeExecutionUpdate_Errored(ErroredResponse):
-    type: typing.Literal["errored"]
+    type: typing.Literal["errored"] = "errored"
 
     class Config:
         allow_population_by_field_name = True
@@ -42,7 +42,7 @@ class CodeExecutionUpdate_Errored(ErroredResponse):
 
 
 class CodeExecutionUpdate_Stopped(StoppedResponse):
-    type: typing.Literal["stopped"]
+    type: typing.Literal["stopped"] = "stopped"
 
     class Config:
         allow_population_by_field_name = True
@@ -50,7 +50,7 @@ class CodeExecutionUpdate_Stopped(StoppedResponse):
 
 
 class CodeExecutionUpdate_Graded(GradedResponse):
-    type: typing.Literal["graded"]
+    type: typing.Literal["graded"] = "graded"
 
     class Config:
         allow_population_by_field_name = True
@@ -58,7 +58,7 @@ class CodeExecutionUpdate_Graded(GradedResponse):
 
 
 class CodeExecutionUpdate_GradedV2(GradedResponseV2):
-    type: typing.Literal["gradedV2"]
+    type: typing.Literal["gradedV2"] = "gradedV2"
 
     class Config:
         allow_population_by_field_name = True
@@ -66,7 +66,7 @@ class CodeExecutionUpdate_GradedV2(GradedResponseV2):
 
 
 class CodeExecutionUpdate_WorkspaceRan(WorkspaceRanResponse):
-    type: typing.Literal["workspaceRan"]
+    type: typing.Literal["workspaceRan"] = "workspaceRan"
 
     class Config:
         allow_population_by_field_name = True
@@ -74,7 +74,7 @@ class CodeExecutionUpdate_WorkspaceRan(WorkspaceRanResponse):
 
 
 class CodeExecutionUpdate_Recording(RecordingResponseNotification):
-    type: typing.Literal["recording"]
+    type: typing.Literal["recording"] = "recording"
 
     class Config:
         allow_population_by_field_name = True
@@ -82,7 +82,7 @@ class CodeExecutionUpdate_Recording(RecordingResponseNotification):
 
 
 class CodeExecutionUpdate_Recorded(RecordedResponseNotification):
-    type: typing.Literal["recorded"]
+    type: typing.Literal["recorded"] = "recorded"
 
     class Config:
         allow_population_by_field_name = True
@@ -90,7 +90,7 @@ class CodeExecutionUpdate_Recorded(RecordedResponseNotification):
 
 
 class CodeExecutionUpdate_InvalidRequest(InvalidRequestResponse):
-    type: typing.Literal["invalidRequest"]
+    type: typing.Literal["invalidRequest"] = "invalidRequest"
 
     class Config:
         allow_population_by_field_name = True
@@ -98,7 +98,7 @@ class CodeExecutionUpdate_InvalidRequest(InvalidRequestResponse):
 
 
 class CodeExecutionUpdate_Finished(FinishedResponse):
-    type: typing.Literal["finished"]
+    type: typing.Literal["finished"] = "finished"
 
     class Config:
         allow_population_by_field_name = True

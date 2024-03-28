@@ -30,7 +30,7 @@ class Base(pydantic.BaseModel):
 
 
 class UnionWithLiteral_Fern(Base):
-    type: typing.Literal["fern"]
+    type: typing.Literal["fern"] = "fern"
     value: typing.Literal["fern"]
 
     class Config:

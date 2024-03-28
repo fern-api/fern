@@ -14,12 +14,12 @@ except ImportError:
 
 
 class Union_Foo(pydantic.BaseModel):
-    type: typing.Literal["foo"]
+    type: typing.Literal["foo"] = "foo"
     foo: Foo
 
 
 class Union_Bar(pydantic.BaseModel):
-    type: typing.Literal["bar"]
+    type: typing.Literal["bar"] = "bar"
     bar: Bar
 
 

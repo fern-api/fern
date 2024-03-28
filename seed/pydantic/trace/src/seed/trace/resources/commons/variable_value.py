@@ -19,32 +19,32 @@ except ImportError:
 
 
 class VariableValue_IntegerValue(pydantic.BaseModel):
-    type: typing.Literal["integerValue"]
+    type: typing.Literal["integerValue"] = "integerValue"
     value: int
 
 
 class VariableValue_BooleanValue(pydantic.BaseModel):
-    type: typing.Literal["booleanValue"]
+    type: typing.Literal["booleanValue"] = "booleanValue"
     value: bool
 
 
 class VariableValue_DoubleValue(pydantic.BaseModel):
-    type: typing.Literal["doubleValue"]
+    type: typing.Literal["doubleValue"] = "doubleValue"
     value: float
 
 
 class VariableValue_StringValue(pydantic.BaseModel):
-    type: typing.Literal["stringValue"]
+    type: typing.Literal["stringValue"] = "stringValue"
     value: str
 
 
 class VariableValue_CharValue(pydantic.BaseModel):
-    type: typing.Literal["charValue"]
+    type: typing.Literal["charValue"] = "charValue"
     value: str
 
 
 class VariableValue_MapValue(MapValue):
-    type: typing.Literal["mapValue"]
+    type: typing.Literal["mapValue"] = "mapValue"
 
     class Config:
         allow_population_by_field_name = True
@@ -52,12 +52,12 @@ class VariableValue_MapValue(MapValue):
 
 
 class VariableValue_ListValue(pydantic.BaseModel):
-    type: typing.Literal["listValue"]
+    type: typing.Literal["listValue"] = "listValue"
     value: typing.List[VariableValue]
 
 
 class VariableValue_BinaryTreeValue(BinaryTreeValue):
-    type: typing.Literal["binaryTreeValue"]
+    type: typing.Literal["binaryTreeValue"] = "binaryTreeValue"
 
     class Config:
         allow_population_by_field_name = True
@@ -65,7 +65,7 @@ class VariableValue_BinaryTreeValue(BinaryTreeValue):
 
 
 class VariableValue_SinglyLinkedListValue(SinglyLinkedListValue):
-    type: typing.Literal["singlyLinkedListValue"]
+    type: typing.Literal["singlyLinkedListValue"] = "singlyLinkedListValue"
 
     class Config:
         allow_population_by_field_name = True
@@ -73,7 +73,7 @@ class VariableValue_SinglyLinkedListValue(SinglyLinkedListValue):
 
 
 class VariableValue_DoublyLinkedListValue(DoublyLinkedListValue):
-    type: typing.Literal["doublyLinkedListValue"]
+    type: typing.Literal["doublyLinkedListValue"] = "doublyLinkedListValue"
 
     class Config:
         allow_population_by_field_name = True
@@ -81,7 +81,7 @@ class VariableValue_DoublyLinkedListValue(DoublyLinkedListValue):
 
 
 class VariableValue_NullValue(pydantic.BaseModel):
-    type: typing.Literal["nullValue"]
+    type: typing.Literal["nullValue"] = "nullValue"
 
 
 VariableValue = typing.Union[

@@ -13,7 +13,7 @@ except ImportError:
 
 
 class PlaylistIdNotFoundErrorBody_PlaylistId(pydantic.BaseModel):
-    type: typing.Literal["playlistId"]
+    type: typing.Literal["playlistId"] = "playlistId"
     value: PlaylistId
 
 

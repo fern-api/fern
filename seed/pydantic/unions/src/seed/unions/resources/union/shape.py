@@ -32,7 +32,7 @@ class Base(pydantic.BaseModel):
 
 
 class Shape_Circle(Circle, Base):
-    type: typing.Literal["circle"]
+    type: typing.Literal["circle"] = "circle"
 
     class Config:
         allow_population_by_field_name = True
@@ -40,7 +40,7 @@ class Shape_Circle(Circle, Base):
 
 
 class Shape_Square(Square, Base):
-    type: typing.Literal["square"]
+    type: typing.Literal["square"] = "square"
 
     class Config:
         allow_population_by_field_name = True
