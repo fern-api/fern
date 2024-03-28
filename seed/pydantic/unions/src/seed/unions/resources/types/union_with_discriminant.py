@@ -14,7 +14,7 @@ except ImportError:
 
 
 class UnionWithDiscriminant_Foo(pydantic.BaseModel):
-    type: typing.Literal["foo"] = pydantic.Field(alias="_type")
+    type: typing.Literal["foo"] = pydantic.Field(alias="_type", default="foo")
     foo: Foo
 
     class Config:
@@ -23,7 +23,7 @@ class UnionWithDiscriminant_Foo(pydantic.BaseModel):
 
 
 class UnionWithDiscriminant_Bar(pydantic.BaseModel):
-    type: typing.Literal["bar"] = pydantic.Field(alias="_type")
+    type: typing.Literal["bar"] = pydantic.Field(alias="_type", default="bar")
     bar: Bar
 
     class Config:

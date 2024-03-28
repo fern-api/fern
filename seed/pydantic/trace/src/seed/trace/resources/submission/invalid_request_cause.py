@@ -10,7 +10,7 @@ from .unexpected_language_error import UnexpectedLanguageError
 
 
 class InvalidRequestCause_SubmissionIdNotFound(SubmissionIdNotFound):
-    type: typing.Literal["submissionIdNotFound"]
+    type: typing.Literal["submissionIdNotFound"] = "submissionIdNotFound"
 
     class Config:
         allow_population_by_field_name = True
@@ -18,7 +18,7 @@ class InvalidRequestCause_SubmissionIdNotFound(SubmissionIdNotFound):
 
 
 class InvalidRequestCause_CustomTestCasesUnsupported(CustomTestCasesUnsupported):
-    type: typing.Literal["customTestCasesUnsupported"]
+    type: typing.Literal["customTestCasesUnsupported"] = "customTestCasesUnsupported"
 
     class Config:
         allow_population_by_field_name = True
@@ -26,7 +26,7 @@ class InvalidRequestCause_CustomTestCasesUnsupported(CustomTestCasesUnsupported)
 
 
 class InvalidRequestCause_UnexpectedLanguage(UnexpectedLanguageError):
-    type: typing.Literal["unexpectedLanguage"]
+    type: typing.Literal["unexpectedLanguage"] = "unexpectedLanguage"
 
     class Config:
         allow_population_by_field_name = True

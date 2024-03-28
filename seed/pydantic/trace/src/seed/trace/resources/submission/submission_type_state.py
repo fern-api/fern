@@ -9,7 +9,7 @@ from .workspace_submission_state import WorkspaceSubmissionState
 
 
 class SubmissionTypeState_Test(TestSubmissionState):
-    type: typing.Literal["test"]
+    type: typing.Literal["test"] = "test"
 
     class Config:
         allow_population_by_field_name = True
@@ -17,7 +17,7 @@ class SubmissionTypeState_Test(TestSubmissionState):
 
 
 class SubmissionTypeState_Workspace(WorkspaceSubmissionState):
-    type: typing.Literal["workspace"]
+    type: typing.Literal["workspace"] = "workspace"
 
     class Config:
         allow_population_by_field_name = True

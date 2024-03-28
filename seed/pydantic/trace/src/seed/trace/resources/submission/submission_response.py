@@ -16,20 +16,20 @@ except ImportError:
 
 
 class SubmissionResponse_ServerInitialized(pydantic.BaseModel):
-    type: typing.Literal["serverInitialized"]
+    type: typing.Literal["serverInitialized"] = "serverInitialized"
 
 
 class SubmissionResponse_ProblemInitialized(pydantic.BaseModel):
-    type: typing.Literal["problemInitialized"]
+    type: typing.Literal["problemInitialized"] = "problemInitialized"
     value: ProblemId
 
 
 class SubmissionResponse_WorkspaceInitialized(pydantic.BaseModel):
-    type: typing.Literal["workspaceInitialized"]
+    type: typing.Literal["workspaceInitialized"] = "workspaceInitialized"
 
 
 class SubmissionResponse_ServerErrored(ExceptionInfo):
-    type: typing.Literal["serverErrored"]
+    type: typing.Literal["serverErrored"] = "serverErrored"
 
     class Config:
         allow_population_by_field_name = True
@@ -37,12 +37,12 @@ class SubmissionResponse_ServerErrored(ExceptionInfo):
 
 
 class SubmissionResponse_CodeExecutionUpdate(pydantic.BaseModel):
-    type: typing.Literal["codeExecutionUpdate"]
+    type: typing.Literal["codeExecutionUpdate"] = "codeExecutionUpdate"
     value: CodeExecutionUpdate
 
 
 class SubmissionResponse_Terminated(TerminatedResponse):
-    type: typing.Literal["terminated"]
+    type: typing.Literal["terminated"] = "terminated"
 
     class Config:
         allow_population_by_field_name = True

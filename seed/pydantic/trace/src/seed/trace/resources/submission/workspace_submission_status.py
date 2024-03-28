@@ -15,21 +15,21 @@ except ImportError:
 
 
 class WorkspaceSubmissionStatus_Stopped(pydantic.BaseModel):
-    type: typing.Literal["stopped"]
+    type: typing.Literal["stopped"] = "stopped"
 
 
 class WorkspaceSubmissionStatus_Errored(pydantic.BaseModel):
-    type: typing.Literal["errored"]
+    type: typing.Literal["errored"] = "errored"
     value: ErrorInfo
 
 
 class WorkspaceSubmissionStatus_Running(pydantic.BaseModel):
-    type: typing.Literal["running"]
+    type: typing.Literal["running"] = "running"
     value: RunningSubmissionState
 
 
 class WorkspaceSubmissionStatus_Ran(WorkspaceRunDetails):
-    type: typing.Literal["ran"]
+    type: typing.Literal["ran"] = "ran"
 
     class Config:
         allow_population_by_field_name = True
@@ -37,7 +37,7 @@ class WorkspaceSubmissionStatus_Ran(WorkspaceRunDetails):
 
 
 class WorkspaceSubmissionStatus_Traced(WorkspaceRunDetails):
-    type: typing.Literal["traced"]
+    type: typing.Literal["traced"] = "traced"
 
     class Config:
         allow_population_by_field_name = True

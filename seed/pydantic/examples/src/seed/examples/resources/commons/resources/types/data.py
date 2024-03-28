@@ -11,18 +11,18 @@ except ImportError:
 
 
 class Data_String(pydantic.BaseModel):
-    type: typing.Literal["string"]
+    type: typing.Literal["string"] = "string"
     value: str
 
 
 class Data_Base64(pydantic.BaseModel):
-    type: typing.Literal["base64"]
+    type: typing.Literal["base64"] = "base64"
     value: str
 
 
 """
 from seed.examples.resources.commons import Data_String
 
-Data_String(type="string", value="data")
+Data_String(value="data")
 """
 Data = typing.Union[Data_String, Data_Base64]

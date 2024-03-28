@@ -17,7 +17,7 @@ class Base(pydantic.BaseModel):
     """
     from seed.examples import Metadata_Html
 
-    Metadata_Html(type="html", value="<head>...</head>")
+    Metadata_Html(value="<head>...</head>")
     """
 
     extra: typing.Dict[str, str]
@@ -37,7 +37,7 @@ class Base(pydantic.BaseModel):
 
 
 class Metadata_Html(Base):
-    type: typing.Literal["html"]
+    type: typing.Literal["html"] = "html"
     value: str
 
     class Config:
@@ -46,7 +46,7 @@ class Metadata_Html(Base):
 
 
 class Metadata_Markdown(Base):
-    type: typing.Literal["markdown"]
+    type: typing.Literal["markdown"] = "markdown"
     value: str
 
     class Config:
@@ -57,6 +57,6 @@ class Metadata_Markdown(Base):
 """
 from seed.examples import Metadata_Html
 
-Metadata_Html(type="html", value="<head>...</head>")
+Metadata_Html(value="<head>...</head>")
 """
 Metadata = typing.Union[Metadata_Html, Metadata_Markdown]

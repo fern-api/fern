@@ -11,18 +11,18 @@ except ImportError:
 
 
 class Test_And(pydantic.BaseModel):
-    type: typing.Literal["and"]
+    type: typing.Literal["and"] = "and"
     value: bool
 
 
 class Test_Or(pydantic.BaseModel):
-    type: typing.Literal["or"]
+    type: typing.Literal["or"] = "or"
     value: bool
 
 
 """
 from seed.examples import Test_And
 
-Test_And(type="and", value=True)
+Test_And(value=True)
 """
 Test = typing.Union[Test_And, Test_Or]

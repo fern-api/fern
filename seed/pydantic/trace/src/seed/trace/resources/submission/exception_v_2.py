@@ -13,7 +13,7 @@ except ImportError:
 
 
 class ExceptionV2_Generic(ExceptionInfo):
-    type: typing.Literal["generic"]
+    type: typing.Literal["generic"] = "generic"
 
     class Config:
         allow_population_by_field_name = True
@@ -21,7 +21,7 @@ class ExceptionV2_Generic(ExceptionInfo):
 
 
 class ExceptionV2_Timeout(pydantic.BaseModel):
-    type: typing.Literal["timeout"]
+    type: typing.Literal["timeout"] = "timeout"
 
 
 ExceptionV2 = typing.Union[ExceptionV2_Generic, ExceptionV2_Timeout]

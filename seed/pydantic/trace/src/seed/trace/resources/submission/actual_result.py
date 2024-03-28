@@ -14,12 +14,12 @@ except ImportError:
 
 
 class ActualResult_Value(pydantic.BaseModel):
-    type: typing.Literal["value"]
+    type: typing.Literal["value"] = "value"
     value: VariableValue
 
 
 class ActualResult_Exception(ExceptionInfo):
-    type: typing.Literal["exception"]
+    type: typing.Literal["exception"] = "exception"
 
     class Config:
         allow_population_by_field_name = True
@@ -27,7 +27,7 @@ class ActualResult_Exception(ExceptionInfo):
 
 
 class ActualResult_ExceptionV2(pydantic.BaseModel):
-    type: typing.Literal["exceptionV2"]
+    type: typing.Literal["exceptionV2"] = "exceptionV2"
     value: ExceptionV2
 
 
