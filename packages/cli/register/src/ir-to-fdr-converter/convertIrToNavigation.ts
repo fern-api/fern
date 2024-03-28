@@ -12,11 +12,7 @@ export function convertIrToNavigation(
 
     const defaultRoot = convertIrToDefaultNavigationConfigRoot(ir);
 
-    const items = visitAndSortNavigationSchema(
-        Array.isArray(navigation) ? navigation : [navigation],
-        defaultRoot.items,
-        ir
-    );
+    const items = visitAndSortNavigationSchema(navigation, defaultRoot.items, ir);
 
     return { items };
 }
@@ -99,13 +95,16 @@ function visitAndSortNavigationSchema(
     const items: APIV1Write.ApiNavigationConfigItem[] = [];
     for (const navigationItem of navigationItems) {
         if (typeof navigationItem === "string") {
-            // item could either be a group name or method name
-            // however in this implementation, we only support method name
-            // TODO: consider allowing user to specify a "naked" group name that preserves the default order of it's children
             const foundItem = defaultItems.find(createItemMatcher(navigationItem, ir));
 
             if (foundItem != null && foundItem.type !== "subpackage") {
                 items.push(foundItem);
+            } else if (foundItem != null) {
+                items.push({
+                    type: "subpackage",
+                    subpackageId: foundItem.subpackageId,
+                    items: []
+                });
             }
         } else {
             // item must be a collection of groups
