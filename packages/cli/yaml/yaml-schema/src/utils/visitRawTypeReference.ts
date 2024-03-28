@@ -17,6 +17,7 @@ export interface RawTypeReferenceVisitor<R> {
     optional: (valueType: string) => R;
     literal: (literal: Literal) => R;
     named: (named: string) => R;
+    bytes: (file: string) => R;
     unknown: () => R;
 }
 
@@ -81,6 +82,10 @@ export function visitRawTypeReference<R>(type: string, visitor: RawTypeReference
             default:
                 throw new Error(`Unsupported literal value: ${group}`);
         }
+    }
+
+    if (type === "file" || type === "bytes") {
+        return visitor.bytes(type);
     }
 
     return visitor.named(type);

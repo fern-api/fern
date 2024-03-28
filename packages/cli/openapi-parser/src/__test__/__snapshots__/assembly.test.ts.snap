@@ -261,7 +261,29 @@ The parameter should map to a JSON encoded list of strings.
         503,
         504,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": null,
+          "response": {
+            "properties": {
+              "upload_url": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "upload_url",
+                },
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "FilesUploadRequest",
       "headers": [],
       "internal": null,
@@ -3544,7 +3566,36 @@ The parameter should map to a JSON encoded list of strings.
       "availability": null,
       "description": "Export your transcript in SRT or VTT format, to be plugged into a video player for subtitles and closed captions.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "transcript_id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "transcript_id",
+                },
+              },
+            },
+            {
+              "name": "subtitle_format",
+              "value": {
+                "type": "enum",
+                "value": "srt",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+        },
+      ],
       "generatedRequestName": "TranscriptGetSubtitlesRequest",
       "headers": [],
       "internal": null,

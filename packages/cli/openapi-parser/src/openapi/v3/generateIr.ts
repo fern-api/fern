@@ -131,7 +131,7 @@ export function generateIr({
             if (endpointExample != null) {
                 examples = [
                     endpointExample,
-                    // Remove incomplete examples
+                    // Remove incomplete examples (codesamples are included in generated examples)
                     ...endpointWithExample.examples.filter((example) => !hasIncompleteExample(example))
                 ];
             }

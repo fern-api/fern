@@ -323,6 +323,10 @@ export function convertTypeReferenceExample({
                 })
             });
         },
+        bytes: () => {
+            // TODO: Implement file example conversion
+            return ExampleTypeReferenceShape.unknown(jsonExample);
+        },
         unknown: () => {
             return ExampleTypeReferenceShape.unknown(jsonExample);
         }

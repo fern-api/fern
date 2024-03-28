@@ -362,7 +362,29 @@ exports[`open api parser hume parse open api 1`] = `
       "availability": null,
       "description": "Get the artifacts ZIP of a completed job.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+        },
+      ],
       "generatedRequestName": "GetJobArtifactsRequest",
       "headers": [],
       "internal": null,
