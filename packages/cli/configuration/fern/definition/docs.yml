@@ -369,21 +369,37 @@ types:
         type: optional<boolean>
         docs: Defaults to false
       snippets: optional<SnippetsConfiguration>
-  #     changelog:
-  #       type: optional<ChangelogConfiguration>
-  #       docs: |
-  #         Defaults to the changelog directory in the API workspace if present.
-  #         > fern/
-  #             changelog/
-  #               ...
-  #             definition/
-  #               ...
-
-  # ChangelogConfiguration:
-  #   discriminated: false
-  #   union:
-  #     - type: string
-  #       docs: Path to a custom folder which contains markdown files for the changelog.
+      layout: 
+        type: optional<ApiSectionLayout>
+        docs: |
+          If `layout` is set to `sidebar`, the API section will render with a sidebar.
+          If `layout` is set to `full`, the API section will render without a sidebar.
+  
+  ApiSectionLayout: 
+    docs: | 
+      Use the `layout` object to customize the order that your API endpoints
+      are displayed in the docs site.
+    type: unknown
+    examples: 
+      - name: Ordering Groups
+        value: 
+          - users # users endpoints will be displayed first
+          - roles
+          - permissions
+      - name: Ordering Endpoints
+        value: 
+          - roles
+            - get
+            - create
+            - update
+          - users
+            - get
+            - create
+            - update
+          - permissions
+            - get
+            - create
+            - update
 
   LinkConfiguration:
     properties:

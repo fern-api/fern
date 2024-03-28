@@ -1,5 +1,6 @@
 import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { z, ZodType } from "zod";
 import { Audiences } from "../commons";
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
 import { DocsInstances, TabConfig, VersionAvailability } from "./schemas";
@@ -156,6 +157,7 @@ export declare namespace DocsNavigationItem {
         audiences: Audiences;
         showErrors: boolean;
         snippetsConfiguration: SnippetsConfiguration | undefined;
+        navigation: APINavigationSchema | undefined;
     }
 
     export interface Link {
@@ -171,3 +173,28 @@ export declare namespace DocsNavigationItem {
         java: string | undefined;
     }
 }
+
+// eslint-disable-next-line @typescript-eslint/consistent-indexed-object-style
+export interface ApiNavigationGroup {
+    [key: string]: ApiNavigationItem[];
+}
+export const ApiNavigationGroup: ZodType<ApiNavigationGroup> = z.lazy(() => z.record(z.array(ApiNavigationItem)));
+
+export const ApiNavigationItem = z.union([z.string(), ApiNavigationGroup]);
+export type ApiNavigationItem = z.infer<typeof ApiNavigationItem>;
+
+/**
+ * NavigationSchema is a recursive schema that can be either a record,
+ * a list of records, or a list of strings where the strings are endpoint ids
+ * and the records are groups of endpoint ids for a subpackage.
+ *
+ * @example
+ *   - groupA
+ *   - groupB:
+ *      - methodA
+ *      - methodB
+ *      - groupC:
+ *          - methodC
+ */
+export const APINavigationSchema = z.array(ApiNavigationItem);
+export type APINavigationSchema = z.infer<typeof APINavigationSchema>;

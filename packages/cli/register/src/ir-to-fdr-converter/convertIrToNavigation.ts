@@ -1,10 +1,10 @@
-import { generatorsYml } from "@fern-api/configuration";
+import { docsYml } from "@fern-api/configuration";
 import { APIV1Write } from "@fern-api/fdr-sdk";
 import { FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
 
 export function convertIrToNavigation(
     ir: IntermediateRepresentation,
-    navigation: generatorsYml.NavigationSchema | undefined
+    navigation: docsYml.APINavigationSchema | undefined
 ): APIV1Write.ApiNavigationConfigRoot | undefined {
     if (navigation == null) {
         return undefined;
@@ -92,12 +92,12 @@ function createItemMatcher(key: string, ir: IntermediateRepresentation) {
 }
 
 function visitAndSortNavigationSchema(
-    navigationItems: generatorsYml.NavigationSchema,
+    navigationItems: docsYml.APINavigationSchema,
     defaultItems: APIV1Write.ApiNavigationConfigItem[],
     ir: IntermediateRepresentation
 ): APIV1Write.ApiNavigationConfigItem[] {
     const items: APIV1Write.ApiNavigationConfigItem[] = [];
-    for (const navigationItem of Array.isArray(navigationItems) ? navigationItems : [navigationItems]) {
+    for (const navigationItem of navigationItems) {
         if (typeof navigationItem === "string") {
             // item could either be a group name or method name
             // however in this implementation, we only support method name

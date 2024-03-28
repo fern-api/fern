@@ -12,4 +12,9 @@ export interface ApiSectionConfiguration {
     /** Defaults to false */
     displayErrors?: boolean;
     snippets?: FernDocsConfig.SnippetsConfiguration;
+    /**
+     * If `layout` is set to `sidebar`, the API section will render with a sidebar.
+     * If `layout` is set to `full`, the API section will render without a sidebar.
+     */
+    layout?: FernDocsConfig.ApiSectionLayout | undefined;
 }

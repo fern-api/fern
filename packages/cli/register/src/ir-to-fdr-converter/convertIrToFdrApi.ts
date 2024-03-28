@@ -1,4 +1,4 @@
-import { generatorsYml } from "@fern-api/configuration";
+import { docsYml, generatorsYml } from "@fern-api/configuration";
 import { entries } from "@fern-api/core-utils";
 import { APIV1Write } from "@fern-api/fdr-sdk";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
@@ -7,11 +7,15 @@ import { convertIrAvailability, convertPackage } from "./convertPackage";
 import { convertTypeReference, convertTypeShape } from "./convertTypeShape";
 import { convertAuth } from "./covertAuth";
 
-export function convertIrToFdrApi(
-    ir: IntermediateRepresentation,
-    snippetsConfig: APIV1Write.SnippetsConfig,
-    navigation: generatorsYml.NavigationSchema | undefined
-): APIV1Write.ApiDefinition {
+export function convertIrToFdrApi({
+    ir,
+    snippetsConfig,
+    navigation
+}: {
+    ir: IntermediateRepresentation;
+    snippetsConfig: APIV1Write.SnippetsConfig;
+    navigation: docsYml.APINavigationSchema | undefined;
+}): APIV1Write.ApiDefinition {
     const fdrApi: APIV1Write.ApiDefinition = {
         types: {},
         subpackages: {},

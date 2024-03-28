@@ -1,5 +1,5 @@
 import { FernToken } from "@fern-api/auth";
-import { Audiences } from "@fern-api/configuration";
+import { Audiences, docsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import { APIV1Write, FdrAPI } from "@fern-api/fdr-sdk";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
@@ -13,7 +13,8 @@ export async function registerApi({
     context,
     token,
     audiences,
-    snippetsConfig
+    snippetsConfig,
+    navigation
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -21,6 +22,7 @@ export async function registerApi({
     token: FernToken;
     audiences: Audiences;
     snippetsConfig: APIV1Write.SnippetsConfig;
+    navigation: docsYml.APINavigationSchema | undefined;
 }): Promise<FdrAPI.ApiDefinitionId> {
     const ir = await generateIntermediateRepresentation({
         workspace,
@@ -34,7 +36,7 @@ export async function registerApi({
         token: token.value
     });
 
-    const apiDefinition = convertIrToFdrApi(ir, snippetsConfig, workspace.generatorsConfiguration?.api?.navigation);
+    const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, navigation });
     context.logger.debug("Calling registerAPI... ", JSON.stringify(apiDefinition, undefined, 4));
     const response = await fdrService.api.v1.register.registerApiDefinition({
         orgId: organization,

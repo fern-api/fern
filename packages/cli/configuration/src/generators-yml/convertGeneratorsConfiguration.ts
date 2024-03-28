@@ -19,8 +19,6 @@ import { GeneratorPublishMetadataSchema } from "./schemas/GeneratorPublishMetada
 import {
     ASYNC_API_LOCATION_KEY,
     GeneratorsConfigurationSchema,
-    isAPIDefinitionListWithNavigation,
-    NavigationSchema,
     OPENAPI_LOCATION_KEY,
     OPENAPI_OVERRIDES_LOCATION_KEY
 } from "./schemas/GeneratorsConfigurationSchema";
@@ -64,7 +62,6 @@ async function parseAPIConfiguration(
 ): Promise<APIDefinition> {
     const apiConfiguration = rawGeneratorsConfiguration.api;
     const apiDefinitions: APIDefinitionLocation[] = [];
-    let navigation: NavigationSchema = [];
     if (apiConfiguration != null) {
         if (typeof apiConfiguration === "string") {
             apiDefinitions.push({
@@ -85,21 +82,6 @@ async function parseAPIConfiguration(
                     });
                 }
             }
-        } else if (isAPIDefinitionListWithNavigation(apiConfiguration)) {
-            apiConfiguration.definitions.forEach((definition) => {
-                if (typeof definition === "string") {
-                    apiDefinitions.push({
-                        path: definition,
-                        overrides: undefined
-                    });
-                } else {
-                    apiDefinitions.push({
-                        path: definition.path,
-                        overrides: definition.overrides
-                    });
-                }
-            });
-            navigation = apiConfiguration.navigation;
         } else {
             apiDefinitions.push({
                 path: apiConfiguration.path,
@@ -133,8 +115,7 @@ async function parseAPIConfiguration(
 
     return {
         type: "singleNamespace",
-        definitions: apiDefinitions,
-        navigation
+        definitions: apiDefinitions
     };
 }
 
