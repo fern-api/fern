@@ -4524,7 +4524,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-api/configuration", "workspace:packages/cli/configuration"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-api/fdr-sdk", "npm:0.60.0-1-g4795d27"],\
+            ["@fern-api/fdr-sdk", "npm:0.62.1"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.486"],\
@@ -4552,7 +4552,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./packages/core/",\
           "packageDependencies": [\
             ["@fern-api/core", "workspace:packages/core"],\
-            ["@fern-api/fdr-sdk", "npm:0.60.0-1-g4795d27"],\
+            ["@fern-api/fdr-sdk", "npm:0.62.1"],\
             ["@fern-api/venus-api-sdk", "npm:0.0.38"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.486"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -4657,7 +4657,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/docs-preview", "workspace:packages/cli/docs-preview"],\
             ["@fern-api/configuration", "workspace:packages/cli/configuration"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-api/fdr-sdk", "npm:0.60.0-1-g4795d27"],\
+            ["@fern-api/fdr-sdk", "npm:0.62.1"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/ir-generator", "workspace:packages/cli/generation/ir-generator"],\
             ["@fern-api/register", "workspace:packages/cli/register"],\
@@ -4735,15 +4735,16 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-api/fdr-sdk", [\
-        ["npm:0.60.0-1-g4795d27", {\
-          "packageLocation": "./.yarn/cache/@fern-api-fdr-sdk-npm-0.60.0-1-g4795d27-2612c5a0b6-d80621f91f.zip/node_modules/@fern-api/fdr-sdk/",\
+        ["npm:0.62.1", {\
+          "packageLocation": "./.yarn/cache/@fern-api-fdr-sdk-npm-0.62.1-14caa34fd6-e35c8b550d.zip/node_modules/@fern-api/fdr-sdk/",\
           "packageDependencies": [\
-            ["@fern-api/fdr-sdk", "npm:0.60.0-1-g4795d27"],\
-            ["@ungap/url-search-params", "npm:0.2.2"],\
-            ["axios", "npm:0.27.2"],\
-            ["js-base64", "npm:3.7.2"],\
+            ["@fern-api/fdr-sdk", "npm:0.62.1"],\
+            ["form-data", "npm:4.0.0"],\
+            ["js-base64", "npm:3.7.7"],\
             ["lodash", "npm:4.17.21"],\
             ["marked", "npm:5.1.2"],\
+            ["node-fetch", "virtual:e657f79e17f7be411787c1bc05f40f4332f715c3a1325e07b20386fce53bc3433558a6a1b22169757d70ef4efa88471acf338992c86a01132da7d1d58ebd4dd4#npm:2.7.0"],\
+            ["qs", "npm:6.12.0"],\
             ["tinycolor2", "npm:1.6.0"],\
             ["url-join", "npm:4.0.1"]\
           ],\
@@ -5408,7 +5409,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/configuration", "workspace:packages/cli/configuration"],\
             ["@fern-api/core", "workspace:packages/core"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-api/fdr-sdk", "npm:0.60.0-1-g4795d27"],\
+            ["@fern-api/fdr-sdk", "npm:0.62.1"],\
             ["@fern-api/ir-generator", "workspace:packages/cli/generation/ir-generator"],\
             ["@fern-api/ir-sdk", "workspace:packages/ir-sdk"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
@@ -5437,7 +5438,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/core", "workspace:packages/core"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/docs-validator", "workspace:packages/cli/yaml/docs-validator"],\
-            ["@fern-api/fdr-sdk", "npm:0.60.0-1-g4795d27"],\
+            ["@fern-api/fdr-sdk", "npm:0.62.1"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/ir-generator", "workspace:packages/cli/generation/ir-generator"],\
             ["@fern-api/ir-migrations", "workspace:packages/cli/generation/ir-migrations"],\
@@ -9545,15 +9546,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@ungap-structured-clone-npm-1.2.0-648f0b82e0-4f656b7b46.zip/node_modules/@ungap/structured-clone/",\
           "packageDependencies": [\
             ["@ungap/structured-clone", "npm:1.2.0"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@ungap/url-search-params", [\
-        ["npm:0.2.2", {\
-          "packageLocation": "./.yarn/cache/@ungap-url-search-params-npm-0.2.2-038ac53cb9-779506cca3.zip/node_modules/@ungap/url-search-params/",\
-          "packageDependencies": [\
-            ["@ungap/url-search-params", "npm:0.2.2"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -17798,6 +17790,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["js-base64", "npm:3.7.6"]\
           ],\
           "linkType": "HARD"\
+        }],\
+        ["npm:3.7.7", {\
+          "packageLocation": "./.yarn/cache/js-base64-npm-3.7.7-641cff09f0-d1b02971db.zip/node_modules/js-base64/",\
+          "packageDependencies": [\
+            ["js-base64", "npm:3.7.7"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["js-levenshtein", [\
@@ -22391,6 +22390,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["qs", "npm:6.11.2"],\
             ["side-channel", "npm:1.0.4"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:6.12.0", {\
+          "packageLocation": "./.yarn/cache/qs-npm-6.12.0-c6571f061c-ba007fb248.zip/node_modules/qs/",\
+          "packageDependencies": [\
+            ["qs", "npm:6.12.0"],\
+            ["side-channel", "npm:1.0.6"]\
           ],\
           "linkType": "HARD"\
         }],\

@@ -46,6 +46,7 @@ export function convertIrToFdrApi({
         const service = subpackage.service != null ? ir.services[subpackage.service] : undefined;
         fdrApi.subpackages[subpackageId] = {
             subpackageId,
+            displayName: service?.displayName,
             name: service?.displayName ?? subpackage.name.originalName,
             description: subpackage.docs ?? undefined,
             ...convertPackage(subpackage, ir)

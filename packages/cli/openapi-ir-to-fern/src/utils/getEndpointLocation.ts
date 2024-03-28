@@ -10,18 +10,22 @@ export interface EndpointLocation {
 }
 
 export function getEndpointLocation(endpoint: Endpoint): EndpointLocation {
+    const tag = endpoint.tags[0];
     if (endpoint.sdkName != null) {
-        const filename =
+        const filenameWithoutExtension =
             endpoint.sdkName.groupName.length === 0
-                ? "__package__.yml"
-                : `${endpoint.sdkName.groupName.map((part) => camelCase(part)).join("/")}.yml`;
+                ? "__package__"
+                : `${endpoint.sdkName.groupName.map((part) => camelCase(part)).join("/")}`;
+        const filename = `${filenameWithoutExtension}.yml`;
+        // only if the tag lines up with `x-fern-sdk-group-name` do we use it
+        const isTagApplicable = filenameWithoutExtension.toLowerCase() === tag?.toLowerCase().replaceAll(" ", "");
         return {
             file: RelativeFilePath.of(filename),
-            endpointId: endpoint.sdkName.methodName
+            endpointId: endpoint.sdkName.methodName,
+            // only if the tag lines up with `x-fern-sdk-group-name` do we use it
+            tag: isTagApplicable ? tag : undefined
         };
     }
-
-    const tag = endpoint.tags[0];
     const operationId = endpoint.operationId;
 
     if (operationId == null) {

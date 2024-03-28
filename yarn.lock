@@ -2410,7 +2410,7 @@ __metadata:
   resolution: "@fern-api/configuration@workspace:packages/cli/configuration"
   dependencies:
     "@fern-api/core-utils": "workspace:*"
-    "@fern-api/fdr-sdk": 0.60.0-1-g4795d27
+    "@fern-api/fdr-sdk": 0.62.1
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.486
@@ -2454,7 +2454,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/core@workspace:packages/core"
   dependencies:
-    "@fern-api/fdr-sdk": 0.60.0-1-g4795d27
+    "@fern-api/fdr-sdk": 0.62.1
     "@fern-api/venus-api-sdk": 0.0.38
     "@fern-fern/fiddle-sdk": ^0.0.486
     "@types/jest": ^29.0.3
@@ -2531,7 +2531,7 @@ __metadata:
   dependencies:
     "@fern-api/configuration": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
-    "@fern-api/fdr-sdk": 0.60.0-1-g4795d27
+    "@fern-api/fdr-sdk": 0.62.1
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/register": "workspace:*"
@@ -2603,18 +2603,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/fdr-sdk@npm:0.60.0-1-g4795d27":
-  version: 0.60.0-1-g4795d27
-  resolution: "@fern-api/fdr-sdk@npm:0.60.0-1-g4795d27"
+"@fern-api/fdr-sdk@npm:0.62.1":
+  version: 0.62.1
+  resolution: "@fern-api/fdr-sdk@npm:0.62.1"
   dependencies:
-    "@ungap/url-search-params": 0.2.2
-    axios: 0.27.2
-    js-base64: 3.7.2
-    lodash: ^4.17.21
+    form-data: 4.0.0
+    js-base64: 3.7.7
+    lodash: ^4.17.21-es
     marked: ^5.1.0
+    node-fetch: 2.7.0
+    qs: 6.12.0
     tinycolor2: ^1.6.0
     url-join: 4.0.1
-  checksum: d80621f91fe9121a6af05fafd8076b0a8571b354cc8baff6577729d1913c8b0f2c0ece7e6cf6d70fd6ad0bba63068fb4304211903f39fc47da96f43ff3e9b3dd
+  checksum: e35c8b550d5d97c04ef126b08746420b8c0e535b7f245a57142c69e66071f8040db4ae3a59b67ba2d35b35a506e2dc6588ccf087e8cb80956b09056bac0d439f
   languageName: node
   linkType: hard
 
@@ -3239,7 +3240,7 @@ __metadata:
     "@fern-api/configuration": "workspace:*"
     "@fern-api/core": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
-    "@fern-api/fdr-sdk": 0.60.0-1-g4795d27
+    "@fern-api/fdr-sdk": 0.62.1
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/ir-sdk": "workspace:*"
     "@fern-api/task-context": "workspace:*"
@@ -3266,7 +3267,7 @@ __metadata:
     "@fern-api/core": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/docs-validator": "workspace:*"
-    "@fern-api/fdr-sdk": 0.60.0-1-g4795d27
+    "@fern-api/fdr-sdk": 0.62.1
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/ir-migrations": "workspace:*"
@@ -6831,13 +6832,6 @@ __metadata:
   version: 1.2.0
   resolution: "@ungap/structured-clone@npm:1.2.0"
   checksum: 4f656b7b4672f2ce6e272f2427d8b0824ed11546a601d8d5412b9d7704e83db38a8d9f402ecdf2b9063fc164af842ad0ec4a55819f621ed7e7ea4d1efcc74524
-  languageName: node
-  linkType: hard
-
-"@ungap/url-search-params@npm:0.2.2":
-  version: 0.2.2
-  resolution: "@ungap/url-search-params@npm:0.2.2"
-  checksum: 779506cca3d36bc291e4e6eb0484e8bd87186cbe5bb6a6d37f17a866c47069d8a3a20b9331ef0a5c96f26b4db8210cf26c6e5a1f4a6c8be3be13a619e82cb93c
   languageName: node
   linkType: hard
 
@@ -14100,6 +14094,13 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"js-base64@npm:3.7.7":
+  version: 3.7.7
+  resolution: "js-base64@npm:3.7.7"
+  checksum: d1b02971db9dc0fd35baecfaf6ba499731fb44fe3373e7e1d6681fbd3ba665f29e8d9d17910254ef8104e2cb8b44117fe4202d3dc54c7cafe9ba300fe5433358
+  languageName: node
+  linkType: hard
+
 "js-base64@npm:^3.7.6":
   version: 3.7.6
   resolution: "js-base64@npm:3.7.6"
@@ -14948,7 +14949,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.17.20, lodash@npm:^4.17.21":
+"lodash@npm:^4.17.20, lodash@npm:^4.17.21, lodash@npm:^4.17.21-es":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: eb835a2e51d381e561e508ce932ea50a8e5a68f4ebdd771ea240d3048244a8d13658acbd502cd4829768c56f2e16bdd4340b9ea141297d472517b83868e677f7
@@ -18173,6 +18174,15 @@ env-cmd@toddbluhm/env-cmd:
   dependencies:
     side-channel: ^1.0.4
   checksum: e812f3c590b2262548647d62f1637b6989cc56656dc960b893fe2098d96e1bd633f36576f4cd7564dfbff9db42e17775884db96d846bebe4f37420d073ecdc0b
+  languageName: node
+  linkType: hard
+
+"qs@npm:6.12.0":
+  version: 6.12.0
+  resolution: "qs@npm:6.12.0"
+  dependencies:
+    side-channel: ^1.0.6
+  checksum: ba007fb2488880b9c6c3df356fe6888b9c1f4c5127552edac214486cfe83a332de09a5c40d490d79bb27bef977ba1085a8497512ff52eaac72e26564f77ce908
   languageName: node
   linkType: hard
 
