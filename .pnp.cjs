@@ -5694,7 +5694,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["axios", "npm:0.28.0"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
-            ["glob", "npm:8.1.0"],\
+            ["glob", "npm:10.3.10"],\
             ["glob-promise", "virtual:05c9e45862260c886c225652bec99cad7887f66633a7523be0779a61d1b18e00a53a73459a92e616cdddaec4e56c4785468ac2461291fb12a8be2bd2de789022#npm:5.0.1"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["js-yaml", "npm:4.1.0"],\
@@ -5753,7 +5753,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
             ["find-up", "npm:6.3.0"],\
-            ["glob", "npm:8.1.0"],\
+            ["glob", "npm:10.3.10"],\
             ["glob-promise", "virtual:05c9e45862260c886c225652bec99cad7887f66633a7523be0779a61d1b18e00a53a73459a92e616cdddaec4e56c4785468ac2461291fb12a8be2bd2de789022#npm:5.0.1"],\
             ["inquirer", "npm:9.2.11"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
@@ -6349,7 +6349,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
             ["esutils", "npm:2.0.3"],\
-            ["glob", "npm:8.1.0"],\
+            ["glob", "npm:10.3.10"],\
             ["glob-promise", "virtual:05c9e45862260c886c225652bec99cad7887f66633a7523be0779a61d1b18e00a53a73459a92e616cdddaec4e56c4785468ac2461291fb12a8be2bd2de789022#npm:5.0.1"],\
             ["immer", "npm:9.0.15"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
@@ -15391,18 +15391,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["once", "npm:1.4.0"]\
           ],\
           "linkType": "HARD"\
-        }],\
-        ["npm:8.1.0", {\
-          "packageLocation": "./.yarn/cache/glob-npm-8.1.0-65f64af8b1-92fbea3221.zip/node_modules/glob/",\
-          "packageDependencies": [\
-            ["glob", "npm:8.1.0"],\
-            ["fs.realpath", "npm:1.0.0"],\
-            ["inflight", "npm:1.0.6"],\
-            ["inherits", "npm:2.0.4"],\
-            ["minimatch", "npm:5.1.0"],\
-            ["once", "npm:1.4.0"]\
-          ],\
-          "linkType": "HARD"\
         }]\
       ]],\
       ["glob-parent", [\
@@ -15436,7 +15424,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["glob-promise", "virtual:05c9e45862260c886c225652bec99cad7887f66633a7523be0779a61d1b18e00a53a73459a92e616cdddaec4e56c4785468ac2461291fb12a8be2bd2de789022#npm:5.0.1"],\
             ["@types/glob", "npm:8.1.0"],\
-            ["glob", "npm:8.1.0"],\
+            ["glob", "npm:10.3.10"],\
             ["npm-install-peers", "npm:1.2.2"]\
           ],\
           "packagePeers": [\

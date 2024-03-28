@@ -38,7 +38,7 @@
     "@fern-api/yaml-schema": "workspace:*",
     "@fern-fern/fiddle-sdk": "^0.0.486",
     "axios": "^0.28.0",
-    "glob": "^8.0.3",
+    "glob": "^10.3.10",
     "glob-promise": "^5.0.0",
     "js-yaml": "^4.1.0",
     "lodash-es": "^4.17.21",
