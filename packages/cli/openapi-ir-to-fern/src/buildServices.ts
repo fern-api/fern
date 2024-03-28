@@ -26,10 +26,12 @@ export function buildServices(context: OpenApiIrConverterContext): {
             name: endpointId,
             schema: convertedEndpoint.value
         });
-        context.builder.setServiceInfo(file, {
-            displayName: irTag?.id,
-            docs: irTag?.description ?? undefined
-        });
+        if (irTag?.id != null || irTag?.description != null) {
+            context.builder.setServiceInfo(file, {
+                displayName: irTag?.id,
+                docs: irTag?.description ?? undefined
+            });
+        }
     }
     return { schemaIdsToExclude, sdkGroups };
 }
