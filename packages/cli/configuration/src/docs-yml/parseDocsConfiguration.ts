@@ -9,6 +9,7 @@ import { convertColorsConfiguration } from "./convertColorsConfiguration";
 import { getAllPages } from "./getAllPages";
 import {
     AbsoluteJsFileConfig,
+    APINavigationSchema,
     DocsNavigationConfiguration,
     DocsNavigationItem,
     FontConfig,
@@ -538,6 +539,15 @@ async function convertNavigationItem({
         };
     }
     if (isRawApiSectionConfig(rawConfig)) {
+        let navigation: APINavigationSchema | undefined = undefined;
+        if (rawConfig.layout != null) {
+            const parseResponse = APINavigationSchema.safeParse(rawConfig.layout);
+            if (parseResponse.success) {
+                navigation = parseResponse.data;
+            } else {
+                context.logger.error(`Failed to parse API layout configuration: ${parseResponse.error.message}`);
+            }
+        }
         return {
             type: "apiSection",
             title: rawConfig.api,
@@ -546,7 +556,10 @@ async function convertNavigationItem({
                 rawConfig.audiences != null ? { type: "select", audiences: rawConfig.audiences } : { type: "all" },
             showErrors: rawConfig.displayErrors ?? false,
             snippetsConfiguration:
-                rawConfig.snippets != null ? convertSnippetsConfiguration({ rawConfig: rawConfig.snippets }) : undefined
+                rawConfig.snippets != null
+                    ? convertSnippetsConfiguration({ rawConfig: rawConfig.snippets })
+                    : undefined,
+            navigation
         };
     }
     if (isRawLinkConfig(rawConfig)) {

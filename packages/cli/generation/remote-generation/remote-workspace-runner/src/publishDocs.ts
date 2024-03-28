@@ -899,6 +899,7 @@ async function convertNavigationItem({
                 context,
                 token,
                 audiences: item.audiences,
+                navigation: item.navigation,
                 snippetsConfig: convertDocsSnippetsConfigurationToFdr({
                     snippetsConfiguration: item.snippetsConfiguration ?? {
                         python: undefined,

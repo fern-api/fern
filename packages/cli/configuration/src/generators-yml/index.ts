@@ -12,6 +12,7 @@ export {
     loadGeneratorsConfiguration,
     loadRawGeneratorsConfiguration
 } from "./loadGeneratorsConfiguration";
+export { type APIConfigurationSchema } from "./schemas/APIConfigurationSchema";
 export { type GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
 export { type GeneratorPublishMetadataSchema } from "./schemas/GeneratorPublishMetadataSchema";
 export {

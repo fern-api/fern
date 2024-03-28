@@ -24,11 +24,12 @@
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
-    "depcheck": "depcheck"
+    "depcheck": "depcheck",
+    "generate": "fern generate --local"
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/fdr-sdk": "0.57.0-1-ge86efe6",
+    "@fern-api/fdr-sdk": "0.60.0-1-g4795d27",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-fern/fiddle-sdk": "^0.0.486",
