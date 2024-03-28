@@ -118,6 +118,8 @@ class HttpX:
             if is_async:
                 writer.write("async ")
             writer.write("with ")
+            if is_async:
+                writer.write("await ")
             writer.write_node(reference_to_client)
             writer.write(f'.stream("{method}", ')
             writer.write_node(url)

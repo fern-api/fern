@@ -7,8 +7,6 @@ from .utilities import validate_response
 
 
 async def test_get(client: SeedUnions, async_client: AsyncSeedUnions) -> None:
-    circle = Shape_Circle(id="string", radius=1.1)
-    print(circle.dict(by_alias=True))
     expected_response = {"type": "circle", "id": "string", "radius": 1.1}
     expected_types = "no_validate"
     response = client.union.get(id="string")

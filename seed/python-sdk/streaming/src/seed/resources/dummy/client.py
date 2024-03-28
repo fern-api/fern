@@ -105,7 +105,7 @@ class AsyncDummyClient:
             num_events=1,
         )
         """
-        async with self._client_wrapper.httpx_client.stream(
+        async with await self._client_wrapper.httpx_client.stream(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "generate-stream"),
             params=jsonable_encoder(

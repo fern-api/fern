@@ -79,7 +79,7 @@ class AsyncServiceClient:
         )
         await client.service.download_file()
         """
-        async with self._client_wrapper.httpx_client.stream(
+        async with await self._client_wrapper.httpx_client.stream(
             "POST",
             self._client_wrapper.get_base_url(),
             params=jsonable_encoder(
