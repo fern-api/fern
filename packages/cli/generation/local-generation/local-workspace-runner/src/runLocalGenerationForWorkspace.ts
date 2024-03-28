@@ -236,6 +236,7 @@ async function writeFilesToDiskAndRunGenerator({
         absolutePathToTmpOutputDirectory,
         absolutePathToTmpSnippetJSON,
         absolutePathToDotMockDirectory,
+        absolutePathToConfigJson: absolutePathToWriteConfigJson,
         absolutePathToIr
     });
     await taskHandler.copyGeneratedFiles();

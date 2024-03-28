@@ -14,6 +14,7 @@ export declare namespace LocalTaskHandler {
         absolutePathToLocalOutput: AbsoluteFilePath;
         absolutePathToDotMockDirectory: AbsoluteFilePath;
         absolutePathToIr: AbsoluteFilePath | undefined;
+        absolutePathToConfigJson: AbsoluteFilePath;
     }
 }
 
@@ -24,6 +25,7 @@ export class LocalTaskHandler {
     private absolutePathToLocalOutput: AbsoluteFilePath;
     private absolutePathToDotMockDirectory: AbsoluteFilePath;
     private absolutePathToIr: AbsoluteFilePath | undefined;
+    private absolutePathToConfigJson: AbsoluteFilePath;
 
     constructor({
         context,
@@ -31,7 +33,8 @@ export class LocalTaskHandler {
         absolutePathToTmpSnippetJSON,
         absolutePathToLocalOutput,
         absolutePathToDotMockDirectory,
-        absolutePathToIr
+        absolutePathToIr,
+        absolutePathToConfigJson
     }: LocalTaskHandler.Init) {
         this.context = context;
         this.absolutePathToLocalOutput = absolutePathToLocalOutput;
@@ -39,6 +42,7 @@ export class LocalTaskHandler {
         this.absolutePathToTmpOutputDirectory = absolutePathToTmpOutputDirectory;
         this.absolutePathToTmpSnippetJSON = absolutePathToTmpSnippetJSON;
         this.absolutePathToIr = absolutePathToIr;
+        this.absolutePathToConfigJson = absolutePathToConfigJson;
     }
 
     public async copyGeneratedFiles(): Promise<void> {
@@ -50,7 +54,7 @@ export class LocalTaskHandler {
         if (this.absolutePathToTmpSnippetJSON !== undefined) {
             await this.copySnippetJSON(this.absolutePathToTmpSnippetJSON);
         }
-        await this.copyIr();
+        await this.copyInputs();
         await this.copyDotMockDirectory();
     }
 
@@ -61,13 +65,17 @@ export class LocalTaskHandler {
         return await doesPathExist(absolutePathToFernignore);
     }
 
-    private async copyIr(): Promise<void> {
+    private async copyInputs(): Promise<void> {
         if (this.absolutePathToIr === undefined) {
             return;
         }
         await cp(
             this.absolutePathToIr,
-            AbsoluteFilePath.of(join(this.absolutePathToLocalOutput, RelativeFilePath.of(".config/ir.json")))
+            AbsoluteFilePath.of(join(this.absolutePathToLocalOutput, RelativeFilePath.of(".inputs/ir.json")))
+        );
+        await cp(
+            this.absolutePathToConfigJson,
+            AbsoluteFilePath.of(join(this.absolutePathToLocalOutput, RelativeFilePath.of(".inputs/config.json")))
         );
     }
 

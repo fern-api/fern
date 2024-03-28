@@ -7,6 +7,8 @@ import { init } from "../init/init";
 const FERNIGNORE_FILECONTENTS = `
 fern.js
 **/*.txt
+.mock
+.inputs
 `;
 
 const FERN_JS_FILENAME = "fern.js";

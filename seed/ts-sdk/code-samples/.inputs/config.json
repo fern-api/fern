@@ -1,0 +1,28 @@
+{
+    "irFilepath": "/fern/ir.json",
+    "output": {
+        "mode": {
+            "type": "github",
+            "repoUrl": "https://github.com/code-samples/fern",
+            "version": "0.0.1",
+            "publishInfo": {
+                "type": "npm",
+                "registryUrl": "",
+                "packageName": "@fern/code-samples",
+                "tokenEnvironmentVariable": ""
+            }
+        },
+        "path": "/fern/output",
+        "publishingMetadata": null,
+        "snippetFilepath": "/fern/snippet.json"
+    },
+    "publish": null,
+    "workspaceName": "code-samples",
+    "organization": "seed",
+    "environment": {
+        "_type": "local"
+    },
+    "dryRun": false,
+    "whitelabel": false,
+    "writeUnitTests": true
+}

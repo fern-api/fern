@@ -10,8 +10,8 @@ const ROOT_DIR = path.resolve(__dirname, "..", "..", "..", "..", "..", "..", "..
 // Note: There is currently a bit of an undeclared dependency in that the IRs need to be generated
 // before these tests can be fully up-to-date.
 export const IrPaths = {
-    MULTI_URL_ENVIRONMENT: path.join(ROOT_DIR, "seed", "ts-sdk", "multi-url-environment", ".config", "ir.json"),
-    EXAMPLES: path.join(ROOT_DIR, "seed", "ts-sdk", "examples", "examples-with-api-reference", ".config", "ir.json")
+    MULTI_URL_ENVIRONMENT: path.join(ROOT_DIR, "seed", "ts-sdk", "multi-url-environment", ".inputs", "ir.json"),
+    EXAMPLES: path.join(ROOT_DIR, "seed", "ts-sdk", "examples", "examples-with-api-reference", ".inputs", "ir.json")
 };
 
 export const IrLoader = {
