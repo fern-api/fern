@@ -22,10 +22,10 @@ export abstract class TypescriptProject {
     protected static DIST_DIRECTORY = "dist" as const;
 
     protected volume = new Volume();
-    protected tsMorphProject: Project;
+    public tsMorphProject: Project;
     protected extraDependencies: Record<string, string>;
     protected extraDevDependencies: Record<string, string>;
-    protected extraFiles: Record<string, string>;
+    public extraFiles: Record<string, string>;
     protected extraScripts: Record<string, string>;
 
     constructor({
