@@ -234,9 +234,9 @@ navigation:
             path: ./docs/pages/fern-docs/content/front-matter.mdx
           - page: Code snippets
             path: ./docs/pages/fern-docs/content/code-snippets.mdx
-      
+
       - section: API references
-        contents: 
+        contents:
           - page: Generate API reference
             path: ./docs/pages/fern-docs/content/generate-api-ref.mdx
             slug: generate-api-ref
@@ -250,25 +250,25 @@ navigation:
       - section: Components
         slug: components
         contents:
-          - page: Cards
-            path: ./docs/pages/fern-docs/components/card.mdx
-          - page: CodeBlocks
-            path: ./docs/pages/fern-docs/components/codeblocks.mdx
-            slug: codeblocks
-          - page: Callout
-            path: ./docs/pages/fern-docs/components/callout.mdx
-          - page: Icons
-            path: ./docs/pages/fern-docs/components/icons.mdx
-          - page: Availability
-            path: ./docs/pages/fern-docs/components/availability.mdx
-          - page: Tabs
-            path: ./docs/pages/fern-docs/components/tabs.mdx
           - page: Accordion
             path: ./docs/pages/fern-docs/components/accordion.mdx
+          - page: Availability
+            path: ./docs/pages/fern-docs/components/availability.mdx
+          - page: Callout
+            path: ./docs/pages/fern-docs/components/callout.mdx
+          - page: Cards
+            path: ./docs/pages/fern-docs/components/card.mdx
+          - page: Code Blocks
+            path: ./docs/pages/fern-docs/components/codeblocks.mdx
+            slug: codeblocks
+          - page: Endpoint Snippets
+            path: ./docs/pages/fern-docs/components/endpoint-snippets.mdx
+          - page: Icon
+            path: ./docs/pages/fern-docs/components/icon.mdx
           - page: Steps
             path: ./docs/pages/fern-docs/components/steps.mdx
-          - page: Endpoint snippets
-            path: ./docs/pages/fern-docs/components/endpoint-snippets.mdx
+          - page: Tabs
+            path: ./docs/pages/fern-docs/components/tabs.mdx
 
 navbar-links:
   - type: minimal
