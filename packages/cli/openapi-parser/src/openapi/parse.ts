@@ -52,7 +52,8 @@ export async function parse({
         variables: {},
         nonRequestReferencedSchemas: new Set(),
         securitySchemes: {},
-        globalHeaders: []
+        globalHeaders: [],
+        groups: {}
     };
 
     for (const spec of workspace.specs) {
@@ -142,7 +143,11 @@ function merge(
             ...ir1.securitySchemes,
             ...ir2.securitySchemes
         },
-        globalHeaders: ir1.globalHeaders != null ? [...ir1.globalHeaders, ...(ir2.globalHeaders ?? [])] : undefined
+        globalHeaders: ir1.globalHeaders != null ? [...ir1.globalHeaders, ...(ir2.globalHeaders ?? [])] : undefined,
+        groups: {
+            ...ir1.groups,
+            ...ir2.groups
+        }
     };
 }
 
