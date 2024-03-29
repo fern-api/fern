@@ -14,7 +14,10 @@ export const GeneratorInvocationSchema = z.strictObject({
     "smart-casing": z.optional(z.boolean()),
     // Temporary way to unblock example serialization
     "disable-examples": z.optional(z.boolean()),
-    "publish-metadata": z.optional(GeneratorPublishMetadataSchema)
+    
+    // Use `metadata` instead of `publish-metadata`
+    "publish-metadata": z.optional(GeneratorPublishMetadataSchema),
+    metadata: z.optional(GeneratorPublishMetadataSchema)
 });
 
 export type GeneratorInvocationSchema = z.infer<typeof GeneratorInvocationSchema>;

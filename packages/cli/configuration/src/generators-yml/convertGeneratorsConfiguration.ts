@@ -193,7 +193,7 @@ async function convertOutputMode({
             generator.github.license != null
                 ? await getGithubLicense({
                       absolutePathToGeneratorsConfiguration,
-                      githubLicense: generator.github.license
+                      githubLicense: generator["publish-metadata"]?.license ?? generator.github.license
                   })
                 : undefined;
         const mode = generator.github.mode ?? "release";
