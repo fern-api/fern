@@ -14,8 +14,6 @@ export function parseInlineType({ type, file }: parseInlineType.Args): TypeRefer
     return recursivelyVisitRawTypeReference<TypeReference>(type, {
         primitive: TypeReference.primitive,
         unknown: TypeReference.unknown,
-        file: TypeReference.unknown, // TODO: Implement file type
-        bytes: TypeReference.unknown, // TODO: Implement bytes type
         map: ({ keyType, valueType }) => TypeReference.container(ContainerType.map({ keyType, valueType })),
         list: (valueType) => TypeReference.container(ContainerType.list(valueType)),
         set: (valueType) => TypeReference.container(ContainerType.set(valueType)),

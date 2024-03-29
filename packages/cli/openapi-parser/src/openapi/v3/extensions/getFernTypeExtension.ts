@@ -197,8 +197,6 @@ export function getSchemaFromFernType({
                 description,
                 groupName
             }),
-        file: () => undefined,
-        bytes: () => undefined,
         named: () => {
             return undefined;
         }

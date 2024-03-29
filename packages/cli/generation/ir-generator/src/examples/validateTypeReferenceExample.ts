@@ -175,12 +175,6 @@ export function validateTypeReferenceExample({
         unknown: () => {
             return [];
         },
-        file: () => {
-            return [];
-        },
-        bytes: () => {
-            return [];
-        },
         literal: (expectedLiteral) => {
             switch (expectedLiteral.type) {
                 case "boolean":

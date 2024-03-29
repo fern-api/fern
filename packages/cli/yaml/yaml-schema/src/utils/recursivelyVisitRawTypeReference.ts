@@ -9,8 +9,6 @@ export interface RecursiveRawTypeReferenceVisitor<R> {
     optional: (valueType: R) => R;
     literal: (literal: Literal) => R;
     named: (named: string) => R;
-    file: (file: string) => R;
-    bytes: () => R;
     unknown: () => R;
 }
 
@@ -27,8 +25,6 @@ export function recursivelyVisitRawTypeReference<R>(type: string, visitor: Recur
         optional: (valueType) => visitor.optional(recursivelyVisitRawTypeReference(valueType, visitor)),
         literal: visitor.literal,
         named: visitor.named,
-        file: visitor.file,
-        bytes: visitor.bytes,
         unknown: visitor.unknown
     });
 }
