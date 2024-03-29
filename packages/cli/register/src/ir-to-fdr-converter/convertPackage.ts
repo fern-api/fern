@@ -554,10 +554,15 @@ function convertHttpEndpointExample(
                         property._visit({
                             file: (file) => {
                                 // TODO: support provided file examples, file arrays
-                                if (!file.isOptional) {
+                                if (file.type === "file") {
                                     value[file.key.wireValue] = {
                                         type: "filename",
-                                        value: "filename.xyz"
+                                        value: "<file1>"
+                                    };
+                                } else if (file.type === "fileArray") {
+                                    value[file.key.wireValue] = {
+                                        type: "filename",
+                                        value: "<file1>"
                                     };
                                 }
                             },
