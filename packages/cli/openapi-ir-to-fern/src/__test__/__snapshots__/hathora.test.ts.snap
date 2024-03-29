@@ -528,6 +528,17 @@ exports[`open api parser hathora simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                  "buildId": 1.1,
+                },
+                "request": {
+                  "file": "file",
+                },
+              },
+            ],
             "method": "POST",
             "path": "/builds/v1/{appId}/run/{buildId}",
             "path-parameters": {
@@ -540,6 +551,7 @@ exports[`open api parser hathora simple 1`] = `
                   "file": "file",
                 },
               },
+              "content-type": "multipart/form-data",
               "headers": undefined,
               "name": "RunBuildRequest",
               "query-parameters": undefined,
@@ -1427,6 +1439,14 @@ exports[`open api parser hathora simple 1`] = `
           "GetLogsForDeployment": {
             "auth": true,
             "docs": undefined,
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                  "deploymentId": 1.1,
+                },
+              },
+            ],
             "method": "GET",
             "path": "/logs/v1/{appId}/deployment/{deploymentId}",
             "path-parameters": {

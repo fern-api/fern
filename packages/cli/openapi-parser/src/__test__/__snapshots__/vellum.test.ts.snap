@@ -742,7 +742,26 @@ Used to list documents. Optionally filter on supported fields.
 
 Executes a deployed Workflow and streams back its results.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "inputs": {
+                "type": "array",
+                "value": [],
+              },
+            },
+            "type": "object",
+          },
+          "response": null,
+        },
+      ],
       "generatedRequestName": "ExecuteWorkflowStreamRequest",
       "headers": [],
       "internal": null,
@@ -961,7 +980,36 @@ Generate a stream of completions using a previously defined deployment.
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "requests": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "input_values": {
+                        "type": "map",
+                        "value": [],
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+            },
+            "type": "object",
+          },
+          "response": null,
+        },
+      ],
       "generatedRequestName": "GenerateStreamRequest",
       "headers": [],
       "internal": null,
@@ -2560,7 +2608,47 @@ Upload a document to be indexed and used for search.
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "contents": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "contents",
+                },
+              },
+              "label": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "label",
+                },
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "document_id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "document_id",
+                },
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "DocumentsUploadRequest",
       "headers": [],
       "internal": null,

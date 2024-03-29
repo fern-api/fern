@@ -11,7 +11,41 @@ exports[`file-upload file-upload parse open api 1`] = `
       "availability": null,
       "description": null,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "file": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "file",
+                },
+              },
+              "file_list": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "file_list",
+                    },
+                  },
+                ],
+              },
+            },
+            "type": "object",
+          },
+          "response": null,
+        },
+      ],
       "generatedRequestName": "UploadFileRequest",
       "headers": [],
       "internal": null,

@@ -1663,7 +1663,29 @@ exports[`open api parser squidex parse open api 1`] = `
       "availability": null,
       "description": null,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+        },
+      ],
       "generatedRequestName": "UsersGetUserPictureRequest",
       "headers": [],
       "internal": null,
@@ -25626,7 +25648,59 @@ You will be assigned as owner of the new team automatically.",
       "availability": "Deprecated",
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+            {
+              "name": "schema",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "schema",
+                },
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+            {
+              "name": "version",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1,
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+        },
+      ],
       "generatedRequestName": "ContentsGetContentVersionRequest",
       "headers": [],
       "internal": null,
@@ -29088,7 +29162,39 @@ You will be assigned as owner of the new team automatically.",
       "availability": null,
       "description": null,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+        },
+      ],
       "generatedRequestName": "BackupsGetBackupContentRequest",
       "headers": [],
       "internal": null,
@@ -29257,7 +29363,29 @@ You will be assigned as owner of the new team automatically.",
       "availability": null,
       "description": null,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+        },
+      ],
       "generatedRequestName": "BackupsGetBackupContentV2Request",
       "headers": [],
       "internal": null,
@@ -29799,7 +29927,39 @@ You will be assigned as owner of the new team automatically.",
       "availability": null,
       "description": null,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+            {
+              "name": "idOrSlug",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "idOrSlug",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+        },
+      ],
       "generatedRequestName": "AssetsGetAssetContentBySlugRequest",
       "headers": [],
       "internal": null,
@@ -30198,7 +30358,29 @@ You will be assigned as owner of the new team automatically.",
       "availability": "Deprecated",
       "description": null,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+        },
+      ],
       "generatedRequestName": "AssetsGetAssetContentRequest",
       "headers": [],
       "internal": null,
@@ -32361,7 +32543,270 @@ You will be assigned as owner of the new team automatically.",
         413,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "_links": {
+                "type": "map",
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "_links",
+                    },
+                    "value": {
+                      "properties": {
+                        "href": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "href",
+                          },
+                        },
+                        "metadata": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "metadata",
+                          },
+                        },
+                        "method": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "method",
+                          },
+                        },
+                      },
+                      "type": "object",
+                    },
+                  },
+                ],
+              },
+              "_meta": {
+                "properties": {
+                  "isDuplicate": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "isDuplicate",
+                    },
+                  },
+                },
+                "type": "object",
+              },
+              "created": {
+                "type": "primitive",
+                "value": {
+                  "type": "datetime",
+                  "value": "2024-01-15T09:30:00Z",
+                },
+              },
+              "createdBy": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "createdBy",
+                },
+              },
+              "editToken": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "editToken",
+                },
+              },
+              "fileHash": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "fileHash",
+                },
+              },
+              "fileName": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "fileName",
+                },
+              },
+              "fileSize": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1,
+                },
+              },
+              "fileType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "fileType",
+                },
+              },
+              "fileVersion": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1,
+                },
+              },
+              "id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+              "isImage": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "isProtected": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "lastModified": {
+                "type": "primitive",
+                "value": {
+                  "type": "datetime",
+                  "value": "2024-01-15T09:30:00Z",
+                },
+              },
+              "lastModifiedBy": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "lastModifiedBy",
+                },
+              },
+              "metadata": {
+                "type": "map",
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "metadata",
+                    },
+                    "value": {
+                      "type": "map",
+                      "value": [
+                        {
+                          "key": {
+                            "type": "string",
+                            "value": "key",
+                          },
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "value",
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+              "metadataText": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "metadataText",
+                },
+              },
+              "mimeType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "mimeType",
+                },
+              },
+              "parentId": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "parentId",
+                },
+              },
+              "pixelHeight": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1,
+                },
+              },
+              "pixelWidth": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1,
+                },
+              },
+              "slug": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "slug",
+                },
+              },
+              "tags": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "tags",
+                    },
+                  },
+                ],
+              },
+              "type": {
+                "type": "enum",
+                "value": "Unknown",
+              },
+              "version": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1,
+                },
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AssetsPostAssetRequest",
       "headers": [],
       "internal": null,
@@ -33223,7 +33668,280 @@ You will be assigned as owner of the new team automatically.",
         413,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "_links": {
+                "type": "map",
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "_links",
+                    },
+                    "value": {
+                      "properties": {
+                        "href": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "href",
+                          },
+                        },
+                        "metadata": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "metadata",
+                          },
+                        },
+                        "method": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "method",
+                          },
+                        },
+                      },
+                      "type": "object",
+                    },
+                  },
+                ],
+              },
+              "_meta": {
+                "properties": {
+                  "isDuplicate": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "isDuplicate",
+                    },
+                  },
+                },
+                "type": "object",
+              },
+              "created": {
+                "type": "primitive",
+                "value": {
+                  "type": "datetime",
+                  "value": "2024-01-15T09:30:00Z",
+                },
+              },
+              "createdBy": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "createdBy",
+                },
+              },
+              "editToken": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "editToken",
+                },
+              },
+              "fileHash": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "fileHash",
+                },
+              },
+              "fileName": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "fileName",
+                },
+              },
+              "fileSize": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1,
+                },
+              },
+              "fileType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "fileType",
+                },
+              },
+              "fileVersion": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1,
+                },
+              },
+              "id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+              "isImage": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "isProtected": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "lastModified": {
+                "type": "primitive",
+                "value": {
+                  "type": "datetime",
+                  "value": "2024-01-15T09:30:00Z",
+                },
+              },
+              "lastModifiedBy": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "lastModifiedBy",
+                },
+              },
+              "metadata": {
+                "type": "map",
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "metadata",
+                    },
+                    "value": {
+                      "type": "map",
+                      "value": [
+                        {
+                          "key": {
+                            "type": "string",
+                            "value": "key",
+                          },
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "value",
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+              "metadataText": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "metadataText",
+                },
+              },
+              "mimeType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "mimeType",
+                },
+              },
+              "parentId": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "parentId",
+                },
+              },
+              "pixelHeight": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1,
+                },
+              },
+              "pixelWidth": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1,
+                },
+              },
+              "slug": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "slug",
+                },
+              },
+              "tags": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "tags",
+                    },
+                  },
+                ],
+              },
+              "type": {
+                "type": "enum",
+                "value": "Unknown",
+              },
+              "version": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1,
+                },
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AssetsPostUpsertAssetRequest",
       "headers": [],
       "internal": null,
@@ -34069,7 +34787,280 @@ You will be assigned as owner of the new team automatically.",
         413,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "_links": {
+                "type": "map",
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "_links",
+                    },
+                    "value": {
+                      "properties": {
+                        "href": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "href",
+                          },
+                        },
+                        "metadata": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "metadata",
+                          },
+                        },
+                        "method": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "method",
+                          },
+                        },
+                      },
+                      "type": "object",
+                    },
+                  },
+                ],
+              },
+              "_meta": {
+                "properties": {
+                  "isDuplicate": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "isDuplicate",
+                    },
+                  },
+                },
+                "type": "object",
+              },
+              "created": {
+                "type": "primitive",
+                "value": {
+                  "type": "datetime",
+                  "value": "2024-01-15T09:30:00Z",
+                },
+              },
+              "createdBy": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "createdBy",
+                },
+              },
+              "editToken": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "editToken",
+                },
+              },
+              "fileHash": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "fileHash",
+                },
+              },
+              "fileName": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "fileName",
+                },
+              },
+              "fileSize": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1,
+                },
+              },
+              "fileType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "fileType",
+                },
+              },
+              "fileVersion": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1,
+                },
+              },
+              "id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+              "isImage": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "isProtected": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "lastModified": {
+                "type": "primitive",
+                "value": {
+                  "type": "datetime",
+                  "value": "2024-01-15T09:30:00Z",
+                },
+              },
+              "lastModifiedBy": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "lastModifiedBy",
+                },
+              },
+              "metadata": {
+                "type": "map",
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "metadata",
+                    },
+                    "value": {
+                      "type": "map",
+                      "value": [
+                        {
+                          "key": {
+                            "type": "string",
+                            "value": "key",
+                          },
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "value",
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+              "metadataText": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "metadataText",
+                },
+              },
+              "mimeType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "mimeType",
+                },
+              },
+              "parentId": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "parentId",
+                },
+              },
+              "pixelHeight": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1,
+                },
+              },
+              "pixelWidth": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1,
+                },
+              },
+              "slug": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "slug",
+                },
+              },
+              "tags": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "tags",
+                    },
+                  },
+                ],
+              },
+              "type": {
+                "type": "enum",
+                "value": "Unknown",
+              },
+              "version": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1,
+                },
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AssetsPutAssetContentRequest",
       "headers": [],
       "internal": null,
@@ -36768,7 +37759,29 @@ The client secret is auto generated on the server and returned. The client does 
       "availability": null,
       "description": null,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+        },
+      ],
       "generatedRequestName": "AppsGetImageRequest",
       "headers": [],
       "internal": null,
@@ -36823,7 +37836,191 @@ The client secret is auto generated on the server and returned. The client does 
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "_links": {
+                "type": "map",
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "_links",
+                    },
+                    "value": {
+                      "properties": {
+                        "href": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "href",
+                          },
+                        },
+                        "metadata": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "metadata",
+                          },
+                        },
+                        "method": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "method",
+                          },
+                        },
+                      },
+                      "type": "object",
+                    },
+                  },
+                ],
+              },
+              "canAccessApi": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "canAccessContent": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "created": {
+                "type": "primitive",
+                "value": {
+                  "type": "datetime",
+                  "value": "2024-01-15T09:30:00Z",
+                },
+              },
+              "description": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "description",
+                },
+              },
+              "id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+              "label": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "label",
+                },
+              },
+              "lastModified": {
+                "type": "primitive",
+                "value": {
+                  "type": "datetime",
+                  "value": "2024-01-15T09:30:00Z",
+                },
+              },
+              "name": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "name",
+                },
+              },
+              "permissions": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "permissions",
+                    },
+                  },
+                ],
+              },
+              "roleName": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "roleName",
+                },
+              },
+              "roleProperties": {
+                "type": "map",
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "roleProperties",
+                    },
+                    "value": {
+                      "type": "map",
+                      "value": [
+                        {
+                          "key": {
+                            "type": "string",
+                            "value": "key",
+                          },
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "value",
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+              "teamId": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "teamId",
+                },
+              },
+              "version": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1,
+                },
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "AppsUploadImageRequest",
       "headers": [],
       "internal": null,

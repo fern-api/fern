@@ -249,6 +249,19 @@ Upload a document to be indexed and used for search.
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "contents": "contents",
+                  "label": "label",
+                },
+                "response": {
+                  "body": {
+                    "document_id": "document_id",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/v1/upload-document",
             "request": {
@@ -273,6 +286,7 @@ Upload a document to be indexed and used for search.
                   },
                 },
               },
+              "content-type": "multipart/form-data",
               "headers": undefined,
               "name": "UploadDocumentBodyRequest",
               "query-parameters": undefined,
@@ -834,6 +848,13 @@ or overwritten with default values.",
           "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Executes a deployed Workflow and streams back its results.",
+          "examples": [
+            {
+              "request": {
+                "inputs": [],
+              },
+            },
+          ],
           "method": "POST",
           "path": "/v1/execute-workflow-stream",
           "request": {
@@ -957,6 +978,17 @@ Generate a stream of completions using a previously defined deployment.
             "ForbiddenError",
             "NotFoundError",
             "InternalServerError",
+          ],
+          "examples": [
+            {
+              "request": {
+                "requests": [
+                  {
+                    "input_values": {},
+                  },
+                ],
+              },
+            },
           ],
           "method": "POST",
           "path": "/v1/generate-stream",

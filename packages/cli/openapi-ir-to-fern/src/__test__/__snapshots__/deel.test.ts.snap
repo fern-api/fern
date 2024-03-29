@@ -1695,6 +1695,22 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "contract_id": "contract_id",
+                },
+                "request": {},
+                "response": {
+                  "body": {
+                    "data": {
+                      "filename": "filename",
+                      "key": "key",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/contracts/{contract_id}/documents",
             "path-parameters": {
@@ -1709,6 +1725,7 @@ exports[`open api parser deel simple 1`] = `
                   "file": "optional<file>",
                 },
               },
+              "content-type": "multipart/form-data",
               "headers": undefined,
               "name": "AddContractDocumentRequest",
               "query-parameters": undefined,
@@ -1899,6 +1916,22 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "contract_id": "contract_id",
+                },
+                "request": {},
+                "response": {
+                  "body": {
+                    "data": {
+                      "filename": "filename",
+                      "key": "key",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "PUT",
             "path": "/contracts/{contract_id}/documents",
             "path-parameters": {
@@ -1913,6 +1946,7 @@ exports[`open api parser deel simple 1`] = `
                   "file": "optional<file>",
                 },
               },
+              "content-type": "multipart/form-data",
               "headers": undefined,
               "name": "EditContractDocumentRequest",
               "query-parameters": undefined,
