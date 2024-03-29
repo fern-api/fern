@@ -1,21 +1,22 @@
 ---
 title: Use Card to display content in a box
-description: The Card component displays content in a box, with an optional title, icon, href (link), and content. Create a grid of boxes using the Cards component. 
+description: The Card component displays content in a box, with an optional title, icon, href (link), and content. Create a grid of boxes using the CardGroup component.
 ---
 
 Use the `Card` component to display content in a rectangular box.
 
 ## Props
 
-| prop          | type    | description                   | default  |
-|---------------|---------|-------------------------------|----------|
-| *title*       | string  | Displayed title for the card  | none     |
-| *icon*        | string  | Font Awesome icon             | none     |
-| *href*        | string  | A link to another page        | none     |
+| prop    | type   | description                  | default |
+| ------- | ------ | ---------------------------- | ------- |
+| _title_ | string | Displayed title for the card | none    |
+| _icon_  | string | Font Awesome icon            | none    |
+| _href_  | string | A link to another page       | none    |
 
 All props are optional.
 
 ### The `icon` prop
+
 The usage for the `icon` prop for this component is identical to the `icon` prop for the `Icon` component. See [Icons](/learn/docs/components/icons#set-icon-and-style) for more information about setting this prop.
 
 ## Usage
@@ -24,94 +25,60 @@ The usage for the `icon` prop for this component is identical to the `icon` prop
 
 For a `Card` that does not contain content, use a single self-closing `<Card />` tag, as shown below:
 
-<CodeBlock title='Single card without content'>
+<CodeGroup title="Single card without content">
+
 ```mdx
-<Card 
-  title='Python'
-  icon='brands python'
-  href='https://github.com/fern-api/fern/tree/main/generators/python'
-/>
+<Card title="Python" icon="brands python" href="https://github.com/fern-api/fern/tree/main/generators/python" />
 ```
-</CodeBlock>
+
+</CodeGroup>
 
 This renders as:
 
-<Card
-  title='Python'
-  icon='brands python'
-  href='https://github.com/fern-api/fern/tree/main/generators/python'
-/>
+<Card title="Python" icon="brands python" href="https://github.com/fern-api/fern/tree/main/generators/python" />
 
-This `Card` shows the `title` and `icon` passed in via props, but otherwise does not contain any content. When clicked, it will open the link provided to its `href` prop. 
+This `Card` shows the `title` and `icon` passed in via props, but otherwise does not contain any content. When clicked, it will open the link provided to its `href` prop.
 
 ### Single `Card` with content
 
 For a `Card` that contains content, use both the opening and closing tags (`<Card>` and `</Card>`) around the content, as shown below:
 
-<CodeBlock title='Single card with content'>
+<CodeGroup title="Single card with content">
+
 ```mdx
-<Card 
-  title='Python'
-  icon='brands python'
-  href='https://github.com/fern-api/fern/tree/main/generators/python'
->
+<Card title="Python" icon="brands python" href="https://github.com/fern-api/fern/tree/main/generators/python">
   View the source code for Fern's Python SDK generator.
 </Card>
 ```
-</CodeBlock>
+
+</CodeGroup>
 
 This renders as:
 
-<Card 
-  title='Python'
-  icon='brands python'
-  href='https://github.com/fern-api/fern/tree/main/generators/python'
->
+<Card title="Python" icon="brands python" href="https://github.com/fern-api/fern/tree/main/generators/python">
   View the source code for Fern's Python SDK generator.
 </Card>
 
-### Multiple `Cards` 
+### Multiple `Card`s in `CardGroup`
 
-Use the `Cards` component to display multiple `Card` components in a grid view. Wrap the `<Card>` and `</Card>` tags around the `Card` components as shown below:
+Use the `CardGroup` component to display multiple `Card` components in a grid view. Wrap the `<Card>` and `</Card>` tags around the `Card` components as shown below:
 
-<CodeBlock title='The Cards component'>
+<CodeGroup title='The CardGroup component'>
+
 ```mdx
-<Cards>
-  <Card
-      title='Python'
-      icon='brands python'
-      href='https://github.com/fern-api/fern/tree/main/generators/python'
-  />
-  <Card
-      title='Java'
-      icon='brands java'
-      href='https://github.com/fern-api/fern/tree/main/generators/java'
-  />
-  <Card
-      title='Go'
-      icon='brands golang'
-      href='https://github.com/fern-api/fern/tree/main/generators/go'
-  />
-</Cards>
+<CardGroup>
+  <Card title="Python" icon="brands python" href="https://github.com/fern-api/fern/tree/main/generators/python" />
+  <Card title="Java" icon="brands java" href="https://github.com/fern-api/fern/tree/main/generators/java" />
+  <Card title="Go" icon="brands golang" href="https://github.com/fern-api/fern/tree/main/generators/go" />
+</CardGroup>
 ```
-</CodeBlock>
+
+</CodeGroup>
 
 This renders as:
 
-<Cards>
-  <Card
-      title='Python'
-      icon='brands python'
-      href='https://github.com/fern-api/fern/tree/main/generators/python'
-  />
-  <Card
-      title='Java'
-      icon='brands java'
-      href='https://github.com/fern-api/fern/tree/main/generators/java'
-  />
-  <Card
-      title='Go'
-      icon='brands golang'
-      href='https://github.com/fern-api/fern/tree/main/generators/go'
-  />
-</Cards>
+<CardGroup>
+  <Card title="Python" icon="brands python" href="https://github.com/fern-api/fern/tree/main/generators/python" />
+  <Card title="Java" icon="brands java" href="https://github.com/fern-api/fern/tree/main/generators/java" />
+  <Card title="Go" icon="brands golang" href="https://github.com/fern-api/fern/tree/main/generators/go" />
+</CardGroup>
