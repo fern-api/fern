@@ -9,12 +9,14 @@ import {
 } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
+import { getExtension } from "../getExtension";
 import { convertSchema } from "../schema/convertSchemas";
 import { convertUndiscriminatedOneOf } from "../schema/convertUndiscriminatedOneOf";
 import { convertSchemaWithExampleToSchema } from "../schema/utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../schema/utils/isReferenceObject";
 import { AsyncAPIV2ParserContext } from "./AsyncAPIParserContext";
 import { ExampleWebsocketSessionFactory } from "./ExampleWebsocketSessionFactory";
+import { FernAsyncAPIExtension } from "./fernExtensions";
 import { getFernExamples, WebsocketSessionExampleExtension } from "./getFernExamples";
 import { AsyncAPIV2 } from "./v2";
 
@@ -156,7 +158,7 @@ export function parseAsyncAPI({
                 publish: publishSchema != null ? convertSchemaWithExampleToSchema(publishSchema) : publishSchema,
                 subscribe:
                     subscribeSchema != null ? convertSchemaWithExampleToSchema(subscribeSchema) : subscribeSchema,
-                summary: undefined,
+                summary: getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_DISPLAY_NAME),
                 path: channelPath,
                 description: undefined,
                 examples

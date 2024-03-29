@@ -1,3 +1,4 @@
+import { FernOpenapiIr } from "@fern-api/openapi-ir-sdk";
 import { buildEndpoint } from "./buildEndpoint";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { getEndpointLocation } from "./utils/getEndpointLocation";
@@ -15,6 +16,19 @@ export function buildServices(context: OpenApiIrConverterContext): {
         if (sdkGroup != null) {
             sdkGroups.add(sdkGroup);
         }
+        let group = undefined;
+        if (endpoint.sdkName != null) {
+            const groupInfo: Record<string, FernOpenapiIr.SdkGroupInfo> = context.ir.groups;
+            for (const groupName of endpoint.sdkName.groupName) {
+                const value = groupInfo[groupName];
+                if (value == null) {
+                    break;
+                } else if (value.summary != null || value.description != null) {
+                    group = groupInfo[groupName];
+                    break;
+                }
+            }
+        }
         const irTag = tag == null ? undefined : tags.tagsById[tag];
         const convertedEndpoint = buildEndpoint({
             context,
@@ -28,8 +42,8 @@ export function buildServices(context: OpenApiIrConverterContext): {
         });
         if (irTag?.id != null || irTag?.description != null) {
             context.builder.setServiceInfo(file, {
-                displayName: irTag?.id,
-                docs: irTag?.description ?? undefined
+                displayName: group?.summary ?? irTag?.id,
+                docs: group?.description ?? irTag?.description ?? undefined
             });
         }
     }

@@ -2,6 +2,11 @@ import { Values } from "@fern-api/core-utils";
 
 export const FernAsyncAPIExtension = {
     /**
+     * The x-fern-summary allows you to specify a display name for the websocket channel.
+     */
+    FERN_DISPLAY_NAME: "x-fern-display-name",
+
+    /**
      * The x-fern-examples allows you to specify examples for the websocket session.
      *
      * channels:

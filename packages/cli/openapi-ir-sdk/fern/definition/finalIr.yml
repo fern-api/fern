@@ -8,6 +8,10 @@ types:
       title: optional<string>
       description: optional<string>
       servers: list<commons.Server>
+      groups: 
+        docs: |
+          Top level group information populated through `x-fern-groups`. 
+        type: map<string, SdkGroupInfo>
       tags: Tags
       hasEndpointsMarkedInternal: boolean
       endpoints: list<Endpoint>
@@ -21,6 +25,11 @@ types:
         docs: Whether the schema is directly referenced from a response, parameters, or other schemas
       securitySchemes: map<commons.SecuritySchemeId, commons.SecurityScheme>
       globalHeaders: optional<list<GlobalHeader>>
+
+  SdkGroupInfo: 
+    properties: 
+      summary: optional<string>
+      description: optional<string>
 
   GlobalHeader:
     properties:

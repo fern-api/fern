@@ -1,4 +1,5 @@
 export * from "./OpenApiIntermediateRepresentation";
+export * from "./SdkGroupInfo";
 export * from "./GlobalHeader";
 export * from "./Tags";
 export * from "./HttpError";

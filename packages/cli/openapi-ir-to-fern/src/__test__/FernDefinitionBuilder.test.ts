@@ -21,6 +21,7 @@ describe("Fern Definition Builder", () => {
                 nonRequestReferencedSchemas: new Set(),
                 securitySchemes: {},
                 globalHeaders: [],
+                groups: {},
                 channel: []
             },
             true
