@@ -341,9 +341,9 @@ export function buildEnumTypeDeclaration(schema: EnumSchema): ConvertedTypeDecla
     };
     for (const enumValue of enumSchema.enum) {
         const name = typeof enumValue === "string" ? enumValue : enumValue.name ?? enumValue.value;
-        if (!uniqueEnumName.has(name)) {
+        if (!uniqueEnumName.has(name.toLowerCase())) {
             uniqueEnumSchema.enum.push(enumValue);
-            uniqueEnumName.add(name);
+            uniqueEnumName.add(name.toLowerCase());
         } // TODO: log a warning if the name is not unique
     }
     return {
