@@ -23,6 +23,7 @@ import { convertServer } from "./converters/convertServer";
 import { ERROR_NAMES } from "./converters/convertToHttpError";
 import { ExampleEndpointFactory } from "./converters/ExampleEndpointFactory";
 import { FernOpenAPIExtension } from "./extensions/fernExtensions";
+import { getFernGroups } from "./extensions/getFernGroups";
 import { getGlobalHeaders } from "./extensions/getGlobalHeaders";
 import { getVariableDefinitions } from "./extensions/getVariableDefinitions";
 import { hasIncompleteExample } from "./hasIncompleteExample";
@@ -195,9 +196,16 @@ export function generateIr({
         taskContext.logger.debug(`Converted schema ${key}`);
     }
 
+    const groupInfo = getFernGroups({ document: openApi, context });
+
     const ir: OpenApiIntermediateRepresentation = {
         title: openApi.info.title,
         description: openApi.info.description,
+        groups: Object.fromEntries(
+            Object.entries(groupInfo ?? {}).map(([key, value]) => {
+                return [key, { summary: value.summary ?? undefined, description: value.description ?? undefined }];
+            })
+        ),
         servers: (openApi.servers ?? []).map((server) => convertServer(server)),
         tags: {
             tagsById: Object.fromEntries(

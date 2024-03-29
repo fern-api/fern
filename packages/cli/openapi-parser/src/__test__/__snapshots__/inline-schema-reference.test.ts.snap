@@ -157,6 +157,7 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
   ],
   "errors": {},
   "globalHeaders": [],
+  "groups": {},
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "Schema1",

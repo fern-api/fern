@@ -50704,6 +50704,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
     },
   },
   "globalHeaders": [],
+  "groups": {},
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "IssueType",

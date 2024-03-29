@@ -16103,6 +16103,7 @@ exports[`open api parser suger parse open api 1`] = `
     },
   },
   "globalHeaders": [],
+  "groups": {},
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "shared.IdentityBuyer",

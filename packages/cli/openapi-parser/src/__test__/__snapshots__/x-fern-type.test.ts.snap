@@ -7,6 +7,7 @@ exports[`x-fern-type x-fern-type parse open api 1`] = `
   "endpoints": [],
   "errors": {},
   "globalHeaders": [],
+  "groups": {},
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [],
   "schemas": {

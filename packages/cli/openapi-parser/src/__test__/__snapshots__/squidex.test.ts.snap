@@ -42241,6 +42241,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
     },
   },
   "globalHeaders": [],
+  "groups": {},
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "UsersDto",

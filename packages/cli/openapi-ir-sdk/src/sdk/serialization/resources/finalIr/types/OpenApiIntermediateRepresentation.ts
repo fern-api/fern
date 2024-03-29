@@ -13,6 +13,10 @@ export const OpenApiIntermediateRepresentation: core.serialization.ObjectSchema<
     title: core.serialization.string().optional(),
     description: core.serialization.string().optional(),
     servers: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).Server)),
+    groups: core.serialization.record(
+        core.serialization.string(),
+        core.serialization.lazyObject(async () => (await import("../../..")).SdkGroupInfo)
+    ),
     tags: core.serialization.lazyObject(async () => (await import("../../..")).Tags),
     hasEndpointsMarkedInternal: core.serialization.boolean(),
     endpoints: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).Endpoint)),
@@ -49,6 +53,7 @@ export declare namespace OpenApiIntermediateRepresentation {
         title?: string | null;
         description?: string | null;
         servers: serializers.Server.Raw[];
+        groups: Record<string, serializers.SdkGroupInfo.Raw>;
         tags: serializers.Tags.Raw;
         hasEndpointsMarkedInternal: boolean;
         endpoints: serializers.Endpoint.Raw[];

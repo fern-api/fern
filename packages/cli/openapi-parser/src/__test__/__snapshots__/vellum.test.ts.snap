@@ -2804,6 +2804,7 @@ Upload a document to be indexed and used for search.
     },
   },
   "globalHeaders": [],
+  "groups": {},
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "DeploymentRead",

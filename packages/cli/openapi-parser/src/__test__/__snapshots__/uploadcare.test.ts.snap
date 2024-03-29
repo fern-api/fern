@@ -3728,6 +3728,7 @@ Log.d("TAG", group.toString())
     },
   },
   "globalHeaders": [],
+  "groups": {},
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "projectPublicKeyType",

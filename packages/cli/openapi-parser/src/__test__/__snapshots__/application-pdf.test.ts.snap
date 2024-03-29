@@ -36,6 +36,7 @@ exports[`open api parser application-pdf-content-type parse open api 1`] = `
   ],
   "errors": {},
   "globalHeaders": [],
+  "groups": {},
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [],
   "schemas": {},

@@ -8,6 +8,8 @@ export interface OpenApiIntermediateRepresentation {
     title: string | undefined;
     description: string | undefined;
     servers: FernOpenapiIr.Server[];
+    /** Top level group information populated through `x-fern-groups`. */
+    groups: Record<string, FernOpenapiIr.SdkGroupInfo>;
     tags: FernOpenapiIr.Tags;
     hasEndpointsMarkedInternal: boolean;
     endpoints: FernOpenapiIr.Endpoint[];

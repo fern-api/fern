@@ -48372,6 +48372,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
     },
   },
   "globalHeaders": [],
+  "groups": {},
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "UnauthorizedError",

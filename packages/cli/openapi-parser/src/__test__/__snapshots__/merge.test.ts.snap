@@ -24550,6 +24550,7 @@ exports[`open api parser merge parse open api 1`] = `
   ],
   "errors": {},
   "globalHeaders": [],
+  "groups": {},
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "AccountDetails",

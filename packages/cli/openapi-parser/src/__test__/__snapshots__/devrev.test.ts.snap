@@ -6374,6 +6374,7 @@ organizations.
     },
   },
   "globalHeaders": [],
+  "groups": {},
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "artifacts-locate-response",

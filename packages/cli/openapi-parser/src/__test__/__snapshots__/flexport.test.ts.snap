@@ -48497,6 +48497,7 @@ Other details about this invoice",
     },
   },
   "globalHeaders": [],
+  "groups": {},
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "Error",

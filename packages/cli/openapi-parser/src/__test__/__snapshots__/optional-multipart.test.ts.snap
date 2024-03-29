@@ -394,6 +394,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
   ],
   "errors": {},
   "globalHeaders": [],
+  "groups": {},
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "request-model",
