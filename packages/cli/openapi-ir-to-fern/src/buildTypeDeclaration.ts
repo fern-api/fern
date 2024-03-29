@@ -334,9 +334,21 @@ export function buildEnumTypeDeclaration(schema: EnumSchema): ConvertedTypeDecla
     if (schema.description != null) {
         enumSchema.docs = schema.description;
     }
+    const uniqueEnumName = new Set<string>();
+    const uniqueEnumSchema: RawSchemas.EnumSchema = {
+        ...enumSchema,
+        enum: []
+    };
+    for (const enumValue of enumSchema.enum) {
+        const name = typeof enumValue === "string" ? enumValue : enumValue.name ?? enumValue.value;
+        if (!uniqueEnumName.has(name)) {
+            uniqueEnumSchema.enum.push(enumValue);
+            uniqueEnumName.add(name);
+        } // TODO: log a warning if the name is not unique
+    }
     return {
         name: schema.nameOverride ?? schema.generatedName,
-        schema: enumSchema
+        schema: uniqueEnumSchema
     };
 }
 
