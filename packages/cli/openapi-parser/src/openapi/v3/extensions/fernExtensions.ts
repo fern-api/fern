@@ -5,7 +5,6 @@ export const FernOpenAPIExtension = {
     SDK_METHOD_NAME: TypedExtensionId.of<string>("x-fern-sdk-method-name"),
     SDK_GROUP_NAME: TypedExtensionId.of<string | string[]>("x-fern-sdk-group-name"),
 
-
     REQUEST_NAME_V1: "x-request-name",
     REQUEST_NAME_V2: "x-fern-request-name",
     TYPE_NAME: "x-fern-type-name",
@@ -17,14 +16,14 @@ export const FernOpenAPIExtension = {
     /**
      * Should align with the OpenAPI spec's `x-fern-sdk-group-name` extension.
      * This is a place where you can specify any display names related to the
-     * configured SDK group names. These display names and descriptions will 
-     * come through in the docs. 
-     * 
-     * x-fern-groups: 
-     *  group1: 
+     * configured SDK group names. These display names and descriptions will
+     * come through in the docs.
+     *
+     * x-fern-groups:
+     *  group1:
      *    display-name: Group 1
      *    description: This is group 1
-     *    groups: 
+     *    groups:
      *      group2 # add child groups
      */
     GROUPS: TypedExtensionId.of<string | string[]>("x-fern-groups"),
