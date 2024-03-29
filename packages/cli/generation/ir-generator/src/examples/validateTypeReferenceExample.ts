@@ -175,6 +175,9 @@ export function validateTypeReferenceExample({
         unknown: () => {
             return [];
         },
+        file: () => {
+            return [];
+        },
         bytes: () => {
             return [];
         },

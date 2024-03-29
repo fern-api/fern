@@ -107,7 +107,8 @@ export class TypeResolverImpl implements TypeResolver {
                 originalTypeReference: TypeReference.primitive(primitive)
             }),
             unknown: () => ({ _type: "unknown", originalTypeReference: TypeReference.unknown() }),
-            // TODO: implement file
+            // TODO: Implement files and bytes
+            file: () => ({ _type: "unknown", originalTypeReference: TypeReference.unknown() }),
             bytes: () => ({ _type: "unknown", originalTypeReference: TypeReference.unknown() }),
             map: ({ keyType, valueType }) =>
                 keyType != null && valueType != null

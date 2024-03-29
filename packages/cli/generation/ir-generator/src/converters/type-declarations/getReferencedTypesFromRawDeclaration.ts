@@ -74,6 +74,7 @@ export function getReferencedTypesFromRawDeclaration({
             set: (valueType) => valueType,
             named: (name) => [name],
             literal: () => [],
+            file: () => [],
             bytes: () => [],
             unknown: () => []
         });

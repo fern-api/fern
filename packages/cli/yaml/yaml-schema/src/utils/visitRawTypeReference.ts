@@ -17,7 +17,8 @@ export interface RawTypeReferenceVisitor<R> {
     optional: (valueType: string) => R;
     literal: (literal: Literal) => R;
     named: (named: string) => R;
-    bytes: (file: string) => R;
+    file: (file: string) => R;
+    bytes: (bytes: string) => R;
     unknown: () => R;
 }
 
@@ -84,7 +85,11 @@ export function visitRawTypeReference<R>(type: string, visitor: RawTypeReference
         }
     }
 
-    if (type === "file" || type === "bytes") {
+    if (type === "file") {
+        return visitor.file(type);
+    }
+
+    if (type === "bytes") {
         return visitor.bytes(type);
     }
 

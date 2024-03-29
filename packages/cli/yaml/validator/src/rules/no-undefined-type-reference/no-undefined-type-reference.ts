@@ -53,6 +53,16 @@ export const NoUndefinedTypeReferenceRule: Rule = {
                         }
                     }
 
+                    const parseFileType = parseRawFileType(typeReference);
+                    if (parseFileType != null && location !== TypeReferenceLocation.InlinedRequestProperty) {
+                        return [
+                            {
+                                severity: "error",
+                                message: "The file type can only be used as properties in inlined requests."
+                            }
+                        ];
+                    }
+
                     const parsedBytesType = parseRawBytesType(typeReference);
                     if (parsedBytesType != null) {
                         if (location === TypeReferenceLocation.RequestReference) {
@@ -89,12 +99,7 @@ export const NoUndefinedTypeReferenceRule: Rule = {
                     });
 
                     return namedTypes.reduce<RuleViolation[]>((violations, namedType) => {
-                        if (namedType.parsed?.typeName != null && parseRawFileType(namedType.parsed.typeName) != null) {
-                            violations.push({
-                                severity: "error",
-                                message: "The file type can only be used as properties in inlined requests."
-                            });
-                        } else if (namedType.parsed?.typeName != null && isRawTextType(namedType.parsed.typeName)) {
+                        if (namedType.parsed?.typeName != null && isRawTextType(namedType.parsed.typeName)) {
                             violations.push({
                                 severity: "error",
                                 message: "The text type can only be used as a response-stream or response."
@@ -156,6 +161,7 @@ function getAllNamedTypes({
         primitive: () => [],
         unknown: () => [],
         bytes: () => [],
+        file: () => [],
         map: ({ keyType: namesInKeyType, valueType: namesInValueType }) => {
             return [...namesInKeyType, ...namesInValueType];
         },
