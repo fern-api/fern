@@ -258,8 +258,8 @@ navigation:
             path: ./docs/pages/fern-docs/components/callout.mdx
           - page: Cards
             path: ./docs/pages/fern-docs/components/card.mdx
-          - page: Code Blocks
-            path: ./docs/pages/fern-docs/components/codeblocks.mdx
+          - page: CodeGroup
+            path: ./docs/pages/fern-docs/components/codegroup.mdx
             slug: codeblocks
           - page: Endpoint Snippets
             path: ./docs/pages/fern-docs/components/endpoint-snippets.mdx
