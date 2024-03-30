@@ -2,16 +2,15 @@ import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
 import tmp from "tmp-promise";
-import { ParsedDockerName } from "../../cli";
 import { SeedWorkspace } from "../../loadSeedWorkspaces";
 import { Semaphore } from "../../Semaphore";
+import { ParsedDockerName } from "../../utils/parseDockerOrThrow";
 import { TaskContextFactory } from "./TaskContextFactory";
 import { acquireLocksAndRunTest } from "./testWorkspaceFixtures";
 
 export async function testCustomFixture({
     pathToFixture,
     workspace,
-    irVersion,
     language,
     docker,
     logLevel,
@@ -21,7 +20,6 @@ export async function testCustomFixture({
 }: {
     pathToFixture: AbsoluteFilePath;
     workspace: SeedWorkspace;
-    irVersion: string | undefined;
     language: generatorsYml.GenerationLanguage | undefined;
     docker: ParsedDockerName;
     logLevel: LogLevel;
@@ -42,7 +40,7 @@ export async function testCustomFixture({
     const result = await acquireLocksAndRunTest({
         absolutePathToWorkspace: join(pathToFixture),
         lock,
-        irVersion,
+        irVersion: workspace.workspaceConfig.irVersion,
         outputVersion: customFixtureConfig?.outputVersion,
         language,
         fixture: "custom",

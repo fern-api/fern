@@ -3,11 +3,13 @@ import { CONSOLE_LOGGER, LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import path from "path";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
+import { rewriteInputsForWorkspace } from "./commands/rewrite-inputs/rewriteInputsForWorkspace";
 import { TaskContextFactory } from "./commands/test/TaskContextFactory";
 import { testCustomFixture } from "./commands/test/testCustomFixture";
 import { FIXTURES, testWorkspaceFixtures } from "./commands/test/testWorkspaceFixtures";
 import { loadSeedWorkspaces } from "./loadSeedWorkspaces";
 import { runScript } from "./runScript";
+import { parseDockerOrThrow } from "./utils/parseDockerOrThrow";
 
 void tryRunCli();
 
@@ -15,6 +17,7 @@ export async function tryRunCli(): Promise<void> {
     const cli: Argv = yargs(hideBin(process.argv));
 
     addTestCommand(cli);
+    addWriteInputsCommand(cli);
 
     await cli.parse();
 
@@ -84,7 +87,7 @@ function addTestCommand(cli: Argv) {
                     continue;
                 }
 
-                const parsedDockerImage = validateAndParseDockerImage(workspace.workspaceConfig.docker);
+                const parsedDockerImage = parseDockerOrThrow(workspace.workspaceConfig.docker);
 
                 const taskContextFactory = new TaskContextFactory(argv["log-level"]);
                 if (workspace.workspaceConfig.dockerCommand != null) {
@@ -106,7 +109,6 @@ function addTestCommand(cli: Argv) {
                             ? AbsoluteFilePath.of(argv.customFixture)
                             : join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of(argv.customFixture)),
                         workspace,
-                        irVersion: workspace.workspaceConfig.irVersion,
                         language: workspace.workspaceConfig.language,
                         docker: parsedDockerImage,
                         logLevel: argv["log-level"],
@@ -140,18 +142,42 @@ function addTestCommand(cli: Argv) {
     );
 }
 
-export interface ParsedDockerName {
-    name: string;
-    version: string;
-}
-
-function validateAndParseDockerImage(docker: string): ParsedDockerName {
-    const dockerArray: string[] = docker.split(":");
-    if (dockerArray.length === 2 && dockerArray[0] != null && dockerArray[1] != null) {
-        return {
-            name: dockerArray[0],
-            version: dockerArray[1]
-        };
-    }
-    throw new Error(`Received invalid docker name ${docker}. Must be formatted as <name>:<version>`);
+function addWriteInputsCommand(cli: Argv) {
+    cli.command(
+        "write-inputs",
+        "Rewrites the .inputs directory for each workspace",
+        (yargs) =>
+            yargs
+                .option("workspace", {
+                    type: "array",
+                    string: true,
+                    demandOption: false,
+                    description: "Workspaces to write inputs for"
+                })
+                .option("fixture", {
+                    type: "array",
+                    string: true,
+                    default: FIXTURES,
+                    choices: FIXTURES,
+                    demandOption: false,
+                    description: "Runs on all fixtures if not provided"
+                })
+                .option("log-level", {
+                    default: LogLevel.Info,
+                    choices: LOG_LEVELS
+                }),
+        async (argv) => {
+            const workspaces = await loadSeedWorkspaces();
+            for (const workspace of workspaces) {
+                if (argv.workspace != null && !argv.workspace.includes(workspace.workspaceName)) {
+                    continue;
+                }
+                await rewriteInputsForWorkspace({
+                    workspace,
+                    fixtures: argv.fixture,
+                    taskContextFactory: new TaskContextFactory(argv["log-level"])
+                });
+            }
+        }
+    );
 }

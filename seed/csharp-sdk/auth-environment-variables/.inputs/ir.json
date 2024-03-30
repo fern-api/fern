@@ -1,0 +1,499 @@
+{
+    "apiName": {
+        "originalName": "auth-environment-variables",
+        "camelCase": {
+            "unsafeName": "authEnvironmentVariables",
+            "safeName": "authEnvironmentVariables"
+        },
+        "snakeCase": {
+            "unsafeName": "auth_environment_variables",
+            "safeName": "auth_environment_variables"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "AUTH_ENVIRONMENT_VARIABLES",
+            "safeName": "AUTH_ENVIRONMENT_VARIABLES"
+        },
+        "pascalCase": {
+            "unsafeName": "AuthEnvironmentVariables",
+            "safeName": "AuthEnvironmentVariables"
+        }
+    },
+    "apiDisplayName": null,
+    "apiDocs": null,
+    "auth": {
+        "requirement": "ALL",
+        "schemes": [
+            {
+                "_type": "header",
+                "name": {
+                    "name": {
+                        "originalName": "APIKey",
+                        "camelCase": {
+                            "unsafeName": "apiKey",
+                            "safeName": "apiKey"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "api_key",
+                            "safeName": "api_key"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "API_KEY",
+                            "safeName": "API_KEY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "ApiKey",
+                            "safeName": "ApiKey"
+                        }
+                    },
+                    "wireValue": "X-FERN-API-KEY"
+                },
+                "valueType": {
+                    "_type": "primitive",
+                    "primitive": "STRING"
+                },
+                "prefix": null,
+                "headerEnvVar": "FERN_API_KEY",
+                "docs": null
+            }
+        ],
+        "docs": null
+    },
+    "headers": [
+        {
+            "name": {
+                "name": {
+                    "originalName": "X-Another-Header",
+                    "camelCase": {
+                        "unsafeName": "xAnotherHeader",
+                        "safeName": "xAnotherHeader"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "x_another_header",
+                        "safeName": "x_another_header"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "X_ANOTHER_HEADER",
+                        "safeName": "X_ANOTHER_HEADER"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "XAnotherHeader",
+                        "safeName": "XAnotherHeader"
+                    }
+                },
+                "wireValue": "X-Another-Header"
+            },
+            "valueType": {
+                "_type": "primitive",
+                "primitive": "STRING"
+            },
+            "availability": null,
+            "docs": null
+        }
+    ],
+    "idempotencyHeaders": [],
+    "types": {},
+    "errors": {},
+    "services": {
+        "service_service": {
+            "availability": null,
+            "name": {
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                }
+            },
+            "displayName": null,
+            "basePath": {
+                "head": "",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "endpoints": [
+                {
+                    "id": "endpoint_service.getWithApiKey",
+                    "name": {
+                        "originalName": "getWithApiKey",
+                        "camelCase": {
+                            "unsafeName": "getWithApiKey",
+                            "safeName": "getWithApiKey"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_with_api_key",
+                            "safeName": "get_with_api_key"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_WITH_API_KEY",
+                            "safeName": "GET_WITH_API_KEY"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetWithApiKey",
+                            "safeName": "GetWithApiKey"
+                        }
+                    },
+                    "displayName": null,
+                    "auth": true,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "method": "GET",
+                    "path": {
+                        "head": "/apiKey",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "apiKey",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": null,
+                    "sdkRequest": null,
+                    "response": {
+                        "type": "json",
+                        "value": {
+                            "type": "response",
+                            "responseBodyType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "docs": null
+                        }
+                    },
+                    "errors": [],
+                    "examples": [],
+                    "availability": null,
+                    "docs": "GET request with custom api key"
+                },
+                {
+                    "id": "endpoint_service.getWithHeader",
+                    "name": {
+                        "originalName": "getWithHeader",
+                        "camelCase": {
+                            "unsafeName": "getWithHeader",
+                            "safeName": "getWithHeader"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_with_header",
+                            "safeName": "get_with_header"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_WITH_HEADER",
+                            "safeName": "GET_WITH_HEADER"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetWithHeader",
+                            "safeName": "GetWithHeader"
+                        }
+                    },
+                    "displayName": null,
+                    "auth": false,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "method": "GET",
+                    "path": {
+                        "head": "/apiKeyInHeader",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "apiKeyInHeader",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "X-Endpoint-Header",
+                                    "camelCase": {
+                                        "unsafeName": "xEndpointHeader",
+                                        "safeName": "xEndpointHeader"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "x_endpoint_header",
+                                        "safeName": "x_endpoint_header"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "X_ENDPOINT_HEADER",
+                                        "safeName": "X_ENDPOINT_HEADER"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "XEndpointHeader",
+                                        "safeName": "XEndpointHeader"
+                                    }
+                                },
+                                "wireValue": "X-Endpoint-Header"
+                            },
+                            "valueType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "availability": null,
+                            "docs": "Specifies the endpoint key."
+                        }
+                    ],
+                    "requestBody": null,
+                    "sdkRequest": {
+                        "shape": {
+                            "type": "wrapper",
+                            "wrapperName": {
+                                "originalName": "HeaderAuthRequest",
+                                "camelCase": {
+                                    "unsafeName": "headerAuthRequest",
+                                    "safeName": "headerAuthRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "header_auth_request",
+                                    "safeName": "header_auth_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "HEADER_AUTH_REQUEST",
+                                    "safeName": "HEADER_AUTH_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "HeaderAuthRequest",
+                                    "safeName": "HeaderAuthRequest"
+                                }
+                            },
+                            "bodyKey": {
+                                "originalName": "body",
+                                "camelCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BODY",
+                                    "safeName": "BODY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Body",
+                                    "safeName": "Body"
+                                }
+                            }
+                        },
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        }
+                    },
+                    "response": {
+                        "type": "json",
+                        "value": {
+                            "type": "response",
+                            "responseBodyType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "docs": null
+                        }
+                    },
+                    "errors": [],
+                    "examples": [],
+                    "availability": null,
+                    "docs": "GET request with custom api key"
+                }
+            ]
+        }
+    },
+    "constants": {
+        "errorInstanceIdKey": {
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceId",
+                    "safeName": "errorInstanceId"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceId",
+                    "safeName": "ErrorInstanceId"
+                }
+            },
+            "wireValue": "errorInstanceId"
+        }
+    },
+    "environments": null,
+    "errorDiscriminationStrategy": {
+        "type": "statusCode"
+    },
+    "basePath": null,
+    "pathParameters": [],
+    "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": []
+    },
+    "webhookGroups": {},
+    "websocketChannels": {},
+    "subpackages": {
+        "subpackage_service": {
+            "name": {
+                "originalName": "service",
+                "camelCase": {
+                    "unsafeName": "service",
+                    "safeName": "service"
+                },
+                "snakeCase": {
+                    "unsafeName": "service",
+                    "safeName": "service"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "SERVICE",
+                    "safeName": "SERVICE"
+                },
+                "pascalCase": {
+                    "unsafeName": "Service",
+                    "safeName": "Service"
+                }
+            },
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "service",
+                    "camelCase": {
+                        "unsafeName": "service",
+                        "safeName": "service"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "service",
+                        "safeName": "service"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SERVICE",
+                        "safeName": "SERVICE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Service",
+                        "safeName": "Service"
+                    }
+                }
+            },
+            "service": "service_service",
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": true,
+            "docs": null
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": [],
+            "file": null
+        },
+        "websocket": null,
+        "service": null,
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "subpackage_service"
+        ],
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": true,
+        "docs": null
+    },
+    "sdkConfig": {
+        "isAuthMandatory": false,
+        "hasStreamingEndpoints": false,
+        "hasFileDownloadEndpoints": false,
+        "platformHeaders": {
+            "language": "X-Fern-Language",
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version"
+        }
+    }
+}

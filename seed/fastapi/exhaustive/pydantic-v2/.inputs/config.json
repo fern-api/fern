@@ -1,0 +1,24 @@
+{
+    "irFilepath": "/fern/ir.json",
+    "output": {
+        "mode": {
+            "type": "downloadFiles"
+        },
+        "path": "/fern/output",
+        "publishingMetadata": null
+    },
+    "publish": null,
+    "customConfig": {
+        "pydantic_config": {
+            "version": "v2"
+        }
+    },
+    "workspaceName": "exhaustive",
+    "organization": "seed",
+    "environment": {
+        "_type": "local"
+    },
+    "dryRun": false,
+    "whitelabel": false,
+    "writeUnitTests": true
+}

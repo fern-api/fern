@@ -1,0 +1,30 @@
+{
+    "irFilepath": "/fern/ir.json",
+    "output": {
+        "mode": {
+            "type": "github",
+            "repoUrl": "https://github.com/objects-with-imports/fern",
+            "version": "0.0.1",
+            "publishInfo": {
+                "type": "maven",
+                "registryUrl": "",
+                "coordinate": "com.fern:objects-with-imports",
+                "usernameEnvironmentVariable": "",
+                "passwordEnvironmentVariable": "",
+                "signature": null
+            }
+        },
+        "path": "/fern/output",
+        "publishingMetadata": null,
+        "snippetFilepath": "/fern/snippet.json"
+    },
+    "publish": null,
+    "workspaceName": "objects-with-imports",
+    "organization": "seed",
+    "environment": {
+        "_type": "local"
+    },
+    "dryRun": false,
+    "whitelabel": false,
+    "writeUnitTests": true
+}
