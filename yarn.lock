@@ -4226,7 +4226,6 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-loader: ^9.3.1
-    ts-node: ^10.9.1
     tsup: ^8.0.2
     typescript: 4.6.4
     zod: ^3.22.3
@@ -4566,7 +4565,6 @@ __metadata:
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-loader: ^9.3.1
-    ts-node: ^10.9.1
     tsup: ^8.0.2
     typescript: 4.6.4
     zod: ^3.22.3
@@ -21091,7 +21089,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"ts-node@npm:^10.9.1, ts-node@npm:^10.9.2":
+"ts-node@npm:^10.9.2":
   version: 10.9.2
   resolution: "ts-node@npm:10.9.2"
   dependencies:

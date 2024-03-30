@@ -6561,7 +6561,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["ts-loader", "virtual:6279a6bcd054f97c4ec611654ca73e0463708f604bb8fdbb0a4f8c8618a3a25c97220f909d15222cde40ca1b761ecafc3bbf8f2b7907c7ec5bc347340354fbc5#npm:9.5.1"],\
-            ["ts-node", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:10.9.2"],\
             ["tsup", "virtual:7fd4d27628c3743ebc965c3a5559b2f471c2d0ff304c92680b4764724aa0c3780f0f5fda9fc8045c34b169da479e01e8cef2d25c59b27f5ec7b3dc4810e345bc#npm:8.0.2"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["zod", "npm:3.22.4"]\
@@ -6939,7 +6938,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["ts-loader", "virtual:6279a6bcd054f97c4ec611654ca73e0463708f604bb8fdbb0a4f8c8618a3a25c97220f909d15222cde40ca1b761ecafc3bbf8f2b7907c7ec5bc347340354fbc5#npm:9.5.1"],\
-            ["ts-node", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:10.9.2"],\
             ["tsup", "virtual:7fd4d27628c3743ebc965c3a5559b2f471c2d0ff304c92680b4764724aa0c3780f0f5fda9fc8045c34b169da479e01e8cef2d25c59b27f5ec7b3dc4810e345bc#npm:8.0.2"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["zod", "npm:3.22.4"]\
