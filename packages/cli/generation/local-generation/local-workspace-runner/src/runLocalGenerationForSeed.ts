@@ -23,7 +23,7 @@ export async function runLocalGenerationForSeed({
     generatorGroup: generatorsYml.GeneratorGroup;
     keepDocker: boolean;
     context: TaskContext;
-    irVersionOverride: string | undefined;
+    irVersionOverride: string;
     outputVersionOverride: string | undefined;
 }): Promise<void> {
     const workspaceTempDir = await getWorkspaceTempDir();

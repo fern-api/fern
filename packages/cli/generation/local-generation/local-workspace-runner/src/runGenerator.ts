@@ -137,7 +137,7 @@ async function writeIrToFile({
     context: TaskContext;
     irVersionOverride: string | undefined;
 }): Promise<AbsoluteFilePath> {
-    const intermediateRepresentation = getIntermediateRepresentation({
+    const intermediateRepresentation = await getIntermediateRepresentation({
         workspace,
         audiences,
         generatorInvocation,
