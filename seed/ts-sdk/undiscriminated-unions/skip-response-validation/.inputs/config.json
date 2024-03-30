@@ -1,29 +1,26 @@
 {
-    "irFilepath": "/fern/ir.json",
+    "irFilepath": "./ir.json",
     "output": {
         "mode": {
-            "type": "github",
             "repoUrl": "https://github.com/undiscriminated-unions/fern",
             "version": "0.0.1",
             "publishInfo": {
-                "type": "npm",
                 "registryUrl": "",
                 "packageName": "@fern/undiscriminated-unions",
-                "tokenEnvironmentVariable": ""
-            }
+                "tokenEnvironmentVariable": "",
+                "type": "npm"
+            },
+            "type": "github"
         },
-        "path": "/fern/output",
-        "publishingMetadata": null,
-        "snippetFilepath": "/fern/snippet.json"
+        "path": "../"
     },
-    "publish": null,
     "customConfig": {
         "skipResponseValidation": true
     },
     "workspaceName": "undiscriminated-unions",
     "organization": "seed",
     "environment": {
-        "_type": "local"
+        "type": "local"
     },
     "dryRun": false,
     "whitelabel": false,

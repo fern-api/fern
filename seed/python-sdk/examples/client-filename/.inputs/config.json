@@ -1,23 +1,20 @@
 {
-    "irFilepath": "/fern/ir.json",
+    "irFilepath": "./ir.json",
     "output": {
         "mode": {
-            "type": "github",
             "repoUrl": "https://github.com/examples/fern",
             "version": "0.0.1",
             "publishInfo": {
-                "type": "pypi",
                 "registryUrl": "",
                 "packageName": "fern_examples",
                 "usernameEnvironmentVariable": "",
-                "passwordEnvironmentVariable": ""
-            }
+                "passwordEnvironmentVariable": "",
+                "type": "pypi"
+            },
+            "type": "github"
         },
-        "path": "/fern/output",
-        "publishingMetadata": null,
-        "snippetFilepath": "/fern/snippet.json"
+        "path": "../"
     },
-    "publish": null,
     "customConfig": {
         "client": {
             "filename": "base_client.py",
@@ -29,7 +26,7 @@
     "workspaceName": "examples",
     "organization": "seed",
     "environment": {
-        "_type": "local"
+        "type": "local"
     },
     "dryRun": false,
     "whitelabel": false,

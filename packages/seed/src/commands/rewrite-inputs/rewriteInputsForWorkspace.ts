@@ -50,7 +50,10 @@ export async function rewriteInputsForWorkspace({
                     return;
                 }
                 writeInputs({
-                    absolutePathToOutput,
+                    absolutePathToOutput: join(
+                        absolutePathToOutput,
+                        RelativeFilePath.of(fixtureConfigInstance.outputFolder)
+                    ),
                     fernWorkspace,
                     taskContext,
                     docker,

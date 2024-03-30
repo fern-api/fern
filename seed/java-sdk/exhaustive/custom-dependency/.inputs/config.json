@@ -1,24 +1,20 @@
 {
-    "irFilepath": "/fern/ir.json",
+    "irFilepath": "./ir.json",
     "output": {
         "mode": {
-            "type": "github",
             "repoUrl": "https://github.com/exhaustive/fern",
             "version": "0.0.1",
             "publishInfo": {
-                "type": "maven",
                 "registryUrl": "",
                 "coordinate": "com.fern:exhaustive",
                 "usernameEnvironmentVariable": "",
                 "passwordEnvironmentVariable": "",
-                "signature": null
-            }
+                "type": "maven"
+            },
+            "type": "github"
         },
-        "path": "/fern/output",
-        "publishingMetadata": null,
-        "snippetFilepath": "/fern/snippet.json"
+        "path": "../"
     },
-    "publish": null,
     "customConfig": {
         "custom-dependencies": [
             "implementation jakarta.websocket:jakarta.websocket-api:2.1.0"
@@ -27,7 +23,7 @@
     "workspaceName": "exhaustive",
     "organization": "seed",
     "environment": {
-        "_type": "local"
+        "type": "local"
     },
     "dryRun": false,
     "whitelabel": false,

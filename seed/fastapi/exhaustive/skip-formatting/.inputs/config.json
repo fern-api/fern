@@ -1,20 +1,18 @@
 {
-    "irFilepath": "/fern/ir.json",
+    "irFilepath": "./ir.json",
     "output": {
         "mode": {
             "type": "downloadFiles"
         },
-        "path": "/fern/output",
-        "publishingMetadata": null
+        "path": "../"
     },
-    "publish": null,
     "customConfig": {
         "skip_formatting": true
     },
     "workspaceName": "exhaustive",
     "organization": "seed",
     "environment": {
-        "_type": "local"
+        "type": "local"
     },
     "dryRun": false,
     "whitelabel": false,
