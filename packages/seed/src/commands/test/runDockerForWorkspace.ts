@@ -3,6 +3,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { runLocalGenerationForSeed } from "@fern-api/local-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
+import { writeInputs } from "../../commands/rewrite-inputs/rewriteInputsForWorkspace";
 import { OutputMode } from "../../config/api";
 import { ALL_AUDIENCES, DUMMY_ORGANIZATION } from "../../utils/constants";
 import { getGeneratorInvocation } from "../../utils/getGeneratorInvocation";
@@ -39,31 +40,51 @@ export async function runDockerForWorkspace({
     keepDocker: boolean | undefined;
     publishMetadata: unknown;
 }): Promise<void> {
-    const generatorGroup: generatorsYml.GeneratorGroup = {
-        groupName: "test",
-        audiences: selectAudiences != null ? { type: "select", audiences: selectAudiences } : ALL_AUDIENCES,
-        generators: [
-            getGeneratorInvocation({
-                absolutePathToOutput,
-                docker,
-                language,
-                customConfig,
-                publishConfig,
-                outputMode,
-                fixtureName,
-                irVersion,
-                publishMetadata
-            })
-        ]
-    };
-    await runLocalGenerationForSeed({
-        organization: DUMMY_ORGANIZATION,
-        absolutePathToFernConfig: undefined,
-        workspace,
-        generatorGroup,
-        keepDocker: keepDocker ?? false,
-        context: taskContext,
-        irVersionOverride: irVersion,
-        outputVersionOverride: outputVersion
-    });
+    try {
+        const generatorGroup: generatorsYml.GeneratorGroup = {
+            groupName: "test",
+            audiences: selectAudiences != null ? { type: "select", audiences: selectAudiences } : ALL_AUDIENCES,
+            generators: [
+                getGeneratorInvocation({
+                    absolutePathToOutput,
+                    docker,
+                    language,
+                    customConfig,
+                    publishConfig,
+                    outputMode,
+                    fixtureName,
+                    irVersion,
+                    publishMetadata
+                })
+            ]
+        };
+        await runLocalGenerationForSeed({
+            organization: DUMMY_ORGANIZATION,
+            absolutePathToFernConfig: undefined,
+            workspace,
+            generatorGroup,
+            keepDocker: keepDocker ?? false,
+            context: taskContext,
+            irVersionOverride: irVersion,
+            outputVersionOverride: outputVersion
+        });
+    } catch (e) {
+        throw e;
+    } finally {
+        writeInputs({
+            absolutePathToOutput,
+            fernWorkspace: workspace,
+            taskContext,
+            docker,
+            language,
+            customConfig,
+            publishConfig,
+            outputMode,
+            fixtureName,
+            irVersion,
+            publishMetadata,
+            workspaceName: workspace.name,
+            context: taskContext
+        });
+    }
 }

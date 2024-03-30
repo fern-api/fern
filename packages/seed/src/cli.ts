@@ -168,16 +168,19 @@ function addWriteInputsCommand(cli: Argv) {
                 }),
         async (argv) => {
             const workspaces = await loadSeedWorkspaces();
+            const promises: Promise<void>[] = [];
             for (const workspace of workspaces) {
                 if (argv.workspace != null && !argv.workspace.includes(workspace.workspaceName)) {
                     continue;
                 }
-                await rewriteInputsForWorkspace({
+                const promise = rewriteInputsForWorkspace({
                     workspace,
                     fixtures: argv.fixture,
                     taskContextFactory: new TaskContextFactory(argv["log-level"])
                 });
+                promises.push(promise);
             }
+            await Promise.all(promises);
         }
     );
 }

@@ -1,28 +1,24 @@
 {
-    "irFilepath": "/fern/ir.json",
+    "irFilepath": "./ir.json",
     "output": {
         "mode": {
-            "type": "github",
             "repoUrl": "https://github.com/no-environment/fern",
             "version": "0.0.1",
             "publishInfo": {
-                "type": "maven",
                 "registryUrl": "",
                 "coordinate": "com.fern:no-environment",
                 "usernameEnvironmentVariable": "",
                 "passwordEnvironmentVariable": "",
-                "signature": null
-            }
+                "type": "maven"
+            },
+            "type": "github"
         },
-        "path": "/fern/output",
-        "publishingMetadata": null,
-        "snippetFilepath": "/fern/snippet.json"
+        "path": "../"
     },
-    "publish": null,
-    "workspaceName": "no-environment",
+    "workspaceName": "csharp-model",
     "organization": "seed",
     "environment": {
-        "_type": "local"
+        "type": "local"
     },
     "dryRun": false,
     "whitelabel": false,

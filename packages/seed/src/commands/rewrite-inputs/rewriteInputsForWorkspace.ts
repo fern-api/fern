@@ -1,10 +1,12 @@
-import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/configuration";
+import { APIS_DIRECTORY, FERN_DIRECTORY, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { getGeneratorConfig, getIntermediateRepresentation } from "@fern-api/local-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { writeFile } from "fs/promises";
+import { mkdir, writeFile } from "fs/promises";
 import path from "path";
+import { OutputMode } from "../../config/api";
 import { SeedWorkspace } from "../../loadSeedWorkspaces";
 import {
     DUMMY_ORGANIZATION,
@@ -14,7 +16,7 @@ import {
 } from "../../utils/constants";
 import { convertSeedWorkspaceToFernWorkspace } from "../../utils/convertSeedWorkspaceToFernWorkspace";
 import { getGeneratorInvocation } from "../../utils/getGeneratorInvocation";
-import { parseDockerOrThrow } from "../../utils/parseDockerOrThrow";
+import { ParsedDockerName, parseDockerOrThrow } from "../../utils/parseDockerOrThrow";
 import { TaskContextFactory } from "../test/TaskContextFactory";
 
 export async function rewriteInputsForWorkspace({
@@ -47,36 +49,21 @@ export async function rewriteInputsForWorkspace({
                     taskContext.logger.error("Failed to load workspace.");
                     return;
                 }
-                const generatorInvocation = getGeneratorInvocation({
+                writeInputs({
                     absolutePathToOutput,
-                    docker: docker,
+                    fernWorkspace,
+                    taskContext,
+                    docker,
                     language: workspace.workspaceConfig.language,
                     customConfig: fixtureConfigInstance.customConfig,
                     publishConfig: fixtureConfigInstance.publishConfig,
                     outputMode: fixtureConfigInstance.outputMode ?? workspace.workspaceConfig.defaultOutputMode,
                     fixtureName: fixture,
                     irVersion: workspace.workspaceConfig.irVersion,
-                    publishMetadata: fixtureConfigInstance.publishMetadata
-                });
-                const ir = await getIntermediateRepresentation({
-                    workspace: fernWorkspace,
-                    audiences: {
-                        type: "all"
-                    },
-                    context: taskContext,
-                    irVersionOverride: workspace.workspaceConfig.irVersion,
-                    generatorInvocation
-                });
-                const config = getGeneratorConfig({
-                    generatorInvocation,
-                    customConfig: fixtureConfigInstance.customConfig,
+                    publishMetadata: fixtureConfigInstance.publishMetadata,
                     workspaceName: workspace.workspaceName,
-                    outputVersion: undefined,
-                    organization: DUMMY_ORGANIZATION,
-                    absolutePathToSnippet: undefined,
-                    writeUnitTests: false
-                }).config;
-                await writeInputs({ absolutePathToOutput, ir, config, context: taskContext });
+                    context: taskContext
+                });
             }
         } else {
             const taskContext = taskContextFactory.create(`${workspace.workspaceName}:${fixture}`);
@@ -89,57 +76,91 @@ export async function rewriteInputsForWorkspace({
                 taskContext.logger.error("Failed to load workspace.");
                 return;
             }
-            const generatorInvocation = getGeneratorInvocation({
+            writeInputs({
                 absolutePathToOutput,
-                docker: docker,
+                fernWorkspace,
+                taskContext,
+                docker,
                 language: workspace.workspaceConfig.language,
                 customConfig: undefined,
                 publishConfig: undefined,
                 outputMode: workspace.workspaceConfig.defaultOutputMode,
                 fixtureName: fixture,
                 irVersion: workspace.workspaceConfig.irVersion,
-                publishMetadata: undefined
-            });
-            const ir = await getIntermediateRepresentation({
-                workspace: fernWorkspace,
-                audiences: {
-                    type: "all"
-                },
-                context: taskContext,
-                irVersionOverride: workspace.workspaceConfig.irVersion,
-                generatorInvocation
-            });
-            const config = getGeneratorConfig({
-                generatorInvocation,
-                customConfig: undefined,
+                publishMetadata: undefined,
                 workspaceName: workspace.workspaceName,
-                outputVersion: undefined,
-                organization: DUMMY_ORGANIZATION,
-                absolutePathToSnippet: undefined,
-                writeUnitTests: false
-            }).config;
-            await writeInputs({ absolutePathToOutput, ir, config, context: taskContext });
+                context: taskContext
+            });
         }
     }
 }
 
-async function writeInputs({
+export async function writeInputs({
     absolutePathToOutput,
-    ir,
-    config,
+    fernWorkspace,
+    taskContext,
+    docker,
+    language,
+    customConfig,
+    publishConfig,
+    outputMode,
+    fixtureName,
+    irVersion,
+    publishMetadata,
+    workspaceName,
     context
 }: {
     absolutePathToOutput: AbsoluteFilePath;
-    ir: unknown;
-    config: FernGeneratorExec.GeneratorConfig;
+    fernWorkspace: FernWorkspace;
+    taskContext: TaskContext;
+    docker: ParsedDockerName;
+    language: generatorsYml.GenerationLanguage | undefined;
+    customConfig: unknown;
+    publishConfig: unknown;
+    outputMode: OutputMode;
+    fixtureName: string;
+    irVersion: string;
+    publishMetadata: unknown;
+    workspaceName: string;
     context: TaskContext;
-}) {
+}): Promise<void> {
+    const generatorInvocation = getGeneratorInvocation({
+        absolutePathToOutput,
+        docker,
+        language,
+        customConfig,
+        publishConfig,
+        outputMode: outputMode,
+        fixtureName,
+        irVersion,
+        publishMetadata
+    });
+    const ir = await getIntermediateRepresentation({
+        workspace: fernWorkspace,
+        audiences: {
+            type: "all"
+        },
+        context: taskContext,
+        irVersionOverride: irVersion,
+        generatorInvocation
+    });
+    const config = getGeneratorConfig({
+        generatorInvocation,
+        customConfig,
+        workspaceName,
+        outputVersion: undefined,
+        organization: DUMMY_ORGANIZATION,
+        absolutePathToSnippet: undefined,
+        writeUnitTests: true
+    }).config;
     const absolutePathToInputsDirectory = AbsoluteFilePath.of(
         join(absolutePathToOutput, RelativeFilePath.of(INPUTS_DIRECTORY_NAME))
     );
+    await mkdir(absolutePathToInputsDirectory, { recursive: true });
+
     await writeFile(
-        JSON.stringify(ir, undefined, 4),
-        join(absolutePathToInputsDirectory, RelativeFilePath.of(INPUT_IR_FILENAME))
+        join(absolutePathToInputsDirectory, RelativeFilePath.of(INPUT_IR_FILENAME)),
+        JSON.stringify(ir, undefined, 4)
     );
     // Update filepaths in config.json so that they
     // are compatible with the local filesystem
@@ -152,8 +173,8 @@ async function writeInputs({
         }
     };
     await writeFile(
-        JSON.stringify(locallyCompatibleConfig, undefined, 4),
-        join(absolutePathToInputsDirectory, RelativeFilePath.of(INPUT_CONFIG_FILENAME))
+        join(absolutePathToInputsDirectory, RelativeFilePath.of(INPUT_CONFIG_FILENAME)),
+        JSON.stringify(locallyCompatibleConfig, undefined, 4)
     );
 
     context.logger.info(`Wrote inputs to ${absolutePathToInputsDirectory}`);

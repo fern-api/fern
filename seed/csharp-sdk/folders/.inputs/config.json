@@ -1,28 +1,24 @@
 {
-    "irFilepath": "/fern/ir.json",
+    "irFilepath": "./ir.json",
     "output": {
         "mode": {
-            "type": "github",
             "repoUrl": "https://github.com/folders/fern",
             "version": "0.0.1",
             "publishInfo": {
-                "type": "maven",
                 "registryUrl": "",
                 "coordinate": "com.fern:folders",
                 "usernameEnvironmentVariable": "",
                 "passwordEnvironmentVariable": "",
-                "signature": null
-            }
+                "type": "maven"
+            },
+            "type": "github"
         },
-        "path": "/fern/output",
-        "publishingMetadata": null,
-        "snippetFilepath": "/fern/snippet.json"
+        "path": "../"
     },
-    "publish": null,
-    "workspaceName": "api",
+    "workspaceName": "csharp-sdk",
     "organization": "seed",
     "environment": {
-        "_type": "local"
+        "type": "local"
     },
     "dryRun": false,
     "whitelabel": false,

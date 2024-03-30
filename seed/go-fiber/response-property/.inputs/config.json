@@ -1,21 +1,17 @@
 {
-    "irFilepath": "/fern/ir.json",
+    "irFilepath": "./ir.json",
     "output": {
         "mode": {
-            "type": "github",
             "repoUrl": "https://github.com/response-property/fern",
             "version": "0.0.1",
-            "publishInfo": null
+            "type": "github"
         },
-        "path": "/fern/output",
-        "publishingMetadata": null,
-        "snippetFilepath": "/fern/snippet.json"
+        "path": "../"
     },
-    "publish": null,
-    "workspaceName": "response-property",
+    "workspaceName": "go-fiber",
     "organization": "seed",
     "environment": {
-        "_type": "local"
+        "type": "local"
     },
     "dryRun": false,
     "whitelabel": false,

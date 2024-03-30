@@ -1,0 +1,22 @@
+{
+    "irFilepath": "./ir.json",
+    "output": {
+        "mode": {
+            "type": "downloadFiles"
+        },
+        "path": "../"
+    },
+    "customConfig": {
+        "pydantic_config": {
+            "version": "v2"
+        }
+    },
+    "workspaceName": "fastapi",
+    "organization": "seed",
+    "environment": {
+        "type": "local"
+    },
+    "dryRun": false,
+    "whitelabel": false,
+    "writeUnitTests": true
+}
