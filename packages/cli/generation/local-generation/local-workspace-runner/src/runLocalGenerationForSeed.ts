@@ -98,7 +98,7 @@ export async function writeIrAndConfigJson({
 }): Promise<void> {
     const workspaceTempDir = await getWorkspaceTempDir();
 
-    const results = await Promise.all(
+    await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
             return context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
                 if (generatorInvocation.absolutePathToLocalOutput == null) {
@@ -106,7 +106,7 @@ export async function writeIrAndConfigJson({
                         "Cannot generate because output location is not local-file-system"
                     );
                 } else {
-                    const response = await writeFilesToDiskAndRunGenerator({
+                    await writeFilesToDiskAndRunGenerator({
                         organization,
                         absolutePathToFernConfig,
                         workspace,

@@ -66,7 +66,7 @@ export async function generateWorkspace({
             workspace,
             generatorGroup: group,
             keepDocker,
-            context,
+            context
         });
     } else {
         await runRemoteGenerationForAPIWorkspace({
