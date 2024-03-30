@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "ruby-model",
+    "workspaceName": "enum",
     "organization": "seed",
     "environment": {
         "type": "local"

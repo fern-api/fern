@@ -9,7 +9,7 @@
     "customConfig": {
         "outputSourceFiles": true
     },
-    "workspaceName": "ts-express",
+    "workspaceName": "api",
     "organization": "seed",
     "environment": {
         "type": "local"

@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "java-spring",
+    "workspaceName": "single-url-environment-no-default",
     "organization": "seed",
     "environment": {
         "type": "local"

@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "java-spring",
+    "workspaceName": "api",
     "organization": "seed",
     "environment": {
         "type": "local"

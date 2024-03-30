@@ -23,7 +23,7 @@
             "exported_class_name": "SeedExhaustive"
         }
     },
-    "workspaceName": "python-sdk",
+    "workspaceName": "examples",
     "organization": "seed",
     "environment": {
         "type": "local"

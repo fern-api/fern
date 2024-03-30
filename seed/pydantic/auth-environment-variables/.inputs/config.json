@@ -15,7 +15,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "pydantic",
+    "workspaceName": "auth-environment-variables",
     "organization": "seed",
     "environment": {
         "type": "local"

@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "java-spring",
+    "workspaceName": "package-yml",
     "organization": "seed",
     "environment": {
         "type": "local"

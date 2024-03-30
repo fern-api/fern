@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "java-spring",
+    "workspaceName": "error-property",
     "organization": "seed",
     "environment": {
         "type": "local"

@@ -15,7 +15,7 @@
             "path": "github.com/fern-api/unions-go"
         }
     },
-    "workspaceName": "go-sdk",
+    "workspaceName": "unions",
     "organization": "seed",
     "environment": {
         "type": "local"

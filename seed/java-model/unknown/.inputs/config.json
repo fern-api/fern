@@ -15,7 +15,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "java-model",
+    "workspaceName": "unknown-as-any",
     "organization": "seed",
     "environment": {
         "type": "local"

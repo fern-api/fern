@@ -15,7 +15,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "pydantic",
+    "workspaceName": "plain-text",
     "organization": "seed",
     "environment": {
         "type": "local"

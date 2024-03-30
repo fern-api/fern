@@ -26,7 +26,7 @@
             "referenceUrl": "https://buildwithfern.com"
         }
     },
-    "workspaceName": "java-sdk",
+    "workspaceName": "exhaustive",
     "organization": "seed",
     "environment": {
         "type": "local"

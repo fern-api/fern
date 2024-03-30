@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "postman",
+    "workspaceName": "query-parameters",
     "organization": "seed",
     "environment": {
         "type": "local"

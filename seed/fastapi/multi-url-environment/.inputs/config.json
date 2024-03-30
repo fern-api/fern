@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "fastapi",
+    "workspaceName": "multi-url-environment",
     "organization": "seed",
     "environment": {
         "type": "local"

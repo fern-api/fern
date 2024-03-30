@@ -8,7 +8,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "go-model",
+    "workspaceName": "file-upload",
     "organization": "seed",
     "environment": {
         "type": "local"

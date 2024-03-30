@@ -9,7 +9,7 @@
     "customConfig": {
         "noSerdeLayer": true
     },
-    "workspaceName": "ts-express",
+    "workspaceName": "trace",
     "organization": "seed",
     "environment": {
         "type": "local"

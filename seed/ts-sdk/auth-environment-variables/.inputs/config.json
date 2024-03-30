@@ -14,7 +14,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "ts-sdk",
+    "workspaceName": "auth-environment-variables",
     "organization": "seed",
     "environment": {
         "type": "local"

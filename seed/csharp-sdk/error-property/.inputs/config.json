@@ -15,7 +15,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "csharp-sdk",
+    "workspaceName": "error-property",
     "organization": "seed",
     "environment": {
         "type": "local"

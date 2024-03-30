@@ -22,7 +22,7 @@
         "includeOtherInUnionTypes": true,
         "timeoutInSeconds": "infinity"
     },
-    "workspaceName": "ts-sdk",
+    "workspaceName": "trace",
     "organization": "seed",
     "environment": {
         "type": "local"

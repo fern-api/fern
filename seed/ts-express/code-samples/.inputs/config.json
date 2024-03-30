@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "ts-express",
+    "workspaceName": "code-samples",
     "organization": "seed",
     "environment": {
         "type": "local"

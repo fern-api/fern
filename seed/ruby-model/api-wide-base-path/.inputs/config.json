@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "ruby-model",
+    "workspaceName": "api-wide-base-path",
     "organization": "seed",
     "environment": {
         "type": "local"

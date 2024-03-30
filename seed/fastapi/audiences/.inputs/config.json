@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "fastapi",
+    "workspaceName": "audiences",
     "organization": "seed",
     "environment": {
         "type": "local"

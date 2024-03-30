@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "java-spring",
+    "workspaceName": "custom-auth",
     "organization": "seed",
     "environment": {
         "type": "local"

@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "fastapi",
+    "workspaceName": "bearer-token-environment-variable",
     "organization": "seed",
     "environment": {
         "type": "local"

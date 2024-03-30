@@ -14,7 +14,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "ts-sdk",
+    "workspaceName": "package-yml",
     "organization": "seed",
     "environment": {
         "type": "local"

@@ -8,7 +8,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "go-model",
+    "workspaceName": "trace",
     "organization": "seed",
     "environment": {
         "type": "local"

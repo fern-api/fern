@@ -14,7 +14,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "ts-sdk",
+    "workspaceName": "nursery-api",
     "organization": "seed",
     "environment": {
         "type": "local"

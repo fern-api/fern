@@ -15,7 +15,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "csharp-sdk",
+    "workspaceName": "auth-environment-variables",
     "organization": "seed",
     "environment": {
         "type": "local"

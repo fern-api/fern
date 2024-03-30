@@ -15,7 +15,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "java-model",
+    "workspaceName": "undiscriminated-unions",
     "organization": "seed",
     "environment": {
         "type": "local"

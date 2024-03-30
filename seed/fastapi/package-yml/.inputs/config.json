@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "fastapi",
+    "workspaceName": "package-yml",
     "organization": "seed",
     "environment": {
         "type": "local"

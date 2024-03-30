@@ -14,7 +14,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "ruby-sdk",
+    "workspaceName": "extends",
     "organization": "seed",
     "environment": {
         "type": "local"

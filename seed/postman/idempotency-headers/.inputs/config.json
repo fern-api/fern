@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "postman",
+    "workspaceName": "idempotency-headers",
     "organization": "seed",
     "environment": {
         "type": "local"

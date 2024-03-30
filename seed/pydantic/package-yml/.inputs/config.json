@@ -15,7 +15,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "pydantic",
+    "workspaceName": "package-yml",
     "organization": "seed",
     "environment": {
         "type": "local"

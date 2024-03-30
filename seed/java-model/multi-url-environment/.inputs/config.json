@@ -15,7 +15,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "java-model",
+    "workspaceName": "multi-url-environment",
     "organization": "seed",
     "environment": {
         "type": "local"

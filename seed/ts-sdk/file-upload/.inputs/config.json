@@ -14,7 +14,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "ts-sdk",
+    "workspaceName": "file-upload",
     "organization": "seed",
     "environment": {
         "type": "local"

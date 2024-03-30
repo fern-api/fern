@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "ts-express",
+    "workspaceName": "single-url-environment-default",
     "organization": "seed",
     "environment": {
         "type": "local"

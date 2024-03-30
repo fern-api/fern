@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "java-spring",
+    "workspaceName": "file-upload",
     "organization": "seed",
     "environment": {
         "type": "local"

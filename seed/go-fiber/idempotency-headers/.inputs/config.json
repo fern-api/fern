@@ -15,7 +15,7 @@
         },
         "includeLegacyClientOptions": true
     },
-    "workspaceName": "go-fiber",
+    "workspaceName": "idempotency-headers",
     "organization": "seed",
     "environment": {
         "type": "local"

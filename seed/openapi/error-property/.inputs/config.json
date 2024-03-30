@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "openapi",
+    "workspaceName": "error-property",
     "organization": "seed",
     "environment": {
         "type": "local"

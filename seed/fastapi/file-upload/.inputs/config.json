@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "fastapi",
+    "workspaceName": "file-upload",
     "organization": "seed",
     "environment": {
         "type": "local"

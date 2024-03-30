@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "fastapi",
+    "workspaceName": "enum",
     "organization": "seed",
     "environment": {
         "type": "local"

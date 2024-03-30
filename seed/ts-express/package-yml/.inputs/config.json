@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "ts-express",
+    "workspaceName": "package-yml",
     "organization": "seed",
     "environment": {
         "type": "local"

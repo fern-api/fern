@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "ts-express",
+    "workspaceName": "unions",
     "organization": "seed",
     "environment": {
         "type": "local"

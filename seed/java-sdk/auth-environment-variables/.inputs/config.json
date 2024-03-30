@@ -15,7 +15,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "java-sdk",
+    "workspaceName": "auth-environment-variables",
     "organization": "seed",
     "environment": {
         "type": "local"

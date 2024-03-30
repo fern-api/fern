@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "ts-express",
+    "workspaceName": "idempotency-headers",
     "organization": "seed",
     "environment": {
         "type": "local"

@@ -19,7 +19,7 @@
         "includeUtilsOnUnionMembers": true,
         "includeOtherInUnionTypes": true
     },
-    "workspaceName": "ts-sdk",
+    "workspaceName": "error-property",
     "organization": "seed",
     "environment": {
         "type": "local"

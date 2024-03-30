@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "fastapi",
+    "workspaceName": "response-property",
     "organization": "seed",
     "environment": {
         "type": "local"

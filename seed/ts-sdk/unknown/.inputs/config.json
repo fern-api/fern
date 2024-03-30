@@ -17,7 +17,7 @@
     "customConfig": {
         "treatUnknownAsAny": true
     },
-    "workspaceName": "ts-sdk",
+    "workspaceName": "unknown-as-any",
     "organization": "seed",
     "environment": {
         "type": "local"

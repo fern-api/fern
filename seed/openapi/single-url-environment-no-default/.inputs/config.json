@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "openapi",
+    "workspaceName": "single-url-environment-no-default",
     "organization": "seed",
     "environment": {
         "type": "local"

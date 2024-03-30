@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "openapi",
+    "workspaceName": "trace",
     "organization": "seed",
     "environment": {
         "type": "local"

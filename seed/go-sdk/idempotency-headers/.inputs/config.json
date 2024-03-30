@@ -15,7 +15,7 @@
         },
         "includeLegacyClientOptions": true
     },
-    "workspaceName": "go-sdk",
+    "workspaceName": "idempotency-headers",
     "organization": "seed",
     "environment": {
         "type": "local"

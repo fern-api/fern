@@ -18,7 +18,7 @@
         "allowCustomFetcher": true,
         "timeoutInSeconds": 2
     },
-    "workspaceName": "ts-sdk",
+    "workspaceName": "streaming",
     "organization": "seed",
     "environment": {
         "type": "local"

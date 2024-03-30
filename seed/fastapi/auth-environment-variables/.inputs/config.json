@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "fastapi",
+    "workspaceName": "auth-environment-variables",
     "organization": "seed",
     "environment": {
         "type": "local"

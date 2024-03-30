@@ -15,7 +15,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "csharp-model",
+    "workspaceName": "enum",
     "organization": "seed",
     "environment": {
         "type": "local"

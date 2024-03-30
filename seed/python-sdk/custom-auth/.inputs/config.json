@@ -15,7 +15,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "python-sdk",
+    "workspaceName": "custom-auth",
     "organization": "seed",
     "environment": {
         "type": "local"

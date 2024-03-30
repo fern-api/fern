@@ -15,7 +15,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "java-model",
+    "workspaceName": "streaming",
     "organization": "seed",
     "environment": {
         "type": "local"

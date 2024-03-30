@@ -8,7 +8,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "go-model",
+    "workspaceName": "undiscriminated-unions",
     "organization": "seed",
     "environment": {
         "type": "local"

@@ -15,7 +15,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "pydantic",
+    "workspaceName": "error-property",
     "organization": "seed",
     "environment": {
         "type": "local"

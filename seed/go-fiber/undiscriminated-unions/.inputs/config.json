@@ -8,7 +8,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "go-fiber",
+    "workspaceName": "undiscriminated-unions",
     "organization": "seed",
     "environment": {
         "type": "local"

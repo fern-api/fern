@@ -15,7 +15,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "csharp-model",
+    "workspaceName": "custom-auth",
     "organization": "seed",
     "environment": {
         "type": "local"

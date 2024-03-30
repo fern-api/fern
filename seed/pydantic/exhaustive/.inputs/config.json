@@ -18,7 +18,7 @@
     "customConfig": {
         "version": "v2"
     },
-    "workspaceName": "pydantic",
+    "workspaceName": "exhaustive",
     "organization": "seed",
     "environment": {
         "type": "local"

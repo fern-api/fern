@@ -11,7 +11,7 @@
             "version": "v2"
         }
     },
-    "workspaceName": "fastapi",
+    "workspaceName": "exhaustive",
     "organization": "seed",
     "environment": {
         "type": "local"

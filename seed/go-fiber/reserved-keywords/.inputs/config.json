@@ -8,7 +8,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "go-fiber",
+    "workspaceName": "nursery-api",
     "organization": "seed",
     "environment": {
         "type": "local"

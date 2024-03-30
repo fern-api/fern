@@ -28,7 +28,7 @@
             "jest": "^29.7.0"
         }
     },
-    "workspaceName": "ts-sdk",
+    "workspaceName": "exhaustive",
     "organization": "seed",
     "environment": {
         "type": "local"

@@ -17,7 +17,7 @@
     "customConfig": {
         "skipResponseValidation": true
     },
-    "workspaceName": "ts-sdk",
+    "workspaceName": "undiscriminated-unions",
     "organization": "seed",
     "environment": {
         "type": "local"

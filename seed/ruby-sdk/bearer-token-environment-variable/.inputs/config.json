@@ -14,7 +14,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "ruby-sdk",
+    "workspaceName": "bearer-token-environment-variable",
     "organization": "seed",
     "environment": {
         "type": "local"

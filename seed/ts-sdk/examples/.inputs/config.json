@@ -17,7 +17,7 @@
     "customConfig": {
         "includeApiReference": true
     },
-    "workspaceName": "ts-sdk",
+    "workspaceName": "examples",
     "organization": "seed",
     "environment": {
         "type": "local"

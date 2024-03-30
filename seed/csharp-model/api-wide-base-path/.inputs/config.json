@@ -15,7 +15,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "csharp-model",
+    "workspaceName": "api-wide-base-path",
     "organization": "seed",
     "environment": {
         "type": "local"

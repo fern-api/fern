@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "openapi",
+    "workspaceName": "file-download",
     "organization": "seed",
     "environment": {
         "type": "local"

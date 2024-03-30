@@ -15,7 +15,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "pydantic",
+    "workspaceName": "file-download",
     "organization": "seed",
     "environment": {
         "type": "local"

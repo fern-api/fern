@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "ts-express",
+    "workspaceName": "bearer-token-environment-variable",
     "organization": "seed",
     "environment": {
         "type": "local"

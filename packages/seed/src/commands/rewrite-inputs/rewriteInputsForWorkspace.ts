@@ -61,7 +61,7 @@ export async function rewriteInputsForWorkspace({
                     fixtureName: fixture,
                     irVersion: workspace.workspaceConfig.irVersion,
                     publishMetadata: fixtureConfigInstance.publishMetadata,
-                    workspaceName: workspace.workspaceName,
+                    workspaceName: fernWorkspace.name,
                     context: taskContext
                 });
             }
@@ -88,7 +88,7 @@ export async function rewriteInputsForWorkspace({
                 fixtureName: fixture,
                 irVersion: workspace.workspaceConfig.irVersion,
                 publishMetadata: undefined,
-                workspaceName: workspace.workspaceName,
+                workspaceName: fernWorkspace.name,
                 context: taskContext
             });
         }

@@ -14,7 +14,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "ts-sdk",
+    "workspaceName": "code-samples",
     "organization": "seed",
     "environment": {
         "type": "local"

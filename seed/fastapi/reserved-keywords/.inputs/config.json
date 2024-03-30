@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "fastapi",
+    "workspaceName": "nursery-api",
     "organization": "seed",
     "environment": {
         "type": "local"

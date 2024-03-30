@@ -15,7 +15,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "java-sdk",
+    "workspaceName": "alias",
     "organization": "seed",
     "environment": {
         "type": "local"

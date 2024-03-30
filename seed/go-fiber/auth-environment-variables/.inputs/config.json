@@ -8,7 +8,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "go-fiber",
+    "workspaceName": "auth-environment-variables",
     "organization": "seed",
     "environment": {
         "type": "local"

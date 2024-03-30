@@ -15,7 +15,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "csharp-model",
+    "workspaceName": "bytes",
     "organization": "seed",
     "environment": {
         "type": "local"

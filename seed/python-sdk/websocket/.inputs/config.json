@@ -15,7 +15,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "python-sdk",
+    "workspaceName": "websocket",
     "organization": "seed",
     "environment": {
         "type": "local"

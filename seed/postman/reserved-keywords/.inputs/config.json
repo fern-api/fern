@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "postman",
+    "workspaceName": "nursery-api",
     "organization": "seed",
     "environment": {
         "type": "local"

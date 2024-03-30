@@ -15,7 +15,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "java-model",
+    "workspaceName": "package-yml",
     "organization": "seed",
     "environment": {
         "type": "local"

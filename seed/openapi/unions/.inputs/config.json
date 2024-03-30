@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "openapi",
+    "workspaceName": "unions",
     "organization": "seed",
     "environment": {
         "type": "local"

@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "openapi",
+    "workspaceName": "package-yml",
     "organization": "seed",
     "environment": {
         "type": "local"

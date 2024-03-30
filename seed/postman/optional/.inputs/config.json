@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "postman",
+    "workspaceName": "objects-with-imports",
     "organization": "seed",
     "environment": {
         "type": "local"

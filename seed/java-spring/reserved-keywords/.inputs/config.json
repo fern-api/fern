@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "java-spring",
+    "workspaceName": "nursery-api",
     "organization": "seed",
     "environment": {
         "type": "local"

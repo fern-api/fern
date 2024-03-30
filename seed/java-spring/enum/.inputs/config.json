@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "java-spring",
+    "workspaceName": "enum",
     "organization": "seed",
     "environment": {
         "type": "local"

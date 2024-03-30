@@ -8,7 +8,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "go-fiber",
+    "workspaceName": "response-property",
     "organization": "seed",
     "environment": {
         "type": "local"

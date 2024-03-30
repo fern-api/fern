@@ -8,7 +8,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "go-fiber",
+    "workspaceName": "package-yml",
     "organization": "seed",
     "environment": {
         "type": "local"

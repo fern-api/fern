@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "ruby-model",
+    "workspaceName": "extends",
     "organization": "seed",
     "environment": {
         "type": "local"

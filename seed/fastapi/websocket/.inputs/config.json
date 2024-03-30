@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "fastapi",
+    "workspaceName": "websocket",
     "organization": "seed",
     "environment": {
         "type": "local"

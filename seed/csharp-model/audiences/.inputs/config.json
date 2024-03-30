@@ -15,7 +15,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "csharp-model",
+    "workspaceName": "audiences",
     "organization": "seed",
     "environment": {
         "type": "local"

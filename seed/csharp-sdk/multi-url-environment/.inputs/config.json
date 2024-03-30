@@ -15,7 +15,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "csharp-sdk",
+    "workspaceName": "multi-url-environment",
     "organization": "seed",
     "environment": {
         "type": "local"

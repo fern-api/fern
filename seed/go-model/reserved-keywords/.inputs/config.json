@@ -8,7 +8,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "go-model",
+    "workspaceName": "nursery-api",
     "organization": "seed",
     "environment": {
         "type": "local"

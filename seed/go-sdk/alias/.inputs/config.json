@@ -8,7 +8,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "go-sdk",
+    "workspaceName": "alias",
     "organization": "seed",
     "environment": {
         "type": "local"

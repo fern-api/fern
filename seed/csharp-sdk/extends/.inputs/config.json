@@ -15,7 +15,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "csharp-sdk",
+    "workspaceName": "extends",
     "organization": "seed",
     "environment": {
         "type": "local"

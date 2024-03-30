@@ -9,7 +9,7 @@
     "customConfig": {
         "format": "json"
     },
-    "workspaceName": "openapi",
+    "workspaceName": "api",
     "organization": "seed",
     "environment": {
         "type": "local"

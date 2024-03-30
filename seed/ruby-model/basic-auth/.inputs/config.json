@@ -6,7 +6,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "ruby-model",
+    "workspaceName": "basic-auth",
     "organization": "seed",
     "environment": {
         "type": "local"

@@ -11,7 +11,7 @@
         "includeUtilsOnUnionMembers": true,
         "includeOtherInUnionTypes": true
     },
-    "workspaceName": "ts-express",
+    "workspaceName": "exhaustive",
     "organization": "seed",
     "environment": {
         "type": "local"
