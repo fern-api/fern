@@ -7977,8 +7977,6 @@ exports[`open api parser hookdeck simple 1`] = `
         "enum": [
           "asc",
           "desc",
-          "ASC",
-          "DESC",
         ],
       },
       "RawBody": {

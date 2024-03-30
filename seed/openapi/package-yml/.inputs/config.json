@@ -1,0 +1,17 @@
+{
+    "irFilepath": "./ir.json",
+    "output": {
+        "mode": {
+            "type": "downloadFiles"
+        },
+        "path": "../"
+    },
+    "workspaceName": "package-yml",
+    "organization": "seed",
+    "environment": {
+        "type": "local"
+    },
+    "dryRun": false,
+    "whitelabel": false,
+    "writeUnitTests": true
+}

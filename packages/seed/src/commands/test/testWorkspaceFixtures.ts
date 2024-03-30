@@ -3,17 +3,17 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, LogLevel } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
-import { convertOpenApiWorkspaceToFernWorkspace, FernWorkspace, loadAPIWorkspace } from "@fern-api/workspace-loader";
 import fs from "fs";
 import { writeFile } from "fs/promises";
 import { difference } from "lodash-es";
 import path from "path";
 import tmp from "tmp-promise";
-import { ParsedDockerName } from "../../cli";
 import { OutputMode, ScriptConfig } from "../../config/api";
 import { SeedWorkspace } from "../../loadSeedWorkspaces";
 import { Semaphore } from "../../Semaphore";
 import { Stopwatch } from "../../Stopwatch";
+import { convertSeedWorkspaceToFernWorkspace } from "../../utils/convertSeedWorkspaceToFernWorkspace";
+import { ParsedDockerName } from "../../utils/parseDockerOrThrow";
 import { printTestCases } from "./printTestCases";
 import { runDockerForWorkspace } from "./runDockerForWorkspace";
 import { TaskContextFactory } from "./TaskContextFactory";
@@ -61,7 +61,7 @@ export async function testWorkspaceFixtures({
     outputFolder
 }: {
     workspace: SeedWorkspace;
-    irVersion: string | undefined;
+    irVersion: string;
     language: generatorsYml.GenerationLanguage | undefined;
     fixtures: string[];
     docker: ParsedDockerName;
@@ -214,7 +214,7 @@ export async function acquireLocksAndRunTest({
 }: {
     id: string;
     lock: Semaphore;
-    irVersion: string | undefined;
+    irVersion: string;
     outputVersion: string | undefined;
     language: generatorsYml.GenerationLanguage | undefined;
     fixture: string;
@@ -282,7 +282,7 @@ async function testWithWriteToDisk({
 }: {
     id: string;
     fixture: string;
-    irVersion: string | undefined;
+    irVersion: string;
     outputVersion: string | undefined;
     language: generatorsYml.GenerationLanguage | undefined;
     docker: ParsedDockerName;
@@ -301,29 +301,20 @@ async function testWithWriteToDisk({
 }): Promise<TestResult> {
     const metrics: TestCaseMetrics = {};
     try {
-        const workspace = await loadAPIWorkspace({
+        const fernWorkspace = await convertSeedWorkspaceToFernWorkspace({
             absolutePathToWorkspace,
-            context: taskContext,
-            cliVersion: "DUMMY",
-            workspaceName: fixture
+            taskContext,
+            fixture
         });
-        if (!workspace.didSucceed) {
-            taskContext.logger.info(`Failed to load workspace for fixture ${fixture}`);
+        if (fernWorkspace == null) {
             return {
                 type: "failure",
                 cause: "invalid-fixture",
-                message: Object.entries(workspace.failures)
-                    .map(([file, reason]) => `${file}: ${reason.type}`)
-                    .join("\n"),
+                message: "Failed to load workspace",
                 id,
                 metrics
             };
         }
-        const fernWorkspace: FernWorkspace =
-            workspace.workspace.type === "fern"
-                ? workspace.workspace
-                : await convertOpenApiWorkspaceToFernWorkspace(workspace.workspace, taskContext);
-
         const generationStopwatch = new Stopwatch();
         generationStopwatch.start();
         await runDockerForWorkspace({

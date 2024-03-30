@@ -1,0 +1,18 @@
+{
+    "irFilepath": "./ir.json",
+    "output": {
+        "mode": {
+            "type": "downloadFiles"
+        },
+        "path": "../"
+    },
+    "customConfig": null,
+    "workspaceName": "api",
+    "organization": "seed",
+    "environment": {
+        "type": "local"
+    },
+    "dryRun": false,
+    "whitelabel": false,
+    "writeUnitTests": true
+}
