@@ -1,5 +1,5 @@
 import { packageUtils } from "@fern-api/csharp-codegen";
-import { AbstractGeneratorCli } from "@fern-api/csharp-generator-cli";
+import { AbstractGeneratorCli } from "@fern-api/csharp-generator-commons";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { GeneratorContext, getPackageName as getPackageNameFromPublishConfig } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";

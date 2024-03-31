@@ -1,4 +1,4 @@
-import { BaseCustomConfigSchema } from "@fern-api/csharp-generator-cli";
+import { BaseCustomConfigSchema } from "@fern-api/csharp-generator-commons";
 import { z } from "zod";
 
 export const ModelCustomConfigSchema = BaseCustomConfigSchema.extend({});

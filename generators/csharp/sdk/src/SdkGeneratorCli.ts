@@ -1,11 +1,11 @@
-import { AbstractGeneratorCli } from "@fern-api/csharp-generator-cli";
+import { AbstractGeneratorCli } from "@fern-api/csharp-generator-commons";
 import { GeneratorContext } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { writeFile } from "fs/promises";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
-export class SdkGeneratorCLI extends AbstractGeneratorCli<SdkCustomConfigSchema> {
+export class SdkGeneratorCLI extends AbstractCsharp<SdkCustomConfigSchema> {
     protected parseCustomConfig(customConfig: unknown): SdkCustomConfigSchema {
         const parsed = customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : undefined;
         return parsed ?? {};
