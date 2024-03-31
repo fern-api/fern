@@ -7,14 +7,10 @@ ENV YARN_CACHE_FOLDER=/.yarn
 
 COPY generators/csharp/model/dist /dist
 
-# Copy over the asIs files
-COPY generators/csharp/cli/src/asIs /asIs/cli
-COPY generators/csharp/codegen/src/asIs /asIs/codegen
-
 # Copy over node contents to be able to run the compiled CLI
 COPY --from=node /usr/local/bin/node /usr/local/bin/
 COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
     && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
-ENTRYPOINT ["node", "/dist/cli.cjs", "csharp-model"]
+ENTRYPOINT ["node", "/dist/cli.cjs"]
