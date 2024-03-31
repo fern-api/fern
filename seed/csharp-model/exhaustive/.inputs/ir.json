@@ -425,11 +425,11 @@
                             "originalName": "object",
                             "camelCase": {
                                 "unsafeName": "object",
-                                "safeName": "object"
+                                "safeName": "object_"
                             },
                             "snakeCase": {
                                 "unsafeName": "object",
-                                "safeName": "object"
+                                "safeName": "object_"
                             },
                             "screamingSnakeCase": {
                                 "unsafeName": "OBJECT",
@@ -466,11 +466,11 @@
                         "originalName": "object",
                         "camelCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "snakeCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "OBJECT",
@@ -494,11 +494,11 @@
                                 "originalName": "string",
                                 "camelCase": {
                                     "unsafeName": "string",
-                                    "safeName": "string"
+                                    "safeName": "string_"
                                 },
                                 "snakeCase": {
                                     "unsafeName": "string",
-                                    "safeName": "string"
+                                    "safeName": "string_"
                                 },
                                 "screamingSnakeCase": {
                                     "unsafeName": "STRING",
@@ -638,11 +638,11 @@
                                 "originalName": "bool",
                                 "camelCase": {
                                     "unsafeName": "bool",
-                                    "safeName": "bool"
+                                    "safeName": "bool_"
                                 },
                                 "snakeCase": {
                                     "unsafeName": "bool",
-                                    "safeName": "bool"
+                                    "safeName": "bool_"
                                 },
                                 "screamingSnakeCase": {
                                     "unsafeName": "BOOL",
@@ -860,11 +860,11 @@
                                 "originalName": "set",
                                 "camelCase": {
                                     "unsafeName": "set",
-                                    "safeName": "set"
+                                    "safeName": "set_"
                                 },
                                 "snakeCase": {
                                     "unsafeName": "set",
-                                    "safeName": "set"
+                                    "safeName": "set_"
                                 },
                                 "screamingSnakeCase": {
                                     "unsafeName": "SET",
@@ -995,11 +995,11 @@
                             "originalName": "object",
                             "camelCase": {
                                 "unsafeName": "object",
-                                "safeName": "object"
+                                "safeName": "object_"
                             },
                             "snakeCase": {
                                 "unsafeName": "object",
-                                "safeName": "object"
+                                "safeName": "object_"
                             },
                             "screamingSnakeCase": {
                                 "unsafeName": "OBJECT",
@@ -1036,11 +1036,11 @@
                         "originalName": "object",
                         "camelCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "snakeCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "OBJECT",
@@ -1064,11 +1064,11 @@
                                 "originalName": "string",
                                 "camelCase": {
                                     "unsafeName": "string",
-                                    "safeName": "string"
+                                    "safeName": "string_"
                                 },
                                 "snakeCase": {
                                     "unsafeName": "string",
-                                    "safeName": "string"
+                                    "safeName": "string_"
                                 },
                                 "screamingSnakeCase": {
                                     "unsafeName": "STRING",
@@ -1141,11 +1141,11 @@
                             "originalName": "object",
                             "camelCase": {
                                 "unsafeName": "object",
-                                "safeName": "object"
+                                "safeName": "object_"
                             },
                             "snakeCase": {
                                 "unsafeName": "object",
-                                "safeName": "object"
+                                "safeName": "object_"
                             },
                             "screamingSnakeCase": {
                                 "unsafeName": "OBJECT",
@@ -1182,11 +1182,11 @@
                         "originalName": "object",
                         "camelCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "snakeCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "OBJECT",
@@ -1307,11 +1307,11 @@
                             "originalName": "object",
                             "camelCase": {
                                 "unsafeName": "object",
-                                "safeName": "object"
+                                "safeName": "object_"
                             },
                             "snakeCase": {
                                 "unsafeName": "object",
-                                "safeName": "object"
+                                "safeName": "object_"
                             },
                             "screamingSnakeCase": {
                                 "unsafeName": "OBJECT",
@@ -1348,11 +1348,11 @@
                         "originalName": "object",
                         "camelCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "snakeCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "OBJECT",
@@ -1376,11 +1376,11 @@
                                 "originalName": "string",
                                 "camelCase": {
                                     "unsafeName": "string",
-                                    "safeName": "string"
+                                    "safeName": "string_"
                                 },
                                 "snakeCase": {
                                     "unsafeName": "string",
-                                    "safeName": "string"
+                                    "safeName": "string_"
                                 },
                                 "screamingSnakeCase": {
                                     "unsafeName": "STRING",
@@ -1479,11 +1479,11 @@
                                                 "originalName": "object",
                                                 "camelCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "snakeCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "screamingSnakeCase": {
                                                     "unsafeName": "OBJECT",
@@ -1520,11 +1520,11 @@
                                             "originalName": "object",
                                             "camelCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "snakeCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "screamingSnakeCase": {
                                                 "unsafeName": "OBJECT",
@@ -1598,11 +1598,11 @@
                             "originalName": "object",
                             "camelCase": {
                                 "unsafeName": "object",
-                                "safeName": "object"
+                                "safeName": "object_"
                             },
                             "snakeCase": {
                                 "unsafeName": "object",
-                                "safeName": "object"
+                                "safeName": "object_"
                             },
                             "screamingSnakeCase": {
                                 "unsafeName": "OBJECT",
@@ -1639,11 +1639,11 @@
                         "originalName": "object",
                         "camelCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "snakeCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "OBJECT",
@@ -1667,11 +1667,11 @@
                                 "originalName": "string",
                                 "camelCase": {
                                     "unsafeName": "string",
-                                    "safeName": "string"
+                                    "safeName": "string_"
                                 },
                                 "snakeCase": {
                                     "unsafeName": "string",
-                                    "safeName": "string"
+                                    "safeName": "string_"
                                 },
                                 "screamingSnakeCase": {
                                     "unsafeName": "STRING",
@@ -1760,11 +1760,11 @@
                                         "originalName": "object",
                                         "camelCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "screamingSnakeCase": {
                                             "unsafeName": "OBJECT",
@@ -1801,11 +1801,11 @@
                                     "originalName": "object",
                                     "camelCase": {
                                         "unsafeName": "object",
-                                        "safeName": "object"
+                                        "safeName": "object_"
                                     },
                                     "snakeCase": {
                                         "unsafeName": "object",
-                                        "safeName": "object"
+                                        "safeName": "object_"
                                     },
                                     "screamingSnakeCase": {
                                         "unsafeName": "OBJECT",
@@ -3025,11 +3025,11 @@
                             "originalName": "object",
                             "camelCase": {
                                 "unsafeName": "object",
-                                "safeName": "object"
+                                "safeName": "object_"
                             },
                             "snakeCase": {
                                 "unsafeName": "object",
-                                "safeName": "object"
+                                "safeName": "object_"
                             },
                             "screamingSnakeCase": {
                                 "unsafeName": "OBJECT",
@@ -3066,11 +3066,11 @@
                         "originalName": "object",
                         "camelCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "snakeCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "OBJECT",
@@ -3153,11 +3153,11 @@
                             "originalName": "object",
                             "camelCase": {
                                 "unsafeName": "object",
-                                "safeName": "object"
+                                "safeName": "object_"
                             },
                             "snakeCase": {
                                 "unsafeName": "object",
-                                "safeName": "object"
+                                "safeName": "object_"
                             },
                             "screamingSnakeCase": {
                                 "unsafeName": "OBJECT",
@@ -3194,11 +3194,11 @@
                         "originalName": "object",
                         "camelCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "snakeCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "OBJECT",
@@ -3260,11 +3260,11 @@
                             "originalName": "object",
                             "camelCase": {
                                 "unsafeName": "object",
-                                "safeName": "object"
+                                "safeName": "object_"
                             },
                             "snakeCase": {
                                 "unsafeName": "object",
-                                "safeName": "object"
+                                "safeName": "object_"
                             },
                             "screamingSnakeCase": {
                                 "unsafeName": "OBJECT",
@@ -3301,11 +3301,11 @@
                         "originalName": "object",
                         "camelCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "snakeCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "OBJECT",
@@ -3388,11 +3388,11 @@
                             "originalName": "object",
                             "camelCase": {
                                 "unsafeName": "object",
-                                "safeName": "object"
+                                "safeName": "object_"
                             },
                             "snakeCase": {
                                 "unsafeName": "object",
-                                "safeName": "object"
+                                "safeName": "object_"
                             },
                             "screamingSnakeCase": {
                                 "unsafeName": "OBJECT",
@@ -3429,11 +3429,11 @@
                         "originalName": "object",
                         "camelCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "snakeCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "OBJECT",
@@ -3495,11 +3495,11 @@
                             "originalName": "object",
                             "camelCase": {
                                 "unsafeName": "object",
-                                "safeName": "object"
+                                "safeName": "object_"
                             },
                             "snakeCase": {
                                 "unsafeName": "object",
-                                "safeName": "object"
+                                "safeName": "object_"
                             },
                             "screamingSnakeCase": {
                                 "unsafeName": "OBJECT",
@@ -3536,11 +3536,11 @@
                         "originalName": "object",
                         "camelCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "snakeCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "OBJECT",
@@ -3623,11 +3623,11 @@
                             "originalName": "object",
                             "camelCase": {
                                 "unsafeName": "object",
-                                "safeName": "object"
+                                "safeName": "object_"
                             },
                             "snakeCase": {
                                 "unsafeName": "object",
-                                "safeName": "object"
+                                "safeName": "object_"
                             },
                             "screamingSnakeCase": {
                                 "unsafeName": "OBJECT",
@@ -3664,11 +3664,11 @@
                         "originalName": "object",
                         "camelCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "snakeCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "OBJECT",
@@ -3730,11 +3730,11 @@
                             "originalName": "object",
                             "camelCase": {
                                 "unsafeName": "object",
-                                "safeName": "object"
+                                "safeName": "object_"
                             },
                             "snakeCase": {
                                 "unsafeName": "object",
-                                "safeName": "object"
+                                "safeName": "object_"
                             },
                             "screamingSnakeCase": {
                                 "unsafeName": "OBJECT",
@@ -3771,11 +3771,11 @@
                         "originalName": "object",
                         "camelCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "snakeCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "OBJECT",
@@ -3858,11 +3858,11 @@
                             "originalName": "object",
                             "camelCase": {
                                 "unsafeName": "object",
-                                "safeName": "object"
+                                "safeName": "object_"
                             },
                             "snakeCase": {
                                 "unsafeName": "object",
-                                "safeName": "object"
+                                "safeName": "object_"
                             },
                             "screamingSnakeCase": {
                                 "unsafeName": "OBJECT",
@@ -3899,11 +3899,11 @@
                         "originalName": "object",
                         "camelCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "snakeCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "OBJECT",
@@ -4454,11 +4454,11 @@
                                                 "originalName": "object",
                                                 "camelCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "snakeCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "screamingSnakeCase": {
                                                     "unsafeName": "OBJECT",
@@ -4495,11 +4495,11 @@
                                             "originalName": "object",
                                             "camelCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "snakeCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "screamingSnakeCase": {
                                                 "unsafeName": "OBJECT",
@@ -4573,11 +4573,11 @@
                                                         "originalName": "object",
                                                         "camelCase": {
                                                             "unsafeName": "object",
-                                                            "safeName": "object"
+                                                            "safeName": "object_"
                                                         },
                                                         "snakeCase": {
                                                             "unsafeName": "object",
-                                                            "safeName": "object"
+                                                            "safeName": "object_"
                                                         },
                                                         "screamingSnakeCase": {
                                                             "unsafeName": "OBJECT",
@@ -4614,11 +4614,11 @@
                                                     "originalName": "object",
                                                     "camelCase": {
                                                         "unsafeName": "object",
-                                                        "safeName": "object"
+                                                        "safeName": "object_"
                                                     },
                                                     "snakeCase": {
                                                         "unsafeName": "object",
-                                                        "safeName": "object"
+                                                        "safeName": "object_"
                                                     },
                                                     "screamingSnakeCase": {
                                                         "unsafeName": "OBJECT",
@@ -4712,11 +4712,11 @@
                                                     "originalName": "object",
                                                     "camelCase": {
                                                         "unsafeName": "object",
-                                                        "safeName": "object"
+                                                        "safeName": "object_"
                                                     },
                                                     "snakeCase": {
                                                         "unsafeName": "object",
-                                                        "safeName": "object"
+                                                        "safeName": "object_"
                                                     },
                                                     "screamingSnakeCase": {
                                                         "unsafeName": "OBJECT",
@@ -4753,11 +4753,11 @@
                                                 "originalName": "object",
                                                 "camelCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "snakeCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "screamingSnakeCase": {
                                                     "unsafeName": "OBJECT",
@@ -4985,11 +4985,11 @@
                                                 "originalName": "object",
                                                 "camelCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "snakeCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "screamingSnakeCase": {
                                                     "unsafeName": "OBJECT",
@@ -5026,11 +5026,11 @@
                                             "originalName": "object",
                                             "camelCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "snakeCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "screamingSnakeCase": {
                                                 "unsafeName": "OBJECT",
@@ -5104,11 +5104,11 @@
                                                         "originalName": "object",
                                                         "camelCase": {
                                                             "unsafeName": "object",
-                                                            "safeName": "object"
+                                                            "safeName": "object_"
                                                         },
                                                         "snakeCase": {
                                                             "unsafeName": "object",
-                                                            "safeName": "object"
+                                                            "safeName": "object_"
                                                         },
                                                         "screamingSnakeCase": {
                                                             "unsafeName": "OBJECT",
@@ -5145,11 +5145,11 @@
                                                     "originalName": "object",
                                                     "camelCase": {
                                                         "unsafeName": "object",
-                                                        "safeName": "object"
+                                                        "safeName": "object_"
                                                     },
                                                     "snakeCase": {
                                                         "unsafeName": "object",
-                                                        "safeName": "object"
+                                                        "safeName": "object_"
                                                     },
                                                     "screamingSnakeCase": {
                                                         "unsafeName": "OBJECT",
@@ -5243,11 +5243,11 @@
                                                     "originalName": "object",
                                                     "camelCase": {
                                                         "unsafeName": "object",
-                                                        "safeName": "object"
+                                                        "safeName": "object_"
                                                     },
                                                     "snakeCase": {
                                                         "unsafeName": "object",
-                                                        "safeName": "object"
+                                                        "safeName": "object_"
                                                     },
                                                     "screamingSnakeCase": {
                                                         "unsafeName": "OBJECT",
@@ -5284,11 +5284,11 @@
                                                 "originalName": "object",
                                                 "camelCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "snakeCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "screamingSnakeCase": {
                                                     "unsafeName": "OBJECT",
@@ -5532,11 +5532,11 @@
                                                 "originalName": "object",
                                                 "camelCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "snakeCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "screamingSnakeCase": {
                                                     "unsafeName": "OBJECT",
@@ -5573,11 +5573,11 @@
                                             "originalName": "object",
                                             "camelCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "snakeCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "screamingSnakeCase": {
                                                 "unsafeName": "OBJECT",
@@ -5655,11 +5655,11 @@
                                                         "originalName": "object",
                                                         "camelCase": {
                                                             "unsafeName": "object",
-                                                            "safeName": "object"
+                                                            "safeName": "object_"
                                                         },
                                                         "snakeCase": {
                                                             "unsafeName": "object",
-                                                            "safeName": "object"
+                                                            "safeName": "object_"
                                                         },
                                                         "screamingSnakeCase": {
                                                             "unsafeName": "OBJECT",
@@ -5696,11 +5696,11 @@
                                                     "originalName": "object",
                                                     "camelCase": {
                                                         "unsafeName": "object",
-                                                        "safeName": "object"
+                                                        "safeName": "object_"
                                                     },
                                                     "snakeCase": {
                                                         "unsafeName": "object",
-                                                        "safeName": "object"
+                                                        "safeName": "object_"
                                                     },
                                                     "screamingSnakeCase": {
                                                         "unsafeName": "OBJECT",
@@ -5798,11 +5798,11 @@
                                                     "originalName": "object",
                                                     "camelCase": {
                                                         "unsafeName": "object",
-                                                        "safeName": "object"
+                                                        "safeName": "object_"
                                                     },
                                                     "snakeCase": {
                                                         "unsafeName": "object",
-                                                        "safeName": "object"
+                                                        "safeName": "object_"
                                                     },
                                                     "screamingSnakeCase": {
                                                         "unsafeName": "OBJECT",
@@ -5839,11 +5839,11 @@
                                                 "originalName": "object",
                                                 "camelCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "snakeCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "screamingSnakeCase": {
                                                     "unsafeName": "OBJECT",
@@ -5957,11 +5957,11 @@
                                                 "originalName": "object",
                                                 "camelCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "snakeCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "screamingSnakeCase": {
                                                     "unsafeName": "OBJECT",
@@ -5998,11 +5998,11 @@
                                             "originalName": "object",
                                             "camelCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "snakeCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "screamingSnakeCase": {
                                                 "unsafeName": "OBJECT",
@@ -6076,11 +6076,11 @@
                                                         "originalName": "object",
                                                         "camelCase": {
                                                             "unsafeName": "object",
-                                                            "safeName": "object"
+                                                            "safeName": "object_"
                                                         },
                                                         "snakeCase": {
                                                             "unsafeName": "object",
-                                                            "safeName": "object"
+                                                            "safeName": "object_"
                                                         },
                                                         "screamingSnakeCase": {
                                                             "unsafeName": "OBJECT",
@@ -6117,11 +6117,11 @@
                                                     "originalName": "object",
                                                     "camelCase": {
                                                         "unsafeName": "object",
-                                                        "safeName": "object"
+                                                        "safeName": "object_"
                                                     },
                                                     "snakeCase": {
                                                         "unsafeName": "object",
-                                                        "safeName": "object"
+                                                        "safeName": "object_"
                                                     },
                                                     "screamingSnakeCase": {
                                                         "unsafeName": "OBJECT",
@@ -6215,11 +6215,11 @@
                                                     "originalName": "object",
                                                     "camelCase": {
                                                         "unsafeName": "object",
-                                                        "safeName": "object"
+                                                        "safeName": "object_"
                                                     },
                                                     "snakeCase": {
                                                         "unsafeName": "object",
-                                                        "safeName": "object"
+                                                        "safeName": "object_"
                                                     },
                                                     "screamingSnakeCase": {
                                                         "unsafeName": "OBJECT",
@@ -6256,11 +6256,11 @@
                                                 "originalName": "object",
                                                 "camelCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "snakeCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "screamingSnakeCase": {
                                                     "unsafeName": "OBJECT",
@@ -7085,11 +7085,11 @@
                                         "originalName": "object",
                                         "camelCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "screamingSnakeCase": {
                                             "unsafeName": "OBJECT",
@@ -7126,11 +7126,11 @@
                                     "originalName": "object",
                                     "camelCase": {
                                         "unsafeName": "object",
-                                        "safeName": "object"
+                                        "safeName": "object_"
                                     },
                                     "snakeCase": {
                                         "unsafeName": "object",
-                                        "safeName": "object"
+                                        "safeName": "object_"
                                     },
                                     "screamingSnakeCase": {
                                         "unsafeName": "OBJECT",
@@ -7198,11 +7198,11 @@
                                                 "originalName": "object",
                                                 "camelCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "snakeCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "screamingSnakeCase": {
                                                     "unsafeName": "OBJECT",
@@ -7239,11 +7239,11 @@
                                             "originalName": "object",
                                             "camelCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "snakeCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "screamingSnakeCase": {
                                                 "unsafeName": "OBJECT",
@@ -7331,11 +7331,11 @@
                                             "originalName": "object",
                                             "camelCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "snakeCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "screamingSnakeCase": {
                                                 "unsafeName": "OBJECT",
@@ -7372,11 +7372,11 @@
                                         "originalName": "object",
                                         "camelCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "screamingSnakeCase": {
                                             "unsafeName": "OBJECT",
@@ -7552,11 +7552,11 @@
                                         "originalName": "object",
                                         "camelCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "screamingSnakeCase": {
                                             "unsafeName": "OBJECT",
@@ -7593,11 +7593,11 @@
                                     "originalName": "object",
                                     "camelCase": {
                                         "unsafeName": "object",
-                                        "safeName": "object"
+                                        "safeName": "object_"
                                     },
                                     "snakeCase": {
                                         "unsafeName": "object",
-                                        "safeName": "object"
+                                        "safeName": "object_"
                                     },
                                     "screamingSnakeCase": {
                                         "unsafeName": "OBJECT",
@@ -7665,11 +7665,11 @@
                                                 "originalName": "object",
                                                 "camelCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "snakeCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "screamingSnakeCase": {
                                                     "unsafeName": "OBJECT",
@@ -7706,11 +7706,11 @@
                                             "originalName": "object",
                                             "camelCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "snakeCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "screamingSnakeCase": {
                                                 "unsafeName": "OBJECT",
@@ -7798,11 +7798,11 @@
                                             "originalName": "object",
                                             "camelCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "snakeCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "screamingSnakeCase": {
                                                 "unsafeName": "OBJECT",
@@ -7839,11 +7839,11 @@
                                         "originalName": "object",
                                         "camelCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "screamingSnakeCase": {
                                             "unsafeName": "OBJECT",
@@ -8019,11 +8019,11 @@
                                         "originalName": "object",
                                         "camelCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "screamingSnakeCase": {
                                             "unsafeName": "OBJECT",
@@ -8060,11 +8060,11 @@
                                     "originalName": "object",
                                     "camelCase": {
                                         "unsafeName": "object",
-                                        "safeName": "object"
+                                        "safeName": "object_"
                                     },
                                     "snakeCase": {
                                         "unsafeName": "object",
-                                        "safeName": "object"
+                                        "safeName": "object_"
                                     },
                                     "screamingSnakeCase": {
                                         "unsafeName": "OBJECT",
@@ -8132,11 +8132,11 @@
                                                 "originalName": "object",
                                                 "camelCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "snakeCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "screamingSnakeCase": {
                                                     "unsafeName": "OBJECT",
@@ -8173,11 +8173,11 @@
                                             "originalName": "object",
                                             "camelCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "snakeCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "screamingSnakeCase": {
                                                 "unsafeName": "OBJECT",
@@ -8265,11 +8265,11 @@
                                             "originalName": "object",
                                             "camelCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "snakeCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "screamingSnakeCase": {
                                                 "unsafeName": "OBJECT",
@@ -8306,11 +8306,11 @@
                                         "originalName": "object",
                                         "camelCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "screamingSnakeCase": {
                                             "unsafeName": "OBJECT",
@@ -8486,11 +8486,11 @@
                             "originalName": "object",
                             "camelCase": {
                                 "unsafeName": "object",
-                                "safeName": "object"
+                                "safeName": "object_"
                             },
                             "snakeCase": {
                                 "unsafeName": "object",
-                                "safeName": "object"
+                                "safeName": "object_"
                             },
                             "screamingSnakeCase": {
                                 "unsafeName": "OBJECT",
@@ -8527,11 +8527,11 @@
                         "originalName": "object",
                         "camelCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "snakeCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "OBJECT",
@@ -8638,11 +8638,11 @@
                                         "originalName": "object",
                                         "camelCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "screamingSnakeCase": {
                                             "unsafeName": "OBJECT",
@@ -8679,11 +8679,11 @@
                                     "originalName": "object",
                                     "camelCase": {
                                         "unsafeName": "object",
-                                        "safeName": "object"
+                                        "safeName": "object_"
                                     },
                                     "snakeCase": {
                                         "unsafeName": "object",
-                                        "safeName": "object"
+                                        "safeName": "object_"
                                     },
                                     "screamingSnakeCase": {
                                         "unsafeName": "OBJECT",
@@ -8751,11 +8751,11 @@
                                                 "originalName": "object",
                                                 "camelCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "snakeCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "screamingSnakeCase": {
                                                     "unsafeName": "OBJECT",
@@ -8792,11 +8792,11 @@
                                             "originalName": "object",
                                             "camelCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "snakeCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "screamingSnakeCase": {
                                                 "unsafeName": "OBJECT",
@@ -8884,11 +8884,11 @@
                                             "originalName": "object",
                                             "camelCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "snakeCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "screamingSnakeCase": {
                                                 "unsafeName": "OBJECT",
@@ -8925,11 +8925,11 @@
                                         "originalName": "object",
                                         "camelCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "screamingSnakeCase": {
                                             "unsafeName": "OBJECT",
@@ -9037,11 +9037,11 @@
                                         "originalName": "object",
                                         "camelCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "screamingSnakeCase": {
                                             "unsafeName": "OBJECT",
@@ -9078,11 +9078,11 @@
                                     "originalName": "object",
                                     "camelCase": {
                                         "unsafeName": "object",
-                                        "safeName": "object"
+                                        "safeName": "object_"
                                     },
                                     "snakeCase": {
                                         "unsafeName": "object",
-                                        "safeName": "object"
+                                        "safeName": "object_"
                                     },
                                     "screamingSnakeCase": {
                                         "unsafeName": "OBJECT",
@@ -9150,11 +9150,11 @@
                                                 "originalName": "object",
                                                 "camelCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "snakeCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "screamingSnakeCase": {
                                                     "unsafeName": "OBJECT",
@@ -9191,11 +9191,11 @@
                                             "originalName": "object",
                                             "camelCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "snakeCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "screamingSnakeCase": {
                                                 "unsafeName": "OBJECT",
@@ -9283,11 +9283,11 @@
                                             "originalName": "object",
                                             "camelCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "snakeCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "screamingSnakeCase": {
                                                 "unsafeName": "OBJECT",
@@ -9324,11 +9324,11 @@
                                         "originalName": "object",
                                         "camelCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "screamingSnakeCase": {
                                             "unsafeName": "OBJECT",
@@ -9436,11 +9436,11 @@
                                         "originalName": "object",
                                         "camelCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "screamingSnakeCase": {
                                             "unsafeName": "OBJECT",
@@ -9477,11 +9477,11 @@
                                     "originalName": "object",
                                     "camelCase": {
                                         "unsafeName": "object",
-                                        "safeName": "object"
+                                        "safeName": "object_"
                                     },
                                     "snakeCase": {
                                         "unsafeName": "object",
-                                        "safeName": "object"
+                                        "safeName": "object_"
                                     },
                                     "screamingSnakeCase": {
                                         "unsafeName": "OBJECT",
@@ -9549,11 +9549,11 @@
                                                 "originalName": "object",
                                                 "camelCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "snakeCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "screamingSnakeCase": {
                                                     "unsafeName": "OBJECT",
@@ -9590,11 +9590,11 @@
                                             "originalName": "object",
                                             "camelCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "snakeCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "screamingSnakeCase": {
                                                 "unsafeName": "OBJECT",
@@ -9682,11 +9682,11 @@
                                             "originalName": "object",
                                             "camelCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "snakeCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "screamingSnakeCase": {
                                                 "unsafeName": "OBJECT",
@@ -9723,11 +9723,11 @@
                                         "originalName": "object",
                                         "camelCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "screamingSnakeCase": {
                                             "unsafeName": "OBJECT",
@@ -9835,11 +9835,11 @@
                                         "originalName": "object",
                                         "camelCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "screamingSnakeCase": {
                                             "unsafeName": "OBJECT",
@@ -9876,11 +9876,11 @@
                                     "originalName": "object",
                                     "camelCase": {
                                         "unsafeName": "object",
-                                        "safeName": "object"
+                                        "safeName": "object_"
                                     },
                                     "snakeCase": {
                                         "unsafeName": "object",
-                                        "safeName": "object"
+                                        "safeName": "object_"
                                     },
                                     "screamingSnakeCase": {
                                         "unsafeName": "OBJECT",
@@ -9948,11 +9948,11 @@
                                                 "originalName": "object",
                                                 "camelCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "snakeCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "screamingSnakeCase": {
                                                     "unsafeName": "OBJECT",
@@ -9989,11 +9989,11 @@
                                             "originalName": "object",
                                             "camelCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "snakeCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "screamingSnakeCase": {
                                                 "unsafeName": "OBJECT",
@@ -10081,11 +10081,11 @@
                                             "originalName": "object",
                                             "camelCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "snakeCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "screamingSnakeCase": {
                                                 "unsafeName": "OBJECT",
@@ -10122,11 +10122,11 @@
                                         "originalName": "object",
                                         "camelCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "screamingSnakeCase": {
                                             "unsafeName": "OBJECT",
@@ -10234,11 +10234,11 @@
                                         "originalName": "object",
                                         "camelCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "screamingSnakeCase": {
                                             "unsafeName": "OBJECT",
@@ -10275,11 +10275,11 @@
                                     "originalName": "object",
                                     "camelCase": {
                                         "unsafeName": "object",
-                                        "safeName": "object"
+                                        "safeName": "object_"
                                     },
                                     "snakeCase": {
                                         "unsafeName": "object",
-                                        "safeName": "object"
+                                        "safeName": "object_"
                                     },
                                     "screamingSnakeCase": {
                                         "unsafeName": "OBJECT",
@@ -10347,11 +10347,11 @@
                                                 "originalName": "object",
                                                 "camelCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "snakeCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "screamingSnakeCase": {
                                                     "unsafeName": "OBJECT",
@@ -10388,11 +10388,11 @@
                                             "originalName": "object",
                                             "camelCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "snakeCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "screamingSnakeCase": {
                                                 "unsafeName": "OBJECT",
@@ -10480,11 +10480,11 @@
                                             "originalName": "object",
                                             "camelCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "snakeCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "screamingSnakeCase": {
                                                 "unsafeName": "OBJECT",
@@ -10521,11 +10521,11 @@
                                         "originalName": "object",
                                         "camelCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "screamingSnakeCase": {
                                             "unsafeName": "OBJECT",
@@ -10637,11 +10637,11 @@
                                                 "originalName": "object",
                                                 "camelCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "snakeCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "screamingSnakeCase": {
                                                     "unsafeName": "OBJECT",
@@ -10678,11 +10678,11 @@
                                             "originalName": "object",
                                             "camelCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "snakeCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "screamingSnakeCase": {
                                                 "unsafeName": "OBJECT",
@@ -10756,11 +10756,11 @@
                                                         "originalName": "object",
                                                         "camelCase": {
                                                             "unsafeName": "object",
-                                                            "safeName": "object"
+                                                            "safeName": "object_"
                                                         },
                                                         "snakeCase": {
                                                             "unsafeName": "object",
-                                                            "safeName": "object"
+                                                            "safeName": "object_"
                                                         },
                                                         "screamingSnakeCase": {
                                                             "unsafeName": "OBJECT",
@@ -10797,11 +10797,11 @@
                                                     "originalName": "object",
                                                     "camelCase": {
                                                         "unsafeName": "object",
-                                                        "safeName": "object"
+                                                        "safeName": "object_"
                                                     },
                                                     "snakeCase": {
                                                         "unsafeName": "object",
-                                                        "safeName": "object"
+                                                        "safeName": "object_"
                                                     },
                                                     "screamingSnakeCase": {
                                                         "unsafeName": "OBJECT",
@@ -10891,11 +10891,11 @@
                                             "originalName": "object",
                                             "camelCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "snakeCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "screamingSnakeCase": {
                                                 "unsafeName": "OBJECT",
@@ -10932,11 +10932,11 @@
                                         "originalName": "object",
                                         "camelCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "screamingSnakeCase": {
                                             "unsafeName": "OBJECT",
@@ -10988,11 +10988,11 @@
                             "originalName": "params",
                             "camelCase": {
                                 "unsafeName": "params",
-                                "safeName": "params"
+                                "safeName": "params_"
                             },
                             "snakeCase": {
                                 "unsafeName": "params",
-                                "safeName": "params"
+                                "safeName": "params_"
                             },
                             "screamingSnakeCase": {
                                 "unsafeName": "PARAMS",
@@ -11029,11 +11029,11 @@
                         "originalName": "params",
                         "camelCase": {
                             "unsafeName": "params",
-                            "safeName": "params"
+                            "safeName": "params_"
                         },
                         "snakeCase": {
                             "unsafeName": "params",
-                            "safeName": "params"
+                            "safeName": "params_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "PARAMS",
@@ -13469,11 +13469,11 @@
                                         "originalName": "string",
                                         "camelCase": {
                                             "unsafeName": "string",
-                                            "safeName": "string"
+                                            "safeName": "string_"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "string",
-                                            "safeName": "string"
+                                            "safeName": "string_"
                                         },
                                         "screamingSnakeCase": {
                                             "unsafeName": "STRING",
@@ -13590,11 +13590,11 @@
                                                 "originalName": "object",
                                                 "camelCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "snakeCase": {
                                                     "unsafeName": "object",
-                                                    "safeName": "object"
+                                                    "safeName": "object_"
                                                 },
                                                 "screamingSnakeCase": {
                                                     "unsafeName": "OBJECT",
@@ -13631,11 +13631,11 @@
                                             "originalName": "object",
                                             "camelCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "snakeCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "screamingSnakeCase": {
                                                 "unsafeName": "OBJECT",
@@ -13765,11 +13765,11 @@
                                             "originalName": "object",
                                             "camelCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "snakeCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "screamingSnakeCase": {
                                                 "unsafeName": "OBJECT",
@@ -13806,11 +13806,11 @@
                                         "originalName": "object",
                                         "camelCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "screamingSnakeCase": {
                                             "unsafeName": "OBJECT",
@@ -14268,11 +14268,11 @@
                                             "originalName": "object",
                                             "camelCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "snakeCase": {
                                                 "unsafeName": "object",
-                                                "safeName": "object"
+                                                "safeName": "object_"
                                             },
                                             "screamingSnakeCase": {
                                                 "unsafeName": "OBJECT",
@@ -14309,11 +14309,11 @@
                                         "originalName": "object",
                                         "camelCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "object",
-                                            "safeName": "object"
+                                            "safeName": "object_"
                                         },
                                         "screamingSnakeCase": {
                                             "unsafeName": "OBJECT",
@@ -15101,11 +15101,11 @@
                 "originalName": "object",
                 "camelCase": {
                     "unsafeName": "object",
-                    "safeName": "object"
+                    "safeName": "object_"
                 },
                 "snakeCase": {
                     "unsafeName": "object",
-                    "safeName": "object"
+                    "safeName": "object_"
                 },
                 "screamingSnakeCase": {
                     "unsafeName": "OBJECT",
@@ -15141,11 +15141,11 @@
                         "originalName": "object",
                         "camelCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "snakeCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "OBJECT",
@@ -15182,11 +15182,11 @@
                     "originalName": "object",
                     "camelCase": {
                         "unsafeName": "object",
-                        "safeName": "object"
+                        "safeName": "object_"
                     },
                     "snakeCase": {
                         "unsafeName": "object",
-                        "safeName": "object"
+                        "safeName": "object_"
                     },
                     "screamingSnakeCase": {
                         "unsafeName": "OBJECT",
@@ -15213,11 +15213,11 @@
                 "originalName": "params",
                 "camelCase": {
                     "unsafeName": "params",
-                    "safeName": "params"
+                    "safeName": "params_"
                 },
                 "snakeCase": {
                     "unsafeName": "params",
-                    "safeName": "params"
+                    "safeName": "params_"
                 },
                 "screamingSnakeCase": {
                     "unsafeName": "PARAMS",
@@ -15253,11 +15253,11 @@
                         "originalName": "params",
                         "camelCase": {
                             "unsafeName": "params",
-                            "safeName": "params"
+                            "safeName": "params_"
                         },
                         "snakeCase": {
                             "unsafeName": "params",
-                            "safeName": "params"
+                            "safeName": "params_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "PARAMS",
@@ -15294,11 +15294,11 @@
                     "originalName": "params",
                     "camelCase": {
                         "unsafeName": "params",
-                        "safeName": "params"
+                        "safeName": "params_"
                     },
                     "snakeCase": {
                         "unsafeName": "params",
-                        "safeName": "params"
+                        "safeName": "params_"
                     },
                     "screamingSnakeCase": {
                         "unsafeName": "PARAMS",
@@ -16113,11 +16113,11 @@
                 "originalName": "object",
                 "camelCase": {
                     "unsafeName": "object",
-                    "safeName": "object"
+                    "safeName": "object_"
                 },
                 "snakeCase": {
                     "unsafeName": "object",
-                    "safeName": "object"
+                    "safeName": "object_"
                 },
                 "screamingSnakeCase": {
                     "unsafeName": "OBJECT",
@@ -16153,11 +16153,11 @@
                         "originalName": "object",
                         "camelCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "snakeCase": {
                             "unsafeName": "object",
-                            "safeName": "object"
+                            "safeName": "object_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "OBJECT",
@@ -16194,11 +16194,11 @@
                     "originalName": "object",
                     "camelCase": {
                         "unsafeName": "object",
-                        "safeName": "object"
+                        "safeName": "object_"
                     },
                     "snakeCase": {
                         "unsafeName": "object",
-                        "safeName": "object"
+                        "safeName": "object_"
                     },
                     "screamingSnakeCase": {
                         "unsafeName": "OBJECT",

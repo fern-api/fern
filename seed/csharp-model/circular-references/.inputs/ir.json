@@ -466,11 +466,11 @@
                                     "originalName": "value",
                                     "camelCase": {
                                         "unsafeName": "value",
-                                        "safeName": "value"
+                                        "safeName": "value_"
                                     },
                                     "snakeCase": {
                                         "unsafeName": "value",
-                                        "safeName": "value"
+                                        "safeName": "value_"
                                     },
                                     "screamingSnakeCase": {
                                         "unsafeName": "VALUE",
@@ -673,11 +673,11 @@
                                     "originalName": "value",
                                     "camelCase": {
                                         "unsafeName": "value",
-                                        "safeName": "value"
+                                        "safeName": "value_"
                                     },
                                     "snakeCase": {
                                         "unsafeName": "value",
-                                        "safeName": "value"
+                                        "safeName": "value_"
                                     },
                                     "screamingSnakeCase": {
                                         "unsafeName": "VALUE",
@@ -894,11 +894,11 @@
                                     "originalName": "value",
                                     "camelCase": {
                                         "unsafeName": "value",
-                                        "safeName": "value"
+                                        "safeName": "value_"
                                     },
                                     "snakeCase": {
                                         "unsafeName": "value",
-                                        "safeName": "value"
+                                        "safeName": "value_"
                                     },
                                     "screamingSnakeCase": {
                                         "unsafeName": "VALUE",
@@ -1016,11 +1016,11 @@
                                     "originalName": "value",
                                     "camelCase": {
                                         "unsafeName": "value",
-                                        "safeName": "value"
+                                        "safeName": "value_"
                                     },
                                     "snakeCase": {
                                         "unsafeName": "value",
-                                        "safeName": "value"
+                                        "safeName": "value_"
                                     },
                                     "screamingSnakeCase": {
                                         "unsafeName": "VALUE",
@@ -1195,11 +1195,11 @@
                                 "originalName": "STRING",
                                 "camelCase": {
                                     "unsafeName": "string",
-                                    "safeName": "string"
+                                    "safeName": "string_"
                                 },
                                 "snakeCase": {
                                     "unsafeName": "string",
-                                    "safeName": "string"
+                                    "safeName": "string_"
                                 },
                                 "screamingSnakeCase": {
                                     "unsafeName": "STRING",

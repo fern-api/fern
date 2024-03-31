@@ -34,11 +34,11 @@
                     "originalName": "Package",
                     "camelCase": {
                         "unsafeName": "package",
-                        "safeName": "package_"
+                        "safeName": "package"
                     },
                     "snakeCase": {
                         "unsafeName": "package",
-                        "safeName": "package_"
+                        "safeName": "package"
                     },
                     "screamingSnakeCase": {
                         "unsafeName": "PACKAGE",
@@ -55,11 +55,11 @@
                             "originalName": "package",
                             "camelCase": {
                                 "unsafeName": "package",
-                                "safeName": "package_"
+                                "safeName": "package"
                             },
                             "snakeCase": {
                                 "unsafeName": "package",
-                                "safeName": "package_"
+                                "safeName": "package"
                             },
                             "screamingSnakeCase": {
                                 "unsafeName": "PACKAGE",
@@ -76,11 +76,11 @@
                         "originalName": "package",
                         "camelCase": {
                             "unsafeName": "package",
-                            "safeName": "package_"
+                            "safeName": "package"
                         },
                         "snakeCase": {
                             "unsafeName": "package",
-                            "safeName": "package_"
+                            "safeName": "package"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "PACKAGE",
@@ -141,11 +141,11 @@
                     "originalName": "Record",
                     "camelCase": {
                         "unsafeName": "record",
-                        "safeName": "record"
+                        "safeName": "record_"
                     },
                     "snakeCase": {
                         "unsafeName": "record",
-                        "safeName": "record"
+                        "safeName": "record_"
                     },
                     "screamingSnakeCase": {
                         "unsafeName": "RECORD",
@@ -162,11 +162,11 @@
                             "originalName": "package",
                             "camelCase": {
                                 "unsafeName": "package",
-                                "safeName": "package_"
+                                "safeName": "package"
                             },
                             "snakeCase": {
                                 "unsafeName": "package",
-                                "safeName": "package_"
+                                "safeName": "package"
                             },
                             "screamingSnakeCase": {
                                 "unsafeName": "PACKAGE",
@@ -183,11 +183,11 @@
                         "originalName": "package",
                         "camelCase": {
                             "unsafeName": "package",
-                            "safeName": "package_"
+                            "safeName": "package"
                         },
                         "snakeCase": {
                             "unsafeName": "package",
-                            "safeName": "package_"
+                            "safeName": "package"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "PACKAGE",
@@ -294,11 +294,11 @@
                             "originalName": "package",
                             "camelCase": {
                                 "unsafeName": "package",
-                                "safeName": "package_"
+                                "safeName": "package"
                             },
                             "snakeCase": {
                                 "unsafeName": "package",
-                                "safeName": "package_"
+                                "safeName": "package"
                             },
                             "screamingSnakeCase": {
                                 "unsafeName": "PACKAGE",
@@ -315,11 +315,11 @@
                         "originalName": "package",
                         "camelCase": {
                             "unsafeName": "package",
-                            "safeName": "package_"
+                            "safeName": "package"
                         },
                         "snakeCase": {
                             "unsafeName": "package",
-                            "safeName": "package_"
+                            "safeName": "package"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "PACKAGE",
@@ -572,11 +572,11 @@
                 "originalName": "package",
                 "camelCase": {
                     "unsafeName": "package",
-                    "safeName": "package_"
+                    "safeName": "package"
                 },
                 "snakeCase": {
                     "unsafeName": "package",
-                    "safeName": "package_"
+                    "safeName": "package"
                 },
                 "screamingSnakeCase": {
                     "unsafeName": "PACKAGE",
@@ -593,11 +593,11 @@
                         "originalName": "package",
                         "camelCase": {
                             "unsafeName": "package",
-                            "safeName": "package_"
+                            "safeName": "package"
                         },
                         "snakeCase": {
                             "unsafeName": "package",
-                            "safeName": "package_"
+                            "safeName": "package"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "PACKAGE",
@@ -614,11 +614,11 @@
                     "originalName": "package",
                     "camelCase": {
                         "unsafeName": "package",
-                        "safeName": "package_"
+                        "safeName": "package"
                     },
                     "snakeCase": {
                         "unsafeName": "package",
-                        "safeName": "package_"
+                        "safeName": "package"
                     },
                     "screamingSnakeCase": {
                         "unsafeName": "PACKAGE",

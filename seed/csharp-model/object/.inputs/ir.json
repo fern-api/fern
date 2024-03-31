@@ -3,11 +3,11 @@
         "originalName": "object",
         "camelCase": {
             "unsafeName": "object",
-            "safeName": "object"
+            "safeName": "object_"
         },
         "snakeCase": {
             "unsafeName": "object",
-            "safeName": "object"
+            "safeName": "object_"
         },
         "screamingSnakeCase": {
             "unsafeName": "OBJECT",
@@ -2268,11 +2268,11 @@
                                                             "originalName": "value",
                                                             "camelCase": {
                                                                 "unsafeName": "value",
-                                                                "safeName": "value"
+                                                                "safeName": "value_"
                                                             },
                                                             "snakeCase": {
                                                                 "unsafeName": "value",
-                                                                "safeName": "value"
+                                                                "safeName": "value_"
                                                             },
                                                             "screamingSnakeCase": {
                                                                 "unsafeName": "VALUE",
@@ -2486,11 +2486,11 @@
                                 "originalName": "value",
                                 "camelCase": {
                                     "unsafeName": "value",
-                                    "safeName": "value"
+                                    "safeName": "value_"
                                 },
                                 "snakeCase": {
                                     "unsafeName": "value",
-                                    "safeName": "value"
+                                    "safeName": "value_"
                                 },
                                 "screamingSnakeCase": {
                                     "unsafeName": "VALUE",
@@ -2606,11 +2606,11 @@
                                         "originalName": "value",
                                         "camelCase": {
                                             "unsafeName": "value",
-                                            "safeName": "value"
+                                            "safeName": "value_"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "value",
-                                            "safeName": "value"
+                                            "safeName": "value_"
                                         },
                                         "screamingSnakeCase": {
                                             "unsafeName": "VALUE",

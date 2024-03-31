@@ -3,11 +3,11 @@
         "originalName": "alias",
         "camelCase": {
             "unsafeName": "alias",
-            "safeName": "alias"
+            "safeName": "alias_"
         },
         "snakeCase": {
             "unsafeName": "alias",
-            "safeName": "alias"
+            "safeName": "alias_"
         },
         "screamingSnakeCase": {
             "unsafeName": "ALIAS",
@@ -436,11 +436,11 @@
                     "originalName": "Object",
                     "camelCase": {
                         "unsafeName": "object",
-                        "safeName": "object"
+                        "safeName": "object_"
                     },
                     "snakeCase": {
                         "unsafeName": "object",
-                        "safeName": "object"
+                        "safeName": "object_"
                     },
                     "screamingSnakeCase": {
                         "unsafeName": "OBJECT",

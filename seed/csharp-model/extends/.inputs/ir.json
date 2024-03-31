@@ -3,11 +3,11 @@
         "originalName": "extends",
         "camelCase": {
             "unsafeName": "extends",
-            "safeName": "extends_"
+            "safeName": "extends"
         },
         "snakeCase": {
             "unsafeName": "extends",
-            "safeName": "extends_"
+            "safeName": "extends"
         },
         "screamingSnakeCase": {
             "unsafeName": "EXTENDS",
