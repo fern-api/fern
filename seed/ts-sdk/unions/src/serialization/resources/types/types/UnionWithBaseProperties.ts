@@ -5,6 +5,7 @@
 import * as core from "../../../../core";
 import * as serializers from "../../..";
 import * as SeedUnions from "../../../../api";
+import { Foo } from "./Foo";
 
 const _Base = core.serialization.object({
     id: core.serialization.string(),
@@ -24,7 +25,7 @@ export const UnionWithBaseProperties: core.serialization.Schema<
                 value: core.serialization.string(),
             })
             .extend(_Base),
-        foo: core.serialization.lazyObject(async () => (await import("../../..")).Foo).extend(_Base),
+        foo: Foo.extend(_Base),
     })
     .transform<SeedUnions.UnionWithBaseProperties>({
         transform: (value) => value,
@@ -44,7 +45,7 @@ export declare namespace UnionWithBaseProperties {
         value: string;
     }
 
-    interface Foo extends _Base, serializers.Foo.Raw {
+    interface Foo extends _Base, Foo.Raw {
         type: "foo";
     }
 

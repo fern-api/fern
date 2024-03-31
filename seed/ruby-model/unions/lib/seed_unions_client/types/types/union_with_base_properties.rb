@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "json"
+require_relative "foo"
 
 module SeedUnionsClient
   class Types
@@ -33,6 +34,8 @@ module SeedUnionsClient
                    json_object.value
                  when "string"
                    json_object.value
+                 when "foo"
+                   Types::Foo.from_json(json_object: json_object)
                  else
                    json_object
                  end
@@ -45,9 +48,14 @@ module SeedUnionsClient
       def to_json(*_args)
         case @discriminant
         when "integer"
+          { "type": @discriminant, "value": @member }.to_json
         when "string"
+          { "type": @discriminant, "value": @member }.to_json
+        when "foo"
+          { **@member.to_json, type: @discriminant }.to_json
+        else
+          { "type": @discriminant, value: @member }.to_json
         end
-        { "type": @discriminant, "value": @member }.to_json
         @member.to_json
       end
 
@@ -61,6 +69,8 @@ module SeedUnionsClient
           obj.is_a?(Integer) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         when "string"
           obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
+        when "foo"
+          Types::Foo.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -84,6 +94,12 @@ module SeedUnionsClient
       # @return [Types::UnionWithBaseProperties]
       def self.string(member:)
         new(member: member, discriminant: "string")
+      end
+
+      # @param member [Types::Foo]
+      # @return [Types::UnionWithBaseProperties]
+      def self.foo(member:)
+        new(member: member, discriminant: "foo")
       end
     end
   end

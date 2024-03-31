@@ -6,6 +6,7 @@ import datetime as dt
 import typing
 
 from ....core.datetime_utils import serialize_datetime
+from .foo import Foo as resources_types_types_foo_Foo
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -22,21 +23,35 @@ class _Factory:
     def string(self, value: str) -> UnionWithBaseProperties:
         return UnionWithBaseProperties(__root__=_UnionWithBaseProperties.String(type="string", value=value))
 
+    def foo(self, value: resources_types_types_foo_Foo) -> UnionWithBaseProperties:
+        return UnionWithBaseProperties(
+            __root__=_UnionWithBaseProperties.Foo(**value.dict(exclude_unset=True), type="foo")
+        )
+
 
 class UnionWithBaseProperties(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
-    def get_as_union(self) -> typing.Union[_UnionWithBaseProperties.Integer, _UnionWithBaseProperties.String]:
+    def get_as_union(
+        self,
+    ) -> typing.Union[_UnionWithBaseProperties.Integer, _UnionWithBaseProperties.String, _UnionWithBaseProperties.Foo]:
         return self.__root__
 
-    def visit(self, integer: typing.Callable[[int], T_Result], string: typing.Callable[[str], T_Result]) -> T_Result:
+    def visit(
+        self,
+        integer: typing.Callable[[int], T_Result],
+        string: typing.Callable[[str], T_Result],
+        foo: typing.Callable[[resources_types_types_foo_Foo], T_Result],
+    ) -> T_Result:
         if self.__root__.type == "integer":
             return integer(self.__root__.value)
         if self.__root__.type == "string":
             return string(self.__root__.value)
+        if self.__root__.type == "foo":
+            return foo(resources_types_types_foo_Foo(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
 
     __root__: typing.Annotated[
-        typing.Union[_UnionWithBaseProperties.Integer, _UnionWithBaseProperties.String],
+        typing.Union[_UnionWithBaseProperties.Integer, _UnionWithBaseProperties.String, _UnionWithBaseProperties.Foo],
         pydantic.Field(discriminator="type"),
     ]
 
@@ -61,6 +76,13 @@ class _UnionWithBaseProperties:
     class String(pydantic.BaseModel):
         type: typing.Literal["string"] = "string"
         value: str
+
+    class Foo(resources_types_types_foo_Foo):
+        type: typing.Literal["foo"] = "foo"
+
+        class Config:
+            allow_population_by_field_name = True
+            populate_by_name = True
 
 
 UnionWithBaseProperties.update_forward_refs()

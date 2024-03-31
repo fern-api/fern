@@ -6,6 +6,7 @@ import datetime as dt
 import typing
 
 from ...core.datetime_utils import serialize_datetime
+from .foo import Foo
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -47,4 +48,14 @@ class UnionWithBaseProperties_String(Base):
         populate_by_name = True
 
 
-UnionWithBaseProperties = typing.Union[UnionWithBaseProperties_Integer, UnionWithBaseProperties_String]
+class UnionWithBaseProperties_Foo(Foo, Base):
+    type: typing.Literal["foo"] = "foo"
+
+    class Config:
+        allow_population_by_field_name = True
+        populate_by_name = True
+
+
+UnionWithBaseProperties = typing.Union[
+    UnionWithBaseProperties_Integer, UnionWithBaseProperties_String, UnionWithBaseProperties_Foo
+]

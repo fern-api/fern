@@ -5,6 +5,7 @@ from .foo import Foo
 from .union import Union, Union_Bar, Union_Foo
 from .union_with_base_properties import (
     UnionWithBaseProperties,
+    UnionWithBaseProperties_Foo,
     UnionWithBaseProperties_Integer,
     UnionWithBaseProperties_String,
 )
@@ -21,6 +22,7 @@ __all__ = [
     "Foo",
     "Union",
     "UnionWithBaseProperties",
+    "UnionWithBaseProperties_Foo",
     "UnionWithBaseProperties_Integer",
     "UnionWithBaseProperties_String",
     "UnionWithDiscriminant",
