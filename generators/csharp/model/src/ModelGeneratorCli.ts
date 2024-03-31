@@ -56,7 +56,7 @@ export class ModelGeneratorCLI extends AbstractCsharpGeneratorCli<ModelCustomCon
 
         const files = new ModelGenerator(clientName, context.ir, context).generateTypes();
         for (const file of files) {
-            await file.write(directoryPrefix);
+            await file.tryWrite(directoryPrefix);
         }
     }
 
@@ -82,7 +82,7 @@ export class ModelGeneratorCLI extends AbstractCsharpGeneratorCli<ModelCustomCon
 
         const files = new ModelGenerator(clientName, context.ir, context).generateTypes();
         for (const file of files) {
-            await file.write(directoryPrefix);
+            await file.tryWrite(directoryPrefix);
         }
     }
 
