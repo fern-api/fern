@@ -264,7 +264,7 @@ export const RESERVED_KEYWORDS: Record<generatorsYml.GenerationLanguage, Set<str
         "while",
         "yield"
     ]),
-    [GenerationLanguage.CSHARP]: new Set([
+    [generatorsYml.GenerationLanguage.CSHARP]: new Set([
         "abstract",
         "as",
         "base",

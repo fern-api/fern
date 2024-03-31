@@ -1,16 +1,19 @@
 import { File, packageUtils } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { GeneratorContext, getPackageName as getPackageNameFromPublishConfig } from "@fern-api/generator-commons";
+import {
+    FernGeneratorExec,
+    GeneratorContext,
+    GeneratorNotificationService,
+    getPackageName as getPackageNameFromPublishConfig,
+    parseGeneratorConfig
+} from "@fern-api/generator-commons";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { execSync } from "child_process";
 import { existsSync } from "fs";
 import { readFile } from "fs/promises";
 import { template } from "lodash";
 import { BaseCustomConfigSchema } from "./BaseCustomConfig";
-import { GeneratorNotificationServiceImpl } from "./GeneratorNotificationService";
 import { loadIntermediateRepresentation } from "./loadIntermediateRepresentation";
 
 const LOG_LEVEL_CONVERSIONS: Record<LogLevel, FernGeneratorExec.logging.LogLevel> = {
@@ -111,7 +114,7 @@ export abstract class AbstractGeneratorCli<CustomConfig extends BaseCustomConfig
 
             // ===========================================================
 
-            await generatorNotificationService?.sendUpdateOrThrow(
+            await generatorNotificationService?.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(FernGeneratorExec.ExitStatusUpdate.successful({}))
             );
         } catch (e) {

@@ -108,6 +108,8 @@ function getGithubPublishInfo({
                 packageName: `fern_${fixtureName}`,
                 registryUrl: ""
             });
+        case "csharp":
+            return undefined;
         default:
             assertNever(language);
     }
@@ -144,6 +146,8 @@ function getPublishInfo({
         case "go":
             throw new Error("Seed doesn't support publish mode in Go!");
         case "ruby":
+            throw new Error("Seed doesn't support publish mode in Ruby!");
+        case "csharp":
             throw new Error("Seed doesn't support publish mode in Ruby!");
         default:
             assertNever(language);
