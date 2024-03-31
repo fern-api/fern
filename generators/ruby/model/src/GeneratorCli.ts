@@ -1,5 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { GeneratorContext, getPackageName, getSdkVersion } from "@fern-api/generator-commons";
+import { AbstractGeneratorContext, getPackageName, getSdkVersion } from "@fern-api/generator-commons";
 import {
     generateBasicTests,
     GeneratedFile,
@@ -72,7 +72,7 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
     private generateTypes(
         gemName: string,
         clientName: string,
-        generatorContext: GeneratorContext,
+        generatorContext: AbstractGeneratorContext,
         intermediateRepresentation: IntermediateRepresentation
     ) {
         const generatedTypeFiles = new TypesGenerator(
@@ -88,7 +88,7 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
         gemName: string,
         clientName: string,
         config: FernGeneratorExec.GeneratorConfig,
-        generatorContext: GeneratorContext,
+        generatorContext: AbstractGeneratorContext,
         intermediateRepresentation: IntermediateRepresentation,
         repoUrl?: string
     ) {
@@ -101,7 +101,7 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
     protected async publishPackage(
         _config: FernGeneratorExec.GeneratorConfig,
         _customConfig: RubyModelCustomConfig,
-        _generatorContext: GeneratorContext,
+        _generatorContext: AbstractGeneratorContext,
         _intermediateRepresentation: IntermediateRepresentation
     ): Promise<void> {
         throw new Error("Unimplemented Exception");
@@ -109,7 +109,7 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
     protected async writeForGithub(
         config: FernGeneratorExec.GeneratorConfig,
         customConfig: RubyModelCustomConfig,
-        generatorContext: GeneratorContext,
+        generatorContext: AbstractGeneratorContext,
         intermediateRepresentation: IntermediateRepresentation,
         githubOutputMode: FernGeneratorExec.GithubOutputMode
     ): Promise<void> {
@@ -148,7 +148,7 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
     protected async writeForDownload(
         config: FernGeneratorExec.GeneratorConfig,
         customConfig: RubyModelCustomConfig,
-        generatorContext: GeneratorContext,
+        generatorContext: AbstractGeneratorContext,
         intermediateRepresentation: IntermediateRepresentation
     ): Promise<void> {
         const gemName = getGemName(

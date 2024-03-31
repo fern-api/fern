@@ -1264,11 +1264,11 @@
                                     "originalName": "value",
                                     "camelCase": {
                                         "unsafeName": "value",
-                                        "safeName": "value"
+                                        "safeName": "value_"
                                     },
                                     "snakeCase": {
                                         "unsafeName": "value",
-                                        "safeName": "value"
+                                        "safeName": "value_"
                                     },
                                     "screamingSnakeCase": {
                                         "unsafeName": "VALUE",
@@ -2092,11 +2092,11 @@
                                 "originalName": "string",
                                 "camelCase": {
                                     "unsafeName": "string",
-                                    "safeName": "string"
+                                    "safeName": "string_"
                                 },
                                 "snakeCase": {
                                     "unsafeName": "string",
-                                    "safeName": "string"
+                                    "safeName": "string_"
                                 },
                                 "screamingSnakeCase": {
                                     "unsafeName": "STRING",
@@ -2116,11 +2116,11 @@
                                     "originalName": "value",
                                     "camelCase": {
                                         "unsafeName": "value",
-                                        "safeName": "value"
+                                        "safeName": "value_"
                                     },
                                     "snakeCase": {
                                         "unsafeName": "value",
-                                        "safeName": "value"
+                                        "safeName": "value_"
                                     },
                                     "screamingSnakeCase": {
                                         "unsafeName": "VALUE",
@@ -2170,11 +2170,11 @@
                                     "originalName": "value",
                                     "camelCase": {
                                         "unsafeName": "value",
-                                        "safeName": "value"
+                                        "safeName": "value_"
                                     },
                                     "snakeCase": {
                                         "unsafeName": "value",
-                                        "safeName": "value"
+                                        "safeName": "value_"
                                     },
                                     "screamingSnakeCase": {
                                         "unsafeName": "VALUE",
@@ -2203,11 +2203,11 @@
                         "originalName": "String",
                         "camelCase": {
                             "unsafeName": "string",
-                            "safeName": "string"
+                            "safeName": "string_"
                         },
                         "snakeCase": {
                             "unsafeName": "string",
-                            "safeName": "string"
+                            "safeName": "string_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "STRING",
@@ -2248,11 +2248,11 @@
                                     "originalName": "string",
                                     "camelCase": {
                                         "unsafeName": "string",
-                                        "safeName": "string"
+                                        "safeName": "string_"
                                     },
                                     "snakeCase": {
                                         "unsafeName": "string",
-                                        "safeName": "string"
+                                        "safeName": "string_"
                                     },
                                     "screamingSnakeCase": {
                                         "unsafeName": "STRING",
@@ -2317,11 +2317,11 @@
                             "originalName": "file",
                             "camelCase": {
                                 "unsafeName": "file",
-                                "safeName": "file"
+                                "safeName": "file_"
                             },
                             "snakeCase": {
                                 "unsafeName": "file",
-                                "safeName": "file"
+                                "safeName": "file_"
                             },
                             "screamingSnakeCase": {
                                 "unsafeName": "FILE",
@@ -2357,11 +2357,11 @@
                             "originalName": "file",
                             "camelCase": {
                                 "unsafeName": "file",
-                                "safeName": "file"
+                                "safeName": "file_"
                             },
                             "snakeCase": {
                                 "unsafeName": "file",
-                                "safeName": "file"
+                                "safeName": "file_"
                             },
                             "screamingSnakeCase": {
                                 "unsafeName": "FILE",
@@ -2867,11 +2867,11 @@
                                 "originalName": "from",
                                 "camelCase": {
                                     "unsafeName": "from",
-                                    "safeName": "from"
+                                    "safeName": "from_"
                                 },
                                 "snakeCase": {
                                     "unsafeName": "from",
-                                    "safeName": "from"
+                                    "safeName": "from_"
                                 },
                                 "screamingSnakeCase": {
                                     "unsafeName": "FROM",
@@ -3659,11 +3659,11 @@
                                         "originalName": "from",
                                         "camelCase": {
                                             "unsafeName": "from",
-                                            "safeName": "from"
+                                            "safeName": "from_"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "from",
-                                            "safeName": "from"
+                                            "safeName": "from_"
                                         },
                                         "screamingSnakeCase": {
                                             "unsafeName": "FROM",
@@ -6407,11 +6407,11 @@
                                         "originalName": "from",
                                         "camelCase": {
                                             "unsafeName": "from",
-                                            "safeName": "from"
+                                            "safeName": "from_"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "from",
-                                            "safeName": "from"
+                                            "safeName": "from_"
                                         },
                                         "screamingSnakeCase": {
                                             "unsafeName": "FROM",
@@ -7760,11 +7760,11 @@
                     "originalName": "File",
                     "camelCase": {
                         "unsafeName": "file",
-                        "safeName": "file"
+                        "safeName": "file_"
                     },
                     "snakeCase": {
                         "unsafeName": "file",
-                        "safeName": "file"
+                        "safeName": "file_"
                     },
                     "screamingSnakeCase": {
                         "unsafeName": "FILE",
@@ -7951,11 +7951,11 @@
                                         "originalName": "File",
                                         "camelCase": {
                                             "unsafeName": "file",
-                                            "safeName": "file"
+                                            "safeName": "file_"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "file",
-                                            "safeName": "file"
+                                            "safeName": "file_"
                                         },
                                         "screamingSnakeCase": {
                                             "unsafeName": "FILE",
@@ -8052,11 +8052,11 @@
                                         "originalName": "File",
                                         "camelCase": {
                                             "unsafeName": "file",
-                                            "safeName": "file"
+                                            "safeName": "file_"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "file",
-                                            "safeName": "file"
+                                            "safeName": "file_"
                                         },
                                         "screamingSnakeCase": {
                                             "unsafeName": "FILE",
@@ -8184,11 +8184,11 @@
                                         "originalName": "File",
                                         "camelCase": {
                                             "unsafeName": "file",
-                                            "safeName": "file"
+                                            "safeName": "file_"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "file",
-                                            "safeName": "file"
+                                            "safeName": "file_"
                                         },
                                         "screamingSnakeCase": {
                                             "unsafeName": "FILE",
@@ -8285,11 +8285,11 @@
                                         "originalName": "File",
                                         "camelCase": {
                                             "unsafeName": "file",
-                                            "safeName": "file"
+                                            "safeName": "file_"
                                         },
                                         "snakeCase": {
                                             "unsafeName": "file",
-                                            "safeName": "file"
+                                            "safeName": "file_"
                                         },
                                         "screamingSnakeCase": {
                                             "unsafeName": "FILE",
@@ -8495,11 +8495,11 @@
                                                 "originalName": "File",
                                                 "camelCase": {
                                                     "unsafeName": "file",
-                                                    "safeName": "file"
+                                                    "safeName": "file_"
                                                 },
                                                 "snakeCase": {
                                                     "unsafeName": "file",
-                                                    "safeName": "file"
+                                                    "safeName": "file_"
                                                 },
                                                 "screamingSnakeCase": {
                                                     "unsafeName": "FILE",
@@ -8883,11 +8883,11 @@
                                                                             "originalName": "File",
                                                                             "camelCase": {
                                                                                 "unsafeName": "file",
-                                                                                "safeName": "file"
+                                                                                "safeName": "file_"
                                                                             },
                                                                             "snakeCase": {
                                                                                 "unsafeName": "file",
-                                                                                "safeName": "file"
+                                                                                "safeName": "file_"
                                                                             },
                                                                             "screamingSnakeCase": {
                                                                                 "unsafeName": "FILE",
@@ -8986,11 +8986,11 @@
                                                                                         "originalName": "File",
                                                                                         "camelCase": {
                                                                                             "unsafeName": "file",
-                                                                                            "safeName": "file"
+                                                                                            "safeName": "file_"
                                                                                         },
                                                                                         "snakeCase": {
                                                                                             "unsafeName": "file",
-                                                                                            "safeName": "file"
+                                                                                            "safeName": "file_"
                                                                                         },
                                                                                         "screamingSnakeCase": {
                                                                                             "unsafeName": "FILE",
@@ -9087,11 +9087,11 @@
                                                                                         "originalName": "File",
                                                                                         "camelCase": {
                                                                                             "unsafeName": "file",
-                                                                                            "safeName": "file"
+                                                                                            "safeName": "file_"
                                                                                         },
                                                                                         "snakeCase": {
                                                                                             "unsafeName": "file",
-                                                                                            "safeName": "file"
+                                                                                            "safeName": "file_"
                                                                                         },
                                                                                         "screamingSnakeCase": {
                                                                                             "unsafeName": "FILE",
@@ -9489,11 +9489,11 @@
                                                                                                                             "originalName": "File",
                                                                                                                             "camelCase": {
                                                                                                                                 "unsafeName": "file",
-                                                                                                                                "safeName": "file"
+                                                                                                                                "safeName": "file_"
                                                                                                                             },
                                                                                                                             "snakeCase": {
                                                                                                                                 "unsafeName": "file",
-                                                                                                                                "safeName": "file"
+                                                                                                                                "safeName": "file_"
                                                                                                                             },
                                                                                                                             "screamingSnakeCase": {
                                                                                                                                 "unsafeName": "FILE",
@@ -9592,11 +9592,11 @@
                                                                                                                                         "originalName": "File",
                                                                                                                                         "camelCase": {
                                                                                                                                             "unsafeName": "file",
-                                                                                                                                            "safeName": "file"
+                                                                                                                                            "safeName": "file_"
                                                                                                                                         },
                                                                                                                                         "snakeCase": {
                                                                                                                                             "unsafeName": "file",
-                                                                                                                                            "safeName": "file"
+                                                                                                                                            "safeName": "file_"
                                                                                                                                         },
                                                                                                                                         "screamingSnakeCase": {
                                                                                                                                             "unsafeName": "FILE",
@@ -9693,11 +9693,11 @@
                                                                                                                                         "originalName": "File",
                                                                                                                                         "camelCase": {
                                                                                                                                             "unsafeName": "file",
-                                                                                                                                            "safeName": "file"
+                                                                                                                                            "safeName": "file_"
                                                                                                                                         },
                                                                                                                                         "snakeCase": {
                                                                                                                                             "unsafeName": "file",
-                                                                                                                                            "safeName": "file"
+                                                                                                                                            "safeName": "file_"
                                                                                                                                         },
                                                                                                                                         "screamingSnakeCase": {
                                                                                                                                             "unsafeName": "FILE",
@@ -12752,11 +12752,11 @@
                                     "originalName": "value",
                                     "camelCase": {
                                         "unsafeName": "value",
-                                        "safeName": "value"
+                                        "safeName": "value_"
                                     },
                                     "snakeCase": {
                                         "unsafeName": "value",
-                                        "safeName": "value"
+                                        "safeName": "value_"
                                     },
                                     "screamingSnakeCase": {
                                         "unsafeName": "VALUE",
@@ -12806,11 +12806,11 @@
                                     "originalName": "value",
                                     "camelCase": {
                                         "unsafeName": "value",
-                                        "safeName": "value"
+                                        "safeName": "value_"
                                     },
                                     "snakeCase": {
                                         "unsafeName": "value",
-                                        "safeName": "value"
+                                        "safeName": "value_"
                                     },
                                     "screamingSnakeCase": {
                                         "unsafeName": "VALUE",
@@ -15140,11 +15140,11 @@
                         "originalName": "String",
                         "camelCase": {
                             "unsafeName": "string",
-                            "safeName": "string"
+                            "safeName": "string_"
                         },
                         "snakeCase": {
                             "unsafeName": "string",
-                            "safeName": "string"
+                            "safeName": "string_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "STRING",
@@ -15364,11 +15364,11 @@
                                 "originalName": "and",
                                 "camelCase": {
                                     "unsafeName": "and",
-                                    "safeName": "and"
+                                    "safeName": "and_"
                                 },
                                 "snakeCase": {
                                     "unsafeName": "and",
-                                    "safeName": "and"
+                                    "safeName": "and_"
                                 },
                                 "screamingSnakeCase": {
                                     "unsafeName": "AND",
@@ -15388,11 +15388,11 @@
                                     "originalName": "value",
                                     "camelCase": {
                                         "unsafeName": "value",
-                                        "safeName": "value"
+                                        "safeName": "value_"
                                     },
                                     "snakeCase": {
                                         "unsafeName": "value",
-                                        "safeName": "value"
+                                        "safeName": "value_"
                                     },
                                     "screamingSnakeCase": {
                                         "unsafeName": "VALUE",
@@ -15418,11 +15418,11 @@
                                 "originalName": "or",
                                 "camelCase": {
                                     "unsafeName": "or",
-                                    "safeName": "or"
+                                    "safeName": "or_"
                                 },
                                 "snakeCase": {
                                     "unsafeName": "or",
-                                    "safeName": "or"
+                                    "safeName": "or_"
                                 },
                                 "screamingSnakeCase": {
                                     "unsafeName": "OR",
@@ -15442,11 +15442,11 @@
                                     "originalName": "value",
                                     "camelCase": {
                                         "unsafeName": "value",
-                                        "safeName": "value"
+                                        "safeName": "value_"
                                     },
                                     "snakeCase": {
                                         "unsafeName": "value",
-                                        "safeName": "value"
+                                        "safeName": "value_"
                                     },
                                     "screamingSnakeCase": {
                                         "unsafeName": "VALUE",
@@ -15475,11 +15475,11 @@
                         "originalName": "And",
                         "camelCase": {
                             "unsafeName": "and",
-                            "safeName": "and"
+                            "safeName": "and_"
                         },
                         "snakeCase": {
                             "unsafeName": "and",
-                            "safeName": "and"
+                            "safeName": "and_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "AND",
@@ -15520,11 +15520,11 @@
                                     "originalName": "and",
                                     "camelCase": {
                                         "unsafeName": "and",
-                                        "safeName": "and"
+                                        "safeName": "and_"
                                     },
                                     "snakeCase": {
                                         "unsafeName": "and",
-                                        "safeName": "and"
+                                        "safeName": "and_"
                                     },
                                     "screamingSnakeCase": {
                                         "unsafeName": "AND",
@@ -15561,11 +15561,11 @@
                         "originalName": "Or",
                         "camelCase": {
                             "unsafeName": "or",
-                            "safeName": "or"
+                            "safeName": "or_"
                         },
                         "snakeCase": {
                             "unsafeName": "or",
-                            "safeName": "or"
+                            "safeName": "or_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "OR",
@@ -15606,11 +15606,11 @@
                                     "originalName": "or",
                                     "camelCase": {
                                         "unsafeName": "or",
-                                        "safeName": "or"
+                                        "safeName": "or_"
                                     },
                                     "snakeCase": {
                                         "unsafeName": "or",
-                                        "safeName": "or"
+                                        "safeName": "or_"
                                     },
                                     "screamingSnakeCase": {
                                         "unsafeName": "OR",
@@ -15910,11 +15910,11 @@
                             "originalName": "file",
                             "camelCase": {
                                 "unsafeName": "file",
-                                "safeName": "file"
+                                "safeName": "file_"
                             },
                             "snakeCase": {
                                 "unsafeName": "file",
-                                "safeName": "file"
+                                "safeName": "file_"
                             },
                             "screamingSnakeCase": {
                                 "unsafeName": "FILE",
@@ -15969,11 +15969,11 @@
                             "originalName": "file",
                             "camelCase": {
                                 "unsafeName": "file",
-                                "safeName": "file"
+                                "safeName": "file_"
                             },
                             "snakeCase": {
                                 "unsafeName": "file",
-                                "safeName": "file"
+                                "safeName": "file_"
                             },
                             "screamingSnakeCase": {
                                 "unsafeName": "FILE",
@@ -16717,11 +16717,11 @@
                             "originalName": "file",
                             "camelCase": {
                                 "unsafeName": "file",
-                                "safeName": "file"
+                                "safeName": "file_"
                             },
                             "snakeCase": {
                                 "unsafeName": "file",
-                                "safeName": "file"
+                                "safeName": "file_"
                             },
                             "screamingSnakeCase": {
                                 "unsafeName": "FILE",
@@ -16757,11 +16757,11 @@
                             "originalName": "file",
                             "camelCase": {
                                 "unsafeName": "file",
-                                "safeName": "file"
+                                "safeName": "file_"
                             },
                             "snakeCase": {
                                 "unsafeName": "file",
-                                "safeName": "file"
+                                "safeName": "file_"
                             },
                             "screamingSnakeCase": {
                                 "unsafeName": "FILE",
@@ -17012,11 +17012,11 @@
                                     "originalName": "File",
                                     "camelCase": {
                                         "unsafeName": "file",
-                                        "safeName": "file"
+                                        "safeName": "file_"
                                     },
                                     "snakeCase": {
                                         "unsafeName": "file",
-                                        "safeName": "file"
+                                        "safeName": "file_"
                                     },
                                     "screamingSnakeCase": {
                                         "unsafeName": "FILE",
@@ -18680,11 +18680,11 @@
                                                             "originalName": "from",
                                                             "camelCase": {
                                                                 "unsafeName": "from",
-                                                                "safeName": "from"
+                                                                "safeName": "from_"
                                                             },
                                                             "snakeCase": {
                                                                 "unsafeName": "from",
-                                                                "safeName": "from"
+                                                                "safeName": "from_"
                                                             },
                                                             "screamingSnakeCase": {
                                                                 "unsafeName": "FROM",
@@ -20236,11 +20236,11 @@
                                                         "originalName": "from",
                                                         "camelCase": {
                                                             "unsafeName": "from",
-                                                            "safeName": "from"
+                                                            "safeName": "from_"
                                                         },
                                                         "snakeCase": {
                                                             "unsafeName": "from",
-                                                            "safeName": "from"
+                                                            "safeName": "from_"
                                                         },
                                                         "screamingSnakeCase": {
                                                             "unsafeName": "FROM",
@@ -21947,11 +21947,11 @@
                 "originalName": "file",
                 "camelCase": {
                     "unsafeName": "file",
-                    "safeName": "file"
+                    "safeName": "file_"
                 },
                 "snakeCase": {
                     "unsafeName": "file",
-                    "safeName": "file"
+                    "safeName": "file_"
                 },
                 "screamingSnakeCase": {
                     "unsafeName": "FILE",
@@ -21968,11 +21968,11 @@
                         "originalName": "file",
                         "camelCase": {
                             "unsafeName": "file",
-                            "safeName": "file"
+                            "safeName": "file_"
                         },
                         "snakeCase": {
                             "unsafeName": "file",
-                            "safeName": "file"
+                            "safeName": "file_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "FILE",
@@ -21989,11 +21989,11 @@
                         "originalName": "file",
                         "camelCase": {
                             "unsafeName": "file",
-                            "safeName": "file"
+                            "safeName": "file_"
                         },
                         "snakeCase": {
                             "unsafeName": "file",
-                            "safeName": "file"
+                            "safeName": "file_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "FILE",
@@ -22046,11 +22046,11 @@
                         "originalName": "file",
                         "camelCase": {
                             "unsafeName": "file",
-                            "safeName": "file"
+                            "safeName": "file_"
                         },
                         "snakeCase": {
                             "unsafeName": "file",
-                            "safeName": "file"
+                            "safeName": "file_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "FILE",
@@ -22086,11 +22086,11 @@
                         "originalName": "file",
                         "camelCase": {
                             "unsafeName": "file",
-                            "safeName": "file"
+                            "safeName": "file_"
                         },
                         "snakeCase": {
                             "unsafeName": "file",
-                            "safeName": "file"
+                            "safeName": "file_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "FILE",
@@ -22161,11 +22161,11 @@
                         "originalName": "file",
                         "camelCase": {
                             "unsafeName": "file",
-                            "safeName": "file"
+                            "safeName": "file_"
                         },
                         "snakeCase": {
                             "unsafeName": "file",
-                            "safeName": "file"
+                            "safeName": "file_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "FILE",
@@ -22220,11 +22220,11 @@
                         "originalName": "file",
                         "camelCase": {
                             "unsafeName": "file",
-                            "safeName": "file"
+                            "safeName": "file_"
                         },
                         "snakeCase": {
                             "unsafeName": "file",
-                            "safeName": "file"
+                            "safeName": "file_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "FILE",
@@ -22311,11 +22311,11 @@
                         "originalName": "file",
                         "camelCase": {
                             "unsafeName": "file",
-                            "safeName": "file"
+                            "safeName": "file_"
                         },
                         "snakeCase": {
                             "unsafeName": "file",
-                            "safeName": "file"
+                            "safeName": "file_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "FILE",
@@ -22351,11 +22351,11 @@
                         "originalName": "file",
                         "camelCase": {
                             "unsafeName": "file",
-                            "safeName": "file"
+                            "safeName": "file_"
                         },
                         "snakeCase": {
                             "unsafeName": "file",
-                            "safeName": "file"
+                            "safeName": "file_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "FILE",

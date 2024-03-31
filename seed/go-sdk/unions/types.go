@@ -147,6 +147,7 @@ type UnionWithBaseProperties struct {
 	Id      string
 	Integer int
 	String  string
+	Foo     *Foo
 }
 
 func (u *UnionWithBaseProperties) UnmarshalJSON(data []byte) error {
@@ -176,6 +177,12 @@ func (u *UnionWithBaseProperties) UnmarshalJSON(data []byte) error {
 			return err
 		}
 		u.String = valueUnmarshaler.String
+	case "foo":
+		value := new(Foo)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		u.Foo = value
 	}
 	return nil
 }
@@ -205,12 +212,25 @@ func (u UnionWithBaseProperties) MarshalJSON() ([]byte, error) {
 		}
 		return json.Marshal(marshaler)
 	}
+	if u.Foo != nil {
+		var marshaler = struct {
+			Type string `json:"type"`
+			Id   string `json:"id"`
+			*Foo
+		}{
+			Type: "foo",
+			Id:   u.Id,
+			Foo:  u.Foo,
+		}
+		return json.Marshal(marshaler)
+	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
 }
 
 type UnionWithBasePropertiesVisitor interface {
 	VisitInteger(int) error
 	VisitString(string) error
+	VisitFoo(*Foo) error
 }
 
 func (u *UnionWithBaseProperties) Accept(visitor UnionWithBasePropertiesVisitor) error {
@@ -219,6 +239,9 @@ func (u *UnionWithBaseProperties) Accept(visitor UnionWithBasePropertiesVisitor)
 	}
 	if u.String != "" {
 		return visitor.VisitString(u.String)
+	}
+	if u.Foo != nil {
+		return visitor.VisitFoo(u.Foo)
 	}
 	return fmt.Errorf("type %T does not define a non-empty union type", u)
 }

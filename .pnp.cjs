@@ -16,8 +16,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:."\
       },\
       {\
-        "name": "@fern-api/csharp-generator-cli",\
-        "reference": "workspace:generators/csharp/cli"\
+        "name": "@fern-api/generator-commons",\
+        "reference": "workspace:generators/commons"\
       },\
       {\
         "name": "@fern-api/csharp-codegen",\
@@ -356,10 +356,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/core"\
       },\
       {\
-        "name": "@fern-api/generator-commons",\
-        "reference": "workspace:packages/generators/commons"\
-      },\
-      {\
         "name": "@fern-api/ir-sdk",\
         "reference": "workspace:packages/ir-sdk"\
       },\
@@ -382,7 +378,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/core", ["workspace:packages/core"]],\
       ["@fern-api/core-utils", ["workspace:packages/commons/core-utils"]],\
       ["@fern-api/csharp-codegen", ["workspace:generators/csharp/codegen"]],\
-      ["@fern-api/csharp-generator-cli", ["workspace:generators/csharp/cli"]],\
       ["@fern-api/docker-utils", ["workspace:packages/cli/generation/local-generation/docker-utils"]],\
       ["@fern-api/docs-preview", ["workspace:packages/cli/docs-preview"]],\
       ["@fern-api/docs-validator", ["workspace:packages/cli/yaml/docs-validator"]],\
@@ -392,7 +387,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/fern-ruby-model", ["workspace:generators/ruby/model"]],\
       ["@fern-api/fern-ruby-sdk", ["workspace:generators/ruby/sdk"]],\
       ["@fern-api/fs-utils", ["workspace:packages/commons/fs-utils"]],\
-      ["@fern-api/generator-commons", ["workspace:packages/generators/commons"]],\
+      ["@fern-api/generator-commons", ["workspace:generators/commons"]],\
       ["@fern-api/init", ["workspace:packages/cli/init"]],\
       ["@fern-api/ir-generator", ["workspace:packages/cli/generation/ir-generator"]],\
       ["@fern-api/ir-migrations", ["workspace:packages/cli/generation/ir-migrations"]],\
@@ -4594,36 +4589,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/csharp-codegen", "workspace:generators/csharp/codegen"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
+            ["@fern-api/generator-commons", "workspace:generators/commons"],\
+            ["@fern-fern/ir-sdk", "npm:32.0.0"],\
             ["@types/jest", "npm:29.0.3"],\
+            ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
+            ["lodash-es", "npm:4.17.21"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
-      ["@fern-api/csharp-generator-cli", [\
-        ["workspace:generators/csharp/cli", {\
-          "packageLocation": "./generators/csharp/cli/",\
-          "packageDependencies": [\
-            ["@fern-api/csharp-generator-cli", "workspace:generators/csharp/cli"],\
-            ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
-            ["@fern-api/generator-commons", "workspace:packages/generators/commons"],\
-            ["@fern-api/logger", "workspace:packages/cli/logger"],\
-            ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
-            ["@fern-fern/ir-sdk", "npm:0.0.3318"],\
-            ["@types/jest", "npm:29.0.3"],\
-            ["@types/node", "npm:18.7.18"],\
-            ["depcheck", "npm:1.4.6"],\
-            ["eslint", "npm:8.56.0"],\
-            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
-            ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
-            ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
@@ -4756,9 +4732,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/csharp/model/",\
           "packageDependencies": [\
             ["@fern-api/fern-csharp-model", "workspace:generators/csharp/model"],\
-            ["@fern-api/csharp-generator-cli", "workspace:generators/csharp/cli"],\
-            ["@fern-api/generator-commons", "workspace:packages/generators/commons"],\
-            ["@fern-fern/generator-exec-sdk", "npm:0.0.687"],\
+            ["@fern-api/csharp-codegen", "workspace:generators/csharp/codegen"],\
+            ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
+            ["@fern-api/generator-commons", "workspace:generators/commons"],\
             ["@fern-fern/ir-sdk", "npm:0.0.3318"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
@@ -4781,8 +4757,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/csharp/sdk/",\
           "packageDependencies": [\
             ["@fern-api/fern-csharp-sdk", "workspace:generators/csharp/sdk"],\
-            ["@fern-api/csharp-generator-cli", "workspace:generators/csharp/cli"],\
-            ["@fern-api/generator-commons", "workspace:packages/generators/commons"],\
+            ["@fern-api/csharp-codegen", "workspace:generators/csharp/codegen"],\
+            ["@fern-api/generator-commons", "workspace:generators/commons"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.687"],\
             ["@fern-fern/ir-sdk", "npm:0.0.3318"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -4807,7 +4783,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-api/fern-ruby-model", "workspace:generators/ruby/model"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
-            ["@fern-api/generator-commons", "workspace:packages/generators/commons"],\
+            ["@fern-api/generator-commons", "workspace:generators/commons"],\
             ["@fern-api/ruby-codegen", "workspace:generators/ruby/codegen"],\
             ["@fern-api/ruby-generator-cli", "workspace:generators/ruby/cli"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.687"],\
@@ -4836,7 +4812,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fern-ruby-sdk", "workspace:generators/ruby/sdk"],\
             ["@fern-api/fern-ruby-model", "workspace:generators/ruby/model"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
-            ["@fern-api/generator-commons", "workspace:packages/generators/commons"],\
+            ["@fern-api/generator-commons", "workspace:generators/commons"],\
             ["@fern-api/ruby-codegen", "workspace:generators/ruby/codegen"],\
             ["@fern-api/ruby-generator-cli", "workspace:generators/ruby/cli"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.687"],\
@@ -4880,10 +4856,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-api/generator-commons", [\
-        ["workspace:packages/generators/commons", {\
-          "packageLocation": "./packages/generators/commons/",\
+        ["workspace:generators/commons", {\
+          "packageLocation": "./generators/commons/",\
           "packageDependencies": [\
-            ["@fern-api/generator-commons", "workspace:packages/generators/commons"],\
+            ["@fern-api/generator-commons", "workspace:generators/commons"],\
+            ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
@@ -5223,7 +5200,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/openapi/",\
           "packageDependencies": [\
             ["@fern-api/openapi-generator", "workspace:generators/openapi"],\
-            ["@fern-api/generator-commons", "workspace:packages/generators/commons"],\
+            ["@fern-api/generator-commons", "workspace:generators/commons"],\
             ["@fern-fern/ir-sdk", "npm:0.0.2828"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.8"],\
@@ -5351,7 +5328,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/postman/",\
           "packageDependencies": [\
             ["@fern-api/postman-generator", "workspace:generators/postman"],\
-            ["@fern-api/generator-commons", "workspace:packages/generators/commons"],\
+            ["@fern-api/generator-commons", "workspace:generators/commons"],\
             ["@fern-fern/ir-sdk", "npm:0.0.2828"],\
             ["@fern-fern/postman-sdk", "npm:0.0.46"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -5505,7 +5482,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-api/ruby-generator-cli", "workspace:generators/ruby/cli"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
-            ["@fern-api/generator-commons", "workspace:packages/generators/commons"],\
+            ["@fern-api/generator-commons", "workspace:generators/commons"],\
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
             ["@fern-fern/ir-sdk", "npm:32.0.0"],\
@@ -6238,7 +6215,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-typescript/abstract-generator-cli", "workspace:generators/typescript/utils/abstract-generator-cli"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
-            ["@fern-api/generator-commons", "workspace:packages/generators/commons"],\
+            ["@fern-api/generator-commons", "workspace:generators/commons"],\
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.687"],\
             ["@fern-fern/ir-sdk", "npm:0.0.16"],\
@@ -6919,7 +6896,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-typescript/sdk-generator-cli", "workspace:generators/typescript/sdk/cli"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
-            ["@fern-api/generator-commons", "workspace:packages/generators/commons"],\
+            ["@fern-api/generator-commons", "workspace:generators/commons"],\
             ["@fern-fern/ir-sdk", "npm:0.0.16"],\
             ["@fern-typescript/abstract-generator-cli", "workspace:generators/typescript/utils/abstract-generator-cli"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\

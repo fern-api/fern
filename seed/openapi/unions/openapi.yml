@@ -204,6 +204,17 @@ components:
               type: string
           required:
             - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - foo
+            - $ref: '#/components/schemas/Foo'
+          required:
+            - type
       required:
         - id
       properties:

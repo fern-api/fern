@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.JsonValue;
 import java.util.Objects;
 import java.util.Optional;
@@ -33,12 +34,20 @@ public final class UnionWithBaseProperties {
         return new UnionWithBaseProperties(new StringValue(value));
     }
 
+    public static UnionWithBaseProperties foo(Foo value) {
+        return new UnionWithBaseProperties(new FooValue(value));
+    }
+
     public boolean isInteger() {
         return value instanceof IntegerValue;
     }
 
     public boolean isString() {
         return value instanceof StringValue;
+    }
+
+    public boolean isFoo() {
+        return value instanceof FooValue;
     }
 
     public boolean _isUnknown() {
@@ -55,6 +64,13 @@ public final class UnionWithBaseProperties {
     public Optional<String> getString() {
         if (isString()) {
             return Optional.of(((StringValue) value).value);
+        }
+        return Optional.empty();
+    }
+
+    public Optional<Foo> getFoo() {
+        if (isFoo()) {
+            return Optional.of(((FooValue) value).value);
         }
         return Optional.empty();
     }
@@ -76,11 +92,17 @@ public final class UnionWithBaseProperties {
 
         T visitString(String string);
 
+        T visitFoo(Foo foo);
+
         T _visitUnknown(Object unknownType);
     }
 
     @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type", visible = true, defaultImpl = _UnknownValue.class)
-    @JsonSubTypes({@JsonSubTypes.Type(IntegerValue.class), @JsonSubTypes.Type(StringValue.class)})
+    @JsonSubTypes({
+        @JsonSubTypes.Type(IntegerValue.class),
+        @JsonSubTypes.Type(StringValue.class),
+        @JsonSubTypes.Type(FooValue.class)
+    })
     @JsonIgnoreProperties(ignoreUnknown = true)
     private interface Value {
         <T> T visit(Visitor<T> visitor);
@@ -144,6 +166,44 @@ public final class UnionWithBaseProperties {
         }
 
         private boolean equalTo(StringValue other) {
+            return value.equals(other.value);
+        }
+
+        @java.lang.Override
+        public int hashCode() {
+            return Objects.hash(this.value);
+        }
+
+        @java.lang.Override
+        public String toString() {
+            return "UnionWithBaseProperties{" + "value: " + value + "}";
+        }
+    }
+
+    @JsonTypeName("foo")
+    private static final class FooValue implements Value {
+        @JsonUnwrapped
+        private Foo value;
+
+        @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+        private FooValue() {}
+
+        private FooValue(Foo value) {
+            this.value = value;
+        }
+
+        @java.lang.Override
+        public <T> T visit(Visitor<T> visitor) {
+            return visitor.visitFoo(value);
+        }
+
+        @java.lang.Override
+        public boolean equals(Object other) {
+            if (this == other) return true;
+            return other instanceof FooValue && equalTo((FooValue) other);
+        }
+
+        private boolean equalTo(FooValue other) {
             return value.equals(other.value);
         }
 

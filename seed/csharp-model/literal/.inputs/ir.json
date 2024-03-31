@@ -553,11 +553,11 @@
                                     "originalName": "async",
                                     "camelCase": {
                                         "unsafeName": "async",
-                                        "safeName": "async"
+                                        "safeName": "async_"
                                     },
                                     "snakeCase": {
                                         "unsafeName": "async",
-                                        "safeName": "async"
+                                        "safeName": "async_"
                                     },
                                     "screamingSnakeCase": {
                                         "unsafeName": "ASYNC",
@@ -787,11 +787,11 @@
                                             "originalName": "async",
                                             "camelCase": {
                                                 "unsafeName": "async",
-                                                "safeName": "async"
+                                                "safeName": "async_"
                                             },
                                             "snakeCase": {
                                                 "unsafeName": "async",
-                                                "safeName": "async"
+                                                "safeName": "async_"
                                             },
                                             "screamingSnakeCase": {
                                                 "unsafeName": "ASYNC",

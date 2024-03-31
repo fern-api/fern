@@ -227,11 +227,11 @@
                         "originalName": "get",
                         "camelCase": {
                             "unsafeName": "get",
-                            "safeName": "get"
+                            "safeName": "get_"
                         },
                         "snakeCase": {
                             "unsafeName": "get",
-                            "safeName": "get"
+                            "safeName": "get_"
                         },
                         "screamingSnakeCase": {
                             "unsafeName": "GET",

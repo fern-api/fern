@@ -121,6 +121,7 @@ type UnionWithBaseProperties struct {
 	Id      string
 	Integer int
 	String  string
+	Foo     *Foo
 }
 
 func NewUnionWithBasePropertiesFromInteger(value int) *UnionWithBaseProperties {
@@ -129,6 +130,10 @@ func NewUnionWithBasePropertiesFromInteger(value int) *UnionWithBaseProperties {
 
 func NewUnionWithBasePropertiesFromString(value string) *UnionWithBaseProperties {
 	return &UnionWithBaseProperties{Type: "string", String: value}
+}
+
+func NewUnionWithBasePropertiesFromFoo(value *Foo) *UnionWithBaseProperties {
+	return &UnionWithBaseProperties{Type: "foo", Foo: value}
 }
 
 func (u *UnionWithBaseProperties) UnmarshalJSON(data []byte) error {
@@ -158,6 +163,12 @@ func (u *UnionWithBaseProperties) UnmarshalJSON(data []byte) error {
 			return err
 		}
 		u.String = valueUnmarshaler.String
+	case "foo":
+		value := new(Foo)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		u.Foo = value
 	}
 	return nil
 }
@@ -188,12 +199,24 @@ func (u UnionWithBaseProperties) MarshalJSON() ([]byte, error) {
 			String: u.String,
 		}
 		return json.Marshal(marshaler)
+	case "foo":
+		var marshaler = struct {
+			Type string `json:"type"`
+			Id   string `json:"id"`
+			*Foo
+		}{
+			Type: "foo",
+			Id:   u.Id,
+			Foo:  u.Foo,
+		}
+		return json.Marshal(marshaler)
 	}
 }
 
 type UnionWithBasePropertiesVisitor interface {
 	VisitInteger(int) error
 	VisitString(string) error
+	VisitFoo(*Foo) error
 }
 
 func (u *UnionWithBaseProperties) Accept(visitor UnionWithBasePropertiesVisitor) error {
@@ -204,6 +227,8 @@ func (u *UnionWithBaseProperties) Accept(visitor UnionWithBasePropertiesVisitor)
 		return visitor.VisitInteger(u.Integer)
 	case "string":
 		return visitor.VisitString(u.String)
+	case "foo":
+		return visitor.VisitFoo(u.Foo)
 	}
 }
 
