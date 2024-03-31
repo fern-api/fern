@@ -85,8 +85,4 @@ export class ModelGeneratorCLI extends AbstractCsharpGeneratorCli<ModelCustomCon
             await file.tryWrite(directoryPrefix);
         }
     }
-
-    protected shouldTolerateRepublish(customConfig: ModelCustomConfigSchema): boolean {
-        return false;
-    }
 }

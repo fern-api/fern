@@ -110,12 +110,13 @@ async function getGeneratorConfig(): Promise<FernGeneratorExec.GeneratorConfig> 
     }
     const rawConfig = await readFile(pathToConfig);
     console.log(`Reading ${pathToConfig}`);
-    const parsedConfig = JSON.parse(rawConfig.toString());
-    const validatedConfig = await GeneratorExecParsing.GeneratorConfig.parse(parsedConfig, {
+    const rawConfigString = rawConfig.toString();
+    console.log(`Contents are ${rawConfigString}`);
+    const validatedConfig = await GeneratorExecParsing.GeneratorConfig.parse(JSON.parse(rawConfigString), {
         unrecognizedObjectKeys: "passthrough"
     });
     if (!validatedConfig.ok) {
         throw new Error(`The generator config failed to pass validation. ${validatedConfig.errors.join(", ")}`);
     }
-    return parsedConfig.value;
+    return validatedConfig.value;
 }
