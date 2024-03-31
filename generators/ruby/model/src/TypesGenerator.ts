@@ -1,4 +1,4 @@
-import { GeneratorContext } from "@fern-api/generator-commons";
+import { AbstractGeneratorContext } from "@fern-api/generator-commons";
 import { ClassReferenceFactory, Class_, GeneratedRubyFile, LocationGenerator, Module_ } from "@fern-api/ruby-codegen";
 import {
     AliasTypeDeclaration,
@@ -30,7 +30,7 @@ export class TypesGenerator {
     public flattenedProperties: Map<TypeId, ObjectProperty[]>;
 
     private types: Map<TypeId, TypeDeclaration>;
-    private gc: GeneratorContext;
+    private gc: AbstractGeneratorContext;
     private classReferenceFactory: ClassReferenceFactory;
     private locationGenerator: LocationGenerator;
     private gemName: string;
@@ -39,7 +39,7 @@ export class TypesGenerator {
     constructor(
         gemName: string,
         clientName: string,
-        generatorContext: GeneratorContext,
+        generatorContext: AbstractGeneratorContext,
         intermediateRepresentation: IntermediateRepresentation
     ) {
         this.types = new Map();

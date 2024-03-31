@@ -1,25 +1,16 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
-    GeneratorContext,
-    GeneratorNotificationService,
-    GeneratorExecParsing,
+    AbstractGeneratorContext,
     FernGeneratorExec,
+    GeneratorNotificationService,
     parseGeneratorConfig
 } from "@fern-api/generator-commons";
-import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
+import { Logger, LogLevel } from "@fern-api/logger";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { cp, readdir, readFile } from "fs/promises";
+import { cp, readdir } from "fs/promises";
 import tmp from "tmp-promise";
 import { loadIntermediateRepresentation } from "./loadIntermediateRepresentation";
-
-const LOG_LEVEL_CONVERSIONS: Record<LogLevel, FernGeneratorExec.logging.LogLevel> = {
-    [LogLevel.Debug]: FernGeneratorExec.logging.LogLevel.Debug,
-    [LogLevel.Info]: FernGeneratorExec.logging.LogLevel.Info,
-    [LogLevel.Warn]: FernGeneratorExec.logging.LogLevel.Warn,
-    [LogLevel.Error]: FernGeneratorExec.logging.LogLevel.Error
-};
-
 export abstract class AbstractGeneratorCli<CustomConfig> {
     public async runCli(): Promise<void> {
         const pathToConfig = process.argv[process.argv.length - 1];
@@ -35,37 +26,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
 
         try {
             const customConfig = this.parseCustomConfig(config.customConfig);
-
-            const logger = createLogger((level, ...message) => {
-                CONSOLE_LOGGER.log(level, ...message);
-
-                // kick off log, but don't wait for it
-                try {
-                    void generatorNotificationService.sendUpdate(
-                        FernGeneratorExec.GeneratorUpdate.log({
-                            message: message.join(" "),
-                            level: LOG_LEVEL_CONVERSIONS[level]
-                        })
-                    );
-                } catch (e) {
-                    // eslint-disable-next-line no-console
-                    console.warn("Encountered error when sending update", e);
-                }
-            });
-
-            // TODO(fern-api): Dependent on update to Fiddle def: https://github.com/fern-api/fiddle/blob/main/fern/apis/generator-exec/definition/logging.yml#L26
-            // await generatorNotificationService.sendUpdateOrThrow(
-            //     FernGeneratorExec.GeneratorUpdate.initV2({
-            //         publishingToRegistry: config.output.mode._visit<FernGeneratorExec.RegistryType | undefined>({
-            //             publish: () => this.registry,
-            //             github: () => undefined,
-            //             downloadFiles: () => undefined,
-            //             _other: () => undefined,
-            //         })
-            //     })
-            // );
-
-            const generatorContext = new GeneratorContextImpl(logger);
+            const generatorContext = new GeneratorContextImpl(config, generatorNotificationService);
             if (!generatorContext.didSucceed()) {
                 throw new Error("Failed to generate ruby project.");
             }
@@ -126,20 +87,20 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     protected abstract publishPackage(
         config: FernGeneratorExec.GeneratorConfig,
         customConfig: CustomConfig,
-        generatorContext: GeneratorContext,
+        generatorContext: AbstractGeneratorContext,
         intermediateRepresentation: IntermediateRepresentation
     ): Promise<void>;
     protected abstract writeForGithub(
         config: FernGeneratorExec.GeneratorConfig,
         customConfig: CustomConfig,
-        generatorContext: GeneratorContext,
+        generatorContext: AbstractGeneratorContext,
         intermediateRepresentation: IntermediateRepresentation,
         githubOutputMode: FernGeneratorExec.GithubOutputMode
     ): Promise<void>;
     protected abstract writeForDownload(
         config: FernGeneratorExec.GeneratorConfig,
         customConfig: CustomConfig,
-        generatorContext: GeneratorContext,
+        generatorContext: AbstractGeneratorContext,
         intermediateRepresentation: IntermediateRepresentation
     ): Promise<void>;
 
@@ -165,10 +126,15 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
     }
 }
 
-class GeneratorContextImpl implements GeneratorContext {
+class GeneratorContextImpl extends AbstractGeneratorContext {
     private isSuccess = true;
 
-    constructor(public readonly logger: Logger) {}
+    constructor(
+        public readonly config: FernGeneratorExec.config.GeneratorConfig,
+        public readonly generatorNotificationService: GeneratorNotificationService
+    ) {
+        super(config, generatorNotificationService);
+    }
 
     public fail(): void {
         this.isSuccess = false;

@@ -1,4 +1,4 @@
-import { GeneratorContext } from "@fern-api/generator-commons";
+import { AbstractGeneratorContext } from "@fern-api/generator-commons";
 import { ClassReferenceFactory, Class_, GeneratedRubyFile, LocationGenerator, Module_ } from "@fern-api/ruby-codegen";
 import {
     HttpService,
@@ -32,7 +32,7 @@ export class ClientsGenerator {
     private types: Map<TypeId, TypeDeclaration>;
     private services: Map<ServiceId, HttpService>;
     private subpackages: Map<SubpackageId, Subpackage>;
-    private gc: GeneratorContext;
+    private gc: AbstractGeneratorContext;
     private irBasePath: string;
     private generatedClasses: Map<TypeId, Class_>;
     private flattenedProperties: Map<TypeId, ObjectProperty[]>;
@@ -52,7 +52,7 @@ export class ClientsGenerator {
     constructor(
         gemName: string,
         clientName: string,
-        generatorContext: GeneratorContext,
+        generatorContext: AbstractGeneratorContext,
         intermediateRepresentation: IntermediateRepresentation,
         sdkVersion: string | undefined,
         generatedClasses: Map<TypeId, Class_>,

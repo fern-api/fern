@@ -1,5 +1,4 @@
 import { csharp, CSharpFile, PrebuiltUtilities } from "@fern-api/csharp-codegen";
-import { GeneratorContext } from "@fern-api/generator-commons";
 import {
     AliasTypeDeclaration,
     DeclaredTypeName,
@@ -13,6 +12,7 @@ import {
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { getNameFromIrName } from "./GeneratorUtilities";
+import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { ReferenceGenerator } from "./ReferenceGenerator";
 
 export class ModelGenerator {
@@ -20,14 +20,14 @@ export class ModelGenerator {
 
     private types: Map<TypeId, TypeDeclaration>;
     private flattenedProperties: Map<TypeId, ObjectProperty[]>;
-    private generatorContext: GeneratorContext;
+    private generatorContext: ModelGeneratorContext;
     private referenceGenerator: ReferenceGenerator;
     private prebuiltUtilities: PrebuiltUtilities;
 
     constructor(
         rootModule: string,
         intermediateRepresentation: IntermediateRepresentation,
-        generatorContext: GeneratorContext
+        generatorContext: ModelGeneratorContext
     ) {
         this.rootModule = rootModule;
         this.generatorContext = generatorContext;

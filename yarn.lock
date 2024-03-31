@@ -2632,6 +2632,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/fern-csharp-sdk@workspace:generators/csharp/sdk"
   dependencies:
+    "@fern-api/csharp-codegen": "workspace:*"
     "@fern-api/generator-commons": "workspace:*"
     "@fern-fern/generator-exec-sdk": 0.0.687
     "@fern-fern/ir-sdk": 0.0.3318

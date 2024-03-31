@@ -4,11 +4,15 @@ import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { readFile } from "fs/promises";
 import { AbstractCsharpGeneratorContext } from "./AbstractCsharpGeneratorContext";
 
-export abstract class AbstractCsharpGeneratorCli<CustomConfig> extends AbstractGeneratorCli<
+export abstract class AbstractCsharpGeneratorCli<
     CustomConfig,
-    IntermediateRepresentation,
-    AbstractCsharpGeneratorContext<CustomConfig>
-> {
+    CsharpGeneratorContext extends AbstractCsharpGeneratorContext<CustomConfig>
+> extends AbstractGeneratorCli<CustomConfig, IntermediateRepresentation, CsharpGeneratorContext> {
+    /**
+     * Parses the IR for the Csharp generators
+     * @param irFilepath
+     * @returns
+     */
     protected async parseIntermediateRepresentation(irFilepath: string): Promise<IntermediateRepresentation> {
         const rawIr = (await readFile(irFilepath)).toString();
         const parsedIr = JSON.parse(rawIr);

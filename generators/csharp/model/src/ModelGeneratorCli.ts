@@ -1,85 +1,86 @@
-import { packageUtils } from "@fern-api/csharp-codegen";
-import { AbstractGeneratorCli } from "@fern-api/csharp-generator-commons";
+import { AbstractCsharpGeneratorCli, packageUtils } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { GeneratorContext, getPackageName as getPackageNameFromPublishConfig } from "@fern-api/generator-commons";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import {
+    FernGeneratorExec,
+    GeneratorNotificationService,
+    getPackageName as getPackageNameFromPublishConfig
+} from "@fern-api/generator-commons";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 import { ModelGenerator } from "./ModelGenerator";
+import { ModelGeneratorContext } from "./ModelGeneratorContext";
 
-export class ModelGeneratorCLI extends AbstractGeneratorCli<ModelCustomConfigSchema> {
-    protected parseCustomConfig(customConfig: unknown): ModelCustomConfigSchema {
+export class ModelGeneratorCLI extends AbstractCsharpGeneratorCli<ModelCustomConfigSchema, ModelGeneratorContext> {
+    protected constructContext({
+        ir,
+        customConfig,
+        generatorConfig,
+        generatorNotificationService
+    }: {
+        ir: IntermediateRepresentation;
+        customConfig: ModelCustomConfigSchema;
+        generatorConfig: FernGeneratorExec.GeneratorConfig;
+        generatorNotificationService: GeneratorNotificationService;
+    }): ModelGeneratorContext {
+        return new ModelGeneratorContext(ir, generatorConfig, customConfig, generatorNotificationService);
+    }
+
+    protected parseCustomConfigOrThrow(customConfig: unknown): ModelCustomConfigSchema {
         const parsed = customConfig != null ? ModelCustomConfigSchema.parse(customConfig) : undefined;
         return parsed ?? {};
     }
 
-    protected async publishPackage(
-        config: FernGeneratorExec.GeneratorConfig,
-        customConfig: ModelCustomConfigSchema,
-        generatorContext: GeneratorContext,
-        intermediateRepresentation: IntermediateRepresentation
-    ): Promise<void> {
+    protected async publishPackage(context: ModelGeneratorContext): Promise<void> {
         throw new Error("Method not implemented.");
     }
 
-    protected async writeForGithub(
-        config: FernGeneratorExec.GeneratorConfig,
-        customConfig: ModelCustomConfigSchema,
-        generatorContext: GeneratorContext,
-        intermediateRepresentation: IntermediateRepresentation,
-        githubOutputMode: FernGeneratorExec.GithubOutputMode
-    ): Promise<void> {
-        generatorContext.logger.info("Received IR, processing model generation for Github.");
+    protected async writeForGithub(context: ModelGeneratorContext): Promise<void> {
+        context.logger.info("Received IR, processing model generation for Github.");
         const packageName = packageUtils.getPackageName(
-            config.organization,
-            intermediateRepresentation.apiName.pascalCase.safeName,
-            customConfig.clientClassName,
-            getPackageNameFromPublishConfig(config)
+            context.config.organization,
+            context.ir.apiName.pascalCase.safeName,
+            "Client",
+            getPackageNameFromPublishConfig(context.config)
         );
         const directoryPrefix = join(
-            AbsoluteFilePath.of(config.output.path),
+            AbsoluteFilePath.of(context.config.output.path),
             RelativeFilePath.of("src"),
             RelativeFilePath.of(packageName)
         );
 
         const clientName = packageUtils.getClientName(
-            config.organization,
-            intermediateRepresentation.apiName.pascalCase.safeName,
-            customConfig.clientClassName
+            context.config.organization,
+            context.ir.apiName.pascalCase.safeName,
+            "Client"
         );
 
-        const files = new ModelGenerator(clientName, intermediateRepresentation, generatorContext).generateTypes();
+        const files = new ModelGenerator(clientName, context.ir, context).generateTypes();
         for (const file of files) {
             await file.write(directoryPrefix);
         }
     }
 
-    protected async writeForDownload(
-        config: FernGeneratorExec.GeneratorConfig,
-        customConfig: ModelCustomConfigSchema,
-        generatorContext: GeneratorContext,
-        intermediateRepresentation: IntermediateRepresentation
-    ): Promise<void> {
-        generatorContext.logger.info("Received IR, processing model generation for download.");
+    protected async writeForDownload(context: ModelGeneratorContext): Promise<void> {
+        context.logger.info("Received IR, processing model generation for download.");
         const packageName = packageUtils.getPackageName(
-            config.organization,
-            intermediateRepresentation.apiName.pascalCase.safeName,
-            customConfig.clientClassName,
-            getPackageNameFromPublishConfig(config)
+            context.config.organization,
+            context.ir.apiName.pascalCase.safeName,
+            "Client",
+            getPackageNameFromPublishConfig(context.config)
         );
         const directoryPrefix = join(
-            AbsoluteFilePath.of(config.output.path),
+            AbsoluteFilePath.of(context.config.output.path),
             RelativeFilePath.of("src"),
             RelativeFilePath.of(packageName)
         );
 
         const clientName = packageUtils.getClientName(
-            config.organization,
-            intermediateRepresentation.apiName.pascalCase.safeName,
-            customConfig.clientClassName
+            context.config.organization,
+            context.ir.apiName.pascalCase.safeName,
+            "Client"
         );
 
-        const files = new ModelGenerator(clientName, intermediateRepresentation, generatorContext).generateTypes();
+        const files = new ModelGenerator(clientName, context.ir, context).generateTypes();
         for (const file of files) {
             await file.write(directoryPrefix);
         }
