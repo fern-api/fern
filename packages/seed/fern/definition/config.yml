@@ -9,6 +9,7 @@ types:
       generatorType: GeneratorType
       docker: string
       dockerCommand: optional<DockerCommand>
+      local: optional<LocalBuildInfo>
       customFixtureConfig: 
         type: optional<FixtureConfigurations>
         docs: |
@@ -22,6 +23,32 @@ types:
           List any fixtures that are okay to fail. For normal fixtures 
           just list the fixture name. For configured fixture list {fixture}:{outputFolder}.
       features: optional<features.GeneratorFeatures>
+  
+  LocalBuildInfo: 
+    properties: 
+      buildCommand: 
+        type: string
+        docs: | 
+          The command to build the generator locally. 
+          `yarn workspace @fern-api/openapi-generator build` for example. 
+      runCommand:
+        type: string
+        docs: | 
+          The command to run the generator locally. 
+          `node generators/openapi/dist/cli.cjs` for example.
+  
+  DockerBuildInfo: 
+    properties: 
+      buildCommand: 
+        type: string
+        docs: | 
+          The command to build the generator locally. 
+          `yarn workspace @fern-api/openapi-generator build` for example. 
+      runCommand:
+        type: string
+        docs: | 
+          The command to run the generator locally. 
+          `node generators/openapi/dist/cli.cjs` for example.
 
   DockerCommand: 
     discriminated: false
