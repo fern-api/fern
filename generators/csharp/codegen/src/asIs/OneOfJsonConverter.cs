@@ -6,7 +6,6 @@ using OneOf;
 
 #nullable enable
 
-// from .NET: https://github.com/dotnet/docfx/blob/d519bb4a10a227279f0845ac9e7fb0c292f18d2a/src/Docfx.Build/OneOfJsonConverterFactory.cs
 private class OneOfJsonConverter<T> : JsonConverter<T> where T : IOneOf
 {
     private static readonly (Type type, MethodInfo cast)[] s_types = GetOneOfTypes();

@@ -1,4 +1,9 @@
-import { csharp, PrebuiltUtilities } from "@fern-api/csharp-codegen";
+import {
+    AbstractCsharpGeneratorContext,
+    BaseCsharpCustomConfigSchema,
+    csharp,
+    PrebuiltUtilities
+} from "@fern-api/csharp-codegen";
 import {
     ContainerType,
     DeclaredTypeName,
@@ -9,16 +14,21 @@ import {
     TypeId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { getNameFromIrName } from "./GeneratorUtilities";
 
 export class ReferenceGenerator {
+    private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
     private prebuiltUtilities: PrebuiltUtilities;
 
     private types: Map<TypeId, TypeDeclaration>;
     private references: Map<TypeReference, csharp.Type>;
     public annotations: Map<TypeReference, csharp.Annotation>;
 
-    constructor(types: Map<TypeId, TypeDeclaration>, prebuiltUtilities: PrebuiltUtilities) {
+    constructor(
+        context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>,
+        types: Map<TypeId, TypeDeclaration>,
+        prebuiltUtilities: PrebuiltUtilities
+    ) {
+        this.context = context;
         this.prebuiltUtilities = prebuiltUtilities;
         this.types = types;
         this.references = new Map();
@@ -35,9 +45,9 @@ export class ReferenceGenerator {
             throw new Error(`Type ${typeName.name.pascalCase.safeName} not found`);
         }
 
-        const objectNamespace = csharp.Class.getNamespaceFromFernFilepath(rootModule, typeName.fernFilepath);
+        const objectNamespace = this.context.getNamespaceForTypeId(typeName.typeId);
         const objectClassReference = new csharp.ClassReference({
-            name: getNameFromIrName(typeName.name),
+            name: this.context.getPascalCaseSafeName(typeName.name),
             namespace: objectNamespace
         });
         const objectReference = csharp.Type.reference(objectClassReference);
@@ -58,17 +68,17 @@ export class ReferenceGenerator {
                             const t = member.shape._visit<csharp.ClassReference | undefined>({
                                 samePropertiesAsObject: (objectType) =>
                                     new csharp.ClassReference({
-                                        name: getNameFromIrName(objectType.name),
+                                        name: this.context.getPascalCaseSafeName(objectType.name),
                                         namespace: objectNamespace
                                     }),
                                 singleProperty: (property) =>
                                     new csharp.ClassReference({
-                                        name: getNameFromIrName(property.name.name),
+                                        name: this.context.getPascalCaseSafeName(property.name.name),
                                         namespace: objectNamespace
                                     }),
                                 noProperties: () =>
                                     new csharp.ClassReference({
-                                        name: getNameFromIrName(member.discriminantValue.name),
+                                        name: this.context.getPascalCaseSafeName(member.discriminantValue.name),
                                         namespace: objectNamespace
                                     }),
                                 _other: () => undefined
@@ -120,9 +130,9 @@ export class ReferenceGenerator {
                     throw new Error(`Type ${value.name.pascalCase.safeName} not found`);
                 }
 
-                const objectNamespace = csharp.Class.getNamespaceFromFernFilepath(rootModule, value.fernFilepath);
+                const objectNamespace = this.context.getNamespaceForTypeId(value.typeId);
                 const objectClassReference = new csharp.ClassReference({
-                    name: getNameFromIrName(value.name),
+                    name: this.context.getPascalCaseSafeName(value.name),
                     namespace: objectNamespace
                 });
                 const objectReference = csharp.Type.reference(objectClassReference);
@@ -135,7 +145,7 @@ export class ReferenceGenerator {
                         return csharp.Type.stringEnum(objectClassReference);
                     },
                     union: (union) => {
-                        const containerObjectName = getNameFromIrName(value.name);
+                        const containerObjectName = this.context.getPascalCaseSafeName(value.name);
                         this.annotations.set(typeReference, this.prebuiltUtilities.oneOfConverterAnnotation());
                         // TODO: we could do a better job sharing classreferences between this and the
                         // ultimate created class, maybe class should have a classReference as opposed to
@@ -143,7 +153,7 @@ export class ReferenceGenerator {
                         return csharp.Type.oneOf(
                             union.types
                                 .map<csharp.Type | undefined>((member) => {
-                                    const memberObjectName = `${containerObjectName}._${getNameFromIrName(
+                                    const memberObjectName = `${containerObjectName}._${this.context.getPascalCaseSafeName(
                                         member.discriminantValue.name
                                     )}`;
                                     const t = member.shape._visit<csharp.ClassReference | undefined>({
