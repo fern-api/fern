@@ -29,6 +29,7 @@ export declare namespace TypeContextImpl {
         typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
         treatUnknownAsAny: boolean;
         includeSerdeLayer: boolean;
+        retainOriginalCasing: boolean;
     }
 }
 
@@ -42,6 +43,7 @@ export class TypeContextImpl implements TypeContext {
     private typeGenerator: TypeGenerator;
     private typeReferenceExampleGenerator: TypeReferenceExampleGenerator;
     private includeSerdeLayer: boolean;
+    private retainOriginalCasing: boolean;
     private isForSnippet: boolean;
     private npmPackage: NpmPackage | undefined;
 
@@ -55,7 +57,8 @@ export class TypeContextImpl implements TypeContext {
         typeGenerator,
         typeReferenceExampleGenerator,
         treatUnknownAsAny,
-        includeSerdeLayer
+        includeSerdeLayer,
+        retainOriginalCasing
     }: TypeContextImpl.Init) {
         this.npmPackage = npmPackage;
         this.isForSnippet = isForSnippet;
@@ -66,6 +69,7 @@ export class TypeContextImpl implements TypeContext {
         this.typeGenerator = typeGenerator;
         this.typeReferenceExampleGenerator = typeReferenceExampleGenerator;
         this.includeSerdeLayer = includeSerdeLayer;
+        this.retainOriginalCasing = retainOriginalCasing;
 
         this.typeReferenceToParsedTypeNodeConverter = new TypeReferenceToParsedTypeNodeConverter({
             getReferenceToNamedType: (typeName) => this.getReferenceToNamedType(typeName).getEntityName(),
@@ -132,7 +136,8 @@ export class TypeContextImpl implements TypeContext {
             examples: typeDeclaration.examples,
             fernFilepath: typeDeclaration.name.fernFilepath,
             getReferenceToSelf: (context) => context.type.getReferenceToNamedType(typeName),
-            includeSerdeLayer: this.includeSerdeLayer
+            includeSerdeLayer: this.includeSerdeLayer,
+            retainOriginalCasing: this.retainOriginalCasing
         });
     }
 

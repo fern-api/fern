@@ -20,11 +20,20 @@ fixtures:
   exhaustive:
     - customConfig: null
       outputFolder: no-custom-config
+    - customConfig:
+        retainOriginalCasing: true
+      outputFolder: retain-original-casing
     - customConfig: 
         doNotHandleUnrecognizedErrors: true
         includeUtilsOnUnionMembers: true
         includeOtherInUnionTypes: true
       outputFolder: union-utils
+  mixed-case:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        retainOriginalCasing: true
+      outputFolder: retain-original-casing
 allowedFailures: 
   - bytes
   - enum

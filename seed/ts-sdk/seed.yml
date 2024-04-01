@@ -31,6 +31,9 @@ fixtures:
             lodash-es: "^4.17.21"
       outputFolder: bundle
     - customConfig: 
+        retainOriginalCasing: true
+      outputFolder: retain-original-casing
+    - customConfig: 
         useBrandedStringAliases: true
         neverThrowErrors: true
         namespaceExport: "Fiddle"
@@ -94,6 +97,15 @@ fixtures:
     - customConfig:
         includeApiReference: true
       outputFolder: examples-with-api-reference
+    - customConfig:
+        retainOriginalCasing: true
+      outputFolder: retain-original-casing
+  mixed-case:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        retainOriginalCasing: true
+      outputFolder: retain-original-casing
 scripts:
   - docker: fernapi/ts-seed
     commands:

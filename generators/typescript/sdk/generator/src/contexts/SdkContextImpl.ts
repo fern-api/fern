@@ -95,6 +95,7 @@ export declare namespace SdkContextImpl {
         isForSnippet: boolean;
         npmPackage: NpmPackage | undefined;
         targetRuntime: JavaScriptRuntime;
+        retainOriginalCasing: boolean;
     }
 }
 
@@ -122,6 +123,7 @@ export class SdkContextImpl implements SdkContext {
     public readonly timeoutSdkError: TimeoutSdkErrorContext;
     public readonly targetRuntime: JavaScriptRuntime;
     public readonly includeSerdeLayer: boolean;
+    public readonly retainOriginalCasing: boolean;
 
     constructor({
         npmPackage,
@@ -162,9 +164,11 @@ export class SdkContextImpl implements SdkContext {
         coreUtilitiesManager,
         fernConstants,
         includeSerdeLayer,
+        retainOriginalCasing,
         targetRuntime
     }: SdkContextImpl.Init) {
         this.includeSerdeLayer = includeSerdeLayer;
+        this.retainOriginalCasing = retainOriginalCasing;
         this.targetRuntime = targetRuntime;
         this.sdkInstanceReferenceForSnippet = ts.factory.createIdentifier(
             camelCase(typeDeclarationReferencer.namespaceExport)
@@ -192,7 +196,8 @@ export class SdkContextImpl implements SdkContext {
             typeGenerator,
             typeReferenceExampleGenerator,
             treatUnknownAsAny,
-            includeSerdeLayer
+            includeSerdeLayer,
+            retainOriginalCasing
         });
         this.typeSchema = new TypeSchemaContextImpl({
             sourceFile,
@@ -204,7 +209,8 @@ export class SdkContextImpl implements SdkContext {
             typeGenerator,
             typeSchemaGenerator,
             treatUnknownAsAny,
-            includeSerdeLayer
+            includeSerdeLayer,
+            retainOriginalCasing
         });
         this.sdkError = new SdkErrorContextImpl({
             sourceFile,
@@ -234,7 +240,8 @@ export class SdkContextImpl implements SdkContext {
             packageResolver,
             sourceFile: this.sourceFile,
             importsManager,
-            includeSerdeLayer
+            includeSerdeLayer,
+            retainOriginalCasing
         });
         this.sdkInlinedRequestBodySchema = new SdkInlinedRequestBodySchemaContextImpl({
             importsManager,

@@ -47,6 +47,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         targetRuntime: JavaScriptRuntime;
         includeContentHeadersOnFileDownloadResponse: boolean;
         includeSerdeLayer: boolean;
+        retainOriginalCasing: boolean;
     }
 }
 
@@ -76,6 +77,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private npmPackage: NpmPackage | undefined;
     private targetRuntime: JavaScriptRuntime;
     private packageId: PackageId;
+    private retainOriginalCasing: boolean;
 
     constructor({
         intermediateRepresentation,
@@ -91,7 +93,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         npmPackage,
         targetRuntime,
         includeContentHeadersOnFileDownloadResponse,
-        includeSerdeLayer
+        includeSerdeLayer,
+        retainOriginalCasing
     }: GeneratedSdkClientClassImpl.Init) {
         this.packageId = packageId;
         this.serviceClassName = serviceClassName;
@@ -101,6 +104,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.requireDefaultEnvironment = requireDefaultEnvironment;
         this.npmPackage = npmPackage;
         this.targetRuntime = targetRuntime;
+        this.retainOriginalCasing = retainOriginalCasing;
 
         const package_ = packageResolver.resolvePackage(packageId);
         this.package_ = package_;
@@ -125,7 +129,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             endpoint,
                             requestBody,
                             generatedSdkClientClass: this,
-                            targetRuntime: this.targetRuntime
+                            targetRuntime: this.targetRuntime,
+                            retainOriginalCasing: this.retainOriginalCasing
                         });
                     } else {
                         return new GeneratedDefaultEndpointRequest({
@@ -135,7 +140,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             service,
                             endpoint,
                             requestBody,
-                            generatedSdkClientClass: this
+                            generatedSdkClientClass: this,
+                            retainOriginalCasing: this.retainOriginalCasing
                         });
                     }
                 };
@@ -178,7 +184,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         generatedSdkClientClass: this,
                         includeCredentialsOnCrossOriginRequests,
                         defaultTimeoutInSeconds,
-                        includeSerdeLayer
+                        includeSerdeLayer,
+                        retainOriginalCasing
                     });
                 };
 
@@ -197,7 +204,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             response: getGeneratedEndpointResponse({
                                 response: HttpResponse.fileDownload(fileDownload)
                             }),
-                            includeSerdeLayer
+                            includeSerdeLayer,
+                            retainOriginalCasing
                         }),
                     json: (jsonResponse) =>
                         getDefaultEndpointImplementation({
@@ -214,7 +222,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             }),
                             defaultTimeoutInSeconds,
                             request: getGeneratedEndpointRequest(),
-                            includeSerdeLayer
+                            includeSerdeLayer,
+                            retainOriginalCasing
                         }),
                     text: () => {
                         throw new Error("Text responses are unsupported");
@@ -676,7 +685,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         for (const pathParameter of getNonVariablePathParameters(this.intermediateRepresentation.pathParameters)) {
             properties.push({
-                name: getParameterNameForPathParameter(pathParameter),
+                name: getParameterNameForPathParameter({
+                    pathParameter,
+                    retainOriginalCasing: this.retainOriginalCasing
+                }),
                 type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode)
             });
         }
@@ -1280,7 +1292,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     }
 
     public getReferenceToRootPathParameter(pathParameter: PathParameter): ts.Expression {
-        return this.getReferenceToOption(getParameterNameForPathParameter(pathParameter));
+        return this.getReferenceToOption(
+            getParameterNameForPathParameter({
+                pathParameter,
+                retainOriginalCasing: this.retainOriginalCasing
+            })
+        );
     }
 
     public getReferenceToVariable(variableId: VariableId): ts.Expression {

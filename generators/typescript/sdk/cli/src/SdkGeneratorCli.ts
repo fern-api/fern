@@ -48,7 +48,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             noSerdeLayer,
             noOptionalProperties: parsed?.noOptionalProperties ?? false,
             includeApiReference: parsed?.includeApiReference ?? false,
-            tolerateRepublish: parsed?.tolerateRepublish ?? false
+            tolerateRepublish: parsed?.tolerateRepublish ?? false,
+            retainOriginalCasing: parsed?.retainOriginalCasing ?? false
         };
     }
 
@@ -99,6 +100,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 treatUnknownAsAny: customConfig.treatUnknownAsAny,
                 includeContentHeadersOnFileDownloadResponse: customConfig.includeContentHeadersOnFileDownloadResponse,
                 includeSerdeLayer: !customConfig.noSerdeLayer,
+                retainOriginalCasing: customConfig.retainOriginalCasing ?? false,
                 noOptionalProperties: customConfig.noOptionalProperties,
                 includeApiReference: customConfig.includeApiReference ?? false,
                 tolerateRepublish: customConfig.tolerateRepublish

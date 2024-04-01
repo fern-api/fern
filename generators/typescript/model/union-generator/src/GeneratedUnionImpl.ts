@@ -34,6 +34,7 @@ export declare namespace GeneratedUnionImpl {
         includeOtherInUnionTypes: boolean;
         baseProperties?: ObjectProperty[];
         includeSerdeLayer: boolean;
+        retainOriginalCasing: boolean;
         noOptionalProperties: boolean;
     }
 }
@@ -60,6 +61,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
     private includeOtherInUnionTypes: boolean;
     private baseProperties: ObjectProperty[];
     private includeSerdeLayer: boolean;
+    private retainOriginalCasing: boolean;
     private includeConstBuilders: boolean;
     private noOptionalProperties: boolean;
 
@@ -75,6 +77,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         includeOtherInUnionTypes,
         baseProperties = [],
         includeSerdeLayer,
+        retainOriginalCasing,
         noOptionalProperties
     }: GeneratedUnionImpl.Init<Context>) {
         this.getReferenceToUnion = getReferenceToUnion;
@@ -87,6 +90,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         this.includeOtherInUnionTypes = includeOtherInUnionTypes;
         this.baseProperties = baseProperties;
         this.includeSerdeLayer = includeSerdeLayer;
+        this.retainOriginalCasing = retainOriginalCasing;
         this.includeConstBuilders = includeConstBuilders;
         this.noOptionalProperties = noOptionalProperties;
     }
@@ -219,7 +223,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
     }
 
     private _getBasePropertyKey(baseProperty: ObjectProperty): string {
-        if (this.includeSerdeLayer) {
+        if (this.includeSerdeLayer && !this.retainOriginalCasing) {
             return baseProperty.name.name.camelCase.unsafeName;
         } else {
             return baseProperty.name.wireValue;
