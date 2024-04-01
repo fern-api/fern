@@ -1,7 +1,6 @@
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/generator-commons";
-import { IntermediateRepresentation, ObjectProperty, TypeId } from "@fern-fern/ir-sdk/api";
+import { IntermediateRepresentation, TypeId } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
-import { ClassReference } from "../ast";
 import { BaseCsharpCustomConfigSchema } from "./BaseCsharpCustomConfigSchema";
 
 export abstract class AbstractCsharpGeneratorContext<
@@ -23,11 +22,7 @@ export abstract class AbstractCsharpGeneratorContext<
         );
     }
 
-    public abstract getFilepathForTypeId(typeId: TypeId): string;
+    public abstract getDirectoryForTypeId(typeId: TypeId): string;
 
     public abstract getNamespaceForTypeId(typeId: TypeId): string;
-
-    public abstract getClassReferenceForTypeId(typeId: TypeId): ClassReference;
-
-    public abstract getAllPropertiesIncludingExtensions(typeId: TypeId): ObjectProperty[];
 }

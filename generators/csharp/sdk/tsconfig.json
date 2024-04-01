@@ -2,5 +2,10 @@
   "extends": "../../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src/**/*"],
-  "references": [{ "path": "../../commons" }, { "path": "../codegen" }]
+  "references": [
+    { "path": "../../../packages/commons/fs-utils" },
+    { "path": "../../commons" },
+    { "path": "../codegen" },
+    { "path": "../model" }
+  ]
 }

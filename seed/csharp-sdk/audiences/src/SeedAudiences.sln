@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedAudiences", "SeedAudiences\SeedAudiences.csproj", "{550755A6-FE86-4CB3-BF02-71EFD28EF5A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedAudiences.Test", "SeedAudiences.Test\SeedAudiences.Test.csproj", "{5EE5E280-424B-472E-BD9F-6AC76B214726}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{550755A6-FE86-4CB3-BF02-71EFD28EF5A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{550755A6-FE86-4CB3-BF02-71EFD28EF5A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{550755A6-FE86-4CB3-BF02-71EFD28EF5A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{550755A6-FE86-4CB3-BF02-71EFD28EF5A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EE5E280-424B-472E-BD9F-6AC76B214726}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EE5E280-424B-472E-BD9F-6AC76B214726}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EE5E280-424B-472E-BD9F-6AC76B214726}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EE5E280-424B-472E-BD9F-6AC76B214726}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

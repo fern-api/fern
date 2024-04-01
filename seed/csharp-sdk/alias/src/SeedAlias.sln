@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedAlias", "SeedAlias\SeedAlias.csproj", "{0B143711-E61B-4E35-A34D-1FEA97BA1346}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedAlias.Test", "SeedAlias.Test\SeedAlias.Test.csproj", "{675AAE4E-5F1A-4EE8-9142-697D1870A7C6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0B143711-E61B-4E35-A34D-1FEA97BA1346}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B143711-E61B-4E35-A34D-1FEA97BA1346}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B143711-E61B-4E35-A34D-1FEA97BA1346}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B143711-E61B-4E35-A34D-1FEA97BA1346}.Release|Any CPU.Build.0 = Release|Any CPU
+		{675AAE4E-5F1A-4EE8-9142-697D1870A7C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{675AAE4E-5F1A-4EE8-9142-697D1870A7C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{675AAE4E-5F1A-4EE8-9142-697D1870A7C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{675AAE4E-5F1A-4EE8-9142-697D1870A7C6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

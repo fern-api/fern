@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedStreaming", "SeedStreaming\SeedStreaming.csproj", "{F491B437-2B8A-4E21-921A-92484BDD94F3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedStreaming.Test", "SeedStreaming.Test\SeedStreaming.Test.csproj", "{1EC60342-C437-4FEE-AB5F-6C2E677A4268}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F491B437-2B8A-4E21-921A-92484BDD94F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F491B437-2B8A-4E21-921A-92484BDD94F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F491B437-2B8A-4E21-921A-92484BDD94F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F491B437-2B8A-4E21-921A-92484BDD94F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1EC60342-C437-4FEE-AB5F-6C2E677A4268}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1EC60342-C437-4FEE-AB5F-6C2E677A4268}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1EC60342-C437-4FEE-AB5F-6C2E677A4268}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1EC60342-C437-4FEE-AB5F-6C2E677A4268}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

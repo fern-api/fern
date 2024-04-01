@@ -2604,7 +2604,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/fern-csharp-model@workspace:generators/csharp/model":
+"@fern-api/fern-csharp-model@workspace:*, @fern-api/fern-csharp-model@workspace:generators/csharp/model":
   version: 0.0.0-use.local
   resolution: "@fern-api/fern-csharp-model@workspace:generators/csharp/model"
   dependencies:
@@ -2634,6 +2634,8 @@ __metadata:
   resolution: "@fern-api/fern-csharp-sdk@workspace:generators/csharp/sdk"
   dependencies:
     "@fern-api/csharp-codegen": "workspace:*"
+    "@fern-api/fern-csharp-model": "workspace:*"
+    "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generator-commons": "workspace:*"
     "@fern-fern/generator-exec-sdk": 0.0.687
     "@fern-fern/ir-sdk": 0.0.3318

@@ -1,8 +1,9 @@
-import { AbstractCsharpGeneratorCli } from "@fern-api/csharp-codegen";
+import { AbstractCsharpGeneratorCli, CsharpProject } from "@fern-api/csharp-codegen";
+import { ModelGenerator } from "@fern-api/fern-csharp-model";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { writeFile } from "fs/promises";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 
@@ -31,12 +32,20 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
     }
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
-        context.logger.info("Received IR", JSON.stringify(context.ir, null, 2));
-        await writeFile(`/${context.config.output.path}/ir.json`, JSON.stringify(context.ir, null, 2));
+        const project = new CsharpProject(context, context.getNamespace());
+        const files = new ModelGenerator(context).generateTypes();
+        for (const file of files) {
+            project.addSourceFiles(file);
+        }
+        await project.persist(AbsoluteFilePath.of(context.config.output.path));
     }
 
     protected async writeForDownload(context: SdkGeneratorContext): Promise<void> {
-        context.logger.info("Received IR", JSON.stringify(context.ir, null, 2));
-        await writeFile(`/${context.config.output.path}/ir.json`, JSON.stringify(context.ir, null, 2));
+        const project = new CsharpProject(context, context.getNamespace());
+        const files = new ModelGenerator(context).generateTypes();
+        for (const file of files) {
+            project.addSourceFiles(file);
+        }
+        await project.persist(AbsoluteFilePath.of(context.config.output.path));
     }
 }

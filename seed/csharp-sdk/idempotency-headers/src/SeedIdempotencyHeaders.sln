@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedIdempotencyHeaders", "SeedIdempotencyHeaders\SeedIdempotencyHeaders.csproj", "{FC79BD1A-A164-4C3F-BC5D-E5C96D9944A3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedIdempotencyHeaders.Test", "SeedIdempotencyHeaders.Test\SeedIdempotencyHeaders.Test.csproj", "{176F4481-9275-454E-9377-4B7792CBEE4B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FC79BD1A-A164-4C3F-BC5D-E5C96D9944A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC79BD1A-A164-4C3F-BC5D-E5C96D9944A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC79BD1A-A164-4C3F-BC5D-E5C96D9944A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC79BD1A-A164-4C3F-BC5D-E5C96D9944A3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{176F4481-9275-454E-9377-4B7792CBEE4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{176F4481-9275-454E-9377-4B7792CBEE4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{176F4481-9275-454E-9377-4B7792CBEE4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{176F4481-9275-454E-9377-4B7792CBEE4B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

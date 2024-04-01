@@ -32,7 +32,7 @@ export class ModelGeneratorCLI extends AbstractCsharpGeneratorCli<ModelCustomCon
 
     protected async writeForGithub(context: ModelGeneratorContext): Promise<void> {
         const project = new CsharpProject(context, context.getNamespace());
-        const files = new ModelGenerator(context.getNamespace(), context.ir, context).generateTypes();
+        const files = new ModelGenerator(context).generateTypes();
         for (const file of files) {
             project.addSourceFiles(file);
         }
@@ -41,7 +41,7 @@ export class ModelGeneratorCLI extends AbstractCsharpGeneratorCli<ModelCustomCon
 
     protected async writeForDownload(context: ModelGeneratorContext): Promise<void> {
         const project = new CsharpProject(context, context.getNamespace());
-        const files = new ModelGenerator(context.getNamespace(), context.ir, context).generateTypes();
+        const files = new ModelGenerator(context).generateTypes();
         for (const file of files) {
             project.addSourceFiles(file);
         }

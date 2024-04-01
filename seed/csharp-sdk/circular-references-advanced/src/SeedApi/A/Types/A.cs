@@ -1,0 +1,9 @@
+using System.Text.Json.Serialization;
+
+namespace SeedApi;
+
+public class A
+{
+    [JsonPropertyName("s")]
+    public string S { get; init; }
+}

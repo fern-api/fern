@@ -1,25 +1,34 @@
-import { AbstractCsharpGeneratorContext, csharp } from "@fern-api/csharp-codegen";
-import { ObjectProperty, TypeId } from "@fern-fern/ir-sdk/api";
+import { AbstractCsharpGeneratorContext } from "@fern-api/csharp-codegen";
+import { RelativeFilePath } from "@fern-api/fs-utils";
+import { TypeId } from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 
 export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelCustomConfigSchema> {
-    public packageName(): string {
-        return "TODO";
-    }
-
-    public getFilepathForTypeId(typeId: TypeId): string {
-        return "TODO";
+    /**
+     * __package__.yml types are stored at the top level
+     * __{{file}}__.yml types are stored in a directory with the same name as the file
+     *
+     * @param typeId The type id of the type declaration
+     * @returns
+     */
+    public getDirectoryForTypeId(typeId: TypeId): RelativeFilePath {
+        const typeDeclaration = this.ir.types[typeId];
+        if (typeDeclaration == null) {
+            throw new Error(`Type declaration with id ${typeId} not found`);
+        }
+        return RelativeFilePath.of(
+            [...typeDeclaration.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/")
+        );
     }
 
     public getNamespaceForTypeId(typeId: TypeId): string {
-        return "TODO";
-    }
-
-    public getClassReferenceForTypeId(typeId: TypeId): csharp.ClassReference {
-        return new csharp.ClassReference({ namespace: "TODO", name: "TODO" });
-    }
-
-    public getAllPropertiesIncludingExtensions(typeId: TypeId): ObjectProperty[] {
-        return [];
+        const typeDeclaration = this.ir.types[typeId];
+        if (typeDeclaration == null) {
+            throw new Error(`Type declaration with id ${typeId} not found`);
+        }
+        return [
+            this.getNamespace(),
+            ...typeDeclaration.name.fernFilepath.packagePath.map((path) => path.pascalCase.safeName)
+        ].join(".");
     }
 }
