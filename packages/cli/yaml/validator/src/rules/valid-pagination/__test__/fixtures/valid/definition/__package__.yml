@@ -1,0 +1,10 @@
+types:
+  UsernameCursor:
+    properties:
+      cursor: UsernamePage
+  
+  UsernamePage:
+    properties:
+      usernames: list<string>
+      next: optional<string>
+
