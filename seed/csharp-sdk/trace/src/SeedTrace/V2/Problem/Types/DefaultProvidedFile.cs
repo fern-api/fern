@@ -1,0 +1,15 @@
+using System.Text.Json.Serialization;
+using SeedTrace.V2;
+using OneOf;
+using SeedTrace;
+
+namespace SeedTrace.V2;
+
+public class DefaultProvidedFile
+{
+    [JsonPropertyName("file")]
+    public FileInfoV2 File { get; init; }
+
+    [JsonPropertyName("relatedTypes")]
+    public List<OneOf<VariableType._IntegerType, VariableType._DoubleType, VariableType._BooleanType, VariableType._StringType, VariableType._CharType, VariableType._ListType, VariableType._MapType, VariableType._BinaryTreeType, VariableType._SinglyLinkedListType, VariableType._DoublyLinkedListType>> RelatedTypes { get; init; }
+}
