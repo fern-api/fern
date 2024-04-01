@@ -298,3 +298,4 @@ layout:
   page-width: 1504px
   header-height: 83px
   searchbar-placement: header
+  tabs-placement: header
