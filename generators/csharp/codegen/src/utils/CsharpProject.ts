@@ -3,6 +3,7 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { template } from "lodash-es";
 import path from "path";
+import { AsIsFiles } from "../AsIs";
 import { AbstractCsharpGeneratorContext, BaseCsharpCustomConfigSchema } from "../cli";
 import { CSharpFile } from "./CSharpFile";
 import { File } from "./File";
@@ -10,17 +11,6 @@ import { File } from "./File";
 const SRC_DIRECTORY_NAME = "src";
 const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
 const CORE_DIRECTORY_NAME = "_Core";
-
-enum AsIsFiles {
-    EnumConverter = "EnumConverter.cs",
-    OneOfJsonConverter = "OneOfJsonConverter.cs",
-    StringEnum = "StringEnum.cs",
-    TemplateCsProj = "Template.csproj",
-    TemplateTestCsProj = "Template.Test.csproj",
-    TemplateTestClientCs = "TemplateTestClient.cs",
-    UsingCs = "Using.cs"
-}
-
 /**
  * In memory representation of a C# project.
  */
@@ -57,8 +47,9 @@ export class CsharpProject {
             await file.write(absolutePathToProjectDirectory);
         }
 
-        this.coreFiles.push(await this.createCoreAsIsFile(AsIsFiles.StringEnum));
-        this.coreFiles.push(await this.createCoreAsIsFile(AsIsFiles.OneOfJsonConverter));
+        for (const file of this.context.getAsIsFiles()) {
+            this.coreFiles.push(await this.createCoreAsIsFile(file));
+        }
         await this.createCoreDirectory({ absolutePathToProjectDirectory });
     }
 

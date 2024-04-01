@@ -1,4 +1,4 @@
-import { AbstractCsharpGeneratorContext } from "@fern-api/csharp-codegen";
+import { AbstractCsharpGeneratorContext, AsIsFiles } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { TypeId } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
@@ -36,5 +36,9 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             this.getNamespace(),
             ...typeDeclaration.name.fernFilepath.packagePath.map((path) => path.pascalCase.safeName)
         ].join(".");
+    }
+
+    public getAsIsFiles(): string[] {
+        return [AsIsFiles.StringEnum, AsIsFiles.OneOfJsonConverter];
     }
 }

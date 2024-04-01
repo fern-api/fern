@@ -32,6 +32,8 @@ export abstract class AbstractCsharpGeneratorContext<
         return name.pascalCase.safeName;
     }
 
+    public abstract getAsIsFiles(): string[];
+
     public abstract getDirectoryForTypeId(typeId: TypeId): string;
 
     public abstract getNamespaceForTypeId(typeId: TypeId): string;

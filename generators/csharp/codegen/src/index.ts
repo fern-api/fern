@@ -1,3 +1,4 @@
+export { AsIsFiles } from "./AsIs";
 export * from "./cli";
 export { Access } from "./core/Access";
 export { Writer } from "./core/Writer";
