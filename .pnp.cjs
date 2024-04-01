@@ -4601,7 +4601,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["lodash-es", "npm:4.17.21"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
+            ["zod", "npm:3.22.4"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -4759,6 +4760,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-api/fern-csharp-sdk", "workspace:generators/csharp/sdk"],\
             ["@fern-api/csharp-codegen", "workspace:generators/csharp/codegen"],\
+            ["@fern-api/fern-csharp-model", "workspace:generators/csharp/model"],\
+            ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/generator-commons", "workspace:generators/commons"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.687"],\
             ["@fern-fern/ir-sdk", "npm:0.0.3318"],\

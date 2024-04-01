@@ -3,7 +3,6 @@ import {
     AliasTypeDeclaration,
     DeclaredTypeName,
     EnumTypeDeclaration,
-    IntermediateRepresentation,
     ObjectProperty,
     ObjectTypeDeclaration,
     Type,
@@ -20,22 +19,18 @@ export class ModelGenerator {
 
     private types: Map<TypeId, TypeDeclaration>;
     private flattenedProperties: Map<TypeId, ObjectProperty[]>;
-    private generatorContext: ModelGeneratorContext;
+    private context: ModelGeneratorContext;
     private referenceGenerator: ReferenceGenerator;
     private prebuiltUtilities: PrebuiltUtilities;
 
-    constructor(
-        rootModule: string,
-        intermediateRepresentation: IntermediateRepresentation,
-        generatorContext: ModelGeneratorContext
-    ) {
-        this.rootModule = rootModule;
-        this.generatorContext = generatorContext;
+    constructor(context: ModelGeneratorContext) {
+        this.rootModule = context.getNamespace();
+        this.context = context;
 
         this.types = new Map();
         this.flattenedProperties = new Map();
 
-        for (const type of Object.values(intermediateRepresentation.types)) {
+        for (const type of Object.values(context.ir.types)) {
             this.types.set(type.name.typeId, type);
         }
 
@@ -54,7 +49,7 @@ export class ModelGenerator {
     // does not allow for multiple inheritence of classes, and creating interfaces feels
     // heavy-handed + duplicative.
     private getFlattenedProperties(typeId: TypeId): ObjectProperty[] {
-        this.generatorContext.logger.debug(`Getting flattened properties for ${typeId}`);
+        this.context.logger.debug(`Getting flattened properties for ${typeId}`);
         const td = this.types.get(typeId);
         return td === undefined
             ? []
@@ -103,14 +98,14 @@ export class ModelGenerator {
         // C# doesn't have a direct equivalent to an alias, so we do not generate a class here.
         // The closest thing to aliases are leveraging a `using` statement, but this seems to be file specific.
         // https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/proposals/csharp-12.0/using-alias-types
-        this.generatorContext.logger.debug(`Skipping generation of alias type: ${typeId}`);
+        this.context.logger.debug(`Skipping generation of alias type: ${typeId}`);
         return;
     }
 
     private generateEnumClass(enumTypeDeclaration: EnumTypeDeclaration, typeDeclaration: TypeDeclaration): csharp.Enum {
         const enum_ = csharp.enum_({
             name: getNameFromIrName(typeDeclaration.name.name),
-            namespace: csharp.Class.getNamespaceFromFernFilepath(this.rootModule, typeDeclaration.name.fernFilepath),
+            namespace: this.context.getNamespaceForTypeId(typeDeclaration.name.typeId),
             access: "public",
             annotations: [this.prebuiltUtilities.enumConverterAnnotation()]
         });
@@ -129,7 +124,7 @@ export class ModelGenerator {
     ): csharp.Class {
         const class_ = csharp.class_({
             name: getNameFromIrName(typeDeclaration.name.name),
-            namespace: csharp.Class.getNamespaceFromFernFilepath(this.rootModule, typeDeclaration.name.fernFilepath),
+            namespace: this.context.getNamespaceForTypeId(typeDeclaration.name.typeId),
             partial: false,
             access: "public"
         });
@@ -221,7 +216,7 @@ export class ModelGenerator {
                             objectType
                         );
                         if (parentClassReference == null || parentClassReference.internalType.type !== "reference") {
-                            this.generatorContext.logger.error(
+                            this.context.logger.error(
                                 "Could not find reference for object " +
                                     objectType.typeId +
                                     " when generating union: " +
@@ -292,23 +287,23 @@ export class ModelGenerator {
         // Undiscriminated unions are managed through the use of the OneOf library:
         // OneOf<Type1, Type2, ...>, and so there is no need to generate a class for them,
         // given there are no aliases.
-        this.generatorContext.logger.debug(
+        this.context.logger.debug(
             "Skipping generation of undiscriminated union type, we just annotate unions: " + typeId
         );
         return;
     }
 
     private generateUnknownClass(shape: Type): undefined {
-        this.generatorContext.logger.error("Skipping generation of unknown type: " + shape.type);
+        this.context.logger.error("Skipping generation of unknown type: " + shape.type);
         return;
     }
 
     public generateTypes(): CSharpFile[] {
-        this.generatorContext.logger.debug("Generating all types...");
+        this.context.logger.debug("Generating all types...");
         const typeFiles: CSharpFile[] = [];
         for (const [typeId, typeDeclaration] of this.types.entries()) {
-            const filePath = CSharpFile.getFilePathFromFernFilePath(typeDeclaration.name.fernFilepath);
-            this.generatorContext.logger.debug(`Generating type: ${typeId}`);
+            const directory = this.context.getDirectoryForTypeId(typeId);
+            this.context.logger.debug(`Generating type: ${typeId}`);
             const generatedClass = typeDeclaration.shape._visit<csharp.Class | csharp.Enum | undefined>({
                 alias: () => this.generateAliasClass(typeId),
                 enum: (etd: EnumTypeDeclaration) => this.generateEnumClass(etd, typeDeclaration),
@@ -319,7 +314,7 @@ export class ModelGenerator {
             });
 
             if (generatedClass != null) {
-                typeFiles.push(new CSharpFile({ clazz: generatedClass, directory: filePath }));
+                typeFiles.push(new CSharpFile({ clazz: generatedClass, directory }));
             }
         }
         return typeFiles;
