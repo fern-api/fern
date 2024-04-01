@@ -26,7 +26,7 @@ jobs:
       java: ${{ steps.filter.outputs.java }}
       typescript: ${{ steps.filter.outputs.typescript }}
       go: ${{ steps.filter.outputs.go }}
-      csharp: ${{ steps.filter.outputs.chsarp }}
+      csharp: ${{ steps.filter.outputs.csharp }}
     steps:
       - uses: actions/checkout@v2
       - uses: dorny/paths-filter@v2
