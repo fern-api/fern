@@ -13,15 +13,12 @@ title: Fern | Documentation
 tabs:
   overview:
     display-name: Overview
-    icon: "globe"
   sdks:
     display-name: SDKs
     slug: sdks
-    icon: code
   docs:
     display-name: Docs
     slug: docs
-    icon: book
 
 navigation:
   - tab: overview
@@ -298,3 +295,4 @@ layout:
   page-width: 1504px
   header-height: 83px
   searchbar-placement: header
+  tabs-placement: header
