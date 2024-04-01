@@ -5152,7 +5152,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/posthog-manager", "workspace:packages/cli/posthog-manager"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@types/boxen", "npm:3.0.1"],\
-            ["@types/inquirer", "npm:9.0.3"],\
+            ["@types/inquirer", "npm:9.0.7"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/qs", "npm:6.9.8"],\
@@ -5161,7 +5161,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["chalk", "npm:5.0.1"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
-            ["inquirer", "npm:9.2.11"],\
+            ["inquirer", "npm:9.2.17"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["open", "npm:8.4.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
@@ -5728,7 +5728,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-fern/docs-config", "npm:0.0.80"],\
             ["@fern-fern/legacy-docs-config", "npm:0.0.58"],\
-            ["@types/inquirer", "npm:9.0.3"],\
+            ["@types/inquirer", "npm:9.0.7"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/node", "npm:18.7.18"],\
@@ -5738,7 +5738,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["find-up", "npm:6.3.0"],\
             ["glob", "npm:8.1.0"],\
             ["glob-promise", "virtual:05c9e45862260c886c225652bec99cad7887f66633a7523be0779a61d1b18e00a53a73459a92e616cdddaec4e56c4785468ac2461291fb12a8be2bd2de789022#npm:5.0.1"],\
-            ["inquirer", "npm:9.2.11"],\
+            ["inquirer", "npm:9.2.17"],\
             ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
             ["js-yaml", "npm:4.1.0"],\
             ["organize-imports-cli", "npm:0.10.0"],\
@@ -7627,10 +7627,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@ljharb/through", [\
-        ["npm:2.3.9", {\
-          "packageLocation": "./.yarn/cache/@ljharb-through-npm-2.3.9-808c7c7ac5-a47ffed12e.zip/node_modules/@ljharb/through/",\
+        ["npm:2.3.13", {\
+          "packageLocation": "./.yarn/cache/@ljharb-through-npm-2.3.13-e9ca0df17f-0255464a0e.zip/node_modules/@ljharb/through/",\
           "packageDependencies": [\
-            ["@ljharb/through", "npm:2.3.9"]\
+            ["@ljharb/through", "npm:2.3.13"],\
+            ["call-bind", "npm:1.0.7"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -8466,10 +8467,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/inquirer", [\
-        ["npm:9.0.3", {\
-          "packageLocation": "./.yarn/cache/@types-inquirer-npm-9.0.3-c788b29e9d-729a0deefd.zip/node_modules/@types/inquirer/",\
+        ["npm:9.0.7", {\
+          "packageLocation": "./.yarn/cache/@types-inquirer-npm-9.0.7-49aba11c47-c14c7a5279.zip/node_modules/@types/inquirer/",\
           "packageDependencies": [\
-            ["@types/inquirer", "npm:9.0.3"],\
+            ["@types/inquirer", "npm:9.0.7"],\
             ["@types/through", "npm:0.0.30"],\
             ["rxjs", "npm:7.5.6"]\
           ],\
@@ -14618,12 +14619,11 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["figures", [\
-        ["npm:5.0.0", {\
-          "packageLocation": "./.yarn/cache/figures-npm-5.0.0-cd5f512f9c-e6e8b6d1df.zip/node_modules/figures/",\
+        ["npm:3.2.0", {\
+          "packageLocation": "./.yarn/cache/figures-npm-3.2.0-85d357e955-85a6ad29e9.zip/node_modules/figures/",\
           "packageDependencies": [\
-            ["figures", "npm:5.0.0"],\
-            ["escape-string-regexp", "npm:5.0.0"],\
-            ["is-unicode-supported", "npm:1.2.0"]\
+            ["figures", "npm:3.2.0"],\
+            ["escape-string-regexp", "npm:1.0.5"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -16232,17 +16232,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["inquirer", [\
-        ["npm:9.2.11", {\
-          "packageLocation": "./.yarn/cache/inquirer-npm-9.2.11-2ab2a0f2e3-af59b422eb.zip/node_modules/inquirer/",\
+        ["npm:9.2.17", {\
+          "packageLocation": "./.yarn/cache/inquirer-npm-9.2.17-d7334ff09f-be5afe4f70.zip/node_modules/inquirer/",\
           "packageDependencies": [\
-            ["inquirer", "npm:9.2.11"],\
-            ["@ljharb/through", "npm:2.3.9"],\
+            ["inquirer", "npm:9.2.17"],\
+            ["@ljharb/through", "npm:2.3.13"],\
             ["ansi-escapes", "npm:4.3.2"],\
             ["chalk", "npm:5.3.0"],\
             ["cli-cursor", "npm:3.1.0"],\
             ["cli-width", "npm:4.1.0"],\
             ["external-editor", "npm:3.1.0"],\
-            ["figures", "npm:5.0.0"],\
+            ["figures", "npm:3.2.0"],\
             ["lodash", "npm:4.17.21"],\
             ["mute-stream", "npm:1.0.0"],\
             ["ora", "npm:5.4.1"],\
