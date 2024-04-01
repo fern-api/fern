@@ -14,11 +14,14 @@ tabs:
   overview:
     display-name: Overview
   sdks:
-    display-name: Generate SDKs
+    display-name: SDKs
     slug: sdks
   docs:
-    display-name: Generate Docs
+    display-name: Docs
     slug: docs
+  api:
+    display-name: API Reference
+    slug: api
 
 navigation:
   - tab: overview
@@ -180,13 +183,6 @@ navigation:
           - page: Update SDKs with Fern's GitHub Bot
             path: ./docs/pages/fern-sdks/guides/github-bot.mdx
             slug: github-bot
-      - api: API Reference
-        api-name: public-api
-        # audiences:
-        #   - external
-        snippets:
-          python: fern-api
-          typescript: "@fern-api/node-sdk"
   - tab: docs
     layout:
       - page: Overview
@@ -266,6 +262,16 @@ navigation:
             path: ./docs/pages/fern-docs/components/steps.mdx
           - page: Tabs
             path: ./docs/pages/fern-docs/components/tabs.mdx
+  - tab: api
+    layout:
+      - api: API Reference
+        api-name: public-api
+        # audiences:
+        #   - external
+        snippets:
+          python: fern-api
+          typescript: "@fern-api/node-sdk"
+  
 
 navbar-links:
   - type: minimal
