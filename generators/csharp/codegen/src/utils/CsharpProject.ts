@@ -3,32 +3,29 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { template } from "lodash-es";
 import path from "path";
+import { AsIsFiles } from "../AsIs";
 import { AbstractCsharpGeneratorContext, BaseCsharpCustomConfigSchema } from "../cli";
 import { CSharpFile } from "./CSharpFile";
+import { File } from "./File";
 
 const SRC_DIRECTORY_NAME = "src";
 const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
-
-enum AsIsFiles {
-    EnumConverter = "EnumConverter.cs",
-    OneOfJsonConverter = "OneOfJsonConverter.cs",
-    StringEnum = "StringEnum.cs",
-    TemplateCsProj = "Template.csproj",
-    TemplateTestCsProj = "Template.Test.csproj",
-    TemplateTestClientCs = "TemplateTestClient.cs",
-    UsingCs = "Using.cs"
-}
-
+const CORE_DIRECTORY_NAME = "_Core";
 /**
  * In memory representation of a C# project.
  */
 export class CsharpProject {
     private sourceFiles: CSharpFile[] = [];
+    private coreFiles: File[] = [];
 
     public constructor(
         private readonly context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>,
         private readonly name: string
     ) {}
+
+    public addCoreFiles(file: File): void {
+        this.coreFiles.push(file);
+    }
 
     public addSourceFiles(file: CSharpFile): void {
         this.sourceFiles.push(file);
@@ -49,6 +46,11 @@ export class CsharpProject {
         for (const file of this.sourceFiles) {
             await file.write(absolutePathToProjectDirectory);
         }
+
+        for (const file of this.context.getAsIsFiles()) {
+            this.coreFiles.push(await this.createCoreAsIsFile(file));
+        }
+        await this.createCoreDirectory({ absolutePathToProjectDirectory });
     }
 
     private async createProject({
@@ -107,6 +109,37 @@ export class CsharpProject {
         );
 
         return absolutePathToTestProject;
+    }
+
+    private async createCoreDirectory({
+        absolutePathToProjectDirectory
+    }: {
+        absolutePathToProjectDirectory: AbsoluteFilePath;
+    }): Promise<AbsoluteFilePath> {
+        const absolutePathToCoreDirectory = join(
+            absolutePathToProjectDirectory,
+            RelativeFilePath.of(CORE_DIRECTORY_NAME)
+        );
+        this.context.logger.debug(`mkdir ${absolutePathToCoreDirectory}`);
+        await mkdir(absolutePathToCoreDirectory, { recursive: true });
+
+        for (const file of this.coreFiles) {
+            await file.write(absolutePathToCoreDirectory);
+        }
+
+        return absolutePathToCoreDirectory;
+    }
+
+    private async createCoreAsIsFile(filename: string): Promise<File> {
+        const contents = (await readFile(getAsIsFilepath(AsIsFiles.StringEnum))).toString();
+        return new File(
+            filename,
+            RelativeFilePath.of(""),
+            `namespace ${this.context.getCoreNamespace()}            
+
+${contents}
+            `
+        );
     }
 }
 

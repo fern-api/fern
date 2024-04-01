@@ -69,7 +69,9 @@ export class Field extends AstNode {
     public write(writer: Writer): void {
         if (this.summary != null) {
             writer.writeLine("/// <summary>");
-            writer.writeLine(`/// ${this.summary}`);
+            this.summary.split("\n").forEach((line) => {
+                writer.writeLine(`/// ${line}`);
+            });
             writer.writeLine("/// </summary>");
         }
 

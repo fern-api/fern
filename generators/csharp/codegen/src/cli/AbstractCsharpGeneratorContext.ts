@@ -1,11 +1,13 @@
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/generator-commons";
-import { IntermediateRepresentation, TypeId } from "@fern-fern/ir-sdk/api";
+import { IntermediateRepresentation, Name, TypeId } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
 import { BaseCsharpCustomConfigSchema } from "./BaseCsharpCustomConfigSchema";
 
 export abstract class AbstractCsharpGeneratorContext<
     CustomConfig extends BaseCsharpCustomConfigSchema
 > extends AbstractGeneratorContext {
+    private namespace: string;
+
     public constructor(
         public readonly ir: IntermediateRepresentation,
         public readonly config: FernGeneratorExec.config.GeneratorConfig,
@@ -13,14 +15,24 @@ export abstract class AbstractCsharpGeneratorContext<
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(config, generatorNotificationService);
+        this.namespace =
+            this.customConfig.namespace ??
+            upperFirst(camelCase(`${this.config.organization}_${this.ir.apiName.pascalCase.unsafeName}`));
     }
 
     public getNamespace(): string {
-        return (
-            this.customConfig.namespace ??
-            upperFirst(camelCase(`${this.config.organization}_${this.ir.apiName.pascalCase.unsafeName}`))
-        );
+        return this.namespace;
     }
+
+    public getCoreNamespace(): string {
+        return `${this.namespace}.Core`;
+    }
+
+    public getPascalCaseSafeName(name: Name): string {
+        return name.pascalCase.safeName;
+    }
+
+    public abstract getAsIsFiles(): string[];
 
     public abstract getDirectoryForTypeId(typeId: TypeId): string;
 
