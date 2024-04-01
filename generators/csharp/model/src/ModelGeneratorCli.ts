@@ -1,5 +1,5 @@
-import { AbstractCsharpGeneratorCli, packageUtils } from "@fern-api/csharp-codegen";
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbstractCsharpGeneratorCli, CsharpProject, getClientName, getPackageName } from "@fern-api/csharp-codegen";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import {
     FernGeneratorExec,
     GeneratorNotificationService,
@@ -35,54 +35,38 @@ export class ModelGeneratorCLI extends AbstractCsharpGeneratorCli<ModelCustomCon
     }
 
     protected async writeForGithub(context: ModelGeneratorContext): Promise<void> {
-        context.logger.info("Received IR, processing model generation for Github.");
-        const packageName = packageUtils.getPackageName(
+        const packageName = getPackageName(
             context.config.organization,
             context.ir.apiName.pascalCase.safeName,
             "Client",
             getPackageNameFromPublishConfig(context.config)
         );
-        const directoryPrefix = join(
-            AbsoluteFilePath.of(context.config.output.path),
-            RelativeFilePath.of("src"),
-            RelativeFilePath.of(packageName)
-        );
+        const project = new CsharpProject(context, packageName);
 
-        const clientName = packageUtils.getClientName(
-            context.config.organization,
-            context.ir.apiName.pascalCase.safeName,
-            "Client"
-        );
+        const clientName = getClientName(context.config.organization, context.ir.apiName.pascalCase.safeName, "Client");
 
         const files = new ModelGenerator(clientName, context.ir, context).generateTypes();
         for (const file of files) {
-            await file.tryWrite(directoryPrefix);
+            project.addSourceFiles(file);
         }
+        await project.persist(AbsoluteFilePath.of(context.config.output.path));
     }
 
     protected async writeForDownload(context: ModelGeneratorContext): Promise<void> {
-        context.logger.info("Received IR, processing model generation for download.");
-        const packageName = packageUtils.getPackageName(
+        const packageName = getPackageName(
             context.config.organization,
             context.ir.apiName.pascalCase.safeName,
             "Client",
             getPackageNameFromPublishConfig(context.config)
         );
-        const directoryPrefix = join(
-            AbsoluteFilePath.of(context.config.output.path),
-            RelativeFilePath.of("src"),
-            RelativeFilePath.of(packageName)
-        );
+        const project = new CsharpProject(context, packageName);
 
-        const clientName = packageUtils.getClientName(
-            context.config.organization,
-            context.ir.apiName.pascalCase.safeName,
-            "Client"
-        );
+        const clientName = getClientName(context.config.organization, context.ir.apiName.pascalCase.safeName, "Client");
 
         const files = new ModelGenerator(clientName, context.ir, context).generateTypes();
         for (const file of files) {
-            await file.tryWrite(directoryPrefix);
+            project.addSourceFiles(file);
         }
+        await project.persist(AbsoluteFilePath.of(context.config.output.path));
     }
 }
