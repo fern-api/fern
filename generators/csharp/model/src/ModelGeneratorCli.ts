@@ -1,10 +1,6 @@
-import { AbstractCsharpGeneratorCli, CsharpProject, getClientName, getPackageName } from "@fern-api/csharp-codegen";
+import { AbstractCsharpGeneratorCli, CsharpProject } from "@fern-api/csharp-codegen";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import {
-    FernGeneratorExec,
-    GeneratorNotificationService,
-    getPackageName as getPackageNameFromPublishConfig
-} from "@fern-api/generator-commons";
+import { FernGeneratorExec, GeneratorNotificationService } from "@fern-api/generator-commons";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 import { ModelGenerator } from "./ModelGenerator";
@@ -35,17 +31,8 @@ export class ModelGeneratorCLI extends AbstractCsharpGeneratorCli<ModelCustomCon
     }
 
     protected async writeForGithub(context: ModelGeneratorContext): Promise<void> {
-        const packageName = getPackageName(
-            context.config.organization,
-            context.ir.apiName.pascalCase.safeName,
-            "Client",
-            getPackageNameFromPublishConfig(context.config)
-        );
-        const project = new CsharpProject(context, packageName);
-
-        const clientName = getClientName(context.config.organization, context.ir.apiName.pascalCase.safeName, "Client");
-
-        const files = new ModelGenerator(clientName, context.ir, context).generateTypes();
+        const project = new CsharpProject(context, context.getNamespace());
+        const files = new ModelGenerator(context.getNamespace(), context.ir, context).generateTypes();
         for (const file of files) {
             project.addSourceFiles(file);
         }
@@ -53,17 +40,8 @@ export class ModelGeneratorCLI extends AbstractCsharpGeneratorCli<ModelCustomCon
     }
 
     protected async writeForDownload(context: ModelGeneratorContext): Promise<void> {
-        const packageName = getPackageName(
-            context.config.organization,
-            context.ir.apiName.pascalCase.safeName,
-            "Client",
-            getPackageNameFromPublishConfig(context.config)
-        );
-        const project = new CsharpProject(context, packageName);
-
-        const clientName = getClientName(context.config.organization, context.ir.apiName.pascalCase.safeName, "Client");
-
-        const files = new ModelGenerator(clientName, context.ir, context).generateTypes();
+        const project = new CsharpProject(context, context.getNamespace());
+        const files = new ModelGenerator(context.getNamespace(), context.ir, context).generateTypes();
         for (const file of files) {
             project.addSourceFiles(file);
         }

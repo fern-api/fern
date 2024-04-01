@@ -3,9 +3,10 @@ import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { readFile } from "fs/promises";
 import { AbstractCsharpGeneratorContext } from "./AbstractCsharpGeneratorContext";
+import { BaseCsharpCustomConfigSchema } from "./BaseCsharpCustomConfigSchema";
 
 export abstract class AbstractCsharpGeneratorCli<
-    CustomConfig,
+    CustomConfig extends BaseCsharpCustomConfigSchema,
     CsharpGeneratorContext extends AbstractCsharpGeneratorContext<CustomConfig>
 > extends AbstractGeneratorCli<CustomConfig, IntermediateRepresentation, CsharpGeneratorContext> {
     /**

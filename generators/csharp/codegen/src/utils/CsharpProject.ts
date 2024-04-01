@@ -3,7 +3,7 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { template } from "lodash-es";
 import path from "path";
-import { AbstractCsharpGeneratorContext } from "../cli";
+import { AbstractCsharpGeneratorContext, BaseCsharpCustomConfigSchema } from "../cli";
 import { CSharpFile } from "./CSharpFile";
 
 const SRC_DIRECTORY_NAME = "src";
@@ -26,7 +26,7 @@ export class CsharpProject {
     private sourceFiles: CSharpFile[] = [];
 
     public constructor(
-        private readonly context: AbstractCsharpGeneratorContext<unknown>,
+        private readonly context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>,
         private readonly name: string
     ) {}
 
