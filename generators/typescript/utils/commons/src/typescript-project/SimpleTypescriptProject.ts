@@ -14,6 +14,7 @@ export declare namespace SimpleTypescriptProject {
         npmPackage: NpmPackage | undefined;
         dependencies: PackageDependencies;
         outputEsm: boolean;
+        resolutions: Record<string, string>;
     }
 }
 
@@ -25,12 +26,14 @@ export class SimpleTypescriptProject extends TypescriptProject {
     private npmPackage: NpmPackage | undefined;
     private dependencies: PackageDependencies;
     private outputEsm: boolean;
+    private resolutions: Record<string, string>;
 
-    constructor({ npmPackage, dependencies, outputEsm, ...superInit }: SimpleTypescriptProject.Init) {
+    constructor({ npmPackage, dependencies, outputEsm, resolutions, ...superInit }: SimpleTypescriptProject.Init) {
         super(superInit);
         this.npmPackage = npmPackage;
         this.dependencies = dependencies;
         this.outputEsm = outputEsm;
+        this.resolutions = resolutions;
     }
 
     protected async addFilesToVolume(): Promise<void> {
@@ -135,6 +138,13 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 ...packageJson,
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 license: this.npmPackage.license as any
+            };
+        }
+
+        if (Object.entries(this.resolutions).length > 0) {  
+            packageJson = {
+                ...packageJson,
+                resolutions: this.resolutions
             };
         }
 
