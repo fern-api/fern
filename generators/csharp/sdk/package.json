@@ -35,7 +35,7 @@
     "@fern-api/fern-csharp-model": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/generator-commons": "workspace:*",
-    "@fern-fern/generator-exec-sdk": "0.0.687",
+    "@fern-fern/generator-exec-sdk": "0.0.692",
     "@fern-fern/ir-sdk": "0.0.3318",
     "zod": "^3.22.3"
   },
