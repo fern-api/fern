@@ -387,7 +387,8 @@ module.exports = {
                   extraDependencies: this.config.extraDependencies,
                   extraDevDependencies: this.config.extraDevDependencies,
                   extraFiles: this.extraFiles,
-                  extraScripts: this.extraScripts
+                  extraScripts: this.extraScripts,
+                  resolutions: {}
               });
     }
 

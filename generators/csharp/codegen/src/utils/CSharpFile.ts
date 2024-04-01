@@ -19,7 +19,7 @@ export class CSharpFile extends File {
     }
 
     public async tryWrite(directoryPrefix: AbsoluteFilePath): Promise<void> {
-       await this.write(directoryPrefix);
+        await this.write(directoryPrefix);
     }
 
     public static getFilePathFromFernFilePath(fernFilePath: FernFilepath): RelativeFilePath {
