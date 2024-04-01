@@ -9,7 +9,7 @@ export type EndpointExample = FernOpenapiIr.EndpointExample.Unknown | FernOpenap
 export declare namespace EndpointExample {
     interface Unknown extends _Utils {
         type: "unknown";
-        value: unknown;
+        value: FernOpenapiIr.FernExample | undefined;
     }
 
     interface Full extends FernOpenapiIr.FullEndpointExample, _Utils {
@@ -21,14 +21,14 @@ export declare namespace EndpointExample {
     }
 
     interface _Visitor<_Result> {
-        unknown: (value: unknown) => _Result;
+        unknown: (value: FernOpenapiIr.FernExample | undefined) => _Result;
         full: (value: FernOpenapiIr.FullEndpointExample) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
 
 export const EndpointExample = {
-    unknown: (value?: unknown): FernOpenapiIr.EndpointExample.Unknown => {
+    unknown: (value?: FernOpenapiIr.FernExample): FernOpenapiIr.EndpointExample.Unknown => {
         return {
             value: value,
             type: "unknown",

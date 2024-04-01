@@ -12,7 +12,6 @@ import {
     Webhook
 } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
-import { RawSchemas } from "@fern-api/yaml-schema";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../getExtension";
 import { convertSchema } from "../../schema/convertSchemas";
@@ -128,9 +127,7 @@ export function generateIr({
     const exampleEndpointFactory = new ExampleEndpointFactory(schemasWithExample, context.logger);
     const endpoints = endpointsWithExample.map((endpointWithExample): Endpoint => {
         // if x-fern-examples is not present, generate an example
-        const extensionExamples = (endpointWithExample.examples as RawSchemas.ExampleEndpointCallArraySchema).map(
-            EndpointExample.unknown
-        );
+        const extensionExamples = endpointWithExample.examples;
         let examples: EndpointExample[] = extensionExamples;
         if (!disableExamples && (extensionExamples.length === 0 || extensionExamples.every(hasIncompleteExample))) {
             const endpointExample = exampleEndpointFactory.buildEndpointExample(endpointWithExample);

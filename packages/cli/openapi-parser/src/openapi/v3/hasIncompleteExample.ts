@@ -13,7 +13,6 @@ export function hasIncompleteExample(example: EndpointExample): boolean {
         );
     } else {
         const castExample = example.value as RawSchemas.ExampleEndpointCallSchema;
-        // throw new Error(`Here we are: ${JSON.stringify(castExample)}`);
         return (
             castExample.request == null &&
             castExample.response == null &&

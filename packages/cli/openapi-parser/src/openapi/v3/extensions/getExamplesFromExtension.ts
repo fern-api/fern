@@ -1,4 +1,4 @@
-import { FernOpenapiIr } from "@fern-api/openapi-ir-sdk";
+import { EndpointExample, FernOpenapiIr } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtensionAndValidate } from "../../../getExtension";
@@ -12,7 +12,7 @@ export function getExamplesFromExtension(
     operationContext: OperationContext,
     operationObject: OpenAPIV3.OperationObject,
     context: AbstractOpenAPIV3ParserContext
-): RawSchemas.ExampleEndpointCallArraySchema {
+): EndpointExample[] {
     const exampleEndpointCalls: RawSchemas.ExampleEndpointCallArraySchema =
         getExtensionAndValidate(
             operationObject,
@@ -60,5 +60,5 @@ export function getExamplesFromExtension(
         });
     }
 
-    return exampleEndpointCalls;
+    return exampleEndpointCalls.map(EndpointExample.unknown);
 }

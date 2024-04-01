@@ -501,6 +501,7 @@ in the DevPortal.
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListLinksRequest",
@@ -1298,6 +1299,7 @@ in the DevPortal.
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "RegisterLinkRequest",
@@ -1529,6 +1531,7 @@ in the DevPortal.
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "PatchLinksRequest",
@@ -1744,6 +1747,7 @@ in the DevPortal.
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DetailLinkRequest",
@@ -2016,6 +2020,7 @@ in the DevPortal.
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "UpdateLinkRequest",
@@ -2165,6 +2170,7 @@ To delete links in bulk, we recommend looping through the list of links you want
           "queryParameters": [],
           "request": null,
           "response": null,
+          "type": "full",
         },
       ],
       "generatedRequestName": "DestroyLinkRequest",
@@ -2337,6 +2343,7 @@ To delete links in bulk, we recommend looping through the list of links you want
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ChangeLinkAccessModeRequest",
@@ -3155,6 +3162,7 @@ To delete links in bulk, we recommend looping through the list of links you want
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListAccountsRequest",
@@ -4648,6 +4656,7 @@ To delete links in bulk, we recommend looping through the list of links you want
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "RetrieveAccountsRequest",
@@ -5308,6 +5317,7 @@ To delete links in bulk, we recommend looping through the list of links you want
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "PatchAccountsRequest",
@@ -5991,6 +6001,7 @@ To delete links in bulk, we recommend looping through the list of links you want
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DetailAccountRequest",
@@ -6120,6 +6131,7 @@ To delete links in bulk, we recommend looping through the list of links you want
           "queryParameters": [],
           "request": null,
           "response": null,
+          "type": "full",
         },
       ],
       "generatedRequestName": "DestroyAccountRequest",
@@ -7057,6 +7069,7 @@ To delete links in bulk, we recommend looping through the list of links you want
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListTransactionsRequest",
@@ -9030,6 +9043,7 @@ If you try to access older information than what we can access, we will return a
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "RetrieveTransactionsRequest",
@@ -9237,6 +9251,7 @@ If you try to access older information than what we can access, we will return a
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "RetrieveTransactionsAsyncRequest",
@@ -9888,6 +9903,7 @@ If you try to access older information than what we can access, we will return a
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "PatchTransactionsRequest",
@@ -10688,6 +10704,7 @@ If you try to access older information than what we can access, we will return a
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DetailTransactionRequest",
@@ -10817,6 +10834,7 @@ If you try to access older information than what we can access, we will return a
           "queryParameters": [],
           "request": null,
           "response": null,
+          "type": "full",
         },
       ],
       "generatedRequestName": "DestroyTransactionRequest",
@@ -11372,6 +11390,7 @@ If you try to access older information than what we can access, we will return a
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListBalancesRequest",
@@ -12493,6 +12512,7 @@ If you try to access older information than what we can access, we will return a
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "RetrieveBalancesRequest",
@@ -12997,6 +13017,7 @@ If you try to access older information than what we can access, we will return a
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "PatchBalancesRequest",
@@ -13661,6 +13682,7 @@ If you try to access older information than what we can access, we will return a
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DetailBalanceRequest",
@@ -13790,6 +13812,7 @@ If you try to access older information than what we can access, we will return a
           "queryParameters": [],
           "request": null,
           "response": null,
+          "type": "full",
         },
       ],
       "generatedRequestName": "DestroyBalanceRequest",
@@ -14190,6 +14213,7 @@ If you try to access older information than what we can access, we will return a
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListInstitutionsRequest",
@@ -14850,6 +14874,7 @@ If you try to access older information than what we can access, we will return a
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DetailInstitutionRequest",
@@ -15256,6 +15281,7 @@ If you try to access older information than what we can access, we will return a
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListOwnersRequest",
@@ -15821,6 +15847,7 @@ If you try to access older information than what we can access, we will return a
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "RetrieveOwnersRequest",
@@ -16108,6 +16135,7 @@ If you try to access older information than what we can access, we will return a
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "PatchOwnersRequest",
@@ -16366,6 +16394,7 @@ If you try to access older information than what we can access, we will return a
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DetailOwnerRequest",
@@ -16495,6 +16524,7 @@ If you try to access older information than what we can access, we will return a
           "queryParameters": [],
           "request": null,
           "response": null,
+          "type": "full",
         },
       ],
       "generatedRequestName": "DestroyOwnerRequest",
@@ -17438,6 +17468,7 @@ If you try to access older information than what we can access, we will return a
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListInvoicesRequest",
@@ -18857,6 +18888,7 @@ If you try to access older information than what we can access, we will return a
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "RetrieveInvoicesRequest",
@@ -19609,6 +19641,7 @@ If you try to access older information than what we can access, we will return a
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "PatchInvoicesRequest",
@@ -20384,6 +20417,7 @@ If you try to access older information than what we can access, we will return a
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DetailInvoiceRequest",
@@ -20533,6 +20567,7 @@ If you try to access older information than what we can access, we will return a
           "queryParameters": [],
           "request": null,
           "response": null,
+          "type": "full",
         },
       ],
       "generatedRequestName": "DestroyInvoiceRequest",
@@ -20877,6 +20912,7 @@ If you try to access older information than what we can access, we will return a
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListTaxReturnsRequest",
@@ -21823,6 +21859,7 @@ If you try to access older information than what we can access, we will return a
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "RetrieveTaxReturnsRequest",
@@ -22308,6 +22345,7 @@ If you try to access older information than what we can access, we will return a
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DetailTaxReturnRequest",
@@ -22473,6 +22511,7 @@ If you try to access older information than what we can access, we will return a
           "queryParameters": [],
           "request": null,
           "response": null,
+          "type": "full",
         },
       ],
       "generatedRequestName": "DestroyTaxReturnRequest",
@@ -22831,6 +22870,7 @@ If you try to access older information than what we can access, we will return a
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListTaxStatusRequest",
@@ -23592,6 +23632,7 @@ If you try to access older information than what we can access, we will return a
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "RetrieveTaxStatusRequest",
@@ -24110,6 +24151,7 @@ If you try to access older information than what we can access, we will return a
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DetailTaxStatusRequest",
@@ -24259,6 +24301,7 @@ If you try to access older information than what we can access, we will return a
           "queryParameters": [],
           "request": null,
           "response": null,
+          "type": "full",
         },
       ],
       "generatedRequestName": "DestroyTaxStatusRequest",
@@ -24527,6 +24570,7 @@ If you try to access older information than what we can access, we will return a
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListTaxComplianceStatusRequest",
@@ -24984,6 +25028,7 @@ If you try to access older information than what we can access, we will return a
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "RetrieveTaxComplianceStatusRequest",
@@ -25178,6 +25223,7 @@ If you try to access older information than what we can access, we will return a
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DetailTaxComplianceStatusRequest",
@@ -25307,6 +25353,7 @@ If you try to access older information than what we can access, we will return a
           "queryParameters": [],
           "request": null,
           "response": null,
+          "type": "full",
         },
       ],
       "generatedRequestName": "DestroyTaxComplianceStatusRequest",
@@ -25616,6 +25663,7 @@ If you try to access older information than what we can access, we will return a
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListIncomesRequest",
@@ -26189,6 +26237,7 @@ If you try to access older information than what we can access, we will return a
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "RetrieveIncomeRequest",
@@ -26503,6 +26552,7 @@ If you try to access older information than what we can access, we will return a
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "PatchIncomesRequest",
@@ -26800,6 +26850,7 @@ If you try to access older information than what we can access, we will return a
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DetailIncomeRequest",
@@ -26936,6 +26987,7 @@ If you try to access older information than what we can access, we will return a
           "queryParameters": [],
           "request": null,
           "response": null,
+          "type": "full",
         },
       ],
       "generatedRequestName": "DestroyIncomesRequest",
@@ -27350,6 +27402,7 @@ If you try to access older information than what we can access, we will return a
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListRecurringExpensesRequest",
@@ -28071,6 +28124,7 @@ If you try to access older information than what we can access, we will return a
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "RetrieveRecurringExpensesRequest",
@@ -28614,6 +28668,7 @@ If you try to access older information than what we can access, we will return a
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "PatchRecurringExpensesRequest",
@@ -29133,6 +29188,7 @@ If you try to access older information than what we can access, we will return a
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DetailRecurringExpenseRequest",
@@ -29269,6 +29325,7 @@ If you try to access older information than what we can access, we will return a
           "queryParameters": [],
           "request": null,
           "response": null,
+          "type": "full",
         },
       ],
       "generatedRequestName": "DestroyRecurringExpenseRequest",
@@ -29572,6 +29629,7 @@ If you try to access older information than what we can access, we will return a
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListPortfolioRequest",
@@ -30175,6 +30233,7 @@ If you try to access older information than what we can access, we will return a
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "RetrievePortfolioRequest",
@@ -30579,6 +30638,7 @@ If you try to access older information than what we can access, we will return a
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "PatchPortfolioRequest",
@@ -30967,6 +31027,7 @@ If you try to access older information than what we can access, we will return a
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DetailPortfolioRequest",
@@ -31096,6 +31157,7 @@ If you try to access older information than what we can access, we will return a
           "queryParameters": [],
           "request": null,
           "response": null,
+          "type": "full",
         },
       ],
       "generatedRequestName": "DestroyPortfolioRequest",
@@ -31512,6 +31574,7 @@ If you try to access older information than what we can access, we will return a
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListReceivableTransactionsRequest",
@@ -32229,6 +32292,7 @@ If you try to access older information than what we can access, we will return a
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "RetrieveReceivableTransactionsRequest",
@@ -32522,6 +32586,7 @@ If you try to access older information than what we can access, we will return a
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DetailReceivableTransactionRequest",
@@ -32651,6 +32716,7 @@ If you try to access older information than what we can access, we will return a
           "queryParameters": [],
           "request": null,
           "response": null,
+          "type": "full",
         },
       ],
       "generatedRequestName": "DestroyReceivableTransactionRequest",
@@ -32699,87 +32765,7 @@ If you try to access older information than what we can access, we will return a
       ],
       "examples": [
         {
-          "codeSamples": [
-            {
-              "code": "curl https://sandbox.belvo.com/api/risk-insights/ \\
--u [Secret Key ID]:[Secret Key PASSWORD]
-",
-              "description": null,
-              "install": null,
-              "language": "cURL",
-              "name": "cURL",
-              "type": "language",
-            },
-            {
-              "code": "# For more information about our SDKs go to:
-# https://developers.belvo.com/docs/belvo-sdks
-
-from pprint import pprint
-from belvo.client import Client
-
-# Login to Belvo API
-client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
-
-# List Risk insights
-for risk_insight in client.RiskInsights.list():
-pprint(income)
-",
-              "description": null,
-              "install": null,
-              "language": "python",
-              "name": "python",
-              "type": "language",
-            },
-            {
-              "code": "# For more information about our SDKs go to:
-# https://developers.belvo.com/docs/belvo-sdks
-
-require 'belvo'
-
-sandbox = Belvo::Client.new(
-  'Secret Key ID',
-  'Secret Key PASSWORD',
-  'sandbox'
-)
-
-client.risk_insights.list
-",
-              "description": null,
-              "install": null,
-              "language": "ruby",
-              "name": "ruby",
-              "type": "language",
-            },
-            {
-              "code": "// For more information about our SDKs go to:
-// https://developers.belvo.com/docs/belvo-sdks
-
-var belvo = require('belvo').default;
-
-var client = new belvo(
-  'Secret Key ID',
-  'Secret Key PASSWORD',
-  'sandbox'
-);
-
-client.connect()
-  .then(function () {
-    client.riskInsights.list()
-      .then(function (res) {
-        console.log(res);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-});
-",
-              "description": null,
-              "install": null,
-              "language": "javascript",
-              "name": "javascript",
-              "type": "language",
-            },
-          ],
+          "codeSamples": [],
           "description": null,
           "headers": [],
           "name": null,
@@ -33360,6 +33346,7 @@ client.connect()
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListRiskInsightsRequest",
@@ -33603,94 +33590,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
       ],
       "examples": [
         {
-          "codeSamples": [
-            {
-              "code": "curl -X POST \\
-  https://sandbox.belvo.com/api/risk-insights/ \\
-  -H 'Content-Type: application/json' \\
-  -H 'Host: sandbox.belvo.com' \\
-  -H 'cache-control: no-cache' \\
-  -d '{
-    "link": "link_id"
-}' \\
-  -u [Secret Key ID]:[Secret Key PASSWORD]
-",
-              "description": null,
-              "install": null,
-              "language": "cURL",
-              "name": "cURL",
-              "type": "language",
-            },
-            {
-              "code": "# For more information about our SDKs go to:
-# https://developers.belvo.com/docs/belvo-sdks
-
-from belvo.client import Client
-
-# Login to Belvo API
-client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
-
-# Retrieve Risk insights
-client.RiskInsights.create('link-id')
-",
-              "description": null,
-              "install": null,
-              "language": "python",
-              "name": "python",
-              "type": "language",
-            },
-            {
-              "code": "# For more information about our SDKs go to:
-# https://developers.belvo.com/docs/belvo-sdks
-
-require 'belvo'
-
-sandbox = Belvo::Client.new(
-  'Secret Key ID',
-  'Secret Key PASSWORD',
-  'sandbox'
-)
-
-client.risk_insights.retrieve(
-  link: 'link-id'
-)
-",
-              "description": null,
-              "install": null,
-              "language": "ruby",
-              "name": "ruby",
-              "type": "language",
-            },
-            {
-              "code": "// For more information about our SDKs go to:
-// https://developers.belvo.com/docs/belvo-sdks
-
-var belvo = require('belvo').default;
-
-var client = new belvo(
-  'Secret Key ID',
-  'Secret Key PASSWORD',
-  'sandbox'
-);
-
-client.connect()
-  .then(function () {
-    client.riskInsights.retrieve('linkID')
-      .then(function (res) {
-        console.log(res);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-});
-",
-              "description": null,
-              "install": null,
-              "language": "javascript",
-              "name": "javascript",
-              "type": "language",
-            },
-          ],
+          "codeSamples": [],
           "description": null,
           "headers": [],
           "name": null,
@@ -34203,6 +34103,7 @@ client.connect()
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "RetrieveRiskInsightsRequest",
@@ -34317,102 +34218,7 @@ client.connect()
       ],
       "examples": [
         {
-          "codeSamples": [
-            {
-              "code": "curl -X PATCH \\
-https://sandbox.belvo.com/api/risk-insights/ \\
--H 'Content-Type: application/json' \\
--H 'Host: sandbox.belvo.com' \\
--H 'cache-control: no-cache' \\
--d '{
-    "session": "",
-    "token": "",
-    "link": ""
-}' \\
--u [Secret Key ID]:[Secret Key PASSWORD]
-",
-              "description": null,
-              "install": null,
-              "language": "cURL",
-              "name": "cURL",
-              "type": "language",
-            },
-            {
-              "code": "# For more information about our SDKs go to:
-# https://developers.belvo.com/docs/belvo-sdks
-
-from belvo.client import Client
-
-# Login to Belvo API
-client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
-
-# Resume Risk insights
-risk_insights = client.RiskInsights.resume(
-  session="session_id",
-  token="token",
-  link="link_id"
-)
-",
-              "description": null,
-              "install": null,
-              "language": "python",
-              "name": "python",
-              "type": "language",
-            },
-            {
-              "code": "# For more information about our SDKs go to:
-    # https://developers.belvo.com/docs/belvo-sdks
-
-    require 'belvo'
-
-    client = Belvo::Client.new(
-      'Secret Key ID',
-      'Secret Key PASSWORD',
-      'sandbox'
-    )
-
-    client.risk_insights.resume(
-      session: 'session_id',
-      token: 'token',
-      link: 'link_id'
-    )
-",
-              "description": null,
-              "install": null,
-              "language": "ruby",
-              "name": "ruby",
-              "type": "language",
-            },
-            {
-              "code": "// For more information about our SDKs go to:
-// https://developers.belvo.com/docs/belvo-sdks
-
-var belvo = require('belvo').default;
-
-var client = new belvo(
-  'Secret Key ID',
-  'Secret Key PASSWORD',
-  'sandbox'
-);
-
-client.connect()
-  .then(function () {
-    client.riskInsights.resume('sessionId', 'token', 'linkId')
-      .then(function (res) {
-        console.log(res);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-});
-",
-              "description": null,
-              "install": null,
-              "language": "javascript",
-              "name": "javascript",
-              "type": "language",
-            },
-          ],
+          "codeSamples": [],
           "description": null,
           "headers": [],
           "name": null,
@@ -34939,6 +34745,7 @@ client.connect()
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "PatchRiskInsightsRequest",
@@ -35050,85 +34857,7 @@ client.connect()
       ],
       "examples": [
         {
-          "codeSamples": [
-            {
-              "code": "curl https://sandbox.belvo.com/api/risk-insights/{id} \\
--u [Secret Key ID]:[Secret Key PASSWORD]
-",
-              "description": null,
-              "install": null,
-              "language": "cURL",
-              "name": "cURL",
-              "type": "language",
-            },
-            {
-              "code": "# For more information about our SDKs go to:
-# https://developers.belvo.com/docs/belvo-sdks
-
-from belvo.client import Client
-
-# Login to Belvo API
-client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
-
-# Get Risk insight
-client.RiskInsights.get('risk-insights.id')
-",
-              "description": null,
-              "install": null,
-              "language": "python",
-              "name": "python",
-              "type": "language",
-            },
-            {
-              "code": "# For more information about our SDKs go to:
-# https://developers.belvo.com/docs/belvo-sdks
-
-require 'belvo'
-
-sandbox = Belvo::Client.new(
-  'Secret Key ID',
-  'Secret Key PASSWORD',
-  'sandbox'
-)
-
-sandbox.risk_insights.detail id: 'risk-insights.id'
-",
-              "description": null,
-              "install": null,
-              "language": "ruby",
-              "name": "ruby",
-              "type": "language",
-            },
-            {
-              "code": "// For more information about our SDKs go to:
-// https://developers.belvo.com/docs/belvo-sdks
-
-var belvo = require('belvo').default;
-
-var client = new belvo(
-  'Secret Key ID',
-  'Secret Key PASSWORD',
-  'sandbox'
-);
-
-client.connect()
-  .then(function () {
-    client.riskInsights.detail('risk-insights.id')
-      .then(function (res) {
-        console.log(res);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-});
-",
-              "description": null,
-              "install": null,
-              "language": "javascript",
-              "name": "javascript",
-              "type": "language",
-            },
-          ],
+          "codeSamples": [],
           "description": null,
           "headers": [],
           "name": null,
@@ -35634,6 +35363,7 @@ client.connect()
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DetailRiskInsightsRequest",
@@ -35751,87 +35481,7 @@ client.connect()
       ],
       "examples": [
         {
-          "codeSamples": [
-            {
-              "code": "curl -X DELETE \\
-https://sandbox.belvo.com/api/risk-insights/{id}/ \\
--H 'Host: sandbox.belvo.com' \\
--u [Secret Key ID]:[Secret Key PASSWORD]
-",
-              "description": null,
-              "install": null,
-              "language": "cURL",
-              "name": "cURL",
-              "type": "language",
-            },
-            {
-              "code": "# For more information about our SDKs go to:
-# https://developers.belvo.com/docs/belvo-sdks
-
-from belvo.client import Client
-
-# Login to Belvo API
-client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
-
-# Delete Risk insight
-client.RiskInsights.delete('risk-insights.id')
-",
-              "description": null,
-              "install": null,
-              "language": "python",
-              "name": "python",
-              "type": "language",
-            },
-            {
-              "code": "# For more information about our SDKs go to:
-# https://developers.belvo.com/docs/belvo-sdks
-
-require 'belvo'
-
-sandbox = Belvo::Client.new(
-  'Secret Key ID',
-  'Secret Key PASSWORD',
-  'sandbox'
-)
-
-sandbox.risk_insights.delete id: 'risk-insights.id'
-",
-              "description": null,
-              "install": null,
-              "language": "ruby",
-              "name": "ruby",
-              "type": "language",
-            },
-            {
-              "code": "// For more information about our SDKs go to:
-// https://developers.belvo.com/docs/belvo-sdks
-
-var belvo = require('belvo').default;
-
-var client = new belvo(
-  'Secret Key ID',
-  'Secret Key PASSWORD',
-  'sandbox'
-);
-
-client.connect()
-  .then(function () {
-    client.riskInsights.delete('risk-insights.id')
-      .then(function (res) {
-        console.log(res);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-});
-",
-              "description": null,
-              "install": null,
-              "language": "javascript",
-              "name": "javascript",
-              "type": "language",
-            },
-          ],
+          "codeSamples": [],
           "description": null,
           "headers": [],
           "name": null,
@@ -35850,6 +35500,7 @@ client.connect()
           "queryParameters": [],
           "request": null,
           "response": null,
+          "type": "full",
         },
       ],
       "generatedRequestName": "DestroyRiskInsightsRequest",
@@ -36220,6 +35871,7 @@ client.connect()
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListTaxRetentionsRequest",
@@ -36767,6 +36419,7 @@ client.connect()
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "RetrieveTaxRetentionsRequest",
@@ -37094,6 +36747,7 @@ client.connect()
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DetailTaxRetentionsRequest",
@@ -37223,6 +36877,7 @@ client.connect()
           "queryParameters": [],
           "request": null,
           "response": null,
+          "type": "full",
         },
       ],
       "generatedRequestName": "DestroyTaxRetentionRequest",
@@ -37908,6 +37563,7 @@ client.connect()
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListTaxDeclarationsRequest",
@@ -38885,6 +38541,7 @@ client.connect()
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "RetrieveTaxDeclarationsRequest",
@@ -39463,6 +39120,7 @@ client.connect()
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DetailTaxDeclarationRequest",
@@ -39612,6 +39270,7 @@ client.connect()
           "queryParameters": [],
           "request": null,
           "response": null,
+          "type": "full",
         },
       ],
       "generatedRequestName": "DestroyTaxDeclarationRequest",
@@ -39883,6 +39542,7 @@ client.connect()
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListEmploymentRecordsRequest",
@@ -40308,6 +39968,7 @@ client.connect()
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "RetrieveEmploymentRecordDetailsRequest",
@@ -40738,6 +40399,7 @@ client.connect()
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DetailEmploymentRecordRequest",
@@ -40867,6 +40529,7 @@ client.connect()
           "queryParameters": [],
           "request": null,
           "response": null,
+          "type": "full",
         },
       ],
       "generatedRequestName": "DestroyEmploymentRecordRequest",
@@ -41178,6 +40841,7 @@ client.connect()
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "VerifyIncomeRequest",
@@ -41458,6 +41122,7 @@ client.connect()
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CategorizeTransactionsRequest",
@@ -41586,6 +41251,7 @@ client.connect()
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListSecretKeysRequest",
@@ -41684,6 +41350,7 @@ For example:
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreateSecretKeysRequest",
@@ -41836,6 +41503,7 @@ For example:
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListPaymentWebhooksRequest",
@@ -41991,6 +41659,7 @@ For example:
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "RegisterPaymentWebhookRequest",
@@ -42136,6 +41805,7 @@ For example:
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DetailPaymentWebhooksRequest",
@@ -42216,6 +41886,7 @@ For example:
           "queryParameters": [],
           "request": null,
           "response": null,
+          "type": "full",
         },
       ],
       "generatedRequestName": "DeletePaymentWebhooksRequest",
@@ -42538,6 +42209,7 @@ For example:
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListPaymentInstitutionsRequest",
@@ -43004,6 +42676,7 @@ For example:
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DetailPaymentInstitutionRequest",
@@ -43276,6 +42949,7 @@ For example:
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListCustomersRequest",
@@ -43682,6 +43356,7 @@ For example:
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreateCustomerRequest",
@@ -43868,6 +43543,7 @@ For example:
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DetailCustomerRequest",
@@ -44236,6 +43912,7 @@ For example:
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListBankAccountRequest",
@@ -44816,6 +44493,7 @@ For example:
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreateBankAccountRequest",
@@ -45028,6 +44706,7 @@ For example:
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DetailBankAccountRequest",
@@ -45328,6 +45007,7 @@ For example:
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListPaymentLinksRequest",
@@ -45847,6 +45527,7 @@ For example:
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreatePaymentlinkRequest",
@@ -46044,6 +45725,7 @@ For example:
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DetailCreatePaymentlinkRequest",
@@ -46350,6 +46032,7 @@ For example:
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListPaymentIntentsRequest",
@@ -47373,6 +47056,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListPaymentTransactionsRequest",
@@ -48083,6 +47767,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DetailPaymentTransactionsRequest",

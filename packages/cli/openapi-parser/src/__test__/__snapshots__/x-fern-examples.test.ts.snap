@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
+exports[`x-fern-examples x-fern-examples parse open api 1`] = `
 {
   "channel": [],
   "description": null,
@@ -13,26 +13,25 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
       "errorStatusCode": [],
       "examples": [
         {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": null,
-          "response": {
-            "properties": {
-              "message": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "message",
-                },
+          "type": "unknown",
+          "value": {
+            "response": {
+              "body": {
+                "message": "This is a test",
               },
             },
-            "type": "object",
           },
-          "type": "full",
+        },
+        {
+          "type": "unknown",
+          "value": {
+            "response": {
+              "body": {
+                "id": 1,
+                "name": "John Doe",
+              },
+            },
+          },
         },
       ],
       "generatedRequestName": "GetExampleRequest",

@@ -38,7 +38,9 @@ export const EndpointWithExample: core.serialization.ObjectSchema<
             core.serialization.lazy(async () => (await import("../../..")).StatusCode)
         ),
         server: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).Server)),
-        examples: core.serialization.list(core.serialization.unknown()),
+        examples: core.serialization.list(
+            core.serialization.lazy(async () => (await import("../../..")).EndpointExample)
+        ),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
 
@@ -63,6 +65,6 @@ export declare namespace EndpointWithExample {
         response?: serializers.ResponseWithExample.Raw | null;
         errorStatusCode: serializers.StatusCode.Raw[];
         server: serializers.Server.Raw[];
-        examples: unknown[];
+        examples: serializers.EndpointExample.Raw[];
     }
 }

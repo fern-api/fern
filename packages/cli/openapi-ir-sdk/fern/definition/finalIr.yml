@@ -195,9 +195,11 @@ types:
       - dotnet # alias to csharp
       - jvm # alias to java
 
+  FernExample: unknown
+
   EndpointExample:
     union:
-      unknown: unknown
+      unknown: FernExample
       full: FullEndpointExample
 
   FullEndpointExample:

@@ -15,6 +15,7 @@ export * from "./CustomCodeSample";
 export * from "./CustomCodeSampleLanguage";
 export * from "./CustomCodeSampleSdk";
 export * from "./SupportedSdkLanguage";
+export * from "./FernExample";
 export * from "./EndpointExample";
 export * from "./FullEndpointExample";
 export * from "./PathParameterExample";

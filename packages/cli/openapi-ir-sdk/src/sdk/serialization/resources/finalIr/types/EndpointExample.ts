@@ -12,7 +12,7 @@ export const EndpointExample: core.serialization.Schema<
 > = core.serialization
     .union("type", {
         unknown: core.serialization.object({
-            value: core.serialization.unknown(),
+            value: core.serialization.lazy(async () => (await import("../../..")).FernExample),
         }),
         full: core.serialization.lazyObject(async () => (await import("../../..")).FullEndpointExample),
     })
@@ -35,7 +35,7 @@ export declare namespace EndpointExample {
 
     interface Unknown {
         type: "unknown";
-        value?: unknown;
+        value?: serializers.FernExample.Raw;
     }
 
     interface Full extends serializers.FullEndpointExample.Raw {
