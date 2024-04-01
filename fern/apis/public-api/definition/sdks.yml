@@ -4,6 +4,7 @@ service:
   endpoints:
     generate:
       path: /generate
+      display-name: Generate SDKs
       docs: Generate an SDK for your API 
       method: POST
       request:
@@ -40,6 +41,7 @@ service:
               status: pending
     
     getGenerationStatus:
+      display-name: Get SDK generation status
       path: /generate/{generationId}
       docs: Get the status of a generation request
       method: GET
