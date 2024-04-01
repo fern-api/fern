@@ -495,21 +495,7 @@
                         }
                     },
                     "displayName": null,
-                    "auth": false,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
-                    "path": {
-                        "head": "/headers",
-                        "parts": []
-                    },
-                    "fullPath": {
-                        "head": "headers",
-                        "parts": []
-                    },
-                    "pathParameters": [],
-                    "allPathParameters": [],
-                    "queryParameters": [],
                     "headers": [
                         {
                             "name": {
@@ -584,6 +570,18 @@
                             "docs": null
                         }
                     ],
+                    "baseUrl": null,
+                    "path": {
+                        "head": "/headers",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "headers",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
                     "requestBody": {
                         "type": "inlinedRequestBody",
                         "name": {
@@ -737,6 +735,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": false,
+                    "idempotent": false,
                     "examples": [
                         {
                             "name": null,
@@ -1179,10 +1179,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": false,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/inlined",
                         "parts": []
@@ -1194,7 +1193,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "inlinedRequestBody",
                         "name": {
@@ -1453,6 +1451,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": false,
+                    "idempotent": false,
                     "examples": [
                         {
                             "name": null,
@@ -1943,10 +1943,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": false,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/path/",
                         "parts": [
@@ -2038,7 +2037,6 @@
                         }
                     ],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": {
@@ -2077,6 +2075,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": false,
+                    "idempotent": false,
                     "examples": [
                         {
                             "name": null,
@@ -2438,10 +2438,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": false,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/query",
                         "parts": []
@@ -2559,7 +2558,6 @@
                             "docs": null
                         }
                     ],
-                    "headers": [],
                     "requestBody": null,
                     "sdkRequest": {
                         "shape": {
@@ -2659,6 +2657,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": false,
+                    "idempotent": false,
                     "examples": [
                         {
                             "name": null,
@@ -3093,10 +3093,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": false,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/reference",
                         "parts": []
@@ -3108,7 +3107,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -3311,6 +3309,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": false,
+                    "idempotent": false,
                     "examples": [
                         {
                             "name": null,

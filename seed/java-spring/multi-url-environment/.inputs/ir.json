@@ -132,10 +132,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": "ec2",
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": "ec2",
                     "path": {
                         "head": "/boot",
                         "parts": []
@@ -147,7 +146,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "inlinedRequestBody",
                         "name": {
@@ -267,6 +265,8 @@
                     },
                     "response": null,
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -350,10 +350,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": "s3",
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": "s3",
                     "path": {
                         "head": "/presigned-url",
                         "parts": []
@@ -365,7 +364,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "inlinedRequestBody",
                         "name": {
@@ -495,6 +493,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
