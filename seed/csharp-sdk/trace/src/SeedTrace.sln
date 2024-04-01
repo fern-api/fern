@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedTrace", "SeedTrace\SeedTrace.csproj", "{CDF6321C-560F-4D38-AF42-6E99016D4B9F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedTrace.Test", "SeedTrace.Test\SeedTrace.Test.csproj", "{7671454E-69CB-4CDC-A623-8AE6D7904399}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CDF6321C-560F-4D38-AF42-6E99016D4B9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDF6321C-560F-4D38-AF42-6E99016D4B9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDF6321C-560F-4D38-AF42-6E99016D4B9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDF6321C-560F-4D38-AF42-6E99016D4B9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7671454E-69CB-4CDC-A623-8AE6D7904399}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7671454E-69CB-4CDC-A623-8AE6D7904399}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7671454E-69CB-4CDC-A623-8AE6D7904399}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7671454E-69CB-4CDC-A623-8AE6D7904399}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

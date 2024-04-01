@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedNurseryApi", "SeedNurseryApi\SeedNurseryApi.csproj", "{8BD2930B-E85A-4B89-A000-3A45C184F2B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedNurseryApi.Test", "SeedNurseryApi.Test\SeedNurseryApi.Test.csproj", "{93B8C171-ED0F-489F-AFC3-04CB0A2CA908}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8BD2930B-E85A-4B89-A000-3A45C184F2B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BD2930B-E85A-4B89-A000-3A45C184F2B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BD2930B-E85A-4B89-A000-3A45C184F2B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BD2930B-E85A-4B89-A000-3A45C184F2B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93B8C171-ED0F-489F-AFC3-04CB0A2CA908}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93B8C171-ED0F-489F-AFC3-04CB0A2CA908}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93B8C171-ED0F-489F-AFC3-04CB0A2CA908}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93B8C171-ED0F-489F-AFC3-04CB0A2CA908}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

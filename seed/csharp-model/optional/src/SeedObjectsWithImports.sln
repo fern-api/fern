@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedObjectsWithImports", "SeedObjectsWithImports\SeedObjectsWithImports.csproj", "{515431B4-64D0-4CC1-81AD-A81DB419D88D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeedObjectsWithImports.Test", "SeedObjectsWithImports.Test\SeedObjectsWithImports.Test.csproj", "{E8DC6CAD-3FFD-4B69-9C3A-DC36C8ABB899}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{515431B4-64D0-4CC1-81AD-A81DB419D88D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{515431B4-64D0-4CC1-81AD-A81DB419D88D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{515431B4-64D0-4CC1-81AD-A81DB419D88D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{515431B4-64D0-4CC1-81AD-A81DB419D88D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8DC6CAD-3FFD-4B69-9C3A-DC36C8ABB899}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8DC6CAD-3FFD-4B69-9C3A-DC36C8ABB899}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8DC6CAD-3FFD-4B69-9C3A-DC36C8ABB899}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8DC6CAD-3FFD-4B69-9C3A-DC36C8ABB899}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
