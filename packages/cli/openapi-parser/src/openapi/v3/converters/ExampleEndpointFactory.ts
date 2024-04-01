@@ -13,6 +13,7 @@ import {
     ResponseWithExample,
     SchemaWithExample
 } from "@fern-api/openapi-ir-sdk";
+import { RawSchemas } from "@fern-api/yaml-schema";
 import { ExampleTypeFactory } from "../../../schema/examples/ExampleTypeFactory";
 import { convertSchemaToSchemaWithExample } from "../../../schema/utils/convertSchemaToSchemaWithExample";
 import { isSchemaRequired } from "../../../schema/utils/isSchemaRequired";
@@ -153,9 +154,12 @@ export class ExampleEndpointFactory {
         }
 
         // Get all the code samples from incomplete examples
-        const codeSamples = endpoint.examples.filter(hasIncompleteExample).flatMap((example) => example.codeSamples);
+        const codeSamples = endpoint.examples
+            .filter((ex) => hasIncompleteExample(EndpointExample.unknown(ex)))
+            .flatMap((example) => (example as RawSchemas.ExampleEndpointCallSchema)["code-samples"])
+            .filter(isNonNullish);
 
-        return {
+        return EndpointExample.full({
             name: exampleName,
             description: undefined,
             pathParameters,
@@ -163,8 +167,8 @@ export class ExampleEndpointFactory {
             headers,
             request: requestExample,
             response: responseExample,
-            codeSamples
-        };
+            codeSamples: []
+        });
     }
 
     private isSchemaRequired(schema: SchemaWithExample) {

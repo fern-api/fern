@@ -1,4 +1,4 @@
-import { EndpointExample, FernOpenapiIr } from "@fern-api/openapi-ir-sdk";
+import { FernOpenapiIr } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtensionAndValidate } from "../../../getExtension";
@@ -12,7 +12,7 @@ export function getExamplesFromExtension(
     operationContext: OperationContext,
     operationObject: OpenAPIV3.OperationObject,
     context: AbstractOpenAPIV3ParserContext
-): EndpointExample[] {
+): RawSchemas.ExampleEndpointCallArraySchema {
     const exampleEndpointCalls: RawSchemas.ExampleEndpointCallArraySchema =
         getExtensionAndValidate(
             operationObject,
@@ -21,54 +21,6 @@ export function getExamplesFromExtension(
             context,
             [...operationContext.baseBreadcrumbs, `${operationContext.method} ${operationContext.path}`]
         ) ?? [];
-
-    // TODO: Not validated
-    const fernExamples = exampleEndpointCalls.map(
-        (value): EndpointExample => ({
-            name: value.name,
-            pathParameters: value["path-parameters"]
-                ? Object.entries(value["path-parameters"]).map(([name, value]) => ({
-                      name,
-                      // TODO: Not validated
-                      value: value as FernOpenapiIr.FullExample
-                  }))
-                : undefined,
-            queryParameters: value["query-parameters"]
-                ? Object.entries(value["query-parameters"]).map(([name, value]) => ({
-                      name,
-                      // TODO: Not validated
-                      value: value as FernOpenapiIr.FullExample
-                  }))
-                : undefined,
-            headers: value.headers
-                ? Object.entries(value.headers).map(([name, value]) => ({
-                      name,
-                      // TODO: Not validated
-                      value: value as FernOpenapiIr.FullExample
-                  }))
-                : undefined,
-            request: value.request as FernOpenapiIr.FullExample,
-            response: value.response as FernOpenapiIr.FullExample,
-            codeSamples: (value["code-samples"] ?? []).map(
-                (value): FernOpenapiIr.CustomCodeSample =>
-                    "language" in value
-                        ? FernOpenapiIr.CustomCodeSample.language({
-                              name: value.name,
-                              language: value.language,
-                              code: value.code,
-                              install: value.install,
-                              description: value.docs
-                          })
-                        : FernOpenapiIr.CustomCodeSample.sdk({
-                              name: value.name,
-                              sdk: value.sdk === "c#" ? "csharp" : value.sdk,
-                              code: value.code,
-                              description: value.docs
-                          })
-            ),
-            description: undefined
-        })
-    );
 
     const redoclyCodeSamplesKebabCase =
         getExtensionAndValidate<RedoclyCodeSampleArraySchema>(
@@ -94,14 +46,8 @@ export function getExamplesFromExtension(
     ];
 
     if (redoclyCodeSamples.length > 0) {
-        fernExamples.push({
-            name: undefined,
-            pathParameters: undefined,
-            queryParameters: undefined,
-            headers: undefined,
-            request: undefined,
-            response: undefined,
-            codeSamples: redoclyCodeSamples.map(
+        exampleEndpointCalls.push({
+            "code-samples": redoclyCodeSamples.map(
                 (value): FernOpenapiIr.CustomCodeSample =>
                     FernOpenapiIr.CustomCodeSample.language({
                         name: value.label ?? value.lang,
@@ -110,10 +56,9 @@ export function getExamplesFromExtension(
                         install: undefined,
                         description: undefined
                     })
-            ),
-            description: undefined
+            )
         });
     }
 
-    return fernExamples;
+    return exampleEndpointCalls;
 }

@@ -34,5 +34,5 @@ export interface EndpointWithExample extends FernOpenapiIr.WithDescription {
      * Populated by `x-fern-examples` on a path object.
      * Also migrated from `x-readme.code-samples` if present.
      */
-    examples: FernOpenapiIr.EndpointExample[];
+    examples: unknown[];
 }

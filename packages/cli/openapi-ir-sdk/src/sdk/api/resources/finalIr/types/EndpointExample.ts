@@ -4,17 +4,67 @@
 
 import * as FernOpenapiIr from "../../..";
 
-/**
- * A complete example associated with the endpoint. All child
- * examples will be fully complete (i.e. there will be no
- * PartialObjectExamples).
- */
-export interface EndpointExample extends FernOpenapiIr.WithDescription {
-    name: string | undefined;
-    pathParameters: FernOpenapiIr.PathParameterExample[] | undefined;
-    queryParameters: FernOpenapiIr.QueryParameterExample[] | undefined;
-    headers: FernOpenapiIr.HeaderExample[] | undefined;
-    request: FernOpenapiIr.FullExample | undefined;
-    response: FernOpenapiIr.FullExample | undefined;
-    codeSamples: FernOpenapiIr.CustomCodeSample[];
+export type EndpointExample = FernOpenapiIr.EndpointExample.Unknown | FernOpenapiIr.EndpointExample.Full;
+
+export declare namespace EndpointExample {
+    interface Unknown extends _Utils {
+        type: "unknown";
+        value: unknown;
+    }
+
+    interface Full extends FernOpenapiIr.FullEndpointExample, _Utils {
+        type: "full";
+    }
+
+    interface _Utils {
+        _visit: <_Result>(visitor: FernOpenapiIr.EndpointExample._Visitor<_Result>) => _Result;
+    }
+
+    interface _Visitor<_Result> {
+        unknown: (value: unknown) => _Result;
+        full: (value: FernOpenapiIr.FullEndpointExample) => _Result;
+        _other: (value: { type: string }) => _Result;
+    }
 }
+
+export const EndpointExample = {
+    unknown: (value?: unknown): FernOpenapiIr.EndpointExample.Unknown => {
+        return {
+            value: value,
+            type: "unknown",
+            _visit: function <_Result>(
+                this: FernOpenapiIr.EndpointExample.Unknown,
+                visitor: FernOpenapiIr.EndpointExample._Visitor<_Result>
+            ) {
+                return FernOpenapiIr.EndpointExample._visit(this, visitor);
+            },
+        };
+    },
+
+    full: (value: FernOpenapiIr.FullEndpointExample): FernOpenapiIr.EndpointExample.Full => {
+        return {
+            ...value,
+            type: "full",
+            _visit: function <_Result>(
+                this: FernOpenapiIr.EndpointExample.Full,
+                visitor: FernOpenapiIr.EndpointExample._Visitor<_Result>
+            ) {
+                return FernOpenapiIr.EndpointExample._visit(this, visitor);
+            },
+        };
+    },
+
+    _visit: <_Result>(
+        value: FernOpenapiIr.EndpointExample,
+        visitor: FernOpenapiIr.EndpointExample._Visitor<_Result>
+    ): _Result => {
+        switch (value.type) {
+            case "unknown":
+                return visitor.unknown(value.value);
+            case "full":
+                return visitor.full(value);
+            default:
+                return visitor._other(value as any);
+        }
+    },
+} as const;

@@ -46,7 +46,7 @@ types:
       errorStatusCode: list<commons.StatusCode>
       server: list<commons.Server>
       examples:
-        type: list<finalIr.EndpointExample>
+        type: list<unknown>
         docs: |
           Populated by `x-fern-examples` on a path object.
           Also migrated from `x-readme.code-samples` if present.
