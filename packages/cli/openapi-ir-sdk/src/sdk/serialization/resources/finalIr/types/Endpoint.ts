@@ -41,7 +41,7 @@ export const Endpoint: core.serialization.ObjectSchema<serializers.Endpoint.Raw,
                 core.serialization.lazyObject(async () => (await import("../../..")).Server)
             ),
             examples: core.serialization.list(
-                core.serialization.lazyObject(async () => (await import("../../..")).EndpointExample)
+                core.serialization.lazy(async () => (await import("../../..")).EndpointExample)
             ),
         })
         .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));

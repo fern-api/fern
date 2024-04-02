@@ -15,6 +15,7 @@ export declare namespace ParsedSingleUnionTypeForError {
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
         includeUtilsOnUnionMembers: boolean;
         noOptionalProperties: boolean;
+        retainOriginalCasing: boolean;
     }
 }
 
@@ -22,20 +23,23 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
     private errorDeclaration: ErrorDeclaration;
     private responseError: ResponseError;
     private errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+    private retainOriginalCasing: boolean;
 
     constructor({
         error,
         errorDiscriminationStrategy,
         errorResolver,
         includeUtilsOnUnionMembers,
-        noOptionalProperties
+        noOptionalProperties,
+        retainOriginalCasing
     }: ParsedSingleUnionTypeForError.Init) {
         const errorDeclaration = errorResolver.getErrorDeclarationFromName(error.error);
         super({
             singleUnionType: getSingleUnionTypeGenerator({
                 errorDiscriminationStrategy,
                 errorDeclaration,
-                noOptionalProperties
+                noOptionalProperties,
+                retainOriginalCasing
             }),
             includeUtilsOnUnionMembers
         });
@@ -43,6 +47,7 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
         this.errorDiscriminationStrategy = errorDiscriminationStrategy;
         this.responseError = error;
         this.errorDeclaration = errorDeclaration;
+        this.retainOriginalCasing = retainOriginalCasing;
     }
 
     public getDocs(): string | null | undefined {
@@ -64,11 +69,15 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
     }
 
     public getBuilderName(): string {
-        return this.errorDeclaration.discriminantValue.name.camelCase.unsafeName;
+        return this.retainOriginalCasing
+            ? this.errorDeclaration.discriminantValue.name.originalName
+            : this.errorDeclaration.discriminantValue.name.camelCase.unsafeName;
     }
 
     public getVisitorKey(): string {
-        return this.errorDeclaration.discriminantValue.name.camelCase.unsafeName;
+        return this.retainOriginalCasing
+            ? this.errorDeclaration.discriminantValue.name.originalName
+            : this.errorDeclaration.discriminantValue.name.camelCase.unsafeName;
     }
 }
 
@@ -77,11 +86,13 @@ const CONTENT_PROPERTY_FOR_STATUS_CODE_DISCRIMINATED_ERRORS = "content";
 function getSingleUnionTypeGenerator({
     errorDiscriminationStrategy,
     errorDeclaration,
-    noOptionalProperties
+    noOptionalProperties,
+    retainOriginalCasing
 }: {
     errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     errorDeclaration: ErrorDeclaration;
     noOptionalProperties: boolean;
+    retainOriginalCasing: boolean;
 }): SingleUnionTypeGenerator<SdkContext> {
     if (errorDeclaration.type == null) {
         return new NoPropertiesSingleUnionTypeGenerator();
@@ -89,7 +100,8 @@ function getSingleUnionTypeGenerator({
     const { type } = errorDeclaration;
 
     const propertyName = ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
-        property: ({ contentProperty }) => contentProperty.name.camelCase.unsafeName,
+        property: ({ contentProperty }) =>
+            retainOriginalCasing ? contentProperty.name.originalName : contentProperty.name.camelCase.unsafeName,
         statusCode: () => CONTENT_PROPERTY_FOR_STATUS_CODE_DISCRIMINATED_ERRORS,
         _other: () => {
             throw new Error("Unknown ErrorDiscriminationStrategy: " + errorDiscriminationStrategy.type);

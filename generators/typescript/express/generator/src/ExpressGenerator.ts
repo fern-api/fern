@@ -59,6 +59,7 @@ export declare namespace ExpressGenerator {
         treatUnknownAsAny: boolean;
         includeSerdeLayer: boolean;
         outputEsm: boolean;
+        retainOriginalCasing: boolean;
     }
 }
 
@@ -180,6 +181,7 @@ export class ExpressGenerator {
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
             includeOtherInUnionTypes: config.includeOtherInUnionTypes,
             includeSerdeLayer: config.includeSerdeLayer,
+            retainOriginalCasing: config.retainOriginalCasing,
             noOptionalProperties: false
         });
         this.typeSchemaGenerator = new TypeSchemaGenerator({
@@ -480,7 +482,8 @@ export class ExpressGenerator {
             expressRegisterGenerator: this.expressRegisterGenerator,
             expressErrorSchemaDeclarationReferencer: this.expressErrorSchemaDeclarationReferencer,
             expressErrorSchemaGenerator: this.expressErrorSchemaGenerator,
-            includeSerdeLayer: this.config.includeSerdeLayer
+            includeSerdeLayer: this.config.includeSerdeLayer,
+            retainOriginalCasing: this.config.retainOriginalCasing
         });
     }
 }

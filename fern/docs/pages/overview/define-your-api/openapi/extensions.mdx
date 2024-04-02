@@ -96,7 +96,10 @@ components:
       x-fern-header:
         name: header
         env: MY_HEADER_ENVVAR
+        prefix: "Token "  # Optional
 ```
+
+This adds a header of the form `X-API-Key: Token <value>` to the request.
 
 ## Global headers
 At times, your API will leverage certain headers for every endpoint, or the majority of them, we call these "global headers". For convenience, generated Fern SDKs expose "global headers" to easily be updated on API calls. Take for example an API key, if we declare the API key as a global header, a user will be able to plug theirs in easily:
@@ -106,7 +109,7 @@ import os
 
 class Client:
 
-  def __init__(self, *, apiKey: str)
+  def __init__(self, *, apiKey: str):
 ```
 
 To configure global headers, Fern will automatically pull out headers that are used in every request, or the majority of requests, and mark them as global.

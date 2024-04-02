@@ -7,6 +7,7 @@ export declare namespace ExpressInlinedRequestBodyGenerator {
         export interface Args {
             requestBody: InlinedRequestBody;
             typeName: string;
+            retainOriginalCasing: boolean;
         }
     }
 }
@@ -14,11 +15,13 @@ export declare namespace ExpressInlinedRequestBodyGenerator {
 export class ExpressInlinedRequestBodyGenerator {
     public generateInlinedRequestBody({
         requestBody,
-        typeName
+        typeName,
+        retainOriginalCasing
     }: ExpressInlinedRequestBodyGenerator.generateInlinedRequestBody.Args): GeneratedExpressInlinedRequestBody {
         return new GeneratedExpressInlinedRequestBodyImpl({
             requestBody,
-            typeName
+            typeName,
+            retainOriginalCasing
         });
     }
 }

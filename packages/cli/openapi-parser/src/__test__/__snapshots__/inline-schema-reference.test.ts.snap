@@ -32,6 +32,7 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetExampleRequest",

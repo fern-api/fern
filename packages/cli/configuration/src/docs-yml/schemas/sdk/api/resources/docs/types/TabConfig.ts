@@ -4,6 +4,6 @@
 
 export interface TabConfig {
     displayName: string;
-    icon: string;
+    icon?: string;
     slug?: string;
 }

@@ -10,7 +10,7 @@ service:
     get:
       path: ""
       docs: Get snippet by endpoint method and path
-      display-name: Get snippet for endpoint
+      display-name: Get SDK snippet for endpoint
       availability: pre-release
       audiences: 
         - external
@@ -78,7 +78,7 @@ service:
 
     load:
       path: /load
-      display-name: Load all snippets
+      display-name: Load all SDK snippets
       method: POST
       availability: pre-release
       audiences: 

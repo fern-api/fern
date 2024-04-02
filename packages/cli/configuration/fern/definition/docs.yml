@@ -32,7 +32,7 @@ types:
   TabConfig:
     properties:
       display-name: string
-      icon: string
+      icon: optional<string>
       slug: optional<string>
 
   DocsInstances:

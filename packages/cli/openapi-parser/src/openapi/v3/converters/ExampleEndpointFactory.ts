@@ -1,6 +1,7 @@
 import { assertNever, isNonNullish } from "@fern-api/core-utils";
 import { Logger } from "@fern-api/logger";
 import {
+    CustomCodeSample,
     EndpointExample,
     EndpointWithExample,
     FernOpenapiIr,
@@ -11,8 +12,10 @@ import {
     QueryParameterExample,
     RequestWithExample,
     ResponseWithExample,
-    SchemaWithExample
+    SchemaWithExample,
+    SupportedSdkLanguage
 } from "@fern-api/openapi-ir-sdk";
+import { RawSchemas } from "@fern-api/yaml-schema";
 import { ExampleTypeFactory } from "../../../schema/examples/ExampleTypeFactory";
 import { convertSchemaToSchemaWithExample } from "../../../schema/utils/convertSchemaToSchemaWithExample";
 import { isSchemaRequired } from "../../../schema/utils/isSchemaRequired";
@@ -153,9 +156,24 @@ export class ExampleEndpointFactory {
         }
 
         // Get all the code samples from incomplete examples
-        const codeSamples = endpoint.examples.filter(hasIncompleteExample).flatMap((example) => example.codeSamples);
+        const codeSamples = endpoint.examples
+            .filter((ex) => hasIncompleteExample(ex))
+            .flatMap((ex) => {
+                if (ex.type === "unknown") {
+                    if (ex.value != null) {
+                        const samples = (ex.value as RawSchemas.ExampleEndpointCallSchema)["code-samples"];
+                        if (samples != null) {
+                            return this.convertCodeSamples(samples);
+                        }
+                    }
+                    return undefined;
+                } else {
+                    return ex.codeSamples;
+                }
+            })
+            .filter((ex): ex is CustomCodeSample => isNonNullish(ex));
 
-        return {
+        return EndpointExample.full({
             name: exampleName,
             description: undefined,
             pathParameters,
@@ -164,7 +182,30 @@ export class ExampleEndpointFactory {
             request: requestExample,
             response: responseExample,
             codeSamples
-        };
+        });
+    }
+
+    private convertCodeSamples(codeSamples: RawSchemas.ExampleCodeSampleSchema[]): CustomCodeSample[] {
+        return codeSamples
+            .map((codeSample) => {
+                if ("language" in codeSample) {
+                    return CustomCodeSample.language({
+                        name: codeSample.name ?? undefined,
+                        description: codeSample.docs ?? undefined,
+                        language: codeSample.language,
+                        code: codeSample.code,
+                        install: codeSample.install ?? undefined
+                    });
+                } else {
+                    return CustomCodeSample.sdk({
+                        name: codeSample.name ?? undefined,
+                        description: codeSample.docs ?? undefined,
+                        sdk: codeSample.sdk === "c#" ? SupportedSdkLanguage.Csharp : codeSample.sdk,
+                        code: codeSample.code
+                    });
+                }
+            })
+            .filter(isNonNullish);
     }
 
     private isSchemaRequired(schema: SchemaWithExample) {
