@@ -43,8 +43,8 @@ class Node(pydantic.BaseModel):
     """
 
     name: str
-    nodes: typing.Optional[typing.List[Node]]
-    trees: typing.Optional[typing.List[Tree]]
+    nodes: typing.Optional[typing.List[Node]] = None
+    trees: typing.Optional[typing.List[Tree]] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

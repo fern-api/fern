@@ -14,7 +14,7 @@ except ImportError:
 
 
 class DoublyLinkedListValue(pydantic.BaseModel):
-    head: typing.Optional[NodeId]
+    head: typing.Optional[NodeId] = None
     nodes: typing.Dict[NodeId, DoublyLinkedListNodeValue]
 
     def json(self, **kwargs: typing.Any) -> str:

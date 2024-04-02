@@ -14,11 +14,11 @@ except ImportError:
 
 class Migration(pydantic.BaseModel):
     """
-    from seed.examples import Migration, MigrationStatus
+    from seed.examples import Migration
 
     Migration(
         name="001_init",
-        status=MigrationStatus.RUNNING,
+        status="RUNNING",
     )
     """
 

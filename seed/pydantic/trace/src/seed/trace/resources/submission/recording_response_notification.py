@@ -16,10 +16,10 @@ except ImportError:
 
 class RecordingResponseNotification(pydantic.BaseModel):
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
-    test_case_id: typing.Optional[str] = pydantic.Field(alias="testCaseId")
+    test_case_id: typing.Optional[str] = pydantic.Field(alias="testCaseId", default=None)
     line_number: int = pydantic.Field(alias="lineNumber")
     lightweight_stack_info: LightweightStackframeInformation = pydantic.Field(alias="lightweightStackInfo")
-    traced_file: typing.Optional[TracedFile] = pydantic.Field(alias="tracedFile")
+    traced_file: typing.Optional[TracedFile] = pydantic.Field(alias="tracedFile", default=None)
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

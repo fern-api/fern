@@ -34,7 +34,7 @@ class Movie(pydantic.BaseModel):
     """
 
     id: MovieId
-    prequel: typing.Optional[MovieId]
+    prequel: typing.Optional[MovieId] = None
     title: str
     from_: str = pydantic.Field(alias="from")
     rating: float = pydantic.Field()
@@ -44,7 +44,7 @@ class Movie(pydantic.BaseModel):
 
     type: typing.Literal["movie"]
     tag: Tag
-    book: typing.Optional[str]
+    book: typing.Optional[str] = None
     metadata: typing.Dict[str, typing.Any]
 
     def json(self, **kwargs: typing.Any) -> str:

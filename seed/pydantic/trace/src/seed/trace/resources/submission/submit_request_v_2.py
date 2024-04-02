@@ -20,8 +20,8 @@ class SubmitRequestV2(pydantic.BaseModel):
     language: Language
     submission_files: typing.List[SubmissionFileInfo] = pydantic.Field(alias="submissionFiles")
     problem_id: ProblemId = pydantic.Field(alias="problemId")
-    problem_version: typing.Optional[int] = pydantic.Field(alias="problemVersion")
-    user_id: typing.Optional[str] = pydantic.Field(alias="userId")
+    problem_version: typing.Optional[int] = pydantic.Field(alias="problemVersion", default=None)
+    user_id: typing.Optional[str] = pydantic.Field(alias="userId", default=None)
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

@@ -14,7 +14,7 @@ except ImportError:
 
 
 class SinglyLinkedListValue(pydantic.BaseModel):
-    head: typing.Optional[NodeId]
+    head: typing.Optional[NodeId] = None
     nodes: typing.Dict[NodeId, SinglyLinkedListNodeValue]
 
     def json(self, **kwargs: typing.Any) -> str:

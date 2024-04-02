@@ -14,7 +14,7 @@ except ImportError:
 
 
 class BinaryTreeValue(pydantic.BaseModel):
-    root: typing.Optional[NodeId]
+    root: typing.Optional[NodeId] = None
     nodes: typing.Dict[NodeId, BinaryTreeNodeValue]
 
     def json(self, **kwargs: typing.Any) -> str:
