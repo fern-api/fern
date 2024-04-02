@@ -5,10 +5,57 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.13.0-rc0] - 2024-04-02
+
+- Feature: Add `retainOriginalCasing` option to preserve the naming convention expressed in the API.
+  For example, the following Fern definition will generate a type like so:
+
+```yaml
+types:
+  GetUsersRequest
+    properties:
+      group_id: string
+```
+
+**Before**
+
+```typescript
+export interface GetUsersRequest {
+  groupId: string;
+}
+
+export interface GetUsersRequest = core.serialization.object({
+ groupId: core.serialization.string("group_id")
+})
+
+export namespace GetUsersRequest {
+  interface Raw {
+    group_id: string
+  }
+}
+```
+
+**After**
+
+```typescript
+export interface GetUsersRequest {
+  group_id: string;
+}
+
+export interface GetUsersRequest = core.serialization.object({
+ group_id: core.serialization.string()
+})
+
+export namespace GetUsersRequest {
+  interface Raw {
+    group_id: string
+  }
+}
+```
+
 ## [0.12.9] - 2024-03-22
 
-- Fix: The generator stopped working for remote code generation starting in `0.12.7`. This is now fixed. 
-
+- Fix: The generator stopped working for remote code generation starting in `0.12.7`. This is now fixed.
 
 ## [0.12.8] - 2024-03-22
 
