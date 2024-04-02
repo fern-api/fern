@@ -1,6 +1,6 @@
+import { FERNIGNORE_FILENAME, SNIPPET_JSON_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { FERNIGNORE_FILENAME, SNIPPET_JSON_FILENAME } from "@fern-api/configuration";
 import { TaskContext } from "@fern-api/task-context";
 import decompress from "decompress";
 import { cp, readdir, readFile, rm, rmdir } from "fs/promises";
