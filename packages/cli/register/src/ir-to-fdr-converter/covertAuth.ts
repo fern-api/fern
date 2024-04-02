@@ -21,7 +21,8 @@ export function convertAuth(auth: Ir.auth.ApiAuth): APIV1Write.ApiAuth | undefin
                 return {
                     type: "header",
                     headerWireValue: scheme.name.wireValue,
-                    nameOverride: scheme.name.name.originalName
+                    nameOverride: scheme.name.name.originalName,
+                    prefix: scheme.prefix
                 };
             default:
                 assertNever(scheme);
