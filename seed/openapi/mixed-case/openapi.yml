@@ -1,0 +1,162 @@
+openapi: 3.0.1
+info:
+  title: mixed-case
+  version: ''
+paths:
+  /resource/{ResourceID}:
+    get:
+      operationId: service_getResource
+      tags:
+        - Service
+      parameters:
+        - name: ResourceID
+          in: path
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: rsc-xyz
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Resource'
+              examples:
+                Example1:
+                  value:
+                    resource_type: user
+                    userName: username
+                    metadata_tags:
+                      - tag1
+                      - tag2
+                    EXTRA_PROPERTIES:
+                      foo: bar
+                      baz: qux
+  /resource:
+    get:
+      operationId: service_listResources
+      tags:
+        - Service
+      parameters:
+        - name: page_limit
+          in: query
+          required: true
+          schema:
+            type: integer
+          examples:
+            One:
+              value: 10
+        - name: beforeDate
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date
+          examples:
+            One:
+              value: '2023-01-01'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Resource'
+              examples:
+                One:
+                  value:
+                    - resource_type: user
+                      userName: username
+                      metadata_tags:
+                        - tag1
+                        - tag2
+                      EXTRA_PROPERTIES:
+                        foo: bar
+                        baz: qux
+components:
+  schemas:
+    Organization:
+      title: Organization
+      type: object
+      properties:
+        name:
+          type: string
+          example: orgName
+      required:
+        - name
+    User:
+      title: User
+      type: object
+      properties:
+        userName:
+          type: string
+          example: username
+        metadata_tags:
+          type: array
+          items:
+            type: string
+          example:
+            - tag1
+            - tag2
+        EXTRA_PROPERTIES:
+          type: object
+          additionalProperties:
+            type: string
+      required:
+        - userName
+        - metadata_tags
+        - EXTRA_PROPERTIES
+    NestedUser:
+      title: NestedUser
+      type: object
+      properties:
+        Name:
+          type: string
+          example: username
+        NestedUser:
+          $ref: '#/components/schemas/User'
+      required:
+        - Name
+        - NestedUser
+    ResourceStatus:
+      title: ResourceStatus
+      type: string
+      enum:
+        - ACTIVE
+        - INACTIVE
+    Resource:
+      title: Resource
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                resource_type:
+                  type: string
+                  enum:
+                    - user
+            - $ref: '#/components/schemas/User'
+          required:
+            - resource_type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                resource_type:
+                  type: string
+                  enum:
+                    - Organization
+            - $ref: '#/components/schemas/Organization'
+          required:
+            - resource_type
+      required:
+        - status
+      properties:
+        status:
+          $ref: '#/components/schemas/ResourceStatus'
+  securitySchemes: {}

@@ -33,6 +33,7 @@ export declare namespace GeneratedFileUploadEndpointRequest {
         requestBody: HttpRequestBody.FileUpload;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         targetRuntime: JavaScriptRuntime;
+        retainOriginalCasing: boolean;
     }
 }
 
@@ -47,6 +48,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     private requestBody: HttpRequestBody.FileUpload;
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private targetRuntime: JavaScriptRuntime;
+    private retainOriginalCasing: boolean;
 
     constructor({
         ir,
@@ -55,7 +57,8 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         endpoint,
         requestBody,
         generatedSdkClientClass,
-        targetRuntime
+        targetRuntime,
+        retainOriginalCasing
     }: GeneratedFileUploadEndpointRequest.Init) {
         this.ir = ir;
         this.service = service;
@@ -63,6 +66,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         this.requestBody = requestBody;
         this.generatedSdkClientClass = generatedSdkClientClass;
         this.targetRuntime = targetRuntime;
+        this.retainOriginalCasing = retainOriginalCasing;
 
         if (
             requestBody.properties.some((property) => property.type === "bodyProperty") ||
@@ -96,14 +100,20 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         for (const property of this.requestBody.properties) {
             if (property.type === "file") {
                 parameters.push({
-                    name: getParameterNameForFile(property),
+                    name: getParameterNameForFile({
+                        property,
+                        retainOriginalCasing: context.retainOriginalCasing
+                    }),
                     type: getTextOfTsNode(this.getFileParameterType(property, context))
                 });
             }
         }
         for (const pathParameter of getPathParametersForEndpointSignature(this.service, this.endpoint)) {
             parameters.push({
-                name: getParameterNameForPathParameter(pathParameter),
+                name: getParameterNameForPathParameter({
+                    pathParameter,
+                    retainOriginalCasing: this.retainOriginalCasing
+                }),
                 type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode)
             });
         }

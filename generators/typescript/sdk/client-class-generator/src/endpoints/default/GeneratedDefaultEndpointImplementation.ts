@@ -21,6 +21,7 @@ export declare namespace GeneratedDefaultEndpointImplementation {
         request: GeneratedEndpointRequest;
         response: GeneratedEndpointResponse;
         includeSerdeLayer: boolean;
+        retainOriginalCasing: boolean;
     }
 }
 
@@ -34,6 +35,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     private request: GeneratedEndpointRequest;
     private response: GeneratedEndpointResponse;
     private includeSerdeLayer: boolean;
+    private retainOriginalCasing: boolean;
 
     constructor({
         endpoint,
@@ -42,7 +44,8 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         includeCredentialsOnCrossOriginRequests,
         defaultTimeoutInSeconds,
         request,
-        includeSerdeLayer
+        includeSerdeLayer,
+        retainOriginalCasing
     }: GeneratedDefaultEndpointImplementation.Init) {
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -51,6 +54,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         this.request = request;
         this.response = response;
         this.includeSerdeLayer = includeSerdeLayer;
+        this.retainOriginalCasing = retainOriginalCasing;
     }
 
     public getOverloads(): EndpointSignature[] {
@@ -143,7 +147,8 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             endpoint: this.endpoint,
             generatedClientClass: this.generatedSdkClientClass,
             context,
-            includeSerdeLayer: this.includeSerdeLayer
+            includeSerdeLayer: this.includeSerdeLayer,
+            retainOriginalCasing: this.retainOriginalCasing
         });
         if (url != null) {
             return context.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);

@@ -27,4 +27,5 @@ export interface SdkContext extends ModelContext {
     sdkClientClass: SdkClientClassContext;
     targetRuntime: JavaScriptRuntime;
     includeSerdeLayer: boolean;
+    retainOriginalCasing: boolean;
 }

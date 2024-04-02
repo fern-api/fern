@@ -72,7 +72,9 @@ export class GeneratedQueryParams {
                                             skipValidation: false,
                                             breadcrumbsPrefix: [
                                                 "request",
-                                                queryParameter.name.name.camelCase.unsafeName
+                                                context.retainOriginalCasing
+                                                    ? queryParameter.name.name.originalName
+                                                    : queryParameter.name.name.camelCase.unsafeName
                                             ]
                                         });
                                 } else if (objectType != null) {
@@ -117,7 +119,9 @@ export class GeneratedQueryParams {
                                                 skipValidation: false,
                                                 breadcrumbsPrefix: [
                                                     "request",
-                                                    queryParameter.name.name.camelCase.unsafeName
+                                                    context.retainOriginalCasing
+                                                        ? queryParameter.name.name.originalName
+                                                        : queryParameter.name.name.camelCase.unsafeName
                                                 ]
                                             });
                                 } else if (objectType != null) {
