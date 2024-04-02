@@ -6,16 +6,19 @@ export declare namespace GeneratedExpressInlinedRequestBodyImpl {
     export interface Init {
         requestBody: InlinedRequestBody;
         typeName: string;
+        retainOriginalCasing: boolean;
     }
 }
 
 export class GeneratedExpressInlinedRequestBodyImpl implements GeneratedExpressInlinedRequestBody {
     private requestBody: InlinedRequestBody;
     private typeName: string;
+    private retainOriginalCasing: boolean;
 
-    constructor({ requestBody, typeName }: GeneratedExpressInlinedRequestBodyImpl.Init) {
+    constructor({ requestBody, typeName, retainOriginalCasing }: GeneratedExpressInlinedRequestBodyImpl.Init) {
         this.requestBody = requestBody;
         this.typeName = typeName;
+        this.retainOriginalCasing = retainOriginalCasing;
     }
 
     public writeToFile(context: ExpressContext): void {
@@ -37,6 +40,6 @@ export class GeneratedExpressInlinedRequestBodyImpl implements GeneratedExpressI
     }
 
     public getPropertyKey(property: InlinedRequestBodyProperty): string {
-        return property.name.name.camelCase.unsafeName;
+        return this.retainOriginalCasing ? property.name.name.originalName : property.name.name.camelCase.unsafeName;
     }
 }

@@ -20,13 +20,23 @@ export function appendPropertyToFormData({
             let statement = context.externalDependencies.formData.append({
                 referencetoFormData: referenceToFormData,
                 key: property.key.wireValue,
-                value: ts.factory.createIdentifier(getParameterNameForFile(property))
+                value: ts.factory.createIdentifier(
+                    getParameterNameForFile({
+                        property,
+                        retainOriginalCasing: context.retainOriginalCasing
+                    })
+                )
             });
 
             if (property.isOptional) {
                 statement = ts.factory.createIfStatement(
                     ts.factory.createBinaryExpression(
-                        ts.factory.createIdentifier(getParameterNameForFile(property)),
+                        ts.factory.createIdentifier(
+                            getParameterNameForFile({
+                                property,
+                                retainOriginalCasing: context.retainOriginalCasing
+                            })
+                        ),
                         ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
                         ts.factory.createNull()
                     ),
