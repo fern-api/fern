@@ -15,7 +15,7 @@ except ImportError:
 
 class ExecutionSessionResponse(pydantic.BaseModel):
     session_id: str = pydantic.Field(alias="sessionId")
-    execution_session_url: typing.Optional[str] = pydantic.Field(alias="executionSessionUrl")
+    execution_session_url: typing.Optional[str] = pydantic.Field(alias="executionSessionUrl", default=None)
     language: Language
     status: ExecutionSessionStatus
 

@@ -12,8 +12,8 @@ except ImportError:
 
 
 class FindRequest(pydantic.BaseModel):
-    public_property: typing.Optional[str] = pydantic.Field(alias="publicProperty")
-    private_property: typing.Optional[int] = pydantic.Field(alias="privateProperty")
+    public_property: typing.Optional[str] = pydantic.Field(alias="publicProperty", default=None)
+    private_property: typing.Optional[int] = pydantic.Field(alias="privateProperty", default=None)
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

@@ -11,8 +11,8 @@ except ImportError:
     import pydantic # type: ignore
             
 class NestedObjectWithOptionalField(pydantic.BaseModel):
-    string: typing.Optional[str]
-    nested_object: typing.Optional[ObjectWithOptionalField] = pydantic.Field(alias="NestedObject")
+    string: typing.Optional[str] = None
+    nested_object: typing.Optional[ObjectWithOptionalField] = pydantic.Field(alias="NestedObject", default=None)
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = { "by_alias": True, "exclude_unset": True, **kwargs }
         return super().json(**kwargs_with_defaults)

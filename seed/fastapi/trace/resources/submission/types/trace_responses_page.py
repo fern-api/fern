@@ -13,7 +13,7 @@ except ImportError:
 
 
 class TraceResponsesPage(pydantic.BaseModel):
-    offset: typing.Optional[int] = pydantic.Field()
+    offset: typing.Optional[int] = pydantic.Field(default=None)
     """
     If present, use this to load subseqent pages.
     The offset is the id of the next trace response to load.

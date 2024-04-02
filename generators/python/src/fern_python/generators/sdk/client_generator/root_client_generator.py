@@ -387,7 +387,13 @@ class RootClientGenerator:
                 docs="Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.",
                 # This config is optional in the event httpx ever changes it's default behavior, we stay up to date with
                 # that as opposed to forming an opinion on what the default should be.
-                initializer=AST.Expression("True" if self._context.custom_config.follow_redirects_by_default == True else "False" if self._context.custom_config.follow_redirects_by_default == False else "None"),
+                initializer=AST.Expression(
+                    "True"
+                    if self._context.custom_config.follow_redirects_by_default == True
+                    else "False"
+                    if self._context.custom_config.follow_redirects_by_default == False
+                    else "None"
+                ),
             )
         )
 
@@ -509,7 +515,7 @@ class RootClientGenerator:
                                         (
                                             "follow_redirects",
                                             AST.Expression(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME}"),
-                                        )
+                                        ),
                                     ],
                                 ),
                                 right=AST.ClassInstantiation(
@@ -521,9 +527,7 @@ class RootClientGenerator:
                                         ),
                                     ],
                                 ),
-                                test=AST.Expression(
-                                    f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME} is not None"
-                                ),
+                                test=AST.Expression(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME} is not None"),
                             ),
                             test=AST.Expression(
                                 f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME} is not None"

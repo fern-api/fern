@@ -11,18 +11,18 @@ except ImportError:
     import pydantic # type: ignore
             
 class ObjectWithOptionalField(pydantic.BaseModel):
-    string: typing.Optional[str]
-    integer: typing.Optional[int]
-    long_: typing.Optional[int] = pydantic.Field(alias="long")
-    double: typing.Optional[float]
-    bool_: typing.Optional[bool] = pydantic.Field(alias="bool")
-    datetime: typing.Optional[dt.datetime]
-    date: typing.Optional[dt.date]
-    uuid_: typing.Optional[uuid.UUID] = pydantic.Field(alias="uuid")
-    base_64: typing.Optional[str] = pydantic.Field(alias="base64")
-    list_: typing.Optional[typing.List[str]] = pydantic.Field(alias="list")
-    set_: typing.Optional[typing.Set[str]] = pydantic.Field(alias="set")
-    map_: typing.Optional[typing.Dict[int, str]] = pydantic.Field(alias="map")
+    string: typing.Optional[str] = None
+    integer: typing.Optional[int] = None
+    long_: typing.Optional[int] = pydantic.Field(alias="long", default=None)
+    double: typing.Optional[float] = None
+    bool_: typing.Optional[bool] = pydantic.Field(alias="bool", default=None)
+    datetime: typing.Optional[dt.datetime] = None
+    date: typing.Optional[dt.date] = None
+    uuid_: typing.Optional[uuid.UUID] = pydantic.Field(alias="uuid", default=None)
+    base_64: typing.Optional[str] = pydantic.Field(alias="base64", default=None)
+    list_: typing.Optional[typing.List[str]] = pydantic.Field(alias="list", default=None)
+    set_: typing.Optional[typing.Set[str]] = pydantic.Field(alias="set", default=None)
+    map_: typing.Optional[typing.Dict[int, str]] = pydantic.Field(alias="map", default=None)
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = { "by_alias": True, "exclude_unset": True, **kwargs }
         return super().json(**kwargs_with_defaults)
