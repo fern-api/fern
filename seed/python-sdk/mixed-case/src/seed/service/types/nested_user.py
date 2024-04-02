@@ -3,7 +3,8 @@
 import datetime as dt
 import typing
 
-from ....core.datetime_utils import serialize_datetime
+from ...core.datetime_utils import serialize_datetime
+from .user import User
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -11,20 +12,22 @@ except ImportError:
     import pydantic  # type: ignore
 
 
-class User(pydantic.BaseModel):
+class NestedUser(pydantic.BaseModel):
     """
-    from seed import User
+    from seed import NestedUser, User
 
-    User(
-        user_name="username",
-        metadata_tags=["tag1", "tag2"],
-        extra_properties={"foo": "bar", "baz": "qux"},
+    NestedUser(
+        name="username",
+        nested_user=User(
+            user_name="nestedUsername",
+            metadata_tags=["tag1", "tag2"],
+            extra_properties={"foo": "bar", "baz": "qux"},
+        ),
     )
     """
 
-    user_name: str = pydantic.Field(alias="userName")
-    metadata_tags: typing.List[str]
-    extra_properties: typing.Dict[str, str] = pydantic.Field(alias="EXTRA_PROPERTIES")
+    name: str = pydantic.Field(alias="Name")
+    nested_user: User = pydantic.Field(alias="NestedUser")
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

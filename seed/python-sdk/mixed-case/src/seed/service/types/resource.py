@@ -5,7 +5,7 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-from ....core.datetime_utils import serialize_datetime
+from ...core.datetime_utils import serialize_datetime
 from .organization import Organization
 from .resource_status import ResourceStatus
 from .user import User
