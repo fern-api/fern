@@ -65,6 +65,7 @@ class FernAwarePydanticModel:
             frozen=custom_config.frozen,
             orm_mode=custom_config.orm_mode,
             smart_union=custom_config.smart_union,
+            pydantic_base_model=self._context.core_utilities.get_unchecked_pydantic_base_model(self._custom_config.version)
         )
         self._pydantic_model.add_json_encoder(
             key=AST.Expression(

@@ -80,6 +80,16 @@ export async function writeFilesToDiskAndRunGenerator({
         context.logger.debug("Will write snippet.json to: " + absolutePathToTmpSnippetJSON);
     }
 
+    if (writeUnitTests) {
+        context.logger.debug("Will write .mock to: " + absolutePathToTmpOutputDirectory);
+
+        await writeDotMock({
+            absolutePathToDotMockDirectory: absolutePathToTmpOutputDirectory,
+            absolutePathToFernDefinition,
+            absolutePathToFernConfig
+        });
+    }
+
     await runGenerator({
         absolutePathToOutput: absolutePathToTmpOutputDirectory,
         absolutePathToSnippet: absolutePathToTmpSnippetJSON,
@@ -101,20 +111,6 @@ export async function writeFilesToDiskAndRunGenerator({
         absolutePathToTmpSnippetJSON
     });
     await taskHandler.copyGeneratedFiles();
-
-    if (writeUnitTests) {
-        const tmpDotMockDirectory = await tmp.dir({
-            tmpdir: workspaceTempDir.path
-        });
-        const absolutePathToDotMockDirectory = AbsoluteFilePath.of(tmpDotMockDirectory.path);
-        context.logger.debug("Will write .mock to: " + absolutePathToDotMockDirectory);
-
-        await writeDotMock({
-            absolutePathToDotMockDirectory,
-            absolutePathToFernDefinition,
-            absolutePathToFernConfig
-        });
-    }
 
     return {
         absolutePathToIr,

@@ -24,6 +24,7 @@ class FastApiGeneratorContext(ABC):
             type_declaration_referencer=TypeDeclarationReferencer(),
             generator_config=generator_config,
             project_module_path=project_module_path,
+            allow_skipping_validation=False,
         )
         self.core_utilities = CoreUtilities()
 

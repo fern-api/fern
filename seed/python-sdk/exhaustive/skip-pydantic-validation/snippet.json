@@ -1,0 +1,434 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "id": {
+                "path": "/container/list-of-primitives",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.container.get_and_return_list_of_primitives(\n    request=[\"string\"],\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.container.get_and_return_list_of_primitives(\n    request=[\"string\"],\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/list-of-objects",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\nfrom seed.resources.types import ObjectWithRequiredField\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.container.get_and_return_list_of_objects(\n    request=[\n        ObjectWithRequiredField(\n            string=\"string\",\n        )\n    ],\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\nfrom seed.resources.types import ObjectWithRequiredField\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.container.get_and_return_list_of_objects(\n    request=[\n        ObjectWithRequiredField(\n            string=\"string\",\n        )\n    ],\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/set-of-primitives",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.container.get_and_return_set_of_primitives(\n    request={\"string\"},\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.container.get_and_return_set_of_primitives(\n    request={\"string\"},\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/set-of-objects",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\nfrom seed.resources.types import ObjectWithRequiredField\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.container.get_and_return_set_of_objects(\n    request={\n        ObjectWithRequiredField(\n            string=\"string\",\n        )\n    },\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\nfrom seed.resources.types import ObjectWithRequiredField\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.container.get_and_return_set_of_objects(\n    request={\n        ObjectWithRequiredField(\n            string=\"string\",\n        )\n    },\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/map-prim-to-prim",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.container.get_and_return_map_prim_to_prim(\n    request={\"string\": \"string\"},\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.container.get_and_return_map_prim_to_prim(\n    request={\"string\": \"string\"},\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/map-prim-to-object",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\nfrom seed.resources.types import ObjectWithRequiredField\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.container.get_and_return_map_of_prim_to_object(\n    request={\n        \"string\": ObjectWithRequiredField(\n            string=\"string\",\n        )\n    },\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\nfrom seed.resources.types import ObjectWithRequiredField\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.container.get_and_return_map_of_prim_to_object(\n    request={\n        \"string\": ObjectWithRequiredField(\n            string=\"string\",\n        )\n    },\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/opt-objects",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\nfrom seed.resources.types import ObjectWithRequiredField\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.container.get_and_return_optional(\n    request=ObjectWithRequiredField(\n        string=\"string\",\n    ),\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\nfrom seed.resources.types import ObjectWithRequiredField\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.container.get_and_return_optional(\n    request=ObjectWithRequiredField(\n        string=\"string\",\n    ),\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/enum",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\nfrom seed.resources.types import WeatherReport\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.enum.get_and_return_enum(\n    request=WeatherReport.SUNNY,\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\nfrom seed.resources.types import WeatherReport\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.enum.get_and_return_enum(\n    request=WeatherReport.SUNNY,\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.http_methods.test_get(\n    id=\"string\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.http_methods.test_get(\n    id=\"string\",\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\nfrom seed.resources.types import ObjectWithRequiredField\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.http_methods.test_post(\n    request=ObjectWithRequiredField(\n        string=\"string\",\n    ),\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\nfrom seed.resources.types import ObjectWithRequiredField\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.http_methods.test_post(\n    request=ObjectWithRequiredField(\n        string=\"string\",\n    ),\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "PUT"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\nfrom seed.resources.types import ObjectWithRequiredField\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.http_methods.test_put(\n    id=\"string\",\n    request=ObjectWithRequiredField(\n        string=\"string\",\n    ),\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\nfrom seed.resources.types import ObjectWithRequiredField\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.http_methods.test_put(\n    id=\"string\",\n    request=ObjectWithRequiredField(\n        string=\"string\",\n    ),\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "PATCH"
+            },
+            "snippet": {
+                "sync_client": "import datetime\nimport uuid\n\nfrom seed.client import SeedExhaustive\nfrom seed.resources.types import ObjectWithOptionalField\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.http_methods.test_patch(\n    id=\"string\",\n    request=ObjectWithOptionalField(\n        string=\"string\",\n        integer=1,\n        long_=1000000,\n        double=1.1,\n        bool_=True,\n        datetime=datetime.datetime.fromisoformat(\n            \"2024-01-15 09:30:00+00:00\",\n        ),\n        date=datetime.date.fromisoformat(\n            \"2023-01-15\",\n        ),\n        uuid_=uuid.UUID(\n            \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        ),\n        base_64=\"SGVsbG8gd29ybGQh\",\n        list_=[\"string\"],\n        set_={\"string\"},\n        map_={1: \"string\"},\n    ),\n)\n",
+                "async_client": "import datetime\nimport uuid\n\nfrom seed.client import AsyncSeedExhaustive\nfrom seed.resources.types import ObjectWithOptionalField\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.http_methods.test_patch(\n    id=\"string\",\n    request=ObjectWithOptionalField(\n        string=\"string\",\n        integer=1,\n        long_=1000000,\n        double=1.1,\n        bool_=True,\n        datetime=datetime.datetime.fromisoformat(\n            \"2024-01-15 09:30:00+00:00\",\n        ),\n        date=datetime.date.fromisoformat(\n            \"2023-01-15\",\n        ),\n        uuid_=uuid.UUID(\n            \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        ),\n        base_64=\"SGVsbG8gd29ybGQh\",\n        list_=[\"string\"],\n        set_={\"string\"},\n        map_={1: \"string\"},\n    ),\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "DELETE"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.http_methods.test_delete(\n    id=\"string\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.http_methods.test_delete(\n    id=\"string\",\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-with-optional-field",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "import datetime\nimport uuid\n\nfrom seed.client import SeedExhaustive\nfrom seed.resources.types import ObjectWithOptionalField\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.object.get_and_return_with_optional_field(\n    request=ObjectWithOptionalField(\n        string=\"string\",\n        integer=1,\n        long_=1000000,\n        double=1.1,\n        bool_=True,\n        datetime=datetime.datetime.fromisoformat(\n            \"2024-01-15 09:30:00+00:00\",\n        ),\n        date=datetime.date.fromisoformat(\n            \"2023-01-15\",\n        ),\n        uuid_=uuid.UUID(\n            \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        ),\n        base_64=\"SGVsbG8gd29ybGQh\",\n        list_=[\"string\"],\n        set_={\"string\"},\n        map_={1: \"string\"},\n    ),\n)\n",
+                "async_client": "import datetime\nimport uuid\n\nfrom seed.client import AsyncSeedExhaustive\nfrom seed.resources.types import ObjectWithOptionalField\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.object.get_and_return_with_optional_field(\n    request=ObjectWithOptionalField(\n        string=\"string\",\n        integer=1,\n        long_=1000000,\n        double=1.1,\n        bool_=True,\n        datetime=datetime.datetime.fromisoformat(\n            \"2024-01-15 09:30:00+00:00\",\n        ),\n        date=datetime.date.fromisoformat(\n            \"2023-01-15\",\n        ),\n        uuid_=uuid.UUID(\n            \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        ),\n        base_64=\"SGVsbG8gd29ybGQh\",\n        list_=[\"string\"],\n        set_={\"string\"},\n        map_={1: \"string\"},\n    ),\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-with-required-field",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\nfrom seed.resources.types import ObjectWithRequiredField\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.object.get_and_return_with_required_field(\n    request=ObjectWithRequiredField(\n        string=\"string\",\n    ),\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\nfrom seed.resources.types import ObjectWithRequiredField\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.object.get_and_return_with_required_field(\n    request=ObjectWithRequiredField(\n        string=\"string\",\n    ),\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-with-map-of-map",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\nfrom seed.resources.types import ObjectWithMapOfMap\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.object.get_and_return_with_map_of_map(\n    request=ObjectWithMapOfMap(\n        map_={\"string\": {\"string\": \"string\"}},\n    ),\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\nfrom seed.resources.types import ObjectWithMapOfMap\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.object.get_and_return_with_map_of_map(\n    request=ObjectWithMapOfMap(\n        map_={\"string\": {\"string\": \"string\"}},\n    ),\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-nested-with-optional-field",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "import datetime\nimport uuid\n\nfrom seed.client import SeedExhaustive\nfrom seed.resources.types import (\n    NestedObjectWithOptionalField,\n    ObjectWithOptionalField,\n)\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.object.get_and_return_nested_with_optional_field(\n    request=NestedObjectWithOptionalField(\n        string=\"string\",\n        nested_object=ObjectWithOptionalField(\n            string=\"string\",\n            integer=1,\n            long_=1000000,\n            double=1.1,\n            bool_=True,\n            datetime=datetime.datetime.fromisoformat(\n                \"2024-01-15 09:30:00+00:00\",\n            ),\n            date=datetime.date.fromisoformat(\n                \"2023-01-15\",\n            ),\n            uuid_=uuid.UUID(\n                \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            ),\n            base_64=\"SGVsbG8gd29ybGQh\",\n            list_=[\"string\"],\n            set_={\"string\"},\n            map_={1: \"string\"},\n        ),\n    ),\n)\n",
+                "async_client": "import datetime\nimport uuid\n\nfrom seed.client import AsyncSeedExhaustive\nfrom seed.resources.types import (\n    NestedObjectWithOptionalField,\n    ObjectWithOptionalField,\n)\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.object.get_and_return_nested_with_optional_field(\n    request=NestedObjectWithOptionalField(\n        string=\"string\",\n        nested_object=ObjectWithOptionalField(\n            string=\"string\",\n            integer=1,\n            long_=1000000,\n            double=1.1,\n            bool_=True,\n            datetime=datetime.datetime.fromisoformat(\n                \"2024-01-15 09:30:00+00:00\",\n            ),\n            date=datetime.date.fromisoformat(\n                \"2023-01-15\",\n            ),\n            uuid_=uuid.UUID(\n                \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            ),\n            base_64=\"SGVsbG8gd29ybGQh\",\n            list_=[\"string\"],\n            set_={\"string\"},\n            map_={1: \"string\"},\n        ),\n    ),\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-nested-with-required-field",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "import datetime\nimport uuid\n\nfrom seed.client import SeedExhaustive\nfrom seed.resources.types import (\n    NestedObjectWithRequiredField,\n    ObjectWithOptionalField,\n)\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.object.get_and_return_nested_with_required_field(\n    request=NestedObjectWithRequiredField(\n        string=\"string\",\n        nested_object=ObjectWithOptionalField(\n            string=\"string\",\n            integer=1,\n            long_=1000000,\n            double=1.1,\n            bool_=True,\n            datetime=datetime.datetime.fromisoformat(\n                \"2024-01-15 09:30:00+00:00\",\n            ),\n            date=datetime.date.fromisoformat(\n                \"2023-01-15\",\n            ),\n            uuid_=uuid.UUID(\n                \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            ),\n            base_64=\"SGVsbG8gd29ybGQh\",\n            list_=[\"string\"],\n            set_={\"string\"},\n            map_={1: \"string\"},\n        ),\n    ),\n)\n",
+                "async_client": "import datetime\nimport uuid\n\nfrom seed.client import AsyncSeedExhaustive\nfrom seed.resources.types import (\n    NestedObjectWithRequiredField,\n    ObjectWithOptionalField,\n)\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.object.get_and_return_nested_with_required_field(\n    request=NestedObjectWithRequiredField(\n        string=\"string\",\n        nested_object=ObjectWithOptionalField(\n            string=\"string\",\n            integer=1,\n            long_=1000000,\n            double=1.1,\n            bool_=True,\n            datetime=datetime.datetime.fromisoformat(\n                \"2024-01-15 09:30:00+00:00\",\n            ),\n            date=datetime.date.fromisoformat(\n                \"2023-01-15\",\n            ),\n            uuid_=uuid.UUID(\n                \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            ),\n            base_64=\"SGVsbG8gd29ybGQh\",\n            list_=[\"string\"],\n            set_={\"string\"},\n            map_={1: \"string\"},\n        ),\n    ),\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-nested-with-required-field-list",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "import datetime\nimport uuid\n\nfrom seed.client import SeedExhaustive\nfrom seed.resources.types import (\n    NestedObjectWithRequiredField,\n    ObjectWithOptionalField,\n)\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.object.get_and_return_nested_with_required_field_as_list(\n    request=[\n        NestedObjectWithRequiredField(\n            string=\"string\",\n            nested_object=ObjectWithOptionalField(\n                string=\"string\",\n                integer=1,\n                long_=1000000,\n                double=1.1,\n                bool_=True,\n                datetime=datetime.datetime.fromisoformat(\n                    \"2024-01-15 09:30:00+00:00\",\n                ),\n                date=datetime.date.fromisoformat(\n                    \"2023-01-15\",\n                ),\n                uuid_=uuid.UUID(\n                    \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n                ),\n                base_64=\"SGVsbG8gd29ybGQh\",\n                list_=[\"string\"],\n                set_={\"string\"},\n                map_={1: \"string\"},\n            ),\n        )\n    ],\n)\n",
+                "async_client": "import datetime\nimport uuid\n\nfrom seed.client import AsyncSeedExhaustive\nfrom seed.resources.types import (\n    NestedObjectWithRequiredField,\n    ObjectWithOptionalField,\n)\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.object.get_and_return_nested_with_required_field_as_list(\n    request=[\n        NestedObjectWithRequiredField(\n            string=\"string\",\n            nested_object=ObjectWithOptionalField(\n                string=\"string\",\n                integer=1,\n                long_=1000000,\n                double=1.1,\n                bool_=True,\n                datetime=datetime.datetime.fromisoformat(\n                    \"2024-01-15 09:30:00+00:00\",\n                ),\n                date=datetime.date.fromisoformat(\n                    \"2023-01-15\",\n                ),\n                uuid_=uuid.UUID(\n                    \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n                ),\n                base_64=\"SGVsbG8gd29ybGQh\",\n                list_=[\"string\"],\n                set_={\"string\"},\n                map_={1: \"string\"},\n            ),\n        )\n    ],\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.params.get_with_path(\n    param=\"string\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.params.get_with_path(\n    param=\"string\",\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/params",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.params.get_with_query(\n    query=\"string\",\n    number=1,\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.params.get_with_query(\n    query=\"string\",\n    number=1,\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/params",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.params.get_with_allow_multiple_query(\n    query=\"string\",\n    numer=1,\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.params.get_with_allow_multiple_query(\n    query=\"string\",\n    numer=1,\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path-query/{param}",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.params.get_with_path_and_query(\n    param=\"string\",\n    query=\"string\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.params.get_with_path_and_query(\n    param=\"string\",\n    query=\"string\",\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "PUT"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.params.modify_with_path(\n    param=\"string\",\n    request=\"string\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.params.modify_with_path(\n    param=\"string\",\n    request=\"string\",\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/string",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.primitive.get_and_return_string(\n    request=\"string\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.primitive.get_and_return_string(\n    request=\"string\",\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/integer",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.primitive.get_and_return_int(\n    request=1,\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.primitive.get_and_return_int(\n    request=1,\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/long",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.primitive.get_and_return_long(\n    request=1000000,\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.primitive.get_and_return_long(\n    request=1000000,\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/double",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.primitive.get_and_return_double(\n    request=1.1,\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.primitive.get_and_return_double(\n    request=1.1,\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/boolean",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.primitive.get_and_return_bool(\n    request=True,\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.primitive.get_and_return_bool(\n    request=True,\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/datetime",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "import datetime\n\nfrom seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.primitive.get_and_return_datetime(\n    request=datetime.datetime.fromisoformat(\n        \"2024-01-15 09:30:00+00:00\",\n    ),\n)\n",
+                "async_client": "import datetime\n\nfrom seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.primitive.get_and_return_datetime(\n    request=datetime.datetime.fromisoformat(\n        \"2024-01-15 09:30:00+00:00\",\n    ),\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/date",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "import datetime\n\nfrom seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.primitive.get_and_return_date(\n    request=datetime.date.fromisoformat(\n        \"2023-01-15\",\n    ),\n)\n",
+                "async_client": "import datetime\n\nfrom seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.primitive.get_and_return_date(\n    request=datetime.date.fromisoformat(\n        \"2023-01-15\",\n    ),\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/uuid",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "import uuid\n\nfrom seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.primitive.get_and_return_uuid(\n    request=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n)\n",
+                "async_client": "import uuid\n\nfrom seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.primitive.get_and_return_uuid(\n    request=uuid.UUID(\n        \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    ),\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/base64",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.primitive.get_and_return_base_64(\n    request=\"SGVsbG8gd29ybGQh\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.primitive.get_and_return_base_64(\n    request=\"SGVsbG8gd29ybGQh\",\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/union",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\nfrom seed.resources.types import Animal_Dog\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.union.get_and_return_union(\n    request=Animal_Dog(\n        name=\"string\",\n        likes_to_woof=True,\n    ),\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\nfrom seed.resources.types import Animal_Dog\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.union.get_and_return_union(\n    request=Animal_Dog(\n        name=\"string\",\n        likes_to_woof=True,\n    ),\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/req-bodies/object",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "import datetime\nimport uuid\n\nfrom seed.client import SeedExhaustive\nfrom seed.resources.types import ObjectWithOptionalField\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.inlined_requests.post_with_object_bodyand_response(\n    string=\"string\",\n    integer=1,\n    nested_object=ObjectWithOptionalField(\n        string=\"string\",\n        integer=1,\n        long_=1000000,\n        double=1.1,\n        bool_=True,\n        datetime=datetime.datetime.fromisoformat(\n            \"2024-01-15 09:30:00+00:00\",\n        ),\n        date=datetime.date.fromisoformat(\n            \"2023-01-15\",\n        ),\n        uuid_=uuid.UUID(\n            \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        ),\n        base_64=\"SGVsbG8gd29ybGQh\",\n        list_=[\"string\"],\n        set_={\"string\"},\n        map_={1: \"string\"},\n    ),\n)\n",
+                "async_client": "import datetime\nimport uuid\n\nfrom seed.client import AsyncSeedExhaustive\nfrom seed.resources.types import ObjectWithOptionalField\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.inlined_requests.post_with_object_bodyand_response(\n    string=\"string\",\n    integer=1,\n    nested_object=ObjectWithOptionalField(\n        string=\"string\",\n        integer=1,\n        long_=1000000,\n        double=1.1,\n        bool_=True,\n        datetime=datetime.datetime.fromisoformat(\n            \"2024-01-15 09:30:00+00:00\",\n        ),\n        date=datetime.date.fromisoformat(\n            \"2023-01-15\",\n        ),\n        uuid_=uuid.UUID(\n            \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        ),\n        base_64=\"SGVsbG8gd29ybGQh\",\n        list_=[\"string\"],\n        set_={\"string\"},\n        map_={1: \"string\"},\n    ),\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/no-auth",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.no_auth.post_with_no_auth(\n    request={\"key\": \"value\"},\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.no_auth.post_with_no_auth(\n    request={\"key\": \"value\"},\n)\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/no-req-body",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.no_req_body.get_with_no_request_body()\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.no_req_body.get_with_no_request_body()\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/no-req-body",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.no_req_body.post_with_no_request_body()\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.no_req_body.post_with_no_request_body()\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/test-headers/custom-header",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.req_with_headers.get_with_custom_header(\n    x_test_service_header=\"string\",\n    x_test_endpoint_header=\"string\",\n    request=\"string\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.req_with_headers.get_with_custom_header(\n    x_test_service_header=\"string\",\n    x_test_endpoint_header=\"string\",\n    request=\"string\",\n)\n",
+                "type": "python"
+            }
+        }
+    ]
+}

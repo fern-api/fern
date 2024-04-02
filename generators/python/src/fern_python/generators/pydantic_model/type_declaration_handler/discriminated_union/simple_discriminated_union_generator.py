@@ -101,6 +101,7 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                 frozen=self._custom_config.frozen,
                 orm_mode=self._custom_config.orm_mode,
                 smart_union=self._custom_config.smart_union,
+                pydantic_base_model=self._context.core_utilities.get_unchecked_pydantic_base_model(self._custom_config.version)
             ) as internal_pydantic_model_for_single_union_type:
                 internal_single_union_type = internal_pydantic_model_for_single_union_type.to_reference()
                 single_union_type_references.append(internal_single_union_type)
