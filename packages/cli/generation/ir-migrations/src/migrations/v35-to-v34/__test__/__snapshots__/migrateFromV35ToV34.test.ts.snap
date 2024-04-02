@@ -145,7 +145,6 @@ exports[`migrateFromV35ToV34 snapshot 1`] = `
               "unsafeName": "list_users",
             },
           },
-          "pagination": undefined,
           "path": {
             "head": "/users",
             "parts": [],

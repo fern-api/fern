@@ -5,7 +5,8 @@ export {
     DEFAULT_REQUEST_PARAMETER_NAME,
     doesRequestHaveNonBodyProperties
 } from "./converters/services/convertHttpSdkRequest";
-export { getHeaderName, getQueryParameterName, resolvePathParameter } from "./converters/services/convertHttpService";
+export { getHeaderName, resolvePathParameter } from "./converters/services/convertHttpService";
+export { getQueryParameterName } from "./converters/services/convertQueryParameter";
 export {
     getSingleUnionTypeName,
     getUnionDiscriminant,

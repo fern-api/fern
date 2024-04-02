@@ -15,8 +15,7 @@ service:
       method: GET
       path: /users
       pagination:
-        type: offset
-        page: $request.pageNum
+        offset: $request.pageNum
         results: $response.users
       request:
         headers:

@@ -39,9 +39,39 @@ export const V35_TO_V34_MIGRATION: IrMigration<
             unrecognizedObjectKeys: "strip",
             skipValidation: true
         }),
-    migrateBackwards: (V35, _context): IrVersions.V34.ir.IntermediateRepresentation => {
+    migrateBackwards: (V35): IrVersions.V34.ir.IntermediateRepresentation => {
         return {
-            ...V35
+            ...V35,
+            services: Object.fromEntries(
+                Object.entries(V35.services).map(([id, service]) => [
+                    id,
+                    {
+                        ...service,
+                        endpoints: service.endpoints.map((endpoint) => ({
+                            docs: endpoint.docs,
+                            availability: endpoint.availability,
+                            id: endpoint.id,
+                            name: endpoint.name,
+                            displayName: endpoint.displayName,
+                            method: endpoint.method,
+                            headers: endpoint.headers,
+                            baseUrl: endpoint.baseUrl,
+                            path: endpoint.path,
+                            fullPath: endpoint.fullPath,
+                            pathParameters: endpoint.pathParameters,
+                            allPathParameters: endpoint.allPathParameters,
+                            queryParameters: endpoint.queryParameters,
+                            requestBody: endpoint.requestBody,
+                            sdkRequest: endpoint.sdkRequest,
+                            response: endpoint.response,
+                            errors: endpoint.errors,
+                            auth: endpoint.auth,
+                            idempotent: endpoint.idempotent,
+                            examples: endpoint.examples
+                        }))
+                    }
+                ])
+            )
         };
     }
 };

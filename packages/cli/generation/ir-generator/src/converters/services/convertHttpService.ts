@@ -24,6 +24,8 @@ import { convertExampleEndpointCall } from "./convertExampleEndpointCall";
 import { convertHttpRequestBody } from "./convertHttpRequestBody";
 import { convertHttpResponse } from "./convertHttpResponse";
 import { convertHttpSdkRequest } from "./convertHttpSdkRequest";
+import { convertPagination } from "./convertPagination";
+import { convertQueryParameter } from "./convertQueryParameter";
 import { convertResponseErrors } from "./convertResponseErrors";
 
 export async function convertHttpService({
@@ -55,7 +57,7 @@ export async function convertHttpService({
     });
 
     const serviceName = { fernFilepath: file.fernFilepath };
-    return {
+    const service: HttpService = {
         availability: convertAvailability(serviceDefinition.availability),
         name: serviceName,
         displayName: serviceDefinition["display-name"] ?? undefined,
@@ -99,21 +101,11 @@ export async function convertHttpService({
                             ? await Promise.all(
                                   Object.entries(endpoint.request["query-parameters"]).map(
                                       async ([queryParameterKey, queryParameter]) => {
-                                          const { name } = getQueryParameterName({ queryParameterKey, queryParameter });
-                                          const valueType = file.parseTypeReference(queryParameter);
-                                          return {
-                                              ...(await convertDeclaration(queryParameter)),
-                                              name: file.casingsGenerator.generateNameAndWireValue({
-                                                  wireValue: queryParameterKey,
-                                                  name
-                                              }),
-                                              valueType,
-                                              allowMultiple:
-                                                  typeof queryParameter !== "string" &&
-                                                  queryParameter["allow-multiple"] != null
-                                                      ? queryParameter["allow-multiple"]
-                                                      : false
-                                          };
+                                          return await convertQueryParameter({
+                                              file,
+                                              queryParameterKey,
+                                              queryParameter
+                                          });
                                       }
                                   )
                               )
@@ -151,14 +143,18 @@ export async function convertHttpService({
                                   })
                               )
                             : [],
-                    // TODO: Implement pagination.
-                    pagination: undefined
+                    pagination: await convertPagination({
+                        typeResolver,
+                        file,
+                        endpointSchema: endpoint
+                    })
                 };
                 httpEndpoint.id = IdGenerator.generateEndpointId(serviceName, httpEndpoint);
                 return httpEndpoint;
             })
         )
     };
+    return service;
 }
 
 export async function convertPathParameters({
@@ -281,21 +277,6 @@ export function resolvePathParameter({
             rawType: typeof parameter === "string" ? parameter : parameter.type
         };
     }
-}
-
-export function getQueryParameterName({
-    queryParameterKey,
-    queryParameter
-}: {
-    queryParameterKey: string;
-    queryParameter: RawSchemas.HttpQueryParameterSchema;
-}): { name: string; wasExplicitlySet: boolean } {
-    if (typeof queryParameter !== "string") {
-        if (queryParameter.name != null) {
-            return { name: queryParameter.name, wasExplicitlySet: true };
-        }
-    }
-    return { name: queryParameterKey, wasExplicitlySet: false };
 }
 
 function convertHttpMethod(method: Exclude<RawSchemas.HttpEndpointSchema["method"], null | undefined>): HttpMethod {
