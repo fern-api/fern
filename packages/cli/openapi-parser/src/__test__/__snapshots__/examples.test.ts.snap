@@ -131,6 +131,7 @@ exports[`examples examples parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SearchRequest",

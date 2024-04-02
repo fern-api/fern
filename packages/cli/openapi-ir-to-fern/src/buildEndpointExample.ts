@@ -18,6 +18,9 @@ export function buildEndpointExample({
     context: OpenApiIrConverterContext;
 }): RawSchemas.ExampleEndpointCallSchema {
     const example: RawSchemas.ExampleEndpointCallSchema = {};
+    if (endpointExample.type !== "full") {
+        return endpointExample.value as RawSchemas.ExampleEndpointCallSchema;
+    }
 
     if (endpointExample.name != null) {
         example.name = endpointExample.name;

@@ -21,6 +21,7 @@ exports[`open api parser application-pdf-content-type parse open api 1`] = `
           "queryParameters": [],
           "request": null,
           "response": null,
+          "type": "full",
         },
       ],
       "generatedRequestName": "PdfGetRequest",
