@@ -23,6 +23,7 @@ export async function writeFilesToDiskAndRunGenerator({
     workspace,
     generatorInvocation,
     absolutePathToLocalOutput,
+    absolutePathToLocalSnippetJSON,
     absolutePathToFernConfig,
     audiences,
     workspaceTempDir,
@@ -30,21 +31,20 @@ export async function writeFilesToDiskAndRunGenerator({
     context,
     irVersionOverride,
     outputVersionOverride,
-    writeSnippets,
     writeUnitTests
 }: {
     organization: string;
     workspace: FernWorkspace;
-    audiences: Audiences;
-    absolutePathToFernConfig: AbsoluteFilePath | undefined;
     generatorInvocation: generatorsYml.GeneratorInvocation;
     absolutePathToLocalOutput: AbsoluteFilePath;
+    absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
+    absolutePathToFernConfig: AbsoluteFilePath | undefined;
+    audiences: Audiences;
     workspaceTempDir: DirectoryResult;
     keepDocker: boolean;
     context: TaskContext;
     irVersionOverride: string | undefined;
     outputVersionOverride: string | undefined;
-    writeSnippets: boolean;
     writeUnitTests: boolean;
 }): Promise<GeneratorRunResponse> {
     const absolutePathToIr = await writeIrToFile({
@@ -72,7 +72,7 @@ export async function writeFilesToDiskAndRunGenerator({
     const absolutePathToFernDefinition = workspace.definition.absoluteFilepath;
 
     let absolutePathToTmpSnippetJSON = undefined;
-    if (writeSnippets) {
+    if (absolutePathToLocalSnippetJSON != null) {
         const snippetJsonFile = await tmp.file({
             tmpdir: workspaceTempDir.path
         });
@@ -98,6 +98,7 @@ export async function writeFilesToDiskAndRunGenerator({
         context,
         absolutePathToLocalOutput,
         absolutePathToTmpOutputDirectory,
+        absolutePathToLocalSnippetJSON,
         absolutePathToTmpSnippetJSON
     });
     await taskHandler.copyGeneratedFiles();

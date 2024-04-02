@@ -1,4 +1,4 @@
-import { generatorsYml } from "@fern-api/configuration";
+import { generatorsYml, SNIPPET_JSON_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
@@ -42,13 +42,20 @@ export async function runLocalGenerationForSeed({
                         workspace,
                         generatorInvocation,
                         absolutePathToLocalOutput: generatorInvocation.absolutePathToLocalOutput,
+                        absolutePathToLocalSnippetJSON: generatorInvocation.absolutePathToLocalOutput
+                            ? AbsoluteFilePath.of(
+                                  join(
+                                      generatorInvocation.absolutePathToLocalOutput,
+                                      RelativeFilePath.of(SNIPPET_JSON_FILENAME)
+                                  )
+                              )
+                            : undefined,
                         audiences: generatorGroup.audiences,
                         workspaceTempDir,
                         keepDocker,
                         context: interactiveTaskContext,
                         irVersionOverride,
                         outputVersionOverride,
-                        writeSnippets: true,
                         writeUnitTests: true
                     });
                     interactiveTaskContext.logger.info(
@@ -112,13 +119,18 @@ export async function writeIrAndConfigJson({
                         workspace,
                         generatorInvocation,
                         absolutePathToLocalOutput: generatorInvocation.absolutePathToLocalOutput,
+                        absolutePathToLocalSnippetJSON: AbsoluteFilePath.of(
+                            join(
+                                generatorInvocation.absolutePathToLocalOutput,
+                                RelativeFilePath.of(SNIPPET_JSON_FILENAME)
+                            )
+                        ),
                         audiences: generatorGroup.audiences,
                         workspaceTempDir,
                         keepDocker,
                         context: interactiveTaskContext,
                         irVersionOverride,
                         outputVersionOverride,
-                        writeSnippets: true,
                         writeUnitTests: true
                     });
                     interactiveTaskContext.logger.info(

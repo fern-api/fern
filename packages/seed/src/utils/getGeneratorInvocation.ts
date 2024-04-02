@@ -33,6 +33,7 @@ export function getGeneratorInvocation({
         config: customConfig,
         outputMode: getOutputMode({ outputMode, language, fixtureName, publishConfig }),
         absolutePathToLocalOutput: absolutePathToOutput,
+        absolutePathToLocalSnippets: undefined,
         language,
         smartCasing: false,
         disableExamples: false,
@@ -63,7 +64,7 @@ function getOutputMode({
                     (language != null ? getGithubPublishInfo({ language, fixtureName }) : undefined)
             });
         case "local_files":
-            return FernFiddle.remoteGen.OutputMode.downloadFiles();
+            return FernFiddle.remoteGen.OutputMode.downloadFiles({});
         case "publish": {
             if (language == null) {
                 throw new Error("Seed requires a language to be specified to test in publish mode");

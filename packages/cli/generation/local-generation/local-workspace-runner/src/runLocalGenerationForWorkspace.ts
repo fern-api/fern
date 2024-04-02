@@ -36,13 +36,13 @@ export async function runLocalGenerationForWorkspace({
                         workspace,
                         generatorInvocation,
                         absolutePathToLocalOutput: generatorInvocation.absolutePathToLocalOutput,
+                        absolutePathToLocalSnippetJSON: undefined,
                         audiences: generatorGroup.audiences,
                         workspaceTempDir,
                         keepDocker,
                         context: interactiveTaskContext,
                         irVersionOverride: generatorInvocation.irVersionOverride,
                         outputVersionOverride: undefined,
-                        writeSnippets: false,
                         writeUnitTests: false
                     });
                     interactiveTaskContext.logger.info(

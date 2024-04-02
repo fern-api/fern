@@ -91,7 +91,9 @@ export class RemoteTaskHandler {
                     if (this.generatorInvocation.absolutePathToLocalOutput != null) {
                         await downloadFilesForTask({
                             s3PreSignedReadUrl: finishedStatus.s3PreSignedReadUrlV2,
+                            snippetsS3PreSignedReadUrl: finishedStatus.snippetsS3PreSignedReadUrl,
                             absolutePathToLocalOutput: this.generatorInvocation.absolutePathToLocalOutput,
+                            absolutePathToLocalSnippetJSON: this.generatorInvocation.absolutePathToLocalSnippets,
                             context: this.context
                         });
                     }
@@ -124,34 +126,79 @@ export class RemoteTaskHandler {
 async function downloadFilesForTask({
     s3PreSignedReadUrl,
     absolutePathToLocalOutput,
+    snippetsS3PreSignedReadUrl,
+    absolutePathToLocalSnippetJSON,
     context
 }: {
     s3PreSignedReadUrl: string;
     absolutePathToLocalOutput: AbsoluteFilePath;
+    snippetsS3PreSignedReadUrl: string | undefined;
+    absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
     context: InteractiveTaskContext;
 }) {
     try {
-        // initiate request
-        const request = await axios.get(s3PreSignedReadUrl, {
-            responseType: "stream"
+        await downloadZipForTask({
+            s3PreSignedReadUrl,
+            absolutePathToLocalOutput
         });
 
-        // pipe to zip
-        const tmpDir = await tmp.dir({ prefix: "fern", unsafeCleanup: true });
-        const outputZipPath = path.join(tmpDir.path, "output.zip");
-        await pipeline(request.data, createWriteStream(outputZipPath));
-
-        // decompress to user-specified location
-        if (await doesPathExist(absolutePathToLocalOutput)) {
-            await rm(absolutePathToLocalOutput, { recursive: true });
-        }
-        await mkdir(absolutePathToLocalOutput, { recursive: true });
-        await decompress(outputZipPath, absolutePathToLocalOutput);
-
         context.logger.info(chalk.green(`Downloaded to ${absolutePathToLocalOutput}`));
+
+        if (absolutePathToLocalSnippetJSON != null && snippetsS3PreSignedReadUrl != null) {
+            try {
+                await downloadFileForTask({
+                    s3PreSignedReadUrl: snippetsS3PreSignedReadUrl,
+                    absolutePathToLocalOutput: absolutePathToLocalSnippetJSON
+                });
+                context.logger.info(chalk.green(`Downloaded to ${absolutePathToLocalSnippetJSON}`));
+            } catch (e) {
+                context.logger.debug(chalk.yellow("Failed to download snippet.json from output."));
+            }
+        }
     } catch (e) {
         context.failAndThrow("Failed to download files", e);
     }
+}
+
+async function downloadZipForTask({
+    s3PreSignedReadUrl,
+    absolutePathToLocalOutput
+}: {
+    s3PreSignedReadUrl: string;
+    absolutePathToLocalOutput: AbsoluteFilePath;
+}): Promise<void> {
+    // initiate request
+    const request = await axios.get(s3PreSignedReadUrl, {
+        responseType: "stream"
+    });
+
+    // pipe to zip
+    const tmpDir = await tmp.dir({ prefix: "fern", unsafeCleanup: true });
+    const outputZipPath = path.join(tmpDir.path, "output.zip");
+    await pipeline(request.data, createWriteStream(outputZipPath));
+
+    // decompress to user-specified location
+    if (await doesPathExist(absolutePathToLocalOutput)) {
+        await rm(absolutePathToLocalOutput, { recursive: true });
+    }
+    await mkdir(absolutePathToLocalOutput, { recursive: true });
+    await decompress(outputZipPath, absolutePathToLocalOutput);
+}
+
+async function downloadFileForTask({
+    s3PreSignedReadUrl,
+    absolutePathToLocalOutput
+}: {
+    s3PreSignedReadUrl: string;
+    absolutePathToLocalOutput: AbsoluteFilePath;
+}): Promise<void> {
+    const request = await axios.get(s3PreSignedReadUrl, {
+        responseType: "stream"
+    });
+    if (await doesPathExist(absolutePathToLocalOutput)) {
+        await rm(absolutePathToLocalOutput, { recursive: true });
+    }
+    await pipeline(request.data, createWriteStream(absolutePathToLocalOutput));
 }
 
 function convertLogLevel(logLevel: FernFiddle.LogLevel): LogLevel {
