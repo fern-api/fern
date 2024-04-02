@@ -32765,7 +32765,87 @@ If you try to access older information than what we can access, we will return a
       ],
       "examples": [
         {
-          "codeSamples": [],
+          "codeSamples": [
+            {
+              "code": "curl https://sandbox.belvo.com/api/risk-insights/ \\
+-u [Secret Key ID]:[Secret Key PASSWORD]
+",
+              "description": null,
+              "install": null,
+              "language": "cURL",
+              "name": "cURL",
+              "type": "language",
+            },
+            {
+              "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+from pprint import pprint
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# List Risk insights
+for risk_insight in client.RiskInsights.list():
+pprint(income)
+",
+              "description": null,
+              "install": null,
+              "language": "python",
+              "name": "python",
+              "type": "language",
+            },
+            {
+              "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+client.risk_insights.list
+",
+              "description": null,
+              "install": null,
+              "language": "ruby",
+              "name": "ruby",
+              "type": "language",
+            },
+            {
+              "code": "// For more information about our SDKs go to:
+// https://developers.belvo.com/docs/belvo-sdks
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.riskInsights.list()
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+              "description": null,
+              "install": null,
+              "language": "javascript",
+              "name": "javascript",
+              "type": "language",
+            },
+          ],
           "description": null,
           "headers": [],
           "name": null,
@@ -33590,7 +33670,94 @@ If you need to know the currency of the account, just do a GET Details to the ac
       ],
       "examples": [
         {
-          "codeSamples": [],
+          "codeSamples": [
+            {
+              "code": "curl -X POST \\
+  https://sandbox.belvo.com/api/risk-insights/ \\
+  -H 'Content-Type: application/json' \\
+  -H 'Host: sandbox.belvo.com' \\
+  -H 'cache-control: no-cache' \\
+  -d '{
+    "link": "link_id"
+}' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+              "description": null,
+              "install": null,
+              "language": "cURL",
+              "name": "cURL",
+              "type": "language",
+            },
+            {
+              "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Retrieve Risk insights
+client.RiskInsights.create('link-id')
+",
+              "description": null,
+              "install": null,
+              "language": "python",
+              "name": "python",
+              "type": "language",
+            },
+            {
+              "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+client.risk_insights.retrieve(
+  link: 'link-id'
+)
+",
+              "description": null,
+              "install": null,
+              "language": "ruby",
+              "name": "ruby",
+              "type": "language",
+            },
+            {
+              "code": "// For more information about our SDKs go to:
+// https://developers.belvo.com/docs/belvo-sdks
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.riskInsights.retrieve('linkID')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+              "description": null,
+              "install": null,
+              "language": "javascript",
+              "name": "javascript",
+              "type": "language",
+            },
+          ],
           "description": null,
           "headers": [],
           "name": null,
@@ -34218,7 +34385,102 @@ If you need to know the currency of the account, just do a GET Details to the ac
       ],
       "examples": [
         {
-          "codeSamples": [],
+          "codeSamples": [
+            {
+              "code": "curl -X PATCH \\
+https://sandbox.belvo.com/api/risk-insights/ \\
+-H 'Content-Type: application/json' \\
+-H 'Host: sandbox.belvo.com' \\
+-H 'cache-control: no-cache' \\
+-d '{
+    "session": "",
+    "token": "",
+    "link": ""
+}' \\
+-u [Secret Key ID]:[Secret Key PASSWORD]
+",
+              "description": null,
+              "install": null,
+              "language": "cURL",
+              "name": "cURL",
+              "type": "language",
+            },
+            {
+              "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Resume Risk insights
+risk_insights = client.RiskInsights.resume(
+  session="session_id",
+  token="token",
+  link="link_id"
+)
+",
+              "description": null,
+              "install": null,
+              "language": "python",
+              "name": "python",
+              "type": "language",
+            },
+            {
+              "code": "# For more information about our SDKs go to:
+    # https://developers.belvo.com/docs/belvo-sdks
+
+    require 'belvo'
+
+    client = Belvo::Client.new(
+      'Secret Key ID',
+      'Secret Key PASSWORD',
+      'sandbox'
+    )
+
+    client.risk_insights.resume(
+      session: 'session_id',
+      token: 'token',
+      link: 'link_id'
+    )
+",
+              "description": null,
+              "install": null,
+              "language": "ruby",
+              "name": "ruby",
+              "type": "language",
+            },
+            {
+              "code": "// For more information about our SDKs go to:
+// https://developers.belvo.com/docs/belvo-sdks
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.riskInsights.resume('sessionId', 'token', 'linkId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+              "description": null,
+              "install": null,
+              "language": "javascript",
+              "name": "javascript",
+              "type": "language",
+            },
+          ],
           "description": null,
           "headers": [],
           "name": null,
@@ -34857,7 +35119,85 @@ If you need to know the currency of the account, just do a GET Details to the ac
       ],
       "examples": [
         {
-          "codeSamples": [],
+          "codeSamples": [
+            {
+              "code": "curl https://sandbox.belvo.com/api/risk-insights/{id} \\
+-u [Secret Key ID]:[Secret Key PASSWORD]
+",
+              "description": null,
+              "install": null,
+              "language": "cURL",
+              "name": "cURL",
+              "type": "language",
+            },
+            {
+              "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Get Risk insight
+client.RiskInsights.get('risk-insights.id')
+",
+              "description": null,
+              "install": null,
+              "language": "python",
+              "name": "python",
+              "type": "language",
+            },
+            {
+              "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.risk_insights.detail id: 'risk-insights.id'
+",
+              "description": null,
+              "install": null,
+              "language": "ruby",
+              "name": "ruby",
+              "type": "language",
+            },
+            {
+              "code": "// For more information about our SDKs go to:
+// https://developers.belvo.com/docs/belvo-sdks
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.riskInsights.detail('risk-insights.id')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+              "description": null,
+              "install": null,
+              "language": "javascript",
+              "name": "javascript",
+              "type": "language",
+            },
+          ],
           "description": null,
           "headers": [],
           "name": null,
@@ -35481,7 +35821,87 @@ If you need to know the currency of the account, just do a GET Details to the ac
       ],
       "examples": [
         {
-          "codeSamples": [],
+          "codeSamples": [
+            {
+              "code": "curl -X DELETE \\
+https://sandbox.belvo.com/api/risk-insights/{id}/ \\
+-H 'Host: sandbox.belvo.com' \\
+-u [Secret Key ID]:[Secret Key PASSWORD]
+",
+              "description": null,
+              "install": null,
+              "language": "cURL",
+              "name": "cURL",
+              "type": "language",
+            },
+            {
+              "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Delete Risk insight
+client.RiskInsights.delete('risk-insights.id')
+",
+              "description": null,
+              "install": null,
+              "language": "python",
+              "name": "python",
+              "type": "language",
+            },
+            {
+              "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.risk_insights.delete id: 'risk-insights.id'
+",
+              "description": null,
+              "install": null,
+              "language": "ruby",
+              "name": "ruby",
+              "type": "language",
+            },
+            {
+              "code": "// For more information about our SDKs go to:
+// https://developers.belvo.com/docs/belvo-sdks
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.riskInsights.delete('risk-insights.id')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+              "description": null,
+              "install": null,
+              "language": "javascript",
+              "name": "javascript",
+              "type": "language",
+            },
+          ],
           "description": null,
           "headers": [],
           "name": null,

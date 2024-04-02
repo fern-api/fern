@@ -59,7 +59,112 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
       ],
       "examples": [
         {
-          "codeSamples": [],
+          "codeSamples": [
+            {
+              "code": "import { base } from '@uploadcare/upload-client'
+
+// fileData must be \`Blob\` or \`File\` or \`Buffer\`
+const result = await base(
+  fileData,
+  {
+    publicKey: 'YOUR_PUBLIC_KEY',
+    store: 'auto',
+    metadata: {
+      subsystem: 'uploader',
+      pet: 'cat'
+    }
+  }
+)
+",
+              "description": null,
+              "install": null,
+              "language": "JavaScript",
+              "name": "JS",
+              "type": "language",
+            },
+            {
+              "code": "<?php
+$configuration = Uploadcare\\Configuration::create((string) $_ENV['UPLOADCARE_PUBLIC_KEY'], (string) $_ENV['UPLOADCARE_SECRET_KEY']);
+
+$uploader = new Uploadcare\\Uploader\\Uploader($configuration);
+$fileInfo = $uploader->fromPath(__DIR__ . '/squirrel.jpg', null, null, 'auto', [
+    'system' => 'php-uploader',
+    'pet' => 'cat',
+]);
+echo \\sprintf("URL: %s, ID: %s, Mime type: %s\\n", $fileInfo->getUrl(), $fileInfo->getUuid(), $fileInfo->getMimeType());
+foreach ($fileInfo->getMetadata() as $key => $value) {
+    echo \\sprintf("%s: %s\\n", $key, $value);
+}
+",
+              "description": null,
+              "install": null,
+              "language": "PHP",
+              "name": "PHP",
+              "type": "language",
+            },
+            {
+              "code": "from pyuploadcare import Uploadcare, File
+
+uploadcare = Uploadcare(public_key='YOUR_PUBLIC_KEY', secret_key='YOUR_SECRET_KEY')
+with open('test1.txt', 'rb') as file_object:
+    ucare_file = uploadcare.upload(file_object)
+",
+              "description": null,
+              "install": null,
+              "language": "Python",
+              "name": "Python",
+              "type": "language",
+            },
+            {
+              "code": "require 'uploadcare'
+Uploadcare.config.public_key = "YOUR_PUBLIC_KEY"
+Uploadcare.config.secret_key = "YOUR_SECRET_KEY"
+
+source_file = File.open('image.png')
+uploaded_file = Uploadcare::Uploader.upload(source_file, store: auto)
+",
+              "description": null,
+              "install": null,
+              "language": "Ruby",
+              "name": "Ruby",
+              "type": "language",
+            },
+            {
+              "code": "import Uploadcare
+
+let uploadcare = Uploadcare(withPublicKey: "YOUR_PUBLIC_KEY", secretKey: "YOUR_SECRET_KEY")
+
+guard let url = Bundle.main.url(forResource: "squirrel", withExtension: "jpg"),
+      let data = try? Data(contentsOf: url) else { return }
+let metadata = ["subsystem": "uploader", "pet": "cat"]
+
+let file = try await uploadcare.uploadFile(data, withName: "random_file_name.jpg", store: .auto) { progress in
+  print("progress: \\(progress)")
+}
+prkint(file)
+",
+              "description": null,
+              "install": null,
+              "language": "Swift",
+              "name": "Swift",
+              "type": "language",
+            },
+            {
+              "code": "import com.uploadcare.android.library.api.UploadcareClient
+
+val uploadcare = UploadcareClient(publicKey = "YOUR_PUBLIC_KEY", secretKey = "YOUR_SECRET_KEY")
+
+val uri = "content://com.android.providers.media.documents/document/image%3A1000001178".toUri()
+val file = FileUploader(uploadcare, uri = uri, context = context).upload()
+Log.d("TAG", file.toString())
+",
+              "description": null,
+              "install": null,
+              "language": "Kotlin",
+              "name": "Kotlin",
+              "type": "language",
+            },
+          ],
           "description": null,
           "headers": [],
           "name": null,
@@ -325,7 +430,121 @@ To upload large files, 3 requests are sent in sequence:
       ],
       "examples": [
         {
-          "codeSamples": [],
+          "codeSamples": [
+            {
+              "code": "import { multipartStart } from '@uploadcare/upload-client'
+
+const result = await multipartStart(
+  27796904,
+  {
+    publicKey: 'YOUR_PUBLIC_KEY',
+    store: 'auto',
+    fileName: 'myfile.mp4',
+    contentType: 'video/mp4',
+    metadata: {
+      subsystem: 'uploader',
+      pet: 'cat'
+    }
+  }
+)
+",
+              "description": null,
+              "install": null,
+              "language": "JavaScript",
+              "name": "JS",
+              "type": "language",
+            },
+            {
+              "code": "// Uploadcare lib provides high level API for multipart uploads that does everything for you
+
+<?php
+$configuration = Uploadcare\\Configuration::create((string) $_ENV['UPLOADCARE_PUBLIC_KEY'], (string) $_ENV['UPLOADCARE_SECRET_KEY']);
+
+$uploader = new Uploadcare\\Uploader\\Uploader($configuration);
+$path = '/path-to-large-file.zip';
+$handle = \\fopen($path, 'rb');
+$response = $uploader->fromResource($handle, null, null, 'auto', [
+    'size' => \\filesize($path), // The "size" is the metadata key
+]);
+echo \\sprintf('File uploaded. ID is \\'%s\\'', $response->getUuid());
+",
+              "description": null,
+              "install": null,
+              "language": "PHP",
+              "name": "PHP",
+              "type": "language",
+            },
+            {
+              "code": "// Uploadcare lib provides high level API for multipart uploads that does everything for you
+
+from pyuploadcare import Uploadcare, File
+
+uploadcare = Uploadcare(public_key='YOUR_PUBLIC_KEY', secret_key='YOUR_SECRET_KEY')
+with open('test1.txt', 'rb') as file_object:
+    ucare_file = uploadcare.multipart_upload(file_object)
+",
+              "description": null,
+              "install": null,
+              "language": "Python",
+              "name": "Python",
+              "type": "language",
+            },
+            {
+              "code": "// Uploadcare lib provides high level API for multipart uploads that does everything for you
+
+require 'uploadcare'
+Uploadcare.config.public_key = "YOUR_PUBLIC_KEY"
+Uploadcare.config.secret_key = "YOUR_SECRET_KEY"
+
+source_file = File.open('image.png')
+uploaded_file = Uploadcare::Uploader.upload(source_file, store: auto)
+",
+              "description": null,
+              "install": null,
+              "language": "Ruby",
+              "name": "Ruby",
+              "type": "language",
+            },
+            {
+              "code": "// Uploadcare lib provides high level API for multipart uploads that does everything for you
+
+import Uploadcare
+
+let uploadcare = Uploadcare(withPublicKey: "YOUR_PUBLIC_KEY", secretKey: "YOUR_SECRET_KEY")
+
+guard let url = Bundle.main.url(forResource: "Mona_Lisa_23mb", withExtension: "jpg"),
+      let data = try? Data(contentsOf: url) else { return }
+
+let metadata = ["subsystem": "uploader", "pet": "cat"]
+let onProgress: (Double)->Void = { (progress) in
+  print("progress: \\(progress)")
+}
+
+let file = try await uploadcare.uploadAPI.multipartUpload(data, withName: "Mona_Lisa_big.jpg", store: .auto, metadata: metadata, onProgress)
+print(file)
+",
+              "description": null,
+              "install": null,
+              "language": "Swift",
+              "name": "Swift",
+              "type": "language",
+            },
+            {
+              "code": "import com.uploadcare.android.library.api.UploadcareClient
+
+val uploadcare = UploadcareClient(publicKey = "YOUR_PUBLIC_KEY", secretKey = "YOUR_SECRET_KEY")
+
+val uri = "content://com.android.providers.media.documents/document/image%3A1000001178".toUri()
+val file = FileUploader(uploadcare, uri = uri, context = context).upload()
+Log.d("TAG", file.toString())
+",
+              "description": null,
+              "install": null,
+              "language": "Kotlin",
+              "name": "Kotlin",
+              "type": "language",
+            },
+          ],
           "description": null,
           "headers": [],
           "name": null,
@@ -735,7 +954,114 @@ You can upload the file parts in parallel provided that the byte order stays unc
       "errorStatusCode": [],
       "examples": [
         {
-          "codeSamples": [],
+          "codeSamples": [
+            {
+              "code": "import { multipartUpload } from '@uploadcare/upload-client'
+
+// partData is a chunk of the uploaded file's content
+// must be \`Blob\` or \`File\` or \`Buffer\`
+const result = await multipartUpload(
+  partData,
+  '<presigned-url-x>'
+)
+",
+              "description": null,
+              "install": null,
+              "language": "JavaScript",
+              "name": "JS",
+              "type": "language",
+            },
+            {
+              "code": "// Uploadcare lib provides high level API for multipart uploads that does everything for you
+
+<?php
+$configuration = Uploadcare\\Configuration::create((string) $_ENV['UPLOADCARE_PUBLIC_KEY'], (string) $_ENV['UPLOADCARE_SECRET_KEY']);
+
+$uploader = new Uploadcare\\Uploader\\Uploader($configuration);
+$path = '/path-to-large-file.zip';
+$handle = \\fopen($path, 'rb');
+$response = $uploader->fromResource($handle, null, null, 'auto', [
+    'size' => \\filesize($path), // The "size" is the metadata key
+]);
+echo \\sprintf('File uploaded. ID is \\'%s\\'', $response->getUuid());
+",
+              "description": null,
+              "install": null,
+              "language": "PHP",
+              "name": "PHP",
+              "type": "language",
+            },
+            {
+              "code": "// Uploadcare lib provides high level API for multipart uploads that does everything for you
+
+from pyuploadcare import Uploadcare, File
+
+uploadcare = Uploadcare(public_key='YOUR_PUBLIC_KEY', secret_key='YOUR_SECRET_KEY')
+with open('test1.txt', 'rb') as file_object:
+    ucare_file = uploadcare.multipart_upload(file_object)
+",
+              "description": null,
+              "install": null,
+              "language": "Python",
+              "name": "Python",
+              "type": "language",
+            },
+            {
+              "code": "// Uploadcare lib provides high level API for multipart uploads that does everything for you
+
+require 'uploadcare'
+Uploadcare.config.public_key = "YOUR_PUBLIC_KEY"
+Uploadcare.config.secret_key = "YOUR_SECRET_KEY"
+
+source_file = File.open('image.png')
+uploaded_file = Uploadcare::Uploader.upload(source_file, store: auto)
+",
+              "description": null,
+              "install": null,
+              "language": "Ruby",
+              "name": "Ruby",
+              "type": "language",
+            },
+            {
+              "code": "// Uploadcare lib provides high level API for multipart uploads that does everything for you
+
+import Uploadcare
+
+let uploadcare = Uploadcare(withPublicKey: "YOUR_PUBLIC_KEY", secretKey: "YOUR_SECRET_KEY")
+
+guard let url = Bundle.main.url(forResource: "Mona_Lisa_23mb", withExtension: "jpg"),
+      let data = try? Data(contentsOf: url) else { return }
+
+let metadata = ["subsystem": "uploader", "pet": "cat"]
+let onProgress: (Double)->Void = { (progress) in
+  print("progress: \\(progress)")
+}
+
+let file = try await uploadcare.uploadAPI.multipartUpload(data, withName: "Mona_Lisa_big.jpg", store: .auto, metadata: metadata, onProgress)
+print(file)
+",
+              "description": null,
+              "install": null,
+              "language": "Swift",
+              "name": "Swift",
+              "type": "language",
+            },
+            {
+              "code": "import com.uploadcare.android.library.api.UploadcareClient
+
+val uploadcare = UploadcareClient(publicKey = "YOUR_PUBLIC_KEY", secretKey = "YOUR_SECRET_KEY")
+
+val uri = "content://com.android.providers.media.documents/document/image%3A1000001178".toUri()
+val file = FileUploader(uploadcare, uri = uri, context = context).upload()
+Log.d("TAG", file.toString())
+",
+              "description": null,
+              "install": null,
+              "language": "Kotlin",
+              "name": "Kotlin",
+              "type": "language",
+            },
+          ],
           "description": null,
           "headers": [],
           "name": null,
@@ -781,7 +1107,114 @@ upload session to assemble all the file parts into a single resulting file.
       ],
       "examples": [
         {
-          "codeSamples": [],
+          "codeSamples": [
+            {
+              "code": "import { multipartComplete } from '@uploadcare/upload-client'
+
+const result = await multipartComplete(
+  '67947755-1584-4e3f-902b-d4e2bf76a841',
+  {
+    publicKey: 'YOUR_PUBLIC_KEY'
+  }
+)
+",
+              "description": null,
+              "install": null,
+              "language": "JavaScript",
+              "name": "JS",
+              "type": "language",
+            },
+            {
+              "code": "// Uploadcare lib provides high level API for multipart uploads that does everything for you
+
+<?php
+$configuration = Uploadcare\\Configuration::create((string) $_ENV['UPLOADCARE_PUBLIC_KEY'], (string) $_ENV['UPLOADCARE_SECRET_KEY']);
+
+$uploader = new Uploadcare\\Uploader\\Uploader($configuration);
+$path = '/path-to-large-file.zip';
+$handle = \\fopen($path, 'rb');
+$response = $uploader->fromResource($handle, null, null, 'auto', [
+    'size' => \\filesize($path), // The "size" is the metadata key
+]);
+echo \\sprintf('File uploaded. ID is \\'%s\\'', $response->getUuid());
+",
+              "description": null,
+              "install": null,
+              "language": "PHP",
+              "name": "PHP",
+              "type": "language",
+            },
+            {
+              "code": "// Uploadcare lib provides high level API for multipart uploads that does everything for you
+
+from pyuploadcare import Uploadcare, File
+
+uploadcare = Uploadcare(public_key='YOUR_PUBLIC_KEY', secret_key='YOUR_SECRET_KEY')
+with open('test1.txt', 'rb') as file_object:
+    ucare_file = uploadcare.multipart_upload(file_object)
+",
+              "description": null,
+              "install": null,
+              "language": "Python",
+              "name": "Python",
+              "type": "language",
+            },
+            {
+              "code": "// Uploadcare lib provides high level API for multipart uploads that does everything for you
+
+require 'uploadcare'
+Uploadcare.config.public_key = "YOUR_PUBLIC_KEY"
+Uploadcare.config.secret_key = "YOUR_SECRET_KEY"
+
+source_file = File.open('image.png')
+uploaded_file = Uploadcare::Uploader.upload(source_file, store: auto)
+",
+              "description": null,
+              "install": null,
+              "language": "Ruby",
+              "name": "Ruby",
+              "type": "language",
+            },
+            {
+              "code": "// Uploadcare lib provides high level API for multipart uploads that does everything for you
+
+import Uploadcare
+
+let uploadcare = Uploadcare(withPublicKey: "YOUR_PUBLIC_KEY", secretKey: "YOUR_SECRET_KEY")
+
+guard let url = Bundle.main.url(forResource: "Mona_Lisa_23mb", withExtension: "jpg"),
+      let data = try? Data(contentsOf: url) else { return }
+
+let metadata = ["subsystem": "uploader", "pet": "cat"]
+let onProgress: (Double)->Void = { (progress) in
+  print("progress: \\(progress)")
+}
+
+let file = try await uploadcare.uploadAPI.multipartUpload(data, withName: "Mona_Lisa_big.jpg", store: .auto, metadata: metadata, onProgress)
+print(file)
+",
+              "description": null,
+              "install": null,
+              "language": "Swift",
+              "name": "Swift",
+              "type": "language",
+            },
+            {
+              "code": "import com.uploadcare.android.library.api.UploadcareClient
+
+val uploadcare = UploadcareClient(publicKey = "YOUR_PUBLIC_KEY", secretKey = "YOUR_SECRET_KEY")
+
+val uri = "content://com.android.providers.media.documents/document/image%3A1000001178".toUri()
+val file = FileUploader(uploadcare, uri = uri, context = context).upload()
+Log.d("TAG", file.toString())
+",
+              "description": null,
+              "install": null,
+              "language": "Kotlin",
+              "name": "Kotlin",
+              "type": "language",
+            },
+          ],
           "description": null,
           "headers": [],
           "name": null,
@@ -1451,7 +1884,114 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
       ],
       "examples": [
         {
-          "codeSamples": [],
+          "codeSamples": [
+            {
+              "code": "import { fromUrl } from '@uploadcare/upload-client'
+
+const result = await fromUrl(
+  'https://source.unsplash.com/featured',
+  {
+    publicKey: 'YOUR_PUBLIC_KEY',
+    metadata: {
+      subsystem: 'uploader',
+      pet: 'cat'
+    }
+  }
+)
+",
+              "description": null,
+              "install": null,
+              "language": "JavaScript",
+              "name": "JS",
+              "type": "language",
+            },
+            {
+              "code": "<?php
+$configuration = Uploadcare\\Configuration::create((string) $_ENV['UPLOADCARE_PUBLIC_KEY'], (string) $_ENV['UPLOADCARE_SECRET_KEY']);
+
+$uploader = new Uploadcare\\Uploader\\Uploader($configuration);
+$url = 'https://source.unsplash.com/featured';
+$token = $uploader->fromUrl($url, null, null, 'auto', [
+    'action' => 'upload from URL', // The "Action" is the metadata key
+    'checkDuplicates' => true,
+    'storeDuplicates' => false,
+]);
+echo \\sprintf('Upload from URL \\'%s\\' has been started. Token is %s', $url, $token);
+",
+              "description": null,
+              "install": null,
+              "language": "PHP",
+              "name": "PHP",
+              "type": "language",
+            },
+            {
+              "code": "from pyuploadcare import Uploadcare
+
+uploadcare = Uploadcare(public_key='YOUR_PUBLIC_KEY', secret_key='YOUR_SECRET_KEY')
+ucare_file = uploadcare.upload_from_url_sync(
+    "https://source.unsplash.com/featured",
+    check_duplicates=True,
+    save_duplicates=False
+)
+",
+              "description": null,
+              "install": null,
+              "language": "Python",
+              "name": "Python",
+              "type": "language",
+            },
+            {
+              "code": "require 'uploadcare'
+Uploadcare.config.public_key = "YOUR_PUBLIC_KEY"
+
+source_url = "https://source.unsplash.com/featured"
+uploaded_file = Uploadcare::Uploader.upload(source_url, store: auto)
+",
+              "description": null,
+              "install": null,
+              "language": "Ruby",
+              "name": "Ruby",
+              "type": "language",
+            },
+            {
+              "code": "import Uploadcare
+
+let uploadcare = Uploadcare(withPublicKey: "YOUR_PUBLIC_KEY", secretKey: "YOUR_SECRET_KEY")
+
+let url = URL(string: "https://source.unsplash.com/featured")!
+let task = UploadFromURLTask(sourceUrl: url)
+  .store(.auto)
+  .setMetadata("uploader", forKey: "subsystem")
+  .setMetadata("cat", forKey: "pet")
+
+let file = try await uploadcare.uploadAPI.uploadAndWaitForCompletion(task: task)
+print(file)
+",
+              "description": null,
+              "install": null,
+              "language": "Swift",
+              "name": "Swift",
+              "type": "language",
+            },
+            {
+              "code": "import com.uploadcare.android.library.api.UploadcareClient
+
+val uploadcare = UploadcareClient(publicKey = "YOUR_PUBLIC_KEY", secretKey = "YOUR_SECRET_KEY")
+
+val uploader = UrlUploader(
+    client = uploadcare,
+    sourceUrl = "https://source.unsplash.com/featured"
+)
+val file = uploader.upload()
+Log.d("TAG", file.toString())
+",
+              "description": null,
+              "install": null,
+              "language": "Kotlin",
+              "name": "Kotlin",
+              "type": "language",
+            },
+          ],
           "description": null,
           "headers": [],
           "name": null,
@@ -1861,7 +2401,93 @@ to the value of the \`check_URL_duplicates\` parameter.
       ],
       "examples": [
         {
-          "codeSamples": [],
+          "codeSamples": [
+            {
+              "code": "import { fromUrlStatus } from '@uploadcare/upload-client'
+
+const result = await fromUrlStatus(
+  '945ebb27-1fd6-46c6-a859-b9893712d650',
+  {
+    publicKey: 'YOUR_PUBLIC_KEY'
+  }
+)
+",
+              "description": null,
+              "install": null,
+              "language": "JavaScript",
+              "name": "JS",
+              "type": "language",
+            },
+            {
+              "code": "<?php
+$configuration = Uploadcare\\Configuration::create((string) $_ENV['UPLOADCARE_PUBLIC_KEY'], (string) $_ENV['UPLOADCARE_SECRET_KEY']);
+
+$uploader = new Uploadcare\\Uploader\\Uploader($configuration);
+$status = $uploader->checkStatus('945ebb27-1fd6-46c6-a859-b9893712d650');
+echo \\sprintf('Upload status is %s', $status);
+",
+              "description": null,
+              "install": null,
+              "language": "PHP",
+              "name": "PHP",
+              "type": "language",
+            },
+            {
+              "code": "from pyuploadcare import Uploadcare, File
+
+uploadcare = Uploadcare(public_key='YOUR_PUBLIC_KEY', secret_key='YOUR_SECRET_KEY')
+file = uploadcare.file_from_url('945ebb27-1fd6-46c6-a859-b9893712d650')
+print(file.info)
+",
+              "description": null,
+              "install": null,
+              "language": "Python",
+              "name": "Python",
+              "type": "language",
+            },
+            {
+              "code": "require 'uploadcare'
+Uploadcare.config.public_key = "YOUR_PUBLIC_KEY"
+Uploadcare.config.secret_key = "YOUR_SECRET_KEY"
+
+token = '945ebb27-1fd6-46c6-a859-b9893712d650'
+puts Uploadcare::Uploader.get_upload_from_url_status(token)
+",
+              "description": null,
+              "install": null,
+              "language": "Ruby",
+              "name": "Ruby",
+              "type": "language",
+            },
+            {
+              "code": "import Uploadcare
+
+let uploadcare = Uploadcare(withPublicKey: "YOUR_PUBLIC_KEY", secretKey: "YOUR_SECRET_KEY")
+
+let status = try await uploadcare.uploadAPI.uploadStatus(forToken: "945ebb27-1fd6-46c6-a859-b9893712d650")
+print(status)
+",
+              "description": null,
+              "install": null,
+              "language": "Swift",
+              "name": "Swift",
+              "type": "language",
+            },
+            {
+              "code": "import com.uploadcare.android.library.api.UploadcareClient
+
+val uploadcare = UploadcareClient(publicKey = "YOUR_PUBLIC_KEY", secretKey = "YOUR_SECRET_KEY")
+
+val status = uploadcare.getFromUrlStatus(token = "945ebb27-1fd6-46c6-a859-b9893712d650")
+Log.d("TAG", status.toString())
+",
+              "description": null,
+              "install": null,
+              "language": "Kotlin",
+              "name": "Kotlin",
+              "type": "language",
+            },
+          ],
           "description": null,
           "headers": [],
           "name": null,
@@ -2000,7 +2626,93 @@ to the value of the \`check_URL_duplicates\` parameter.
       ],
       "examples": [
         {
-          "codeSamples": [],
+          "codeSamples": [
+            {
+              "code": "import { info } from '@uploadcare/upload-client'
+
+const result = await info(
+  'be3b4d5e-179d-460e-8a5d-69112ac86cbb',
+  {
+    publicKey: 'YOUR_PUBLIC_KEY'
+  }
+)
+",
+              "description": null,
+              "install": null,
+              "language": "JavaScript",
+              "name": "JS",
+              "type": "language",
+            },
+            {
+              "code": "<?php
+$configuration = Uploadcare\\Configuration::create((string) $_ENV['UPLOADCARE_PUBLIC_KEY'], (string) $_ENV['UPLOADCARE_SECRET_KEY']);
+
+$fileInfo = (new Uploadcare\\Api($configuration))->file()->fileInfo(string $uuid);
+echo \\sprintf('URL: %s, ID: %s, Mime type: %s', $fileInfo->getUrl(), $fileInfo->getUuid(), $fileInfo->getMimeType());
+",
+              "description": null,
+              "install": null,
+              "language": "PHP",
+              "name": "PHP",
+              "type": "language",
+            },
+            {
+              "code": "from pyuploadcare import Uploadcare, File
+
+uploadcare = Uploadcare(public_key='YOUR_PUBLIC_KEY', secret_key='YOUR_SECRET_KEY')
+file = uploadcare.file('740e1b8c-1ad8-4324-b7ec-112c79d8eac2')
+print(file.info)
+",
+              "description": null,
+              "install": null,
+              "language": "Python",
+              "name": "Python",
+              "type": "language",
+            },
+            {
+              "code": "require 'uploadcare'
+Uploadcare.config.public_key = "YOUR_PUBLIC_KEY"
+Uploadcare.config.secret_key = "YOUR_SECRET_KEY"
+
+uuid = '740e1b8c-1ad8-4324-b7ec-112c79d8eac2'
+info = Uploadcare::File.info(uuid)
+puts info.inspect
+",
+              "description": null,
+              "install": null,
+              "language": "Ruby",
+              "name": "Ruby",
+              "type": "language",
+            },
+            {
+              "code": "import Uploadcare
+
+let uploadcare = Uploadcare(withPublicKey: "YOUR_PUBLIC_KEY", secretKey: "YOUR_SECRET_KEY")
+
+let file = try await uploadcare.uploadAPI.fileInfo(withFileId: "740e1b8c-1ad8-4324-b7ec-112c79d8eac2")
+print(file)
+",
+              "description": null,
+              "install": null,
+              "language": "Swift",
+              "name": "Swift",
+              "type": "language",
+            },
+            {
+              "code": "import com.uploadcare.android.library.api.UploadcareClient
+
+val uploadcare = UploadcareClient(publicKey = "YOUR_PUBLIC_KEY", secretKey = "YOUR_SECRET_KEY")
+
+val file = uploadcare.getUploadedFile(fileId = "740e1b8c-1ad8-4324-b7ec-112c79d8eac2")
+Log.d("TAG", file.toString())
+",
+              "description": null,
+              "install": null,
+              "language": "Kotlin",
+              "name": "Kotlin",
+              "type": "language",
+            },
+          ],
           "description": null,
           "headers": [],
           "name": null,
@@ -2655,7 +3367,104 @@ is to create a new one.
       ],
       "examples": [
         {
-          "codeSamples": [],
+          "codeSamples": [
+            {
+              "code": "import { group } from '@uploadcare/upload-client'
+
+const result = await group(
+  [
+    'd6d34fa9-addd-472c-868d-2e5c105f9fcd',
+    'b1026315-8116-4632-8364-607e64fca723/-/resize/x800/'
+  ],
+  {
+    publicKey: 'YOUR_PUBLIC_KEY'
+  }
+)
+",
+              "description": null,
+              "install": null,
+              "language": "JavaScript",
+              "name": "JS",
+              "type": "language",
+            },
+            {
+              "code": "<?php
+$configuration = Uploadcare\\Configuration::create((string) $_ENV['UPLOADCARE_PUBLIC_KEY'], (string) $_ENV['UPLOADCARE_SECRET_KEY']);
+
+$uploader = new Uploadcare\\Uploader\\Uploader($configuration);
+$result = $uploader->groupFiles(['d6d34fa9-addd-472c-868d-2e5c105f9fcd', 'b1026315-8116-4632-8364-607e64fca723/-/resize/x800/']);
+echo \\sprintf('Response status is %s', $result->getStatusCode());
+",
+              "description": null,
+              "install": null,
+              "language": "PHP",
+              "name": "PHP",
+              "type": "language",
+            },
+            {
+              "code": "from pyuploadcare import Uploadcare, File, FileGroup
+
+uploadcare = Uploadcare(public_key='YOUR_PUBLIC_KEY', secret_key='YOUR_SECRET_KEY')
+file_1 = uploadcare.file('d6d34fa9-addd-472c-868d-2e5c105f9fcd')
+file_2 = uploadcare.file('b1026315-8116-4632-8364-607e64fca723/-/resize/x800/')
+file_group = uploadcare.create_file_group([file_1, file_2])
+",
+              "description": null,
+              "install": null,
+              "language": "Python",
+              "name": "Python",
+              "type": "language",
+            },
+            {
+              "code": "require 'uploadcare'
+Uploadcare.config.public_key = "YOUR_PUBLIC_KEY"
+
+uuids = [
+  'd6d34fa9-addd-472c-868d-2e5c105f9fcd',
+  'b1026315-8116-4632-8364-607e64fca723/-/resize/x800/'
+]
+group = Uploadcare::Group.create(uuids)
+",
+              "description": null,
+              "install": null,
+              "language": "Ruby",
+              "name": "Ruby",
+              "type": "language",
+            },
+            {
+              "code": "import Uploadcare
+
+let uploadcare = Uploadcare(withPublicKey: "YOUR_PUBLIC_KEY", secretKey: "YOUR_SECRET_KEY")
+
+let filesIds = ["d6d34fa9-addd-472c-868d-2e5c105f9fcd", "b1026315-8116-4632-8364-607e64fca723/-/resize/x800/"]
+let group = try await uploadAPI.createFilesGroup(fileIds: filesIds)
+print(group)
+",
+              "description": null,
+              "install": null,
+              "language": "Swift",
+              "name": "Swift",
+              "type": "language",
+            },
+            {
+              "code": "import com.uploadcare.android.library.api.UploadcareClient
+
+val uploadcare = UploadcareClient(publicKey = "YOUR_PUBLIC_KEY", secretKey = "YOUR_SECRET_KEY")
+
+val uuids = listOf(
+    "d6d34fa9-addd-472c-868d-2e5c105f9fcd",
+    "b1026315-8116-4632-8364-607e64fca723/-/resize/x800/"
+)
+val group = uploadcare.createGroup(fileIds = uuids)
+Log.d("TAG", group.toString())
+",
+              "description": null,
+              "install": null,
+              "language": "Kotlin",
+              "name": "Kotlin",
+              "type": "language",
+            },
+          ],
           "description": null,
           "headers": [],
           "name": null,
@@ -3506,7 +4315,94 @@ number of the files in the group, etc).
       ],
       "examples": [
         {
-          "codeSamples": [],
+          "codeSamples": [
+            {
+              "code": "import { groupInfo } from '@uploadcare/upload-client'
+
+const result = await groupInfo(
+  '0d712319-b970-4602-850c-bae1ced521a6~1',
+  {
+    publicKey: 'YOUR_PUBLIC_KEY'
+  }
+)
+",
+              "description": null,
+              "install": null,
+              "language": "JavaScript",
+              "name": "JS",
+              "type": "language",
+            },
+            {
+              "code": "<?php
+$configuration = Uploadcare\\Configuration::create((string) $_ENV['UPLOADCARE_PUBLIC_KEY'], (string) $_ENV['UPLOADCARE_SECRET_KEY']);
+
+$uploader = new Uploadcare\\Uploader\\Uploader($configuration);
+$groupInfo = $uploader->groupInfo('0d712319-b970-4602-850c-bae1ced521a6~1');
+echo $groupInfo->getBody()->getContents();
+",
+              "description": null,
+              "install": null,
+              "language": "PHP",
+              "name": "PHP",
+              "type": "language",
+            },
+            {
+              "code": "from pyuploadcare import Uploadcare, FileGroup
+
+uploadcare = Uploadcare(public_key='YOUR_PUBLIC_KEY', secret_key='YOUR_SECRET_KEY')
+file_group = uploadcare.file_group('0d712319-b970-4602-850c-bae1ced521a6~1')
+print(file_group.info)
+",
+              "description": null,
+              "install": null,
+              "language": "Python",
+              "name": "Python",
+              "type": "language",
+            },
+            {
+              "code": "require 'uploadcare'
+Uploadcare.config.public_key = "YOUR_PUBLIC_KEY"
+Uploadcare.config.secret_key = "YOUR_SECRET_KEY"
+
+uuid = '0d712319-b970-4602-850c-bae1ced521a6~1'
+info = Uploadcare::Group.info(uuid)
+puts info.inspect
+",
+              "description": null,
+              "install": null,
+              "language": "Ruby",
+              "name": "Ruby",
+              "type": "language",
+            },
+            {
+              "code": "import Uploadcare
+
+let uploadcare = Uploadcare(withPublicKey: "YOUR_PUBLIC_KEY", secretKey: "YOUR_SECRET_KEY")
+
+let group = try await uploadcare.uploadAPI.filesGroupInfo(groupId: "0d712319-b970-4602-850c-bae1ced521a6~1")
+print(group)
+",
+              "description": null,
+              "install": null,
+              "language": "Swift",
+              "name": "Swift",
+              "type": "language",
+            },
+            {
+              "code": "import com.uploadcare.android.library.api.UploadcareClient
+
+val uploadcare = UploadcareClient(publicKey = "YOUR_PUBLIC_KEY", secretKey = "YOUR_SECRET_KEY")
+
+val group = uploadcare.getUploadedGroup(groupId = "0d712319-b970-4602-850c-bae1ced521a6~1")
+Log.d("TAG", group.toString())
+",
+              "description": null,
+              "install": null,
+              "language": "Kotlin",
+              "name": "Kotlin",
+              "type": "language",
+            },
+          ],
           "description": null,
           "headers": [],
           "name": null,

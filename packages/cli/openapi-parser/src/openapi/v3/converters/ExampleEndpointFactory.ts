@@ -157,9 +157,21 @@ export class ExampleEndpointFactory {
 
         // Get all the code samples from incomplete examples
         const codeSamples = endpoint.examples
-            .filter((ex) => hasIncompleteExample(EndpointExample.unknown(ex)))
-            .flatMap((example) => (example as RawSchemas.ExampleEndpointCallSchema)["code-samples"])
-            .filter((ex): ex is RawSchemas.ExampleCodeSampleSchema => isNonNullish(ex));
+            .filter((ex) => hasIncompleteExample(ex))
+            .flatMap((ex) => {
+                if (ex.type === "unknown") {
+                    if (ex.value != null) {
+                        const samples = (ex.value as RawSchemas.ExampleEndpointCallSchema)["code-samples"];
+                        if (samples != null) {
+                            return this.convertCodeSamples(samples);
+                        }
+                    }
+                    return undefined;
+                } else {
+                    return ex.codeSamples;
+                }
+            })
+            .filter((ex): ex is CustomCodeSample => isNonNullish(ex));
 
         return EndpointExample.full({
             name: exampleName,
@@ -169,7 +181,7 @@ export class ExampleEndpointFactory {
             headers,
             request: requestExample,
             response: responseExample,
-            codeSamples: this.convertCodeSamples(codeSamples)
+            codeSamples
         });
     }
 

@@ -1,4 +1,4 @@
-import { EndpointExample, FernOpenapiIr } from "@fern-api/openapi-ir-sdk";
+import { EndpointExample } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtensionAndValidate } from "../../../getExtension";
@@ -48,17 +48,15 @@ export function getExamplesFromExtension(
     if (redoclyCodeSamples.length > 0) {
         exampleEndpointCalls.push({
             "code-samples": redoclyCodeSamples.map(
-                (value): FernOpenapiIr.CustomCodeSample =>
-                    FernOpenapiIr.CustomCodeSample.language({
-                        name: value.label ?? value.lang,
-                        language: value.lang,
-                        code: value.source,
-                        install: undefined,
-                        description: undefined
-                    })
+                (value): RawSchemas.ExampleCodeSampleSchema => ({
+                    name: value.label ?? value.lang,
+                    language: value.lang,
+                    code: value.source,
+                    install: undefined,
+                    docs: undefined
+                })
             )
         });
     }
-
     return exampleEndpointCalls.map(EndpointExample.unknown);
 }
