@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import typing
 
+from ...core.pydantic_utilities import pydantic_v1
 from .binary_tree_node_value import BinaryTreeNodeValue
 from .binary_tree_value import BinaryTreeValue
 from .doubly_linked_list_node_value import DoublyLinkedListNodeValue
@@ -12,13 +13,8 @@ from .node_id import NodeId
 from .singly_linked_list_node_value import SinglyLinkedListNodeValue
 from .singly_linked_list_value import SinglyLinkedListValue
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class VariableValue_IntegerValue(pydantic.BaseModel):
+class VariableValue_IntegerValue(pydantic_v1.BaseModel):
     type: typing.Literal["integerValue"] = "integerValue"
     value: int
 
@@ -27,7 +23,7 @@ class VariableValue_IntegerValue(pydantic.BaseModel):
         smart_union = True
 
 
-class VariableValue_BooleanValue(pydantic.BaseModel):
+class VariableValue_BooleanValue(pydantic_v1.BaseModel):
     type: typing.Literal["booleanValue"] = "booleanValue"
     value: bool
 
@@ -36,7 +32,7 @@ class VariableValue_BooleanValue(pydantic.BaseModel):
         smart_union = True
 
 
-class VariableValue_DoubleValue(pydantic.BaseModel):
+class VariableValue_DoubleValue(pydantic_v1.BaseModel):
     type: typing.Literal["doubleValue"] = "doubleValue"
     value: float
 
@@ -45,7 +41,7 @@ class VariableValue_DoubleValue(pydantic.BaseModel):
         smart_union = True
 
 
-class VariableValue_StringValue(pydantic.BaseModel):
+class VariableValue_StringValue(pydantic_v1.BaseModel):
     type: typing.Literal["stringValue"] = "stringValue"
     value: str
 
@@ -54,7 +50,7 @@ class VariableValue_StringValue(pydantic.BaseModel):
         smart_union = True
 
 
-class VariableValue_CharValue(pydantic.BaseModel):
+class VariableValue_CharValue(pydantic_v1.BaseModel):
     type: typing.Literal["charValue"] = "charValue"
     value: str
 
@@ -73,7 +69,7 @@ class VariableValue_MapValue(MapValue):
         populate_by_name = True
 
 
-class VariableValue_ListValue(pydantic.BaseModel):
+class VariableValue_ListValue(pydantic_v1.BaseModel):
     type: typing.Literal["listValue"] = "listValue"
     value: typing.List[VariableValue]
 
@@ -112,7 +108,7 @@ class VariableValue_DoublyLinkedListValue(DoublyLinkedListValue):
         populate_by_name = True
 
 
-class VariableValue_NullValue(pydantic.BaseModel):
+class VariableValue_NullValue(pydantic_v1.BaseModel):
     type: typing.Literal["nullValue"] = "nullValue"
 
     class Config:

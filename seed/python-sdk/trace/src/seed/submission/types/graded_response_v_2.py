@@ -4,19 +4,15 @@ import datetime as dt
 import typing
 
 from ...core.datetime_utils import serialize_datetime
+from ...core.pydantic_utilities import pydantic_v1
 from ...v_2.problem.types.test_case_id import TestCaseId
 from .submission_id import SubmissionId
 from .test_case_grade import TestCaseGrade
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class GradedResponseV2(pydantic.BaseModel):
-    submission_id: SubmissionId = pydantic.Field(alias="submissionId")
-    test_cases: typing.Dict[TestCaseId, TestCaseGrade] = pydantic.Field(alias="testCases")
+class GradedResponseV2(pydantic_v1.BaseModel):
+    submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
+    test_cases: typing.Dict[TestCaseId, TestCaseGrade] = pydantic_v1.Field(alias="testCases")
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -31,5 +27,5 @@ class GradedResponseV2(pydantic.BaseModel):
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

@@ -8,14 +8,10 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
+from ..core.pydantic_utilities import pydantic_v1
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from .types.stream_response import StreamResponse
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -73,7 +69,7 @@ class DummyClient:
                 for _text in _response.iter_lines():
                     if len(_text) == 0:
                         continue
-                    yield pydantic.parse_obj_as(StreamResponse, json.loads(_text))  # type: ignore
+                    yield pydantic_v1.parse_obj_as(StreamResponse, json.loads(_text))  # type: ignore
                 return
             _response.read()
             try:
@@ -135,7 +131,7 @@ class AsyncDummyClient:
                 async for _text in _response.aiter_lines():
                     if len(_text) == 0:
                         continue
-                    yield pydantic.parse_obj_as(StreamResponse, json.loads(_text))  # type: ignore
+                    yield pydantic_v1.parse_obj_as(StreamResponse, json.loads(_text))  # type: ignore
                 return
             await _response.aread()
             try:

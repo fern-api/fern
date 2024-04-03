@@ -4,12 +4,8 @@ from __future__ import annotations
 
 import typing
 
+from ...core.pydantic_utilities import pydantic_v1
 from .foo import Foo
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 
 class UnionWithUnknown_Foo(Foo):
@@ -22,7 +18,7 @@ class UnionWithUnknown_Foo(Foo):
         populate_by_name = True
 
 
-class UnionWithUnknown_Unknown(pydantic.BaseModel):
+class UnionWithUnknown_Unknown(pydantic_v1.BaseModel):
     type: typing.Literal["unknown"] = "unknown"
 
     class Config:

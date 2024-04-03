@@ -4,17 +4,13 @@ import datetime as dt
 import typing
 
 from ...core.datetime_utils import serialize_datetime
+from ...core.pydantic_utilities import pydantic_v1
 from .exception_info import ExceptionInfo
 from .exception_v_2 import ExceptionV2
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class WorkspaceRunDetails(pydantic.BaseModel):
-    exception_v_2: typing.Optional[ExceptionV2] = pydantic.Field(alias="exceptionV2", default=None)
+class WorkspaceRunDetails(pydantic_v1.BaseModel):
+    exception_v_2: typing.Optional[ExceptionV2] = pydantic_v1.Field(alias="exceptionV2", default=None)
     exception: typing.Optional[ExceptionInfo] = None
     stdout: str
 
@@ -31,5 +27,5 @@ class WorkspaceRunDetails(pydantic.BaseModel):
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

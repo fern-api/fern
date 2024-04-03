@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import typing
 
+from ...core.pydantic_utilities import pydantic_v1
 from .binary_tree_node_and_tree_value import BinaryTreeNodeAndTreeValue
 from .binary_tree_node_value import BinaryTreeNodeValue
 from .binary_tree_value import BinaryTreeValue
@@ -16,13 +17,8 @@ from .singly_linked_list_node_and_list_value import SinglyLinkedListNodeAndListV
 from .singly_linked_list_node_value import SinglyLinkedListNodeValue
 from .singly_linked_list_value import SinglyLinkedListValue
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class DebugVariableValue_IntegerValue(pydantic.BaseModel):
+class DebugVariableValue_IntegerValue(pydantic_v1.BaseModel):
     type: typing.Literal["integerValue"] = "integerValue"
     value: int
 
@@ -31,7 +27,7 @@ class DebugVariableValue_IntegerValue(pydantic.BaseModel):
         smart_union = True
 
 
-class DebugVariableValue_BooleanValue(pydantic.BaseModel):
+class DebugVariableValue_BooleanValue(pydantic_v1.BaseModel):
     type: typing.Literal["booleanValue"] = "booleanValue"
     value: bool
 
@@ -40,7 +36,7 @@ class DebugVariableValue_BooleanValue(pydantic.BaseModel):
         smart_union = True
 
 
-class DebugVariableValue_DoubleValue(pydantic.BaseModel):
+class DebugVariableValue_DoubleValue(pydantic_v1.BaseModel):
     type: typing.Literal["doubleValue"] = "doubleValue"
     value: float
 
@@ -49,7 +45,7 @@ class DebugVariableValue_DoubleValue(pydantic.BaseModel):
         smart_union = True
 
 
-class DebugVariableValue_StringValue(pydantic.BaseModel):
+class DebugVariableValue_StringValue(pydantic_v1.BaseModel):
     type: typing.Literal["stringValue"] = "stringValue"
     value: str
 
@@ -58,7 +54,7 @@ class DebugVariableValue_StringValue(pydantic.BaseModel):
         smart_union = True
 
 
-class DebugVariableValue_CharValue(pydantic.BaseModel):
+class DebugVariableValue_CharValue(pydantic_v1.BaseModel):
     type: typing.Literal["charValue"] = "charValue"
     value: str
 
@@ -77,7 +73,7 @@ class DebugVariableValue_MapValue(DebugMapValue):
         populate_by_name = True
 
 
-class DebugVariableValue_ListValue(pydantic.BaseModel):
+class DebugVariableValue_ListValue(pydantic_v1.BaseModel):
     type: typing.Literal["listValue"] = "listValue"
     value: typing.List[DebugVariableValue]
 
@@ -116,7 +112,7 @@ class DebugVariableValue_DoublyLinkedListNodeValue(DoublyLinkedListNodeAndListVa
         populate_by_name = True
 
 
-class DebugVariableValue_UndefinedValue(pydantic.BaseModel):
+class DebugVariableValue_UndefinedValue(pydantic_v1.BaseModel):
     type: typing.Literal["undefinedValue"] = "undefinedValue"
 
     class Config:
@@ -124,7 +120,7 @@ class DebugVariableValue_UndefinedValue(pydantic.BaseModel):
         smart_union = True
 
 
-class DebugVariableValue_NullValue(pydantic.BaseModel):
+class DebugVariableValue_NullValue(pydantic_v1.BaseModel):
     type: typing.Literal["nullValue"] = "nullValue"
 
     class Config:

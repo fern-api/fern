@@ -5,16 +5,12 @@ import typing
 
 from ...commons.types.problem_id import ProblemId
 from ...core.datetime_utils import serialize_datetime
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ...core.pydantic_utilities import pydantic_v1
 
 
-class UpdatePlaylistRequest(pydantic.BaseModel):
+class UpdatePlaylistRequest(pydantic_v1.BaseModel):
     name: str
-    problems: typing.List[ProblemId] = pydantic.Field()
+    problems: typing.List[ProblemId] = pydantic_v1.Field()
     """
     The problems that make up the playlist.
     """
@@ -30,5 +26,5 @@ class UpdatePlaylistRequest(pydantic.BaseModel):
     class Config:
         frozen = True
         smart_union = True
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

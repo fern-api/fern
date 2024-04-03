@@ -4,15 +4,11 @@ from __future__ import annotations
 
 import typing
 
+from ....core.pydantic_utilities import pydantic_v1
 from .parameter_id import ParameterId
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class TestCaseImplementationDescriptionBoard_Html(pydantic.BaseModel):
+class TestCaseImplementationDescriptionBoard_Html(pydantic_v1.BaseModel):
     type: typing.Literal["html"] = "html"
     value: str
 
@@ -21,7 +17,7 @@ class TestCaseImplementationDescriptionBoard_Html(pydantic.BaseModel):
         smart_union = True
 
 
-class TestCaseImplementationDescriptionBoard_ParamId(pydantic.BaseModel):
+class TestCaseImplementationDescriptionBoard_ParamId(pydantic_v1.BaseModel):
     type: typing.Literal["paramId"] = "paramId"
     value: ParameterId
 

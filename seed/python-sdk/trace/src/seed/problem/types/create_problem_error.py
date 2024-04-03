@@ -4,16 +4,12 @@ from __future__ import annotations
 
 import typing
 
+from ...core.pydantic_utilities import pydantic_v1
 from .generic_create_problem_error import GenericCreateProblemError
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 
 class CreateProblemError_Generic(GenericCreateProblemError):
-    error_type: typing.Literal["generic"] = pydantic.Field(alias="_type", default="generic")
+    error_type: typing.Literal["generic"] = pydantic_v1.Field(alias="_type", default="generic")
 
     class Config:
         frozen = True

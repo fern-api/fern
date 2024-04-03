@@ -4,17 +4,13 @@ from __future__ import annotations
 
 import typing
 
+from ...core.pydantic_utilities import pydantic_v1
 from .bar import Bar
 from .foo import Foo
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class UnionWithDiscriminant_Foo(pydantic.BaseModel):
-    type: typing.Literal["foo"] = pydantic.Field(alias="_type", default="foo")
+class UnionWithDiscriminant_Foo(pydantic_v1.BaseModel):
+    type: typing.Literal["foo"] = pydantic_v1.Field(alias="_type", default="foo")
     foo: Foo
 
     class Config:
@@ -24,8 +20,8 @@ class UnionWithDiscriminant_Foo(pydantic.BaseModel):
         populate_by_name = True
 
 
-class UnionWithDiscriminant_Bar(pydantic.BaseModel):
-    type: typing.Literal["bar"] = pydantic.Field(alias="_type", default="bar")
+class UnionWithDiscriminant_Bar(pydantic_v1.BaseModel):
+    type: typing.Literal["bar"] = pydantic_v1.Field(alias="_type", default="bar")
     bar: Bar
 
     class Config:

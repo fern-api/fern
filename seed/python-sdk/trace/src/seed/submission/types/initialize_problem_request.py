@@ -5,16 +5,12 @@ import typing
 
 from ...commons.types.problem_id import ProblemId
 from ...core.datetime_utils import serialize_datetime
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ...core.pydantic_utilities import pydantic_v1
 
 
-class InitializeProblemRequest(pydantic.BaseModel):
-    problem_id: ProblemId = pydantic.Field(alias="problemId")
-    problem_version: typing.Optional[int] = pydantic.Field(alias="problemVersion", default=None)
+class InitializeProblemRequest(pydantic_v1.BaseModel):
+    problem_id: ProblemId = pydantic_v1.Field(alias="problemId")
+    problem_version: typing.Optional[int] = pydantic_v1.Field(alias="problemVersion", default=None)
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -29,5 +25,5 @@ class InitializeProblemRequest(pydantic.BaseModel):
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

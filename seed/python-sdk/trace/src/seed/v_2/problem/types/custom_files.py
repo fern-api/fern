@@ -5,14 +5,10 @@ from __future__ import annotations
 import typing
 
 from ....commons.types.language import Language
+from ....core.pydantic_utilities import pydantic_v1
 from .basic_custom_files import BasicCustomFiles
 from .file_info_v_2 import FileInfoV2
 from .files import Files
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 
 class CustomFiles_Basic(BasicCustomFiles):
@@ -25,7 +21,7 @@ class CustomFiles_Basic(BasicCustomFiles):
         populate_by_name = True
 
 
-class CustomFiles_Custom(pydantic.BaseModel):
+class CustomFiles_Custom(pydantic_v1.BaseModel):
     type: typing.Literal["custom"] = "custom"
     value: typing.Dict[Language, Files]
 

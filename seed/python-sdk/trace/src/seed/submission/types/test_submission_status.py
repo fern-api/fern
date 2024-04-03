@@ -11,6 +11,7 @@ from ...commons.types.doubly_linked_list_value import DoublyLinkedListValue
 from ...commons.types.node_id import NodeId
 from ...commons.types.singly_linked_list_node_value import SinglyLinkedListNodeValue
 from ...commons.types.singly_linked_list_value import SinglyLinkedListValue
+from ...core.pydantic_utilities import pydantic_v1
 from .actual_result import ActualResult
 from .error_info import ErrorInfo
 from .exception_info import ExceptionInfo
@@ -24,13 +25,8 @@ from .test_case_result import TestCaseResult
 from .test_case_result_with_stdout import TestCaseResultWithStdout
 from .traced_test_case import TracedTestCase
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class TestSubmissionStatus_Stopped(pydantic.BaseModel):
+class TestSubmissionStatus_Stopped(pydantic_v1.BaseModel):
     type: typing.Literal["stopped"] = "stopped"
 
     class Config:
@@ -38,7 +34,7 @@ class TestSubmissionStatus_Stopped(pydantic.BaseModel):
         smart_union = True
 
 
-class TestSubmissionStatus_Errored(pydantic.BaseModel):
+class TestSubmissionStatus_Errored(pydantic_v1.BaseModel):
     type: typing.Literal["errored"] = "errored"
     value: ErrorInfo
 
@@ -47,7 +43,7 @@ class TestSubmissionStatus_Errored(pydantic.BaseModel):
         smart_union = True
 
 
-class TestSubmissionStatus_Running(pydantic.BaseModel):
+class TestSubmissionStatus_Running(pydantic_v1.BaseModel):
     type: typing.Literal["running"] = "running"
     value: RunningSubmissionState
 
@@ -56,7 +52,7 @@ class TestSubmissionStatus_Running(pydantic.BaseModel):
         smart_union = True
 
 
-class TestSubmissionStatus_TestCaseIdToState(pydantic.BaseModel):
+class TestSubmissionStatus_TestCaseIdToState(pydantic_v1.BaseModel):
     type: typing.Literal["testCaseIdToState"] = "testCaseIdToState"
     value: typing.Dict[str, SubmissionStatusForTestCase]
 
