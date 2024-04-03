@@ -10,6 +10,7 @@ export declare namespace GeneratedSdkInlinedRequestBodySchemaImpl {
         endpoint: HttpEndpoint;
         inlinedRequestBody: InlinedRequestBody;
         includeSerdeLayer: boolean;
+        allowExtraFields: boolean;
     }
 }
 
@@ -21,12 +22,14 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
     private endpoint: HttpEndpoint;
     private inlinedRequestBody: InlinedRequestBody;
     private includeSerdeLayer: boolean;
+    private allowExtraFields: boolean;
 
     constructor({
         packageId,
         endpoint,
         inlinedRequestBody,
         includeSerdeLayer,
+        allowExtraFields,
         ...superInit
     }: GeneratedSdkInlinedRequestBodySchemaImpl.Init) {
         super(superInit);
@@ -34,6 +37,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
         this.endpoint = endpoint;
         this.inlinedRequestBody = inlinedRequestBody;
         this.includeSerdeLayer = includeSerdeLayer;
+        this.allowExtraFields = allowExtraFields;
     }
 
     public writeToFile(context: SdkContext): void {
@@ -43,6 +47,15 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
     public serializeRequest(referenceToParsedRequest: ts.Expression, context: SdkContext): ts.Expression {
         if (!this.includeSerdeLayer) {
             return referenceToParsedRequest;
+        }
+        if (this.allowExtraFields) {
+            return this.getReferenceToZurgSchema(context).jsonOrThrow(referenceToParsedRequest, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedEnumValues: true,
+                allowUnrecognizedUnionMembers: true,
+                skipValidation: true,
+                breadcrumbsPrefix: []
+            });
         }
         return this.getReferenceToZurgSchema(context).jsonOrThrow(referenceToParsedRequest, {
             unrecognizedObjectKeys: "strip",

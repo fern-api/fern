@@ -11,6 +11,7 @@ export declare namespace GeneratedExpressErrorSchemaImpl {
         errorDeclaration: ErrorDeclaration;
         type: TypeReference;
         includeSerdeLayer: boolean;
+        allowExtraFields: boolean;
     }
 }
 
@@ -21,12 +22,20 @@ export class GeneratedExpressErrorSchemaImpl
     private errorDeclaration: ErrorDeclaration;
     private type: TypeReference;
     private includeSerdeLayer: boolean;
+    private allowExtraFields: boolean;
 
-    constructor({ errorName, errorDeclaration, type, includeSerdeLayer }: GeneratedExpressErrorSchemaImpl.Init) {
+    constructor({
+        errorName,
+        errorDeclaration,
+        type,
+        includeSerdeLayer,
+        allowExtraFields
+    }: GeneratedExpressErrorSchemaImpl.Init) {
         super({ typeName: errorName });
         this.errorDeclaration = errorDeclaration;
         this.type = type;
         this.includeSerdeLayer = includeSerdeLayer;
+        this.allowExtraFields = allowExtraFields;
     }
 
     public writeToFile(context: ExpressContext): void {
@@ -59,12 +68,23 @@ export class GeneratedExpressErrorSchemaImpl
 
         switch (this.type.type) {
             case "named":
+                if (this.allowExtraFields) {
+                    return context.typeSchema
+                        .getSchemaOfNamedType(this.type, { isGeneratingSchema: false })
+                        .jsonOrThrow(referenceToBody, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedEnumValues: true,
+                            allowUnrecognizedUnionMembers: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: []
+                        });
+                }
                 return context.typeSchema
                     .getSchemaOfNamedType(this.type, { isGeneratingSchema: false })
                     .jsonOrThrow(referenceToBody, {
+                        unrecognizedObjectKeys: "strip",
                         allowUnrecognizedEnumValues: false,
                         allowUnrecognizedUnionMembers: false,
-                        unrecognizedObjectKeys: "strip",
                         skipValidation: false,
                         breadcrumbsPrefix: []
                     });
@@ -72,10 +92,19 @@ export class GeneratedExpressErrorSchemaImpl
                 return referenceToBody;
             case "primitive":
             case "container":
+                if (this.allowExtraFields) {
+                    return this.getReferenceToZurgSchema(context).jsonOrThrow(referenceToBody, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedEnumValues: true,
+                        allowUnrecognizedUnionMembers: true,
+                        skipValidation: true,
+                        breadcrumbsPrefix: []
+                    });
+                }
                 return this.getReferenceToZurgSchema(context).jsonOrThrow(referenceToBody, {
+                    unrecognizedObjectKeys: "strip",
                     allowUnrecognizedEnumValues: false,
                     allowUnrecognizedUnionMembers: false,
-                    unrecognizedObjectKeys: "strip",
                     skipValidation: false,
                     breadcrumbsPrefix: []
                 });

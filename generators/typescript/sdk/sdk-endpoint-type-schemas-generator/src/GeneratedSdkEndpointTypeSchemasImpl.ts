@@ -20,6 +20,7 @@ export declare namespace GeneratedSdkEndpointTypeSchemasImpl {
         shouldGenerateErrors: boolean;
         skipResponseValidation: boolean;
         includeSerdeLayer: boolean;
+        allowExtraFields: boolean;
     }
 }
 
@@ -35,6 +36,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
     private generatedSdkErrorSchema: GeneratedEndpointErrorSchema | undefined;
     private skipResponseValidation: boolean;
     private includeSerdeLayer: boolean;
+    private allowExtraFields: boolean;
 
     constructor({
         packageId,
@@ -44,11 +46,13 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         errorDiscriminationStrategy,
         shouldGenerateErrors,
         skipResponseValidation,
-        includeSerdeLayer
+        includeSerdeLayer,
+        allowExtraFields
     }: GeneratedSdkEndpointTypeSchemasImpl.Init) {
         this.endpoint = endpoint;
         this.skipResponseValidation = skipResponseValidation;
         this.includeSerdeLayer = includeSerdeLayer;
+        this.allowExtraFields = allowExtraFields;
 
         if (this.includeSerdeLayer) {
             // only generate request schemas for referenced request bodies.  inlined
@@ -208,6 +212,17 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             case "unknown":
                 return referenceToParsedRequest;
             case "named":
+                if (this.allowExtraFields) {
+                    return context.typeSchema
+                        .getSchemaOfNamedType(this.endpoint.requestBody.requestBodyType, { isGeneratingSchema: false })
+                        .jsonOrThrow(referenceToParsedRequest, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedEnumValues: true,
+                            allowUnrecognizedUnionMembers: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: []
+                        });
+                }
                 return context.typeSchema
                     .getSchemaOfNamedType(this.endpoint.requestBody.requestBodyType, { isGeneratingSchema: false })
                     .jsonOrThrow(referenceToParsedRequest, {
@@ -221,6 +236,17 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             case "container":
                 if (this.generatedRequestSchema == null) {
                     throw new Error("No request schema was generated");
+                }
+                if (this.allowExtraFields) {
+                    return this.generatedRequestSchema
+                        .getReferenceToZurgSchema(context)
+                        .jsonOrThrow(referenceToParsedRequest, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedEnumValues: true,
+                            allowUnrecognizedUnionMembers: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: []
+                        });
                 }
                 return this.generatedRequestSchema
                     .getReferenceToZurgSchema(context)

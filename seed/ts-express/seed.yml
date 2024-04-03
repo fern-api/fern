@@ -24,6 +24,9 @@ fixtures:
         retainOriginalCasing: true
       outputFolder: retain-original-casing
     - customConfig:
+        allowExtraFields: true
+      outputFolder: allow-extra-fields
+    - customConfig:
         doNotHandleUnrecognizedErrors: true
         includeUtilsOnUnionMembers: true
         includeOtherInUnionTypes: true

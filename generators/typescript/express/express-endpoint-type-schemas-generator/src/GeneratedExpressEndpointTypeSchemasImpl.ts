@@ -12,6 +12,7 @@ export declare namespace GeneratedExpressEndpointTypeSchemasImpl {
         service: HttpService;
         endpoint: HttpEndpoint;
         includeSerdeLayer: boolean;
+        allowExtraFields: boolean;
     }
 }
 
@@ -23,10 +24,18 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
     private generatedRequestSchema: GeneratedEndpointTypeSchema | undefined;
     private generatedResponseSchema: GeneratedEndpointTypeSchemaImpl | undefined;
     private includeSerdeLayer: boolean;
+    private allowExtraFields: boolean;
 
-    constructor({ packageId, service, endpoint, includeSerdeLayer }: GeneratedExpressEndpointTypeSchemasImpl.Init) {
+    constructor({
+        packageId,
+        service,
+        endpoint,
+        includeSerdeLayer,
+        allowExtraFields
+    }: GeneratedExpressEndpointTypeSchemasImpl.Init) {
         this.endpoint = endpoint;
         this.includeSerdeLayer = includeSerdeLayer;
+        this.allowExtraFields = allowExtraFields;
 
         if (includeSerdeLayer) {
             // only generate request schemas for referenced request bodies.  inlined
@@ -159,6 +168,19 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
             case "unknown":
                 return referenceToParsedResponse;
             case "named":
+                if (this.allowExtraFields) {
+                    return context.typeSchema
+                        .getSchemaOfNamedType(this.endpoint.response.value.responseBodyType, {
+                            isGeneratingSchema: false
+                        })
+                        .jsonOrThrow(referenceToParsedResponse, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedEnumValues: true,
+                            allowUnrecognizedUnionMembers: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: []
+                        });
+                }
                 return context.typeSchema
                     .getSchemaOfNamedType(this.endpoint.response.value.responseBodyType, { isGeneratingSchema: false })
                     .jsonOrThrow(referenceToParsedResponse, {
@@ -172,6 +194,17 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
             case "container":
                 if (this.generatedResponseSchema == null) {
                     throw new Error("No response schema was generated");
+                }
+                if (this.allowExtraFields) {
+                    return this.generatedResponseSchema
+                        .getReferenceToZurgSchema(context)
+                        .jsonOrThrow(referenceToParsedResponse, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedEnumValues: true,
+                            allowUnrecognizedUnionMembers: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: []
+                        });
                 }
                 return this.generatedResponseSchema
                     .getReferenceToZurgSchema(context)
