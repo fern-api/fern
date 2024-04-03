@@ -4,15 +4,11 @@ import datetime as dt
 import typing
 
 from .core.datetime_utils import serialize_datetime
+from .core.pydantic_utilities import pydantic_v1
 from .type_id import TypeId
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class Type(pydantic.BaseModel):
+class Type(pydantic_v1.BaseModel):
     """
     A simple type with just a name.
     ---
@@ -36,5 +32,5 @@ class Type(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

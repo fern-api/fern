@@ -4,16 +4,12 @@ from __future__ import annotations
 
 import typing
 
+from ...core.pydantic_utilities import pydantic_v1
 from .object_value import ObjectValue
 from .primitive_value import PrimitiveValue
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class FieldValue_PrimitiveValue(pydantic.BaseModel):
+class FieldValue_PrimitiveValue(pydantic_v1.BaseModel):
     type: typing.Literal["primitive_value"] = "primitive_value"
     value: PrimitiveValue
 
@@ -26,7 +22,7 @@ class FieldValue_ObjectValue(ObjectValue):
         populate_by_name = True
 
 
-class FieldValue_ContainerValue(pydantic.BaseModel):
+class FieldValue_ContainerValue(pydantic_v1.BaseModel):
     type: typing.Literal["container_value"] = "container_value"
     value: ContainerValue
 

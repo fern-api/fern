@@ -4,24 +4,22 @@ import datetime as dt
 import typing
 
 from ...core.datetime_utils import serialize_datetime
+from ...core.pydantic_utilities import pydantic_v1
 from ..commons.debug_variable_value import DebugVariableValue
 from .expression_location import ExpressionLocation
 from .stack_information import StackInformation
 from .submission_id import SubmissionId
 from .traced_file import TracedFile
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class TraceResponseV2(pydantic.BaseModel):
-    submission_id: SubmissionId = pydantic.Field(alias="submissionId")
-    line_number: int = pydantic.Field(alias="lineNumber")
+class TraceResponseV2(pydantic_v1.BaseModel):
+    submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
+    line_number: int = pydantic_v1.Field(alias="lineNumber")
     file: TracedFile
-    return_value: typing.Optional[DebugVariableValue] = pydantic.Field(alias="returnValue", default=None)
-    expression_location: typing.Optional[ExpressionLocation] = pydantic.Field(alias="expressionLocation", default=None)
+    return_value: typing.Optional[DebugVariableValue] = pydantic_v1.Field(alias="returnValue", default=None)
+    expression_location: typing.Optional[ExpressionLocation] = pydantic_v1.Field(
+        alias="expressionLocation", default=None
+    )
     stack: StackInformation
     stdout: typing.Optional[str] = None
 
@@ -36,5 +34,5 @@ class TraceResponseV2(pydantic.BaseModel):
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

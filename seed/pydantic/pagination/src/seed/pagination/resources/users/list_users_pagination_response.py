@@ -4,18 +4,14 @@ import datetime as dt
 import typing
 
 from ...core.datetime_utils import serialize_datetime
+from ...core.pydantic_utilities import pydantic_v1
 from .page import Page
 from .user import User
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class ListUsersPaginationResponse(pydantic.BaseModel):
+class ListUsersPaginationResponse(pydantic_v1.BaseModel):
     page: typing.Optional[Page] = None
-    total_count: int = pydantic.Field()
+    total_count: int = pydantic_v1.Field()
     """
     The totall number of /users
     """
@@ -31,5 +27,5 @@ class ListUsersPaginationResponse(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

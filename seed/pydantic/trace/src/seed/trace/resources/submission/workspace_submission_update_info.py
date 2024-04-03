@@ -4,18 +4,14 @@ from __future__ import annotations
 
 import typing
 
+from ...core.pydantic_utilities import pydantic_v1
 from .error_info import ErrorInfo
 from .running_submission_state import RunningSubmissionState
 from .workspace_run_details import WorkspaceRunDetails
 from .workspace_traced_update import WorkspaceTracedUpdate
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class WorkspaceSubmissionUpdateInfo_Running(pydantic.BaseModel):
+class WorkspaceSubmissionUpdateInfo_Running(pydantic_v1.BaseModel):
     type: typing.Literal["running"] = "running"
     value: RunningSubmissionState
 
@@ -28,11 +24,11 @@ class WorkspaceSubmissionUpdateInfo_Ran(WorkspaceRunDetails):
         populate_by_name = True
 
 
-class WorkspaceSubmissionUpdateInfo_Stopped(pydantic.BaseModel):
+class WorkspaceSubmissionUpdateInfo_Stopped(pydantic_v1.BaseModel):
     type: typing.Literal["stopped"] = "stopped"
 
 
-class WorkspaceSubmissionUpdateInfo_Traced(pydantic.BaseModel):
+class WorkspaceSubmissionUpdateInfo_Traced(pydantic_v1.BaseModel):
     type: typing.Literal["traced"] = "traced"
 
 
@@ -44,12 +40,12 @@ class WorkspaceSubmissionUpdateInfo_TracedV2(WorkspaceTracedUpdate):
         populate_by_name = True
 
 
-class WorkspaceSubmissionUpdateInfo_Errored(pydantic.BaseModel):
+class WorkspaceSubmissionUpdateInfo_Errored(pydantic_v1.BaseModel):
     type: typing.Literal["errored"] = "errored"
     value: ErrorInfo
 
 
-class WorkspaceSubmissionUpdateInfo_Finished(pydantic.BaseModel):
+class WorkspaceSubmissionUpdateInfo_Finished(pydantic_v1.BaseModel):
     type: typing.Literal["finished"] = "finished"
 
 

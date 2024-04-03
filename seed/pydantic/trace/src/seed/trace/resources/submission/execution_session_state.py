@@ -4,24 +4,20 @@ import datetime as dt
 import typing
 
 from ...core.datetime_utils import serialize_datetime
+from ...core.pydantic_utilities import pydantic_v1
 from ..commons.language import Language
 from .execution_session_status import ExecutionSessionStatus
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class ExecutionSessionState(pydantic.BaseModel):
-    last_time_contacted: typing.Optional[str] = pydantic.Field(alias="lastTimeContacted", default=None)
-    session_id: str = pydantic.Field(alias="sessionId")
+class ExecutionSessionState(pydantic_v1.BaseModel):
+    last_time_contacted: typing.Optional[str] = pydantic_v1.Field(alias="lastTimeContacted", default=None)
+    session_id: str = pydantic_v1.Field(alias="sessionId")
     """
     The auto-generated session id. Formatted as a uuid.
     """
 
-    is_warm_instance: bool = pydantic.Field(alias="isWarmInstance")
-    aws_task_id: typing.Optional[str] = pydantic.Field(alias="awsTaskId", default=None)
+    is_warm_instance: bool = pydantic_v1.Field(alias="isWarmInstance")
+    aws_task_id: typing.Optional[str] = pydantic_v1.Field(alias="awsTaskId", default=None)
     language: Language
     status: ExecutionSessionStatus
 
@@ -36,5 +32,5 @@ class ExecutionSessionState(pydantic.BaseModel):
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

@@ -4,13 +4,9 @@ from __future__ import annotations
 
 import typing
 
+from .....core.pydantic_utilities import pydantic_v1
 from .metadata import Metadata
 from .tag import Tag
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 
 class EventInfo_Metadata(Metadata):
@@ -21,7 +17,7 @@ class EventInfo_Metadata(Metadata):
         populate_by_name = True
 
 
-class EventInfo_Tag(pydantic.BaseModel):
+class EventInfo_Tag(pydantic_v1.BaseModel):
     type: typing.Literal["tag"] = "tag"
     value: Tag
 

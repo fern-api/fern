@@ -4,16 +4,12 @@ import datetime as dt
 import typing
 
 from .......core.datetime_utils import serialize_datetime
+from .......core.pydantic_utilities import pydantic_v1
 from .test_case_function import TestCaseFunction
 from .test_case_implementation_description import TestCaseImplementationDescription
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class TestCaseImplementation(pydantic.BaseModel):
+class TestCaseImplementation(pydantic_v1.BaseModel):
     description: TestCaseImplementationDescription
     function: TestCaseFunction
 
@@ -26,5 +22,5 @@ class TestCaseImplementation(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}
