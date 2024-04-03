@@ -1,4 +1,6 @@
 import uuid
+
+from exceptiongroup import catch
 from datetime_utils import serialize_datetime
 import datetime as dt
 import typing
@@ -8,6 +10,10 @@ try:
     import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
     import pydantic  # type: ignore
+
+
+class UnionMetadata(pydantic.BaseModel):
+    discriminant: str
 
 
 class UncheckedBaseModel(pydantic.BaseModel):
@@ -67,7 +73,32 @@ class UncheckedBaseModel(pydantic.BaseModel):
         return m
 
 
-def construct_type(*, type_: typing.Any, object_: typing.Any):
+def _convert_undiscriminated_union_type(union_type: typing.Any, object_: typing.Any) -> typing.Any:
+    for inner_type in pydantic.get_args(union_type):
+        return construct_type(object_=object_, type_=inner_type)
+
+
+def _convert_union_type(type_: typing.Any, object_: typing.Any) -> typing.Any:
+    base_type = pydantic.get_origin(type_)
+    union_type = type_
+    if base_type == typing.Annotated:
+        union_type = pydantic.get_args(type_)[0]
+        annotated_metadata = pydantic.get_args(type_)[1:]
+        for metadata in annotated_metadata:
+            if isinstance(metadata, UnionMetadata):
+                try:
+                    # Cast to the correct type, based on the discriminant
+                    for inner_type in pydantic.get_args(union_type):
+                        if inner_type.__fields__[metadata.discriminant].default == getattr(object_, metadata.discriminant):
+                            return construct_type(object_=object_, type_=inner_type)
+                except Exception:
+                    # Allow to fall through to our regular union handling
+                    pass
+    
+    return _convert_undiscriminated_union_type(union_type, object_)
+
+
+def construct_type(*, type_: typing.Any, object_: typing.Any) -> typing.Any:
     """
     Here we are essentially creating the same `construct` method in spirit as the above, but for all types, not just
     Pydantic models.
@@ -86,9 +117,8 @@ def construct_type(*, type_: typing.Any, object_: typing.Any):
         inner_type = pydantic.get_args(type_)[0]
         return [construct_type(object_=entry, type_=inner_type) for entry in object_]
 
-    # TODO: handle aliases and unions
-    if is_union():
-        pass
+    if pydantic.is_union(base_type) or (base_type == typing.Annotated and pydantic.is_union(pydantic.get_args(type_)[0])):
+        _convert_union_type(type_)
     
     if base_type == datetime:
         try:

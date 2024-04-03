@@ -61,7 +61,7 @@ class EnumClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return WeatherReport.construct(_response.json())
+            return typing.cast(WeatherReport, WeatherReport.construct(_response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -115,7 +115,7 @@ class AsyncEnumClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return WeatherReport.construct(_response.json())
+            return typing.cast(WeatherReport, WeatherReport.construct(_response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:

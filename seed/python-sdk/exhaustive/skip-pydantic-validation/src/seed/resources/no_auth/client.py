@@ -68,9 +68,9 @@ class NoAuthClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return construct(_response.json())
+            return typing.cast(bool, construct(_response.json()))
         if _response.status_code == 400:
-            raise BadRequestBody(BadObjectRequestInfo.construct(_response.json()))
+            raise BadRequestBody(typing.cast(BadObjectRequestInfo, BadObjectRequestInfo.construct(_response.json())))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -130,9 +130,9 @@ class AsyncNoAuthClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return construct(_response.json())
+            return typing.cast(bool, construct(_response.json()))
         if _response.status_code == 400:
-            raise BadRequestBody(BadObjectRequestInfo.construct(_response.json()))
+            raise BadRequestBody(typing.cast(BadObjectRequestInfo, BadObjectRequestInfo.construct(_response.json())))
         try:
             _response_json = _response.json()
         except JSONDecodeError:

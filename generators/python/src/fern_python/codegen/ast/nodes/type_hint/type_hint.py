@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import Sequence, Union
 
+from fern_python.codegen.ast.nodes.expressions.function_invocation.function_invocation import FunctionInvocation
+
 from ...ast_node import AstNode, AstNodeMetadata, GenericTypeVar, NodeWriter
 from ...references import ClassReference, Module, Reference, ReferenceImport
 from ..expressions import Expression
@@ -150,6 +152,15 @@ class TypeHint(AstNode):
             type=get_reference_to_typing_import("cast"),
             arguments=[Expression(type_casted_to), value_being_casted],
         )
+    
+    @staticmethod
+    def invoke_cast(type_casted_to: TypeHint, value_being_casted: Expression) -> AST.Expression:
+        return Expression(
+                    FunctionInvocation(
+                        function_definition=get_reference_to_typing_import("cast"),
+                        args=[Expression(type_casted_to), value_being_casted],
+                    )
+                )        
 
     @staticmethod
     def callable(parameters: Sequence[TypeHint], return_type: TypeHint) -> TypeHint:

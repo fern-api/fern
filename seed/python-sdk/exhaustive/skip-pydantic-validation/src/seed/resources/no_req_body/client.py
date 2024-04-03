@@ -52,7 +52,7 @@ class NoReqBodyClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return ObjectWithOptionalField.construct(_response.json())
+            return typing.cast(ObjectWithOptionalField, ObjectWithOptionalField.construct(_response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -96,7 +96,7 @@ class NoReqBodyClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return construct(_response.json())
+            return typing.cast(str, construct(_response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -144,7 +144,7 @@ class AsyncNoReqBodyClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return ObjectWithOptionalField.construct(_response.json())
+            return typing.cast(ObjectWithOptionalField, ObjectWithOptionalField.construct(_response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -188,7 +188,7 @@ class AsyncNoReqBodyClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return construct(_response.json())
+            return typing.cast(str, construct(_response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:

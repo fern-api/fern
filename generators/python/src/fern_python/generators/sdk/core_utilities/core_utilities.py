@@ -279,12 +279,14 @@ class CoreUtilities:
         )
 
     def get_construct(self, type_of_obj: AST.TypeHint, obj: AST.Expression) -> AST.Expression:
-        return AST.Expression(
-                    AST.FunctionInvocation(
-                        function_definition=AST.Reference(
-                            import_=type_of_obj._type.import_,
-                            qualified_name_excluding_import=("construct",),
-                        ),
-                        args=[obj],
-                    )
-                ) if self._allow_skipping_validation else Pydantic.parse_obj_as(PydanticVersionCompatibility.Both, type_of_obj, obj)
+        return AST.TypeHint.invoke_cast(
+            type_casted_to=type_of_obj,
+            value_being_casted=AST.Expression(
+                AST.FunctionInvocation(
+                    function_definition=AST.Reference(
+                        import_=type_of_obj._type.import_,
+                        qualified_name_excluding_import=("construct",),
+                    ),
+                    args=[obj],
+                )
+            )) if self._allow_skipping_validation else Pydantic.parse_obj_as(PydanticVersionCompatibility.Both, type_of_obj, obj)

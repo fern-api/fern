@@ -8,7 +8,7 @@ from .http_client import AsyncHttpClient, HttpClient
 from .jsonable_encoder import jsonable_encoder
 from .remove_none_from_dict import remove_none_from_dict
 from .request_options import RequestOptions
-from .unchecked_base_model import UncheckedBaseModel
+from .unchecked_base_model import UncheckedBaseModel, UnionMetadata
 
 __all__ = [
     "ApiError",
@@ -20,6 +20,7 @@ __all__ = [
     "RequestOptions",
     "SyncClientWrapper",
     "UncheckedBaseModel",
+    "UnionMetadata",
     "convert_file_dict_to_httpx_tuples",
     "jsonable_encoder",
     "remove_none_from_dict",
