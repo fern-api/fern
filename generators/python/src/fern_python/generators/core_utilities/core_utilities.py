@@ -103,10 +103,12 @@ class CoreUtilities:
         return (
             AST.TypeHint.invoke_cast(
                 type_casted_to=type_of_obj,
-                value_being_casted=AST.Expression(AST.FunctionInvocation(
-                    function_definition=self.get_construct_type(),
-                    kwargs=[("type_", AST.Expression(type_of_obj)), ("object_", obj)],
-                )),
+                value_being_casted=AST.Expression(
+                    AST.FunctionInvocation(
+                        function_definition=self.get_construct_type(),
+                        kwargs=[("type_", AST.Expression(type_of_obj)), ("object_", obj)],
+                    )
+                ),
             )
             if self._allow_skipping_validation
             else Pydantic.parse_obj_as(PydanticVersionCompatibility.Both, type_of_obj, obj)

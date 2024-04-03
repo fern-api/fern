@@ -3,7 +3,7 @@ import typing
 import uuid
 
 from core_utilities.sdk.unchecked_base_model import UncheckedBaseModel
-from .union import Shape
+from .union import Shape, UndiscriminatedShape
 
 try:
     import pydantic.v1 as pydantic  # type: ignore
@@ -12,6 +12,7 @@ except ImportError:
 
 
 class ObjectWithOptionalField(UncheckedBaseModel):
+    literal_: typing.Optional[typing.Literal["lit_one", "lit_two"]] = pydantic.Field(alias="literal", default="lit_one")
     string: typing.Optional[str] = None
     integer: typing.Optional[int] = None
     long_: typing.Optional[int] = pydantic.Field(alias="long", default=200000)
@@ -24,7 +25,8 @@ class ObjectWithOptionalField(UncheckedBaseModel):
     list_: typing.Optional[typing.List[str]] = pydantic.Field(alias="list", default=None)
     set_: typing.Optional[typing.Set[str]] = pydantic.Field(alias="set", default=None)
     map_: typing.Optional[typing.Dict[int, str]] = pydantic.Field(alias="map", default=None)
-    union: typing.Optional[Shape] = pydantic.Field(alias="union", default=None)
+    union: typing.Optional[Shape] = None
+    undiscriminated_union: typing.Optional[UndiscriminatedShape] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

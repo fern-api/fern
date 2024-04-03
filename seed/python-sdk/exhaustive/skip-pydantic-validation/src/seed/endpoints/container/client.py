@@ -66,7 +66,7 @@ class ContainerClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(typing.List[str], construct_type(type_=typing.List, object_=_response.json()))
+            return typing.cast(typing.List[str], construct_type(type_=typing.List[str], object_=_response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -128,7 +128,8 @@ class ContainerClient:
         )
         if 200 <= _response.status_code < 300:
             return typing.cast(
-                typing.List[ObjectWithRequiredField], construct_type(type_=typing.List, object_=_response.json())
+                typing.List[ObjectWithRequiredField],
+                construct_type(type_=typing.List[ObjectWithRequiredField], object_=_response.json()),
             )
         try:
             _response_json = _response.json()
@@ -182,7 +183,7 @@ class ContainerClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(typing.Set[str], construct_type(type_=typing.Set, object_=_response.json()))
+            return typing.cast(typing.Set[str], construct_type(type_=typing.Set[str], object_=_response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -244,7 +245,8 @@ class ContainerClient:
         )
         if 200 <= _response.status_code < 300:
             return typing.cast(
-                typing.List[ObjectWithRequiredField], construct_type(type_=typing.List, object_=_response.json())
+                typing.List[ObjectWithRequiredField],
+                construct_type(type_=typing.List[ObjectWithRequiredField], object_=_response.json()),
             )
         try:
             _response_json = _response.json()
@@ -298,7 +300,9 @@ class ContainerClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(typing.Dict[str, str], construct_type(type_=typing.Dict, object_=_response.json()))
+            return typing.cast(
+                typing.Dict[str, str], construct_type(type_=typing.Dict[str, str], object_=_response.json())
+            )
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -360,7 +364,8 @@ class ContainerClient:
         )
         if 200 <= _response.status_code < 300:
             return typing.cast(
-                typing.Dict[str, ObjectWithRequiredField], construct_type(type_=typing.Dict, object_=_response.json())
+                typing.Dict[str, ObjectWithRequiredField],
+                construct_type(type_=typing.Dict[str, ObjectWithRequiredField], object_=_response.json()),
             )
         try:
             _response_json = _response.json()
@@ -422,7 +427,7 @@ class ContainerClient:
         if 200 <= _response.status_code < 300:
             return typing.cast(
                 typing.Optional[ObjectWithRequiredField],
-                construct_type(type_=typing.Optional, object_=_response.json()),
+                construct_type(type_=typing.Optional[ObjectWithRequiredField], object_=_response.json()),
             )
         try:
             _response_json = _response.json()
@@ -481,7 +486,7 @@ class AsyncContainerClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(typing.List[str], construct_type(type_=typing.List, object_=_response.json()))
+            return typing.cast(typing.List[str], construct_type(type_=typing.List[str], object_=_response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -543,7 +548,8 @@ class AsyncContainerClient:
         )
         if 200 <= _response.status_code < 300:
             return typing.cast(
-                typing.List[ObjectWithRequiredField], construct_type(type_=typing.List, object_=_response.json())
+                typing.List[ObjectWithRequiredField],
+                construct_type(type_=typing.List[ObjectWithRequiredField], object_=_response.json()),
             )
         try:
             _response_json = _response.json()
@@ -597,7 +603,7 @@ class AsyncContainerClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(typing.Set[str], construct_type(type_=typing.Set, object_=_response.json()))
+            return typing.cast(typing.Set[str], construct_type(type_=typing.Set[str], object_=_response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -659,7 +665,8 @@ class AsyncContainerClient:
         )
         if 200 <= _response.status_code < 300:
             return typing.cast(
-                typing.List[ObjectWithRequiredField], construct_type(type_=typing.List, object_=_response.json())
+                typing.List[ObjectWithRequiredField],
+                construct_type(type_=typing.List[ObjectWithRequiredField], object_=_response.json()),
             )
         try:
             _response_json = _response.json()
@@ -713,7 +720,9 @@ class AsyncContainerClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(typing.Dict[str, str], construct_type(type_=typing.Dict, object_=_response.json()))
+            return typing.cast(
+                typing.Dict[str, str], construct_type(type_=typing.Dict[str, str], object_=_response.json())
+            )
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -775,7 +784,8 @@ class AsyncContainerClient:
         )
         if 200 <= _response.status_code < 300:
             return typing.cast(
-                typing.Dict[str, ObjectWithRequiredField], construct_type(type_=typing.Dict, object_=_response.json())
+                typing.Dict[str, ObjectWithRequiredField],
+                construct_type(type_=typing.Dict[str, ObjectWithRequiredField], object_=_response.json()),
             )
         try:
             _response_json = _response.json()
@@ -837,7 +847,7 @@ class AsyncContainerClient:
         if 200 <= _response.status_code < 300:
             return typing.cast(
                 typing.Optional[ObjectWithRequiredField],
-                construct_type(type_=typing.Optional, object_=_response.json()),
+                construct_type(type_=typing.Optional[ObjectWithRequiredField], object_=_response.json()),
             )
         try:
             _response_json = _response.json()

@@ -7,11 +7,12 @@ import uuid
 
 from core_utilities.sdk.unchecked_base_model import construct_type
 from .example_models.complex_object import ObjectWithOptionalField
-from .example_models.union import Shape_Circle, Shape_Square
+from .example_models.union import Circle, Shape_Circle, Shape_Square
 
 
 def test_construct_valid() -> None:
     response = {
+        "literal": "lit_two",
         "string": "circle",
         "integer": 1,
         "long": 1000000,
@@ -25,9 +26,11 @@ def test_construct_valid() -> None:
         "set": ["string"],
         "map": {"1": "string"},
         "union": {"type": "square", "id": "string", "length": 1.1},
+        "undiscriminated_union": {"id": "string2", "length": 6.7},
     }
     cast_response = cast(ObjectWithOptionalField, construct_type(type_=ObjectWithOptionalField, object_=response))
 
+    assert cast_response.literal_ == "lit_two"
     assert cast_response.string == "circle"
     assert cast_response.integer == 1
     assert cast_response.long_ == 1000000
@@ -47,9 +50,14 @@ def test_construct_valid() -> None:
     assert cast_response.union.length == shape_expectation.length
     assert cast_response.union.type == shape_expectation.type
 
+    assert cast_response.undiscriminated_union is not None
+    assert cast_response.undiscriminated_union.id == "string2"
+    assert cast_response.undiscriminated_union.length == 6.7
+
 
 def test_construct_invalid() -> None:
     response = {
+        "literal": "something_else",
         "string": 1000000,
         "integer": ["string"],
         "long": "hello world",
@@ -63,9 +71,11 @@ def test_construct_invalid() -> None:
         "set": "testing",
         "map": "hello world",
         "union": {"id": "123", "length": 1.1},
+        "undiscriminated_union": {"id": "123", "length": "fifteen"},
     }
     cast_response = cast(ObjectWithOptionalField, construct_type(type_=ObjectWithOptionalField, object_=response))
 
+    assert cast_response.literal_ == "something_else"
     assert cast_response.string == 1000000
     assert cast_response.integer == ["string"]
     assert cast_response.long_ == "hello world"
@@ -79,19 +89,25 @@ def test_construct_invalid() -> None:
     assert cast_response.set_ == "testing"
     assert cast_response.map_ == "hello world"
     
-    # Note that even though the response is attempting to be a Square (note the "length" field), the
-    # union is still going to create a circle given the type is not specified in the response.
-    shape_expectation = Shape_Circle(id="123", radius=1.1)
+    shape_expectation = Shape_Square(id="123", length=1.1)
     assert cast_response.union is not None
     assert cast_response.union.id == shape_expectation.id
-    assert cast_response.union.length == shape_expectation.radius
+    assert cast_response.union.length == shape_expectation.length
     assert cast_response.union.type == shape_expectation.type
+
+    # Note that even though the response is attempting to be a Square (note the "length" field), the
+    # union is still going to create a circle given the type is not specified in the response.
+    assert cast_response.undiscriminated_union is not None
+    assert cast_response.undiscriminated_union.id == "123"
+    assert cast_response.undiscriminated_union.length == "fifteen"
+    assert type(cast_response.undiscriminated_union) == Circle
 
 
 def test_construct_defaults() -> None:
     response: object = {}
     cast_response = cast(ObjectWithOptionalField, construct_type(type_=ObjectWithOptionalField, object_=response))
 
+    assert cast_response.literal_ is "lit_one"
     assert cast_response.string is None
     assert cast_response.integer is None
     assert cast_response.long_ == 200000
@@ -105,6 +121,7 @@ def test_construct_defaults() -> None:
     assert cast_response.set_ is None
     assert cast_response.map_ is None
     assert cast_response.union is None
+    assert cast_response.undiscriminated_union is None
 
 
 def test_construct_primitives() -> None:

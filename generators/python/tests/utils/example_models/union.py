@@ -79,3 +79,4 @@ class Shape_Square(Square, Base):
 
 
 Shape = typing.Union[Shape_Circle, Shape_Square]
+UndiscriminatedShape = typing.Union[Circle, Square]

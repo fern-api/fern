@@ -14,6 +14,9 @@ class UnionMetadata(pydantic_v1.BaseModel):
     discriminant: str
 
 
+PydanticModelType = typing.TypeVar("PydanticModelType", bound=pydantic_v1.BaseModel)
+
+
 class UncheckedBaseModel(pydantic_v1.BaseModel):
     # Allow extra fields
     class Config:
@@ -27,7 +30,7 @@ class UncheckedBaseModel(pydantic_v1.BaseModel):
     # Allow construct to not validate model
     # Implementation taken from: https://github.com/pydantic/pydantic/issues/1168#issuecomment-817742836
     @classmethod
-    def construct(cls, _fields_set=set(), **values):
+    def construct(cls: typing.Type[PydanticModelType], _fields_set: set = set(), **values: object) -> PydanticModelType:
         m = cls.__new__(cls)
         fields_values = {}
 
@@ -68,10 +71,21 @@ class UncheckedBaseModel(pydantic_v1.BaseModel):
 
 def _convert_undiscriminated_union_type(union_type: typing.Type, object_: typing.Any) -> typing.Any:
     for inner_type in pydantic_v1.typing.get_args(union_type):
-        return construct_type(object_=object_, type_=inner_type)
+        try:
+            # Attempt a validated parse until one works
+            return pydantic_v1.parse_obj_as(inner_type, object_)
+        except Exception:
+            continue
+
+    # If none of the types work, just return the first successful cast
+    for inner_type in pydantic_v1.typing.get_args(union_type):
+        try:
+            return construct_type(object_=object_, type_=inner_type)
+        except Exception:
+            continue
 
 
-def _convert_union_type(type_: typing.Type, object_: typing.Any) -> typing.Any:
+def _convert_union_type(type_: typing.Type[typing.Any], object_: typing.Any) -> typing.Any:
     base_type = pydantic_v1.typing.get_origin(type_) or type_
     union_type = type_
     if base_type == typing_extensions.Annotated:
@@ -93,7 +107,7 @@ def _convert_union_type(type_: typing.Type, object_: typing.Any) -> typing.Any:
     return _convert_undiscriminated_union_type(union_type, object_)
 
 
-def construct_type(*, type_: typing.Type, object_: typing.Any) -> typing.Any:
+def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> typing.Any:
     """
     Here we are essentially creating the same `construct` method in spirit as the above, but for all types, not just
     Pydantic models.
