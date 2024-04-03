@@ -15,7 +15,6 @@ import {
 import { GeneratorGroupSchema } from "./schemas/GeneratorGroupSchema";
 import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
 import { GeneratorOutputSchema } from "./schemas/GeneratorOutputSchema";
-import { GeneratorPublishMetadataSchema } from "./schemas/GeneratorPublishMetadataSchema";
 import {
     ASYNC_API_LOCATION_KEY,
     GeneratorsConfigurationSchema,
@@ -23,6 +22,7 @@ import {
     OPENAPI_OVERRIDES_LOCATION_KEY
 } from "./schemas/GeneratorsConfigurationSchema";
 import { GithubLicenseSchema } from "./schemas/GithubLicenseSchema";
+import { MavenOutputLocationSchema } from "./schemas/MavenOutputLocationSchema";
 
 export async function convertGeneratorsConfiguration({
     absolutePathToGeneratorsConfiguration,
@@ -157,24 +157,32 @@ async function convertGenerator({
                 : undefined,
         language: getLanguageFromGeneratorName(generator.name),
         irVersionOverride: generator["ir-version"] ?? undefined,
-        publishMetadata:
-            generator["publish-metadata"] != null
-                ? convertPublishMetadata({ publishMetadata: generator["publish-metadata"] })
-                : undefined
+        publishMetadata: getPublishMetadata({ generatorInvocation: generator })
     };
 }
 
-function convertPublishMetadata({
-    publishMetadata
+function getPublishMetadata({
+    generatorInvocation
 }: {
-    publishMetadata: GeneratorPublishMetadataSchema;
-}): PublishingMetadata {
-    return {
-        packageDescription: publishMetadata["package-description"],
-        publisherEmail: publishMetadata.email,
-        publisherName: publishMetadata.author,
-        referenceUrl: publishMetadata["reference-url"]
-    };
+    generatorInvocation: GeneratorInvocationSchema;
+}): PublishingMetadata | undefined {
+    const publishMetadata = generatorInvocation["publish-metadata"];
+    if (publishMetadata != null) {
+        return {
+            packageDescription: publishMetadata["package-description"],
+            publisherEmail: publishMetadata.email,
+            publisherName: publishMetadata.author,
+            referenceUrl: publishMetadata["reference-url"]
+        };
+    } else if (generatorInvocation.metadata != null) {
+        return {
+            packageDescription: generatorInvocation.metadata["package-description"],
+            publisherEmail: generatorInvocation.metadata.email,
+            publisherName: generatorInvocation.metadata.author,
+            referenceUrl: generatorInvocation.metadata["reference-url"]
+        };
+    }
+    return undefined;
 }
 
 async function convertOutputMode({
@@ -193,7 +201,10 @@ async function convertOutputMode({
             generator.github.license != null
                 ? await getGithubLicense({
                       absolutePathToGeneratorsConfiguration,
-                      githubLicense: generator["publish-metadata"]?.license ?? generator.github.license
+                      githubLicense:
+                          generator["publish-metadata"]?.license ??
+                          generator.metadata?.license ??
+                          generator.github.license
                   })
                 : undefined;
         const mode = generator.github.mode ?? "release";
@@ -246,13 +257,9 @@ async function convertOutputMode({
                 })
             );
         case "maven": {
-            const hasSignature = generator.output.signature != null;
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.mavenOverride({
-                    registryUrl:
-                        generator.output.url ?? hasSignature
-                            ? "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-                            : "https://s01.oss.sonatype.org/content/repositories/releases/",
+                    registryUrl: getMavenRegistryUrl(generator.output),
                     username: generator.output.username ?? "",
                     password: generator.output.password ?? "",
                     coordinate: generator.output.coordinate,
@@ -340,10 +347,7 @@ function getGithubPublishInfo(output: GeneratorOutputSchema): FernFiddle.GithubP
             });
         case "maven":
             return FernFiddle.GithubPublishInfo.maven({
-                registryUrl:
-                    output.url ?? output.signature != null
-                        ? "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-                        : "https://s01.oss.sonatype.org/content/repositories/releases/",
+                registryUrl: getMavenRegistryUrl(output),
                 coordinate: output.coordinate,
                 credentials:
                     output.username != null && output.password != null
@@ -410,4 +414,13 @@ function getLanguageFromGeneratorName(generatorName: string) {
         return GenerationLanguage.RUBY;
     }
     return undefined;
+}
+
+function getMavenRegistryUrl(maven: MavenOutputLocationSchema) {
+    if (maven.url != null) {
+        return maven.url;
+    }
+    return maven.signature != null
+        ? "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+        : "https://s01.oss.sonatype.org/content/repositories/releases/";
 }
