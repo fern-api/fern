@@ -42,6 +42,7 @@ def test_construct_valid() -> None:
     assert cast_response.map_ == {"1": "string"}
 
     shape_expectation = Shape_Square(id="string", length=1.1)
+    assert cast_response.union is not None
     assert cast_response.union.id == shape_expectation.id
     assert cast_response.union.length == shape_expectation.length
     assert cast_response.union.type == shape_expectation.type
@@ -81,13 +82,14 @@ def test_construct_invalid() -> None:
     # Note that even though the response is attempting to be a Square (note the "length" field), the
     # union is still going to create a circle given the type is not specified in the response.
     shape_expectation = Shape_Circle(id="123", radius=1.1)
+    assert cast_response.union is not None
     assert cast_response.union.id == shape_expectation.id
     assert cast_response.union.length == shape_expectation.radius
     assert cast_response.union.type == shape_expectation.type
 
 
 def test_construct_defaults() -> None:
-    response = {}
+    response: object = {}
     cast_response = cast(ObjectWithOptionalField, construct_type(type_=ObjectWithOptionalField, object_=response))
 
     assert cast_response.string is None
@@ -106,22 +108,22 @@ def test_construct_defaults() -> None:
 
 
 def test_construct_primitives() -> None:
-    response = "hello world"
-    cast_response = cast(str, construct_type(type_=str, object_=response))
+    response_str = "hello world"
+    cast_response_str = cast(str, construct_type(type_=str, object_=response_str))
 
-    assert cast_response == response
+    assert cast_response_str == response_str
 
-    response = 1.1
-    cast_response = cast(float, construct_type(type_=float, object_=response))
+    response_float = 1.1
+    cast_response_float = cast(float, construct_type(type_=float, object_=response_float))
 
-    assert cast_response == response
+    assert cast_response_float == response_float
 
-    response = "2024-01-15T09:30:00Z"
-    cast_response = cast(datetime, construct_type(type_=datetime, object_=response))
+    response_datetime = "2024-01-15T09:30:00Z"
+    cast_response_datetime = cast(datetime, construct_type(type_=datetime, object_=response_datetime))
 
-    assert type(cast_response) == datetime
+    assert type(cast_response_datetime) == datetime
 
-    response = "2023-01-15"
-    cast_response = cast(date, construct_type(type_=date, object_=response))
+    response_date = "2023-01-15"
+    cast_response_date = cast(date, construct_type(type_=date, object_=response_date))
 
-    assert type(cast_response) == date
+    assert type(cast_response_date) == date

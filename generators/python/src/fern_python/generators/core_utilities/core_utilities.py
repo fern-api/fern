@@ -70,17 +70,17 @@ class CoreUtilities:
             ),
         )
 
-    def get_union_metadata(self) -> AST.Reference:
-        return AST.Reference(
+    def get_union_metadata(self) -> AST.ClassReference:
+        return AST.ClassReference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
                 module=AST.Module.local(*self._module_path, "unchecked_base_model"), named_import="UnionMetadata"
             ),
         )
 
-    def get_unchecked_pydantic_base_model(self, version: PydanticVersionCompatibility) -> AST.Reference:
+    def get_unchecked_pydantic_base_model(self, version: PydanticVersionCompatibility) -> AST.ClassReference:
         return (
-            AST.Reference(
+            AST.ClassReference(
                 qualified_name_excluding_import=(),
                 import_=AST.ReferenceImport(
                     module=AST.Module.local(*self._module_path, "unchecked_base_model"),
@@ -103,10 +103,10 @@ class CoreUtilities:
         return (
             AST.TypeHint.invoke_cast(
                 type_casted_to=type_of_obj,
-                value_being_casted=AST.FunctionInvocation(
+                value_being_casted=AST.Expression(AST.FunctionInvocation(
                     function_definition=self.get_construct_type(),
-                    kwargs=[("type_", AST.Expression(type_of_obj._type)), ("object_", obj)],
-                ),
+                    kwargs=[("type_", AST.Expression(type_of_obj)), ("object_", obj)],
+                )),
             )
             if self._allow_skipping_validation
             else Pydantic.parse_obj_as(PydanticVersionCompatibility.Both, type_of_obj, obj)

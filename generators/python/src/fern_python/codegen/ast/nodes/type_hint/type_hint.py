@@ -156,7 +156,7 @@ class TypeHint(AstNode):
         )
 
     @staticmethod
-    def invoke_cast(type_casted_to: TypeHint, value_being_casted: Expression) -> AST.Expression:
+    def invoke_cast(type_casted_to: TypeHint, value_being_casted: Expression) -> Expression:
         return Expression(
             FunctionInvocation(
                 function_definition=get_reference_to_typing_import("cast"),
