@@ -172,4 +172,36 @@ describe("convertGeneratorsConfiguration", () => {
             }
         }
     });
+
+    it("License Metadata", async () => {
+        const converted = await convertGeneratorsConfiguration({
+            absolutePathToGeneratorsConfiguration: AbsoluteFilePath.of(__filename),
+            rawGeneratorsConfiguration: {
+                groups: {
+                    "stage:java": {
+                        generators: [
+                            {
+                                name: "fernapi/fern-java-sdk",
+                                version: "0.8.8-rc0",
+                                config: {
+                                    "package-prefix": "com.test.sdk"
+                                },
+                                metadata: {
+                                    license: "MIT"
+                                },
+                                github: {
+                                    repository: "fern-api/github-app-test"
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        });
+        const output = converted.groups[0]?.generators[0]?.outputMode;
+        expect(output?.type).toEqual("githubV2");
+        if (output?.type === "githubV2") {
+            expect(output.githubV2.license?.type === "basic" && output.githubV2.license.id === "MIT").toEqual(true);
+        }
+    });
 });
