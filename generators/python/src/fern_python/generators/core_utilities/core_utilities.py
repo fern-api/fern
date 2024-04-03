@@ -53,7 +53,7 @@ class CoreUtilities:
                 module=AST.Module.local(*self._module_path, "datetime_utils"), named_import="serialize_datetime"
             ),
         )
-    
+
     def get_pydantic_version_import(self) -> AST.Reference:
         return AST.Reference(
             qualified_name_excluding_import=(),

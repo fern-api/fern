@@ -256,7 +256,7 @@ class CoreUtilities:
                 kwargs=[("httpx_client", obj)],
             )
         )
-    
+
     def get_pydantic_version_import(self) -> AST.Reference:
         return AST.Reference(
             qualified_name_excluding_import=(),

@@ -4,17 +4,13 @@ import datetime as dt
 import typing
 
 from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 from .execution_session_status import ExecutionSessionStatus
 from .submission_id import SubmissionId
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class BuildingExecutorResponse(pydantic.BaseModel):
-    submission_id: SubmissionId = pydantic.Field(alias="submissionId")
+class BuildingExecutorResponse(pydantic_v1.BaseModel):
+    submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
     status: ExecutionSessionStatus
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -28,5 +24,5 @@ class BuildingExecutorResponse(pydantic.BaseModel):
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}

@@ -6,6 +6,7 @@ import datetime as dt
 import typing
 
 from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 from .binary_tree_value import BinaryTreeValue as resources_commons_types_binary_tree_value_BinaryTreeValue
 from .doubly_linked_list_value import (
     DoublyLinkedListValue as resources_commons_types_doubly_linked_list_value_DoublyLinkedListValue,
@@ -13,11 +14,6 @@ from .doubly_linked_list_value import (
 from .singly_linked_list_value import (
     SinglyLinkedListValue as resources_commons_types_singly_linked_list_value_SinglyLinkedListValue,
 )
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -71,7 +67,7 @@ class _Factory:
         return VariableValue(__root__=_VariableValue.NullValue(type="nullValue"))
 
 
-class VariableValue(pydantic.BaseModel):
+class VariableValue(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(
@@ -160,7 +156,7 @@ class VariableValue(pydantic.BaseModel):
             _VariableValue.DoublyLinkedListValue,
             _VariableValue.NullValue,
         ],
-        pydantic.Field(discriminator="type"),
+        pydantic_v1.Field(discriminator="type"),
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -172,7 +168,7 @@ class VariableValue(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
@@ -181,23 +177,23 @@ from .map_value import MapValue as resources_commons_types_map_value_MapValue  #
 
 
 class _VariableValue:
-    class IntegerValue(pydantic.BaseModel):
+    class IntegerValue(pydantic_v1.BaseModel):
         type: typing.Literal["integerValue"] = "integerValue"
         value: int
 
-    class BooleanValue(pydantic.BaseModel):
+    class BooleanValue(pydantic_v1.BaseModel):
         type: typing.Literal["booleanValue"] = "booleanValue"
         value: bool
 
-    class DoubleValue(pydantic.BaseModel):
+    class DoubleValue(pydantic_v1.BaseModel):
         type: typing.Literal["doubleValue"] = "doubleValue"
         value: float
 
-    class StringValue(pydantic.BaseModel):
+    class StringValue(pydantic_v1.BaseModel):
         type: typing.Literal["stringValue"] = "stringValue"
         value: str
 
-    class CharValue(pydantic.BaseModel):
+    class CharValue(pydantic_v1.BaseModel):
         type: typing.Literal["charValue"] = "charValue"
         value: str
 
@@ -208,7 +204,7 @@ class _VariableValue:
             allow_population_by_field_name = True
             populate_by_name = True
 
-    class ListValue(pydantic.BaseModel):
+    class ListValue(pydantic_v1.BaseModel):
         type: typing.Literal["listValue"] = "listValue"
         value: typing.List[VariableValue]
 
@@ -233,7 +229,7 @@ class _VariableValue:
             allow_population_by_field_name = True
             populate_by_name = True
 
-    class NullValue(pydantic.BaseModel):
+    class NullValue(pydantic_v1.BaseModel):
         type: typing.Literal["nullValue"] = "nullValue"
 
 

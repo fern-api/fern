@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2024-04-03
+
+- Fix: Pydantic introduced a "break" to their 1.x libs by adding in a .v1 submodule that does not mirror the one that comes with pydantic v2. To get around this we now force the usage of the v1 submodule only if the pydantic version is v2.
+
 ## [1.0.0] - 2024-04-02
 
 - Break: The python SDK now defaults new (breaking configuration) to introduce general improvements.

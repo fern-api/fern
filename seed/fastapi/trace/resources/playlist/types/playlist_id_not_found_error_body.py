@@ -6,12 +6,8 @@ import datetime as dt
 import typing
 
 from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 from .playlist_id import PlaylistId as resources_playlist_types_playlist_id_PlaylistId
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -23,7 +19,7 @@ class _Factory:
         )
 
 
-class PlaylistIdNotFoundErrorBody(pydantic.BaseModel):
+class PlaylistIdNotFoundErrorBody(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(self) -> typing.Union[_PlaylistIdNotFoundErrorBody.PlaylistId]:
@@ -46,12 +42,12 @@ class PlaylistIdNotFoundErrorBody(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _PlaylistIdNotFoundErrorBody:
-    class PlaylistId(pydantic.BaseModel):
+    class PlaylistId(pydantic_v1.BaseModel):
         type: typing.Literal["playlistId"] = "playlistId"
         value: resources_playlist_types_playlist_id_PlaylistId
 

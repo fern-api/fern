@@ -33,10 +33,7 @@ from . import commons, file, health, service, types
 from .environment import SeedExhaustiveEnvironment
 from .version import __version__
 
-from .core.pydantic_utilities import pydantic_v1
-
 __all__ = [
-    "pydantic_v1",
     "Actor",
     "Actress",
     "CastMember",

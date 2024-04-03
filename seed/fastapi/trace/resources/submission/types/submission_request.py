@@ -6,17 +6,13 @@ import datetime as dt
 import typing
 
 from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 from .initialize_problem_request import (
     InitializeProblemRequest as resources_submission_types_initialize_problem_request_InitializeProblemRequest,
 )
 from .stop_request import StopRequest
 from .submit_request_v_2 import SubmitRequestV2
 from .workspace_submit_request import WorkspaceSubmitRequest
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -50,7 +46,7 @@ class _Factory:
         return SubmissionRequest(__root__=_SubmissionRequest.Stop(**value.dict(exclude_unset=True), type="stop"))
 
 
-class SubmissionRequest(pydantic.BaseModel):
+class SubmissionRequest(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(
@@ -97,7 +93,7 @@ class SubmissionRequest(pydantic.BaseModel):
             _SubmissionRequest.WorkspaceSubmit,
             _SubmissionRequest.Stop,
         ],
-        pydantic.Field(discriminator="type"),
+        pydantic_v1.Field(discriminator="type"),
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -109,7 +105,7 @@ class SubmissionRequest(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
@@ -121,7 +117,7 @@ class _SubmissionRequest:
             allow_population_by_field_name = True
             populate_by_name = True
 
-    class InitializeWorkspaceRequest(pydantic.BaseModel):
+    class InitializeWorkspaceRequest(pydantic_v1.BaseModel):
         type: typing.Literal["initializeWorkspaceRequest"] = "initializeWorkspaceRequest"
 
     class SubmitV2(SubmitRequestV2):
