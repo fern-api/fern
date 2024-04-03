@@ -84,8 +84,8 @@
                 "method": "POST"
             },
             "snippet": {
-                "sync_client": "from seed.client import SeedExhaustive\nfrom seed.types import WeatherReport\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.enum.get_and_return_enum(\n    request=WeatherReport.SUNNY,\n)\n",
-                "async_client": "from seed.client import AsyncSeedExhaustive\nfrom seed.types import WeatherReport\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.enum.get_and_return_enum(\n    request=WeatherReport.SUNNY,\n)\n",
+                "sync_client": "from seed.client import SeedExhaustive\n\nclient = SeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.endpoints.enum.get_and_return_enum(\n    request=\"SUNNY\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.endpoints.enum.get_and_return_enum(\n    request=\"SUNNY\",\n)\n",
                 "type": "python"
             }
         },

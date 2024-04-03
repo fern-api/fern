@@ -171,10 +171,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "GET",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/apiKey",
                         "parts": []
@@ -186,7 +185,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": {
@@ -201,6 +199,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": "GET request with custom api key"
@@ -227,21 +227,7 @@
                         }
                     },
                     "displayName": null,
-                    "auth": false,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "GET",
-                    "path": {
-                        "head": "/apiKeyInHeader",
-                        "parts": []
-                    },
-                    "fullPath": {
-                        "head": "apiKeyInHeader",
-                        "parts": []
-                    },
-                    "pathParameters": [],
-                    "allPathParameters": [],
-                    "queryParameters": [],
                     "headers": [
                         {
                             "name": {
@@ -274,6 +260,18 @@
                             "docs": "Specifies the endpoint key."
                         }
                     ],
+                    "baseUrl": null,
+                    "path": {
+                        "head": "/apiKeyInHeader",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "apiKeyInHeader",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
                     "requestBody": null,
                     "sdkRequest": {
                         "shape": {
@@ -349,6 +347,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": false,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": "GET request with custom api key"

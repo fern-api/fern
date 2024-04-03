@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## Unreleased -->
 
+## [0.18.2 - 2024-04-02]
+
+- Fix: Custom authorization header schemes had their values overridden by request options,
+  which required using the generated request option at every call-site.
+
 ## [0.18.1 - 2024-03-12]
 
 - Fix: Go snippets correctly handle unknown examples.

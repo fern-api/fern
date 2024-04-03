@@ -92,6 +92,7 @@ export declare namespace SdkGenerator {
         noOptionalProperties: boolean;
         includeApiReference: boolean;
         tolerateRepublish: boolean;
+        retainOriginalCasing: boolean;
     }
 }
 
@@ -242,7 +243,8 @@ export class SdkGenerator {
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
             includeOtherInUnionTypes: config.includeOtherInUnionTypes,
             includeSerdeLayer: config.includeSerdeLayer,
-            noOptionalProperties: config.noOptionalProperties
+            noOptionalProperties: config.noOptionalProperties,
+            retainOriginalCasing: config.retainOriginalCasing
         });
         this.typeSchemaGenerator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
@@ -260,6 +262,7 @@ export class SdkGenerator {
             errorResolver: this.errorResolver,
             intermediateRepresentation,
             includeSerdeLayer: config.includeSerdeLayer,
+            retainOriginalCasing: config.retainOriginalCasing,
             noOptionalProperties: config.noOptionalProperties
         });
         this.sdkEndpointTypeSchemasGenerator = new SdkEndpointTypeSchemasGenerator({
@@ -283,7 +286,8 @@ export class SdkGenerator {
             npmPackage,
             targetRuntime: config.targetRuntime,
             includeContentHeadersOnFileDownloadResponse: config.includeContentHeadersOnFileDownloadResponse,
-            includeSerdeLayer: config.includeSerdeLayer
+            includeSerdeLayer: config.includeSerdeLayer,
+            retainOriginalCasing: config.retainOriginalCasing
         });
         this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator();
         this.timeoutSdkErrorGenerator = new TimeoutSdkErrorGenerator();
@@ -882,6 +886,7 @@ module.exports = {
             timeoutSdkErrorGenerator: this.timeoutSdkErrorGenerator,
             treatUnknownAsAny: this.config.treatUnknownAsAny,
             includeSerdeLayer: this.config.includeSerdeLayer,
+            retainOriginalCasing: this.config.retainOriginalCasing,
             targetRuntime: this.config.targetRuntime
         });
     }

@@ -8,13 +8,9 @@ import typing
 import typing_extensions
 
 from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 from .bar import Bar as resources_types_types_bar_Bar
 from .foo import Foo as resources_types_types_foo_Foo
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -27,7 +23,7 @@ class _Factory:
         return UnionWithDiscriminant(__root__=_UnionWithDiscriminant.Bar(type="bar", bar=value))
 
 
-class UnionWithDiscriminant(pydantic.BaseModel):
+class UnionWithDiscriminant(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(self) -> typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar]:
@@ -44,7 +40,7 @@ class UnionWithDiscriminant(pydantic.BaseModel):
             return bar(self.__root__.bar)
 
     __root__: typing_extensions.Annotated[
-        typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar], pydantic.Field(discriminator="type")
+        typing.Union[_UnionWithDiscriminant.Foo, _UnionWithDiscriminant.Bar], pydantic_v1.Field(discriminator="type")
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -56,21 +52,21 @@ class UnionWithDiscriminant(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _UnionWithDiscriminant:
-    class Foo(pydantic.BaseModel):
-        type: typing.Literal["foo"] = pydantic.Field(alias="_type", default="foo")
+    class Foo(pydantic_v1.BaseModel):
+        type: typing.Literal["foo"] = pydantic_v1.Field(alias="_type", default="foo")
         foo: resources_types_types_foo_Foo
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
-    class Bar(pydantic.BaseModel):
-        type: typing.Literal["bar"] = pydantic.Field(alias="_type", default="bar")
+    class Bar(pydantic_v1.BaseModel):
+        type: typing.Literal["bar"] = pydantic_v1.Field(alias="_type", default="bar")
         bar: resources_types_types_bar_Bar
 
         class Config:

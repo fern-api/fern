@@ -294,10 +294,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": false,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -309,7 +308,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -367,6 +365,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": false,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null

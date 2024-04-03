@@ -43,6 +43,7 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
                     union: this.shape,
                     includeUtilsOnUnionMembers,
                     includeSerdeLayer: this.includeSerdeLayer,
+                    retainOriginalCasing: this.retainOriginalCasing,
                     noOptionalProperties: this.noOptionalProperties
                 })
         );
@@ -65,6 +66,7 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
             }),
             baseProperties: this.shape.baseProperties,
             includeSerdeLayer: this.includeSerdeLayer,
+            retainOriginalCasing: this.retainOriginalCasing,
             noOptionalProperties: this.noOptionalProperties
         });
     }
@@ -79,7 +81,8 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
 
     public getSinglePropertyKey(singleProperty: SingleUnionTypeProperty): string {
         return ParsedSingleUnionTypeForUnion.getSinglePropertyKey(singleProperty, {
-            includeSerdeLayer: this.includeSerdeLayer
+            includeSerdeLayer: this.includeSerdeLayer,
+            retainOriginalCasing: this.retainOriginalCasing
         });
     }
 
@@ -121,7 +124,8 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
                         return [
                             ts.factory.createPropertyAssignment(
                                 ParsedSingleUnionTypeForUnion.getSinglePropertyKey(unionMember.shape, {
-                                    includeSerdeLayer: this.includeSerdeLayer
+                                    includeSerdeLayer: this.includeSerdeLayer,
+                                    retainOriginalCasing: this.retainOriginalCasing
                                 }),
                                 context.type.getGeneratedExample(property).build(context, opts)
                             )

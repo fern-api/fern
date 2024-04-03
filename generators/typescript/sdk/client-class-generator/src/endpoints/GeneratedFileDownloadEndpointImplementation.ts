@@ -21,6 +21,7 @@ export declare namespace GeneratedFileDownloadEndpointImplementation {
         request: GeneratedEndpointRequest;
         response: GeneratedEndpointResponse;
         includeSerdeLayer: boolean;
+        retainOriginalCasing: boolean;
     }
 }
 
@@ -32,6 +33,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
     private request: GeneratedEndpointRequest;
     private response: GeneratedEndpointResponse;
     private includeSerdeLayer: boolean;
+    private retainOriginalCasing: boolean;
 
     constructor({
         endpoint,
@@ -40,7 +42,8 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         defaultTimeoutInSeconds,
         request,
         response,
-        includeSerdeLayer
+        includeSerdeLayer,
+        retainOriginalCasing
     }: GeneratedFileDownloadEndpointImplementation.Init) {
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -49,6 +52,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         this.request = request;
         this.response = response;
         this.includeSerdeLayer = includeSerdeLayer;
+        this.retainOriginalCasing = retainOriginalCasing;
     }
 
     public getExample(): ts.Expression | undefined {
@@ -106,7 +110,8 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
             endpoint: this.endpoint,
             generatedClientClass: this.generatedSdkClientClass,
             context,
-            includeSerdeLayer: this.includeSerdeLayer
+            includeSerdeLayer: this.includeSerdeLayer,
+            retainOriginalCasing: this.retainOriginalCasing
         });
         if (url != null) {
             return context.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);

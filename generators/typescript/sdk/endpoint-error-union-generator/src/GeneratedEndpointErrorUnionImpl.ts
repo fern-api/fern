@@ -15,6 +15,7 @@ export declare namespace GeneratedEndpointErrorUnionImpl {
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
         includeSerdeLayer: boolean;
         noOptionalProperties: boolean;
+        retainOriginalCasing: boolean;
     }
 }
 
@@ -31,11 +32,15 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
         errorResolver,
         errorDiscriminationStrategy,
         includeSerdeLayer,
-        noOptionalProperties
+        noOptionalProperties,
+        retainOriginalCasing
     }: GeneratedEndpointErrorUnionImpl.Init) {
         this.endpoint = endpoint;
 
-        const discriminant = this.getErrorUnionDiscriminant(errorDiscriminationStrategy);
+        const discriminant = this.getErrorUnionDiscriminant({
+            errorDiscriminationStrategy,
+            retainOriginalCasing
+        });
         const unknownErrorSingleUnionTypeGenerator = new UnknownErrorSingleUnionTypeGenerator({ discriminant });
         const includeUtilsOnUnionMembers = includeSerdeLayer;
         this.errorUnion = new GeneratedUnionImpl<SdkContext>({
@@ -51,7 +56,8 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
                         errorResolver,
                         errorDiscriminationStrategy,
                         includeUtilsOnUnionMembers,
-                        noOptionalProperties
+                        noOptionalProperties,
+                        retainOriginalCasing
                     })
             ),
             getReferenceToUnion: (context) =>
@@ -66,13 +72,21 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
             }),
             includeOtherInUnionTypes: true,
             includeSerdeLayer,
-            noOptionalProperties
+            noOptionalProperties,
+            retainOriginalCasing
         });
     }
 
-    private getErrorUnionDiscriminant(errorDiscriminationStrategy: ErrorDiscriminationStrategy): string {
+    private getErrorUnionDiscriminant({
+        errorDiscriminationStrategy,
+        retainOriginalCasing
+    }: {
+        errorDiscriminationStrategy: ErrorDiscriminationStrategy;
+        retainOriginalCasing: boolean;
+    }): string {
         return ErrorDiscriminationStrategy._visit(errorDiscriminationStrategy, {
-            property: ({ discriminant }) => discriminant.name.camelCase.unsafeName,
+            property: ({ discriminant }) =>
+                retainOriginalCasing ? discriminant.name.originalName : discriminant.name.camelCase.unsafeName,
             statusCode: () => GeneratedEndpointErrorUnionImpl.STATUS_CODE_DISCRIMINANT,
             _other: () => {
                 throw new Error("Unknown error discrimination strategy: " + errorDiscriminationStrategy.type);

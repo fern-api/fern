@@ -3,7 +3,6 @@
 from seed import (
     CreateProblemRequest,
     FileInfo,
-    Language,
     ProblemDescription,
     ProblemDescriptionBoard_Html,
     ProblemFiles,
@@ -26,7 +25,7 @@ async def test_create_problem(client: SeedTrace, async_client: AsyncSeedTrace) -
             problem_name="string",
             problem_description=ProblemDescription(boards=[ProblemDescriptionBoard_Html(value="string")]),
             files={
-                Language.JAVA: ProblemFiles(
+                "JAVA": ProblemFiles(
                     solution_file=FileInfo(filename="string", contents="string"),
                     read_only_files=[FileInfo(filename="string", contents="string")],
                 )
@@ -49,7 +48,7 @@ async def test_create_problem(client: SeedTrace, async_client: AsyncSeedTrace) -
             problem_name="string",
             problem_description=ProblemDescription(boards=[ProblemDescriptionBoard_Html(value="string")]),
             files={
-                Language.JAVA: ProblemFiles(
+                "JAVA": ProblemFiles(
                     solution_file=FileInfo(filename="string", contents="string"),
                     read_only_files=[FileInfo(filename="string", contents="string")],
                 )
@@ -77,7 +76,7 @@ async def test_update_problem(client: SeedTrace, async_client: AsyncSeedTrace) -
             problem_name="string",
             problem_description=ProblemDescription(boards=[ProblemDescriptionBoard_Html(value="string")]),
             files={
-                Language.JAVA: ProblemFiles(
+                "JAVA": ProblemFiles(
                     solution_file=FileInfo(filename="string", contents="string"),
                     read_only_files=[FileInfo(filename="string", contents="string")],
                 )
@@ -101,7 +100,7 @@ async def test_update_problem(client: SeedTrace, async_client: AsyncSeedTrace) -
             problem_name="string",
             problem_description=ProblemDescription(boards=[ProblemDescriptionBoard_Html(value="string")]),
             files={
-                Language.JAVA: ProblemFiles(
+                "JAVA": ProblemFiles(
                     solution_file=FileInfo(filename="string", contents="string"),
                     read_only_files=[FileInfo(filename="string", contents="string")],
                 )

@@ -9,14 +9,10 @@ import httpx
 from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.jsonable_encoder import jsonable_encoder
+from .core.pydantic_utilities import pydantic_v1
 from .core.remove_none_from_dict import remove_none_from_dict
 from .core.request_options import RequestOptions
-from .resources.service.client import AsyncServiceClient, ServiceClient
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from .service.client import AsyncServiceClient, ServiceClient
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -30,6 +26,8 @@ class SeedPackageYml:
         - base_url: str. The base url to use for requests from the client.
 
         - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds, unless a custom httpx client is used, in which case a default is not set.
+
+        - follow_redirects: typing.Optional[bool]. Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
 
         - httpx_client: typing.Optional[httpx.Client]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
     ---
@@ -45,12 +43,17 @@ class SeedPackageYml:
         *,
         base_url: str,
         timeout: typing.Optional[float] = None,
+        follow_redirects: typing.Optional[bool] = None,
         httpx_client: typing.Optional[httpx.Client] = None,
     ):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
-            httpx_client=httpx.Client(timeout=_defaulted_timeout) if httpx_client is None else httpx_client,
+            httpx_client=httpx_client
+            if httpx_client is not None
+            else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
+            if follow_redirects is not None
+            else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
         self.service = ServiceClient(client_wrapper=self._client_wrapper)
@@ -96,7 +99,7 @@ class SeedPackageYml:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(str, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(str, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -113,6 +116,8 @@ class AsyncSeedPackageYml:
 
         - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds, unless a custom httpx client is used, in which case a default is not set.
 
+        - follow_redirects: typing.Optional[bool]. Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
+
         - httpx_client: typing.Optional[httpx.AsyncClient]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
     ---
     from seed.client import AsyncSeedPackageYml
@@ -127,12 +132,17 @@ class AsyncSeedPackageYml:
         *,
         base_url: str,
         timeout: typing.Optional[float] = None,
+        follow_redirects: typing.Optional[bool] = None,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
     ):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
-            httpx_client=httpx.AsyncClient(timeout=_defaulted_timeout) if httpx_client is None else httpx_client,
+            httpx_client=httpx_client
+            if httpx_client is not None
+            else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
+            if follow_redirects is not None
+            else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
         self.service = AsyncServiceClient(client_wrapper=self._client_wrapper)
@@ -178,7 +188,7 @@ class AsyncSeedPackageYml:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(str, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(str, _response.json())  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:

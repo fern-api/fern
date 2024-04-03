@@ -1,0 +1,5 @@
+name: valid
+pagination: 
+  cursor: $request.cursor
+  next_cursor: $response.cursor.next
+  results: $response.cursor.usernames

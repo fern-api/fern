@@ -4,27 +4,23 @@ from __future__ import annotations
 
 import typing
 
+from ...core.pydantic_utilities import pydantic_v1
 from .error_info import ErrorInfo
 from .graded_test_case_update import GradedTestCaseUpdate
 from .recorded_test_case_update import RecordedTestCaseUpdate
 from .running_submission_state import RunningSubmissionState
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class TestSubmissionUpdateInfo_Running(pydantic.BaseModel):
+class TestSubmissionUpdateInfo_Running(pydantic_v1.BaseModel):
     type: typing.Literal["running"] = "running"
     value: RunningSubmissionState
 
 
-class TestSubmissionUpdateInfo_Stopped(pydantic.BaseModel):
+class TestSubmissionUpdateInfo_Stopped(pydantic_v1.BaseModel):
     type: typing.Literal["stopped"] = "stopped"
 
 
-class TestSubmissionUpdateInfo_Errored(pydantic.BaseModel):
+class TestSubmissionUpdateInfo_Errored(pydantic_v1.BaseModel):
     type: typing.Literal["errored"] = "errored"
     value: ErrorInfo
 
@@ -45,7 +41,7 @@ class TestSubmissionUpdateInfo_RecordedTestCase(RecordedTestCaseUpdate):
         populate_by_name = True
 
 
-class TestSubmissionUpdateInfo_Finished(pydantic.BaseModel):
+class TestSubmissionUpdateInfo_Finished(pydantic_v1.BaseModel):
     type: typing.Literal["finished"] = "finished"
 
 

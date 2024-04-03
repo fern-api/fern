@@ -32,6 +32,7 @@ import { ValidExampleEndpointCallRule } from "./rules/valid-example-endpoint-cal
 import { ValidExampleTypeRule } from "./rules/valid-example-type";
 import { ValidFieldNamesRule } from "./rules/valid-field-names";
 import { ValidNavigationRule } from "./rules/valid-navigation";
+import { ValidPaginationRule } from "./rules/valid-pagination";
 import { ValidServiceUrlsRule } from "./rules/valid-service-urls";
 import { ValidTypeNameRule } from "./rules/valid-type-name";
 
@@ -71,7 +72,8 @@ export function getAllRules(): Rule[] {
         NoUndefinedVariableReferenceRule,
         OnlyObjectExtensionsRule,
         NoMaybeStreamingRule,
-        NoResponsePropertyRule
+        NoResponsePropertyRule,
+        ValidPaginationRule
     ];
 }
 

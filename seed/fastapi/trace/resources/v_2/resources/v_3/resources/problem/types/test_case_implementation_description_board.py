@@ -8,12 +8,8 @@ import typing
 import typing_extensions
 
 from ........core.datetime_utils import serialize_datetime
+from ........core.pydantic_utilities import pydantic_v1
 from .parameter_id import ParameterId
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -30,7 +26,7 @@ class _Factory:
         )
 
 
-class TestCaseImplementationDescriptionBoard(pydantic.BaseModel):
+class TestCaseImplementationDescriptionBoard(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(
@@ -48,7 +44,7 @@ class TestCaseImplementationDescriptionBoard(pydantic.BaseModel):
 
     __root__: typing_extensions.Annotated[
         typing.Union[_TestCaseImplementationDescriptionBoard.Html, _TestCaseImplementationDescriptionBoard.ParamId],
-        pydantic.Field(discriminator="type"),
+        pydantic_v1.Field(discriminator="type"),
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -60,16 +56,16 @@ class TestCaseImplementationDescriptionBoard(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _TestCaseImplementationDescriptionBoard:
-    class Html(pydantic.BaseModel):
+    class Html(pydantic_v1.BaseModel):
         type: typing.Literal["html"] = "html"
         value: str
 
-    class ParamId(pydantic.BaseModel):
+    class ParamId(pydantic_v1.BaseModel):
         type: typing.Literal["paramId"] = "paramId"
         value: ParameterId
 

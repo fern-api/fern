@@ -40,6 +40,8 @@ class RootClientConstructorParameter:
 
 
 class RootClientGenerator:
+    FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME = "follow_redirects"
+
     ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME = "environment"
     ENVIRONMENT_MEMBER_NAME = "_environment"
     ENVIRONMENT_CONSTRUCTOR_PARAMETER_DOCS = "The environment to use for requests from the client."
@@ -377,6 +379,24 @@ class RootClientGenerator:
                 docs="The timeout to be used, in seconds, for requests by default the timeout is 60 seconds, unless a custom httpx client is used, in which case a default is not set.",
             )
         )
+
+        parameters.append(
+            RootClientConstructorParameter(
+                constructor_parameter_name=self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME,
+                type_hint=AST.TypeHint.optional(AST.TypeHint.bool_()),
+                docs="Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.",
+                # This config is optional in the event httpx ever changes it's default behavior, we stay up to date with
+                # that as opposed to forming an opinion on what the default should be.
+                initializer=AST.Expression(
+                    "True"
+                    if self._context.custom_config.follow_redirects_by_default == True
+                    else "False"
+                    if self._context.custom_config.follow_redirects_by_default == False
+                    else "None"
+                ),
+            )
+        )
+
         parameters.append(
             RootClientConstructorParameter(
                 constructor_parameter_name=RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME,
@@ -483,18 +503,34 @@ class RootClientGenerator:
                     ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME,
                     AST.Expression(
                         AST.ConditionalExpression(
-                            left=AST.ClassInstantiation(
-                                HttpX.ASYNC_CLIENT if is_async else HttpX.CLIENT,
-                                kwargs=[
-                                    (
-                                        "timeout",
-                                        AST.Expression(f"{timeout_local_variable}"),
-                                    )
-                                ],
+                            left=AST.Expression(f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME}"),
+                            right=AST.ConditionalExpression(
+                                left=AST.ClassInstantiation(
+                                    HttpX.ASYNC_CLIENT if is_async else HttpX.CLIENT,
+                                    kwargs=[
+                                        (
+                                            "timeout",
+                                            AST.Expression(f"{timeout_local_variable}"),
+                                        ),
+                                        (
+                                            "follow_redirects",
+                                            AST.Expression(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME}"),
+                                        ),
+                                    ],
+                                ),
+                                right=AST.ClassInstantiation(
+                                    HttpX.ASYNC_CLIENT if is_async else HttpX.CLIENT,
+                                    kwargs=[
+                                        (
+                                            "timeout",
+                                            AST.Expression(f"{timeout_local_variable}"),
+                                        ),
+                                    ],
+                                ),
+                                test=AST.Expression(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME} is not None"),
                             ),
-                            right=AST.Expression(f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME}"),
                             test=AST.Expression(
-                                f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME} is None"
+                                f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME} is not None"
                             ),
                         ),
                     ),

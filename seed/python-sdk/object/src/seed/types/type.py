@@ -5,15 +5,11 @@ import typing
 import uuid
 
 from ..core.datetime_utils import serialize_datetime
+from ..core.pydantic_utilities import pydantic_v1
 from .name import Name
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class Type(pydantic.BaseModel):
+class Type(pydantic_v1.BaseModel):
     """
     Exercises all of the built-in types.
     ---
@@ -92,5 +88,5 @@ class Type(pydantic.BaseModel):
     class Config:
         frozen = True
         smart_union = True
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

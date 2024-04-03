@@ -8,11 +8,7 @@ import typing
 import typing_extensions
 
 from ....core.datetime_utils import serialize_datetime
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ....core.pydantic_utilities import pydantic_v1
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -25,7 +21,7 @@ class _Factory:
         return Metadata(__root__=_Metadata.Markdown(type="markdown", value=value))
 
 
-class Metadata(pydantic.BaseModel):
+class Metadata(pydantic_v1.BaseModel):
     """
     from seed.examples import Metadata_Html
 
@@ -44,7 +40,7 @@ class Metadata(pydantic.BaseModel):
             return markdown(self.__root__.value)
 
     __root__: typing_extensions.Annotated[
-        typing.Union[_Metadata.Html, _Metadata.Markdown], pydantic.Field(discriminator="type")
+        typing.Union[_Metadata.Html, _Metadata.Markdown], pydantic_v1.Field(discriminator="type")
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -56,16 +52,16 @@ class Metadata(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _Metadata:
-    class Html(pydantic.BaseModel):
+    class Html(pydantic_v1.BaseModel):
         type: typing.Literal["html"] = "html"
         value: str
 
-    class Markdown(pydantic.BaseModel):
+    class Markdown(pydantic_v1.BaseModel):
         type: typing.Literal["markdown"] = "markdown"
         value: str
 

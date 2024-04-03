@@ -8,17 +8,13 @@ import typing
 import typing_extensions
 
 from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 from ...commons.types.problem_id import ProblemId
 from .code_execution_update import (
     CodeExecutionUpdate as resources_submission_types_code_execution_update_CodeExecutionUpdate,
 )
 from .exception_info import ExceptionInfo
 from .terminated_response import TerminatedResponse
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -53,7 +49,7 @@ class _Factory:
         )
 
 
-class SubmissionResponse(pydantic.BaseModel):
+class SubmissionResponse(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(
@@ -101,7 +97,7 @@ class SubmissionResponse(pydantic.BaseModel):
             _SubmissionResponse.CodeExecutionUpdate,
             _SubmissionResponse.Terminated,
         ],
-        pydantic.Field(discriminator="type"),
+        pydantic_v1.Field(discriminator="type"),
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -113,19 +109,19 @@ class SubmissionResponse(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _SubmissionResponse:
-    class ServerInitialized(pydantic.BaseModel):
+    class ServerInitialized(pydantic_v1.BaseModel):
         type: typing.Literal["serverInitialized"] = "serverInitialized"
 
-    class ProblemInitialized(pydantic.BaseModel):
+    class ProblemInitialized(pydantic_v1.BaseModel):
         type: typing.Literal["problemInitialized"] = "problemInitialized"
         value: ProblemId
 
-    class WorkspaceInitialized(pydantic.BaseModel):
+    class WorkspaceInitialized(pydantic_v1.BaseModel):
         type: typing.Literal["workspaceInitialized"] = "workspaceInitialized"
 
     class ServerErrored(ExceptionInfo):
@@ -135,7 +131,7 @@ class _SubmissionResponse:
             allow_population_by_field_name = True
             populate_by_name = True
 
-    class CodeExecutionUpdate(pydantic.BaseModel):
+    class CodeExecutionUpdate(pydantic_v1.BaseModel):
         type: typing.Literal["codeExecutionUpdate"] = "codeExecutionUpdate"
         value: resources_submission_types_code_execution_update_CodeExecutionUpdate
 

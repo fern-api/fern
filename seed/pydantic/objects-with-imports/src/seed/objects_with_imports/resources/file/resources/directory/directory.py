@@ -6,17 +6,13 @@ import datetime as dt
 import typing
 
 from .....core.datetime_utils import serialize_datetime
+from .....core.pydantic_utilities import pydantic_v1
 from ...file import File
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class Directory(pydantic.BaseModel):
+class Directory(pydantic_v1.BaseModel):
     """
-    from seed.objects_with_imports import File, FileInfo
+    from seed.objects_with_imports import File
     from seed.objects_with_imports.resources.file import Directory
 
     Directory(
@@ -25,7 +21,7 @@ class Directory(pydantic.BaseModel):
             File(
                 name="file.txt",
                 contents="...",
-                info=FileInfo.REGULAR,
+                info="REGULAR",
             )
         ],
         directories=[
@@ -35,7 +31,7 @@ class Directory(pydantic.BaseModel):
                     File(
                         name="another_file.txt",
                         contents="...",
-                        info=FileInfo.REGULAR,
+                        info="REGULAR",
                     )
                 ],
             )
@@ -44,8 +40,8 @@ class Directory(pydantic.BaseModel):
     """
 
     name: str
-    files: typing.Optional[typing.List[File]]
-    directories: typing.Optional[typing.List[Directory]]
+    files: typing.Optional[typing.List[File]] = None
+    directories: typing.Optional[typing.List[Directory]] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -56,7 +52,7 @@ class Directory(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}
 
 

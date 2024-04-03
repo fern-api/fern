@@ -31,6 +31,7 @@ export declare namespace GeneratedDefaultEndpointRequest {
         endpoint: HttpEndpoint;
         requestBody: HttpRequestBody.InlinedRequestBody | HttpRequestBody.Reference | undefined;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
+        retainOriginalCasing: boolean;
     }
 }
 
@@ -48,6 +49,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     private endpoint: HttpEndpoint;
     private requestBody: HttpRequestBody.InlinedRequestBody | HttpRequestBody.Reference | undefined;
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
+    private retainOriginalCasing: boolean;
 
     constructor({
         ir,
@@ -56,7 +58,8 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         service,
         endpoint,
         requestBody,
-        generatedSdkClientClass
+        generatedSdkClientClass,
+        retainOriginalCasing
     }: GeneratedDefaultEndpointRequest.Init) {
         this.ir = ir;
         this.packageId = packageId;
@@ -64,6 +67,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         this.endpoint = endpoint;
         this.requestBody = requestBody;
         this.generatedSdkClientClass = generatedSdkClientClass;
+        this.retainOriginalCasing = retainOriginalCasing;
         this.requestParameter =
             sdkRequest != null
                 ? SdkRequestShape._visit<RequestParameter>(sdkRequest.shape, {
@@ -97,7 +101,10 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         const parameters: OptionalKind<ParameterDeclarationStructure & { docs?: string }>[] = [];
         for (const pathParameter of getPathParametersForEndpointSignature(this.service, this.endpoint)) {
             parameters.push({
-                name: getParameterNameForPathParameter(pathParameter),
+                name: getParameterNameForPathParameter({
+                    pathParameter,
+                    retainOriginalCasing: this.retainOriginalCasing
+                }),
                 type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode),
                 docs: pathParameter.docs
             });

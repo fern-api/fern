@@ -510,10 +510,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "GET",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/basic-auth",
                         "parts": []
@@ -525,7 +524,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": {
@@ -609,6 +607,8 @@
                             "docs": null
                         }
                     ],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": "GET request with basic auth scheme"
@@ -635,10 +635,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/basic-auth",
                         "parts": []
@@ -650,7 +649,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -840,6 +838,8 @@
                             "docs": null
                         }
                     ],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": "POST request with basic auth scheme"

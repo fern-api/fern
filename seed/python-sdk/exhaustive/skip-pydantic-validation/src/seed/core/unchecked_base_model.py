@@ -7,25 +7,21 @@ import uuid
 import typing_extensions
 
 from .datetime_utils import serialize_datetime
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from .pydantic_utilities import pydantic_v1
 
 
-class UnionMetadata(pydantic.BaseModel):
+class UnionMetadata(pydantic_v1.BaseModel):
     discriminant: str
 
 
-class UncheckedBaseModel(pydantic.BaseModel):
+class UncheckedBaseModel(pydantic_v1.BaseModel):
     # Allow extra fields
     class Config:
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}
 
     # Allow construct to not validate model
@@ -71,21 +67,21 @@ class UncheckedBaseModel(pydantic.BaseModel):
 
 
 def _convert_undiscriminated_union_type(union_type: typing.Type, object_: typing.Any) -> typing.Any:
-    for inner_type in pydantic.typing.get_args(union_type):
+    for inner_type in pydantic_v1.typing.get_args(union_type):
         return construct_type(object_=object_, type_=inner_type)
 
 
 def _convert_union_type(type_: typing.Type, object_: typing.Any) -> typing.Any:
-    base_type = pydantic.typing.get_origin(type_) or type_
+    base_type = pydantic_v1.typing.get_origin(type_) or type_
     union_type = type_
     if base_type == typing_extensions.Annotated:
-        union_type = pydantic.typing.get_args(type_)[0]
-        annotated_metadata = pydantic.typing.get_args(type_)[1:]
+        union_type = pydantic_v1.typing.get_args(type_)[0]
+        annotated_metadata = pydantic_v1.typing.get_args(type_)[1:]
         for metadata in annotated_metadata:
             if isinstance(metadata, UnionMetadata):
                 try:
                     # Cast to the correct type, based on the discriminant
-                    for inner_type in pydantic.typing.get_args(union_type):
+                    for inner_type in pydantic_v1.typing.get_args(union_type):
                         if inner_type.__fields__[metadata.discriminant].default == getattr(
                             object_, metadata.discriminant
                         ):
@@ -103,47 +99,47 @@ def construct_type(*, type_: typing.Type, object_: typing.Any) -> typing.Any:
     Pydantic models.
     The idea is to essentially attempt to coerce object_ to type_ (recursively)
     """
-    base_type = pydantic.typing.get_origin(type_) or type_
+    base_type = pydantic_v1.typing.get_origin(type_) or type_
 
     if base_type == dict:
         if not isinstance(object_, typing.Mapping):
             return object_
 
-        _, items_type = pydantic.typing.get_args(type_)
+        _, items_type = pydantic_v1.typing.get_args(type_)
         return {key: construct_type(object_=item, type_=items_type) for key, item in object_.items()}
 
     if base_type == list:
         if not isinstance(object_, list):
             return object_
 
-        inner_type = pydantic.typing.get_args(type_)[0]
+        inner_type = pydantic_v1.typing.get_args(type_)[0]
         return [construct_type(object_=entry, type_=inner_type) for entry in object_]
 
     if base_type == set:
         if not isinstance(object_, set) and not isinstance(object_, list):
             return object_
 
-        inner_type = pydantic.typing.get_args(type_)[0]
+        inner_type = pydantic_v1.typing.get_args(type_)[0]
         return {construct_type(object_=entry, type_=inner_type) for entry in object_}
 
-    if pydantic.typing.is_union(base_type) or (
-        base_type == typing_extensions.Annotated and pydantic.typing.is_union(pydantic.typing.get_args(type_)[0])
+    if pydantic_v1.typing.is_union(base_type) or (
+        base_type == typing_extensions.Annotated and pydantic_v1.typing.is_union(pydantic_v1.typing.get_args(type_)[0])
     ):
         return _convert_union_type(type_, object_)
 
     # Cannot do an `issubclass` with a literal type
-    if not pydantic.typing.is_literal_type(type_) and issubclass(base_type, pydantic.BaseModel):
+    if not pydantic_v1.typing.is_literal_type(type_) and issubclass(base_type, pydantic_v1.BaseModel):
         return type_.construct(**object_)
 
     if base_type == dt.datetime:
         try:
-            return pydantic.datetime_parse.parse_datetime(object_)
+            return pydantic_v1.datetime_parse.parse_datetime(object_)
         except Exception:
             return object_
 
     if base_type == dt.date:
         try:
-            return pydantic.datetime_parse.parse_date(object_)
+            return pydantic_v1.datetime_parse.parse_date(object_)
         except Exception:
             return object_
 

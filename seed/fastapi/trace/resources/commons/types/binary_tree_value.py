@@ -4,17 +4,13 @@ import datetime as dt
 import typing
 
 from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 from .binary_tree_node_value import BinaryTreeNodeValue
 from .node_id import NodeId
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class BinaryTreeValue(pydantic.BaseModel):
-    root: typing.Optional[NodeId]
+class BinaryTreeValue(pydantic_v1.BaseModel):
+    root: typing.Optional[NodeId] = None
     nodes: typing.Dict[NodeId, BinaryTreeNodeValue]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -26,5 +22,5 @@ class BinaryTreeValue(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}

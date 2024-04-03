@@ -4,21 +4,17 @@ import datetime as dt
 import typing
 
 from ........core.datetime_utils import serialize_datetime
+from ........core.pydantic_utilities import pydantic_v1
 from .function_implementation_for_multiple_languages import FunctionImplementationForMultipleLanguages
 from .parameter import Parameter
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class VoidFunctionDefinitionThatTakesActualResult(pydantic.BaseModel):
+class VoidFunctionDefinitionThatTakesActualResult(pydantic_v1.BaseModel):
     """
     The generated signature will include an additional param, actualResult
     """
 
-    additional_parameters: typing.List[Parameter] = pydantic.Field(alias="additionalParameters")
+    additional_parameters: typing.List[Parameter] = pydantic_v1.Field(alias="additionalParameters")
     code: FunctionImplementationForMultipleLanguages
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -32,5 +28,5 @@ class VoidFunctionDefinitionThatTakesActualResult(pydantic.BaseModel):
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}

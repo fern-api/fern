@@ -4,19 +4,15 @@ import datetime as dt
 import typing
 
 from ........core.datetime_utils import serialize_datetime
+from ........core.pydantic_utilities import pydantic_v1
 from .......commons.types.variable_type import VariableType
 from .parameter_id import ParameterId
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class Parameter(pydantic.BaseModel):
-    parameter_id: ParameterId = pydantic.Field(alias="parameterId")
+class Parameter(pydantic_v1.BaseModel):
+    parameter_id: ParameterId = pydantic_v1.Field(alias="parameterId")
     name: str
-    variable_type: VariableType = pydantic.Field(alias="variableType")
+    variable_type: VariableType = pydantic_v1.Field(alias="variableType")
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -29,5 +25,5 @@ class Parameter(pydantic.BaseModel):
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}

@@ -8,11 +8,7 @@ import typing
 import typing_extensions
 
 from ....core.datetime_utils import serialize_datetime
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ....core.pydantic_utilities import pydantic_v1
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -25,7 +21,7 @@ class _Factory:
         return Test(__root__=_Test.Or(type="or", value=value))
 
 
-class Test(pydantic.BaseModel):
+class Test(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(self) -> typing.Union[_Test.And, _Test.Or]:
@@ -37,7 +33,7 @@ class Test(pydantic.BaseModel):
         if self.__root__.type == "or":
             return or_(self.__root__.value)
 
-    __root__: typing_extensions.Annotated[typing.Union[_Test.And, _Test.Or], pydantic.Field(discriminator="type")]
+    __root__: typing_extensions.Annotated[typing.Union[_Test.And, _Test.Or], pydantic_v1.Field(discriminator="type")]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -48,16 +44,16 @@ class Test(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _Test:
-    class And(pydantic.BaseModel):
+    class And(pydantic_v1.BaseModel):
         type: typing.Literal["and"] = "and"
         value: bool
 
-    class Or(pydantic.BaseModel):
+    class Or(pydantic_v1.BaseModel):
         type: typing.Literal["or"] = "or"
         value: bool
 

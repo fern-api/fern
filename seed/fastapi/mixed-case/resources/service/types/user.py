@@ -4,14 +4,10 @@ import datetime as dt
 import typing
 
 from ....core.datetime_utils import serialize_datetime
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ....core.pydantic_utilities import pydantic_v1
 
 
-class User(pydantic.BaseModel):
+class User(pydantic_v1.BaseModel):
     """
     from seed.mixed_case import User
 
@@ -22,9 +18,9 @@ class User(pydantic.BaseModel):
     )
     """
 
-    user_name: str = pydantic.Field(alias="userName")
+    user_name: str = pydantic_v1.Field(alias="userName")
     metadata_tags: typing.List[str]
-    extra_properties: typing.Dict[str, str] = pydantic.Field(alias="EXTRA_PROPERTIES")
+    extra_properties: typing.Dict[str, str] = pydantic_v1.Field(alias="EXTRA_PROPERTIES")
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -37,5 +33,5 @@ class User(pydantic.BaseModel):
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}

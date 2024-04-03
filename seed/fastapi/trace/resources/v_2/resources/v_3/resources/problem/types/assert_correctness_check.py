@@ -8,13 +8,9 @@ import typing
 import typing_extensions
 
 from ........core.datetime_utils import serialize_datetime
+from ........core.pydantic_utilities import pydantic_v1
 from .deep_equality_correctness_check import DeepEqualityCorrectnessCheck
 from .void_function_definition_that_takes_actual_result import VoidFunctionDefinitionThatTakesActualResult
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -31,7 +27,7 @@ class _Factory:
         )
 
 
-class AssertCorrectnessCheck(pydantic.BaseModel):
+class AssertCorrectnessCheck(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(self) -> typing.Union[_AssertCorrectnessCheck.DeepEquality, _AssertCorrectnessCheck.Custom]:
@@ -53,7 +49,7 @@ class AssertCorrectnessCheck(pydantic.BaseModel):
 
     __root__: typing_extensions.Annotated[
         typing.Union[_AssertCorrectnessCheck.DeepEquality, _AssertCorrectnessCheck.Custom],
-        pydantic.Field(discriminator="type"),
+        pydantic_v1.Field(discriminator="type"),
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -65,7 +61,7 @@ class AssertCorrectnessCheck(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 

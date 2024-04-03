@@ -11,6 +11,7 @@ export declare namespace RequestWrapperGenerator {
             wrapperName: string;
             packageId: PackageId;
             includeSerdeLayer: boolean;
+            retainOriginalCasing: boolean;
         }
     }
 }
@@ -21,14 +22,16 @@ export class RequestWrapperGenerator {
         service,
         endpoint,
         wrapperName,
-        includeSerdeLayer
+        includeSerdeLayer,
+        retainOriginalCasing
     }: RequestWrapperGenerator.generateRequestWrapper.Args): GeneratedRequestWrapper {
         return new GeneratedRequestWrapperImpl({
             packageId,
             service,
             endpoint,
             wrapperName,
-            includeSerdeLayer
+            includeSerdeLayer,
+            retainOriginalCasing
         });
     }
 }

@@ -4,26 +4,22 @@ import datetime as dt
 import typing
 
 from .......core.datetime_utils import serialize_datetime
+from .......core.pydantic_utilities import pydantic_v1
 from ......commons.language import Language
 from ......problem.problem_description import ProblemDescription
 from .custom_files import CustomFiles
 from .test_case_template import TestCaseTemplate
 from .test_case_v_2 import TestCaseV2
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class CreateProblemRequestV2(pydantic.BaseModel):
-    problem_name: str = pydantic.Field(alias="problemName")
-    problem_description: ProblemDescription = pydantic.Field(alias="problemDescription")
-    custom_files: CustomFiles = pydantic.Field(alias="customFiles")
-    custom_test_case_templates: typing.List[TestCaseTemplate] = pydantic.Field(alias="customTestCaseTemplates")
+class CreateProblemRequestV2(pydantic_v1.BaseModel):
+    problem_name: str = pydantic_v1.Field(alias="problemName")
+    problem_description: ProblemDescription = pydantic_v1.Field(alias="problemDescription")
+    custom_files: CustomFiles = pydantic_v1.Field(alias="customFiles")
+    custom_test_case_templates: typing.List[TestCaseTemplate] = pydantic_v1.Field(alias="customTestCaseTemplates")
     testcases: typing.List[TestCaseV2]
-    supported_languages: typing.Set[Language] = pydantic.Field(alias="supportedLanguages")
-    is_public: bool = pydantic.Field(alias="isPublic")
+    supported_languages: typing.Set[Language] = pydantic_v1.Field(alias="supportedLanguages")
+    is_public: bool = pydantic_v1.Field(alias="isPublic")
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -36,5 +32,5 @@ class CreateProblemRequestV2(pydantic.BaseModel):
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

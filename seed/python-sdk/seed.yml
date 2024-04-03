@@ -61,6 +61,10 @@ fixtures:
         pydantic_config:
           skip_validation: true
       outputFolder: skip-pydantic-validation
+    - customConfig:
+        pydantic_config:
+        follow_redirects_by_default: true
+      outputFolder: follow_redirects_by_default
 scripts:
   # Tests now run a mock server, you can always run seed with --skip-scripts to save time
   - docker: fernapi/python-seed

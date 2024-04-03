@@ -4,17 +4,13 @@ import datetime as dt
 import typing
 
 from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 from ...commons.types.file_info import FileInfo
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class WorkspaceFiles(pydantic.BaseModel):
-    main_file: FileInfo = pydantic.Field(alias="mainFile")
-    read_only_files: typing.List[FileInfo] = pydantic.Field(alias="readOnlyFiles")
+class WorkspaceFiles(pydantic_v1.BaseModel):
+    main_file: FileInfo = pydantic_v1.Field(alias="mainFile")
+    read_only_files: typing.List[FileInfo] = pydantic_v1.Field(alias="readOnlyFiles")
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -27,5 +23,5 @@ class WorkspaceFiles(pydantic.BaseModel):
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}

@@ -1,6 +1,7 @@
 import enum
 
 from fern_python.codegen import AST
+from fern_python.codegen.filepath import Filepath
 
 PYDANTIC_DEPENDENCY = AST.Dependency(name="pydantic", version=">= 1.9.2")
 
@@ -34,23 +35,14 @@ def _export(version: PydanticVersionCompatibility, *export: str) -> AST.ClassRef
             qualified_name_excluding_import=export,
         )
     elif version == PydanticVersionCompatibility.Both:
+        filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
+        _module_path = tuple(part.module_name for part in filepath)
+
         return AST.ClassReference(
-            import_=AST.ReferenceImport(
-                module=AST.Module.external(
-                    dependency=PYDANTIC_DEPENDENCY,
-                    module_path=("pydantic", "v1"),
-                ),
-                alias="pydantic",
-                alternative_import=AST.ReferenceImport(
-                    module=AST.Module.external(
-                        dependency=PYDANTIC_DEPENDENCY,
-                        module_path=("pydantic",),
-                    ),
-                    mypy_ignore=True,
-                ),
-                mypy_ignore=True,
-            ),
             qualified_name_excluding_import=export,
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*_module_path, "pydantic_utilities"), named_import="pydantic_v1"
+            ),
         )
     else:
         raise AssertionError(f"Encountered unknown pydnatic version compatibility type: {version}")

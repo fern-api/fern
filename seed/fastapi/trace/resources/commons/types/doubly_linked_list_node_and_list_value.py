@@ -4,18 +4,14 @@ import datetime as dt
 import typing
 
 from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 from .doubly_linked_list_value import DoublyLinkedListValue
 from .node_id import NodeId
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class DoublyLinkedListNodeAndListValue(pydantic.BaseModel):
-    node_id: NodeId = pydantic.Field(alias="nodeId")
-    full_list: DoublyLinkedListValue = pydantic.Field(alias="fullList")
+class DoublyLinkedListNodeAndListValue(pydantic_v1.BaseModel):
+    node_id: NodeId = pydantic_v1.Field(alias="nodeId")
+    full_list: DoublyLinkedListValue = pydantic_v1.Field(alias="fullList")
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -28,5 +24,5 @@ class DoublyLinkedListNodeAndListValue(pydantic.BaseModel):
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}

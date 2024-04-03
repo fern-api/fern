@@ -8,12 +8,8 @@ import typing
 import typing_extensions
 
 from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 from .foo import Foo as resources_types_types_foo_Foo
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -31,7 +27,7 @@ class _Factory:
         )
 
 
-class UnionWithBaseProperties(pydantic.BaseModel):
+class UnionWithBaseProperties(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(
@@ -54,7 +50,7 @@ class UnionWithBaseProperties(pydantic.BaseModel):
 
     __root__: typing_extensions.Annotated[
         typing.Union[_UnionWithBaseProperties.Integer, _UnionWithBaseProperties.String, _UnionWithBaseProperties.Foo],
-        pydantic.Field(discriminator="type"),
+        pydantic_v1.Field(discriminator="type"),
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -66,16 +62,16 @@ class UnionWithBaseProperties(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _UnionWithBaseProperties:
-    class Integer(pydantic.BaseModel):
+    class Integer(pydantic_v1.BaseModel):
         type: typing.Literal["integer"] = "integer"
         value: int
 
-    class String(pydantic.BaseModel):
+    class String(pydantic_v1.BaseModel):
         type: typing.Literal["string"] = "string"
         value: str
 

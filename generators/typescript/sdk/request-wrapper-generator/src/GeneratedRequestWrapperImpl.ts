@@ -29,6 +29,7 @@ export declare namespace GeneratedRequestWrapperImpl {
         wrapperName: string;
         packageId: PackageId;
         includeSerdeLayer: boolean;
+        retainOriginalCasing: boolean;
     }
 }
 
@@ -40,13 +41,22 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     private wrapperName: string;
     private packageId: PackageId;
     protected includeSerdeLayer: boolean;
+    protected retainOriginalCasing: boolean;
 
-    constructor({ service, endpoint, wrapperName, packageId, includeSerdeLayer }: GeneratedRequestWrapperImpl.Init) {
+    constructor({
+        service,
+        endpoint,
+        wrapperName,
+        packageId,
+        includeSerdeLayer,
+        retainOriginalCasing
+    }: GeneratedRequestWrapperImpl.Init) {
         this.service = service;
         this.endpoint = endpoint;
         this.wrapperName = wrapperName;
         this.packageId = packageId;
         this.includeSerdeLayer = includeSerdeLayer;
+        this.retainOriginalCasing = retainOriginalCasing;
     }
 
     public writeToFile(context: SdkContext): void {
@@ -245,7 +255,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     public getInlinedRequestBodyPropertyKeyFromName(name: NameAndWireValue): string {
-        return this.includeSerdeLayer ? name.name.camelCase.unsafeName : name.wireValue;
+        return this.includeSerdeLayer && !this.retainOriginalCasing ? name.name.camelCase.unsafeName : name.wireValue;
     }
 
     private expensivelyComputeIfAllPropertiesAreOptional(context: SdkContext): boolean {
@@ -320,13 +330,14 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     }
 
     public getPropertyNameOfQueryParameter(queryParameter: QueryParameter): RequestWrapperNonBodyProperty {
-        return this.getPropertyNameOfNonLiteralHeaderFromName(queryParameter.name);
+        return this.getPropertyNameOfQueryParameterFromName(queryParameter.name);
     }
 
     public getPropertyNameOfQueryParameterFromName(name: NameAndWireValue): RequestWrapperNonBodyProperty {
         return {
             safeName: name.name.camelCase.safeName,
-            propertyName: this.includeSerdeLayer ? name.name.camelCase.unsafeName : name.wireValue
+            propertyName:
+                this.includeSerdeLayer && !this.retainOriginalCasing ? name.name.camelCase.unsafeName : name.wireValue
         };
     }
 
@@ -337,7 +348,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     public getPropertyNameOfNonLiteralHeaderFromName(name: NameAndWireValue): RequestWrapperNonBodyProperty {
         return {
             safeName: name.name.camelCase.safeName,
-            propertyName: this.includeSerdeLayer ? name.name.camelCase.unsafeName : name.wireValue
+            propertyName:
+                this.includeSerdeLayer && !this.retainOriginalCasing ? name.name.camelCase.unsafeName : name.wireValue
         };
     }
 
@@ -374,6 +386,8 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         if (this.endpoint.sdkRequest.shape.type !== "wrapper") {
             throw new Error("Request body is defined but sdkRequest is not a wrapper");
         }
-        return this.endpoint.sdkRequest.shape.bodyKey.camelCase.unsafeName;
+        return this.retainOriginalCasing
+            ? this.endpoint.sdkRequest.shape.bodyKey.originalName
+            : this.endpoint.sdkRequest.shape.bodyKey.camelCase.unsafeName;
     }
 }

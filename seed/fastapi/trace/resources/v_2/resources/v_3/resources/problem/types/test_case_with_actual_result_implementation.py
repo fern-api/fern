@@ -4,18 +4,14 @@ import datetime as dt
 import typing
 
 from ........core.datetime_utils import serialize_datetime
+from ........core.pydantic_utilities import pydantic_v1
 from .assert_correctness_check import AssertCorrectnessCheck
 from .non_void_function_definition import NonVoidFunctionDefinition
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class TestCaseWithActualResultImplementation(pydantic.BaseModel):
-    get_actual_result: NonVoidFunctionDefinition = pydantic.Field(alias="getActualResult")
-    assert_correctness_check: AssertCorrectnessCheck = pydantic.Field(alias="assertCorrectnessCheck")
+class TestCaseWithActualResultImplementation(pydantic_v1.BaseModel):
+    get_actual_result: NonVoidFunctionDefinition = pydantic_v1.Field(alias="getActualResult")
+    assert_correctness_check: AssertCorrectnessCheck = pydantic_v1.Field(alias="assertCorrectnessCheck")
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -28,5 +24,5 @@ class TestCaseWithActualResultImplementation(pydantic.BaseModel):
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}

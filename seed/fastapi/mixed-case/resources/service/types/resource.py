@@ -8,13 +8,9 @@ import typing
 import typing_extensions
 
 from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 from .organization import Organization as resources_service_types_organization_Organization
 from .user import User as resources_service_types_user_User
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -27,7 +23,7 @@ class _Factory:
         return Resource(__root__=_Resource.Organization(**value.dict(exclude_unset=True), resource_type="Organization"))
 
 
-class Resource(pydantic.BaseModel):
+class Resource(pydantic_v1.BaseModel):
     """
     from seed.mixed_case import Resource_User
 
@@ -60,7 +56,7 @@ class Resource(pydantic.BaseModel):
             )
 
     __root__: typing_extensions.Annotated[
-        typing.Union[_Resource.User, _Resource.Organization], pydantic.Field(discriminator="resource_type")
+        typing.Union[_Resource.User, _Resource.Organization], pydantic_v1.Field(discriminator="resource_type")
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -72,7 +68,7 @@ class Resource(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 

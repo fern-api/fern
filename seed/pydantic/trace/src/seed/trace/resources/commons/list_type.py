@@ -6,16 +6,12 @@ import datetime as dt
 import typing
 
 from ...core.datetime_utils import serialize_datetime
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ...core.pydantic_utilities import pydantic_v1
 
 
-class ListType(pydantic.BaseModel):
-    value_type: VariableType = pydantic.Field(alias="valueType")
-    is_fixed_length: typing.Optional[bool] = pydantic.Field(alias="isFixedLength")
+class ListType(pydantic_v1.BaseModel):
+    value_type: VariableType = pydantic_v1.Field(alias="valueType")
+    is_fixed_length: typing.Optional[bool] = pydantic_v1.Field(alias="isFixedLength", default=None)
     """
     Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
     """
@@ -31,7 +27,7 @@ class ListType(pydantic.BaseModel):
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}
 
 

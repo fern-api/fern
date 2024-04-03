@@ -4,18 +4,14 @@ import datetime as dt
 import typing
 
 from .....core.datetime_utils import serialize_datetime
+from .....core.pydantic_utilities import pydantic_v1
 from .test_case_template import TestCaseTemplate
 from .test_case_v_2 import TestCaseV2
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class GetGeneratedTestCaseFileRequest(pydantic.BaseModel):
-    template: typing.Optional[TestCaseTemplate]
-    test_case: TestCaseV2 = pydantic.Field(alias="testCase")
+class GetGeneratedTestCaseFileRequest(pydantic_v1.BaseModel):
+    template: typing.Optional[TestCaseTemplate] = None
+    test_case: TestCaseV2 = pydantic_v1.Field(alias="testCase")
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -28,5 +24,5 @@ class GetGeneratedTestCaseFileRequest(pydantic.BaseModel):
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

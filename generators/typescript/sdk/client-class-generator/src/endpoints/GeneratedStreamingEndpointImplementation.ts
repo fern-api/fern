@@ -22,6 +22,7 @@ export declare namespace GeneratedStreamingEndpointImplementation {
         defaultTimeoutInSeconds: number | "infinity" | undefined;
         request: GeneratedEndpointRequest;
         includeSerdeLayer: boolean;
+        retainOriginalCasing: boolean;
     }
 }
 
@@ -36,6 +37,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
     private defaultTimeoutInSeconds: number | "infinity" | undefined;
     private request: GeneratedEndpointRequest;
     private includeSerdeLayer: boolean;
+    private retainOriginalCasing: boolean;
 
     constructor({
         endpoint,
@@ -44,7 +46,8 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         response,
         defaultTimeoutInSeconds,
         request,
-        includeSerdeLayer
+        includeSerdeLayer,
+        retainOriginalCasing
     }: GeneratedStreamingEndpointImplementation.Init) {
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -53,6 +56,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         this.defaultTimeoutInSeconds = defaultTimeoutInSeconds;
         this.request = request;
         this.includeSerdeLayer = includeSerdeLayer;
+        this.retainOriginalCasing = retainOriginalCasing;
     }
 
     public getExample(): ts.Expression | undefined {
@@ -101,7 +105,8 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
             endpoint: this.endpoint,
             generatedClientClass: this.generatedSdkClientClass,
             context,
-            includeSerdeLayer: this.includeSerdeLayer
+            includeSerdeLayer: this.includeSerdeLayer,
+            retainOriginalCasing: this.retainOriginalCasing
         });
         if (url != null) {
             return context.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);

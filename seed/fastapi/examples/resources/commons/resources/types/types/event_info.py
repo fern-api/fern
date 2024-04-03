@@ -8,13 +8,9 @@ import typing
 import typing_extensions
 
 from ......core.datetime_utils import serialize_datetime
+from ......core.pydantic_utilities import pydantic_v1
 from .metadata import Metadata as resources_commons_resources_types_types_metadata_Metadata
 from .tag import Tag as resources_commons_resources_types_types_tag_Tag
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -27,7 +23,7 @@ class _Factory:
         return EventInfo(__root__=_EventInfo.Tag(type="tag", value=value))
 
 
-class EventInfo(pydantic.BaseModel):
+class EventInfo(pydantic_v1.BaseModel):
     """
     from seed.examples.resources.commons import EventInfo_Metadata
 
@@ -58,7 +54,7 @@ class EventInfo(pydantic.BaseModel):
             return tag(self.__root__.value)
 
     __root__: typing_extensions.Annotated[
-        typing.Union[_EventInfo.Metadata, _EventInfo.Tag], pydantic.Field(discriminator="type")
+        typing.Union[_EventInfo.Metadata, _EventInfo.Tag], pydantic_v1.Field(discriminator="type")
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -70,7 +66,7 @@ class EventInfo(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
@@ -82,7 +78,7 @@ class _EventInfo:
             allow_population_by_field_name = True
             populate_by_name = True
 
-    class Tag(pydantic.BaseModel):
+    class Tag(pydantic_v1.BaseModel):
         type: typing.Literal["tag"] = "tag"
         value: resources_commons_resources_types_types_tag_Tag
 

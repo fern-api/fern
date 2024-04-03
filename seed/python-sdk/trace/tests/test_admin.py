@@ -8,7 +8,6 @@ from seed import (
     ExceptionInfo,
     ExceptionV2_Generic,
     ExpressionLocation,
-    RunningSubmissionState,
     StackInformation,
     TestCaseResult,
     TestCaseResultWithStdout,
@@ -35,9 +34,9 @@ async def test_update_test_submission_status(client: SeedTrace, async_client: As
 
 async def test_send_test_submission_update(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert client.admin.send_test_submission_update(submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), request=TestSubmissionUpdate(update_time=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"), update_info=TestSubmissionUpdateInfo_Running(value=RunningSubmissionState.QUEUEING_SUBMISSION))) is None  # type: ignore[func-returns-value]
+    assert client.admin.send_test_submission_update(submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), request=TestSubmissionUpdate(update_time=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"), update_info=TestSubmissionUpdateInfo_Running(value="QUEUEING_SUBMISSION"))) is None  # type: ignore[func-returns-value]
 
-    assert await async_client.admin.send_test_submission_update(submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), request=TestSubmissionUpdate(update_time=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"), update_info=TestSubmissionUpdateInfo_Running(value=RunningSubmissionState.QUEUEING_SUBMISSION))) is None  # type: ignore[func-returns-value]
+    assert await async_client.admin.send_test_submission_update(submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), request=TestSubmissionUpdate(update_time=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"), update_info=TestSubmissionUpdateInfo_Running(value="QUEUEING_SUBMISSION"))) is None  # type: ignore[func-returns-value]
 
 
 async def test_update_workspace_submission_status(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
@@ -49,9 +48,9 @@ async def test_update_workspace_submission_status(client: SeedTrace, async_clien
 
 async def test_send_workspace_submission_update(client: SeedTrace, async_client: AsyncSeedTrace) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
-    assert client.admin.send_workspace_submission_update(submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), request=WorkspaceSubmissionUpdate(update_time=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"), update_info=WorkspaceSubmissionUpdateInfo_Running(value=RunningSubmissionState.QUEUEING_SUBMISSION))) is None  # type: ignore[func-returns-value]
+    assert client.admin.send_workspace_submission_update(submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), request=WorkspaceSubmissionUpdate(update_time=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"), update_info=WorkspaceSubmissionUpdateInfo_Running(value="QUEUEING_SUBMISSION"))) is None  # type: ignore[func-returns-value]
 
-    assert await async_client.admin.send_workspace_submission_update(submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), request=WorkspaceSubmissionUpdate(update_time=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"), update_info=WorkspaceSubmissionUpdateInfo_Running(value=RunningSubmissionState.QUEUEING_SUBMISSION))) is None  # type: ignore[func-returns-value]
+    assert await async_client.admin.send_workspace_submission_update(submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), request=WorkspaceSubmissionUpdate(update_time=datetime.datetime.fromisoformat("2024-01-15 09:30:00+00:00"), update_info=WorkspaceSubmissionUpdateInfo_Running(value="QUEUEING_SUBMISSION"))) is None  # type: ignore[func-returns-value]
 
 
 async def test_store_traced_test_case(client: SeedTrace, async_client: AsyncSeedTrace) -> None:

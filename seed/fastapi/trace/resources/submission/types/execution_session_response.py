@@ -4,18 +4,14 @@ import datetime as dt
 import typing
 
 from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 from ...commons.types.language import Language
 from .execution_session_status import ExecutionSessionStatus
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class ExecutionSessionResponse(pydantic.BaseModel):
-    session_id: str = pydantic.Field(alias="sessionId")
-    execution_session_url: typing.Optional[str] = pydantic.Field(alias="executionSessionUrl")
+class ExecutionSessionResponse(pydantic_v1.BaseModel):
+    session_id: str = pydantic_v1.Field(alias="sessionId")
+    execution_session_url: typing.Optional[str] = pydantic_v1.Field(alias="executionSessionUrl", default=None)
     language: Language
     status: ExecutionSessionStatus
 
@@ -30,5 +26,5 @@ class ExecutionSessionResponse(pydantic.BaseModel):
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}

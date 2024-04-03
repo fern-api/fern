@@ -13,6 +13,7 @@ export declare namespace ExpressInlinedRequestBodyContextImpl {
         packageResolver: PackageResolver;
         importsManager: ImportsManager;
         sourceFile: SourceFile;
+        retainOriginalCasing: boolean;
     }
 }
 
@@ -22,19 +23,22 @@ export class ExpressInlinedRequestBodyContextImpl implements ExpressInlinedReque
     private packageResolver: PackageResolver;
     private importsManager: ImportsManager;
     private sourceFile: SourceFile;
+    private retainOriginalCasing: boolean;
 
     constructor({
         expressInlinedRequestBodyGenerator,
         expressInlinedRequestBodyDeclarationReferencer,
         packageResolver,
         importsManager,
-        sourceFile
+        sourceFile,
+        retainOriginalCasing
     }: ExpressInlinedRequestBodyContextImpl.Init) {
         this.expressInlinedRequestBodyGenerator = expressInlinedRequestBodyGenerator;
         this.expressInlinedRequestBodyDeclarationReferencer = expressInlinedRequestBodyDeclarationReferencer;
         this.packageResolver = packageResolver;
         this.importsManager = importsManager;
         this.sourceFile = sourceFile;
+        this.retainOriginalCasing = retainOriginalCasing;
     }
 
     public getGeneratedInlinedRequestBody(
@@ -56,7 +60,8 @@ export class ExpressInlinedRequestBodyContextImpl implements ExpressInlinedReque
             typeName: this.expressInlinedRequestBodyDeclarationReferencer.getExportedName({
                 packageId,
                 endpoint
-            })
+            }),
+            retainOriginalCasing: this.retainOriginalCasing
         });
     }
 

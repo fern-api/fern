@@ -4,17 +4,13 @@ import datetime as dt
 import typing
 
 from ...core.datetime_utils import serialize_datetime
+from ...core.pydantic_utilities import pydantic_v1
 from .node_id import NodeId
 from .singly_linked_list_node_value import SinglyLinkedListNodeValue
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class SinglyLinkedListValue(pydantic.BaseModel):
-    head: typing.Optional[NodeId]
+class SinglyLinkedListValue(pydantic_v1.BaseModel):
+    head: typing.Optional[NodeId] = None
     nodes: typing.Dict[NodeId, SinglyLinkedListNodeValue]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -26,5 +22,5 @@ class SinglyLinkedListValue(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

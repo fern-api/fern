@@ -22,12 +22,8 @@ import { VariableResolver } from "../resolvers/VariableResolver";
 import { parseTypeName } from "../utils/parseTypeName";
 import { convertAvailability, convertDeclaration } from "./convertDeclaration";
 import { constructHttpPath } from "./services/constructHttpPath";
-import {
-    convertHttpHeader,
-    convertPathParameters,
-    getQueryParameterName,
-    resolvePathParameterOrThrow
-} from "./services/convertHttpService";
+import { convertHttpHeader, convertPathParameters, resolvePathParameterOrThrow } from "./services/convertHttpService";
+import { getQueryParameterName } from "./services/convertQueryParameter";
 import {
     convertTypeReferenceExample,
     getOriginalTypeDeclarationForPropertyFromExtensions

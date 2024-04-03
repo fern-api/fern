@@ -8,6 +8,7 @@ import typing
 import typing_extensions
 
 from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 from .custom_test_cases_unsupported import (
     CustomTestCasesUnsupported as resources_submission_types_custom_test_cases_unsupported_CustomTestCasesUnsupported,
 )
@@ -15,11 +16,6 @@ from .submission_id_not_found import (
     SubmissionIdNotFound as resources_submission_types_submission_id_not_found_SubmissionIdNotFound,
 )
 from .unexpected_language_error import UnexpectedLanguageError
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -51,7 +47,7 @@ class _Factory:
         )
 
 
-class InvalidRequestCause(pydantic.BaseModel):
+class InvalidRequestCause(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(
@@ -96,7 +92,7 @@ class InvalidRequestCause(pydantic.BaseModel):
             _InvalidRequestCause.CustomTestCasesUnsupported,
             _InvalidRequestCause.UnexpectedLanguage,
         ],
-        pydantic.Field(discriminator="type"),
+        pydantic_v1.Field(discriminator="type"),
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -108,7 +104,7 @@ class InvalidRequestCause(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 

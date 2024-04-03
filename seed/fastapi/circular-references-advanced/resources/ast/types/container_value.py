@@ -8,11 +8,7 @@ import typing
 import typing_extensions
 
 from ....core.datetime_utils import serialize_datetime
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ....core.pydantic_utilities import pydantic_v1
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -25,7 +21,7 @@ class _Factory:
         return ContainerValue(__root__=_ContainerValue.Optional(type="optional", value=value))
 
 
-class ContainerValue(pydantic.BaseModel):
+class ContainerValue(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(self) -> typing.Union[_ContainerValue.List, _ContainerValue.Optional]:
@@ -42,7 +38,7 @@ class ContainerValue(pydantic.BaseModel):
             return optional(self.__root__.value)
 
     __root__: typing_extensions.Annotated[
-        typing.Union[_ContainerValue.List, _ContainerValue.Optional], pydantic.Field(discriminator="type")
+        typing.Union[_ContainerValue.List, _ContainerValue.Optional], pydantic_v1.Field(discriminator="type")
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -54,7 +50,7 @@ class ContainerValue(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
@@ -62,11 +58,11 @@ from .field_value import FieldValue  # noqa: E402
 
 
 class _ContainerValue:
-    class List(pydantic.BaseModel):
+    class List(pydantic_v1.BaseModel):
         type: typing.Literal["list"] = "list"
         value: typing.List[FieldValue]
 
-    class Optional(pydantic.BaseModel):
+    class Optional(pydantic_v1.BaseModel):
         type: typing.Literal["optional"] = "optional"
         value: typing.Optional[FieldValue]
 

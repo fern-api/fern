@@ -1,0 +1,184 @@
+{
+  "info": {
+    "name": "Mixed Case",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": null,
+  "item": [
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Service",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Get Resource",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/resource/:ResourceID",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "resource",
+                ":ResourceID"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "ResourceID",
+                  "description": null,
+                  "value": "rsc-xyz"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/resource/:ResourceID",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "resource",
+                    ":ResourceID"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "ResourceID",
+                      "description": null,
+                      "value": "rsc-xyz"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"resource_type\": \"user\",\n    \"userName\": \"username\",\n    \"metadata_tags\": [\n        \"tag1\",\n        \"tag2\"\n    ],\n    \"EXTRA_PROPERTIES\": {\n        \"foo\": \"bar\",\n        \"baz\": \"qux\"\n    }\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "List Resources",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/resource?page_limit=10&beforeDate=2023-01-01",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "resource"
+              ],
+              "query": [
+                {
+                  "key": "page_limit",
+                  "description": null,
+                  "value": "10"
+                },
+                {
+                  "key": "beforeDate",
+                  "description": null,
+                  "value": "2023-01-01"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/resource?page_limit=10&beforeDate=2023-01-01",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "resource"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_limit",
+                      "description": null,
+                      "value": "10"
+                    },
+                    {
+                      "key": "beforeDate",
+                      "description": null,
+                      "value": "2023-01-01"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "[\n    {\n        \"resource_type\": \"user\",\n        \"userName\": \"username\",\n        \"metadata_tags\": [\n            \"tag1\",\n            \"tag2\"\n        ],\n        \"EXTRA_PROPERTIES\": {\n            \"foo\": \"bar\",\n            \"baz\": \"qux\"\n        }\n    }\n]",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

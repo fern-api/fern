@@ -30,7 +30,8 @@ import {
     getOriginalTypeDeclarationForPropertyFromExtensions
 } from "../type-declarations/convertExampleType";
 import { getPropertyName } from "../type-declarations/convertObjectTypeDeclaration";
-import { getHeaderName, getQueryParameterName, resolvePathParameterOrThrow } from "./convertHttpService";
+import { getHeaderName, resolvePathParameterOrThrow } from "./convertHttpService";
+import { getQueryParameterName } from "./convertQueryParameter";
 
 export function convertExampleEndpointCall({
     service,
