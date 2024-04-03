@@ -4,14 +4,10 @@ import datetime as dt
 import typing
 
 from ...core.datetime_utils import serialize_datetime
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ...core.pydantic_utilities import pydantic_v1
 
 
-class Organization(pydantic.BaseModel):
+class Organization(pydantic_v1.BaseModel):
     """
     from seed.mixed_case import Organization
 
@@ -31,5 +27,5 @@ class Organization(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

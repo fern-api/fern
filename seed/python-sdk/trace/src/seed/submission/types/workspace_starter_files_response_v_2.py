@@ -5,16 +5,12 @@ import typing
 
 from ...commons.types.language import Language
 from ...core.datetime_utils import serialize_datetime
+from ...core.pydantic_utilities import pydantic_v1
 from ...v_2.problem.types.files import Files
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class WorkspaceStarterFilesResponseV2(pydantic.BaseModel):
-    files_by_language: typing.Dict[Language, Files] = pydantic.Field(alias="filesByLanguage")
+class WorkspaceStarterFilesResponseV2(pydantic_v1.BaseModel):
+    files_by_language: typing.Dict[Language, Files] = pydantic_v1.Field(alias="filesByLanguage")
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -29,5 +25,5 @@ class WorkspaceStarterFilesResponseV2(pydantic.BaseModel):
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

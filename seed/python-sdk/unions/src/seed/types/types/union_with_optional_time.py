@@ -5,13 +5,10 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ...core.pydantic_utilities import pydantic_v1
 
 
-class UnionWithOptionalTime_Date(pydantic.BaseModel):
+class UnionWithOptionalTime_Date(pydantic_v1.BaseModel):
     type: typing.Literal["date"] = "date"
     value: typing.Optional[dt.date]
 
@@ -20,7 +17,7 @@ class UnionWithOptionalTime_Date(pydantic.BaseModel):
         smart_union = True
 
 
-class UnionWithOptionalTime_Dateimte(pydantic.BaseModel):
+class UnionWithOptionalTime_Dateimte(pydantic_v1.BaseModel):
     type: typing.Literal["dateimte"] = "dateimte"
     value: typing.Optional[dt.datetime]
 

@@ -6,11 +6,7 @@ import datetime as dt
 import typing
 
 from ....core.datetime_utils import serialize_datetime
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ....core.pydantic_utilities import pydantic_v1
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -20,7 +16,7 @@ class _Factory:
         return UnionWithLiteral(__root__=_UnionWithLiteral.Fern(type="fern", value=value))
 
 
-class UnionWithLiteral(pydantic.BaseModel):
+class UnionWithLiteral(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(self) -> typing.Union[_UnionWithLiteral.Fern]:
@@ -41,12 +37,12 @@ class UnionWithLiteral(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _UnionWithLiteral:
-    class Fern(pydantic.BaseModel):
+    class Fern(pydantic_v1.BaseModel):
         type: typing.Literal["fern"] = "fern"
         value: typing.Literal["fern"]
 

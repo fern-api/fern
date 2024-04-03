@@ -4,18 +4,14 @@ import datetime as dt
 import typing
 
 from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 from .movie_id import MovieId
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class Movie(pydantic.BaseModel):
+class Movie(pydantic_v1.BaseModel):
     id: MovieId
     title: str
-    rating: float = pydantic.Field()
+    rating: float = pydantic_v1.Field()
     """
     The rating scale is one to five stars
     """
@@ -29,5 +25,5 @@ class Movie(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}

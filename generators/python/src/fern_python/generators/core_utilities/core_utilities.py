@@ -21,6 +21,16 @@ class CoreUtilities:
             exports={"serialize_datetime"},
         )
 
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="pydantic_utilities.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="pydantic_utilities"),
+            ),
+            exports={"pydantic_v1"},
+        )
+
     def _copy_file_to_project(
         self, *, project: Project, relative_filepath_on_disk: str, filepath_in_project: Filepath, exports: Set[str]
     ) -> None:
@@ -41,5 +51,13 @@ class CoreUtilities:
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
                 module=AST.Module.local(*self._module_path, "datetime_utils"), named_import="serialize_datetime"
+            ),
+        )
+
+    def get_pydantic_version_import(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="pydantic_v1"
             ),
         )

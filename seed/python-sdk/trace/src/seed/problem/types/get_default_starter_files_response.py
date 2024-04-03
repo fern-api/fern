@@ -5,15 +5,11 @@ import typing
 
 from ...commons.types.language import Language
 from ...core.datetime_utils import serialize_datetime
+from ...core.pydantic_utilities import pydantic_v1
 from .problem_files import ProblemFiles
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class GetDefaultStarterFilesResponse(pydantic.BaseModel):
+class GetDefaultStarterFilesResponse(pydantic_v1.BaseModel):
     files: typing.Dict[Language, ProblemFiles]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -27,5 +23,5 @@ class GetDefaultStarterFilesResponse(pydantic.BaseModel):
     class Config:
         frozen = True
         smart_union = True
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

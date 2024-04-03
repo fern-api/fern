@@ -4,15 +4,11 @@ from __future__ import annotations
 
 import typing
 
+from ...core.pydantic_utilities import pydantic_v1
 from .initialize_problem_request import InitializeProblemRequest
 from .stop_request import StopRequest
 from .submit_request_v_2 import SubmitRequestV2
 from .workspace_submit_request import WorkspaceSubmitRequest
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 
 class SubmissionRequest_InitializeProblemRequest(InitializeProblemRequest):
@@ -25,7 +21,7 @@ class SubmissionRequest_InitializeProblemRequest(InitializeProblemRequest):
         populate_by_name = True
 
 
-class SubmissionRequest_InitializeWorkspaceRequest(pydantic.BaseModel):
+class SubmissionRequest_InitializeWorkspaceRequest(pydantic_v1.BaseModel):
     type: typing.Literal["initializeWorkspaceRequest"] = "initializeWorkspaceRequest"
 
     class Config:

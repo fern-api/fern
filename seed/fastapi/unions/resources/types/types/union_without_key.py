@@ -6,13 +6,9 @@ import datetime as dt
 import typing
 
 from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 from .bar import Bar as resources_types_types_bar_Bar
 from .foo import Foo as resources_types_types_foo_Foo
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -25,7 +21,7 @@ class _Factory:
         return UnionWithoutKey(__root__=_UnionWithoutKey.Bar(**value.dict(exclude_unset=True), type="bar"))
 
 
-class UnionWithoutKey(pydantic.BaseModel):
+class UnionWithoutKey(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(self) -> typing.Union[_UnionWithoutKey.Foo, _UnionWithoutKey.Bar]:
@@ -42,7 +38,7 @@ class UnionWithoutKey(pydantic.BaseModel):
             return bar(resources_types_types_bar_Bar(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
 
     __root__: typing.Annotated[
-        typing.Union[_UnionWithoutKey.Foo, _UnionWithoutKey.Bar], pydantic.Field(discriminator="type")
+        typing.Union[_UnionWithoutKey.Foo, _UnionWithoutKey.Bar], pydantic_v1.Field(discriminator="type")
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -54,7 +50,7 @@ class UnionWithoutKey(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 

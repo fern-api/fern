@@ -83,6 +83,15 @@ class CoreUtilities:
             ),
             exports={"HttpClient", "AsyncHttpClient"},
         )
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="pydantic_utilities.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="pydantic_utilities"),
+            ),
+            exports={"pydantic_v1"},
+        )
         project.add_dependency(TYPING_EXTENSIONS_DEPENDENCY)
         project.add_dependency(PYDANTIC_DEPENDENCY)
 
@@ -246,4 +255,12 @@ class CoreUtilities:
                 ),
                 kwargs=[("httpx_client", obj)],
             )
+        )
+
+    def get_pydantic_version_import(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="pydantic_v1"
+            ),
         )

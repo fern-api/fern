@@ -6,14 +6,10 @@ import datetime as dt
 import typing
 
 from ......core.datetime_utils import serialize_datetime
+from ......core.pydantic_utilities import pydantic_v1
 from .....commons.types.language import Language
 from .basic_custom_files import BasicCustomFiles
 from .files import Files
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -26,7 +22,7 @@ class _Factory:
         return CustomFiles(__root__=_CustomFiles.Custom(type="custom", value=value))
 
 
-class CustomFiles(pydantic.BaseModel):
+class CustomFiles(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(self) -> typing.Union[_CustomFiles.Basic, _CustomFiles.Custom]:
@@ -43,7 +39,7 @@ class CustomFiles(pydantic.BaseModel):
             return custom(self.__root__.value)
 
     __root__: typing.Annotated[
-        typing.Union[_CustomFiles.Basic, _CustomFiles.Custom], pydantic.Field(discriminator="type")
+        typing.Union[_CustomFiles.Basic, _CustomFiles.Custom], pydantic_v1.Field(discriminator="type")
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -55,7 +51,7 @@ class CustomFiles(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
@@ -67,7 +63,7 @@ class _CustomFiles:
             allow_population_by_field_name = True
             populate_by_name = True
 
-    class Custom(pydantic.BaseModel):
+    class Custom(pydantic_v1.BaseModel):
         type: typing.Literal["custom"] = "custom"
         value: typing.Dict[Language, Files]
 

@@ -6,13 +6,9 @@ import datetime as dt
 import typing
 
 from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 from .test_submission_status_v_2 import TestSubmissionStatusV2
 from .workspace_submission_status_v_2 import WorkspaceSubmissionStatusV2
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -27,7 +23,7 @@ class _Factory:
         )
 
 
-class SubmissionStatusV2(pydantic.BaseModel):
+class SubmissionStatusV2(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(self) -> typing.Union[_SubmissionStatusV2.Test, _SubmissionStatusV2.Workspace]:
@@ -44,7 +40,7 @@ class SubmissionStatusV2(pydantic.BaseModel):
             return workspace(WorkspaceSubmissionStatusV2(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
 
     __root__: typing.Annotated[
-        typing.Union[_SubmissionStatusV2.Test, _SubmissionStatusV2.Workspace], pydantic.Field(discriminator="type")
+        typing.Union[_SubmissionStatusV2.Test, _SubmissionStatusV2.Workspace], pydantic_v1.Field(discriminator="type")
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -56,7 +52,7 @@ class SubmissionStatusV2(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 

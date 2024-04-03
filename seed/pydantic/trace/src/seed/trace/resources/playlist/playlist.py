@@ -4,19 +4,15 @@ import datetime as dt
 import typing
 
 from ...core.datetime_utils import serialize_datetime
+from ...core.pydantic_utilities import pydantic_v1
 from ..commons.user_id import UserId
 from .playlist_create_request import PlaylistCreateRequest
 from .playlist_id import PlaylistId
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
-
 
 class Playlist(PlaylistCreateRequest):
     playlist_id: PlaylistId
-    owner_id: UserId = pydantic.Field(alias="owner-id")
+    owner_id: UserId = pydantic_v1.Field(alias="owner-id")
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -29,5 +25,5 @@ class Playlist(PlaylistCreateRequest):
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

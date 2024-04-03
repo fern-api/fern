@@ -4,29 +4,26 @@ from __future__ import annotations
 
 import typing
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ...core.pydantic_utilities import pydantic_v1
 
 
-class VariableType_IntegerType(pydantic.BaseModel):
+class VariableType_IntegerType(pydantic_v1.BaseModel):
     type: typing.Literal["integerType"] = "integerType"
 
 
-class VariableType_DoubleType(pydantic.BaseModel):
+class VariableType_DoubleType(pydantic_v1.BaseModel):
     type: typing.Literal["doubleType"] = "doubleType"
 
 
-class VariableType_BooleanType(pydantic.BaseModel):
+class VariableType_BooleanType(pydantic_v1.BaseModel):
     type: typing.Literal["booleanType"] = "booleanType"
 
 
-class VariableType_StringType(pydantic.BaseModel):
+class VariableType_StringType(pydantic_v1.BaseModel):
     type: typing.Literal["stringType"] = "stringType"
 
 
-class VariableType_CharType(pydantic.BaseModel):
+class VariableType_CharType(pydantic_v1.BaseModel):
     type: typing.Literal["charType"] = "charType"
 
 
@@ -46,15 +43,15 @@ class VariableType_MapType(MapType):
         populate_by_name = True
 
 
-class VariableType_BinaryTreeType(pydantic.BaseModel):
+class VariableType_BinaryTreeType(pydantic_v1.BaseModel):
     type: typing.Literal["binaryTreeType"] = "binaryTreeType"
 
 
-class VariableType_SinglyLinkedListType(pydantic.BaseModel):
+class VariableType_SinglyLinkedListType(pydantic_v1.BaseModel):
     type: typing.Literal["singlyLinkedListType"] = "singlyLinkedListType"
 
 
-class VariableType_DoublyLinkedListType(pydantic.BaseModel):
+class VariableType_DoublyLinkedListType(pydantic_v1.BaseModel):
     type: typing.Literal["doublyLinkedListType"] = "doublyLinkedListType"
 
 

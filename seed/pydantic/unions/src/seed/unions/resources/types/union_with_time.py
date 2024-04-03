@@ -5,23 +5,20 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ...core.pydantic_utilities import pydantic_v1
 
 
-class UnionWithTime_Value(pydantic.BaseModel):
+class UnionWithTime_Value(pydantic_v1.BaseModel):
     type: typing.Literal["value"] = "value"
     value: int
 
 
-class UnionWithTime_Date(pydantic.BaseModel):
+class UnionWithTime_Date(pydantic_v1.BaseModel):
     type: typing.Literal["date"] = "date"
     value: dt.date
 
 
-class UnionWithTime_Datetime(pydantic.BaseModel):
+class UnionWithTime_Datetime(pydantic_v1.BaseModel):
     type: typing.Literal["datetime"] = "datetime"
     value: dt.datetime
 

@@ -4,17 +4,13 @@ from __future__ import annotations
 
 import typing
 
+from ...core.pydantic_utilities import pydantic_v1
 from .error_info import ErrorInfo
 from .running_submission_state import RunningSubmissionState
 from .workspace_run_details import WorkspaceRunDetails
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class WorkspaceSubmissionStatus_Stopped(pydantic.BaseModel):
+class WorkspaceSubmissionStatus_Stopped(pydantic_v1.BaseModel):
     type: typing.Literal["stopped"] = "stopped"
 
     class Config:
@@ -22,7 +18,7 @@ class WorkspaceSubmissionStatus_Stopped(pydantic.BaseModel):
         smart_union = True
 
 
-class WorkspaceSubmissionStatus_Errored(pydantic.BaseModel):
+class WorkspaceSubmissionStatus_Errored(pydantic_v1.BaseModel):
     type: typing.Literal["errored"] = "errored"
     value: ErrorInfo
 
@@ -31,7 +27,7 @@ class WorkspaceSubmissionStatus_Errored(pydantic.BaseModel):
         smart_union = True
 
 
-class WorkspaceSubmissionStatus_Running(pydantic.BaseModel):
+class WorkspaceSubmissionStatus_Running(pydantic_v1.BaseModel):
     type: typing.Literal["running"] = "running"
     value: RunningSubmissionState
 

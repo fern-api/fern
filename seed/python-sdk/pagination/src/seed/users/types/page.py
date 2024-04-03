@@ -4,16 +4,12 @@ import datetime as dt
 import typing
 
 from ...core.datetime_utils import serialize_datetime
+from ...core.pydantic_utilities import pydantic_v1
 from .next_page import NextPage
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class Page(pydantic.BaseModel):
-    page: int = pydantic.Field()
+class Page(pydantic_v1.BaseModel):
+    page: int = pydantic_v1.Field()
     """
     The current page
     """
@@ -33,5 +29,5 @@ class Page(pydantic.BaseModel):
     class Config:
         frozen = True
         smart_union = True
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

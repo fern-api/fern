@@ -7,16 +7,12 @@ from json.decoder import JSONDecodeError
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.jsonable_encoder import jsonable_encoder
+from ..core.pydantic_utilities import pydantic_v1
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from ..errors.errors.bad_request import BadRequest
 from ..errors.errors.unauthorized_request import UnauthorizedRequest
 from ..errors.types.unauthorized_request_error_body import UnauthorizedRequestErrorBody
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -63,10 +59,10 @@ class BasicAuthClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(bool, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(bool, _response.json())  # type: ignore
         if _response.status_code == 401:
             raise UnauthorizedRequest(
-                pydantic.parse_obj_as(UnauthorizedRequestErrorBody, _response.json())  # type: ignore
+                pydantic_v1.parse_obj_as(UnauthorizedRequestErrorBody, _response.json())  # type: ignore
             )
         try:
             _response_json = _response.json()
@@ -123,10 +119,10 @@ class BasicAuthClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(bool, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(bool, _response.json())  # type: ignore
         if _response.status_code == 401:
             raise UnauthorizedRequest(
-                pydantic.parse_obj_as(UnauthorizedRequestErrorBody, _response.json())  # type: ignore
+                pydantic_v1.parse_obj_as(UnauthorizedRequestErrorBody, _response.json())  # type: ignore
             )
         if _response.status_code == 400:
             raise BadRequest()
@@ -178,10 +174,10 @@ class AsyncBasicAuthClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(bool, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(bool, _response.json())  # type: ignore
         if _response.status_code == 401:
             raise UnauthorizedRequest(
-                pydantic.parse_obj_as(UnauthorizedRequestErrorBody, _response.json())  # type: ignore
+                pydantic_v1.parse_obj_as(UnauthorizedRequestErrorBody, _response.json())  # type: ignore
             )
         try:
             _response_json = _response.json()
@@ -238,10 +234,10 @@ class AsyncBasicAuthClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(bool, _response.json())  # type: ignore
+            return pydantic_v1.parse_obj_as(bool, _response.json())  # type: ignore
         if _response.status_code == 401:
             raise UnauthorizedRequest(
-                pydantic.parse_obj_as(UnauthorizedRequestErrorBody, _response.json())  # type: ignore
+                pydantic_v1.parse_obj_as(UnauthorizedRequestErrorBody, _response.json())  # type: ignore
             )
         if _response.status_code == 400:
             raise BadRequest()

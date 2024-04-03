@@ -6,14 +6,10 @@ import datetime as dt
 import typing
 
 from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 from .error_info import ErrorInfo
 from .running_submission_state import RunningSubmissionState
 from .submission_status_for_test_case import SubmissionStatusForTestCase
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -34,7 +30,7 @@ class _Factory:
         )
 
 
-class TestSubmissionStatus(pydantic.BaseModel):
+class TestSubmissionStatus(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(
@@ -70,7 +66,7 @@ class TestSubmissionStatus(pydantic.BaseModel):
             _TestSubmissionStatus.Running,
             _TestSubmissionStatus.TestCaseIdToState,
         ],
-        pydantic.Field(discriminator="type"),
+        pydantic_v1.Field(discriminator="type"),
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -82,23 +78,23 @@ class TestSubmissionStatus(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _TestSubmissionStatus:
-    class Stopped(pydantic.BaseModel):
+    class Stopped(pydantic_v1.BaseModel):
         type: typing.Literal["stopped"] = "stopped"
 
-    class Errored(pydantic.BaseModel):
+    class Errored(pydantic_v1.BaseModel):
         type: typing.Literal["errored"] = "errored"
         value: ErrorInfo
 
-    class Running(pydantic.BaseModel):
+    class Running(pydantic_v1.BaseModel):
         type: typing.Literal["running"] = "running"
         value: RunningSubmissionState
 
-    class TestCaseIdToState(pydantic.BaseModel):
+    class TestCaseIdToState(pydantic_v1.BaseModel):
         type: typing.Literal["testCaseIdToState"] = "testCaseIdToState"
         value: typing.Dict[str, SubmissionStatusForTestCase]
 

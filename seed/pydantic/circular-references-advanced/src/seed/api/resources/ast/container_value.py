@@ -4,21 +4,17 @@ from __future__ import annotations
 
 import typing
 
+from ...core.pydantic_utilities import pydantic_v1
 from .object_value import ObjectValue
 from .primitive_value import PrimitiveValue
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class ContainerValue_List(pydantic.BaseModel):
+class ContainerValue_List(pydantic_v1.BaseModel):
     type: typing.Literal["list"] = "list"
     value: typing.List[FieldValue]
 
 
-class ContainerValue_Optional(pydantic.BaseModel):
+class ContainerValue_Optional(pydantic_v1.BaseModel):
     type: typing.Literal["optional"] = "optional"
     value: typing.Optional[FieldValue]
 

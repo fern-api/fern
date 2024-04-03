@@ -5,15 +5,11 @@ import typing
 
 from ....commons.types.language import Language
 from ....core.datetime_utils import serialize_datetime
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ....core.pydantic_utilities import pydantic_v1
 
 
-class GetFunctionSignatureResponse(pydantic.BaseModel):
-    function_by_language: typing.Dict[Language, str] = pydantic.Field(alias="functionByLanguage")
+class GetFunctionSignatureResponse(pydantic_v1.BaseModel):
+    function_by_language: typing.Dict[Language, str] = pydantic_v1.Field(alias="functionByLanguage")
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -28,5 +24,5 @@ class GetFunctionSignatureResponse(pydantic.BaseModel):
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

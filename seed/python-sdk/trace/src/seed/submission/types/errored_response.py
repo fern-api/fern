@@ -4,18 +4,14 @@ import datetime as dt
 import typing
 
 from ...core.datetime_utils import serialize_datetime
+from ...core.pydantic_utilities import pydantic_v1
 from .error_info import ErrorInfo
 from .submission_id import SubmissionId
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class ErroredResponse(pydantic.BaseModel):
-    submission_id: SubmissionId = pydantic.Field(alias="submissionId")
-    error_info: ErrorInfo = pydantic.Field(alias="errorInfo")
+class ErroredResponse(pydantic_v1.BaseModel):
+    submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
+    error_info: ErrorInfo = pydantic_v1.Field(alias="errorInfo")
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -30,5 +26,5 @@ class ErroredResponse(pydantic.BaseModel):
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

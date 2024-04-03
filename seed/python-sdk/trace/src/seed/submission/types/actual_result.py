@@ -4,16 +4,12 @@ from __future__ import annotations
 
 import typing
 
+from ...core.pydantic_utilities import pydantic_v1
 from .exception_info import ExceptionInfo
 from .exception_v_2 import ExceptionV2
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class ActualResult_Value(pydantic.BaseModel):
+class ActualResult_Value(pydantic_v1.BaseModel):
     type: typing.Literal["value"] = "value"
     value: VariableValue
 
@@ -32,7 +28,7 @@ class ActualResult_Exception(ExceptionInfo):
         populate_by_name = True
 
 
-class ActualResult_ExceptionV2(pydantic.BaseModel):
+class ActualResult_ExceptionV2(pydantic_v1.BaseModel):
     type: typing.Literal["exceptionV2"] = "exceptionV2"
     value: ExceptionV2
 

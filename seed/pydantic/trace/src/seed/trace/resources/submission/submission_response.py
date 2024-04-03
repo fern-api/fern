@@ -4,27 +4,23 @@ from __future__ import annotations
 
 import typing
 
+from ...core.pydantic_utilities import pydantic_v1
 from ..commons.problem_id import ProblemId
 from .code_execution_update import CodeExecutionUpdate
 from .exception_info import ExceptionInfo
 from .terminated_response import TerminatedResponse
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class SubmissionResponse_ServerInitialized(pydantic.BaseModel):
+class SubmissionResponse_ServerInitialized(pydantic_v1.BaseModel):
     type: typing.Literal["serverInitialized"] = "serverInitialized"
 
 
-class SubmissionResponse_ProblemInitialized(pydantic.BaseModel):
+class SubmissionResponse_ProblemInitialized(pydantic_v1.BaseModel):
     type: typing.Literal["problemInitialized"] = "problemInitialized"
     value: ProblemId
 
 
-class SubmissionResponse_WorkspaceInitialized(pydantic.BaseModel):
+class SubmissionResponse_WorkspaceInitialized(pydantic_v1.BaseModel):
     type: typing.Literal["workspaceInitialized"] = "workspaceInitialized"
 
 
@@ -36,7 +32,7 @@ class SubmissionResponse_ServerErrored(ExceptionInfo):
         populate_by_name = True
 
 
-class SubmissionResponse_CodeExecutionUpdate(pydantic.BaseModel):
+class SubmissionResponse_CodeExecutionUpdate(pydantic_v1.BaseModel):
     type: typing.Literal["codeExecutionUpdate"] = "codeExecutionUpdate"
     value: CodeExecutionUpdate
 

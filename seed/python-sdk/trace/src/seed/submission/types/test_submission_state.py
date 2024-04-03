@@ -6,18 +6,14 @@ import typing
 from ...commons.types.problem_id import ProblemId
 from ...commons.types.test_case import TestCase
 from ...core.datetime_utils import serialize_datetime
+from ...core.pydantic_utilities import pydantic_v1
 from .test_submission_status import TestSubmissionStatus
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class TestSubmissionState(pydantic.BaseModel):
-    problem_id: ProblemId = pydantic.Field(alias="problemId")
-    default_test_cases: typing.List[TestCase] = pydantic.Field(alias="defaultTestCases")
-    custom_test_cases: typing.List[TestCase] = pydantic.Field(alias="customTestCases")
+class TestSubmissionState(pydantic_v1.BaseModel):
+    problem_id: ProblemId = pydantic_v1.Field(alias="problemId")
+    default_test_cases: typing.List[TestCase] = pydantic_v1.Field(alias="defaultTestCases")
+    custom_test_cases: typing.List[TestCase] = pydantic_v1.Field(alias="customTestCases")
     status: TestSubmissionStatus
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -33,5 +29,5 @@ class TestSubmissionState(pydantic.BaseModel):
         smart_union = True
         allow_population_by_field_name = True
         populate_by_name = True
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

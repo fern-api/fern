@@ -4,16 +4,12 @@ import datetime as dt
 import typing
 
 from .......core.datetime_utils import serialize_datetime
+from .......core.pydantic_utilities import pydantic_v1
 from .function_implementation_for_multiple_languages import FunctionImplementationForMultipleLanguages
 from .non_void_function_signature import NonVoidFunctionSignature
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class NonVoidFunctionDefinition(pydantic.BaseModel):
+class NonVoidFunctionDefinition(pydantic_v1.BaseModel):
     signature: NonVoidFunctionSignature
     code: FunctionImplementationForMultipleLanguages
 
@@ -26,5 +22,5 @@ class NonVoidFunctionDefinition(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

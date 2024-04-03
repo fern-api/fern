@@ -6,13 +6,9 @@ import datetime as dt
 import typing
 
 from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 from .object_value import ObjectValue as resources_ast_types_object_value_ObjectValue
 from .primitive_value import PrimitiveValue as resources_ast_types_primitive_value_PrimitiveValue
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -28,7 +24,7 @@ class _Factory:
         return FieldValue(__root__=_FieldValue.ContainerValue(type="container_value", value=value))
 
 
-class FieldValue(pydantic.BaseModel):
+class FieldValue(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(
@@ -53,7 +49,7 @@ class FieldValue(pydantic.BaseModel):
 
     __root__: typing.Annotated[
         typing.Union[_FieldValue.PrimitiveValue, _FieldValue.ObjectValue, _FieldValue.ContainerValue],
-        pydantic.Field(discriminator="type"),
+        pydantic_v1.Field(discriminator="type"),
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -65,7 +61,7 @@ class FieldValue(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
@@ -73,7 +69,7 @@ from .container_value import ContainerValue as resources_ast_types_container_val
 
 
 class _FieldValue:
-    class PrimitiveValue(pydantic.BaseModel):
+    class PrimitiveValue(pydantic_v1.BaseModel):
         type: typing.Literal["primitive_value"] = "primitive_value"
         value: resources_ast_types_primitive_value_PrimitiveValue
 
@@ -84,7 +80,7 @@ class _FieldValue:
             allow_population_by_field_name = True
             populate_by_name = True
 
-    class ContainerValue(pydantic.BaseModel):
+    class ContainerValue(pydantic_v1.BaseModel):
         type: typing.Literal["container_value"] = "container_value"
         value: resources_ast_types_container_value_ContainerValue
 

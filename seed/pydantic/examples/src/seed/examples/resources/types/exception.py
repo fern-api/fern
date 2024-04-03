@@ -4,12 +4,8 @@ from __future__ import annotations
 
 import typing
 
+from ...core.pydantic_utilities import pydantic_v1
 from .exception_info import ExceptionInfo
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 
 class Exception_Generic(ExceptionInfo):
@@ -20,7 +16,7 @@ class Exception_Generic(ExceptionInfo):
         populate_by_name = True
 
 
-class Exception_Timeout(pydantic.BaseModel):
+class Exception_Timeout(pydantic_v1.BaseModel):
     type: typing.Literal["timeout"] = "timeout"
 
 

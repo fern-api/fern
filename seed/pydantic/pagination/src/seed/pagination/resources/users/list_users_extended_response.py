@@ -4,16 +4,12 @@ import datetime as dt
 import typing
 
 from ...core.datetime_utils import serialize_datetime
+from ...core.pydantic_utilities import pydantic_v1
 from .user_page import UserPage
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 
 class ListUsersExtendedResponse(UserPage):
-    total_count: int = pydantic.Field()
+    total_count: int = pydantic_v1.Field()
     """
     The totall number of /users
     """
@@ -29,5 +25,5 @@ class ListUsersExtendedResponse(UserPage):
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

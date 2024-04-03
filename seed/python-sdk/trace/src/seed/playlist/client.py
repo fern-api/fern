@@ -9,6 +9,7 @@ from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ..core.datetime_utils import serialize_datetime
 from ..core.jsonable_encoder import jsonable_encoder
+from ..core.pydantic_utilities import pydantic_v1
 from ..core.remove_none_from_dict import remove_none_from_dict
 from ..core.request_options import RequestOptions
 from .errors.playlist_id_not_found_error import PlaylistIdNotFoundError
@@ -18,11 +19,6 @@ from .types.playlist_create_request import PlaylistCreateRequest
 from .types.playlist_id import PlaylistId
 from .types.playlist_id_not_found_error_body import PlaylistIdNotFoundErrorBody
 from .types.update_playlist_request import UpdatePlaylistRequest
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -123,7 +119,7 @@ class PlaylistClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(Playlist, _response_json)  # type: ignore
+            return pydantic_v1.parse_obj_as(Playlist, _response_json)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_playlists(
@@ -210,7 +206,7 @@ class PlaylistClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(typing.List[Playlist], _response_json)  # type: ignore
+            return pydantic_v1.parse_obj_as(typing.List[Playlist], _response_json)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_playlist(
@@ -265,11 +261,11 @@ class PlaylistClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(Playlist, _response_json)  # type: ignore
+            return pydantic_v1.parse_obj_as(Playlist, _response_json)  # type: ignore
         if "errorName" in _response_json:
             if _response_json["errorName"] == "PlaylistIdNotFoundError":
                 raise PlaylistIdNotFoundError(
-                    pydantic.parse_obj_as(PlaylistIdNotFoundErrorBody, _response_json["content"])  # type: ignore
+                    pydantic_v1.parse_obj_as(PlaylistIdNotFoundErrorBody, _response_json["content"])  # type: ignore
                 )
             if _response_json["errorName"] == "UnauthorizedError":
                 raise UnauthorizedError()
@@ -345,11 +341,11 @@ class PlaylistClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(typing.Optional[Playlist], _response_json)  # type: ignore
+            return pydantic_v1.parse_obj_as(typing.Optional[Playlist], _response_json)  # type: ignore
         if "errorName" in _response_json:
             if _response_json["errorName"] == "PlaylistIdNotFoundError":
                 raise PlaylistIdNotFoundError(
-                    pydantic.parse_obj_as(PlaylistIdNotFoundErrorBody, _response_json["content"])  # type: ignore
+                    pydantic_v1.parse_obj_as(PlaylistIdNotFoundErrorBody, _response_json["content"])  # type: ignore
                 )
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
@@ -504,7 +500,7 @@ class AsyncPlaylistClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(Playlist, _response_json)  # type: ignore
+            return pydantic_v1.parse_obj_as(Playlist, _response_json)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_playlists(
@@ -591,7 +587,7 @@ class AsyncPlaylistClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(typing.List[Playlist], _response_json)  # type: ignore
+            return pydantic_v1.parse_obj_as(typing.List[Playlist], _response_json)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_playlist(
@@ -646,11 +642,11 @@ class AsyncPlaylistClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(Playlist, _response_json)  # type: ignore
+            return pydantic_v1.parse_obj_as(Playlist, _response_json)  # type: ignore
         if "errorName" in _response_json:
             if _response_json["errorName"] == "PlaylistIdNotFoundError":
                 raise PlaylistIdNotFoundError(
-                    pydantic.parse_obj_as(PlaylistIdNotFoundErrorBody, _response_json["content"])  # type: ignore
+                    pydantic_v1.parse_obj_as(PlaylistIdNotFoundErrorBody, _response_json["content"])  # type: ignore
                 )
             if _response_json["errorName"] == "UnauthorizedError":
                 raise UnauthorizedError()
@@ -726,11 +722,11 @@ class AsyncPlaylistClient:
         except JSONDecodeError:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         if 200 <= _response.status_code < 300:
-            return pydantic.parse_obj_as(typing.Optional[Playlist], _response_json)  # type: ignore
+            return pydantic_v1.parse_obj_as(typing.Optional[Playlist], _response_json)  # type: ignore
         if "errorName" in _response_json:
             if _response_json["errorName"] == "PlaylistIdNotFoundError":
                 raise PlaylistIdNotFoundError(
-                    pydantic.parse_obj_as(PlaylistIdNotFoundErrorBody, _response_json["content"])  # type: ignore
+                    pydantic_v1.parse_obj_as(PlaylistIdNotFoundErrorBody, _response_json["content"])  # type: ignore
                 )
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
