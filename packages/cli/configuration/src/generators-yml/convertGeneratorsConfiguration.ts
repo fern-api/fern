@@ -197,14 +197,12 @@ async function convertOutputMode({
         const owner = generator.github.repository.slice(0, indexOfFirstSlash);
         const repo = generator.github.repository.slice(indexOfFirstSlash + 1);
         const publishInfo = generator.output != null ? getGithubPublishInfo(generator.output) : undefined;
+        const licenseSchema = getGithubLicenseSchema(generator);
         const license =
-            generator.github.license != null
+            licenseSchema != null
                 ? await getGithubLicense({
                       absolutePathToGeneratorsConfiguration,
-                      githubLicense:
-                          generator["publish-metadata"]?.license ??
-                          generator.metadata?.license ??
-                          generator.github.license
+                      githubLicense: licenseSchema
                   })
                 : undefined;
         const mode = generator.github.mode ?? "release";
@@ -423,4 +421,13 @@ function getMavenRegistryUrl(maven: MavenOutputLocationSchema) {
     return maven.signature != null
         ? "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
         : "https://s01.oss.sonatype.org/content/repositories/releases/";
+}
+
+function getGithubLicenseSchema(generator: GeneratorInvocationSchema): GithubLicenseSchema | undefined {
+    if (generator["publish-metadata"]?.license != null) {
+        return generator["publish-metadata"].license;
+    } else if (generator.metadata?.license != null) {
+        return generator.metadata.license;
+    }
+    return generator.github?.license;
 }
