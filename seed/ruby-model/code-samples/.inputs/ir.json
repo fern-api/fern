@@ -251,10 +251,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": false,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/hello",
                         "parts": []
@@ -266,7 +265,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "inlinedRequestBody",
                         "name": {
@@ -458,6 +456,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": false,
+                    "idempotent": false,
                     "examples": [
                         {
                             "name": null,

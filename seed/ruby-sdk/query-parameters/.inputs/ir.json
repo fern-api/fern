@@ -452,10 +452,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": false,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "GET",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -876,7 +875,6 @@
                             "docs": null
                         }
                     ],
-                    "headers": [],
                     "requestBody": null,
                     "sdkRequest": {
                         "shape": {
@@ -1014,6 +1012,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": false,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null

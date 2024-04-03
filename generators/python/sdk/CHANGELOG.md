@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Break: The python SDK now defaults new (breaking configuration) to introduce general improvements.
 
-  In order to revert to the previous configuration flags and avoid the break, please leverage the below flags:
+  In order to revert to the previous configuration flags and avoid the break, please leverage the below configuration:
 
   ```yaml
   generators:
@@ -39,6 +39,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         follow_redirects=True  # This is defaulted to the value passed into follow_redirects_by_default, and ignored if not specified
   )
   ```
+
+## [0.13.4] - 2024-04-03
+
+- Fix: revert the change from 0.13.2, the stream call returns a context manager, which is not awaited. The issue that this was meant to solve was actually fixed in version `0.12.2`.
+
+## [0.13.3] - 2024-03-28
+
+- Fix: Github workflows for publishing now work again (previously the trigger was incorrect).
 
 ## [0.13.2] - 2024-03-28
 

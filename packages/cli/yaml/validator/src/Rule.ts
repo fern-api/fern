@@ -41,6 +41,7 @@ export interface RuleRunnerArgs<FileSchema> {
     relativeFilepath: RelativeFilePath;
     contents: FileSchema;
 }
+
 export interface RuleViolation {
     severity: "warning" | "error";
     message: string;

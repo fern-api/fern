@@ -1294,10 +1294,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": false,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "GET",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -1309,7 +1308,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": {
@@ -1425,6 +1423,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": false,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -1508,10 +1508,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": false,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -1617,7 +1616,6 @@
                             "docs": null
                         }
                     ],
-                    "headers": [],
                     "requestBody": {
                         "type": "inlinedRequestBody",
                         "name": {
@@ -1850,6 +1848,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": false,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null

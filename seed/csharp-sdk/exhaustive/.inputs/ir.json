@@ -4272,10 +4272,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/list-of-primitives",
                         "parts": []
@@ -4287,7 +4286,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -4360,6 +4358,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -4386,10 +4386,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/list-of-objects",
                         "parts": []
@@ -4401,7 +4400,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -4777,6 +4775,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -4803,10 +4803,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/set-of-primitives",
                         "parts": []
@@ -4818,7 +4817,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -4891,6 +4889,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -4917,10 +4917,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/set-of-objects",
                         "parts": []
@@ -4932,7 +4931,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -5308,6 +5306,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -5334,10 +5334,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/map-prim-to-prim",
                         "parts": []
@@ -5349,7 +5348,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -5434,6 +5432,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -5460,10 +5460,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/map-prim-to-object",
                         "parts": []
@@ -5475,7 +5474,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -5863,6 +5861,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -5889,10 +5889,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/opt-objects",
                         "parts": []
@@ -5904,7 +5903,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -6280,6 +6278,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -6402,10 +6402,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -6417,7 +6416,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -6775,6 +6773,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -6897,10 +6897,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "GET",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/",
                         "parts": [
@@ -6980,7 +6979,6 @@
                         }
                     ],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": {
@@ -6995,6 +6993,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -7021,10 +7021,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -7036,7 +7035,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -7394,6 +7392,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -7420,10 +7420,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "PUT",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/",
                         "parts": [
@@ -7503,7 +7502,6 @@
                         }
                     ],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -7861,6 +7859,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -7887,10 +7887,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "PATCH",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/",
                         "parts": [
@@ -7970,7 +7969,6 @@
                         }
                     ],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -8328,6 +8326,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -8354,10 +8354,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "DELETE",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/",
                         "parts": [
@@ -8437,7 +8436,6 @@
                         }
                     ],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": {
@@ -8452,6 +8450,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -8574,10 +8574,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/get-and-return-with-optional-field",
                         "parts": []
@@ -8589,7 +8588,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -8947,6 +8945,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -8973,10 +8973,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/get-and-return-with-required-field",
                         "parts": []
@@ -8988,7 +8987,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -9346,6 +9344,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -9372,10 +9372,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/get-and-return-with-map-of-map",
                         "parts": []
@@ -9387,7 +9386,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -9745,6 +9743,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -9771,10 +9771,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/get-and-return-nested-with-optional-field",
                         "parts": []
@@ -9786,7 +9785,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -10144,6 +10142,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -10170,10 +10170,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/get-and-return-nested-with-required-field",
                         "parts": []
@@ -10185,7 +10184,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -10543,6 +10541,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -10569,10 +10569,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/get-and-return-nested-with-required-field-list",
                         "parts": []
@@ -10584,7 +10583,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -10954,6 +10952,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -11076,10 +11076,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "GET",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/path/",
                         "parts": [
@@ -11159,7 +11158,6 @@
                         }
                     ],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": {
@@ -11174,6 +11172,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": "GET with path param"
@@ -11200,10 +11200,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "GET",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -11278,7 +11277,6 @@
                             "docs": null
                         }
                     ],
-                    "headers": [],
                     "requestBody": null,
                     "sdkRequest": {
                         "shape": {
@@ -11344,6 +11342,8 @@
                     },
                     "response": null,
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": "GET with query param"
@@ -11370,10 +11370,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "GET",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -11448,7 +11447,6 @@
                             "docs": null
                         }
                     ],
-                    "headers": [],
                     "requestBody": null,
                     "sdkRequest": {
                         "shape": {
@@ -11514,6 +11512,8 @@
                     },
                     "response": null,
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": "GET with multiple of same query param"
@@ -11540,10 +11540,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "GET",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/path-query/",
                         "parts": [
@@ -11655,7 +11654,6 @@
                             "docs": null
                         }
                     ],
-                    "headers": [],
                     "requestBody": null,
                     "sdkRequest": {
                         "shape": {
@@ -11721,6 +11719,8 @@
                     },
                     "response": null,
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": "GET with path and query params"
@@ -11747,10 +11747,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "PUT",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/path/",
                         "parts": [
@@ -11830,7 +11829,6 @@
                         }
                     ],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -11885,6 +11883,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": "PUT to update with path param"
@@ -12007,10 +12007,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/string",
                         "parts": []
@@ -12022,7 +12021,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -12077,6 +12075,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -12103,10 +12103,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/integer",
                         "parts": []
@@ -12118,7 +12117,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -12173,6 +12171,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -12199,10 +12199,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/long",
                         "parts": []
@@ -12214,7 +12213,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -12269,6 +12267,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -12295,10 +12295,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/double",
                         "parts": []
@@ -12310,7 +12309,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -12365,6 +12363,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -12391,10 +12391,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/boolean",
                         "parts": []
@@ -12406,7 +12405,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -12461,6 +12459,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -12487,10 +12487,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/datetime",
                         "parts": []
@@ -12502,7 +12501,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -12557,6 +12555,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -12583,10 +12583,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/date",
                         "parts": []
@@ -12598,7 +12597,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -12653,6 +12651,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -12679,10 +12679,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/uuid",
                         "parts": []
@@ -12694,7 +12693,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -12749,6 +12747,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -12775,10 +12775,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/base64",
                         "parts": []
@@ -12790,7 +12789,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -12845,6 +12843,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -12967,10 +12967,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -12982,7 +12981,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -13340,6 +13338,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -13423,10 +13423,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": false,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/object",
                         "parts": []
@@ -13438,7 +13437,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "inlinedRequestBody",
                         "name": {
@@ -13897,6 +13895,8 @@
                             "docs": null
                         }
                     ],
+                    "auth": false,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": "POST with custom object in request body, response is an object"
@@ -13980,10 +13980,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": false,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -13995,7 +13994,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -14117,6 +14115,8 @@
                             "docs": null
                         }
                     ],
+                    "auth": false,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": "POST request with no auth"
@@ -14200,10 +14200,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "GET",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -14215,7 +14214,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": {
@@ -14331,6 +14329,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -14357,10 +14357,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -14372,7 +14371,6 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": {
@@ -14387,6 +14385,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null
@@ -14501,21 +14501,7 @@
                         }
                     },
                     "displayName": null,
-                    "auth": true,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
-                    "path": {
-                        "head": "/custom-header",
-                        "parts": []
-                    },
-                    "fullPath": {
-                        "head": "/test-headers/custom-header",
-                        "parts": []
-                    },
-                    "pathParameters": [],
-                    "allPathParameters": [],
-                    "queryParameters": [],
                     "headers": [
                         {
                             "name": {
@@ -14548,6 +14534,18 @@
                             "docs": null
                         }
                     ],
+                    "baseUrl": null,
+                    "path": {
+                        "head": "/custom-header",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "/test-headers/custom-header",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -14621,6 +14619,8 @@
                     },
                     "response": null,
                     "errors": [],
+                    "auth": true,
+                    "idempotent": false,
                     "examples": [],
                     "availability": null,
                     "docs": null

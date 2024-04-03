@@ -13,14 +13,14 @@ export interface FernPaginationEnabledExtension {
 
 export interface FernCursorPaginationExtension {
     type: "cursor";
-    page: string;
-    next: string;
+    cursor: string;
+    next_cursor: string;
     results: string;
 }
 
 export interface FernOffsetPaginationExtension {
     type: "offset";
-    page: string;
+    offset: string;
     results: string;
 }
 
@@ -28,15 +28,13 @@ declare namespace Raw {
     export type PaginationExtensionSchema = boolean | CursorPaginationExtensionSchema | OffsetPaginationExtensionSchema;
 
     export interface CursorPaginationExtensionSchema {
-        type: "cursor";
-        page: string;
-        next: string;
+        cursor: string;
+        next_cursor: string;
         results: string;
     }
 
     export interface OffsetPaginationExtensionSchema {
-        type: "offset";
-        page: string;
+        offset: string;
         results: string;
     }
 }
@@ -55,17 +53,27 @@ export function getFernPaginationExtension(
               }
             : undefined;
     }
-    if (pagination.type === "cursor") {
+    if (isRawCursorPaginationSchema(pagination)) {
         return {
             type: "cursor",
-            page: pagination.page,
-            next: pagination.next,
+            cursor: pagination.cursor,
+            next_cursor: pagination.next_cursor,
             results: pagination.results
         };
     }
     return {
         type: "offset",
-        page: pagination.page,
+        offset: pagination.offset,
         results: pagination.results
     };
+}
+
+function isRawCursorPaginationSchema(
+    rawPaginationSchema: Raw.PaginationExtensionSchema
+): rawPaginationSchema is Raw.CursorPaginationExtensionSchema {
+    return (
+        (rawPaginationSchema as Raw.CursorPaginationExtensionSchema).cursor != null &&
+        (rawPaginationSchema as Raw.CursorPaginationExtensionSchema).next_cursor != null &&
+        (rawPaginationSchema as Raw.CursorPaginationExtensionSchema).results != null
+    );
 }

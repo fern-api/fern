@@ -69,10 +69,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": false,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "POST",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "",
                         "parts": []
@@ -118,7 +117,6 @@
                         }
                     ],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -173,6 +171,8 @@
                         }
                     },
                     "errors": [],
+                    "auth": false,
+                    "idempotent": false,
                     "examples": [
                         {
                             "name": null,
@@ -330,10 +330,9 @@
                         }
                     },
                     "displayName": null,
-                    "auth": false,
-                    "idempotent": false,
-                    "baseUrl": null,
                     "method": "GET",
+                    "headers": [],
+                    "baseUrl": null,
                     "path": {
                         "head": "/",
                         "parts": [
@@ -445,11 +444,12 @@
                         }
                     ],
                     "queryParameters": [],
-                    "headers": [],
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": null,
                     "errors": [],
+                    "auth": false,
+                    "idempotent": false,
                     "examples": [
                         {
                             "name": null,

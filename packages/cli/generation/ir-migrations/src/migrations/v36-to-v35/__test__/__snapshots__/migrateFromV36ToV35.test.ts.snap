@@ -178,7 +178,166 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
               "unsafeName": "list_users",
             },
           },
-          "pagination": undefined,
+          "pagination": {
+            "_visit": [Function],
+            "page": {
+              "allowMultiple": false,
+              "availability": undefined,
+              "docs": undefined,
+              "name": {
+                "name": {
+                  "camelCase": {
+                    "safeName": "pageNum",
+                    "unsafeName": "pageNum",
+                  },
+                  "originalName": "pageNum",
+                  "pascalCase": {
+                    "safeName": "PageNum",
+                    "unsafeName": "PageNum",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "PAGE_NUM",
+                    "unsafeName": "PAGE_NUM",
+                  },
+                  "snakeCase": {
+                    "safeName": "page_num",
+                    "unsafeName": "page_num",
+                  },
+                },
+                "wireValue": "pageNum",
+              },
+              "valueType": {
+                "_visit": [Function],
+                "primitive": "INTEGER",
+                "type": "primitive",
+              },
+            },
+            "results": {
+              "property": {
+                "availability": undefined,
+                "docs": undefined,
+                "name": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "users",
+                      "unsafeName": "users",
+                    },
+                    "originalName": "users",
+                    "pascalCase": {
+                      "safeName": "Users",
+                      "unsafeName": "Users",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "USERS",
+                      "unsafeName": "USERS",
+                    },
+                    "snakeCase": {
+                      "safeName": "users",
+                      "unsafeName": "users",
+                    },
+                  },
+                  "wireValue": "users",
+                },
+                "valueType": {
+                  "_visit": [Function],
+                  "container": {
+                    "_visit": [Function],
+                    "list": {
+                      "_visit": [Function],
+                      "fernFilepath": {
+                        "allParts": [
+                          {
+                            "camelCase": {
+                              "safeName": "service",
+                              "unsafeName": "service",
+                            },
+                            "originalName": "service",
+                            "pascalCase": {
+                              "safeName": "Service",
+                              "unsafeName": "Service",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "SERVICE",
+                              "unsafeName": "SERVICE",
+                            },
+                            "snakeCase": {
+                              "safeName": "service",
+                              "unsafeName": "service",
+                            },
+                          },
+                        ],
+                        "file": {
+                          "camelCase": {
+                            "safeName": "service",
+                            "unsafeName": "service",
+                          },
+                          "originalName": "service",
+                          "pascalCase": {
+                            "safeName": "Service",
+                            "unsafeName": "Service",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "SERVICE",
+                            "unsafeName": "SERVICE",
+                          },
+                          "snakeCase": {
+                            "safeName": "service",
+                            "unsafeName": "service",
+                          },
+                        },
+                        "packagePath": [],
+                      },
+                      "name": {
+                        "camelCase": {
+                          "safeName": "user",
+                          "unsafeName": "user",
+                        },
+                        "originalName": "User",
+                        "pascalCase": {
+                          "safeName": "User",
+                          "unsafeName": "User",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "USER",
+                          "unsafeName": "USER",
+                        },
+                        "snakeCase": {
+                          "safeName": "user",
+                          "unsafeName": "user",
+                        },
+                      },
+                      "type": "named",
+                      "typeId": "type_service:User",
+                    },
+                    "type": "list",
+                  },
+                  "type": "container",
+                },
+              },
+              "propertyPath": [
+                {
+                  "camelCase": {
+                    "safeName": "users",
+                    "unsafeName": "users",
+                  },
+                  "originalName": "users",
+                  "pascalCase": {
+                    "safeName": "Users",
+                    "unsafeName": "Users",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "USERS",
+                    "unsafeName": "USERS",
+                  },
+                  "snakeCase": {
+                    "safeName": "users",
+                    "unsafeName": "users",
+                  },
+                },
+              ],
+            },
+            "type": "offset",
+          },
           "path": {
             "head": "/users",
             "parts": [],
