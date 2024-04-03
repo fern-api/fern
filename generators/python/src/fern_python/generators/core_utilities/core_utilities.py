@@ -56,6 +56,14 @@ class CoreUtilities:
                 module=AST.Module.local(*self._module_path, "datetime_utils"), named_import="serialize_datetime"
             ),
         )
+    
+    def get_union_metadata(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "unchecked_base_model"), named_import="UnionMetadata"
+            ),
+        )
 
     def get_unchecked_pydantic_base_model(self, version: PydanticVersionCompatibility) -> AST.Reference:
         return AST.Reference(

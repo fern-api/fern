@@ -94,7 +94,7 @@ class CoreUtilities:
                     directories=self.filepath,
                     file=Filepath.FilepathPart(module_name="unchecked_base_model"),
                 ),
-                exports={"UncheckedBaseModel"},
+                exports={"UncheckedBaseModel", "UnionMetadata"},
             )
 
         project.add_dependency(TYPING_EXTENSIONS_DEPENDENCY)
@@ -262,6 +262,14 @@ class CoreUtilities:
             )
         )
     
+    def get_union_metadata(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "unchecked_base_model"), named_import="UnionMetadata"
+            ),
+        )
+
     def get_unchecked_pydantic_base_model(self) -> AST.Reference:
         return AST.Reference(
             qualified_name_excluding_import=(),
