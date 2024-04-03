@@ -20,10 +20,10 @@ class TraceResponseV2(pydantic.BaseModel):
     submission_id: SubmissionId = pydantic.Field(alias="submissionId")
     line_number: int = pydantic.Field(alias="lineNumber")
     file: TracedFile
-    return_value: typing.Optional[DebugVariableValue] = pydantic.Field(alias="returnValue")
-    expression_location: typing.Optional[ExpressionLocation] = pydantic.Field(alias="expressionLocation")
+    return_value: typing.Optional[DebugVariableValue] = pydantic.Field(alias="returnValue", default=None)
+    expression_location: typing.Optional[ExpressionLocation] = pydantic.Field(alias="expressionLocation", default=None)
     stack: StackInformation
-    stdout: typing.Optional[str]
+    stdout: typing.Optional[str] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

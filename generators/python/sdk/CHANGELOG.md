@@ -5,6 +5,41 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2024-04-02
+
+- Break: The python SDK now defaults new (breaking configuration) to introduce general improvements.
+
+  In order to revert to the previous configuration flags and avoid the break, please leverage the below configuration:
+
+  ```yaml
+  generators:
+    - name: fernapi/fern-python-sdk
+      config:
+        improved_imports: false
+        pydantic_config:
+          require_optional_fields: true
+          use_str_enums: false
+          extra_fields: "forbid"
+  ```
+
+- Improvement: The python SDK now supports specifying whether or not to follow redirects in requests by default, and exposes an option to override that functionality for consumers.
+
+  ```yaml
+  generators:
+    - name: fernapi/fern-python-sdk
+      config:
+        follow_redirects_by_default: true
+  ```
+
+  which then just instantiates the client like so:
+
+  ```python
+  client = SeedExhaustive(
+        token="YOUR_TOKEN",
+        follow_redirects=True  # This is defaulted to the value passed into follow_redirects_by_default, and ignored if not specified
+  )
+  ```
+
 ## [0.13.4] - 2024-04-03
 
 - Fix: revert the change from 0.13.2, the stream call returns a context manager, which is not awaited. The issue that this was meant to solve was actually fixed in version `0.12.2`.

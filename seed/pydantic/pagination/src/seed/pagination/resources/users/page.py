@@ -18,7 +18,7 @@ class Page(pydantic.BaseModel):
     The current page
     """
 
-    next: typing.Optional[NextPage]
+    next: typing.Optional[NextPage] = None
     per_page: int
     total_page: int
 

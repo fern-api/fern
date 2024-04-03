@@ -14,12 +14,12 @@ except ImportError:
 
 class File(pydantic.BaseModel):
     """
-    from seed.objects_with_imports import File, FileInfo
+    from seed.objects_with_imports import File
 
     File(
         name="file.txt",
         contents="...",
-        info=FileInfo.REGULAR,
+        info="REGULAR",
     )
     """
 

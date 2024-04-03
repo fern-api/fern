@@ -22,7 +22,7 @@ class Metadata(pydantic.BaseModel):
     """
 
     id: str
-    data: typing.Optional[typing.Dict[str, str]]
+    data: typing.Optional[typing.Dict[str, str]] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

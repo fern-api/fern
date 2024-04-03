@@ -16,7 +16,7 @@ except ImportError:
 
 class Directory(pydantic.BaseModel):
     """
-    from seed.objects_with_imports import File, FileInfo
+    from seed.objects_with_imports import File
     from seed.objects_with_imports.resources.file import Directory
 
     Directory(
@@ -25,7 +25,7 @@ class Directory(pydantic.BaseModel):
             File(
                 name="file.txt",
                 contents="...",
-                info=FileInfo.REGULAR,
+                info="REGULAR",
             )
         ],
         directories=[
@@ -35,7 +35,7 @@ class Directory(pydantic.BaseModel):
                     File(
                         name="another_file.txt",
                         contents="...",
-                        info=FileInfo.REGULAR,
+                        info="REGULAR",
                     )
                 ],
             )
@@ -44,8 +44,8 @@ class Directory(pydantic.BaseModel):
     """
 
     name: str
-    files: typing.Optional[typing.List[File]]
-    directories: typing.Optional[typing.List[Directory]]
+    files: typing.Optional[typing.List[File]] = None
+    directories: typing.Optional[typing.List[Directory]] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

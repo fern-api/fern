@@ -73,7 +73,7 @@ class Type(pydantic.BaseModel):
     ten: typing.List[int]
     eleven: typing.Set[float]
     twelve: typing.Dict[str, bool]
-    thirteen: typing.Optional[int]
+    thirteen: typing.Optional[int] = None
     fourteen: typing.Any
     fifteen: typing.List[typing.List[int]]
     sixteen: typing.List[typing.Dict[str, int]]

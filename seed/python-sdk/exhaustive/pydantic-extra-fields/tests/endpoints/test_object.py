@@ -4,7 +4,7 @@ import datetime
 import uuid
 
 from seed.client import AsyncSeedExhaustive, SeedExhaustive
-from seed.resources.types import (
+from seed.types import (
     NestedObjectWithOptionalField,
     NestedObjectWithRequiredField,
     ObjectWithMapOfMap,

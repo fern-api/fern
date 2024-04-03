@@ -12,7 +12,7 @@ except ImportError:
 
 
 class UsernamePage(pydantic.BaseModel):
-    after: typing.Optional[str]
+    after: typing.Optional[str] = None
     data: typing.List[str]
 
     def json(self, **kwargs: typing.Any) -> str:

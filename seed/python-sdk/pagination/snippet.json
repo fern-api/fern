@@ -7,8 +7,8 @@
                 "method": "GET"
             },
             "snippet": {
-                "sync_client": "from seed import Order\nfrom seed.client import SeedPagination\n\nclient = SeedPagination(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.users.list_with_cursor_pagination(\n    page=1,\n    per_page=1,\n    order=Order.ASC,\n    starting_after=\"string\",\n)\n",
-                "async_client": "from seed import Order\nfrom seed.client import AsyncSeedPagination\n\nclient = AsyncSeedPagination(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.users.list_with_cursor_pagination(\n    page=1,\n    per_page=1,\n    order=Order.ASC,\n    starting_after=\"string\",\n)\n",
+                "sync_client": "from seed.client import SeedPagination\n\nclient = SeedPagination(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.users.list_with_cursor_pagination(\n    page=1,\n    per_page=1,\n    order=\"asc\",\n    starting_after=\"string\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedPagination\n\nclient = AsyncSeedPagination(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.users.list_with_cursor_pagination(\n    page=1,\n    per_page=1,\n    order=\"asc\",\n    starting_after=\"string\",\n)\n",
                 "type": "python"
             }
         },
@@ -18,8 +18,8 @@
                 "method": "GET"
             },
             "snippet": {
-                "sync_client": "from seed import Order\nfrom seed.client import SeedPagination\n\nclient = SeedPagination(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.users.list_with_offset_pagination(\n    page=1,\n    per_page=1,\n    order=Order.ASC,\n    starting_after=\"string\",\n)\n",
-                "async_client": "from seed import Order\nfrom seed.client import AsyncSeedPagination\n\nclient = AsyncSeedPagination(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.users.list_with_offset_pagination(\n    page=1,\n    per_page=1,\n    order=Order.ASC,\n    starting_after=\"string\",\n)\n",
+                "sync_client": "from seed.client import SeedPagination\n\nclient = SeedPagination(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.users.list_with_offset_pagination(\n    page=1,\n    per_page=1,\n    order=\"asc\",\n    starting_after=\"string\",\n)\n",
+                "async_client": "from seed.client import AsyncSeedPagination\n\nclient = AsyncSeedPagination(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.users.list_with_offset_pagination(\n    page=1,\n    per_page=1,\n    order=\"asc\",\n    starting_after=\"string\",\n)\n",
                 "type": "python"
             }
         },

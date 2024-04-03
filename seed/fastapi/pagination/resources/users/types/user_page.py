@@ -15,7 +15,7 @@ except ImportError:
 
 class UserPage(pydantic.BaseModel):
     data: UserListContainer
-    next: typing.Optional[uuid.UUID]
+    next: typing.Optional[uuid.UUID] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

@@ -41,8 +41,8 @@ class Directory(pydantic.BaseModel):
     """
 
     name: str
-    files: typing.Optional[typing.List[File]]
-    directories: typing.Optional[typing.List[Directory]]
+    files: typing.Optional[typing.List[File]] = None
+    directories: typing.Optional[typing.List[Directory]] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

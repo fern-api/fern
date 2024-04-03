@@ -20,7 +20,7 @@ class TestCaseV2(pydantic.BaseModel):
     metadata: TestCaseMetadata
     implementation: TestCaseImplementationReference
     arguments: typing.Dict[ParameterId, VariableValue]
-    expects: typing.Optional[TestCaseExpects]
+    expects: typing.Optional[TestCaseExpects] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

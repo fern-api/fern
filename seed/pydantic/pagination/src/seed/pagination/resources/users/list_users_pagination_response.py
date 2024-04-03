@@ -14,7 +14,7 @@ except ImportError:
 
 
 class ListUsersPaginationResponse(pydantic.BaseModel):
-    page: typing.Optional[Page]
+    page: typing.Optional[Page] = None
     total_count: int = pydantic.Field()
     """
     The totall number of /users

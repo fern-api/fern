@@ -10,7 +10,7 @@ class BasePydanticModelCustomConfig(pydantic.BaseModel):
     frozen: bool = False
     orm_mode: bool = False
     smart_union: bool = False
-    require_optional_fields: bool = True
+    require_optional_fields: bool = False
 
 
 class PydanticModelCustomConfig(BasePydanticModelCustomConfig):
@@ -21,4 +21,4 @@ class PydanticModelCustomConfig(BasePydanticModelCustomConfig):
     wrapped_aliases: bool = False
     skip_formatting: bool = False
     include_union_utils: bool = False
-    use_str_enums: bool = False
+    use_str_enums: bool = True

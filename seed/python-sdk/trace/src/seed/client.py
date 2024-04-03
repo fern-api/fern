@@ -4,16 +4,16 @@ import typing
 
 import httpx
 
+from .admin.client import AdminClient, AsyncAdminClient
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .environment import SeedTraceEnvironment
-from .resources.admin.client import AdminClient, AsyncAdminClient
-from .resources.homepage.client import AsyncHomepageClient, HomepageClient
-from .resources.migration.client import AsyncMigrationClient, MigrationClient
-from .resources.playlist.client import AsyncPlaylistClient, PlaylistClient
-from .resources.problem.client import AsyncProblemClient, ProblemClient
-from .resources.submission.client import AsyncSubmissionClient, SubmissionClient
-from .resources.sysprop.client import AsyncSyspropClient, SyspropClient
-from .resources.v_2.client import AsyncV2Client, V2Client
+from .homepage.client import AsyncHomepageClient, HomepageClient
+from .migration.client import AsyncMigrationClient, MigrationClient
+from .playlist.client import AsyncPlaylistClient, PlaylistClient
+from .problem.client import AsyncProblemClient, ProblemClient
+from .submission.client import AsyncSubmissionClient, SubmissionClient
+from .sysprop.client import AsyncSyspropClient, SyspropClient
+from .v_2.client import AsyncV2Client, V2Client
 
 
 class SeedTrace:
@@ -33,6 +33,8 @@ class SeedTrace:
 
         - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds, unless a custom httpx client is used, in which case a default is not set.
 
+        - follow_redirects: typing.Optional[bool]. Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
+
         - httpx_client: typing.Optional[httpx.Client]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
     ---
     from seed.client import SeedTrace
@@ -51,6 +53,7 @@ class SeedTrace:
         x_random_header: typing.Optional[str] = None,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         timeout: typing.Optional[float] = None,
+        follow_redirects: typing.Optional[bool] = None,
         httpx_client: typing.Optional[httpx.Client] = None
     ):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
@@ -58,7 +61,11 @@ class SeedTrace:
             base_url=_get_base_url(base_url=base_url, environment=environment),
             x_random_header=x_random_header,
             token=token,
-            httpx_client=httpx.Client(timeout=_defaulted_timeout) if httpx_client is None else httpx_client,
+            httpx_client=httpx_client
+            if httpx_client is not None
+            else httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
+            if follow_redirects is not None
+            else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
         self.v_2 = V2Client(client_wrapper=self._client_wrapper)
@@ -88,6 +95,8 @@ class AsyncSeedTrace:
 
         - timeout: typing.Optional[float]. The timeout to be used, in seconds, for requests by default the timeout is 60 seconds, unless a custom httpx client is used, in which case a default is not set.
 
+        - follow_redirects: typing.Optional[bool]. Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
+
         - httpx_client: typing.Optional[httpx.AsyncClient]. The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
     ---
     from seed.client import AsyncSeedTrace
@@ -106,6 +115,7 @@ class AsyncSeedTrace:
         x_random_header: typing.Optional[str] = None,
         token: typing.Optional[typing.Union[str, typing.Callable[[], str]]] = None,
         timeout: typing.Optional[float] = None,
+        follow_redirects: typing.Optional[bool] = None,
         httpx_client: typing.Optional[httpx.AsyncClient] = None
     ):
         _defaulted_timeout = timeout if timeout is not None else 60 if httpx_client is None else None
@@ -113,7 +123,11 @@ class AsyncSeedTrace:
             base_url=_get_base_url(base_url=base_url, environment=environment),
             x_random_header=x_random_header,
             token=token,
-            httpx_client=httpx.AsyncClient(timeout=_defaulted_timeout) if httpx_client is None else httpx_client,
+            httpx_client=httpx_client
+            if httpx_client is not None
+            else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
+            if follow_redirects is not None
+            else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
         self.v_2 = AsyncV2Client(client_wrapper=self._client_wrapper)

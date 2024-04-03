@@ -15,8 +15,8 @@ except ImportError:
 class BinaryTreeNodeValue(pydantic.BaseModel):
     node_id: NodeId = pydantic.Field(alias="nodeId")
     val: float
-    right: typing.Optional[NodeId]
-    left: typing.Optional[NodeId]
+    right: typing.Optional[NodeId] = None
+    left: typing.Optional[NodeId] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

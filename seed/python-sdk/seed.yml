@@ -57,6 +57,9 @@ fixtures:
     - customConfig:
         improved_imports: true
       outputFolder: improved_imports
+    - customConfig:
+        follow_redirects_by_default: true
+      outputFolder: follow_redirects_by_default
 scripts:
   # Tests now run a mock server, you can always run seed with --skip-scripts to save time
   - docker: fernapi/python-seed
