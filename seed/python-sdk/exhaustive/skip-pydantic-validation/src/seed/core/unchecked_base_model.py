@@ -3,6 +3,7 @@
 import datetime as dt
 import typing
 import uuid
+from collections.abc import Iterable
 
 import typing_extensions
 
@@ -55,8 +56,6 @@ class UncheckedBaseModel(pydantic.BaseModel):
                 else:
                     type_ = typing.cast(typing.Type, field.outer_type_)  # type: ignore
                     fields_values[name] = construct_type(object_=values[key], type_=type_)
-                    # if name == "datetime":
-                    #     raise ValueError(f"This should not be reached {type_}, {type_ == dt.datetime}")
             elif not field.required:
                 fields_values[name] = field.get_default()
 
@@ -107,25 +106,35 @@ def construct_type(*, type_: typing.Type, object_: typing.Any) -> typing.Any:
     """
     base_type = pydantic.typing.get_origin(type_) or type_
 
-    if issubclass(base_type, pydantic.BaseModel):
-        return type_.construct(**object_)
-
     if base_type == dict:
+        if not isinstance(object_, typing.Mapping):
+            return object_
+
         _, items_type = pydantic.typing.get_args(type_)
         return {key: construct_type(object_=item, type_=items_type) for key, item in object_.items()}
 
     if base_type == list:
+        if not isinstance(object_, list):
+            return object_
+
         inner_type = pydantic.typing.get_args(type_)[0]
         return [construct_type(object_=entry, type_=inner_type) for entry in object_]
 
     if base_type == set:
+        if not isinstance(object_, set) and not isinstance(object_, list):
+            return object_
+
         inner_type = pydantic.typing.get_args(type_)[0]
         return {construct_type(object_=entry, type_=inner_type) for entry in object_}
 
     if pydantic.typing.is_union(base_type) or (
         base_type == typing_extensions.Annotated and pydantic.typing.is_union(pydantic.typing.get_args(type_)[0])
     ):
-        _convert_union_type(type_)
+        return _convert_union_type(type_, object_)
+
+    # Cannot do an `issubclass` with a literal type
+    if not pydantic.typing.is_literal_type(type_) and issubclass(base_type, pydantic.BaseModel):
+        return type_.construct(**object_)
 
     if base_type == dt.datetime:
         try:
