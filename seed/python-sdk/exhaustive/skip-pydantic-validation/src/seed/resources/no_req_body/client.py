@@ -9,6 +9,7 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.remove_none_from_dict import remove_none_from_dict
 from ...core.request_options import RequestOptions
+from ...core.unchecked_base_model import construct_type
 from ..types.resources.object.types.object_with_optional_field import ObjectWithOptionalField
 
 
@@ -52,7 +53,7 @@ class NoReqBodyClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(ObjectWithOptionalField, ObjectWithOptionalField.construct(_response.json()))
+            return typing.cast(ObjectWithOptionalField, construct_type(ObjectWithOptionalField, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -96,7 +97,7 @@ class NoReqBodyClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(str, construct(_response.json()))
+            return typing.cast(str, construct_type(str, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -144,7 +145,7 @@ class AsyncNoReqBodyClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(ObjectWithOptionalField, ObjectWithOptionalField.construct(_response.json()))
+            return typing.cast(ObjectWithOptionalField, construct_type(ObjectWithOptionalField, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -188,7 +189,7 @@ class AsyncNoReqBodyClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(str, construct(_response.json()))
+            return typing.cast(str, construct_type(str, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:

@@ -9,6 +9,7 @@ from .....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .....core.jsonable_encoder import jsonable_encoder
 from .....core.remove_none_from_dict import remove_none_from_dict
 from .....core.request_options import RequestOptions
+from .....core.unchecked_base_model import construct_type
 from ....types.resources.union.types.animal import Animal
 
 # this is used as the default value for optional parameters
@@ -69,7 +70,7 @@ class UnionClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(Animal, Animal.construct(_response.json()))
+            return typing.cast(Animal, construct_type(Animal, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -131,7 +132,7 @@ class AsyncUnionClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(Animal, Animal.construct(_response.json()))
+            return typing.cast(Animal, construct_type(Animal, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:

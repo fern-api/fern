@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import typing
 
+from ......core.unchecked_base_model import UnionMetadata
 from .cat import Cat
 from .dog import Dog
 
@@ -28,4 +29,4 @@ class Animal_Cat(Cat):
         populate_by_name = True
 
 
-Animal = typing.Union[Animal_Dog, Animal_Cat]
+Animal = typing.Annotated[typing.Union[Animal_Dog, Animal_Cat], UnionMetadata(discriminant="animal")]

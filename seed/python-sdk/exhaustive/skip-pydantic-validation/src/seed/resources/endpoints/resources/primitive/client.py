@@ -11,6 +11,7 @@ from .....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .....core.jsonable_encoder import jsonable_encoder
 from .....core.remove_none_from_dict import remove_none_from_dict
 from .....core.request_options import RequestOptions
+from .....core.unchecked_base_model import construct_type
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -59,7 +60,7 @@ class PrimitiveClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(str, construct(_response.json()))
+            return typing.cast(str, construct_type(str, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -105,7 +106,7 @@ class PrimitiveClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(int, construct(_response.json()))
+            return typing.cast(int, construct_type(int, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -156,7 +157,7 @@ class PrimitiveClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(int, construct(_response.json()))
+            return typing.cast(int, construct_type(int, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -204,7 +205,7 @@ class PrimitiveClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(float, construct(_response.json()))
+            return typing.cast(float, construct_type(float, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -250,7 +251,7 @@ class PrimitiveClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(bool, construct(_response.json()))
+            return typing.cast(bool, construct_type(bool, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -307,7 +308,7 @@ class PrimitiveClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(dt.datetime, dt.construct(_response.json()))
+            return typing.cast(dt.datetime, construct_type(dt.datetime, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -364,7 +365,7 @@ class PrimitiveClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(dt.date, dt.construct(_response.json()))
+            return typing.cast(dt.date, construct_type(dt.date, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -421,7 +422,7 @@ class PrimitiveClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(uuid.UUID, uuid.construct(_response.json()))
+            return typing.cast(uuid.UUID, construct_type(uuid.UUID, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -472,7 +473,7 @@ class PrimitiveClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(str, construct(_response.json()))
+            return typing.cast(str, construct_type(str, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -525,7 +526,7 @@ class AsyncPrimitiveClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(str, construct(_response.json()))
+            return typing.cast(str, construct_type(str, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -571,7 +572,7 @@ class AsyncPrimitiveClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(int, construct(_response.json()))
+            return typing.cast(int, construct_type(int, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -624,7 +625,7 @@ class AsyncPrimitiveClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(int, construct(_response.json()))
+            return typing.cast(int, construct_type(int, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -672,7 +673,7 @@ class AsyncPrimitiveClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(float, construct(_response.json()))
+            return typing.cast(float, construct_type(float, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -720,7 +721,7 @@ class AsyncPrimitiveClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(bool, construct(_response.json()))
+            return typing.cast(bool, construct_type(bool, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -777,7 +778,7 @@ class AsyncPrimitiveClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(dt.datetime, dt.construct(_response.json()))
+            return typing.cast(dt.datetime, construct_type(dt.datetime, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -834,7 +835,7 @@ class AsyncPrimitiveClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(dt.date, dt.construct(_response.json()))
+            return typing.cast(dt.date, construct_type(dt.date, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -891,7 +892,7 @@ class AsyncPrimitiveClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(uuid.UUID, uuid.construct(_response.json()))
+            return typing.cast(uuid.UUID, construct_type(uuid.UUID, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -944,7 +945,7 @@ class AsyncPrimitiveClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(str, construct(_response.json()))
+            return typing.cast(str, construct_type(str, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:

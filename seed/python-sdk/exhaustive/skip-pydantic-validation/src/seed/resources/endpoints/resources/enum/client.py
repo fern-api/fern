@@ -9,6 +9,7 @@ from .....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .....core.jsonable_encoder import jsonable_encoder
 from .....core.remove_none_from_dict import remove_none_from_dict
 from .....core.request_options import RequestOptions
+from .....core.unchecked_base_model import construct_type
 from ....types.resources.enum.types.weather_report import WeatherReport
 
 # this is used as the default value for optional parameters
@@ -61,7 +62,7 @@ class EnumClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(WeatherReport, WeatherReport.construct(_response.json()))
+            return typing.cast(WeatherReport, construct_type(WeatherReport, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -115,7 +116,7 @@ class AsyncEnumClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(WeatherReport, WeatherReport.construct(_response.json()))
+            return typing.cast(WeatherReport, construct_type(WeatherReport, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:

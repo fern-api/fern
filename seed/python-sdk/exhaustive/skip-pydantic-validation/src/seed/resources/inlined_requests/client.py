@@ -9,6 +9,7 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.remove_none_from_dict import remove_none_from_dict
 from ...core.request_options import RequestOptions
+from ...core.unchecked_base_model import construct_type
 from ..general_errors.errors.bad_request_body import BadRequestBody
 from ..general_errors.types.bad_object_request_info import BadObjectRequestInfo
 from ..types.resources.object.types.object_with_optional_field import ObjectWithOptionalField
@@ -103,9 +104,11 @@ class InlinedRequestsClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(ObjectWithOptionalField, ObjectWithOptionalField.construct(_response.json()))
+            return typing.cast(ObjectWithOptionalField, construct_type(ObjectWithOptionalField, _response.json()))
         if _response.status_code == 400:
-            raise BadRequestBody(typing.cast(BadObjectRequestInfo, BadObjectRequestInfo.construct(_response.json())))
+            raise BadRequestBody(
+                typing.cast(BadObjectRequestInfo, construct_type(BadObjectRequestInfo, _response.json()))
+            )
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -199,9 +202,11 @@ class AsyncInlinedRequestsClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(ObjectWithOptionalField, ObjectWithOptionalField.construct(_response.json()))
+            return typing.cast(ObjectWithOptionalField, construct_type(ObjectWithOptionalField, _response.json()))
         if _response.status_code == 400:
-            raise BadRequestBody(typing.cast(BadObjectRequestInfo, BadObjectRequestInfo.construct(_response.json())))
+            raise BadRequestBody(
+                typing.cast(BadObjectRequestInfo, construct_type(BadObjectRequestInfo, _response.json()))
+            )
         try:
             _response_json = _response.json()
         except JSONDecodeError:

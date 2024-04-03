@@ -31,7 +31,7 @@ class CoreUtilities:
                     directories=self.filepath,
                     file=Filepath.FilepathPart(module_name="unchecked_base_model"),
                 ),
-                exports={"UncheckedBaseModel"},
+                exports={"UncheckedBaseModel", "UnionMetadata", "construct_type"},
             )
 
     def _copy_file_to_project(
@@ -73,13 +73,19 @@ class CoreUtilities:
             ),
         ) if self._allow_skipping_validation else Pydantic.BaseModel(version)
 
+    def get_construct_type(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "unchecked_base_model"), named_import="construct_type"
+            ),
+        )
+
     def get_construct(self, type_of_obj: AST.TypeHint, obj: AST.Expression) -> AST.Expression:
-        return AST.Expression(
-                    AST.FunctionInvocation(
-                        function_definition=AST.Reference(
-                            import_=type_of_obj._type.import_,
-                            qualified_name_excluding_import=("construct",),
-                        ),
-                        args=[obj],
+        return AST.TypeHint.invoke_cast(
+            type_casted_to=type_of_obj,
+            value_being_casted=AST.FunctionInvocation(
+                        function_definition=self.get_construct_type(),
+                        args=[AST.Expression(type_of_obj._type), obj],
                     )
-                ) if self._allow_skipping_validation else Pydantic.parse_obj_as(PydanticVersionCompatibility.Both, type_of_obj, obj)
+        ) if self._allow_skipping_validation else Pydantic.parse_obj_as(PydanticVersionCompatibility.Both, type_of_obj, obj)

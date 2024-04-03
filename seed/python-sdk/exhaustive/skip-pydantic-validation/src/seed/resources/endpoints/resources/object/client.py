@@ -9,6 +9,7 @@ from .....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .....core.jsonable_encoder import jsonable_encoder
 from .....core.remove_none_from_dict import remove_none_from_dict
 from .....core.request_options import RequestOptions
+from .....core.unchecked_base_model import construct_type
 from ....types.resources.object.types.nested_object_with_optional_field import NestedObjectWithOptionalField
 from ....types.resources.object.types.nested_object_with_required_field import NestedObjectWithRequiredField
 from ....types.resources.object.types.object_with_map_of_map import ObjectWithMapOfMap
@@ -94,7 +95,7 @@ class ObjectClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(ObjectWithOptionalField, ObjectWithOptionalField.construct(_response.json()))
+            return typing.cast(ObjectWithOptionalField, construct_type(ObjectWithOptionalField, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -152,7 +153,7 @@ class ObjectClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(ObjectWithRequiredField, ObjectWithRequiredField.construct(_response.json()))
+            return typing.cast(ObjectWithRequiredField, construct_type(ObjectWithRequiredField, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -208,7 +209,7 @@ class ObjectClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(ObjectWithMapOfMap, ObjectWithMapOfMap.construct(_response.json()))
+            return typing.cast(ObjectWithMapOfMap, construct_type(ObjectWithMapOfMap, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -292,7 +293,9 @@ class ObjectClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(NestedObjectWithOptionalField, NestedObjectWithOptionalField.construct(_response.json()))
+            return typing.cast(
+                NestedObjectWithOptionalField, construct_type(NestedObjectWithOptionalField, _response.json())
+            )
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -376,7 +379,9 @@ class ObjectClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(NestedObjectWithRequiredField, NestedObjectWithRequiredField.construct(_response.json()))
+            return typing.cast(
+                NestedObjectWithRequiredField, construct_type(NestedObjectWithRequiredField, _response.json())
+            )
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -465,7 +470,9 @@ class ObjectClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(NestedObjectWithRequiredField, NestedObjectWithRequiredField.construct(_response.json()))
+            return typing.cast(
+                NestedObjectWithRequiredField, construct_type(NestedObjectWithRequiredField, _response.json())
+            )
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -548,7 +555,7 @@ class AsyncObjectClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(ObjectWithOptionalField, ObjectWithOptionalField.construct(_response.json()))
+            return typing.cast(ObjectWithOptionalField, construct_type(ObjectWithOptionalField, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -606,7 +613,7 @@ class AsyncObjectClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(ObjectWithRequiredField, ObjectWithRequiredField.construct(_response.json()))
+            return typing.cast(ObjectWithRequiredField, construct_type(ObjectWithRequiredField, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -662,7 +669,7 @@ class AsyncObjectClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(ObjectWithMapOfMap, ObjectWithMapOfMap.construct(_response.json()))
+            return typing.cast(ObjectWithMapOfMap, construct_type(ObjectWithMapOfMap, _response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -746,7 +753,9 @@ class AsyncObjectClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(NestedObjectWithOptionalField, NestedObjectWithOptionalField.construct(_response.json()))
+            return typing.cast(
+                NestedObjectWithOptionalField, construct_type(NestedObjectWithOptionalField, _response.json())
+            )
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -830,7 +839,9 @@ class AsyncObjectClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(NestedObjectWithRequiredField, NestedObjectWithRequiredField.construct(_response.json()))
+            return typing.cast(
+                NestedObjectWithRequiredField, construct_type(NestedObjectWithRequiredField, _response.json())
+            )
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -919,7 +930,9 @@ class AsyncObjectClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(NestedObjectWithRequiredField, NestedObjectWithRequiredField.construct(_response.json()))
+            return typing.cast(
+                NestedObjectWithRequiredField, construct_type(NestedObjectWithRequiredField, _response.json())
+            )
         try:
             _response_json = _response.json()
         except JSONDecodeError:
