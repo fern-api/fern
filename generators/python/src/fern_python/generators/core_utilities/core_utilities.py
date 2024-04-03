@@ -2,8 +2,11 @@ import os
 from typing import Set
 
 from fern_python.codegen import AST, Filepath, Project
+from fern_python.external_dependencies.pydantic import (
+    Pydantic,
+    PydanticVersionCompatibility,
+)
 from fern_python.source_file_factory import SourceFileFactory
-from fern_python.external_dependencies.pydantic import Pydantic, PydanticVersionCompatibility
 
 
 class CoreUtilities:
@@ -56,7 +59,7 @@ class CoreUtilities:
                 module=AST.Module.local(*self._module_path, "datetime_utils"), named_import="serialize_datetime"
             ),
         )
-    
+
     def get_union_metadata(self) -> AST.Reference:
         return AST.Reference(
             qualified_name_excluding_import=(),
@@ -66,12 +69,17 @@ class CoreUtilities:
         )
 
     def get_unchecked_pydantic_base_model(self, version: PydanticVersionCompatibility) -> AST.Reference:
-        return AST.Reference(
-            qualified_name_excluding_import=(),
-            import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "unchecked_base_model"), named_import="UncheckedBaseModel"
-            ),
-        ) if self._allow_skipping_validation else Pydantic.BaseModel(version)
+        return (
+            AST.Reference(
+                qualified_name_excluding_import=(),
+                import_=AST.ReferenceImport(
+                    module=AST.Module.local(*self._module_path, "unchecked_base_model"),
+                    named_import="UncheckedBaseModel",
+                ),
+            )
+            if self._allow_skipping_validation
+            else Pydantic.BaseModel(version)
+        )
 
     def get_construct_type(self) -> AST.Reference:
         return AST.Reference(
@@ -82,13 +90,14 @@ class CoreUtilities:
         )
 
     def get_construct(self, type_of_obj: AST.TypeHint, obj: AST.Expression) -> AST.Expression:
-        return AST.TypeHint.invoke_cast(
-            type_casted_to=type_of_obj,
-            value_being_casted=AST.FunctionInvocation(
-                        function_definition=self.get_construct_type(),
-                        kwargs=[
-                            ("type_", AST.Expression(type_of_obj._type)), 
-                            ("object_", obj)
-                        ],
-                    )
-        ) if self._allow_skipping_validation else Pydantic.parse_obj_as(PydanticVersionCompatibility.Both, type_of_obj, obj)
+        return (
+            AST.TypeHint.invoke_cast(
+                type_casted_to=type_of_obj,
+                value_being_casted=AST.FunctionInvocation(
+                    function_definition=self.get_construct_type(),
+                    kwargs=[("type_", AST.Expression(type_of_obj._type)), ("object_", obj)],
+                ),
+            )
+            if self._allow_skipping_validation
+            else Pydantic.parse_obj_as(PydanticVersionCompatibility.Both, type_of_obj, obj)
+        )

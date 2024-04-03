@@ -3,7 +3,6 @@
 import datetime as dt
 import typing
 import uuid
-from collections.abc import Iterable
 
 import typing_extensions
 

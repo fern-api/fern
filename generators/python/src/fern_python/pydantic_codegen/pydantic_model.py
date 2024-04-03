@@ -37,7 +37,7 @@ class PydanticModel:
         pydantic_base_model: Optional[AST.ClassReference] = None,
     ):
         self._source_file = source_file
-        
+
         pydantic_base_model = pydantic_base_model or Pydantic.BaseModel(version)
         self._class_declaration = AST.ClassDeclaration(
             name=name,

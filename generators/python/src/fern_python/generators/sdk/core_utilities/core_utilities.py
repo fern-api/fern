@@ -2,11 +2,14 @@ import os
 from typing import Optional, Set
 
 from fern_python.codegen import AST, Filepath, Project
-from fern_python.external_dependencies.pydantic import PYDANTIC_DEPENDENCY
+from fern_python.external_dependencies.pydantic import (
+    PYDANTIC_DEPENDENCY,
+    Pydantic,
+    PydanticVersionCompatibility,
+)
 from fern_python.external_dependencies.typing_extensions import (
     TYPING_EXTENSIONS_DEPENDENCY,
 )
-from fern_python.external_dependencies.pydantic import Pydantic, PydanticVersionCompatibility
 from fern_python.source_file_factory import SourceFileFactory
 
 
@@ -261,7 +264,7 @@ class CoreUtilities:
                 kwargs=[("httpx_client", obj)],
             )
         )
-    
+
     def get_union_metadata(self) -> AST.Reference:
         return AST.Reference(
             qualified_name_excluding_import=(),
@@ -277,7 +280,7 @@ class CoreUtilities:
                 module=AST.Module.local(*self._module_path, "unchecked_base_model"), named_import="UncheckedBaseModel"
             ),
         )
-    
+
     def get_construct_type(self) -> AST.Reference:
         return AST.Reference(
             qualified_name_excluding_import=(),
@@ -287,13 +290,14 @@ class CoreUtilities:
         )
 
     def get_construct(self, type_of_obj: AST.TypeHint, obj: AST.Expression) -> AST.Expression:
-        return AST.TypeHint.invoke_cast(
-            type_casted_to=type_of_obj,
-            value_being_casted=AST.FunctionInvocation(
-                        function_definition=self.get_construct_type(),
-                        kwargs=[
-                            ("type_", AST.Expression(type_of_obj._type)), 
-                            ("object_", obj)
-                        ],
-                    )
-        ) if self._allow_skipping_validation else Pydantic.parse_obj_as(PydanticVersionCompatibility.Both, type_of_obj, obj)
+        return (
+            AST.TypeHint.invoke_cast(
+                type_casted_to=type_of_obj,
+                value_being_casted=AST.FunctionInvocation(
+                    function_definition=self.get_construct_type(),
+                    kwargs=[("type_", AST.Expression(type_of_obj._type)), ("object_", obj)],
+                ),
+            )
+            if self._allow_skipping_validation
+            else Pydantic.parse_obj_as(PydanticVersionCompatibility.Both, type_of_obj, obj)
+        )

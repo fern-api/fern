@@ -1,8 +1,8 @@
 import datetime as dt
 import typing
-import typing_extensions
-from collections.abc import Iterable
 import uuid
+
+import typing_extensions
 
 from .datetime_utils import serialize_datetime
 
@@ -106,21 +106,21 @@ def construct_type(*, type_: typing.Type, object_: typing.Any) -> typing.Any:
     if base_type == dict:
         if not isinstance(object_, typing.Mapping):
             return object_
-        
+
         _, items_type = pydantic.typing.get_args(type_)
         return {key: construct_type(object_=item, type_=items_type) for key, item in object_.items()}
 
     if base_type == list:
         if not isinstance(object_, list):
             return object_
-        
+
         inner_type = pydantic.typing.get_args(type_)[0]
         return [construct_type(object_=entry, type_=inner_type) for entry in object_]
-    
+
     if base_type == set:
         if not isinstance(object_, set) and not isinstance(object_, list):
             return object_
-        
+
         inner_type = pydantic.typing.get_args(type_)[0]
         return {construct_type(object_=entry, type_=inner_type) for entry in object_}
 

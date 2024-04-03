@@ -3,10 +3,6 @@ from typing_extensions import Never
 
 from fern_python.codegen import AST
 from fern_python.external_dependencies.json import Json
-from fern_python.external_dependencies.pydantic import (
-    Pydantic,
-    PydanticVersionCompatibility,
-)
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 
 
