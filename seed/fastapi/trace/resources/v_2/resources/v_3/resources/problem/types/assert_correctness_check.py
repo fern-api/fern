@@ -5,6 +5,8 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ........core.datetime_utils import serialize_datetime
 from .deep_equality_correctness_check import DeepEqualityCorrectnessCheck
 from .void_function_definition_that_takes_actual_result import VoidFunctionDefinitionThatTakesActualResult
@@ -49,7 +51,7 @@ class AssertCorrectnessCheck(pydantic.BaseModel):
                 VoidFunctionDefinitionThatTakesActualResult(**self.__root__.dict(exclude_unset=True, exclude={"type"}))
             )
 
-    __root__: typing.Annotated[
+    __root__: typing_extensions.Annotated[
         typing.Union[_AssertCorrectnessCheck.DeepEquality, _AssertCorrectnessCheck.Custom],
         pydantic.Field(discriminator="type"),
     ]

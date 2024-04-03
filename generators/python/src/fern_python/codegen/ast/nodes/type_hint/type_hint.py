@@ -175,7 +175,7 @@ class TypeHint(AstNode):
     @staticmethod
     def annotated(type: TypeHint, annotation: Expression) -> TypeHint:
         return TypeHint(
-            type=get_reference_to_typing_import("Annotated"),
+            type=get_reference_to_typing_extensions_import("Annotated"),
             type_parameters=[TypeParameter(type), TypeParameter(annotation)],
         )
 

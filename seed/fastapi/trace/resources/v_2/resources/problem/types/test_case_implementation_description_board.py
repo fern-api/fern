@@ -5,6 +5,8 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ......core.datetime_utils import serialize_datetime
 from .parameter_id import ParameterId
 
@@ -44,7 +46,7 @@ class TestCaseImplementationDescriptionBoard(pydantic.BaseModel):
         if self.__root__.type == "paramId":
             return param_id(self.__root__.value)
 
-    __root__: typing.Annotated[
+    __root__: typing_extensions.Annotated[
         typing.Union[_TestCaseImplementationDescriptionBoard.Html, _TestCaseImplementationDescriptionBoard.ParamId],
         pydantic.Field(discriminator="type"),
     ]

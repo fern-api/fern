@@ -104,10 +104,12 @@ class InlinedRequestsClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(ObjectWithOptionalField, construct_type(ObjectWithOptionalField, _response.json()))
+            return typing.cast(
+                ObjectWithOptionalField, construct_type(type_=ObjectWithOptionalField, object_=_response.json())
+            )
         if _response.status_code == 400:
             raise BadRequestBody(
-                typing.cast(BadObjectRequestInfo, construct_type(BadObjectRequestInfo, _response.json()))
+                typing.cast(BadObjectRequestInfo, construct_type(type_=BadObjectRequestInfo, object_=_response.json()))
             )
         try:
             _response_json = _response.json()
@@ -202,10 +204,12 @@ class AsyncInlinedRequestsClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(ObjectWithOptionalField, construct_type(ObjectWithOptionalField, _response.json()))
+            return typing.cast(
+                ObjectWithOptionalField, construct_type(type_=ObjectWithOptionalField, object_=_response.json())
+            )
         if _response.status_code == 400:
             raise BadRequestBody(
-                typing.cast(BadObjectRequestInfo, construct_type(BadObjectRequestInfo, _response.json()))
+                typing.cast(BadObjectRequestInfo, construct_type(type_=BadObjectRequestInfo, object_=_response.json()))
             )
         try:
             _response_json = _response.json()

@@ -5,6 +5,8 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ....core.datetime_utils import serialize_datetime
 from .building_executor_response import BuildingExecutorResponse
 from .errored_response import ErroredResponse
@@ -142,7 +144,7 @@ class CodeExecutionUpdate(pydantic.BaseModel):
         if self.__root__.type == "finished":
             return finished(FinishedResponse(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
 
-    __root__: typing.Annotated[
+    __root__: typing_extensions.Annotated[
         typing.Union[
             _CodeExecutionUpdate.BuildingExecutor,
             _CodeExecutionUpdate.Running,

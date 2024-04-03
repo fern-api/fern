@@ -4,6 +4,7 @@ from __future__ import annotations
 from .dog import Dog as resources_types_resources_union_types_dog_Dog
 from .cat import Cat as resources_types_resources_union_types_cat_Cat
 import typing
+import typing_extensions
 import datetime as dt
 from ......core.datetime_utils import serialize_datetime
 
@@ -29,7 +30,7 @@ class Animal(pydantic.BaseModel):
         if self.__root__.animal == "cat":
             return cat(
             resources_types_resources_union_types_cat_Cat(**self.__root__.dict(exclude_unset=True, exclude={"animal"})))
-    __root__: typing.Annotated[typing.Union[_Animal.Dog, _Animal.Cat], pydantic.Field(discriminator="animal")]
+    __root__: typing_extensions.Annotated[typing.Union[_Animal.Dog, _Animal.Cat], pydantic.Field(discriminator="animal")]
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = { "by_alias": True, "exclude_unset": True, **kwargs }
         return super().json(**kwargs_with_defaults)

@@ -5,6 +5,8 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ....core.datetime_utils import serialize_datetime
 
 try:
@@ -39,7 +41,7 @@ class ContainerValue(pydantic.BaseModel):
         if self.__root__.type == "optional":
             return optional(self.__root__.value)
 
-    __root__: typing.Annotated[
+    __root__: typing_extensions.Annotated[
         typing.Union[_ContainerValue.List, _ContainerValue.Optional], pydantic.Field(discriminator="type")
     ]
 

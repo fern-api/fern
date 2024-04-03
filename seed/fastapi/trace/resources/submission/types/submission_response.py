@@ -5,6 +5,8 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ....core.datetime_utils import serialize_datetime
 from ...commons.types.problem_id import ProblemId
 from .code_execution_update import (
@@ -90,7 +92,7 @@ class SubmissionResponse(pydantic.BaseModel):
         if self.__root__.type == "terminated":
             return terminated(TerminatedResponse(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
 
-    __root__: typing.Annotated[
+    __root__: typing_extensions.Annotated[
         typing.Union[
             _SubmissionResponse.ServerInitialized,
             _SubmissionResponse.ProblemInitialized,

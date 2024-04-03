@@ -5,6 +5,8 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ....core.datetime_utils import serialize_datetime
 from .binary_tree_node_and_tree_value import BinaryTreeNodeAndTreeValue
 from .doubly_linked_list_node_and_list_value import DoublyLinkedListNodeAndListValue
@@ -151,7 +153,7 @@ class DebugVariableValue(pydantic.BaseModel):
                 )
             )
 
-    __root__: typing.Annotated[
+    __root__: typing_extensions.Annotated[
         typing.Union[
             _DebugVariableValue.IntegerValue,
             _DebugVariableValue.BooleanValue,

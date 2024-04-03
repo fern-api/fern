@@ -5,6 +5,8 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ....core.datetime_utils import serialize_datetime
 from .test_submission_status_v_2 import TestSubmissionStatusV2
 from .workspace_submission_status_v_2 import WorkspaceSubmissionStatusV2
@@ -43,7 +45,7 @@ class SubmissionStatusV2(pydantic.BaseModel):
         if self.__root__.type == "workspace":
             return workspace(WorkspaceSubmissionStatusV2(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
 
-    __root__: typing.Annotated[
+    __root__: typing_extensions.Annotated[
         typing.Union[_SubmissionStatusV2.Test, _SubmissionStatusV2.Workspace], pydantic.Field(discriminator="type")
     ]
 

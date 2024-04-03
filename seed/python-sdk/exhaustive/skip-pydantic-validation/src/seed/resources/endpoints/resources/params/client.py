@@ -59,7 +59,7 @@ class ParamsClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(str, construct_type(str, _response.json()))
+            return typing.cast(str, construct_type(type_=str, object_=_response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -303,7 +303,7 @@ class ParamsClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(str, construct_type(str, _response.json()))
+            return typing.cast(str, construct_type(type_=str, object_=_response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -355,7 +355,7 @@ class AsyncParamsClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(str, construct_type(str, _response.json()))
+            return typing.cast(str, construct_type(type_=str, object_=_response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -599,7 +599,7 @@ class AsyncParamsClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(str, construct_type(str, _response.json()))
+            return typing.cast(str, construct_type(type_=str, object_=_response.json()))
         try:
             _response_json = _response.json()
         except JSONDecodeError:

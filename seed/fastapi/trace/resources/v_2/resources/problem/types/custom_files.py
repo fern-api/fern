@@ -5,6 +5,8 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ......core.datetime_utils import serialize_datetime
 from .....commons.types.language import Language
 from .basic_custom_files import BasicCustomFiles
@@ -42,7 +44,7 @@ class CustomFiles(pydantic.BaseModel):
         if self.__root__.type == "custom":
             return custom(self.__root__.value)
 
-    __root__: typing.Annotated[
+    __root__: typing_extensions.Annotated[
         typing.Union[_CustomFiles.Basic, _CustomFiles.Custom], pydantic.Field(discriminator="type")
     ]
 

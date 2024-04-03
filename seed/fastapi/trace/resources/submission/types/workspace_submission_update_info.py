@@ -5,6 +5,8 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ....core.datetime_utils import serialize_datetime
 from .error_info import ErrorInfo
 from .running_submission_state import RunningSubmissionState
@@ -91,7 +93,7 @@ class WorkspaceSubmissionUpdateInfo(pydantic.BaseModel):
         if self.__root__.type == "finished":
             return finished()
 
-    __root__: typing.Annotated[
+    __root__: typing_extensions.Annotated[
         typing.Union[
             _WorkspaceSubmissionUpdateInfo.Running,
             _WorkspaceSubmissionUpdateInfo.Ran,

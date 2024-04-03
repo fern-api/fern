@@ -5,6 +5,8 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ....core.datetime_utils import serialize_datetime
 from ...commons.types.variable_value import VariableValue
 from .exception_info import ExceptionInfo
@@ -48,7 +50,7 @@ class ActualResult(pydantic.BaseModel):
         if self.__root__.type == "exceptionV2":
             return exception_v_2(self.__root__.value)
 
-    __root__: typing.Annotated[
+    __root__: typing_extensions.Annotated[
         typing.Union[_ActualResult.Value, _ActualResult.Exception, _ActualResult.ExceptionV2],
         pydantic.Field(discriminator="type"),
     ]

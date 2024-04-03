@@ -5,6 +5,8 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ......core.datetime_utils import serialize_datetime
 from .test_case_implementation import TestCaseImplementation
 from .test_case_template_id import TestCaseTemplateId
@@ -49,7 +51,7 @@ class TestCaseImplementationReference(pydantic.BaseModel):
         if self.__root__.type == "implementation":
             return implementation(TestCaseImplementation(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
 
-    __root__: typing.Annotated[
+    __root__: typing_extensions.Annotated[
         typing.Union[_TestCaseImplementationReference.TemplateId, _TestCaseImplementationReference.Implementation],
         pydantic.Field(discriminator="type"),
     ]

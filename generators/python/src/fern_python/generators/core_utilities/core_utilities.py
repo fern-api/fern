@@ -86,6 +86,9 @@ class CoreUtilities:
             type_casted_to=type_of_obj,
             value_being_casted=AST.FunctionInvocation(
                         function_definition=self.get_construct_type(),
-                        args=[AST.Expression(type_of_obj._type), obj],
+                        kwargs=[
+                            ("type_", AST.Expression(type_of_obj._type)), 
+                            ("object_", obj)
+                        ],
                     )
         ) if self._allow_skipping_validation else Pydantic.parse_obj_as(PydanticVersionCompatibility.Both, type_of_obj, obj)
