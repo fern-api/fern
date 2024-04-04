@@ -27,7 +27,6 @@ class UncheckedBaseModel(pydantic_v1.BaseModel):
         extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}
 
-
     # Allow construct to not validate model
     # Implementation taken from: https://github.com/pydantic/pydantic/issues/1168#issuecomment-817742836
     @classmethod
@@ -128,9 +127,11 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
     The idea is to essentially attempt to coerce object_ to type_ (recursively)
     """
     base_type = pydantic_v1.typing.get_origin(type_) or type_
-    is_annotated = (base_type == typing_extensions.Annotated)
+    is_annotated = base_type == typing_extensions.Annotated
     maybe_annotation_members = pydantic_v1.typing.get_args(type_)
-    is_annotated_union = is_annotated and pydantic_v1.typing.is_union(pydantic_v1.typing.get_origin(maybe_annotation_members[0]))
+    is_annotated_union = is_annotated and pydantic_v1.typing.is_union(
+        pydantic_v1.typing.get_origin(maybe_annotation_members[0])
+    )
 
     if base_type == dict:
         if not isinstance(object_, typing.Mapping):
