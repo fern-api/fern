@@ -43,6 +43,13 @@ jobs:
         working-directory: ./generators/python
         run: poetry install
 
+      - name: Update models for testing
+        working-directory: ./generators/python
+        run: |
+          docker build -f ./pydantic/Dockerfile -t ferntest/fern-pydantic-model:0.0.0 .
+          cd tests/utils/example_models
+          fern generate --group dummy_types --local
+
       - name: Unit Test
         working-directory: ./generators/python
         run: poetry run pytest -sv
