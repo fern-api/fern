@@ -59,7 +59,14 @@ class UncheckedBaseModel(pydantic_v1.BaseModel):
                     type_ = typing.cast(typing.Type, field.outer_type_)  # type: ignore
                     fields_values[name] = construct_type(object_=values[key], type_=type_)
             elif not field.required:
-                fields_values[name] = field.get_default()
+                default = field.get_default()
+                fields_values[name] = default
+
+                # If the default values are non-null act like they've been set
+                # This effectively allows exclude_unset to work like exclude_none where
+                # the latter passes through intentionally set none values.
+                if default != None:
+                    _fields_set.add(key)
 
         # Add extras back in
         for key, value in values.items():
@@ -76,8 +83,13 @@ class UncheckedBaseModel(pydantic_v1.BaseModel):
 def _convert_undiscriminated_union_type(union_type: typing.Type[typing.Any], object_: typing.Any) -> typing.Any:
     for inner_type in pydantic_v1.typing.get_args(union_type):
         try:
-            # Attempt a validated parse until one works
-            return pydantic_v1.parse_obj_as(inner_type, object_)
+            # If the inner type is AnyStr, we can just return the object cast ourselves
+            # Pydantic's parse turns the object into a binary string.
+            if inner_type == typing.AnyStr:
+                return str(object_)
+            elif issubclass(inner_type, pydantic_v1.BaseModel):
+                # Attempt a validated parse until one works
+                return pydantic_v1.parse_obj_as(inner_type, object_)
         except Exception:
             continue
 
@@ -107,7 +119,6 @@ def _convert_union_type(type_: typing.Type[typing.Any], object_: typing.Any) -> 
                 except Exception:
                     # Allow to fall through to our regular union handling
                     pass
-
     return _convert_undiscriminated_union_type(union_type, object_)
 
 
