@@ -1,3 +1,4 @@
+import enum
 import datetime as dt
 import typing
 import uuid
@@ -9,6 +10,27 @@ try:
     import pydantic.v1 as pydantic  # type: ignore
 except ImportError:
     import pydantic  # type: ignore
+
+StrEnum = typing.Union[
+    typing.AnyStr,
+    typing.Literal[
+        "STATUS_READY",
+        "STATUS_FAILED",
+        "STATUS_PAUSED",
+        "STATUS_QUEUED",
+    ],
+]
+
+
+class Color(str, enum.Enum):
+    """
+    from seed.enum import Color
+
+    Color.RED
+    """
+
+    RED = "red"
+    BLUE = "blue"
 
 
 class ObjectWithOptionalField(UncheckedBaseModel):
@@ -25,6 +47,8 @@ class ObjectWithOptionalField(UncheckedBaseModel):
     list_: typing.Optional[typing.List[str]] = pydantic.Field(alias="list", default=None)
     set_: typing.Optional[typing.Set[str]] = pydantic.Field(alias="set", default=None)
     map_: typing.Optional[typing.Dict[int, str]] = pydantic.Field(alias="map", default=None)
+    str_enum: typing.Optional[StrEnum] = None
+    enum: typing.Optional[Color] = None
     union: typing.Optional[Shape] = None
     undiscriminated_union: typing.Optional[UndiscriminatedShape] = None
 

@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0-rc3] - 2024-04-04
+
+- Fix: There are a number of fixes to the skip validation code as well as tests to reflect those updates.
+
 ## [1.1.0-rc2] - 2024-04-04
 
 - Fix: The generator now writes the skipped-validation `cast` with a suffixing new line so that the code compiles.
