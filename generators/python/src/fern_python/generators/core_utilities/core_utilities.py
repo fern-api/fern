@@ -98,7 +98,7 @@ class CoreUtilities:
                 module=AST.Module.local(*self._module_path, "unchecked_base_model"), named_import="construct_type"
             ),
         )
-    
+
     def _construct_type(self, type_of_obj: AST.TypeHint, obj: AST.Expression) -> AST.Expression:
         def write(writer: AST.NodeWriter) -> None:
             writer.write_node(
@@ -118,7 +118,6 @@ class CoreUtilities:
             writer.write_line("# type: ignore")
 
         return AST.Expression(AST.CodeWriter(write))
-
 
     def get_construct(self, type_of_obj: AST.TypeHint, obj: AST.Expression) -> AST.Expression:
         return (

@@ -319,7 +319,6 @@ class CoreUtilities:
 
         return AST.Expression(AST.CodeWriter(write))
 
-
     def get_construct(self, type_of_obj: AST.TypeHint, obj: AST.Expression) -> AST.Expression:
         return (
             self._construct_type(type_of_obj, obj)
