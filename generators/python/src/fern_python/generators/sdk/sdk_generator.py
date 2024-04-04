@@ -326,21 +326,22 @@ class SdkGenerator(AbstractGenerator):
         self,
         project: Project,
     ) -> None:
-        filepath = Filepath(
-            directories=(),
-            file=Filepath.FilepathPart(module_name="version"),
-        )
-        filepath_nested = project.get_source_file_filepath(filepath, include_src_root=True)
-        contents = f"""
+        if project._project_config is not None:
+            filepath = Filepath(
+                directories=(),
+                file=Filepath.FilepathPart(module_name="version"),
+            )
+            filepath_nested = project.get_source_file_filepath(filepath, include_src_root=True)
+            contents = f"""
 from importlib import metadata
 
-__version__ = metadata.version("{project._project_config.package_name if project._project_config is not None else "__package__"}")
+__version__ = metadata.version("{project._project_config.package_name}")
 """
-        project.add_file(filepath_nested, contents)
-        project.register_export_in_project(
-            filepath_in_project=filepath,
-            exports={"__version__"},
-        )
+            project.add_file(filepath_nested, contents)
+            project.register_export_in_project(
+                filepath_in_project=filepath,
+                exports={"__version__"},
+            )
 
     def _generate_readme(
         self,
