@@ -103,14 +103,10 @@ export async function writeFilesToDiskAndRunGenerator({
     await taskHandler.copyGeneratedFiles();
 
     if (writeUnitTests) {
-        const tmpDotMockDirectory = await tmp.dir({
-            tmpdir: workspaceTempDir.path
-        });
-        const absolutePathToDotMockDirectory = AbsoluteFilePath.of(tmpDotMockDirectory.path);
-        context.logger.debug("Will write .mock to: " + absolutePathToDotMockDirectory);
+        context.logger.debug("Will write .mock to: " + absolutePathToLocalOutput);
 
         await writeDotMock({
-            absolutePathToDotMockDirectory,
+            absolutePathToDotMockDirectory: absolutePathToLocalOutput,
             absolutePathToFernDefinition,
             absolutePathToFernConfig
         });

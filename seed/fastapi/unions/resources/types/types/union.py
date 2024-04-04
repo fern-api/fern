@@ -5,6 +5,8 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ....core.datetime_utils import serialize_datetime
 from ....core.pydantic_utilities import pydantic_v1
 from .bar import Bar as resources_types_types_bar_Bar
@@ -41,7 +43,7 @@ class Union(pydantic_v1.BaseModel):
         if self.__root__.type == "bar":
             return bar(self.__root__.bar)
 
-    __root__: typing.Annotated[typing.Union[_Union.Foo, _Union.Bar], pydantic_v1.Field(discriminator="type")]
+    __root__: typing_extensions.Annotated[typing.Union[_Union.Foo, _Union.Bar], pydantic_v1.Field(discriminator="type")]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

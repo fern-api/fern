@@ -16,6 +16,7 @@
         "path": "../"
     },
     "customConfig": {
+        "pydantic_config": null,
         "follow_redirects_by_default": true
     },
     "workspaceName": "exhaustive",

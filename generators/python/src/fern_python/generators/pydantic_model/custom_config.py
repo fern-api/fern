@@ -22,3 +22,5 @@ class PydanticModelCustomConfig(BasePydanticModelCustomConfig):
     skip_formatting: bool = False
     include_union_utils: bool = False
     use_str_enums: bool = True
+    # Skip validation of fields (automatically includes additional fields)
+    skip_validation: bool = False

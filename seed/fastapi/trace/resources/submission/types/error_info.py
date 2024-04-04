@@ -5,6 +5,8 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ....core.datetime_utils import serialize_datetime
 from ....core.pydantic_utilities import pydantic_v1
 from .compile_error import CompileError as resources_submission_types_compile_error_CompileError
@@ -56,7 +58,7 @@ class ErrorInfo(pydantic_v1.BaseModel):
                 )
             )
 
-    __root__: typing.Annotated[
+    __root__: typing_extensions.Annotated[
         typing.Union[_ErrorInfo.CompileError, _ErrorInfo.RuntimeError, _ErrorInfo.InternalError],
         pydantic_v1.Field(discriminator="type"),
     ]

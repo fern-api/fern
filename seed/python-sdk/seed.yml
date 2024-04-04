@@ -58,6 +58,11 @@ fixtures:
         improved_imports: true
       outputFolder: improved_imports
     - customConfig:
+        pydantic_config:
+          skip_validation: true
+      outputFolder: skip-pydantic-validation
+    - customConfig:
+        pydantic_config:
         follow_redirects_by_default: true
       outputFolder: follow_redirects_by_default
 scripts:

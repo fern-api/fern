@@ -101,6 +101,9 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                 frozen=self._custom_config.frozen,
                 orm_mode=self._custom_config.orm_mode,
                 smart_union=self._custom_config.smart_union,
+                pydantic_base_model=self._context.core_utilities.get_unchecked_pydantic_base_model(
+                    self._custom_config.version
+                ),
             ) as internal_pydantic_model_for_single_union_type:
                 internal_single_union_type = internal_pydantic_model_for_single_union_type.to_reference()
                 single_union_type_references.append(internal_single_union_type)
@@ -150,8 +153,26 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                         {self._context.get_class_reference_for_type_id(type_id) for type_id in forward_refed_types}
                     )
 
+            if self._custom_config.skip_validation:
+                type_hint = AST.TypeHint.annotated(
+                    type=AST.TypeHint.union(*(AST.TypeHint(ref) for ref in single_union_type_references)),
+                    annotation=AST.Expression(
+                        AST.ClassInstantiation(
+                            class_=self._context.core_utilities.get_union_metadata(),
+                            kwargs=[
+                                (
+                                    "discriminant",
+                                    AST.Expression(f'"{self._union.discriminant.wire_value}"'),
+                                )
+                            ],
+                        )
+                    ),
+                )
+            else:
+                type_hint = AST.TypeHint.union(*(AST.TypeHint(ref) for ref in single_union_type_references))
+
         type_alias_declaration = AST.TypeAliasDeclaration(
-            type_hint=AST.TypeHint.union(*(AST.TypeHint(ref) for ref in single_union_type_references)),
+            type_hint=type_hint,
             name=self._name.name.pascal_case.safe_name,
             snippet=self._snippet,
         )

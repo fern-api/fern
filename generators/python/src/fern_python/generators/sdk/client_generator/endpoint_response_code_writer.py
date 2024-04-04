@@ -3,10 +3,6 @@ from typing_extensions import Never
 
 from fern_python.codegen import AST
 from fern_python.external_dependencies.json import Json
-from fern_python.external_dependencies.pydantic import (
-    Pydantic,
-    PydanticVersionCompatibility,
-)
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 
 
@@ -52,8 +48,7 @@ class EndpointResponseCodeWriter:
                 writer.write_line("continue")
             writer.write("yield ")
             writer.write_node(
-                Pydantic.parse_obj_as(
-                    PydanticVersionCompatibility.Both,
+                self._context.core_utilities.get_construct(
                     self._get_streaming_response_data_type(stream_response),
                     AST.Expression(Json.loads(AST.Expression(EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE))),
                 ),
@@ -72,8 +67,7 @@ class EndpointResponseCodeWriter:
     ) -> None:
         writer.write("return ")
         writer.write_node(
-            Pydantic.parse_obj_as(
-                PydanticVersionCompatibility.Both,
+            self._context.core_utilities.get_construct(
                 self._get_json_response_body_type(json_response),
                 AST.Expression(
                     f"{EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE}"
@@ -152,8 +146,7 @@ class EndpointResponseCodeWriter:
                     AST.ClassInstantiation(
                         class_=self._context.get_reference_to_error(error.error),
                         args=[
-                            Pydantic.parse_obj_as(
-                                PydanticVersionCompatibility.Both,
+                            self._context.core_utilities.get_construct(
                                 self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                                     error_declaration.type
                                 ),
@@ -222,8 +215,7 @@ class EndpointResponseCodeWriter:
                             AST.ClassInstantiation(
                                 class_=self._context.get_reference_to_error(error.error),
                                 args=[
-                                    Pydantic.parse_obj_as(
-                                        PydanticVersionCompatibility.Both,
+                                    self._context.core_utilities.get_construct(
                                         self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                                             error_declaration.type
                                         ),

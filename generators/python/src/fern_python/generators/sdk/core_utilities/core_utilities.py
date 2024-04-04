@@ -2,7 +2,11 @@ import os
 from typing import Optional, Set
 
 from fern_python.codegen import AST, Filepath, Project
-from fern_python.external_dependencies.pydantic import PYDANTIC_DEPENDENCY
+from fern_python.external_dependencies.pydantic import (
+    PYDANTIC_DEPENDENCY,
+    Pydantic,
+    PydanticVersionCompatibility,
+)
 from fern_python.external_dependencies.typing_extensions import (
     TYPING_EXTENSIONS_DEPENDENCY,
 )
@@ -13,11 +17,12 @@ class CoreUtilities:
     ASYNC_CLIENT_WRAPPER_CLASS_NAME = "AsyncClientWrapper"
     SYNC_CLIENT_WRAPPER_CLASS_NAME = "SyncClientWrapper"
 
-    def __init__(self) -> None:
+    def __init__(self, allow_skipping_validation: bool) -> None:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
         # Promotes usage of `from ... import core`
         self._module_path_unnamed = tuple(part.module_name for part in self.filepath[:-1])  # type: ignore
+        self._allow_skipping_validation = allow_skipping_validation
 
     def copy_to_project(self, *, project: Project) -> None:
         self._copy_file_to_project(
@@ -83,6 +88,7 @@ class CoreUtilities:
             ),
             exports={"HttpClient", "AsyncHttpClient"},
         )
+
         self._copy_file_to_project(
             project=project,
             relative_filepath_on_disk="pydantic_utilities.py",
@@ -92,6 +98,18 @@ class CoreUtilities:
             ),
             exports={"pydantic_v1"},
         )
+
+        if self._allow_skipping_validation:
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="unchecked_base_model.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="unchecked_base_model"),
+                ),
+                exports={"UncheckedBaseModel", "UnionMetadata", "construct_type"},
+            )
+
         project.add_dependency(TYPING_EXTENSIONS_DEPENDENCY)
         project.add_dependency(PYDANTIC_DEPENDENCY)
 
@@ -255,6 +273,45 @@ class CoreUtilities:
                 ),
                 kwargs=[("httpx_client", obj)],
             )
+        )
+
+    def get_union_metadata(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "unchecked_base_model"), named_import="UnionMetadata"
+            ),
+        )
+
+    def get_unchecked_pydantic_base_model(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "unchecked_base_model"), named_import="UncheckedBaseModel"
+            ),
+        )
+
+    def get_construct_type(self) -> AST.Reference:
+        return AST.Reference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "unchecked_base_model"), named_import="construct_type"
+            ),
+        )
+
+    def get_construct(self, type_of_obj: AST.TypeHint, obj: AST.Expression) -> AST.Expression:
+        return (
+            AST.TypeHint.invoke_cast(
+                type_casted_to=type_of_obj,
+                value_being_casted=AST.Expression(
+                    AST.FunctionInvocation(
+                        function_definition=self.get_construct_type(),
+                        kwargs=[("type_", AST.Expression(type_of_obj)), ("object_", obj)],
+                    )
+                ),
+            )
+            if self._allow_skipping_validation
+            else Pydantic.parse_obj_as(PydanticVersionCompatibility.Both, type_of_obj, obj)
         )
 
     def get_pydantic_version_import(self) -> AST.Reference:

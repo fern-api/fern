@@ -5,6 +5,8 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ....core.datetime_utils import serialize_datetime
 from ....core.pydantic_utilities import pydantic_v1
 from .binary_tree_value import BinaryTreeValue as resources_commons_types_binary_tree_value_BinaryTreeValue
@@ -142,7 +144,7 @@ class VariableValue(pydantic_v1.BaseModel):
         if self.__root__.type == "nullValue":
             return null_value()
 
-    __root__: typing.Annotated[
+    __root__: typing_extensions.Annotated[
         typing.Union[
             _VariableValue.IntegerValue,
             _VariableValue.BooleanValue,

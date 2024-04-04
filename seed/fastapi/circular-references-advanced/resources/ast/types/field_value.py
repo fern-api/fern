@@ -5,6 +5,8 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ....core.datetime_utils import serialize_datetime
 from ....core.pydantic_utilities import pydantic_v1
 from .object_value import ObjectValue as resources_ast_types_object_value_ObjectValue
@@ -47,7 +49,7 @@ class FieldValue(pydantic_v1.BaseModel):
         if self.__root__.type == "container_value":
             return container_value(self.__root__.value)
 
-    __root__: typing.Annotated[
+    __root__: typing_extensions.Annotated[
         typing.Union[_FieldValue.PrimitiveValue, _FieldValue.ObjectValue, _FieldValue.ContainerValue],
         pydantic_v1.Field(discriminator="type"),
     ]

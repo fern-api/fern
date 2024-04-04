@@ -34,14 +34,18 @@ class PydanticModel:
         docstring: Optional[str] = None,
         snippet: Optional[str] = None,
         extra_fields: Optional[Literal["allow", "forbid"]] = None,
+        pydantic_base_model: Optional[AST.ClassReference] = None,
     ):
         self._source_file = source_file
+
+        pydantic_base_model = pydantic_base_model or Pydantic.BaseModel(version)
         self._class_declaration = AST.ClassDeclaration(
             name=name,
-            extends=base_models or [Pydantic.BaseModel(version)],
+            extends=base_models or [pydantic_base_model],
             docstring=AST.Docstring(docstring) if docstring is not None else None,
             snippet=snippet,
         )
+
         self._base_models = base_models or []
         self._local_class_reference = (parent or source_file).add_class_declaration(
             declaration=self._class_declaration, should_export=should_export

@@ -5,6 +5,8 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ....core.datetime_utils import serialize_datetime
 from ....core.pydantic_utilities import pydantic_v1
 
@@ -35,7 +37,7 @@ class UnionWithOptionalTime(pydantic_v1.BaseModel):
         if self.__root__.type == "dateimte":
             return dateimte(self.__root__.value)
 
-    __root__: typing.Annotated[
+    __root__: typing_extensions.Annotated[
         typing.Union[_UnionWithOptionalTime.Date, _UnionWithOptionalTime.Dateimte],
         pydantic_v1.Field(discriminator="type"),
     ]

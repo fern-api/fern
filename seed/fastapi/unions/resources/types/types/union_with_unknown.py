@@ -5,6 +5,8 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ....core.datetime_utils import serialize_datetime
 from ....core.pydantic_utilities import pydantic_v1
 from .foo import Foo as resources_types_types_foo_Foo
@@ -34,7 +36,7 @@ class UnionWithUnknown(pydantic_v1.BaseModel):
         if self.__root__.type == "unknown":
             return unknown()
 
-    __root__: typing.Annotated[
+    __root__: typing_extensions.Annotated[
         typing.Union[_UnionWithUnknown.Foo, _UnionWithUnknown.Unknown], pydantic_v1.Field(discriminator="type")
     ]
 

@@ -5,6 +5,8 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ....core.datetime_utils import serialize_datetime
 from ....core.pydantic_utilities import pydantic_v1
 from .error_info import ErrorInfo
@@ -80,7 +82,7 @@ class TestSubmissionUpdateInfo(pydantic_v1.BaseModel):
         if self.__root__.type == "finished":
             return finished()
 
-    __root__: typing.Annotated[
+    __root__: typing_extensions.Annotated[
         typing.Union[
             _TestSubmissionUpdateInfo.Running,
             _TestSubmissionUpdateInfo.Stopped,

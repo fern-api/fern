@@ -5,6 +5,8 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ....core.datetime_utils import serialize_datetime
 from ....core.pydantic_utilities import pydantic_v1
 from .exception_info import ExceptionInfo
@@ -34,7 +36,7 @@ class ExceptionV2(pydantic_v1.BaseModel):
         if self.__root__.type == "timeout":
             return timeout()
 
-    __root__: typing.Annotated[
+    __root__: typing_extensions.Annotated[
         typing.Union[_ExceptionV2.Generic, _ExceptionV2.Timeout], pydantic_v1.Field(discriminator="type")
     ]
 

@@ -5,6 +5,8 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ....core.datetime_utils import serialize_datetime
 from ....core.pydantic_utilities import pydantic_v1
 from .bar import Bar as resources_types_types_bar_Bar
@@ -37,7 +39,7 @@ class UnionWithoutKey(pydantic_v1.BaseModel):
         if self.__root__.type == "bar":
             return bar(resources_types_types_bar_Bar(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
 
-    __root__: typing.Annotated[
+    __root__: typing_extensions.Annotated[
         typing.Union[_UnionWithoutKey.Foo, _UnionWithoutKey.Bar], pydantic_v1.Field(discriminator="type")
     ]
 

@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0-rc0] - 2024-04-03
+
+- [EXPERIMENTAL] Feature: The python SDK now includes a configuration option to skip pydantic validation. This ensures that Pydantic does not immediately fail if the model being returned from an API does not exactly match the Pydantic model. This is meant to add flexibility, should your SDK fall behind your API, but should be used sparringly, as the type-hinting for users will still reflect the Pydantic model exactly.
+
+  ```yaml
+  generators:
+    - name: fernapi/fern-python-sdk
+      ...
+      config:
+        pydantic_config:
+          skip_validation: true
+  ```
+
 ## [1.0.1] - 2024-04-03
 
 - Fix: Pydantic introduced a "break" to their 1.x libs by adding in a .v1 submodule that does not mirror the one that comes with pydantic v2. To get around this we now force the usage of the v1 submodule only if the pydantic version is v2.

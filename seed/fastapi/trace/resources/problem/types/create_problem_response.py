@@ -5,6 +5,8 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ....core.datetime_utils import serialize_datetime
 from ....core.pydantic_utilities import pydantic_v1
 from ...commons.types.problem_id import ProblemId
@@ -35,7 +37,7 @@ class CreateProblemResponse(pydantic_v1.BaseModel):
         if self.__root__.type == "error":
             return error(self.__root__.value)
 
-    __root__: typing.Annotated[
+    __root__: typing_extensions.Annotated[
         typing.Union[_CreateProblemResponse.Success, _CreateProblemResponse.Error],
         pydantic_v1.Field(discriminator="type"),
     ]

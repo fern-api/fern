@@ -5,6 +5,8 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ....core.datetime_utils import serialize_datetime
 from ....core.pydantic_utilities import pydantic_v1
 from .custom_test_cases_unsupported import (
@@ -84,7 +86,7 @@ class InvalidRequestCause(pydantic_v1.BaseModel):
                 UnexpectedLanguageError(**self.__root__.dict(exclude_unset=True, exclude={"type"}))
             )
 
-    __root__: typing.Annotated[
+    __root__: typing_extensions.Annotated[
         typing.Union[
             _InvalidRequestCause.SubmissionIdNotFound,
             _InvalidRequestCause.CustomTestCasesUnsupported,

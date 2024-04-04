@@ -5,6 +5,8 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ....core.datetime_utils import serialize_datetime
 from ....core.pydantic_utilities import pydantic_v1
 from .organization import Organization as resources_service_types_organization_Organization
@@ -53,7 +55,7 @@ class Resource(pydantic_v1.BaseModel):
                 )
             )
 
-    __root__: typing.Annotated[
+    __root__: typing_extensions.Annotated[
         typing.Union[_Resource.User, _Resource.Organization], pydantic_v1.Field(discriminator="resource_type")
     ]
 
