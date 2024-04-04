@@ -29,8 +29,8 @@ class UncheckedBaseModel(pydantic_v1.BaseModel):
     # Implementation taken from: https://github.com/pydantic/pydantic/issues/1168#issuecomment-817742836
     @classmethod
     def construct(
-        cls: typing.Type[PydanticModelType],
-        _fields_set: set = set(),
+        cls: typing.Type[type],
+        _fields_set: typing.Set[str] = set(),
         **values: object,
     ) -> PydanticModelType:
         m = cls.__new__(cls)
