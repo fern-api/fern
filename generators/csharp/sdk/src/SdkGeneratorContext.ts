@@ -1,6 +1,6 @@
 import { AbstractCsharpGeneratorContext, AsIsFiles } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { TypeId } from "@fern-fern/ir-sdk/api";
+import { FernFilepath, SubpackageId, TypeId } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
 const TYPES_FOLDER_NAME = "Types";
@@ -32,13 +32,32 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         if (typeDeclaration == null) {
             throw new Error(`Type declaration with id ${typeId} not found`);
         }
-        return [
-            this.getNamespace(),
-            ...typeDeclaration.name.fernFilepath.packagePath.map((path) => path.pascalCase.safeName)
-        ].join(".");
+        return this.getNamespaceFromFernFilepath(typeDeclaration.name.fernFilepath);
     }
 
     public getAsIsFiles(): string[] {
         return [AsIsFiles.StringEnum, AsIsFiles.OneOfJsonConverter];
+    }
+
+    public getNamespaceForSubpackageId(subpackageId: SubpackageId): string {
+        const subpackage = this.ir.services[subpackageId];
+        if (subpackage == null) {
+            throw new Error(`Subpackage with id ${subpackageId} not found`);
+        }
+        return this.getNamespaceFromFernFilepath(subpackage.name.fernFilepath);
+    }
+
+    public getDirectoryForSubpackageId(subpackageId: SubpackageId): string {
+        const subpackage = this.ir.services[subpackageId];
+        if (subpackage == null) {
+            throw new Error(`Subpackage with id ${subpackageId} not found`);
+        }
+        return RelativeFilePath.of(
+            [...subpackage.name.fernFilepath.allParts.map((path) => path.pascalCase.safeName)].join("/")
+        );
+    }
+
+    private getNamespaceFromFernFilepath(fernFilepath: FernFilepath): string {
+        return [this.getNamespace(), ...fernFilepath.packagePath.map((path) => path.pascalCase.safeName)].join(".");
     }
 }

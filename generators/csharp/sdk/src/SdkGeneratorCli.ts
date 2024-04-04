@@ -6,6 +6,7 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
+import { SubClientGenerator } from "./sub-client/SubClientGenerator";
 
 export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -37,6 +38,10 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         for (const file of files) {
             project.addSourceFiles(file);
         }
+        for (const [id, subpackage] of Object.entries(context.ir.subpackages)) {
+            const subClient = new SubClientGenerator(context, id, subpackage);
+            project.addSourceFiles(subClient.generate());
+        }
         await project.persist(AbsoluteFilePath.of(context.config.output.path));
     }
 
@@ -45,6 +50,10 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         const files = new ModelGenerator(context).generateTypes();
         for (const file of files) {
             project.addSourceFiles(file);
+        }
+        for (const [id, subpackage] of Object.entries(context.ir.subpackages)) {
+            const subClient = new SubClientGenerator(context, id, subpackage);
+            project.addSourceFiles(subClient.generate());
         }
         await project.persist(AbsoluteFilePath.of(context.config.output.path));
     }
