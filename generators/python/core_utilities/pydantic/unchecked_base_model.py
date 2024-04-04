@@ -12,7 +12,7 @@ class UnionMetadata(pydantic_v1.BaseModel):
     discriminant: str
 
 
-PydanticModelType = typing.TypeVar("PydanticModelType", bound=pydantic_v1.BaseModel)
+Model = typing.TypeVar("Model", bound=pydantic_v1.BaseModel)
 
 
 class UncheckedBaseModel(pydantic_v1.BaseModel):
@@ -29,11 +29,11 @@ class UncheckedBaseModel(pydantic_v1.BaseModel):
     # Implementation taken from: https://github.com/pydantic/pydantic/issues/1168#issuecomment-817742836
     @classmethod
     def construct(
-        cls: typing.Type[PydanticModelType],
-        _fields_set: set = set(),
-        **values: object,
-    ) -> PydanticModelType:
-        m = cls.__new__(cls)
+        cls: typing.Type["Model"],
+        _fields_set: typing.Optional[typing.Set[str]] = set(),
+        **values: typing.Any,
+    ) -> "Model":
+        m = cls.__new__(cls)  # type: ignore
         fields_values = {}
 
         config = cls.__config__
