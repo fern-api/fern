@@ -1,0 +1,10 @@
+types: 
+  SendResponse: 
+    properties: 
+      message: 
+        type: string
+      status: 
+        type: integer
+      success: 
+        type: literal<true>
+      
