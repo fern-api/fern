@@ -71,7 +71,7 @@ class UncheckedBaseModel(pydantic_v1.BaseModel):
         return m
 
 
-def _convert_undiscriminated_union_type(union_type: typing.Type, object_: typing.Any) -> typing.Any:
+def _convert_undiscriminated_union_type(union_type: typing.Type[typing.Any], object_: typing.Any) -> typing.Any:
     for inner_type in pydantic_v1.typing.get_args(union_type):
         try:
             # Attempt a validated parse until one works
