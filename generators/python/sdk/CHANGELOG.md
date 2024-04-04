@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0-rc2] - 2024-04-04
+
+- Fix: The generator now writes the skipped-validation `cast` with a suffixing new line so that the code compiles.
+
+## [1.1.0-rc1] - 2024-04-04
+
+- Fix: The generator no longer attempts to create a version file if Fern does not own generating the full package (e.g. in local generation). It's too confusing for to make the relevant changes to the package set up, and is also arguably not even needed in local generation.
+
 ## [1.1.0-rc0] - 2024-04-03
 
 - [EXPERIMENTAL] Feature: The python SDK now includes a configuration option to skip pydantic validation. This ensures that Pydantic does not immediately fail if the model being returned from an API does not exactly match the Pydantic model. This is meant to add flexibility, should your SDK fall behind your API, but should be used sparringly, as the type-hinting for users will still reflect the Pydantic model exactly.
