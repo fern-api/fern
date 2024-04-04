@@ -70,7 +70,7 @@ class UnionClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(Animal, construct_type(type_=Animal, object_=_response.json()))
+            return typing.cast(Animal, construct_type(type_=Animal, object_=_response.json()))  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:
@@ -132,7 +132,7 @@ class AsyncUnionClient:
             max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         )
         if 200 <= _response.status_code < 300:
-            return typing.cast(Animal, construct_type(type_=Animal, object_=_response.json()))
+            return typing.cast(Animal, construct_type(type_=Animal, object_=_response.json()))  # type: ignore
         try:
             _response_json = _response.json()
         except JSONDecodeError:

@@ -15,6 +15,11 @@
         },
         "path": "../"
     },
+    "customConfig": {
+        "pydantic_config": {
+            "skip_validation": true
+        }
+    },
     "workspaceName": "streaming",
     "organization": "seed",
     "environment": {

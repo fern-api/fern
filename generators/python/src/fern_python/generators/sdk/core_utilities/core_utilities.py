@@ -299,17 +299,30 @@ class CoreUtilities:
             ),
         )
 
+    def _construct_type(self, type_of_obj: AST.TypeHint, obj: AST.Expression) -> AST.Expression:
+        def write(writer: AST.NodeWriter) -> None:
+            writer.write_node(
+                AST.TypeHint.invoke_cast(
+                    type_casted_to=type_of_obj,
+                    value_being_casted=AST.Expression(
+                        AST.FunctionInvocation(
+                            function_definition=self.get_construct_type(),
+                            kwargs=[("type_", AST.Expression(type_of_obj)), ("object_", obj)],
+                        )
+                    ),
+                )
+            )
+
+            # mypy gets confused when passing unions for the Type argument
+            # https://github.com/pydantic/pydantic/issues/1847
+            writer.write_line("# type: ignore")
+
+        return AST.Expression(AST.CodeWriter(write))
+
+
     def get_construct(self, type_of_obj: AST.TypeHint, obj: AST.Expression) -> AST.Expression:
         return (
-            AST.TypeHint.invoke_cast(
-                type_casted_to=type_of_obj,
-                value_being_casted=AST.Expression(
-                    AST.FunctionInvocation(
-                        function_definition=self.get_construct_type(),
-                        kwargs=[("type_", AST.Expression(type_of_obj)), ("object_", obj)],
-                    )
-                ),
-            )
+            self._construct_type(type_of_obj, obj)
             if self._allow_skipping_validation
             else Pydantic.parse_obj_as(PydanticVersionCompatibility.Both, type_of_obj, obj)
         )
