@@ -38,8 +38,12 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         for (const file of files) {
             project.addSourceFiles(file);
         }
-        for (const [id, subpackage] of Object.entries(context.ir.subpackages)) {
-            const subClient = new SubClientGenerator(context, id, subpackage);
+        for (const [_, subpackage] of Object.entries(context.ir.subpackages)) {
+            if (subpackage.service == null) {
+                continue;
+            }
+            const service = context.getServiceWithId(subpackage.service);
+            const subClient = new SubClientGenerator(context, subpackage.service, service);
             project.addSourceFiles(subClient.generate());
         }
         await project.persist(AbsoluteFilePath.of(context.config.output.path));
@@ -51,8 +55,12 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         for (const file of files) {
             project.addSourceFiles(file);
         }
-        for (const [id, subpackage] of Object.entries(context.ir.subpackages)) {
-            const subClient = new SubClientGenerator(context, id, subpackage);
+        for (const [_, subpackage] of Object.entries(context.ir.subpackages)) {
+            if (subpackage.service == null) {
+                continue;
+            }
+            const service = context.getServiceWithId(subpackage.service);
+            const subClient = new SubClientGenerator(context, subpackage.service, service);
             project.addSourceFiles(subClient.generate());
         }
         await project.persist(AbsoluteFilePath.of(context.config.output.path));

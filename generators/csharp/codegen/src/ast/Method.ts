@@ -23,9 +23,9 @@ export declare namespace Method {
         /* The parameters of the method */
         parameters: Parameter[];
         /* The return type of the method */
-        return_: Type;
+        return_?: Type;
         /* The body of the method */
-        body: CodeBlock;
+        body?: CodeBlock;
         /* Docs for the method */
         docs: string | undefined;
         /* The type of the method, defaults to INSTANCE */
@@ -39,8 +39,8 @@ export class Method extends AstNode {
     public readonly name: string;
     public readonly isAsync: boolean;
     public readonly access: Access;
-    public readonly return: Type;
-    public readonly body: CodeBlock;
+    public readonly return: Type | undefined;
+    public readonly body: CodeBlock | undefined;
     public readonly docs: string | undefined;
     public readonly type: MethodType;
     public readonly reference: ClassReference | undefined;
@@ -72,7 +72,11 @@ export class Method extends AstNode {
         if (this.isAsync) {
             writer.write("async ");
         }
-        this.return.write(writer);
+        if (this.return == null) {
+            writer.write("void ");
+        } else {
+            this.return.write(writer);
+        }
         writer.write(` ${this.name}(`);
         this.parameters.forEach((parameter, idx) => {
             parameter.write(writer);
@@ -84,7 +88,7 @@ export class Method extends AstNode {
         writer.writeLine("{");
 
         writer.indent();
-        this.body.write(writer);
+        this.body?.write(writer);
         writer.dedent();
 
         writer.writeLine("}");
