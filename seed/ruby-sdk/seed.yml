@@ -5,7 +5,6 @@ language: ruby
 generatorType: sdk
 defaultOutputMode: github
 fixtures: []
-scripts: []
 allowedFailures:
   - streaming
 features:
@@ -25,3 +24,7 @@ features:
   additionalProperties: true
   whitelabel: false
   apiReferenceGeneration: false
+scripts:
+  - docker: ruby:2.7
+    commands:
+      - bundle install && bundle exec rake test

@@ -1,0 +1,10 @@
+types:
+  StringResponse:
+    properties:
+      data: string
+
+  OptionalStringResponse: optional<StringResponse>
+
+  WithMetadata:
+    properties:
+      metadata: map<string, string>

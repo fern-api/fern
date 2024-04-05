@@ -26,6 +26,22 @@ export function getBreadcrumbsFromFilepath(fernFilepath: FernFilepath, includeFu
     );
 }
 
+export function generateBasicRakefile(): GeneratedFile {
+    const content = `# frozen_string_literal: true
+require "rake/testtask"
+require "rubocop/rake_task"
+
+task default: %i[test rubocop]
+
+Rake::TestTask.new do |t|
+    t.pattern = "./test/**/*_test.rb"
+end
+    
+RuboCop::RakeTask.new   
+`;
+    return new GeneratedFile("Rakefile", RelativeFilePath.of("."), content);
+}
+
 // These tests are so static + basic that I didn't go through the trouble of leveraging the AST
 export function generateBasicTests(gemName: string, clientName: string): GeneratedFile[] {
     const helperContent = `# frozen_string_literal: true
@@ -158,6 +174,9 @@ jobs:
             with:
               ruby-version: 2.7
               bundler-cache: true
+
+          - name: Test gem
+            run: bundle install && bundle exec rake test
               
           - name: Build and Push Gem
             env:
