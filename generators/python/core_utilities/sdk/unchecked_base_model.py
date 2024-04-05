@@ -1,7 +1,8 @@
 import datetime as dt
+import inspect
 import typing
 import uuid
-import inspect
+
 import typing_extensions
 
 from .datetime_utils import serialize_datetime
@@ -162,7 +163,9 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
         return _convert_union_type(type_, object_)
 
     # Cannot do an `issubclass` with a literal type, let's also just confirm we have a class before this call
-    if not pydantic_v1.typing.is_literal_type(type_) and (inspect.isclass(base_type) and issubclass(base_type, pydantic_v1.BaseModel)):
+    if not pydantic_v1.typing.is_literal_type(type_) and (
+        inspect.isclass(base_type) and issubclass(base_type, pydantic_v1.BaseModel)
+    ):
         return type_.construct(**object_)
 
     if base_type == dt.datetime:
