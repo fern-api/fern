@@ -364,7 +364,8 @@ function convertRequestBody(irRequest: Ir.http.HttpRequestBody): APIV1Write.Http
                             bodyProperty: (bodyProperty) => ({
                                 type: "bodyProperty",
                                 key: bodyProperty.name.wireValue,
-                                valueType: convertTypeReference(bodyProperty.valueType)
+                                valueType: convertTypeReference(bodyProperty.valueType),
+                                docs: bodyProperty.docs
                             }),
                             _other: () => undefined
                         });

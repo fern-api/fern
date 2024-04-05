@@ -3,6 +3,7 @@ import { generatorsYml } from "@fern-api/configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import { downloadSnippetsForTask } from "./downloadSnippetsForTask";
 import { runRemoteGenerationForGenerator } from "./runRemoteGenerationForGenerator";
 
 export interface RemoteGenerationForAPIWorkspaceResponse {
@@ -53,6 +54,17 @@ export async function runRemoteGenerationForAPIWorkspace({
                 });
                 if (remoteTaskHandlerResponse != null && remoteTaskHandlerResponse.createdSnippets) {
                     snippetsProducedBy.push(generatorInvocation);
+
+                    if (
+                        generatorInvocation.absolutePathToLocalSnippets != null &&
+                        remoteTaskHandlerResponse.snippetsS3PreSignedReadUrl != null
+                    ) {
+                        await downloadSnippetsForTask({
+                            snippetsS3PreSignedReadUrl: remoteTaskHandlerResponse.snippetsS3PreSignedReadUrl,
+                            absolutePathToLocalSnippetJSON: generatorInvocation.absolutePathToLocalSnippets,
+                            context: interactiveTaskContext
+                        });
+                    }
                 }
             })
         )
