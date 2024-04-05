@@ -1,7 +1,6 @@
 using System.Text.Json.Serialization;
 using OneOf;
 using SeedTrace;
-using StringEnum;
 
 namespace SeedTrace;
 
@@ -26,7 +25,7 @@ public class WorkspaceSubmissionStatus
         public string Type { get; } = "running";
 
         [JsonPropertyName("value")]
-        public StringEnum<RunningSubmissionState> Value { get; init; }
+        public RunningSubmissionState Value { get; init; }
     }
     public class _Ran : WorkspaceRunDetails
     {

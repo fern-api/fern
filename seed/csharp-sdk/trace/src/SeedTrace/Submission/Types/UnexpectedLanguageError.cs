@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using SeedTrace;
 
 namespace SeedTrace;
@@ -7,8 +6,8 @@ namespace SeedTrace;
 public class UnexpectedLanguageError
 {
     [JsonPropertyName("expectedLanguage")]
-    public StringEnum<Language> ExpectedLanguage { get; init; }
+    public Language ExpectedLanguage { get; init; }
 
     [JsonPropertyName("actualLanguage")]
-    public StringEnum<Language> ActualLanguage { get; init; }
+    public Language ActualLanguage { get; init; }
 }

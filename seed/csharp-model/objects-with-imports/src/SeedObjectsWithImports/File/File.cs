@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using SeedObjectsWithImports;
 
 namespace SeedObjectsWithImports;
@@ -13,5 +12,5 @@ public class File
     public string Contents { get; init; }
 
     [JsonPropertyName("info")]
-    public StringEnum<FileInfo> Info { get; init; }
+    public FileInfo Info { get; init; }
 }

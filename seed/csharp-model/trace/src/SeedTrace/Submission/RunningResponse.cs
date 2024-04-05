@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using SeedTrace;
 
 namespace SeedTrace;
@@ -10,5 +9,5 @@ public class RunningResponse
     public Guid SubmissionId { get; init; }
 
     [JsonPropertyName("state")]
-    public StringEnum<RunningSubmissionState> State { get; init; }
+    public RunningSubmissionState State { get; init; }
 }

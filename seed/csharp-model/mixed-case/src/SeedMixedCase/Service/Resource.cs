@@ -1,6 +1,5 @@
 using SeedMixedCase;
 using System.Text.Json.Serialization;
-using StringEnum;
 
 namespace SeedMixedCase;
 
@@ -21,6 +20,6 @@ public class Resource
     private interface _IBase
     {
         [JsonPropertyName("status")]
-        public StringEnum<ResourceStatus> Status { get; init; }
+        public ResourceStatus Status { get; init; }
     }
 }
