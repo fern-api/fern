@@ -43,3 +43,4 @@ types:
       enum: optional<Color>
       union: optional<Shape>
       undiscriminated_union: optional<UndiscriminatedShape>
+      any: unknown
