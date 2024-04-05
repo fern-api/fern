@@ -5,5 +5,5 @@ namespace SeedExamples;
 public class Response
 {
     [JsonPropertyName("response")]
-    public object Response { get; init; }
+    public object Response_ { get; init; }
 }

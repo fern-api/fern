@@ -9,7 +9,7 @@ public class Page
     /// The current page
     /// </summary>
     [JsonPropertyName("page")]
-    public int Page { get; init; }
+    public int Page_ { get; init; }
 
     [JsonPropertyName("next")]
     public NextPage? Next { get; init; }

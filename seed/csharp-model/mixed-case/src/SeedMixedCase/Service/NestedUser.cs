@@ -9,5 +9,5 @@ public class NestedUser
     public string Name { get; init; }
 
     [JsonPropertyName("NestedUser")]
-    public User NestedUser { get; init; }
+    public User NestedUser_ { get; init; }
 }
