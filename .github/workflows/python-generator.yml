@@ -46,6 +46,8 @@ jobs:
       - name: Update models for testing
         working-directory: ./generators/python
         run: |
+          npm install -g fern-api
+
           docker build -f ./pydantic/Dockerfile -t ferntest/fern-pydantic-model:0.0.0 .
           cd tests/utils/example_models
           fern generate --group dummy_types --local
