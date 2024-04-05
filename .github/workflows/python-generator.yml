@@ -45,6 +45,8 @@ jobs:
 
       - name: Update models for testing
         working-directory: ./generators/python
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: |
           npm install -g fern-api
 
