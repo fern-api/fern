@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using SeedApi;
 using OneOf;
 
@@ -13,7 +12,7 @@ public class FieldValue
         public string Type { get; } = "primitive_value";
 
         [JsonPropertyName("value")]
-        public StringEnum<PrimitiveValue> Value { get; init; }
+        public PrimitiveValue Value { get; init; }
     }
     public class _ObjectValue : ObjectValue
     {

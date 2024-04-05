@@ -132,10 +132,7 @@ export class ReferenceGenerator {
                 return underlyingType.shape._visit({
                     alias: (alias) => this.typeFromTypeReference(rootModule, alias.aliasOf),
                     object: () => objectReference,
-                    enum: () => {
-                        this.annotations.set(typeReference, this.prebuiltUtilities.stringEnumConverterAnnotation());
-                        return csharp.Type.stringEnum(objectClassReference);
-                    },
+                    enum: () => objectReference,
                     union: (union) => {
                         const containerObjectName = this.context.getPascalCaseSafeName(value.name);
                         this.annotations.set(typeReference, this.prebuiltUtilities.oneOfConverterAnnotation());

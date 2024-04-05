@@ -1,6 +1,5 @@
 using System.Text.Json.Serialization;
 using SeedTrace;
-using StringEnum;
 using OneOf;
 
 namespace SeedTrace;
@@ -20,7 +19,7 @@ public class ProblemInfo
     public int ProblemVersion { get; init; }
 
     [JsonPropertyName("files")]
-    public Dictionary<StringEnum<Language>, ProblemFiles> Files { get; init; }
+    public Dictionary<Language, ProblemFiles> Files { get; init; }
 
     [JsonPropertyName("inputParams")]
     public List<VariableTypeAndName> InputParams { get; init; }

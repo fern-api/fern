@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using SeedTrace;
 
 namespace SeedTrace.V2;
@@ -7,5 +6,5 @@ namespace SeedTrace.V2;
 public class GetFunctionSignatureResponse
 {
     [JsonPropertyName("functionByLanguage")]
-    public Dictionary<StringEnum<Language>, string> FunctionByLanguage { get; init; }
+    public Dictionary<Language, string> FunctionByLanguage { get; init; }
 }

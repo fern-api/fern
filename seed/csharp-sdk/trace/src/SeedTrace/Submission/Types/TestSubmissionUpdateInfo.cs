@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using SeedTrace;
 using OneOf;
 
@@ -13,7 +12,7 @@ public class TestSubmissionUpdateInfo
         public string Type { get; } = "running";
 
         [JsonPropertyName("value")]
-        public StringEnum<RunningSubmissionState> Value { get; init; }
+        public RunningSubmissionState Value { get; init; }
     }
     public class _Stopped
     {

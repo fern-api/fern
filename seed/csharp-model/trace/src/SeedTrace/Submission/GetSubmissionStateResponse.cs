@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using SeedTrace;
 using OneOf;
 
@@ -14,7 +13,7 @@ public class GetSubmissionStateResponse
     public string Submission { get; init; }
 
     [JsonPropertyName("language")]
-    public StringEnum<Language> Language { get; init; }
+    public Language Language { get; init; }
 
     [JsonPropertyName("submissionTypeState")]
     public OneOf<SubmissionTypeState._Test, SubmissionTypeState._Workspace> SubmissionTypeState { get; init; }

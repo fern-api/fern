@@ -1,6 +1,5 @@
 using System.Text.Json.Serialization;
 using SeedTrace;
-using StringEnum;
 using OneOf;
 using SeedTrace.V2.V3;
 
@@ -21,7 +20,7 @@ public class ProblemInfoV2
     public int ProblemVersion { get; init; }
 
     [JsonPropertyName("supportedLanguages")]
-    public HashSet<StringEnum<Language>> SupportedLanguages { get; init; }
+    public HashSet<Language> SupportedLanguages { get; init; }
 
     [JsonPropertyName("customFiles")]
     public OneOf<CustomFiles._Basic, CustomFiles._Custom> CustomFiles { get; init; }

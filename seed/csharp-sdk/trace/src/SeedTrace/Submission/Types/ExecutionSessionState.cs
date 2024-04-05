@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using SeedTrace;
 
 namespace SeedTrace;
@@ -22,8 +21,8 @@ public class ExecutionSessionState
     public string? AwsTaskId { get; init; }
 
     [JsonPropertyName("language")]
-    public StringEnum<Language> Language { get; init; }
+    public Language Language { get; init; }
 
     [JsonPropertyName("status")]
-    public StringEnum<ExecutionSessionStatus> Status { get; init; }
+    public ExecutionSessionStatus Status { get; init; }
 }

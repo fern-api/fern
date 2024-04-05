@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using StringEnum;
 using SeedTrace;
 
 namespace SeedTrace;
@@ -10,7 +9,7 @@ public class SubmitRequestV2
     public Guid SubmissionId { get; init; }
 
     [JsonPropertyName("language")]
-    public StringEnum<Language> Language { get; init; }
+    public Language Language { get; init; }
 
     [JsonPropertyName("submissionFiles")]
     public List<SubmissionFileInfo> SubmissionFiles { get; init; }
