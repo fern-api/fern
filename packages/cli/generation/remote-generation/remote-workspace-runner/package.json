@@ -32,7 +32,7 @@
     "@fern-api/core": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/docs-validator": "workspace:*",
-    "@fern-api/fdr-sdk": "^0.72.0-d986da306",
+    "@fern-api/fdr-sdk": "^0.73.0-d986da306",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/ir-migrations": "workspace:*",
