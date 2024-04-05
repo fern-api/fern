@@ -1,4 +1,4 @@
-import { FERNIGNORE_FILENAME, SNIPPET_JSON_FILENAME } from "@fern-api/configuration";
+import { FERNIGNORE_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
@@ -12,6 +12,7 @@ export declare namespace LocalTaskHandler {
         absolutePathToTmpOutputDirectory: AbsoluteFilePath;
         absolutePathToTmpSnippetJSON: AbsoluteFilePath | undefined;
         absolutePathToLocalOutput: AbsoluteFilePath;
+        absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
     }
 }
 
@@ -20,17 +21,20 @@ export class LocalTaskHandler {
     private absolutePathToTmpOutputDirectory: AbsoluteFilePath;
     private absolutePathToTmpSnippetJSON: AbsoluteFilePath | undefined;
     private absolutePathToLocalOutput: AbsoluteFilePath;
+    private absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
 
     constructor({
         context,
         absolutePathToTmpOutputDirectory,
         absolutePathToTmpSnippetJSON,
-        absolutePathToLocalOutput
+        absolutePathToLocalOutput,
+        absolutePathToLocalSnippetJSON
     }: LocalTaskHandler.Init) {
         this.context = context;
         this.absolutePathToLocalOutput = absolutePathToLocalOutput;
         this.absolutePathToTmpOutputDirectory = absolutePathToTmpOutputDirectory;
         this.absolutePathToTmpSnippetJSON = absolutePathToTmpSnippetJSON;
+        this.absolutePathToLocalSnippetJSON = absolutePathToLocalSnippetJSON;
     }
 
     public async copyGeneratedFiles(): Promise<void> {
@@ -39,8 +43,11 @@ export class LocalTaskHandler {
         } else {
             await this.copyGeneratedFilesNoFernIgnore();
         }
-        if (this.absolutePathToTmpSnippetJSON !== undefined) {
-            await this.copySnippetJSON(this.absolutePathToTmpSnippetJSON);
+        if (this.absolutePathToTmpSnippetJSON != null && this.absolutePathToLocalSnippetJSON != null) {
+            await this.copySnippetJSON({
+                absolutePathToTmpSnippetJSON: this.absolutePathToTmpSnippetJSON,
+                absolutePathToLocalSnippetJSON: this.absolutePathToLocalSnippetJSON
+            });
         }
     }
 
@@ -118,11 +125,15 @@ export class LocalTaskHandler {
         }
     }
 
-    private async copySnippetJSON(absolutePathToTmpSnippetJSON: string): Promise<void> {
-        const absolutePathToSnippet = AbsoluteFilePath.of(
-            join(this.absolutePathToLocalOutput, RelativeFilePath.of(SNIPPET_JSON_FILENAME))
-        );
-        await cp(AbsoluteFilePath.of(absolutePathToTmpSnippetJSON), absolutePathToSnippet);
+    private async copySnippetJSON({
+        absolutePathToTmpSnippetJSON,
+        absolutePathToLocalSnippetJSON
+    }: {
+        absolutePathToTmpSnippetJSON: AbsoluteFilePath;
+        absolutePathToLocalSnippetJSON: AbsoluteFilePath;
+    }): Promise<void> {
+        this.context.logger.debug(`Copying generated snippets to ${absolutePathToLocalSnippetJSON}`);
+        await cp(absolutePathToTmpSnippetJSON, absolutePathToLocalSnippetJSON);
     }
 
     private async runGitCommand(options: string[], cwd: AbsoluteFilePath): Promise<string> {

@@ -140,7 +140,10 @@ async function createJob({
         version,
         organizationName: organization,
         generators: [generatorConfigsWithEnvVarSubstitutions],
-        uploadToS3: shouldLogS3Url || generatorConfigsWithEnvVarSubstitutions.outputMode.type === "downloadFiles",
+        uploadToS3:
+            shouldLogS3Url ||
+            generatorInvocation.absolutePathToLocalSnippets != null ||
+            generatorConfigsWithEnvVarSubstitutions.outputMode.type === "downloadFiles",
         whitelabel: whitelabelWithEnvVarSubstiutions,
         fernDefinitionMetadata
     });

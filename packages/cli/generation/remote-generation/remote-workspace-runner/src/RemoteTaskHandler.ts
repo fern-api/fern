@@ -23,6 +23,7 @@ export declare namespace RemoteTaskHandler {
     }
     export interface Response {
         createdSnippets: boolean;
+        snippetsS3PreSignedReadUrl: string | undefined;
     }
 }
 
@@ -101,13 +102,19 @@ export class RemoteTaskHandler {
                 }
                 this.#isFinished = true;
                 this.#createdSnippets = finishedStatus.createdSnippets != null ? finishedStatus.createdSnippets : false;
+                this.#snippetsS3PreSignedReadUrl = finishedStatus.snippetsS3PreSignedReadUrl;
             },
             _other: () => {
                 this.context.logger.warn("Received unknown update type: " + remoteTask.status.type);
             }
         });
 
-        return this.#isFinished ? { createdSnippets: this.#createdSnippets } : undefined;
+        return this.#isFinished
+            ? {
+                  createdSnippets: this.#createdSnippets,
+                  snippetsS3PreSignedReadUrl: this.#snippetsS3PreSignedReadUrl
+              }
+            : undefined;
     }
 
     #isFinished = false;
@@ -118,6 +125,11 @@ export class RemoteTaskHandler {
     #createdSnippets = false;
     public get createdSnippets(): boolean {
         return this.#createdSnippets;
+    }
+
+    #snippetsS3PreSignedReadUrl: string | undefined = undefined;
+    public get snippetsS3PreSignedReadUrl(): string | undefined {
+        return this.#snippetsS3PreSignedReadUrl;
     }
 }
 
@@ -131,27 +143,40 @@ async function downloadFilesForTask({
     context: InteractiveTaskContext;
 }) {
     try {
-        // initiate request
-        const request = await axios.get(s3PreSignedReadUrl, {
-            responseType: "stream"
+        await downloadZipForTask({
+            s3PreSignedReadUrl,
+            absolutePathToLocalOutput
         });
-
-        // pipe to zip
-        const tmpDir = await tmp.dir({ prefix: "fern", unsafeCleanup: true });
-        const outputZipPath = path.join(tmpDir.path, "output.zip");
-        await pipeline(request.data, createWriteStream(outputZipPath));
-
-        // decompress to user-specified location
-        if (await doesPathExist(absolutePathToLocalOutput)) {
-            await rm(absolutePathToLocalOutput, { recursive: true });
-        }
-        await mkdir(absolutePathToLocalOutput, { recursive: true });
-        await decompress(outputZipPath, absolutePathToLocalOutput);
 
         context.logger.info(chalk.green(`Downloaded to ${absolutePathToLocalOutput}`));
     } catch (e) {
         context.failAndThrow("Failed to download files", e);
     }
+}
+
+async function downloadZipForTask({
+    s3PreSignedReadUrl,
+    absolutePathToLocalOutput
+}: {
+    s3PreSignedReadUrl: string;
+    absolutePathToLocalOutput: AbsoluteFilePath;
+}): Promise<void> {
+    // initiate request
+    const request = await axios.get(s3PreSignedReadUrl, {
+        responseType: "stream"
+    });
+
+    // pipe to zip
+    const tmpDir = await tmp.dir({ prefix: "fern", unsafeCleanup: true });
+    const outputZipPath = path.join(tmpDir.path, "output.zip");
+    await pipeline(request.data, createWriteStream(outputZipPath));
+
+    // decompress to user-specified location
+    if (await doesPathExist(absolutePathToLocalOutput)) {
+        await rm(absolutePathToLocalOutput, { recursive: true });
+    }
+    await mkdir(absolutePathToLocalOutput, { recursive: true });
+    await decompress(outputZipPath, absolutePathToLocalOutput);
 }
 
 function convertLogLevel(logLevel: FernFiddle.LogLevel): LogLevel {

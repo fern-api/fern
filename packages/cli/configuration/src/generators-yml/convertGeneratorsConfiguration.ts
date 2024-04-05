@@ -155,6 +155,10 @@ async function convertGenerator({
             generator.output?.location === "local-file-system"
                 ? resolve(dirname(absolutePathToGeneratorsConfiguration), generator.output.path)
                 : undefined,
+        absolutePathToLocalSnippets:
+            generator.snippets?.path != null
+                ? resolve(dirname(absolutePathToGeneratorsConfiguration), generator.snippets.path)
+                : undefined,
         language: getLanguageFromGeneratorName(generator.name),
         irVersionOverride: generator["ir-version"] ?? undefined,
         publishMetadata: getPublishMetadata({ generatorInvocation: generator })
@@ -192,6 +196,7 @@ async function convertOutputMode({
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     generator: GeneratorInvocationSchema;
 }): Promise<FernFiddle.OutputMode> {
+    const downloadSnippets = generator.snippets != null && generator.snippets.path !== "";
     if (generator.github != null) {
         const indexOfFirstSlash = generator.github.repository.indexOf("/");
         const owner = generator.github.repository.slice(0, indexOfFirstSlash);
@@ -214,7 +219,8 @@ async function convertOutputMode({
                         owner,
                         repo,
                         license,
-                        publishInfo
+                        publishInfo,
+                        downloadSnippets
                     })
                 );
             case "pull-request":
@@ -223,7 +229,8 @@ async function convertOutputMode({
                         owner,
                         repo,
                         license,
-                        publishInfo
+                        publishInfo,
+                        downloadSnippets
                     })
                 );
             case "push":
@@ -233,7 +240,8 @@ async function convertOutputMode({
                         repo,
                         branch: generator.github.mode === "push" ? generator.github.branch : undefined,
                         license,
-                        publishInfo
+                        publishInfo,
+                        downloadSnippets
                     })
                 );
             default:
@@ -245,13 +253,16 @@ async function convertOutputMode({
     }
     switch (generator.output.location) {
         case "local-file-system":
-            return FernFiddle.OutputMode.downloadFiles();
+            return FernFiddle.OutputMode.downloadFiles({
+                downloadSnippets
+            });
         case "npm":
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.npmOverride({
                     registryUrl: generator.output.url ?? "https://registry.npmjs.org",
                     packageName: generator.output["package-name"],
-                    token: generator.output.token ?? ""
+                    token: generator.output.token ?? "",
+                    downloadSnippets
                 })
             );
         case "maven": {
@@ -268,7 +279,8 @@ async function convertOutputMode({
                                   secretKey: generator.output.signature.secretKey,
                                   password: generator.output.signature.password
                               }
-                            : undefined
+                            : undefined,
+                    downloadSnippets
                 })
             );
         }
@@ -285,7 +297,8 @@ async function convertOutputMode({
                     registryUrl: generator.output.url ?? "https://upload.pypi.org/legacy/",
                     username: generator.output.token != null ? "__token__" : generator.output.password ?? "",
                     password: generator.output.token ?? generator.output.password ?? "",
-                    coordinate: generator.output["package-name"]
+                    coordinate: generator.output["package-name"],
+                    downloadSnippets
                 })
             );
         case "nuget":
@@ -294,7 +307,8 @@ async function convertOutputMode({
                 FernFiddle.remoteGen.PublishOutputModeV2.rubyGemsOverride({
                     registryUrl: generator.output.url ?? "https://rubygems.org/",
                     packageName: generator.output["package-name"],
-                    apiKey: generator.output["api-key"] ?? ""
+                    apiKey: generator.output["api-key"] ?? "",
+                    downloadSnippets
                 })
             );
         default:
