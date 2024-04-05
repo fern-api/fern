@@ -2,4 +2,4 @@
 
 import typing
 
-Order = typing.Union[typing.AnyStr, typing.Literal["asc", "desc"]]
+Order = typing.Union[typing.Literal["asc", "desc"], typing.Any]

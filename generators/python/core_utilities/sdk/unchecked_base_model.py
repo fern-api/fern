@@ -8,8 +8,11 @@ from .datetime_utils import serialize_datetime
 from .pydantic_utilities import pydantic_v1
 
 
-class UnionMetadata(pydantic_v1.BaseModel):
+class UnionMetadata:
     discriminant: str
+
+    def __init__(self, *, discriminant: str) -> None:
+        self.discriminant = discriminant
 
 
 Model = typing.TypeVar("Model", bound=pydantic_v1.BaseModel)
@@ -29,9 +32,7 @@ class UncheckedBaseModel(pydantic_v1.BaseModel):
     # Implementation taken from: https://github.com/pydantic/pydantic/issues/1168#issuecomment-817742836
     @classmethod
     def construct(
-        cls: typing.Type["Model"],
-        _fields_set: typing.Optional[typing.Set[str]] = set(),
-        **values: typing.Any,
+        cls: typing.Type["Model"], _fields_set: typing.Optional[typing.Set[str]] = None, **values: typing.Any
     ) -> "Model":
         m = cls.__new__(cls)  # type: ignore
         fields_values = {}
@@ -57,7 +58,14 @@ class UncheckedBaseModel(pydantic_v1.BaseModel):
                     type_ = typing.cast(typing.Type, field.outer_type_)  # type: ignore
                     fields_values[name] = construct_type(object_=values[key], type_=type_)
             elif not field.required:
-                fields_values[name] = field.get_default()
+                default = field.get_default()
+                fields_values[name] = default
+
+                # If the default values are non-null act like they've been set
+                # This effectively allows exclude_unset to work like exclude_none where
+                # the latter passes through intentionally set none values.
+                if default != None:
+                    _fields_set.add(key)
 
         # Add extras back in
         for key, value in values.items():
@@ -72,15 +80,20 @@ class UncheckedBaseModel(pydantic_v1.BaseModel):
 
 
 def _convert_undiscriminated_union_type(union_type: typing.Type[typing.Any], object_: typing.Any) -> typing.Any:
-    for inner_type in pydantic_v1.typing.get_args(union_type):
+    inner_types = pydantic_v1.typing.get_args(union_type)
+    if typing.Any in inner_types:
+        return object_
+
+    for inner_type in inner_types:
         try:
-            # Attempt a validated parse until one works
-            return pydantic_v1.parse_obj_as(inner_type, object_)
+            if issubclass(inner_type, pydantic_v1.BaseModel):
+                # Attempt a validated parse until one works
+                return pydantic_v1.parse_obj_as(inner_type, object_)
         except Exception:
             continue
 
     # If none of the types work, just return the first successful cast
-    for inner_type in pydantic_v1.typing.get_args(union_type):
+    for inner_type in inner_types:
         try:
             return construct_type(object_=object_, type_=inner_type)
         except Exception:
@@ -105,7 +118,6 @@ def _convert_union_type(type_: typing.Type[typing.Any], object_: typing.Any) -> 
                 except Exception:
                     # Allow to fall through to our regular union handling
                     pass
-
     return _convert_undiscriminated_union_type(union_type, object_)
 
 
@@ -116,6 +128,11 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
     The idea is to essentially attempt to coerce object_ to type_ (recursively)
     """
     base_type = pydantic_v1.typing.get_origin(type_) or type_
+    is_annotated = base_type == typing_extensions.Annotated
+    maybe_annotation_members = pydantic_v1.typing.get_args(type_)
+    is_annotated_union = is_annotated and pydantic_v1.typing.is_union(
+        pydantic_v1.typing.get_origin(maybe_annotation_members[0])
+    )
 
     if base_type == dict:
         if not isinstance(object_, typing.Mapping):
@@ -138,9 +155,7 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
         inner_type = pydantic_v1.typing.get_args(type_)[0]
         return {construct_type(object_=entry, type_=inner_type) for entry in object_}
 
-    if pydantic_v1.typing.is_union(base_type) or (
-        base_type == typing_extensions.Annotated and pydantic_v1.typing.is_union(pydantic_v1.typing.get_args(type_)[0])
-    ):
+    if pydantic_v1.typing.is_union(base_type) or is_annotated_union:
         return _convert_union_type(type_, object_)
 
     # Cannot do an `issubclass` with a literal type

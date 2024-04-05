@@ -2,4 +2,4 @@
 
 import typing
 
-Language = typing.Union[typing.AnyStr, typing.Literal["JAVA", "JAVASCRIPT", "PYTHON"]]
+Language = typing.Union[typing.Literal["JAVA", "JAVASCRIPT", "PYTHON"], typing.Any]

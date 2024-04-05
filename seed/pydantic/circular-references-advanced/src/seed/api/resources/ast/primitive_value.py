@@ -2,4 +2,4 @@
 
 import typing
 
-PrimitiveValue = typing.Union[typing.AnyStr, typing.Literal["STRING", "NUMBER"]]
+PrimitiveValue = typing.Union[typing.Literal["STRING", "NUMBER"], typing.Any]

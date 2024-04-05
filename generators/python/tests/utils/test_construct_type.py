@@ -4,10 +4,9 @@
 from datetime import datetime, date
 from typing import cast
 import uuid
-
 from core_utilities.sdk.unchecked_base_model import construct_type
-from .example_models.complex_object import ObjectWithOptionalField
-from .example_models.union import Circle, Shape_Circle, Shape_Square
+from .example_models.manual_types.defaulted_object import ObjectWithDefaultedOptionalFields
+from .example_models.types.resources.types import ObjectWithOptionalField, Circle, Shape_Square
 
 
 def test_construct_valid() -> None:
@@ -27,10 +26,11 @@ def test_construct_valid() -> None:
         "map": {"1": "string"},
         "union": {"type": "square", "id": "string", "length": 1.1},
         "undiscriminated_union": {"id": "string2", "length": 6.7},
+        "enum": "red"
     }
     cast_response = cast(ObjectWithOptionalField, construct_type(type_=ObjectWithOptionalField, object_=response))
 
-    assert cast_response.literal_ == "lit_two"
+    assert cast_response.literal == "lit_two"
     assert cast_response.string == "circle"
     assert cast_response.integer == 1
     assert cast_response.long_ == 1000000
@@ -43,6 +43,7 @@ def test_construct_valid() -> None:
     assert cast_response.list_ == ["string"]
     assert cast_response.set_ == {"string"}
     assert cast_response.map_ == {"1": "string"}
+    assert cast_response.enum == "red"
 
     shape_expectation = Shape_Square(id="string", length=1.1)
     assert cast_response.union is not None
@@ -54,6 +55,47 @@ def test_construct_valid() -> None:
     assert cast_response.undiscriminated_union.id == "string2"
     assert cast_response.undiscriminated_union.length == 6.7
 
+
+def test_construct_unset() -> None:
+    response = {
+        "literal": "lit_two",
+        "string": "circle",
+        "integer": 1,
+        "long": 1000000,
+        "double": 1.1,
+        "bool": False,
+        "datetime": "2024-01-15T09:30:00Z",
+        "date": "2023-01-15",
+        "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        "base64": "SGVsbG8gd29ybGQh",
+        "list": ["string"],
+        "set": ["string"],
+        "map": {"1": "string"},
+        "union": {"type": "square", "id": "string", "length": 1.1},
+        "undiscriminated_union": {"id": "string2", "length": 6.7},
+        "enum": "red"
+    }
+    cast_response = cast(ObjectWithOptionalField, construct_type(type_=ObjectWithOptionalField, object_=response))
+
+    d = cast_response.dict(by_alias=True, exclude_unset=True)
+    assert d == {
+        "literal": "lit_two",
+        "string": "circle",
+        "integer": 1,
+        "long": 1000000,
+        "double": 1.1,
+        "bool": False,
+        "datetime": datetime.fromisoformat("2024-01-15 09:30:00+00:00"),
+        "date": date.fromisoformat("2023-01-15"),
+        "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+        "base64": "SGVsbG8gd29ybGQh",
+        "list": ["string"],
+        "set": ["string"],
+        "map": {"1": "string"},
+        "union": {"type": "square", "id": "string", "length": 1.1},
+        "undiscriminated_union": {"id": "string2", "length": 6.7},
+        "enum": "red"
+    }
 
 def test_construct_invalid() -> None:
     response = {
@@ -72,10 +114,11 @@ def test_construct_invalid() -> None:
         "map": "hello world",
         "union": {"id": "123", "length": 1.1},
         "undiscriminated_union": {"id": "123", "length": "fifteen"},
+        "enum": "bread"
     }
     cast_response = cast(ObjectWithOptionalField, construct_type(type_=ObjectWithOptionalField, object_=response))
 
-    assert cast_response.literal_ == "something_else"
+    assert cast_response.literal == "something_else"
     assert cast_response.string == 1000000
     assert cast_response.integer == ["string"]
     assert cast_response.long_ == "hello world"
@@ -88,6 +131,7 @@ def test_construct_invalid() -> None:
     assert cast_response.list_ == {"1": "string"}
     assert cast_response.set_ == "testing"
     assert cast_response.map_ == "hello world"
+    assert cast_response.enum == "bread"
     
     shape_expectation = Shape_Square(id="123", length=1.1)
     assert cast_response.union is not None
@@ -105,9 +149,8 @@ def test_construct_invalid() -> None:
 
 def test_construct_defaults() -> None:
     response: object = {}
-    cast_response = cast(ObjectWithOptionalField, construct_type(type_=ObjectWithOptionalField, object_=response))
+    cast_response = cast(ObjectWithDefaultedOptionalFields, construct_type(type_=ObjectWithDefaultedOptionalFields, object_=response))
 
-    assert cast_response.literal_ is "lit_one"
     assert cast_response.string is None
     assert cast_response.integer is None
     assert cast_response.long_ == 200000
@@ -115,13 +158,14 @@ def test_construct_defaults() -> None:
     assert cast_response.bool_ == True
     assert cast_response.datetime is None
     assert cast_response.date is None
-    assert cast_response.uuid_ is None
-    assert cast_response.base_64 is None
-    assert cast_response.list_ is None
-    assert cast_response.set_ is None
-    assert cast_response.map_ is None
-    assert cast_response.union is None
-    assert cast_response.undiscriminated_union is None
+
+
+def test_construct_defaults_unset() -> None:
+    response: object = {}
+    cast_response = cast(ObjectWithDefaultedOptionalFields, construct_type(type_=ObjectWithDefaultedOptionalFields, object_=response))
+
+    d = cast_response.dict(by_alias=True, exclude_unset=True)
+    assert d == {'bool': True, 'literal': 'lit_one', 'long': 200000}
 
 
 def test_construct_primitives() -> None:
