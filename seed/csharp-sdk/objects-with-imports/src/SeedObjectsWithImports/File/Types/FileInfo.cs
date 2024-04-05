@@ -1,10 +1,7 @@
-using System.Text.Json.Serialization;
-using System;
-using SeedObjectsWithImports.Utilities;
+using System.Runtime.Serialization;
 
 namespace SeedObjectsWithImports;
 
-[JsonConverter(typeof(TolerantEnumConverter))]
 public enum FileInfo
 {
     [EnumMember(Value = "REGULAR")]

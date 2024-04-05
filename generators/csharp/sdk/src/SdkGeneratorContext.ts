@@ -1,4 +1,4 @@
-import { AbstractCsharpGeneratorContext, AsIsFiles } from "@fern-api/csharp-codegen";
+import { AbstractCsharpGeneratorContext } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernFilepath, HttpService, ServiceId, TypeId } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
@@ -49,7 +49,8 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getAsIsFiles(): string[] {
-        return [AsIsFiles.StringEnum, AsIsFiles.OneOfJsonConverter];
+        return [];
+        // return [AsIsFiles.StringEnum, AsIsFiles.OneOfJsonConverter, AsIsFiles.EnumConverter];
     }
 
     public getNamespaceForServiceId(serviceId: ServiceId): string {

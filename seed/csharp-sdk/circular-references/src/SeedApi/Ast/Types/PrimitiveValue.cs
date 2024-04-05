@@ -1,10 +1,7 @@
-using System.Text.Json.Serialization;
-using System;
-using SeedApi.Utilities;
+using System.Runtime.Serialization;
 
 namespace SeedApi;
 
-[JsonConverter(typeof(TolerantEnumConverter))]
 public enum PrimitiveValue
 {
     [EnumMember(Value = "STRING")]

@@ -1,6 +1,7 @@
 import { Access } from "../core/Access";
 import { AstNode } from "../core/AstNode";
 import { Writer } from "../core/Writer";
+import { Annotation } from "./Annotation";
 import { ClassInstantiation } from "./ClassInstantiation";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
@@ -26,6 +27,8 @@ export declare namespace Class {
         interfaceReferences?: ClassReference[];
         /* Defaults to false */
         isNestedClass?: boolean;
+        /* Any annotations to add to the class */
+        annotations?: Annotation[];
     }
 }
 
@@ -39,6 +42,7 @@ export class Class extends AstNode {
     public readonly parentClassReference: ClassReference | undefined;
     public readonly interfaceReferences: ClassReference[];
     public readonly isNestedClass: boolean;
+    public readonly annotations: Annotation[] = [];
 
     private fields: Field[] = [];
     private methods: Method[] = [];
@@ -92,6 +96,14 @@ export class Class extends AstNode {
         if (!this.isNestedClass) {
             writer.writeLine(`namespace ${this.namespace};`);
             writer.newLine();
+        }
+        if (this.annotations.length > 0) {
+            writer.write("[");
+            this.annotations.forEach((annotation) => {
+                annotation.write(writer);
+            });
+            writer.write("]");
+            writer.writeNewLineIfLastLineNot();
         }
         writer.write(`${this.access}`);
         if (this.sealed) {

@@ -1,10 +1,7 @@
-using System.Text.Json.Serialization;
-using System;
-using SeedIdempotencyHeaders.Utilities;
+using System.Runtime.Serialization;
 
 namespace SeedIdempotencyHeaders;
 
-[JsonConverter(typeof(TolerantEnumConverter))]
 public enum Currency
 {
     [EnumMember(Value = "USD")]

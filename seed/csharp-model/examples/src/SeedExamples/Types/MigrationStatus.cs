@@ -1,10 +1,7 @@
-using System.Text.Json.Serialization;
-using System;
-using SeedExamples.Utilities;
+using System.Runtime.Serialization;
 
 namespace SeedExamples;
 
-[JsonConverter(typeof(TolerantEnumConverter))]
 public enum MigrationStatus
 {
     [EnumMember(Value = "RUNNING")]

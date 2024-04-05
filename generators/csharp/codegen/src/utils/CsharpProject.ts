@@ -15,6 +15,7 @@ const CORE_DIRECTORY_NAME = "_Core";
  * In memory representation of a C# project.
  */
 export class CsharpProject {
+    private testFiles: CSharpFile[] = [];
     private sourceFiles: CSharpFile[] = [];
     private coreFiles: File[] = [];
 
@@ -31,12 +32,16 @@ export class CsharpProject {
         this.sourceFiles.push(file);
     }
 
+    public addTestFiles(file: CSharpFile): void {
+        this.testFiles.push(file);
+    }
+
     public async persist(path: AbsoluteFilePath): Promise<void> {
         const absolutePathToSrcDirectory = join(path, RelativeFilePath.of(SRC_DIRECTORY_NAME));
         await mkdir(absolutePathToSrcDirectory, { recursive: true });
 
         const absolutePathToProjectDirectory = await this.createProject({ absolutePathToSrcDirectory });
-        await this.createTestProject({ absolutePathToSrcDirectory });
+        const absolutePathToTestProjectDirectory = await this.createTestProject({ absolutePathToSrcDirectory });
 
         await loggingExeca(this.context.logger, "dotnet", ["new", "gitignore"], {
             doNotPipeOutput: true,
@@ -47,9 +52,14 @@ export class CsharpProject {
             await file.write(absolutePathToProjectDirectory);
         }
 
+        for (const file of this.testFiles) {
+            await file.write(absolutePathToTestProjectDirectory);
+        }
+
         for (const file of this.context.getAsIsFiles()) {
             this.coreFiles.push(await this.createCoreAsIsFile(file));
         }
+
         await this.createCoreDirectory({ absolutePathToProjectDirectory });
     }
 
@@ -131,16 +141,19 @@ export class CsharpProject {
     }
 
     private async createCoreAsIsFile(filename: string): Promise<File> {
-        const contents = (await readFile(getAsIsFilepath(AsIsFiles.StringEnum))).toString();
+        const contents = (await readFile(getAsIsFilepath(filename))).toString();
         return new File(
-            filename,
+            filename.replace(".Template", ""),
             RelativeFilePath.of(""),
-            `namespace ${this.context.getCoreNamespace()}            
-
-${contents}
-            `
+            replaceTemplate({ contents, namespace: this.context.getNamespace() })
         );
     }
+}
+
+function replaceTemplate({ contents, namespace }: { contents: string; namespace: string }): string {
+    return template(contents)({
+        namespace
+    });
 }
 
 function getAsIsFilepath(filename: string): string {

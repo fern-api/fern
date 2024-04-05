@@ -1,10 +1,7 @@
-using System.Text.Json.Serialization;
-using System;
-using SeedEnum.Utilities;
+using System.Runtime.Serialization;
 
 namespace SeedEnum;
 
-[JsonConverter(typeof(TolerantEnumConverter))]
 public enum Operand
 {
     [EnumMember(Value = ">")]

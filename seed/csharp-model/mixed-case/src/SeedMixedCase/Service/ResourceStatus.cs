@@ -1,10 +1,7 @@
-using System.Text.Json.Serialization;
-using System;
-using SeedMixedCase.Utilities;
+using System.Runtime.Serialization;
 
 namespace SeedMixedCase;
 
-[JsonConverter(typeof(TolerantEnumConverter))]
 public enum ResourceStatus
 {
     [EnumMember(Value = "ACTIVE")]
