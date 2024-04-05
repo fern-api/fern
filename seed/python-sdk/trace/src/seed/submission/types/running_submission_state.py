@@ -3,7 +3,6 @@
 import typing
 
 RunningSubmissionState = typing.Union[
-    typing.AnyStr,
     typing.Literal[
         "QUEUEING_SUBMISSION",
         "KILLING_HISTORICAL_SUBMISSIONS",
@@ -11,4 +10,5 @@ RunningSubmissionState = typing.Union[
         "COMPILING_SUBMISSION",
         "RUNNING_SUBMISSION",
     ],
+    typing.Any,
 ]

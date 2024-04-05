@@ -3,7 +3,6 @@
 import typing
 
 ExecutionSessionStatus = typing.Union[
-    typing.AnyStr,
     typing.Literal[
         "CREATING_CONTAINER",
         "PROVISIONING_CONTAINER",
@@ -12,4 +11,5 @@ ExecutionSessionStatus = typing.Union[
         "LIVE_CONTAINER",
         "FAILED_TO_LAUNCH",
     ],
+    typing.Any,
 ]

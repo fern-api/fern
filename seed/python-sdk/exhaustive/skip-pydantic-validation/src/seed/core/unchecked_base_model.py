@@ -82,20 +82,20 @@ class UncheckedBaseModel(pydantic_v1.BaseModel):
 
 
 def _convert_undiscriminated_union_type(union_type: typing.Type[typing.Any], object_: typing.Any) -> typing.Any:
-    for inner_type in pydantic_v1.typing.get_args(union_type):
+    inner_types = pydantic_v1.typing.get_args(union_type)
+    if typing.Any in inner_types:
+        return object_
+
+    for inner_type in inner_types:
         try:
-            # If the inner type is AnyStr, we can just return the object cast ourselves
-            # Pydantic's parse turns the object into a binary string.
-            if inner_type == typing.AnyStr:
-                return str(object_)
-            elif issubclass(inner_type, pydantic_v1.BaseModel):
+            if issubclass(inner_type, pydantic_v1.BaseModel):
                 # Attempt a validated parse until one works
                 return pydantic_v1.parse_obj_as(inner_type, object_)
         except Exception:
             continue
 
     # If none of the types work, just return the first successful cast
-    for inner_type in pydantic_v1.typing.get_args(union_type):
+    for inner_type in inner_types:
         try:
             return construct_type(object_=object_, type_=inner_type)
         except Exception:

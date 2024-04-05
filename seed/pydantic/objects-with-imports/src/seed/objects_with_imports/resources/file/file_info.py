@@ -2,4 +2,4 @@
 
 import typing
 
-FileInfo = typing.Union[typing.AnyStr, typing.Literal["REGULAR", "DIRECTORY"]]
+FileInfo = typing.Union[typing.Literal["REGULAR", "DIRECTORY"], typing.Any]

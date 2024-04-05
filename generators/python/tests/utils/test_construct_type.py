@@ -97,7 +97,6 @@ def test_construct_unset() -> None:
         "enum": "red"
     }
 
-
 def test_construct_invalid() -> None:
     response = {
         "literal": "something_else",

@@ -2,4 +2,4 @@
 
 import typing
 
-SubmissionTypeEnum = typing.Union[typing.AnyStr, typing.Literal["TEST"]]
+SubmissionTypeEnum = typing.Union[typing.Literal["TEST"], typing.Any]

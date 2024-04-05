@@ -2,4 +2,4 @@
 
 import typing
 
-ResourceStatus = typing.Union[typing.AnyStr, typing.Literal["ACTIVE", "INACTIVE"]]
+ResourceStatus = typing.Union[typing.Literal["ACTIVE", "INACTIVE"], typing.Any]

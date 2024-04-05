@@ -2,4 +2,4 @@
 
 import typing
 
-ReservedKeywordEnum = typing.Union[typing.AnyStr, typing.Literal["is", "as"]]
+ReservedKeywordEnum = typing.Union[typing.Literal["is", "as"], typing.Any]
