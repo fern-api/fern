@@ -1,3 +1,4 @@
+import { ENUM_MEMBER } from "../constants/System";
 import { Access } from "../core/Access";
 import { AstNode } from "../core/AstNode";
 import { Writer } from "../core/Writer";
@@ -58,10 +59,7 @@ export class Enum extends AstNode {
         this.fields.push({
             name: field.name,
             value: new Annotation({
-                reference: new ClassReference({
-                    name: "EnumMember",
-                    namespace: "System.Text.Json.Serialization"
-                }),
+                reference: ENUM_MEMBER,
                 argument: `Value = "${field.value}"`
             })
         });

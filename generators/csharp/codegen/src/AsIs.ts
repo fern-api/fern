@@ -1,7 +1,7 @@
 export enum AsIsFiles {
-    EnumConverter = "EnumConverter.cs",
-    OneOfJsonConverter = "OneOfJsonConverter.cs",
-    StringEnum = "StringEnum.cs",
+    EnumConverter = "EnumConverter.Template.cs",
+    OneOfJsonConverter = "OneOfJsonConverter.Template.cs",
+    StringEnum = "StringEnum.Template.cs",
     TemplateCsProj = "Template.csproj",
     TemplateTestCsProj = "Template.Test.csproj",
     TemplateTestClientCs = "TemplateTestClient.cs",

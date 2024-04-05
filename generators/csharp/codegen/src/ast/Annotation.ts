@@ -7,13 +7,13 @@ export declare namespace Annotation {
         /* Reference to the annotation */
         reference: ClassReference;
 
-        argument: string | AstNode;
+        argument?: string | AstNode;
     }
 }
 
 export class Annotation extends AstNode {
     private reference: ClassReference;
-    private argument: string | AstNode;
+    private argument?: string | AstNode;
 
     constructor(args: Annotation.Args) {
         super();
@@ -24,10 +24,12 @@ export class Annotation extends AstNode {
     public write(writer: Writer): void {
         writer.addReference(this.reference);
         writer.write(`${this.reference.name}(`);
-        if (typeof this.argument === "string") {
-            writer.write(this.argument);
-        } else {
-            this.argument.write(writer);
+        if (this.argument != null) {
+            if (typeof this.argument === "string") {
+                writer.write(this.argument);
+            } else {
+                this.argument.write(writer);
+            }
         }
         writer.write(")");
     }

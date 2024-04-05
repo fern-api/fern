@@ -1,4 +1,4 @@
-import { AbstractCsharpGeneratorCli, CsharpProject } from "@fern-api/csharp-codegen";
+import { AbstractCsharpGeneratorCli, CsharpProject, TestFileGenerator } from "@fern-api/csharp-codegen";
 import { ModelGenerator } from "@fern-api/fern-csharp-model";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { GeneratorNotificationService } from "@fern-api/generator-commons";
@@ -33,23 +33,14 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
     }
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
-        const project = new CsharpProject(context, context.getNamespace());
-        const files = new ModelGenerator(context).generateTypes();
-        for (const file of files) {
-            project.addSourceFiles(file);
-        }
-        for (const [_, subpackage] of Object.entries(context.ir.subpackages)) {
-            if (subpackage.service == null) {
-                continue;
-            }
-            const service = context.getServiceWithId(subpackage.service);
-            const subClient = new SubClientGenerator(context, subpackage.service, service);
-            project.addSourceFiles(subClient.generate());
-        }
-        await project.persist(AbsoluteFilePath.of(context.config.output.path));
+        await this.generate(context);
     }
 
     protected async writeForDownload(context: SdkGeneratorContext): Promise<void> {
+        await this.generate(context);
+    }
+
+    protected async generate(context: SdkGeneratorContext): Promise<void> {
         const project = new CsharpProject(context, context.getNamespace());
         const files = new ModelGenerator(context).generateTypes();
         for (const file of files) {
@@ -63,6 +54,12 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
             const subClient = new SubClientGenerator(context, subpackage.service, service);
             project.addSourceFiles(subClient.generate());
         }
+
+        const testGenerator = new TestFileGenerator(context);
+        const test = testGenerator.generate();
+
+        project.addTestFiles(test);
+
         await project.persist(AbsoluteFilePath.of(context.config.output.path));
     }
 }

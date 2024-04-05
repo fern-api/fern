@@ -28,6 +28,10 @@ export abstract class AbstractCsharpGeneratorContext<
         return `${this.namespace}.Core`;
     }
 
+    public getTestNamespace(): string {
+        return `${this.namespace}.Test`;
+    }
+
     public getPascalCaseSafeName(name: Name): string {
         return name.pascalCase.safeName;
     }

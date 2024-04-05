@@ -10,6 +10,7 @@ import {
     TypeId,
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
+import { EnumGenerator } from "./enum/EnumGenerator";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { ReferenceGenerator } from "./ReferenceGenerator";
 
@@ -303,16 +304,20 @@ export class ModelGenerator {
         for (const [typeId, typeDeclaration] of this.types.entries()) {
             const directory = this.context.getDirectoryForTypeId(typeId);
             this.context.logger.debug(`Generating type: ${typeId}`);
-            const generatedClass = typeDeclaration.shape._visit<csharp.Class | csharp.Enum | undefined>({
+            const generatedClass = typeDeclaration.shape._visit<csharp.Class | csharp.Enum | CSharpFile | undefined>({
                 alias: () => this.generateAliasClass(typeId),
-                enum: (etd: EnumTypeDeclaration) => this.generateEnumClass(etd, typeDeclaration),
+                enum: (etd: EnumTypeDeclaration) => {
+                    return new EnumGenerator(this.context, typeDeclaration, etd).generate();
+                },
                 object: (otd: ObjectTypeDeclaration) => this.generateObjectClass(typeId, otd, typeDeclaration),
                 union: (utd: UnionTypeDeclaration) => this.generateUnionClass(typeId, utd, typeDeclaration),
                 undiscriminatedUnion: () => this.generateUndiscriminatedUnionClass(typeId),
                 _other: () => this.generateUnknownClass(typeDeclaration.shape)
             });
 
-            if (generatedClass != null) {
+            if (generatedClass instanceof CSharpFile) {
+                typeFiles.push(generatedClass);
+            } else if (generatedClass != null) {
                 typeFiles.push(new CSharpFile({ clazz: generatedClass, directory }));
             }
         }
