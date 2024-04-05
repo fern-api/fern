@@ -29,6 +29,7 @@ class ObjectWithOptionalField(UncheckedBaseModel):
     enum: typing.Optional[Color] = None
     union: typing.Optional[Shape] = None
     undiscriminated_union: typing.Optional[UndiscriminatedShape] = None
+    any: typing.Any
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}

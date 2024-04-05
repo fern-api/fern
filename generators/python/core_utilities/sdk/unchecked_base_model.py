@@ -1,4 +1,5 @@
 import datetime as dt
+import inspect
 import typing
 import uuid
 
@@ -86,7 +87,7 @@ def _convert_undiscriminated_union_type(union_type: typing.Type[typing.Any], obj
 
     for inner_type in inner_types:
         try:
-            if issubclass(inner_type, pydantic_v1.BaseModel):
+            if inspect.isclass(inner_type) and issubclass(inner_type, pydantic_v1.BaseModel):
                 # Attempt a validated parse until one works
                 return pydantic_v1.parse_obj_as(inner_type, object_)
         except Exception:
@@ -134,6 +135,9 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
         pydantic_v1.typing.get_origin(maybe_annotation_members[0])
     )
 
+    if base_type == typing.Any:
+        return object_
+
     if base_type == dict:
         if not isinstance(object_, typing.Mapping):
             return object_
@@ -158,8 +162,10 @@ def construct_type(*, type_: typing.Type[typing.Any], object_: typing.Any) -> ty
     if pydantic_v1.typing.is_union(base_type) or is_annotated_union:
         return _convert_union_type(type_, object_)
 
-    # Cannot do an `issubclass` with a literal type
-    if not pydantic_v1.typing.is_literal_type(type_) and issubclass(base_type, pydantic_v1.BaseModel):
+    # Cannot do an `issubclass` with a literal type, let's also just confirm we have a class before this call
+    if not pydantic_v1.typing.is_literal_type(type_) and (
+        inspect.isclass(base_type) and issubclass(base_type, pydantic_v1.BaseModel)
+    ):
         return type_.construct(**object_)
 
     if base_type == dt.datetime:
