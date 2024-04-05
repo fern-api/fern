@@ -6,5 +6,5 @@ namespace SeedAudiences.FolderB;
 public class Foo
 {
     [JsonPropertyName("foo")]
-    public Foo? Foo { get; init; }
+    public Foo? Foo_ { get; init; }
 }

@@ -1,10 +1,4 @@
 import {
-    AbstractCsharpGeneratorContext,
-    BaseCsharpCustomConfigSchema,
-    csharp,
-    PrebuiltUtilities
-} from "@fern-api/csharp-codegen";
-import {
     ContainerType,
     DeclaredTypeName,
     Literal,
@@ -14,33 +8,31 @@ import {
     TypeId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
+import { csharp } from ".";
+import { AbstractCsharpGeneratorContext, BaseCsharpCustomConfigSchema } from "./cli";
+import { PrebuiltUtilities } from "./utils";
 
 export class ReferenceGenerator {
     private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
     private prebuiltUtilities: PrebuiltUtilities;
 
-    private types: Map<TypeId, TypeDeclaration>;
+    private types: Record<TypeId, TypeDeclaration>;
     private references: Map<TypeReference, csharp.Type>;
     public annotations: Map<TypeReference, csharp.Annotation>;
 
     constructor(
         context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>,
-        types: Map<TypeId, TypeDeclaration>,
         prebuiltUtilities: PrebuiltUtilities
     ) {
         this.context = context;
         this.prebuiltUtilities = prebuiltUtilities;
-        this.types = types;
+        this.types = this.context.ir.types;
         this.references = new Map();
         this.annotations = new Map();
-
-        for (const type of this.types.values()) {
-            type.shape;
-        }
     }
 
     public fromDeclaredTypeName(rootModule: string, typeName: DeclaredTypeName): csharp.Type {
-        const underlyingType = this.types.get(typeName.typeId);
+        const underlyingType = this.types[typeName.typeId];
         if (underlyingType == null) {
             throw new Error(`Type ${typeName.name.pascalCase.safeName} not found`);
         }
@@ -125,7 +117,7 @@ export class ReferenceGenerator {
         const type = typeReference._visit<csharp.Type>({
             container: (value: ContainerType) => this.typeFromContainerReference(rootModule, value),
             named: (value: DeclaredTypeName) => {
-                const underlyingType = this.types.get(value.typeId);
+                const underlyingType = this.types[value.typeId];
                 if (underlyingType == null) {
                     throw new Error(`Type ${value.name.pascalCase.safeName} not found`);
                 }

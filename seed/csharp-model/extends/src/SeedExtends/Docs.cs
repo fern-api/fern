@@ -5,5 +5,5 @@ namespace SeedExtends;
 public class Docs
 {
     [JsonPropertyName("docs")]
-    public string Docs { get; init; }
+    public string Docs_ { get; init; }
 }
