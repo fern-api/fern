@@ -1,2 +1,2 @@
-export { ModelGenerator } from "./ModelGenerator";
+export { generateModels } from "./generateModels";
 export * from "./ModelGeneratorCli";

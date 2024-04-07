@@ -1,5 +1,5 @@
-import { AstNode } from "../core/AstNode";
-import { Writer } from "../core/Writer";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 import { Type } from "./Type";
 
 export declare namespace Parameter {

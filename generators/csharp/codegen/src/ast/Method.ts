@@ -1,8 +1,8 @@
-import { Access } from "../core/Access";
-import { AstNode } from "../core/AstNode";
-import { Writer } from "../core/Writer";
+import { Writer } from "./core/Writer";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
+import { Access } from "./Access";
+import { AstNode } from "./core/AstNode";
 import { MethodInvocation } from "./MethodInvocation";
 import { Parameter } from "./Parameter";
 import { Type } from "./Type";

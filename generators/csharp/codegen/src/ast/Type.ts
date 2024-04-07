@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
-import { AstNode } from "../core/AstNode";
-import { Writer } from "../core/Writer";
 import { ClassReference, OneOfClassReference, StringEnumClassReference } from "./ClassReference";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 
 type InternalType =
     | Integer

@@ -4,7 +4,8 @@ import { mkdir, readFile, writeFile } from "fs/promises";
 import { template } from "lodash-es";
 import path from "path";
 import { AsIsFiles } from "../AsIs";
-import { AbstractCsharpGeneratorContext, BaseCsharpCustomConfigSchema } from "../cli";
+import { AbstractCsharpGeneratorContext } from "../cli";
+import { BaseCsharpCustomConfigSchema } from "../custom-config";
 import { CSharpFile } from "./CSharpFile";
 import { File } from "./File";
 
@@ -18,11 +19,16 @@ export class CsharpProject {
     private testFiles: CSharpFile[] = [];
     private sourceFiles: CSharpFile[] = [];
     private coreFiles: File[] = [];
+    private absolutePathToOutputDirectory: AbsoluteFilePath;
+    public readonly filepaths: CsharpProjectFilepaths;
 
     public constructor(
         private readonly context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>,
         private readonly name: string
-    ) {}
+    ) {
+        this.absolutePathToOutputDirectory = AbsoluteFilePath.of(this.context.config.output.path);
+        this.filepaths = new CsharpProjectFilepaths(name);
+    }
 
     public addCoreFiles(file: File): void {
         this.coreFiles.push(file);
@@ -36,16 +42,18 @@ export class CsharpProject {
         this.testFiles.push(file);
     }
 
-    public async persist(path: AbsoluteFilePath): Promise<void> {
-        const absolutePathToSrcDirectory = join(path, RelativeFilePath.of(SRC_DIRECTORY_NAME));
-        await mkdir(absolutePathToSrcDirectory, { recursive: true });
+    public async persist(): Promise<void> {
+        const absolutePathToSrcDirectory = join(
+            this.absolutePathToOutputDirectory,
+            this.filepaths.getSourceFileDirectory()
+        );
 
         const absolutePathToProjectDirectory = await this.createProject({ absolutePathToSrcDirectory });
         const absolutePathToTestProjectDirectory = await this.createTestProject({ absolutePathToSrcDirectory });
 
         await loggingExeca(this.context.logger, "dotnet", ["new", "gitignore"], {
             doNotPipeOutput: true,
-            cwd: path
+            cwd: this.absolutePathToOutputDirectory
         });
 
         for (const file of this.sourceFiles) {
@@ -95,8 +103,11 @@ export class CsharpProject {
     }: {
         absolutePathToSrcDirectory: AbsoluteFilePath;
     }): Promise<AbsoluteFilePath> {
-        const testProjectName = `${this.name}.Test`;
-        const absolutePathToTestProject = join(absolutePathToSrcDirectory, RelativeFilePath.of(testProjectName));
+        const testProjectName = this.filepaths.getTestProjectName();
+        const absolutePathToTestProject = join(
+            this.absolutePathToOutputDirectory,
+            this.filepaths.getTestFilesDirectory()
+        );
         this.context.logger.debug(`mkdir ${absolutePathToTestProject}`);
         await mkdir(absolutePathToTestProject, { recursive: true });
 
@@ -158,4 +169,28 @@ function replaceTemplate({ contents, namespace }: { contents: string; namespace:
 
 function getAsIsFilepath(filename: string): string {
     return AbsoluteFilePath.of(path.join(AS_IS_DIRECTORY, filename));
+}
+
+class CsharpProjectFilepaths {
+    constructor(private readonly name: string) {}
+
+    public getProjectDirectory(): RelativeFilePath {
+        return join(this.getSourceFileDirectory(), RelativeFilePath.of(this.name));
+    }
+
+    public getSourceFileDirectory(): RelativeFilePath {
+        return RelativeFilePath.of(SRC_DIRECTORY_NAME);
+    }
+
+    public getCoreFilesDirectory(): RelativeFilePath {
+        return join(this.getProjectDirectory(), RelativeFilePath.of(CORE_DIRECTORY_NAME));
+    }
+
+    public getTestFilesDirectory(): RelativeFilePath {
+        return join(this.getSourceFileDirectory(), RelativeFilePath.of(this.getTestProjectName()));
+    }
+
+    public getTestProjectName(): string {
+        return `${this.name}.Test`;
+    }
 }

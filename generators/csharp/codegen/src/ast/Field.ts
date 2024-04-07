@@ -1,9 +1,9 @@
-import { Access } from "../core/Access";
-import { AstNode } from "../core/AstNode";
-import { Writer } from "../core/Writer";
+import { Access } from "./Access";
 import { Annotation } from "./Annotation";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 import { Type } from "./Type";
 
 export declare namespace Field {

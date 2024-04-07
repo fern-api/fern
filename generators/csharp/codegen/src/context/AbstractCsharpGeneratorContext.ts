@@ -11,15 +11,15 @@ import {
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
-import { CsharpTypeMapper } from "../CSharpTypeMapper";
-import { PrebuiltUtilities } from "../project";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
+import { CsharpProject } from "../project";
+import { CsharpTypeMapper } from "./CsharpTypeMapper";
 
 export abstract class AbstractCsharpGeneratorContext<
     CustomConfig extends BaseCsharpCustomConfigSchema
 > extends AbstractGeneratorContext {
     private namespace: string;
-    public readonly project = this.getLogger();
+    public readonly project: CsharpProject;
     public readonly csharpTypeMapper: CsharpTypeMapper;
     public readonly flattenedProperties: Map<TypeId, ObjectProperty[]> = new Map();
 
@@ -33,14 +33,11 @@ export abstract class AbstractCsharpGeneratorContext<
         this.namespace =
             this.customConfig.namespace ??
             upperFirst(camelCase(`${this.config.organization}_${this.ir.apiName.pascalCase.unsafeName}`));
+        this.project = new CsharpProject(this, this.namespace);
         for (const typeId of Object.keys(ir.types)) {
             this.flattenedProperties.set(typeId, this.getFlattenedProperties(typeId));
         }
-        this.csharpTypeMapper = new CsharpTypeMapper(
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            this as any as AbstractCsharpGeneratorContext<any>,
-            new PrebuiltUtilities(this.namespace)
-        );
+        this.csharpTypeMapper = new CsharpTypeMapper(this);
     }
 
     public getNamespace(): string {
@@ -80,7 +77,6 @@ export abstract class AbstractCsharpGeneratorContext<
     // does not allow for multiple inheritence of classes, and creating interfaces feels
     // heavy-handed + duplicative.
     private getFlattenedProperties(typeId: TypeId): ObjectProperty[] {
-        this.logger.debug(`Getting flattened properties for ${typeId}`);
         const td = this.getTypeDeclarationOrThrow(typeId);
         return td === undefined
             ? []

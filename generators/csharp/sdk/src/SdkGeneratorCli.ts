@@ -1,6 +1,5 @@
-import { AbstractCsharpGeneratorCli, CsharpProject, TestFileGenerator } from "@fern-api/csharp-codegen";
-import { ModelGenerator } from "@fern-api/fern-csharp-model";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbstractCsharpGeneratorCli, TestFileGenerator } from "@fern-api/csharp-codegen";
+import { generateModels } from "@fern-api/fern-csharp-model";
 import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
@@ -41,25 +40,24 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
-        const project = new CsharpProject(context, context.getNamespace());
-        const files = new ModelGenerator(context).generateTypes();
-        for (const file of files) {
-            project.addSourceFiles(file);
+        const models = generateModels({ context });
+        for (const file of models) {
+            context.project.addSourceFiles(file);
         }
         for (const [_, subpackage] of Object.entries(context.ir.subpackages)) {
             if (subpackage.service == null) {
                 continue;
             }
-            const service = context.getServiceWithId(subpackage.service);
+            const service = context.getHttpServiceOrThrow(subpackage.service);
             const subClient = new SubClientGenerator(context, subpackage.service, service);
-            project.addSourceFiles(subClient.generate());
+            context.project.addSourceFiles(subClient.generate());
         }
 
         const testGenerator = new TestFileGenerator(context);
         const test = testGenerator.generate();
 
-        project.addTestFiles(test);
+        context.project.addTestFiles(test);
 
-        await project.persist(AbsoluteFilePath.of(context.config.output.path));
+        await context.project.persist();
     }
 }

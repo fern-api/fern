@@ -1,6 +1,6 @@
-import { AstNode } from "../core/AstNode";
-import { Writer } from "../core/Writer";
+import { AstNode } from "./core/AstNode";
 import { ClassReference } from "./ClassReference";
+import { Writer } from "./core/Writer";
 
 export declare namespace Annotation {
     interface Args {

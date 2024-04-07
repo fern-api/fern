@@ -5518,19 +5518,19 @@
     ]
   },
   "packageFolders": {
-    "/Users/armandobelardo/.nuget/packages/": {}
+    "/Users/dsinghvi/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/armandobelardo/git/fern/fern/generators/csharp/playground/Playground.Test/Playground.Test.csproj",
+      "projectUniqueName": "/Users/dsinghvi/Git/fern/generators/csharp/playground/Playground.Test/Playground.Test.csproj",
       "projectName": "Playground.Test",
-      "projectPath": "/Users/armandobelardo/git/fern/fern/generators/csharp/playground/Playground.Test/Playground.Test.csproj",
-      "packagesPath": "/Users/armandobelardo/.nuget/packages/",
-      "outputPath": "/Users/armandobelardo/git/fern/fern/generators/csharp/playground/Playground.Test/obj/",
+      "projectPath": "/Users/dsinghvi/Git/fern/generators/csharp/playground/Playground.Test/Playground.Test.csproj",
+      "packagesPath": "/Users/dsinghvi/.nuget/packages/",
+      "outputPath": "/Users/dsinghvi/Git/fern/generators/csharp/playground/Playground.Test/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/armandobelardo/.nuget/NuGet/NuGet.Config"
+        "/Users/dsinghvi/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -5548,6 +5548,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -5591,7 +5596,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet/8.0.1/libexec/sdk/8.0.101/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.203/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

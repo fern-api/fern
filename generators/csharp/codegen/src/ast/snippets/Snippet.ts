@@ -1,6 +1,6 @@
-import { AstNode } from "../../core/AstNode";
-import { Writer } from "../../core/Writer";
 import { CodeBlock } from "../CodeBlock";
+import { AstNode } from "../core/AstNode";
+import { Writer } from "../core/Writer";
 import { Method } from "../Method";
 import { MethodInvocation } from "../MethodInvocation";
 import { RootClient } from "./RootClient";
