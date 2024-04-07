@@ -11,15 +11,16 @@ import {
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
-import { ReferenceGenerator } from "../ReferenceGenerator";
-import { PrebuiltUtilities } from "../utils";
-import { BaseCsharpCustomConfigSchema } from "./BaseCsharpCustomConfigSchema";
+import { CsharpTypeMapper } from "../CSharpTypeMapper";
+import { PrebuiltUtilities } from "../project";
+import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
 
 export abstract class AbstractCsharpGeneratorContext<
     CustomConfig extends BaseCsharpCustomConfigSchema
 > extends AbstractGeneratorContext {
     private namespace: string;
-    public readonly referenceGenerator: ReferenceGenerator;
+    public readonly project = this.getLogger();
+    public readonly csharpTypeMapper: CsharpTypeMapper;
     public readonly flattenedProperties: Map<TypeId, ObjectProperty[]> = new Map();
 
     public constructor(
@@ -35,7 +36,7 @@ export abstract class AbstractCsharpGeneratorContext<
         for (const typeId of Object.keys(ir.types)) {
             this.flattenedProperties.set(typeId, this.getFlattenedProperties(typeId));
         }
-        this.referenceGenerator = new ReferenceGenerator(
+        this.csharpTypeMapper = new CsharpTypeMapper(
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             this as any as AbstractCsharpGeneratorContext<any>,
             new PrebuiltUtilities(this.namespace)

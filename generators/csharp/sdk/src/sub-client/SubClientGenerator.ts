@@ -28,7 +28,7 @@ export class SubClientGenerator extends Generator<SdkCustomConfigSchema, SdkGene
                     access: "public",
                     isAsync: true,
                     parameters: [],
-                    docs: endpoint.docs
+                    summary: endpoint.docs
                 })
             );
         }

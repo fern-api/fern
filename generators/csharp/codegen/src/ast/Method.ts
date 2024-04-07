@@ -26,8 +26,8 @@ export declare namespace Method {
         return_?: Type;
         /* The body of the method */
         body?: CodeBlock;
-        /* Docs for the method */
-        docs: string | undefined;
+        /* Summary for the method */
+        summary: string | undefined;
         /* The type of the method, defaults to INSTANCE */
         type?: MethodType;
         /* The class this method belongs to, if any */
@@ -41,13 +41,13 @@ export class Method extends AstNode {
     public readonly access: Access;
     public readonly return: Type | undefined;
     public readonly body: CodeBlock | undefined;
-    public readonly docs: string | undefined;
+    public readonly summary: string | undefined;
     public readonly type: MethodType;
     public readonly reference: ClassReference | undefined;
 
     private parameters: Parameter[] = [];
 
-    constructor({ name, isAsync, access, return_, body, docs, type, classReference }: Method.Args) {
+    constructor({ name, isAsync, access, return_, body, summary, type, classReference }: Method.Args) {
         super();
 
         this.name = name;
@@ -55,7 +55,7 @@ export class Method extends AstNode {
         this.access = access;
         this.return = return_;
         this.body = body;
-        this.docs = docs;
+        this.summary = summary;
         this.type = type ?? MethodType.INSTANCE;
         this.reference = classReference;
     }
@@ -65,6 +65,14 @@ export class Method extends AstNode {
     }
 
     public write(writer: Writer): void {
+        if (this.summary != null) {
+            writer.writeLine("/// <summary>");
+            this.summary.split("\n").forEach((line) => {
+                writer.writeLine(`/// ${line}`);
+            });
+            writer.writeLine("/// </summary>");
+        }
+
         writer.write(`${this.access} `);
         if (this.type === MethodType.STATIC) {
             writer.write("static ");

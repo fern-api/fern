@@ -1,4 +1,5 @@
 import { csharp, CSharpFile, Generator } from "@fern-api/csharp-codegen";
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { EnumTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
@@ -12,12 +13,10 @@ export class EnumGenerator extends Generator<ModelCustomConfigSchema, ModelGener
         super(context);
     }
 
-    public generate(): CSharpFile {
+    protected doGenerate(): CSharpFile {
         const enum_ = csharp.enum_({
-            name: this.context.getPascalCaseSafeName(this.typeDeclaration.name.name),
-            namespace: this.context.getNamespaceForTypeId(this.typeDeclaration.name.typeId),
+            ...this.context.csharpTypeMapper.convertToClassReference(this.typeDeclaration.name),
             access: "public"
-            // annotations: [this.prebuiltUtilities.enumConverterAnnotation()]
         });
 
         this.enumDeclaration.values.forEach((member) =>
@@ -28,5 +27,9 @@ export class EnumGenerator extends Generator<ModelCustomConfigSchema, ModelGener
             clazz: enum_,
             directory: this.context.getDirectoryForTypeId(this.typeDeclaration.name.typeId)
         });
+    }
+
+    protected getFilepath(): RelativeFilePath {
+        return this.context.getNamespaceForTypeId(this.typeDeclaration.name.typeId);
     }
 }

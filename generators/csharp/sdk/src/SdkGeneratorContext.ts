@@ -65,7 +65,21 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         );
     }
 
+    public getRootClientClassName(): string {
+        if (this.customConfig["client-class-name"] != null) {
+            return this.customConfig["client-class-name"];
+        }
+        return `${upperFirst(camelCase(this.config.organization))}${this.ir.apiName.pascalCase.unsafeName}Client`;
+    }
+
     private getNamespaceFromFernFilepath(fernFilepath: FernFilepath): string {
         return [this.getNamespace(), ...fernFilepath.packagePath.map((path) => path.pascalCase.safeName)].join(".");
     }
+}
+function upperFirst(arg0: any) {
+    throw new Error("Function not implemented.");
+}
+
+function camelCase(organization: string): any {
+    throw new Error("Function not implemented.");
 }

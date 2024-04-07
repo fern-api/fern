@@ -2,7 +2,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { csharp } from ".";
 import { AbstractCsharpGeneratorContext, BaseCsharpCustomConfigSchema } from "./cli";
 import { NUnit } from "./constants/NUnit";
-import { Generator } from "./Generator";
+import { Generator } from "./FileGenerator";
 import { CSharpFile } from "./utils";
 
 export class TestFileGenerator extends Generator<

@@ -14,30 +14,24 @@ export class ObjectGenerator extends Generator<ModelCustomConfigSchema, ModelGen
 
     public generate(): CSharpFile {
         const typeId = this.typeDeclaration.name.typeId;
-        const className = this.context.getPascalCaseSafeName(this.typeDeclaration.name.name);
+        const classReference = this.context.csharpTypeMapper.convertToClassReference(this.typeDeclaration.name);
         const class_ = csharp.class_({
-            name: className,
-            namespace: this.context.getNamespaceForTypeId(typeId),
+            ...classReference,
             partial: false,
             access: "public"
         });
 
         const properties = this.context.flattenedProperties.get(typeId) ?? this.objectDeclaration.properties;
         properties.forEach((property) => {
-            const maybeAnnotation = this.context.referenceGenerator.annotations.get(property.valueType);
             class_.addField(
                 csharp.field({
-                    name: this.getPropertyName({ className, objectProperty: property }),
-                    type: this.context.referenceGenerator.typeFromTypeReference(
-                        this.context.getNamespace(),
-                        property.valueType
-                    ),
+                    name: this.getPropertyName({ className: classReference.name, objectProperty: property }),
+                    type: this.context.csharpTypeMapper.convert({ reference: property.valueType }),
                     access: "public",
                     get: true,
                     init: true,
                     summary: property.docs,
-                    jsonPropertyName: property.name.wireValue,
-                    annotations: maybeAnnotation ? [maybeAnnotation] : undefined
+                    jsonPropertyName: property.name.wireValue
                 })
             );
         });

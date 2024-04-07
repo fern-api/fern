@@ -1,4 +1,4 @@
-import { ClassReference } from "../ast";
+import { ClassReference } from "..";
 import { AstNode } from "./AstNode";
 
 type Namespace = string;
