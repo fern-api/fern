@@ -31,15 +31,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "audio": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "audio",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": null,
@@ -225,15 +217,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "audio": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "audio",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": null,
