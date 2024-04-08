@@ -305,14 +305,14 @@ service:
               name: Alice
 
 types:
-User:
-properties:
-userId: string
-name: string
+  User:
+    properties:
+      userId: string
+      name: string
 
 errors:
-UserNotFoundError:
-status-code: 404
+  UserNotFoundError:
+    status-code: 404
 ```
 </CodeBlock>
 
@@ -401,8 +401,8 @@ examples:
       error: UserNotFoundError # <--
 
 errors:
-UserNotFoundError:
-status-code: 404
+  UserNotFoundError:
+    status-code: 404
 ```
 </CodeBlock>
 
