@@ -80,7 +80,8 @@ Services can also have path-parameters:
 
 <CodeBlock title='project.yml'>
   ```yaml service: base-path: /projects/{projectId}
-  path-parameters: projectId: string auth: false endpoints: ... ```
+  path-parameters: projectId: string auth: false endpoints: ...
+  ```
 </CodeBlock>
 
 ## Query parameters
@@ -127,7 +128,8 @@ Each endpoint can override the auth behavior specified in the service.
 <CodeBlock title='user.yml'>
   ```yaml service: base-path: /users auth: false endpoints: getMe: path: "" method:
   GET # This endpoint will be authed auth: true docs: Return the current user based
-  on Authorization header. ```
+  on Authorization header. 
+  ```
 </CodeBlock>
 
 ## Headers
@@ -137,7 +139,8 @@ Each endpoint can specify request headers:
 <CodeBlock title='user.yml'>
   ```yaml service: base-path: /users auth: false endpoints: getAllUsers: path: /all
   method: GET request: # this name is required for idiomatic SDKs name:
-  GetAllUsersRequest headers: X-Endpoint-Header: string ```
+  GetAllUsersRequest headers: X-Endpoint-Header: string
+  ```
 </CodeBlock>
 
 Services can also specify request headers. These headers will cascade to the service's endpoints.
@@ -146,7 +149,8 @@ Services can also specify request headers. These headers will cascade to the ser
   ```diff service: base-path: /users auth: false + headers: + X-Service-Header:
   string endpoints: getAllUsers: path: /all method: GET request: # this name is
   required for idiomatic SDKs name: GetAllUsersRequest headers: X-Endpoint-Header:
-  string ```
+  string
+  ```
 </CodeBlock>
 
 ## Request body
@@ -176,7 +180,8 @@ makes the generated SDKs a bit more idiomatic.
 <CodeBlock title='user.yml'>
   ```yaml service: base-path: /users auth: false endpoints: createUser: path:
   /create method: POST request: # this name is required for idiomatic SDKs name:
-  CreateUserRequest body: properties: userName: string ```
+  CreateUserRequest body: properties: userName: string
+  ```
 </CodeBlock>
 
 ## Multipart form uploads
@@ -430,7 +435,5 @@ UserId:
 type: integer
 examples: - name: Example1
 value: user-id-123
-
 ```
 </CodeBlock>
-```
