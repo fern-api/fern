@@ -178,9 +178,19 @@ If the request body is an object, you can **inline the type declaration**. This
 makes the generated SDKs a bit more idiomatic.
 
 <CodeBlock title='user.yml'>
-  ```yaml service: base-path: /users auth: false endpoints: createUser: path:
-  /create method: POST request: # this name is required for idiomatic SDKs name:
-  CreateUserRequest body: properties: userName: string
+  ```yaml 
+  service: 
+    base-path: /users 
+    auth: false 
+    endpoints: 
+      createUser: 
+        path: /create 
+        method: POST 
+        request: # this name is required for idiomatic SDKs 
+        name: CreateUserRequest 
+        body: 
+          properties: 
+            userName: string
   ```
 </CodeBlock>
 
