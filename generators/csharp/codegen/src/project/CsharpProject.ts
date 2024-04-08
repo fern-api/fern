@@ -47,6 +47,8 @@ export class CsharpProject {
             this.absolutePathToOutputDirectory,
             this.filepaths.getSourceFileDirectory()
         );
+        this.context.logger.debug(`mkdir ${absolutePathToSrcDirectory}`);
+        await mkdir(absolutePathToSrcDirectory, { recursive: true });
 
         const absolutePathToProjectDirectory = await this.createProject({ absolutePathToSrcDirectory });
         const absolutePathToTestProjectDirectory = await this.createTestProject({ absolutePathToSrcDirectory });

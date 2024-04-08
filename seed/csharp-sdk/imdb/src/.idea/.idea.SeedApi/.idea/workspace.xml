@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="1647b062-f529-406b-b5bf-4f47efdd4f58" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/SeedApi/BaseClient.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SeedApi/ClientOptions.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/SeedApi/SeedApiClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../.pnp.cjs" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../.pnp.cjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../generators/csharp/codegen/src/ast/Parameter.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../generators/csharp/codegen/src/ast/Parameter.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../generators/csharp/codegen/src/project/CsharpProject.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../generators/csharp/codegen/src/project/CsharpProject.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../generators/csharp/sdk/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../generators/csharp/sdk/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../generators/csharp/sdk/src/SdkGeneratorCli.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../generators/csharp/sdk/src/SdkGeneratorCli.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../generators/csharp/sdk/src/SdkGeneratorContext.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../generators/csharp/sdk/src/SdkGeneratorContext.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../generators/csharp/sdk/src/root-client/RootClientGenerator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../generators/csharp/sdk/src/root-client/RootClientGenerator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../packages/cli/generation/local-generation/local-workspace-runner/src/LocalTaskHandler.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../packages/cli/generation/local-generation/local-workspace-runner/src/LocalTaskHandler.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.SeedApi/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.SeedApi/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.SeedApi/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.SeedApi/.idea/indexLayout.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.SeedApi/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SeedApi.Test/TestClient.cs" beforeDir="false" afterPath="$PROJECT_DIR$/SeedApi.Test/TestClient.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SeedApi/Imdb/Core/BaseClient.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SeedApi/Imdb/Core/ClientOptions.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SeedApi/SeedApi.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../../yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../../../../yarn.lock" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/13e4a284d4277a8bc63f81f597fe304e20bfae856cc237da5f8cf941e5176/HttpClient.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/2de24ade407ea5b8e0f892edba64c36d2ded3693b31cd31c239b147bf1f5cbd/HttpContent.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/55f6b783459e492e9ac811b9f03969853d000/_2c1f2/HttpStatusCode.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/c03ecbf882ec617b54fbd5b46063c091a895e6f24a14a0411120ddd7f0ea7b/Dictionary.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/dac2f5c6fb679113438c1a67ba2be8af92f881eb193087dc7e5e68a3adb14/HttpResponseMessage.cs" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 3
+}</component>
+  <component name="ProjectId" id="2emV6IF3SYqKfgcoqusvcglGkkQ" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "dsinghvi/csharp-edits",
+    "last_opened_file_path": "/Users/dsinghvi/Git/fern/seed/csharp-sdk/imdb/src",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "/Users/dsinghvi/Library/Application Support/JetBrains/Rider2023.2/resharper-host/DecompilerCache",
+      "/Users/dsinghvi/Library/Application Support/JetBrains/Rider2023.2/resharper-host/SourcesCache",
+      "/Users/dsinghvi/.local/share/Symbols/src"
+    ]
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="1647b062-f529-406b-b5bf-4f47efdd4f58" name="Changes" comment="" />
+      <created>1712509563745</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1712509563745</updated>
+      <workItem from="1712509564782" duration="4000000" />
+      <workItem from="1712528195671" duration="5381000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+</project>

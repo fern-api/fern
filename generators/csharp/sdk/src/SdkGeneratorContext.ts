@@ -1,6 +1,7 @@
 import { AbstractCsharpGeneratorContext, csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernFilepath, HttpService, ServiceId, Subpackage, SubpackageId, TypeId } from "@fern-fern/ir-sdk/api";
+import { camelCase, upperFirst } from "lodash-es";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
 const TYPES_FOLDER_NAME = "Types";
@@ -85,11 +86,4 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     private getNamespaceFromFernFilepath(fernFilepath: FernFilepath): string {
         return [this.getNamespace(), ...fernFilepath.packagePath.map((path) => path.pascalCase.safeName)].join(".");
     }
-}
-function upperFirst(arg0: any) {
-    throw new Error("Function not implemented.");
-}
-
-function camelCase(organization: string): any {
-    throw new Error("Function not implemented.");
 }

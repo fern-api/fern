@@ -16,18 +16,17 @@ export declare namespace Parameter {
 export class Parameter extends AstNode {
     public readonly name: string;
     public readonly docs: string | undefined;
-
     private type: Type;
 
     constructor({ name, type, docs }: Parameter.Args) {
         super();
-
         this.name = name;
         this.type = type;
         this.docs = docs;
     }
 
     public write(writer: Writer): void {
-        writer.write(`${this.name}: `);
+        this.type.write(writer);
+        writer.write(` ${this.name}`);
     }
 }

@@ -15,11 +15,9 @@ interface ConstructorParameter {
 
 export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     protected getFilepath(): RelativeFilePath {
-        return join(
-            this.context.project.filepaths.getSourceFileDirectory(),
-            RelativeFilePath.of(this.context.getRootClientClassName() + ".cs")
-        );
+        return join(RelativeFilePath.of(this.context.getRootClientClassName() + ".cs"));
     }
+
     public doGenerate(): CSharpFile {
         const class_ = csharp.class_({
             name: this.context.getRootClientClassName(),
@@ -38,7 +36,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                 requiredParameters.push(param);
             }
         }
-        if (requiredParameters.length > 0) {
+
+        const addRequiredParamConstructor = requiredParameters.length > 0;
+        const addOptionalParamConstructor = optionalParameters.length > 0;
+        if (addRequiredParamConstructor) {
             class_.addConstructor({
                 access: "public",
                 parameters: requiredParameters.map((param) =>
@@ -49,17 +50,24 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     })
                 )
             });
+            if (addOptionalParamConstructor) {
+                // delegate to the optional parameter constructor
+            } else {
+                // implement the constructor
+            }
         }
-        class_.addConstructor({
-            access: "public",
-            parameters: [...requiredParameters, ...optionalParameters].map((param) =>
-                csharp.parameter({
-                    name: param.name,
-                    type: this.context.csharpTypeMapper.convert({ reference: param.typeReference }),
-                    docs: param.docs
-                })
-            )
-        });
+        if (addOptionalParamConstructor) {
+            class_.addConstructor({
+                access: "public",
+                parameters: [...requiredParameters, ...optionalParameters].map((param) =>
+                    csharp.parameter({
+                        name: param.name,
+                        type: this.context.csharpTypeMapper.convert({ reference: param.typeReference }),
+                        docs: param.docs
+                    })
+                )
+            });
+        }
 
         for (const subpackageId of this.context.ir.rootPackage.subpackages) {
             const subpackage = this.context.getSubpackageOrThrow(subpackageId);
@@ -78,7 +86,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
 
         return new CSharpFile({
             clazz: class_,
-            directory: this.context.project.filepaths.getSourceFileDirectory()
+            directory: RelativeFilePath.of("")
         });
     }
 
