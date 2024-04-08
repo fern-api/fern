@@ -3,4 +3,4 @@
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 
 require "minitest/autorun"
-require "fern_api-wide-base-path"
+require "fern_api_wide_base_path"

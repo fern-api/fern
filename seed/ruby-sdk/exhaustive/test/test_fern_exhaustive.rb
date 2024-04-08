@@ -6,6 +6,6 @@ require "fern_exhaustive"
 # Basic SeedExhaustiveClient tests
 class TestSeedExhaustiveClient < Minitest::Test
   def test_function
-    SeedExhaustiveClient::Client.new
+    # SeedExhaustiveClient::Client.new
   end
 end

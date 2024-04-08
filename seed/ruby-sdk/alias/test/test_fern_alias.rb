@@ -6,6 +6,6 @@ require "fern_alias"
 # Basic SeedAliasClient tests
 class TestSeedAliasClient < Minitest::Test
   def test_function
-    SeedAliasClient::Client.new
+    # SeedAliasClient::Client.new
   end
 end

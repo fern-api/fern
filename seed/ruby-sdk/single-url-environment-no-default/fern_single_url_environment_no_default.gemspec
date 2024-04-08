@@ -3,7 +3,7 @@
 require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
-  spec.name = "fern_single-url-environment-no-default"
+  spec.name = "fern_single_url_environment_no_default"
   spec.version = "0.0.1"
   spec.authors = SeedSingleUrlEnvironmentNoDefaultClient::Gemconfig::AUTHORS
   spec.email = SeedSingleUrlEnvironmentNoDefaultClient::Gemconfig::EMAIL

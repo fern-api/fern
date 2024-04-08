@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.4.0] - 2024-04-08
+
+- Improvement: The generators now create a rakefile to run any tests prefixed with `test_` in the `test` directory. A step is also added to CI to run these test. The dummy test now running also provides a sanity check on the health of the build of the gem, even if no tests are added given the gem is imported.
+
 ## [0.3.3] - 2024-03-22
 
 - Internal: Shared generator notification and config parsing logic.

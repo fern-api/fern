@@ -3,7 +3,7 @@
 require_relative "lib/playground/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "Fern Playground"
+  spec.name = "fern_playground"
   spec.version = Playground::VERSION
   spec.authors = ["Fern"]
   spec.email = ["hello@buildwithfern.com"]

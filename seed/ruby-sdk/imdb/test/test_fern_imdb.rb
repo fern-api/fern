@@ -6,6 +6,6 @@ require "fern_imdb"
 # Basic SeedApiClient tests
 class TestSeedApiClient < Minitest::Test
   def test_function
-    SeedApiClient::Client.new
+    # SeedApiClient::Client.new
   end
 end

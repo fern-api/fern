@@ -15,7 +15,7 @@ module SeedBearerTokenEnvironmentVariableClient
     def initialize(max_retries: nil, timeout_in_seconds: nil, api_key: nil)
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "fern_bearer-token-environment-variable",
+        "X-Fern-SDK-Name": "fern_bearer_token_environment_variable",
         "X-Fern-SDK-Version": "0.0.1",
         "Authorization": %(Bearer #{api_key || ENV["COURIER_API_KEY"]})
       }
@@ -38,7 +38,7 @@ module SeedBearerTokenEnvironmentVariableClient
     def initialize(max_retries: nil, timeout_in_seconds: nil, api_key: nil)
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "fern_bearer-token-environment-variable",
+        "X-Fern-SDK-Name": "fern_bearer_token_environment_variable",
         "X-Fern-SDK-Version": "0.0.1",
         "Authorization": %(Bearer #{api_key || ENV["COURIER_API_KEY"]})
       }

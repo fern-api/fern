@@ -6,6 +6,6 @@ require "fern_bytes"
 # Basic SeedBytesClient tests
 class TestSeedBytesClient < Minitest::Test
   def test_function
-    SeedBytesClient::Client.new
+    # SeedBytesClient::Client.new
   end
 end

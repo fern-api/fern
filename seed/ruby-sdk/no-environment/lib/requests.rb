@@ -15,7 +15,7 @@ module SeedNoEnvironmentClient
     def initialize(token:, max_retries: nil, timeout_in_seconds: nil)
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "fern_no-environment",
+        "X-Fern-SDK-Name": "fern_no_environment",
         "X-Fern-SDK-Version": "0.0.1",
         "Authorization": "Bearer #{token}"
       }
@@ -38,7 +38,7 @@ module SeedNoEnvironmentClient
     def initialize(token:, max_retries: nil, timeout_in_seconds: nil)
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "fern_no-environment",
+        "X-Fern-SDK-Name": "fern_no_environment",
         "X-Fern-SDK-Version": "0.0.1",
         "Authorization": "Bearer #{token}"
       }

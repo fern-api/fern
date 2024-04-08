@@ -16,7 +16,7 @@ module SeedBasicAuthClient
     def initialize(username:, password:, max_retries: nil, timeout_in_seconds: nil)
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "fern_basic-auth",
+        "X-Fern-SDK-Name": "fern_basic_auth",
         "X-Fern-SDK-Version": "0.0.1",
         "Authorization": %(Basic #{Base64.encode64("#{username}:#{password}")})
       }
@@ -40,7 +40,7 @@ module SeedBasicAuthClient
     def initialize(username:, password:, max_retries: nil, timeout_in_seconds: nil)
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "fern_basic-auth",
+        "X-Fern-SDK-Name": "fern_basic_auth",
         "X-Fern-SDK-Version": "0.0.1",
         "Authorization": %(Basic #{Base64.encode64("#{username}:#{password}")})
       }

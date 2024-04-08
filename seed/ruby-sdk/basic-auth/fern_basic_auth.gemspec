@@ -3,7 +3,7 @@
 require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
-  spec.name = "fern_basic-auth"
+  spec.name = "fern_basic_auth"
   spec.version = "0.0.1"
   spec.authors = SeedBasicAuthClient::Gemconfig::AUTHORS
   spec.email = SeedBasicAuthClient::Gemconfig::EMAIL

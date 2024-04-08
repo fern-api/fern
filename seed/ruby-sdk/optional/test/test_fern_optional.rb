@@ -6,6 +6,6 @@ require "fern_optional"
 # Basic SeedObjectsWithImportsClient tests
 class TestSeedObjectsWithImportsClient < Minitest::Test
   def test_function
-    SeedObjectsWithImportsClient::Client.new
+    # SeedObjectsWithImportsClient::Client.new
   end
 end

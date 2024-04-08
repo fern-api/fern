@@ -3,7 +3,7 @@
 require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
-  spec.name = "fern_error-property"
+  spec.name = "fern_error_property"
   spec.version = "0.0.1"
   spec.authors = SeedErrorPropertyClient::Gemconfig::AUTHORS
   spec.email = SeedErrorPropertyClient::Gemconfig::EMAIL

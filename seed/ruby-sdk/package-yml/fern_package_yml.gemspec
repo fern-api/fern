@@ -3,7 +3,7 @@
 require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
-  spec.name = "fern_package-yml"
+  spec.name = "fern_package_yml"
   spec.version = "0.0.1"
   spec.authors = SeedPackageYmlClient::Gemconfig::AUTHORS
   spec.email = SeedPackageYmlClient::Gemconfig::EMAIL

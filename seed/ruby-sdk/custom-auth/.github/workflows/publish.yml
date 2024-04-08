@@ -21,6 +21,6 @@ jobs:
             env:
               GEM_HOST_API_KEY: ${{ secrets. }}
             run: |
-              gem build fern_custom-auth.gemspec
+              gem build fern_custom_auth.gemspec
 
-              gem push fern_custom-auth-*.gem --host 
+              gem push fern_custom_auth-*.gem --host 

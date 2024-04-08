@@ -3,7 +3,7 @@
 require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
-  spec.name = "fern_file-upload"
+  spec.name = "fern_file_upload"
   spec.version = "0.0.1"
   spec.authors = SeedFileUploadClient::Gemconfig::AUTHORS
   spec.email = SeedFileUploadClient::Gemconfig::EMAIL

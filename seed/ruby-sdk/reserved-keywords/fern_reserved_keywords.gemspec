@@ -3,7 +3,7 @@
 require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
-  spec.name = "fern_reserved-keywords"
+  spec.name = "fern_reserved_keywords"
   spec.version = "0.0.1"
   spec.authors = SeedNurseryApiClient::Gemconfig::AUTHORS
   spec.email = SeedNurseryApiClient::Gemconfig::EMAIL

@@ -3,7 +3,7 @@
 require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
-  spec.name = "fern_code-samples"
+  spec.name = "fern_code_samples"
   spec.version = "0.0.1"
   spec.authors = SeedCodeSamplesClient::Gemconfig::AUTHORS
   spec.email = SeedCodeSamplesClient::Gemconfig::EMAIL

@@ -21,6 +21,6 @@ jobs:
             env:
               GEM_HOST_API_KEY: ${{ secrets. }}
             run: |
-              gem build fern_single-url-environment-default.gemspec
+              gem build fern_single_url_environment_default.gemspec
 
-              gem push fern_single-url-environment-default-*.gem --host 
+              gem push fern_single_url_environment_default-*.gem --host 

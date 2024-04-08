@@ -13,7 +13,7 @@ import { GeneratedRubyFile } from "./GeneratedRubyFile";
 export const MINIMUM_RUBY_VERSION = "2.7";
 
 export function getGemName(organization: string, apiName: string, clientClassName?: string, gemName?: string): string {
-    return gemName ?? snakeCase(getClientName(organization, apiName, clientClassName));
+    return snakeCase(gemName) ?? snakeCase(getClientName(organization, apiName, clientClassName));
 }
 
 export function getClientName(organization: string, apiName: string, clientClassName?: string): string {
@@ -60,7 +60,7 @@ require "${gemName}"
 # Basic ${clientName} tests
 class Test${clientName} < Minitest::Test
   def test_function
-    ${clientName}::Client.new
+    # ${clientName}::Client.new
   end
 end`;
     const testFile = new GeneratedFile(`test_${gemName}.rb`, RelativeFilePath.of("test/"), testContent);

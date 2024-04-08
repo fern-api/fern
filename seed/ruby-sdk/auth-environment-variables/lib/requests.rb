@@ -16,7 +16,7 @@ module SeedAuthEnvironmentVariablesClient
     def initialize(x_another_header:, max_retries: nil, timeout_in_seconds: nil, api_key: nil)
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "fern_auth-environment-variables",
+        "X-Fern-SDK-Name": "fern_auth_environment_variables",
         "X-Fern-SDK-Version": "0.0.1",
         "X-FERN-API-KEY": (api_key || ENV["FERN_API_KEY"]).to_s
       }
@@ -41,7 +41,7 @@ module SeedAuthEnvironmentVariablesClient
     def initialize(x_another_header:, max_retries: nil, timeout_in_seconds: nil, api_key: nil)
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "fern_auth-environment-variables",
+        "X-Fern-SDK-Name": "fern_auth_environment_variables",
         "X-Fern-SDK-Version": "0.0.1",
         "X-FERN-API-KEY": (api_key || ENV["FERN_API_KEY"]).to_s
       }

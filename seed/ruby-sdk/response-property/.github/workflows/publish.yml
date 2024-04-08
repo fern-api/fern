@@ -21,6 +21,6 @@ jobs:
             env:
               GEM_HOST_API_KEY: ${{ secrets. }}
             run: |
-              gem build fern_response-property.gemspec
+              gem build fern_response_property.gemspec
 
-              gem push fern_response-property-*.gem --host 
+              gem push fern_response_property-*.gem --host 

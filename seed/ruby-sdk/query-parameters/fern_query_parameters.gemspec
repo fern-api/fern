@@ -3,7 +3,7 @@
 require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
-  spec.name = "fern_query-parameters"
+  spec.name = "fern_query_parameters"
   spec.version = "0.0.1"
   spec.authors = SeedQueryParametersClient::Gemconfig::AUTHORS
   spec.email = SeedQueryParametersClient::Gemconfig::EMAIL

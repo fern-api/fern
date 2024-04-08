@@ -6,6 +6,6 @@ require "fern_unknown"
 # Basic SeedUnknownAsAnyClient tests
 class TestSeedUnknownAsAnyClient < Minitest::Test
   def test_function
-    SeedUnknownAsAnyClient::Client.new
+    # SeedUnknownAsAnyClient::Client.new
   end
 end

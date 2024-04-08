@@ -15,7 +15,7 @@ module SeedIdempotencyHeadersClient
     def initialize(token:, max_retries: nil, timeout_in_seconds: nil)
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "fern_idempotency-headers",
+        "X-Fern-SDK-Name": "fern_idempotency_headers",
         "X-Fern-SDK-Version": "0.0.1",
         "Authorization": "Bearer #{token}"
       }
@@ -38,7 +38,7 @@ module SeedIdempotencyHeadersClient
     def initialize(token:, max_retries: nil, timeout_in_seconds: nil)
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "fern_idempotency-headers",
+        "X-Fern-SDK-Name": "fern_idempotency_headers",
         "X-Fern-SDK-Version": "0.0.1",
         "Authorization": "Bearer #{token}"
       }

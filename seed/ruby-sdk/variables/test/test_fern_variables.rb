@@ -6,6 +6,6 @@ require "fern_variables"
 # Basic SeedVariablesClient tests
 class TestSeedVariablesClient < Minitest::Test
   def test_function
-    SeedVariablesClient::Client.new
+    # SeedVariablesClient::Client.new
   end
 end

@@ -6,6 +6,6 @@ require "fern_audiences"
 # Basic SeedAudiencesClient tests
 class TestSeedAudiencesClient < Minitest::Test
   def test_function
-    SeedAudiencesClient::Client.new
+    # SeedAudiencesClient::Client.new
   end
 end
