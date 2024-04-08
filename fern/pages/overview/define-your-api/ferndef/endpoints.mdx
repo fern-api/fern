@@ -79,8 +79,15 @@ service:
 Services can also have path-parameters:
 
 <CodeBlock title='project.yml'>
-  ```yaml service: base-path: /projects/{projectId}
-  path-parameters: projectId: string auth: false endpoints: ... ```
+  ```yaml 
+  service: 
+    base-path: /projects/{projectId}
+    path-parameters: 
+      projectId: string 
+    auth: false 
+    endpoints: 
+      ...
+  ```
 </CodeBlock>
 
 ## Query parameters
@@ -125,9 +132,18 @@ query-parameters:
 Each endpoint can override the auth behavior specified in the service.
 
 <CodeBlock title='user.yml'>
-  ```yaml service: base-path: /users auth: false endpoints: getMe: path: "" method:
-  GET # This endpoint will be authed auth: true docs: Return the current user based
-  on Authorization header. ```
+  ```yaml 
+  service: 
+    base-path: /users 
+    auth: false 
+    endpoints: 
+      getMe: 
+        path: "" 
+        method: GET 
+        # This endpoint will be authed 
+        auth: true 
+        docs: Return the current user based on Authorization header. 
+  ```
 </CodeBlock>
 
 ## Headers
@@ -135,9 +151,20 @@ Each endpoint can override the auth behavior specified in the service.
 Each endpoint can specify request headers:
 
 <CodeBlock title='user.yml'>
-  ```yaml service: base-path: /users auth: false endpoints: getAllUsers: path: /all
-  method: GET request: # this name is required for idiomatic SDKs name:
-  GetAllUsersRequest headers: X-Endpoint-Header: string ```
+  ```yaml 
+  service: 
+    base-path: /users 
+    auth: false 
+    endpoints: 
+      getAllUsers: 
+        path: /all
+        method: GET 
+        request: 
+        # this name is required for idiomatic SDKs name:
+        name: GetAllUsersRequest 
+        headers: 
+          X-Endpoint-Header: string
+  ```
 </CodeBlock>
 
 Services can also specify request headers. These headers will cascade to the service's endpoints.
@@ -146,7 +173,8 @@ Services can also specify request headers. These headers will cascade to the ser
   ```diff service: base-path: /users auth: false + headers: + X-Service-Header:
   string endpoints: getAllUsers: path: /all method: GET request: # this name is
   required for idiomatic SDKs name: GetAllUsersRequest headers: X-Endpoint-Header:
-  string ```
+  string
+  ```
 </CodeBlock>
 
 ## Request body
@@ -174,9 +202,20 @@ If the request body is an object, you can **inline the type declaration**. This
 makes the generated SDKs a bit more idiomatic.
 
 <CodeBlock title='user.yml'>
-  ```yaml service: base-path: /users auth: false endpoints: createUser: path:
-  /create method: POST request: # this name is required for idiomatic SDKs name:
-  CreateUserRequest body: properties: userName: string ```
+  ```yaml 
+  service: 
+    base-path: /users 
+    auth: false 
+    endpoints: 
+      createUser: 
+        path: /create 
+        method: POST 
+        request: # this name is required for idiomatic SDKs 
+        name: CreateUserRequest 
+        body: 
+          properties: 
+            userName: string
+  ```
 </CodeBlock>
 
 ## Multipart form uploads
@@ -218,12 +257,11 @@ service:
       response: list<User>
 
 types:
-User:
-properties:
-userId: string
-name: string
-
-````
+  User:
+    properties:
+      userId: string
+      name: string
+```
 </CodeBlock>
 
 ## Error responses
@@ -255,8 +293,7 @@ types:
 errors:
   UserNotFoundError:
     status-code: 404
-````
-
+```
 </CodeBlock>
 
 You can learn more about how to define errors on the [Errors](/learn/overview/define-your-api/ferndef/errors) page.
@@ -292,20 +329,18 @@ service:
               name: Alice
 
 types:
-User:
-properties:
-userId: string
-name: string
+  User:
+    properties:
+      userId: string
+      name: string
 
 errors:
-UserNotFoundError:
-status-code: 404
-
-````
+  UserNotFoundError:
+    status-code: 404
+```
 </CodeBlock>
 
 If you're adding an example to an endpoint and the type already has an example, you can reference it using `$`.
-
 ```yaml
 service:
   auth: true
@@ -362,8 +397,17 @@ Examples contain all the information about the endpoint call, including
 the request body, path parameters, query parameters, headers, and response body.
 
 <CodeBlock title='user.yml'>
-  ```yaml examples: - path-parameters: userId: some-user-id query-parameters:
-  limit: 50 headers: X-My-Header: some-value response: body: response-field: hello
+  ```yaml
+  examples: 
+    - path-parameters: 
+        userId: some-user-id 
+      query-parameters:
+        limit: 50 
+      headers: 
+        X-My-Header: some-value 
+      response: 
+        body: 
+          response-field: hello
   ```
 </CodeBlock>
 
@@ -381,10 +425,9 @@ examples:
       error: UserNotFoundError # <--
 
 errors:
-UserNotFoundError:
-status-code: 404
-
-````
+  UserNotFoundError:
+    status-code: 404
+```
 </CodeBlock>
 
 If the error has a body, then you must include the body in the example.
@@ -402,8 +445,7 @@ errors:
   UserNotFoundError:
     status-code: 404
     type: string # <--
-````
-
+```
 </CodeBlock>
 
 ### Referencing examples from types
@@ -426,11 +468,10 @@ service:
             userId: $UserId.Example1 # <---
 
 types:
-UserId:
-type: integer
-examples: - name: Example1
-value: user-id-123
-
+  UserId:
+  type: integer
+  examples: 
+    - name: Example1
+      value: user-id-123
 ```
 </CodeBlock>
-```
