@@ -126,9 +126,17 @@ query-parameters:
 Each endpoint can override the auth behavior specified in the service.
 
 <CodeBlock title='user.yml'>
-  ```yaml service: base-path: /users auth: false endpoints: getMe: path: "" method:
-  GET # This endpoint will be authed auth: true docs: Return the current user based
-  on Authorization header. 
+  ```yaml 
+  service: 
+    base-path: /users 
+    auth: false 
+    endpoints: 
+      getMe: 
+        path: "" 
+        method: GET 
+        # This endpoint will be authed 
+        auth: true 
+        docs: Return the current user based on Authorization header. 
   ```
 </CodeBlock>
 
