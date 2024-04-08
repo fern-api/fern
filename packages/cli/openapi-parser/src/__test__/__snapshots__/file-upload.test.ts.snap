@@ -20,27 +20,7 @@ exports[`file-upload file-upload parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "file": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "file",
-                },
-              },
-              "file_list": {
-                "type": "array",
-                "value": [
-                  {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "file_list",
-                    },
-                  },
-                ],
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": null,

@@ -200,18 +200,6 @@ Log.d("TAG", file.toString())
                   "value": "04b29480233f4def5c875875b6bdc3b1",
                 },
               },
-              "{filename}": {
-                "type": "array",
-                "value": [
-                  {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "{filename}",
-                    },
-                  },
-                ],
-              },
             },
             "type": "object",
           },

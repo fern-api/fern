@@ -2633,13 +2633,6 @@ Upload a document to be indexed and used for search.
           "queryParameters": [],
           "request": {
             "properties": {
-              "contents": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "contents",
-                },
-              },
               "label": {
                 "type": "primitive",
                 "value": {
