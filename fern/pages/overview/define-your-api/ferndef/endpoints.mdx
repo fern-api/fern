@@ -79,8 +79,14 @@ service:
 Services can also have path-parameters:
 
 <CodeBlock title='project.yml'>
-  ```yaml service: base-path: /projects/{projectId}
-  path-parameters: projectId: string auth: false endpoints: ...
+  ```yaml 
+  service: 
+    base-path: /projects/{projectId}
+    path-parameters: 
+      projectId: string 
+    auth: false 
+    endpoints: 
+      ...
   ```
 </CodeBlock>
 
@@ -145,9 +151,19 @@ Each endpoint can override the auth behavior specified in the service.
 Each endpoint can specify request headers:
 
 <CodeBlock title='user.yml'>
-  ```yaml service: base-path: /users auth: false endpoints: getAllUsers: path: /all
-  method: GET request: # this name is required for idiomatic SDKs name:
-  GetAllUsersRequest headers: X-Endpoint-Header: string
+  ```yaml 
+  service: 
+    base-path: /users 
+    auth: false 
+    endpoints: 
+      getAllUsers: 
+        path: /all
+        method: GET 
+        request: 
+        # this name is required for idiomatic SDKs name:
+        name: GetAllUsersRequest 
+        headers: 
+          X-Endpoint-Header: string
   ```
 </CodeBlock>
 
