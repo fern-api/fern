@@ -107,9 +107,10 @@
                         }
                     },
                     "displayName": null,
-                    "method": "POST",
-                    "headers": [],
+                    "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
+                    "method": "POST",
                     "path": {
                         "head": "/send-optional-body",
                         "parts": []
@@ -121,6 +122,7 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
+                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -205,9 +207,78 @@
                         }
                     },
                     "errors": [],
-                    "auth": false,
-                    "idempotent": false,
-                    "examples": [],
+                    "examples": [
+                        {
+                            "exampleType": "generated",
+                            "url": "/send-optional-body",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [],
+                            "request": {
+                                "type": "reference",
+                                "shape": {
+                                    "type": "container",
+                                    "container": {
+                                        "type": "map",
+                                        "map": [
+                                            {
+                                                "key": {
+                                                    "shape": {
+                                                        "type": "primitive",
+                                                        "primitive": {
+                                                            "type": "string",
+                                                            "string": {
+                                                                "original": "string"
+                                                            }
+                                                        }
+                                                    },
+                                                    "jsonExample": "string"
+                                                },
+                                                "value": {
+                                                    "shape": {
+                                                        "type": "unknown",
+                                                        "unknown": {
+                                                            "key": "value"
+                                                        }
+                                                    },
+                                                    "jsonExample": {
+                                                        "key": "value"
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                "jsonExample": {
+                                    "string": {
+                                        "key": "value"
+                                    }
+                                }
+                            },
+                            "name": null,
+                            "codeSamples": null,
+                            "response": {
+                                "type": "ok",
+                                "body": {
+                                    "shape": {
+                                        "type": "primitive",
+                                        "primitive": {
+                                            "type": "string",
+                                            "string": {
+                                                "original": "string"
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": "string"
+                                }
+                            },
+                            "docs": null
+                        }
+                    ],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 }

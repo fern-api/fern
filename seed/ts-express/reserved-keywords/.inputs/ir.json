@@ -362,9 +362,10 @@
                         }
                     },
                     "displayName": null,
-                    "method": "POST",
-                    "headers": [],
+                    "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
+                    "method": "POST",
                     "path": {
                         "head": "",
                         "parts": []
@@ -408,6 +409,7 @@
                             "docs": null
                         }
                     ],
+                    "headers": [],
                     "requestBody": null,
                     "sdkRequest": {
                         "shape": {
@@ -473,9 +475,64 @@
                     },
                     "response": null,
                     "errors": [],
-                    "auth": false,
-                    "idempotent": false,
-                    "examples": [],
+                    "examples": [
+                        {
+                            "exampleType": "generated",
+                            "url": "",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [
+                                {
+                                    "name": {
+                                        "name": {
+                                            "originalName": "for",
+                                            "camelCase": {
+                                                "unsafeName": "for",
+                                                "safeName": "for_"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "for",
+                                                "safeName": "for_"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "FOR",
+                                                "safeName": "FOR"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "For",
+                                                "safeName": "For"
+                                            }
+                                        },
+                                        "wireValue": "for"
+                                    },
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "string"
+                                                }
+                                            }
+                                        },
+                                        "jsonExample": "string"
+                                    }
+                                }
+                            ],
+                            "request": null,
+                            "name": null,
+                            "codeSamples": null,
+                            "response": {
+                                "type": "ok",
+                                "body": null
+                            },
+                            "docs": null
+                        }
+                    ],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 }
@@ -565,6 +622,7 @@
         ]
     },
     "webhookGroups": {},
+    "websocketChannels": {},
     "subpackages": {
         "subpackage_package": {
             "name": {
@@ -638,6 +696,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": true,
             "docs": null
         }
@@ -648,6 +707,7 @@
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [],
         "errors": [],

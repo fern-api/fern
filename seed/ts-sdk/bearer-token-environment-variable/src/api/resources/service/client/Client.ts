@@ -24,6 +24,9 @@ export class Service {
 
     /**
      * GET request with custom api key
+     *
+     * @example
+     *     await seedBearerTokenEnvironmentVariable.service.getWithBearerToken()
      */
     public async getWithBearerToken(requestOptions?: Service.RequestOptions): Promise<string> {
         const _response = await core.fetcher({

@@ -11,7 +11,8 @@ const client = new SeedTraceClient({
 });
 
 describe("V2", () => {
-    test("constructor", () => {
-        expect(client.v2).toBeDefined();
+    test("test", async () => {
+        const response = await client.v2.test();
+        expect(response).toEqual(undefined);
     });
 });

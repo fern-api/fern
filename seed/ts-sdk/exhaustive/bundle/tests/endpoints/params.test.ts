@@ -10,7 +10,36 @@ const client = new FiddleClient({
 });
 
 describe("Params", () => {
-    test("constructor", () => {
-        expect(client.endpoints.params).toBeDefined();
+    test("getWithPath", async () => {
+        const response = await client.endpoints.params.getWithPath("string");
+        expect(response).toEqual("string");
+    });
+
+    test("getWithQuery", async () => {
+        const response = await client.endpoints.params.getWithQuery({
+            query: "string",
+            number: 1,
+        });
+        expect(response).toEqual(undefined);
+    });
+
+    test("getWithAllowMultipleQuery", async () => {
+        const response = await client.endpoints.params.getWithAllowMultipleQuery({
+            query: "string",
+            numer: 1,
+        });
+        expect(response).toEqual(undefined);
+    });
+
+    test("getWithPathAndQuery", async () => {
+        const response = await client.endpoints.params.getWithPathAndQuery("string", {
+            query: "string",
+        });
+        expect(response).toEqual(undefined);
+    });
+
+    test("modifyWithPath", async () => {
+        const response = await client.endpoints.params.modifyWithPath("string", "string");
+        expect(response).toEqual("string");
     });
 });

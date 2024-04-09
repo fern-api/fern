@@ -1,5 +1,5 @@
-import { ExampleEndpointCall, Name } from "@fern-fern/ir-sdk/api";
-import { GetReferenceOpts, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
+import { ExampleEndpointCall, Name, TypeReference } from "@fern-fern/ir-sdk/api";
+import { GetReferenceOpts, PackageId } from "@fern-typescript/commons";
 import { GeneratedRequestWrapperExample, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -61,8 +61,20 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                             const originalTypeForProperty = context.type.getGeneratedType(
                                 property.originalTypeDeclaration
                             );
+                            if (originalTypeForProperty.type === "union") {
+                                const propertyKey = originalTypeForProperty.getSinglePropertyKey({
+                                    name: property.name,
+                                    type: TypeReference.named(property.originalTypeDeclaration)
+                                });
+                                return ts.factory.createPropertyAssignment(
+                                    propertyKey,
+                                    context.type.getGeneratedExample(property.value).build(context, opts)
+                                );
+                            }
                             if (originalTypeForProperty.type !== "object") {
-                                throw new Error("Property does not come from an object");
+                                throw new Error(
+                                    `Property does not come from an object, instead got ${originalTypeForProperty.type}`
+                                );
                             }
                             const key = originalTypeForProperty.getPropertyKey({
                                 propertyWireKey: property.name.wireValue

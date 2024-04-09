@@ -4,6 +4,29 @@
 
 import * as SeedTrace from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         workspaceRunDetails: {
+ *             exceptionV2: {
+ *                 type: "generic"
+ *             },
+ *             exception: {},
+ *             stdout: "string"
+ *         },
+ *         traceResponses: [{
+ *                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+ *                 lineNumber: 1,
+ *                 returnValue: {
+ *                     type: "integerValue",
+ *                     value: 1
+ *                 },
+ *                 expressionLocation: {},
+ *                 stack: {},
+ *                 stdout: "string"
+ *             }]
+ *     }
+ */
 export interface StoreTracedWorkspaceRequest {
     workspaceRunDetails: SeedTrace.WorkspaceRunDetails;
     traceResponses: SeedTrace.TraceResponse[];

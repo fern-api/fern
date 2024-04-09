@@ -10,12 +10,12 @@ export interface UserServiceMethods {
         date: string;
         deadline: Date;
         bytes: string;
-        user?: string;
-        keyValue?: string;
+        user: SeedQueryParameters.User;
+        keyValue: Record<string, string>;
         optionalString?: string;
-        nestedUser?: string;
-        optionalUser?: string;
-        excludeUser?: string;
+        nestedUser: SeedQueryParameters.NestedUser;
+        optionalUser?: SeedQueryParameters.User;
+        excludeUser: SeedQueryParameters.User;
         filter: string;
     }>, res: {
         send: (responseBody: SeedQueryParameters.User) => Promise<void>;

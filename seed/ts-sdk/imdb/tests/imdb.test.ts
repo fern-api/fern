@@ -10,7 +10,16 @@ const client = new SeedApiClient({
 });
 
 describe("Imdb", () => {
-    test("constructor", () => {
-        expect(client.imdb).toBeDefined();
+    test("createMovie", async () => {
+        const response = await client.imdb.createMovie({
+            title: "string",
+            rating: 1.1,
+        });
+        expect(response).toEqual("string");
+    });
+
+    test("getMovie", async () => {
+        const response = await client.imdb.getMovie("string");
+        expect(response).toEqual({ id: "string", title: "string", rating: 1.1 });
     });
 });

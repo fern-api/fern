@@ -4,6 +4,17 @@
 
 import * as SeedTrace from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         datetime: new Date("2024-01-15T09:30:00.000Z"),
+ *         optionalDatetime: new Date("2024-01-15T09:30:00.000Z"),
+ *         body: {
+ *             name: "string",
+ *             problems: [SeedTrace.ProblemId("string")]
+ *         }
+ *     }
+ */
 export interface CreatePlaylistRequest {
     datetime: Date;
     optionalDatetime?: Date;

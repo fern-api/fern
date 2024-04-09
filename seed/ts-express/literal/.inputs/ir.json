@@ -59,6 +59,7 @@
                     }
                 }
             },
+            "env": null,
             "availability": null,
             "docs": null
         },
@@ -95,6 +96,7 @@
                     }
                 }
             },
+            "env": null,
             "availability": null,
             "docs": null
         }
@@ -495,7 +497,21 @@
                         }
                     },
                     "displayName": null,
+                    "auth": false,
+                    "idempotent": false,
+                    "baseUrl": null,
                     "method": "POST",
+                    "path": {
+                        "head": "/headers",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "headers",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
                     "headers": [
                         {
                             "name": {
@@ -530,6 +546,7 @@
                                     }
                                 }
                             },
+                            "env": null,
                             "availability": null,
                             "docs": null
                         },
@@ -566,22 +583,11 @@
                                     }
                                 }
                             },
+                            "env": null,
                             "availability": null,
                             "docs": null
                         }
                     ],
-                    "baseUrl": null,
-                    "path": {
-                        "head": "/headers",
-                        "parts": []
-                    },
-                    "fullPath": {
-                        "head": "headers",
-                        "parts": []
-                    },
-                    "pathParameters": [],
-                    "allPathParameters": [],
-                    "queryParameters": [],
                     "requestBody": {
                         "type": "inlinedRequestBody",
                         "name": {
@@ -735,10 +741,9 @@
                         }
                     },
                     "errors": [],
-                    "auth": false,
-                    "idempotent": false,
                     "examples": [
                         {
+                            "exampleType": "userProvided",
                             "name": null,
                             "url": "/headers",
                             "rootPathParameters": [],
@@ -1093,9 +1098,370 @@
                                     }
                                 }
                             },
+                            "codeSamples": null,
+                            "docs": null
+                        },
+                        {
+                            "exampleType": "generated",
+                            "url": "/headers",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [
+                                {
+                                    "name": {
+                                        "name": {
+                                            "originalName": "endpointVersion",
+                                            "camelCase": {
+                                                "unsafeName": "endpointVersion",
+                                                "safeName": "endpointVersion"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "endpoint_version",
+                                                "safeName": "endpoint_version"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "ENDPOINT_VERSION",
+                                                "safeName": "ENDPOINT_VERSION"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "EndpointVersion",
+                                                "safeName": "EndpointVersion"
+                                            }
+                                        },
+                                        "wireValue": "X-Endpoint-Version"
+                                    },
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "02-12-2024"
+                                                }
+                                            }
+                                        },
+                                        "jsonExample": "\"02-12-2024\""
+                                    }
+                                },
+                                {
+                                    "name": {
+                                        "name": {
+                                            "originalName": "async",
+                                            "camelCase": {
+                                                "unsafeName": "async",
+                                                "safeName": "async"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "async",
+                                                "safeName": "async"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "ASYNC",
+                                                "safeName": "ASYNC"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Async",
+                                                "safeName": "Async"
+                                            }
+                                        },
+                                        "wireValue": "X-Async"
+                                    },
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "boolean",
+                                                "boolean": true
+                                            }
+                                        },
+                                        "jsonExample": "true"
+                                    }
+                                }
+                            ],
+                            "queryParameters": [],
+                            "request": {
+                                "type": "inlinedRequestBody",
+                                "properties": [
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "query",
+                                                "camelCase": {
+                                                    "unsafeName": "query",
+                                                    "safeName": "query"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "query",
+                                                    "safeName": "query"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "QUERY",
+                                                    "safeName": "QUERY"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Query",
+                                                    "safeName": "Query"
+                                                }
+                                            },
+                                            "wireValue": "query"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "What is the weather today"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "What is the weather today"
+                                        },
+                                        "originalTypeDeclaration": null
+                                    }
+                                ],
+                                "jsonExample": {
+                                    "query": "What is the weather today"
+                                }
+                            },
+                            "name": null,
+                            "codeSamples": null,
+                            "response": {
+                                "type": "ok",
+                                "body": {
+                                    "shape": {
+                                        "type": "named",
+                                        "typeName": {
+                                            "typeId": "type_:SendResponse",
+                                            "fernFilepath": {
+                                                "allParts": [],
+                                                "packagePath": [],
+                                                "file": null
+                                            },
+                                            "name": {
+                                                "originalName": "SendResponse",
+                                                "camelCase": {
+                                                    "unsafeName": "sendResponse",
+                                                    "safeName": "sendResponse"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "send_response",
+                                                    "safeName": "send_response"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "SEND_RESPONSE",
+                                                    "safeName": "SEND_RESPONSE"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "SendResponse",
+                                                    "safeName": "SendResponse"
+                                                }
+                                            }
+                                        },
+                                        "shape": {
+                                            "type": "object",
+                                            "properties": [
+                                                {
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "message",
+                                                            "camelCase": {
+                                                                "unsafeName": "message",
+                                                                "safeName": "message"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "message",
+                                                                "safeName": "message"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "MESSAGE",
+                                                                "safeName": "MESSAGE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Message",
+                                                                "safeName": "Message"
+                                                            }
+                                                        },
+                                                        "wireValue": "message"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "string",
+                                                                "string": {
+                                                                    "original": "The weather is sunny"
+                                                                }
+                                                            }
+                                                        },
+                                                        "jsonExample": "The weather is sunny"
+                                                    },
+                                                    "originalTypeDeclaration": {
+                                                        "typeId": "type_:SendResponse",
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "name": {
+                                                            "originalName": "SendResponse",
+                                                            "camelCase": {
+                                                                "unsafeName": "sendResponse",
+                                                                "safeName": "sendResponse"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "send_response",
+                                                                "safeName": "send_response"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SEND_RESPONSE",
+                                                                "safeName": "SEND_RESPONSE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "SendResponse",
+                                                                "safeName": "SendResponse"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "status",
+                                                            "camelCase": {
+                                                                "unsafeName": "status",
+                                                                "safeName": "status"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "status",
+                                                                "safeName": "status"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "STATUS",
+                                                                "safeName": "STATUS"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Status",
+                                                                "safeName": "Status"
+                                                            }
+                                                        },
+                                                        "wireValue": "status"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "integer",
+                                                                "integer": 200
+                                                            }
+                                                        },
+                                                        "jsonExample": 200
+                                                    },
+                                                    "originalTypeDeclaration": {
+                                                        "typeId": "type_:SendResponse",
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "name": {
+                                                            "originalName": "SendResponse",
+                                                            "camelCase": {
+                                                                "unsafeName": "sendResponse",
+                                                                "safeName": "sendResponse"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "send_response",
+                                                                "safeName": "send_response"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SEND_RESPONSE",
+                                                                "safeName": "SEND_RESPONSE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "SendResponse",
+                                                                "safeName": "SendResponse"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "success",
+                                                            "camelCase": {
+                                                                "unsafeName": "success",
+                                                                "safeName": "success"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "success",
+                                                                "safeName": "success"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SUCCESS",
+                                                                "safeName": "SUCCESS"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Success",
+                                                                "safeName": "Success"
+                                                            }
+                                                        },
+                                                        "wireValue": "success"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "boolean",
+                                                                "boolean": true
+                                                            }
+                                                        },
+                                                        "jsonExample": true
+                                                    },
+                                                    "originalTypeDeclaration": {
+                                                        "typeId": "type_:SendResponse",
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "name": {
+                                                            "originalName": "SendResponse",
+                                                            "camelCase": {
+                                                                "unsafeName": "sendResponse",
+                                                                "safeName": "sendResponse"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "send_response",
+                                                                "safeName": "send_response"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SEND_RESPONSE",
+                                                                "safeName": "SEND_RESPONSE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "SendResponse",
+                                                                "safeName": "SendResponse"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "jsonExample": {
+                                        "message": "The weather is sunny",
+                                        "status": 200,
+                                        "success": true
+                                    }
+                                }
+                            },
                             "docs": null
                         }
                     ],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 }
@@ -1178,9 +1544,10 @@
                         }
                     },
                     "displayName": null,
-                    "method": "POST",
-                    "headers": [],
+                    "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
+                    "method": "POST",
                     "path": {
                         "head": "/inlined",
                         "parts": []
@@ -1192,6 +1559,7 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
+                    "headers": [],
                     "requestBody": {
                         "type": "inlinedRequestBody",
                         "name": {
@@ -1450,10 +1818,9 @@
                         }
                     },
                     "errors": [],
-                    "auth": false,
-                    "idempotent": false,
                     "examples": [
                         {
+                            "exampleType": "userProvided",
                             "name": null,
                             "url": "/inlined",
                             "rootPathParameters": [],
@@ -1856,9 +2223,418 @@
                                     }
                                 }
                             },
+                            "codeSamples": null,
+                            "docs": null
+                        },
+                        {
+                            "exampleType": "generated",
+                            "url": "/inlined",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [],
+                            "request": {
+                                "type": "inlinedRequestBody",
+                                "properties": [
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "temperature",
+                                                "camelCase": {
+                                                    "unsafeName": "temperature",
+                                                    "safeName": "temperature"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "temperature",
+                                                    "safeName": "temperature"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "TEMPERATURE",
+                                                    "safeName": "TEMPERATURE"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Temperature",
+                                                    "safeName": "Temperature"
+                                                }
+                                            },
+                                            "wireValue": "temperature"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "container",
+                                                "container": {
+                                                    "type": "optional",
+                                                    "optional": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "double",
+                                                                "double": 10.1
+                                                            }
+                                                        },
+                                                        "jsonExample": 10.1
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": 10.1
+                                        },
+                                        "originalTypeDeclaration": null
+                                    },
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "prompt",
+                                                "camelCase": {
+                                                    "unsafeName": "prompt",
+                                                    "safeName": "prompt"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "prompt",
+                                                    "safeName": "prompt"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "PROMPT",
+                                                    "safeName": "PROMPT"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Prompt",
+                                                    "safeName": "Prompt"
+                                                }
+                                            },
+                                            "wireValue": "prompt"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "You are a helpful assistant"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "You are a helpful assistant"
+                                        },
+                                        "originalTypeDeclaration": null
+                                    },
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "stream",
+                                                "camelCase": {
+                                                    "unsafeName": "stream",
+                                                    "safeName": "stream"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "stream",
+                                                    "safeName": "stream"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "STREAM",
+                                                    "safeName": "STREAM"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Stream",
+                                                    "safeName": "Stream"
+                                                }
+                                            },
+                                            "wireValue": "stream"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "boolean",
+                                                    "boolean": false
+                                                }
+                                            },
+                                            "jsonExample": false
+                                        },
+                                        "originalTypeDeclaration": null
+                                    },
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "query",
+                                                "camelCase": {
+                                                    "unsafeName": "query",
+                                                    "safeName": "query"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "query",
+                                                    "safeName": "query"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "QUERY",
+                                                    "safeName": "QUERY"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Query",
+                                                    "safeName": "Query"
+                                                }
+                                            },
+                                            "wireValue": "query"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "What is the weather today"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "What is the weather today"
+                                        },
+                                        "originalTypeDeclaration": null
+                                    }
+                                ],
+                                "jsonExample": {
+                                    "temperature": 10.1,
+                                    "prompt": "You are a helpful assistant",
+                                    "stream": false,
+                                    "query": "What is the weather today"
+                                }
+                            },
+                            "name": null,
+                            "codeSamples": null,
+                            "response": {
+                                "type": "ok",
+                                "body": {
+                                    "shape": {
+                                        "type": "named",
+                                        "typeName": {
+                                            "typeId": "type_:SendResponse",
+                                            "fernFilepath": {
+                                                "allParts": [],
+                                                "packagePath": [],
+                                                "file": null
+                                            },
+                                            "name": {
+                                                "originalName": "SendResponse",
+                                                "camelCase": {
+                                                    "unsafeName": "sendResponse",
+                                                    "safeName": "sendResponse"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "send_response",
+                                                    "safeName": "send_response"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "SEND_RESPONSE",
+                                                    "safeName": "SEND_RESPONSE"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "SendResponse",
+                                                    "safeName": "SendResponse"
+                                                }
+                                            }
+                                        },
+                                        "shape": {
+                                            "type": "object",
+                                            "properties": [
+                                                {
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "message",
+                                                            "camelCase": {
+                                                                "unsafeName": "message",
+                                                                "safeName": "message"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "message",
+                                                                "safeName": "message"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "MESSAGE",
+                                                                "safeName": "MESSAGE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Message",
+                                                                "safeName": "Message"
+                                                            }
+                                                        },
+                                                        "wireValue": "message"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "string",
+                                                                "string": {
+                                                                    "original": "The weather is sunny"
+                                                                }
+                                                            }
+                                                        },
+                                                        "jsonExample": "The weather is sunny"
+                                                    },
+                                                    "originalTypeDeclaration": {
+                                                        "typeId": "type_:SendResponse",
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "name": {
+                                                            "originalName": "SendResponse",
+                                                            "camelCase": {
+                                                                "unsafeName": "sendResponse",
+                                                                "safeName": "sendResponse"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "send_response",
+                                                                "safeName": "send_response"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SEND_RESPONSE",
+                                                                "safeName": "SEND_RESPONSE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "SendResponse",
+                                                                "safeName": "SendResponse"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "status",
+                                                            "camelCase": {
+                                                                "unsafeName": "status",
+                                                                "safeName": "status"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "status",
+                                                                "safeName": "status"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "STATUS",
+                                                                "safeName": "STATUS"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Status",
+                                                                "safeName": "Status"
+                                                            }
+                                                        },
+                                                        "wireValue": "status"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "integer",
+                                                                "integer": 200
+                                                            }
+                                                        },
+                                                        "jsonExample": 200
+                                                    },
+                                                    "originalTypeDeclaration": {
+                                                        "typeId": "type_:SendResponse",
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "name": {
+                                                            "originalName": "SendResponse",
+                                                            "camelCase": {
+                                                                "unsafeName": "sendResponse",
+                                                                "safeName": "sendResponse"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "send_response",
+                                                                "safeName": "send_response"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SEND_RESPONSE",
+                                                                "safeName": "SEND_RESPONSE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "SendResponse",
+                                                                "safeName": "SendResponse"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "success",
+                                                            "camelCase": {
+                                                                "unsafeName": "success",
+                                                                "safeName": "success"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "success",
+                                                                "safeName": "success"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SUCCESS",
+                                                                "safeName": "SUCCESS"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Success",
+                                                                "safeName": "Success"
+                                                            }
+                                                        },
+                                                        "wireValue": "success"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "boolean",
+                                                                "boolean": true
+                                                            }
+                                                        },
+                                                        "jsonExample": true
+                                                    },
+                                                    "originalTypeDeclaration": {
+                                                        "typeId": "type_:SendResponse",
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "name": {
+                                                            "originalName": "SendResponse",
+                                                            "camelCase": {
+                                                                "unsafeName": "sendResponse",
+                                                                "safeName": "sendResponse"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "send_response",
+                                                                "safeName": "send_response"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SEND_RESPONSE",
+                                                                "safeName": "SEND_RESPONSE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "SendResponse",
+                                                                "safeName": "SendResponse"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "jsonExample": {
+                                        "message": "The weather is sunny",
+                                        "status": 200,
+                                        "success": true
+                                    }
+                                }
+                            },
                             "docs": null
                         }
                     ],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 }
@@ -1941,9 +2717,10 @@
                         }
                     },
                     "displayName": null,
-                    "method": "POST",
-                    "headers": [],
+                    "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
+                    "method": "POST",
                     "path": {
                         "head": "/path/",
                         "parts": [
@@ -2035,6 +2812,7 @@
                         }
                     ],
                     "queryParameters": [],
+                    "headers": [],
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": {
@@ -2073,10 +2851,9 @@
                         }
                     },
                     "errors": [],
-                    "auth": false,
-                    "idempotent": false,
                     "examples": [
                         {
+                            "exampleType": "userProvided",
                             "name": null,
                             "url": "/path/123",
                             "rootPathParameters": [],
@@ -2350,9 +3127,289 @@
                                     }
                                 }
                             },
+                            "codeSamples": null,
+                            "docs": null
+                        },
+                        {
+                            "exampleType": "generated",
+                            "url": "/path/",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [
+                                {
+                                    "name": {
+                                        "originalName": "id",
+                                        "camelCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "ID",
+                                            "safeName": "ID"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Id",
+                                            "safeName": "Id"
+                                        }
+                                    },
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "123"
+                                                }
+                                            }
+                                        },
+                                        "jsonExample": "\"123\""
+                                    }
+                                }
+                            ],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [],
+                            "request": null,
+                            "name": null,
+                            "codeSamples": null,
+                            "response": {
+                                "type": "ok",
+                                "body": {
+                                    "shape": {
+                                        "type": "named",
+                                        "typeName": {
+                                            "typeId": "type_:SendResponse",
+                                            "fernFilepath": {
+                                                "allParts": [],
+                                                "packagePath": [],
+                                                "file": null
+                                            },
+                                            "name": {
+                                                "originalName": "SendResponse",
+                                                "camelCase": {
+                                                    "unsafeName": "sendResponse",
+                                                    "safeName": "sendResponse"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "send_response",
+                                                    "safeName": "send_response"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "SEND_RESPONSE",
+                                                    "safeName": "SEND_RESPONSE"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "SendResponse",
+                                                    "safeName": "SendResponse"
+                                                }
+                                            }
+                                        },
+                                        "shape": {
+                                            "type": "object",
+                                            "properties": [
+                                                {
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "message",
+                                                            "camelCase": {
+                                                                "unsafeName": "message",
+                                                                "safeName": "message"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "message",
+                                                                "safeName": "message"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "MESSAGE",
+                                                                "safeName": "MESSAGE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Message",
+                                                                "safeName": "Message"
+                                                            }
+                                                        },
+                                                        "wireValue": "message"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "string",
+                                                                "string": {
+                                                                    "original": "The weather is sunny"
+                                                                }
+                                                            }
+                                                        },
+                                                        "jsonExample": "The weather is sunny"
+                                                    },
+                                                    "originalTypeDeclaration": {
+                                                        "typeId": "type_:SendResponse",
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "name": {
+                                                            "originalName": "SendResponse",
+                                                            "camelCase": {
+                                                                "unsafeName": "sendResponse",
+                                                                "safeName": "sendResponse"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "send_response",
+                                                                "safeName": "send_response"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SEND_RESPONSE",
+                                                                "safeName": "SEND_RESPONSE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "SendResponse",
+                                                                "safeName": "SendResponse"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "status",
+                                                            "camelCase": {
+                                                                "unsafeName": "status",
+                                                                "safeName": "status"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "status",
+                                                                "safeName": "status"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "STATUS",
+                                                                "safeName": "STATUS"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Status",
+                                                                "safeName": "Status"
+                                                            }
+                                                        },
+                                                        "wireValue": "status"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "integer",
+                                                                "integer": 200
+                                                            }
+                                                        },
+                                                        "jsonExample": 200
+                                                    },
+                                                    "originalTypeDeclaration": {
+                                                        "typeId": "type_:SendResponse",
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "name": {
+                                                            "originalName": "SendResponse",
+                                                            "camelCase": {
+                                                                "unsafeName": "sendResponse",
+                                                                "safeName": "sendResponse"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "send_response",
+                                                                "safeName": "send_response"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SEND_RESPONSE",
+                                                                "safeName": "SEND_RESPONSE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "SendResponse",
+                                                                "safeName": "SendResponse"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "success",
+                                                            "camelCase": {
+                                                                "unsafeName": "success",
+                                                                "safeName": "success"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "success",
+                                                                "safeName": "success"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SUCCESS",
+                                                                "safeName": "SUCCESS"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Success",
+                                                                "safeName": "Success"
+                                                            }
+                                                        },
+                                                        "wireValue": "success"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "boolean",
+                                                                "boolean": true
+                                                            }
+                                                        },
+                                                        "jsonExample": true
+                                                    },
+                                                    "originalTypeDeclaration": {
+                                                        "typeId": "type_:SendResponse",
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "name": {
+                                                            "originalName": "SendResponse",
+                                                            "camelCase": {
+                                                                "unsafeName": "sendResponse",
+                                                                "safeName": "sendResponse"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "send_response",
+                                                                "safeName": "send_response"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SEND_RESPONSE",
+                                                                "safeName": "SEND_RESPONSE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "SendResponse",
+                                                                "safeName": "SendResponse"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "jsonExample": {
+                                        "message": "The weather is sunny",
+                                        "status": 200,
+                                        "success": true
+                                    }
+                                }
+                            },
                             "docs": null
                         }
                     ],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 }
@@ -2435,9 +3492,10 @@
                         }
                     },
                     "displayName": null,
-                    "method": "POST",
-                    "headers": [],
+                    "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
+                    "method": "POST",
                     "path": {
                         "head": "/query",
                         "parts": []
@@ -2555,6 +3613,7 @@
                             "docs": null
                         }
                     ],
+                    "headers": [],
                     "requestBody": null,
                     "sdkRequest": {
                         "shape": {
@@ -2654,10 +3713,9 @@
                         }
                     },
                     "errors": [],
-                    "auth": false,
-                    "idempotent": false,
                     "examples": [
                         {
+                            "exampleType": "userProvided",
                             "name": null,
                             "url": "/query",
                             "rootPathParameters": [],
@@ -3004,9 +4062,362 @@
                                     }
                                 }
                             },
+                            "codeSamples": null,
+                            "docs": null
+                        },
+                        {
+                            "exampleType": "generated",
+                            "url": "/query",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [
+                                {
+                                    "name": {
+                                        "name": {
+                                            "originalName": "prompt",
+                                            "camelCase": {
+                                                "unsafeName": "prompt",
+                                                "safeName": "prompt"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "prompt",
+                                                "safeName": "prompt"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "PROMPT",
+                                                "safeName": "PROMPT"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Prompt",
+                                                "safeName": "Prompt"
+                                            }
+                                        },
+                                        "wireValue": "prompt"
+                                    },
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "You are a helpful assistant"
+                                                }
+                                            }
+                                        },
+                                        "jsonExample": "\"You are a helpful assistant\""
+                                    }
+                                },
+                                {
+                                    "name": {
+                                        "name": {
+                                            "originalName": "query",
+                                            "camelCase": {
+                                                "unsafeName": "query",
+                                                "safeName": "query"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "query",
+                                                "safeName": "query"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "QUERY",
+                                                "safeName": "QUERY"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Query",
+                                                "safeName": "Query"
+                                            }
+                                        },
+                                        "wireValue": "query"
+                                    },
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "string"
+                                                }
+                                            }
+                                        },
+                                        "jsonExample": "string"
+                                    }
+                                },
+                                {
+                                    "name": {
+                                        "name": {
+                                            "originalName": "stream",
+                                            "camelCase": {
+                                                "unsafeName": "stream",
+                                                "safeName": "stream"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "stream",
+                                                "safeName": "stream"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "STREAM",
+                                                "safeName": "STREAM"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Stream",
+                                                "safeName": "Stream"
+                                            }
+                                        },
+                                        "wireValue": "stream"
+                                    },
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "boolean",
+                                                "boolean": false
+                                            }
+                                        },
+                                        "jsonExample": "false"
+                                    }
+                                }
+                            ],
+                            "request": null,
+                            "name": null,
+                            "codeSamples": null,
+                            "response": {
+                                "type": "ok",
+                                "body": {
+                                    "shape": {
+                                        "type": "named",
+                                        "typeName": {
+                                            "typeId": "type_:SendResponse",
+                                            "fernFilepath": {
+                                                "allParts": [],
+                                                "packagePath": [],
+                                                "file": null
+                                            },
+                                            "name": {
+                                                "originalName": "SendResponse",
+                                                "camelCase": {
+                                                    "unsafeName": "sendResponse",
+                                                    "safeName": "sendResponse"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "send_response",
+                                                    "safeName": "send_response"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "SEND_RESPONSE",
+                                                    "safeName": "SEND_RESPONSE"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "SendResponse",
+                                                    "safeName": "SendResponse"
+                                                }
+                                            }
+                                        },
+                                        "shape": {
+                                            "type": "object",
+                                            "properties": [
+                                                {
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "message",
+                                                            "camelCase": {
+                                                                "unsafeName": "message",
+                                                                "safeName": "message"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "message",
+                                                                "safeName": "message"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "MESSAGE",
+                                                                "safeName": "MESSAGE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Message",
+                                                                "safeName": "Message"
+                                                            }
+                                                        },
+                                                        "wireValue": "message"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "string",
+                                                                "string": {
+                                                                    "original": "The weather is sunny"
+                                                                }
+                                                            }
+                                                        },
+                                                        "jsonExample": "The weather is sunny"
+                                                    },
+                                                    "originalTypeDeclaration": {
+                                                        "typeId": "type_:SendResponse",
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "name": {
+                                                            "originalName": "SendResponse",
+                                                            "camelCase": {
+                                                                "unsafeName": "sendResponse",
+                                                                "safeName": "sendResponse"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "send_response",
+                                                                "safeName": "send_response"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SEND_RESPONSE",
+                                                                "safeName": "SEND_RESPONSE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "SendResponse",
+                                                                "safeName": "SendResponse"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "status",
+                                                            "camelCase": {
+                                                                "unsafeName": "status",
+                                                                "safeName": "status"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "status",
+                                                                "safeName": "status"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "STATUS",
+                                                                "safeName": "STATUS"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Status",
+                                                                "safeName": "Status"
+                                                            }
+                                                        },
+                                                        "wireValue": "status"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "integer",
+                                                                "integer": 200
+                                                            }
+                                                        },
+                                                        "jsonExample": 200
+                                                    },
+                                                    "originalTypeDeclaration": {
+                                                        "typeId": "type_:SendResponse",
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "name": {
+                                                            "originalName": "SendResponse",
+                                                            "camelCase": {
+                                                                "unsafeName": "sendResponse",
+                                                                "safeName": "sendResponse"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "send_response",
+                                                                "safeName": "send_response"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SEND_RESPONSE",
+                                                                "safeName": "SEND_RESPONSE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "SendResponse",
+                                                                "safeName": "SendResponse"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "success",
+                                                            "camelCase": {
+                                                                "unsafeName": "success",
+                                                                "safeName": "success"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "success",
+                                                                "safeName": "success"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SUCCESS",
+                                                                "safeName": "SUCCESS"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Success",
+                                                                "safeName": "Success"
+                                                            }
+                                                        },
+                                                        "wireValue": "success"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "boolean",
+                                                                "boolean": true
+                                                            }
+                                                        },
+                                                        "jsonExample": true
+                                                    },
+                                                    "originalTypeDeclaration": {
+                                                        "typeId": "type_:SendResponse",
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "name": {
+                                                            "originalName": "SendResponse",
+                                                            "camelCase": {
+                                                                "unsafeName": "sendResponse",
+                                                                "safeName": "sendResponse"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "send_response",
+                                                                "safeName": "send_response"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SEND_RESPONSE",
+                                                                "safeName": "SEND_RESPONSE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "SendResponse",
+                                                                "safeName": "SendResponse"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "jsonExample": {
+                                        "message": "The weather is sunny",
+                                        "status": 200,
+                                        "success": true
+                                    }
+                                }
+                            },
                             "docs": null
                         }
                     ],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 }
@@ -3089,9 +4500,10 @@
                         }
                     },
                     "displayName": null,
-                    "method": "POST",
-                    "headers": [],
+                    "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
+                    "method": "POST",
                     "path": {
                         "head": "/reference",
                         "parts": []
@@ -3103,6 +4515,7 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
+                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -3305,10 +4718,9 @@
                         }
                     },
                     "errors": [],
-                    "auth": false,
-                    "idempotent": false,
                     "examples": [
                         {
+                            "exampleType": "userProvided",
                             "name": null,
                             "url": "/reference",
                             "rootPathParameters": [],
@@ -3929,9 +5341,636 @@
                                     }
                                 }
                             },
+                            "codeSamples": null,
+                            "docs": null
+                        },
+                        {
+                            "exampleType": "generated",
+                            "url": "/reference",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [],
+                            "request": {
+                                "type": "reference",
+                                "shape": {
+                                    "type": "named",
+                                    "typeName": {
+                                        "typeId": "type_reference:SendRequest",
+                                        "fernFilepath": {
+                                            "allParts": [
+                                                {
+                                                    "originalName": "reference",
+                                                    "camelCase": {
+                                                        "unsafeName": "reference",
+                                                        "safeName": "reference"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "reference",
+                                                        "safeName": "reference"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "REFERENCE",
+                                                        "safeName": "REFERENCE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Reference",
+                                                        "safeName": "Reference"
+                                                    }
+                                                }
+                                            ],
+                                            "packagePath": [],
+                                            "file": {
+                                                "originalName": "reference",
+                                                "camelCase": {
+                                                    "unsafeName": "reference",
+                                                    "safeName": "reference"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "reference",
+                                                    "safeName": "reference"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "REFERENCE",
+                                                    "safeName": "REFERENCE"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Reference",
+                                                    "safeName": "Reference"
+                                                }
+                                            }
+                                        },
+                                        "name": {
+                                            "originalName": "SendRequest",
+                                            "camelCase": {
+                                                "unsafeName": "sendRequest",
+                                                "safeName": "sendRequest"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "send_request",
+                                                "safeName": "send_request"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "SEND_REQUEST",
+                                                "safeName": "SEND_REQUEST"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "SendRequest",
+                                                "safeName": "SendRequest"
+                                            }
+                                        }
+                                    },
+                                    "shape": {
+                                        "type": "object",
+                                        "properties": [
+                                            {
+                                                "name": {
+                                                    "name": {
+                                                        "originalName": "prompt",
+                                                        "camelCase": {
+                                                            "unsafeName": "prompt",
+                                                            "safeName": "prompt"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "prompt",
+                                                            "safeName": "prompt"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "PROMPT",
+                                                            "safeName": "PROMPT"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Prompt",
+                                                            "safeName": "Prompt"
+                                                        }
+                                                    },
+                                                    "wireValue": "prompt"
+                                                },
+                                                "value": {
+                                                    "shape": {
+                                                        "type": "primitive",
+                                                        "primitive": {
+                                                            "type": "string",
+                                                            "string": {
+                                                                "original": "You are a helpful assistant"
+                                                            }
+                                                        }
+                                                    },
+                                                    "jsonExample": "You are a helpful assistant"
+                                                },
+                                                "originalTypeDeclaration": {
+                                                    "typeId": "type_reference:SendRequest",
+                                                    "fernFilepath": {
+                                                        "allParts": [
+                                                            {
+                                                                "originalName": "reference",
+                                                                "camelCase": {
+                                                                    "unsafeName": "reference",
+                                                                    "safeName": "reference"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "reference",
+                                                                    "safeName": "reference"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "REFERENCE",
+                                                                    "safeName": "REFERENCE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Reference",
+                                                                    "safeName": "Reference"
+                                                                }
+                                                            }
+                                                        ],
+                                                        "packagePath": [],
+                                                        "file": {
+                                                            "originalName": "reference",
+                                                            "camelCase": {
+                                                                "unsafeName": "reference",
+                                                                "safeName": "reference"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "reference",
+                                                                "safeName": "reference"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "REFERENCE",
+                                                                "safeName": "REFERENCE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Reference",
+                                                                "safeName": "Reference"
+                                                            }
+                                                        }
+                                                    },
+                                                    "name": {
+                                                        "originalName": "SendRequest",
+                                                        "camelCase": {
+                                                            "unsafeName": "sendRequest",
+                                                            "safeName": "sendRequest"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "send_request",
+                                                            "safeName": "send_request"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "SEND_REQUEST",
+                                                            "safeName": "SEND_REQUEST"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "SendRequest",
+                                                            "safeName": "SendRequest"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "name": {
+                                                    "name": {
+                                                        "originalName": "stream",
+                                                        "camelCase": {
+                                                            "unsafeName": "stream",
+                                                            "safeName": "stream"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "stream",
+                                                            "safeName": "stream"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "STREAM",
+                                                            "safeName": "STREAM"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Stream",
+                                                            "safeName": "Stream"
+                                                        }
+                                                    },
+                                                    "wireValue": "stream"
+                                                },
+                                                "value": {
+                                                    "shape": {
+                                                        "type": "primitive",
+                                                        "primitive": {
+                                                            "type": "boolean",
+                                                            "boolean": false
+                                                        }
+                                                    },
+                                                    "jsonExample": false
+                                                },
+                                                "originalTypeDeclaration": {
+                                                    "typeId": "type_reference:SendRequest",
+                                                    "fernFilepath": {
+                                                        "allParts": [
+                                                            {
+                                                                "originalName": "reference",
+                                                                "camelCase": {
+                                                                    "unsafeName": "reference",
+                                                                    "safeName": "reference"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "reference",
+                                                                    "safeName": "reference"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "REFERENCE",
+                                                                    "safeName": "REFERENCE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Reference",
+                                                                    "safeName": "Reference"
+                                                                }
+                                                            }
+                                                        ],
+                                                        "packagePath": [],
+                                                        "file": {
+                                                            "originalName": "reference",
+                                                            "camelCase": {
+                                                                "unsafeName": "reference",
+                                                                "safeName": "reference"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "reference",
+                                                                "safeName": "reference"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "REFERENCE",
+                                                                "safeName": "REFERENCE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Reference",
+                                                                "safeName": "Reference"
+                                                            }
+                                                        }
+                                                    },
+                                                    "name": {
+                                                        "originalName": "SendRequest",
+                                                        "camelCase": {
+                                                            "unsafeName": "sendRequest",
+                                                            "safeName": "sendRequest"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "send_request",
+                                                            "safeName": "send_request"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "SEND_REQUEST",
+                                                            "safeName": "SEND_REQUEST"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "SendRequest",
+                                                            "safeName": "SendRequest"
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            {
+                                                "name": {
+                                                    "name": {
+                                                        "originalName": "query",
+                                                        "camelCase": {
+                                                            "unsafeName": "query",
+                                                            "safeName": "query"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "query",
+                                                            "safeName": "query"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "QUERY",
+                                                            "safeName": "QUERY"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Query",
+                                                            "safeName": "Query"
+                                                        }
+                                                    },
+                                                    "wireValue": "query"
+                                                },
+                                                "value": {
+                                                    "shape": {
+                                                        "type": "primitive",
+                                                        "primitive": {
+                                                            "type": "string",
+                                                            "string": {
+                                                                "original": "What is the weather today"
+                                                            }
+                                                        }
+                                                    },
+                                                    "jsonExample": "What is the weather today"
+                                                },
+                                                "originalTypeDeclaration": {
+                                                    "typeId": "type_reference:SendRequest",
+                                                    "fernFilepath": {
+                                                        "allParts": [
+                                                            {
+                                                                "originalName": "reference",
+                                                                "camelCase": {
+                                                                    "unsafeName": "reference",
+                                                                    "safeName": "reference"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "reference",
+                                                                    "safeName": "reference"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "REFERENCE",
+                                                                    "safeName": "REFERENCE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Reference",
+                                                                    "safeName": "Reference"
+                                                                }
+                                                            }
+                                                        ],
+                                                        "packagePath": [],
+                                                        "file": {
+                                                            "originalName": "reference",
+                                                            "camelCase": {
+                                                                "unsafeName": "reference",
+                                                                "safeName": "reference"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "reference",
+                                                                "safeName": "reference"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "REFERENCE",
+                                                                "safeName": "REFERENCE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Reference",
+                                                                "safeName": "Reference"
+                                                            }
+                                                        }
+                                                    },
+                                                    "name": {
+                                                        "originalName": "SendRequest",
+                                                        "camelCase": {
+                                                            "unsafeName": "sendRequest",
+                                                            "safeName": "sendRequest"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "send_request",
+                                                            "safeName": "send_request"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "SEND_REQUEST",
+                                                            "safeName": "SEND_REQUEST"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "SendRequest",
+                                                            "safeName": "SendRequest"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        ]
+                                    }
+                                },
+                                "jsonExample": {
+                                    "prompt": "You are a helpful assistant",
+                                    "stream": false,
+                                    "query": "What is the weather today"
+                                }
+                            },
+                            "name": null,
+                            "codeSamples": null,
+                            "response": {
+                                "type": "ok",
+                                "body": {
+                                    "shape": {
+                                        "type": "named",
+                                        "typeName": {
+                                            "typeId": "type_:SendResponse",
+                                            "fernFilepath": {
+                                                "allParts": [],
+                                                "packagePath": [],
+                                                "file": null
+                                            },
+                                            "name": {
+                                                "originalName": "SendResponse",
+                                                "camelCase": {
+                                                    "unsafeName": "sendResponse",
+                                                    "safeName": "sendResponse"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "send_response",
+                                                    "safeName": "send_response"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "SEND_RESPONSE",
+                                                    "safeName": "SEND_RESPONSE"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "SendResponse",
+                                                    "safeName": "SendResponse"
+                                                }
+                                            }
+                                        },
+                                        "shape": {
+                                            "type": "object",
+                                            "properties": [
+                                                {
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "message",
+                                                            "camelCase": {
+                                                                "unsafeName": "message",
+                                                                "safeName": "message"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "message",
+                                                                "safeName": "message"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "MESSAGE",
+                                                                "safeName": "MESSAGE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Message",
+                                                                "safeName": "Message"
+                                                            }
+                                                        },
+                                                        "wireValue": "message"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "string",
+                                                                "string": {
+                                                                    "original": "The weather is sunny"
+                                                                }
+                                                            }
+                                                        },
+                                                        "jsonExample": "The weather is sunny"
+                                                    },
+                                                    "originalTypeDeclaration": {
+                                                        "typeId": "type_:SendResponse",
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "name": {
+                                                            "originalName": "SendResponse",
+                                                            "camelCase": {
+                                                                "unsafeName": "sendResponse",
+                                                                "safeName": "sendResponse"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "send_response",
+                                                                "safeName": "send_response"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SEND_RESPONSE",
+                                                                "safeName": "SEND_RESPONSE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "SendResponse",
+                                                                "safeName": "SendResponse"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "status",
+                                                            "camelCase": {
+                                                                "unsafeName": "status",
+                                                                "safeName": "status"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "status",
+                                                                "safeName": "status"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "STATUS",
+                                                                "safeName": "STATUS"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Status",
+                                                                "safeName": "Status"
+                                                            }
+                                                        },
+                                                        "wireValue": "status"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "integer",
+                                                                "integer": 200
+                                                            }
+                                                        },
+                                                        "jsonExample": 200
+                                                    },
+                                                    "originalTypeDeclaration": {
+                                                        "typeId": "type_:SendResponse",
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "name": {
+                                                            "originalName": "SendResponse",
+                                                            "camelCase": {
+                                                                "unsafeName": "sendResponse",
+                                                                "safeName": "sendResponse"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "send_response",
+                                                                "safeName": "send_response"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SEND_RESPONSE",
+                                                                "safeName": "SEND_RESPONSE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "SendResponse",
+                                                                "safeName": "SendResponse"
+                                                            }
+                                                        }
+                                                    }
+                                                },
+                                                {
+                                                    "name": {
+                                                        "name": {
+                                                            "originalName": "success",
+                                                            "camelCase": {
+                                                                "unsafeName": "success",
+                                                                "safeName": "success"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "success",
+                                                                "safeName": "success"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SUCCESS",
+                                                                "safeName": "SUCCESS"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Success",
+                                                                "safeName": "Success"
+                                                            }
+                                                        },
+                                                        "wireValue": "success"
+                                                    },
+                                                    "value": {
+                                                        "shape": {
+                                                            "type": "primitive",
+                                                            "primitive": {
+                                                                "type": "boolean",
+                                                                "boolean": true
+                                                            }
+                                                        },
+                                                        "jsonExample": true
+                                                    },
+                                                    "originalTypeDeclaration": {
+                                                        "typeId": "type_:SendResponse",
+                                                        "fernFilepath": {
+                                                            "allParts": [],
+                                                            "packagePath": [],
+                                                            "file": null
+                                                        },
+                                                        "name": {
+                                                            "originalName": "SendResponse",
+                                                            "camelCase": {
+                                                                "unsafeName": "sendResponse",
+                                                                "safeName": "sendResponse"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "send_response",
+                                                                "safeName": "send_response"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SEND_RESPONSE",
+                                                                "safeName": "SEND_RESPONSE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "SendResponse",
+                                                                "safeName": "SendResponse"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    "jsonExample": {
+                                        "message": "The weather is sunny",
+                                        "status": 200,
+                                        "success": true
+                                    }
+                                }
+                            },
                             "docs": null
                         }
                     ],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 }
@@ -3980,6 +6019,7 @@
         ]
     },
     "webhookGroups": {},
+    "websocketChannels": {},
     "subpackages": {
         "subpackage_headers": {
             "name": {
@@ -4050,6 +6090,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": true,
             "docs": null
         },
@@ -4122,6 +6163,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": true,
             "docs": null
         },
@@ -4194,6 +6236,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": true,
             "docs": null
         },
@@ -4266,6 +6309,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": true,
             "docs": null
         },
@@ -4340,6 +6384,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": true,
             "docs": null
         }
@@ -4350,6 +6395,7 @@
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [
             "type_:SendResponse"

@@ -26,6 +26,9 @@ export class Service {
 
     /**
      * GET request with custom api key
+     *
+     * @example
+     *     await seedAuthEnvironmentVariables.service.getWithApiKey()
      */
     public async getWithApiKey(requestOptions?: Service.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
@@ -77,6 +80,11 @@ export class Service {
 
     /**
      * GET request with custom api key
+     *
+     * @example
+     *     await seedAuthEnvironmentVariables.service.getWithHeader({
+     *         xEndpointHeader: "string"
+     *     })
      */
     public async getWithHeader(
         request: SeedAuthEnvironmentVariables.HeaderAuthRequest,

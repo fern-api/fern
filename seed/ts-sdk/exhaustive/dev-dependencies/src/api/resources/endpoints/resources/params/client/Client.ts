@@ -24,6 +24,9 @@ export class Params {
 
     /**
      * GET with path param
+     *
+     * @example
+     *     await fiddle.endpoints.params.getWithPath("string")
      */
     public async getWithPath(
         param: string,
@@ -64,6 +67,12 @@ export class Params {
 
     /**
      * GET with query param
+     *
+     * @example
+     *     await fiddle.endpoints.params.getWithQuery({
+     *         query: "string",
+     *         number: 1
+     *     })
      */
     public async getWithQuery(
         request: Fiddle.endpoints.GetWithQuery,
@@ -104,6 +113,12 @@ export class Params {
 
     /**
      * GET with multiple of same query param
+     *
+     * @example
+     *     await fiddle.endpoints.params.getWithAllowMultipleQuery({
+     *         query: "string",
+     *         numer: 1
+     *     })
      */
     public async getWithAllowMultipleQuery(
         request: Fiddle.endpoints.GetWithMultipleQuery,
@@ -154,6 +169,11 @@ export class Params {
 
     /**
      * GET with path and query params
+     *
+     * @example
+     *     await fiddle.endpoints.params.getWithPathAndQuery("string", {
+     *         query: "string"
+     *     })
      */
     public async getWithPathAndQuery(
         param: string,
@@ -194,6 +214,9 @@ export class Params {
 
     /**
      * PUT to update with path param
+     *
+     * @example
+     *     await fiddle.endpoints.params.modifyWithPath("string", "string")
      */
     public async modifyWithPath(
         param: string,

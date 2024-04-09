@@ -9,6 +9,13 @@
  *         async: true,
  *         query: "What is the weather today"
  *     }
+ *
+ * @example
+ *     {
+ *         endpointVersion: "02-12-2024",
+ *         async: true,
+ *         query: "What is the weather today"
+ *     }
  */
 export interface SendLiteralsInHeadersRequest {
     query: string;

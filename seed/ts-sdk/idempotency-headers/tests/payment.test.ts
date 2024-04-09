@@ -10,7 +10,8 @@ const client = new SeedIdempotencyHeadersClient({
 });
 
 describe("Payment", () => {
-    test("constructor", () => {
-        expect(client.payment).toBeDefined();
+    test("delete", async () => {
+        const response = await client.payment.delete("string");
+        expect(response).toEqual(undefined);
     });
 });

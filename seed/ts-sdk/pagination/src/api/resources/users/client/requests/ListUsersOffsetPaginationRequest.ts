@@ -4,6 +4,15 @@
 
 import * as SeedPagination from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         page: 1,
+ *         perPage: 1,
+ *         order: SeedPagination.Order.Asc,
+ *         startingAfter: "string"
+ *     }
+ */
 export interface ListUsersOffsetPaginationRequest {
     /**
      * Defaults to first page

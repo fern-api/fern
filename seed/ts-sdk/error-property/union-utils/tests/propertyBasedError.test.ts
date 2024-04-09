@@ -7,7 +7,8 @@ import { SeedErrorPropertyClient } from "../src/Client";
 const client = new SeedErrorPropertyClient({ environment: process.env.TESTS_BASE_URL || "test" });
 
 describe("PropertyBasedError", () => {
-    test("constructor", () => {
-        expect(client.propertyBasedError).toBeDefined();
+    test("throwError", async () => {
+        const response = await client.propertyBasedError.throwError();
+        expect(response).toEqual("string");
     });
 });

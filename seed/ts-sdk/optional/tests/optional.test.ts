@@ -7,7 +7,12 @@ import { SeedObjectsWithImportsClient } from "../src/Client";
 const client = new SeedObjectsWithImportsClient({ environment: process.env.TESTS_BASE_URL || "test" });
 
 describe("Optional", () => {
-    test("constructor", () => {
-        expect(client.optional).toBeDefined();
+    test("sendOptionalBody", async () => {
+        const response = await client.optional.sendOptionalBody({
+            string: {
+                key: "value",
+            },
+        });
+        expect(response).toEqual("string");
     });
 });

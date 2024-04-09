@@ -1,4 +1,15 @@
 {
-    "endpoints": [],
+    "endpoints": [
+        {
+            "id": {
+                "path": "/",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedUndiscriminatedUnionsClient } from \"@fern/undiscriminated-unions\";\n\nconst seedUndiscriminatedUnions = new SeedUndiscriminatedUnionsClient;\nawait seedUndiscriminatedUnions.union.get(\"string\");\n"
+            }
+        }
+    ],
     "types": {}
 }

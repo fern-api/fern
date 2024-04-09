@@ -10,7 +10,8 @@ const client = new SeedNoEnvironmentClient({
 });
 
 describe("Dummy", () => {
-    test("constructor", () => {
-        expect(client.dummy).toBeDefined();
+    test("getDummy", async () => {
+        const response = await client.dummy.getDummy();
+        expect(response).toEqual("string");
     });
 });

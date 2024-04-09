@@ -69,9 +69,10 @@
                         }
                     },
                     "displayName": null,
-                    "method": "POST",
-                    "headers": [],
+                    "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
+                    "method": "POST",
                     "path": {
                         "head": "",
                         "parts": []
@@ -117,6 +118,7 @@
                         }
                     ],
                     "queryParameters": [],
+                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -171,10 +173,9 @@
                         }
                     },
                     "errors": [],
-                    "auth": false,
-                    "idempotent": false,
                     "examples": [
                         {
+                            "exampleType": "userProvided",
                             "name": null,
                             "url": "/",
                             "rootPathParameters": [
@@ -247,8 +248,84 @@
                             },
                             "codeSamples": null,
                             "docs": null
+                        },
+                        {
+                            "exampleType": "generated",
+                            "url": "",
+                            "rootPathParameters": [
+                                {
+                                    "name": {
+                                        "originalName": "id",
+                                        "camelCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "ID",
+                                            "safeName": "ID"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Id",
+                                            "safeName": "Id"
+                                        }
+                                    },
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "string"
+                                                }
+                                            }
+                                        },
+                                        "jsonExample": "string"
+                                    }
+                                }
+                            ],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [],
+                            "request": {
+                                "type": "reference",
+                                "shape": {
+                                    "type": "primitive",
+                                    "primitive": {
+                                        "type": "string",
+                                        "string": {
+                                            "original": "Hello world!"
+                                        }
+                                    }
+                                },
+                                "jsonExample": "Hello world!"
+                            },
+                            "name": null,
+                            "codeSamples": null,
+                            "response": {
+                                "type": "ok",
+                                "body": {
+                                    "shape": {
+                                        "type": "primitive",
+                                        "primitive": {
+                                            "type": "string",
+                                            "string": {
+                                                "original": "Hello world!"
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": "Hello world!"
+                                }
+                            },
+                            "docs": null
                         }
                     ],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 }
@@ -331,9 +408,10 @@
                         }
                     },
                     "displayName": null,
-                    "method": "GET",
-                    "headers": [],
+                    "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
+                    "method": "GET",
                     "path": {
                         "head": "/",
                         "parts": [
@@ -445,14 +523,14 @@
                         }
                     ],
                     "queryParameters": [],
+                    "headers": [],
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": null,
                     "errors": [],
-                    "auth": false,
-                    "idempotent": false,
                     "examples": [
                         {
+                            "exampleType": "userProvided",
                             "name": null,
                             "url": "//id-219xca8",
                             "rootPathParameters": [
@@ -536,8 +614,95 @@
                             },
                             "codeSamples": null,
                             "docs": null
+                        },
+                        {
+                            "exampleType": "generated",
+                            "url": "/",
+                            "rootPathParameters": [
+                                {
+                                    "name": {
+                                        "originalName": "id",
+                                        "camelCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "id",
+                                            "safeName": "id"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "ID",
+                                            "safeName": "ID"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Id",
+                                            "safeName": "Id"
+                                        }
+                                    },
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "string"
+                                                }
+                                            }
+                                        },
+                                        "jsonExample": "string"
+                                    }
+                                }
+                            ],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [
+                                {
+                                    "name": {
+                                        "originalName": "nestedId",
+                                        "camelCase": {
+                                            "unsafeName": "nestedId",
+                                            "safeName": "nestedId"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "nested_id",
+                                            "safeName": "nested_id"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "NESTED_ID",
+                                            "safeName": "NESTED_ID"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "NestedId",
+                                            "safeName": "NestedId"
+                                        }
+                                    },
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "string"
+                                                }
+                                            }
+                                        },
+                                        "jsonExample": "string"
+                                    }
+                                }
+                            ],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [],
+                            "request": null,
+                            "name": null,
+                            "codeSamples": null,
+                            "response": {
+                                "type": "ok",
+                                "body": null
+                            },
+                            "docs": null
                         }
                     ],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 }

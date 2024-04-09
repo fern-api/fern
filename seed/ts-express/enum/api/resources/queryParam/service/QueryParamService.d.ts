@@ -7,8 +7,8 @@ export interface QueryParamServiceMethods {
     send(req: express.Request<never, never, never, {
         operand: SeedEnum.Operand;
         maybeOperand?: SeedEnum.Operand;
-        operandOrColor?: string;
-        maybeOperandOrColor?: string;
+        operandOrColor: SeedEnum.ColorOrOperand;
+        maybeOperandOrColor?: SeedEnum.ColorOrOperand;
     }>, res: {
         send: () => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
@@ -17,8 +17,8 @@ export interface QueryParamServiceMethods {
     sendList(req: express.Request<never, never, never, {
         operand: SeedEnum.Operand;
         maybeOperand?: SeedEnum.Operand;
-        operandOrColor?: string;
-        maybeOperandOrColor?: string;
+        operandOrColor: SeedEnum.ColorOrOperand;
+        maybeOperandOrColor?: SeedEnum.ColorOrOperand;
     }>, res: {
         send: () => Promise<void>;
         cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;

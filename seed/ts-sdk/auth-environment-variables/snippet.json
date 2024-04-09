@@ -1,4 +1,25 @@
 {
-    "endpoints": [],
+    "endpoints": [
+        {
+            "id": {
+                "path": "/apiKey",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedAuthEnvironmentVariablesClient } from \"@fern/auth-environment-variables\";\n\nconst seedAuthEnvironmentVariables = new SeedAuthEnvironmentVariablesClient({ apiKey: \"YOUR_API_KEY\", xAnotherHeader: \"YOUR_X_ANOTHER_HEADER\" });\nawait seedAuthEnvironmentVariables.service.getWithApiKey();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/apiKeyInHeader",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedAuthEnvironmentVariablesClient } from \"@fern/auth-environment-variables\";\n\nconst seedAuthEnvironmentVariables = new SeedAuthEnvironmentVariablesClient({ apiKey: \"YOUR_API_KEY\", xAnotherHeader: \"YOUR_X_ANOTHER_HEADER\" });\nawait seedAuthEnvironmentVariables.service.getWithHeader({\n    xEndpointHeader: \"string\"\n});\n"
+            }
+        }
+    ],
     "types": {}
 }

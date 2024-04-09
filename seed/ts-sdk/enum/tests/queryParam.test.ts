@@ -15,4 +15,14 @@ describe("QueryParam", () => {
         });
         expect(response).toEqual(undefined);
     });
+
+    test("sendList", async () => {
+        const response = await client.queryParam.sendList({
+            operand: SeedEnum.Operand.GreaterThan,
+            maybeOperand: SeedEnum.Operand.GreaterThan,
+            operandOrColor: SeedEnum.Color.Red,
+            maybeOperandOrColor: SeedEnum.Color.Red,
+        });
+        expect(response).toEqual(undefined);
+    });
 });

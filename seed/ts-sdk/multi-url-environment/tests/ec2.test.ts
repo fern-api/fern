@@ -10,7 +10,10 @@ const client = new SeedMultiUrlEnvironmentClient({
 });
 
 describe("Ec2", () => {
-    test("constructor", () => {
-        expect(client.ec2).toBeDefined();
+    test("bootInstance", async () => {
+        const response = await client.ec2.bootInstance({
+            size: "string",
+        });
+        expect(response).toEqual(undefined);
     });
 });

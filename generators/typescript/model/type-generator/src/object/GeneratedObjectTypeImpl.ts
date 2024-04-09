@@ -73,6 +73,16 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
 
         return example.properties.map((property) => {
             const originalTypeForProperty = context.type.getGeneratedType(property.originalTypeDeclaration);
+            if (originalTypeForProperty.type === "union") {
+                const propertyKey = originalTypeForProperty.getSinglePropertyKey({
+                    name: property.name,
+                    type: TypeReference.named(property.originalTypeDeclaration)
+                });
+                return ts.factory.createPropertyAssignment(
+                    propertyKey,
+                    context.type.getGeneratedExample(property.value).build(context, opts)
+                );
+            }
             if (originalTypeForProperty.type !== "object") {
                 throw new Error("Property does not come from an object");
             }

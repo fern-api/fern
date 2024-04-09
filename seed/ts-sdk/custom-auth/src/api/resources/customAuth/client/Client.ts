@@ -26,6 +26,9 @@ export class CustomAuth {
     /**
      * GET request with custom auth scheme
      * @throws {@link SeedCustomAuth.UnauthorizedRequest}
+     *
+     * @example
+     *     await seedCustomAuth.customAuth.getWithCustomAuth()
      */
     public async getWithCustomAuth(requestOptions?: CustomAuth.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({
@@ -90,6 +93,11 @@ export class CustomAuth {
      * POST request with custom auth scheme
      * @throws {@link SeedCustomAuth.UnauthorizedRequest}
      * @throws {@link SeedCustomAuth.BadRequest}
+     *
+     * @example
+     *     await seedCustomAuth.customAuth.postWithCustomAuth({
+     *         "key": "value"
+     *     })
      */
     public async postWithCustomAuth(request?: unknown, requestOptions?: CustomAuth.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({

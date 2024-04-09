@@ -7,7 +7,15 @@ import { SeedApiClient } from "../../src/Client";
 const client = new SeedApiClient({ environment: process.env.TESTS_BASE_URL || "test" });
 
 describe("Service", () => {
-    test("constructor", () => {
-        expect(client.folder.service).toBeDefined();
+    test("endpoint", async () => {
+        const response = await client.folder.service.endpoint();
+        expect(response).toEqual(undefined);
+    });
+
+    test("unknownRequest", async () => {
+        const response = await client.folder.service.unknownRequest({
+            key: "value",
+        });
+        expect(response).toEqual(undefined);
     });
 });

@@ -10,6 +10,14 @@ import * as SeedEnum from "../../../..";
  *         operand: SeedEnum.Operand.GreaterThan,
  *         operandOrColor: SeedEnum.Color.Red
  *     }
+ *
+ * @example
+ *     {
+ *         operand: SeedEnum.Operand.GreaterThan,
+ *         maybeOperand: SeedEnum.Operand.GreaterThan,
+ *         operandOrColor: SeedEnum.Color.Red,
+ *         maybeOperandOrColor: SeedEnum.Color.Red
+ *     }
  */
 export interface SendEnumAsQueryParamRequest {
     operand: SeedEnum.Operand;

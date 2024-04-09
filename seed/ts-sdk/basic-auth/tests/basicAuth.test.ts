@@ -11,7 +11,15 @@ const client = new SeedBasicAuthClient({
 });
 
 describe("BasicAuth", () => {
-    test("constructor", () => {
-        expect(client.basicAuth).toBeDefined();
+    test("getWithBasicAuth", async () => {
+        const response = await client.basicAuth.getWithBasicAuth();
+        expect(response).toEqual(true);
+    });
+
+    test("postWithBasicAuth", async () => {
+        const response = await client.basicAuth.postWithBasicAuth({
+            key: "value",
+        });
+        expect(response).toEqual(true);
     });
 });

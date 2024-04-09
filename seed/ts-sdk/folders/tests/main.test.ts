@@ -7,7 +7,8 @@ import { SeedApiClient } from "../src/Client";
 const client = new SeedApiClient({ environment: process.env.TESTS_BASE_URL || "test" });
 
 describe("SeedApiClient", () => {
-    test("constructor", () => {
-        expect(client).toBeDefined();
+    test("foo", async () => {
+        const response = await client.foo();
+        expect(response).toEqual(undefined);
     });
 });

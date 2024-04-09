@@ -9,6 +9,13 @@
  *         shallow: false,
  *         tag: "development"
  *     }
+ *
+ * @example
+ *     {
+ *         "X-API-Version": "string",
+ *         shallow: true,
+ *         tag: "string"
+ *     }
  */
 export interface GetMetadataRequest {
     shallow?: boolean;

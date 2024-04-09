@@ -10,7 +10,10 @@ const client = new FiddleClient({
 });
 
 describe("NoAuth", () => {
-    test("constructor", () => {
-        expect(client.noAuth).toBeDefined();
+    test("postWithNoAuth", async () => {
+        const response = await client.noAuth.postWithNoAuth({
+            key: "value",
+        });
+        expect(response).toEqual(true);
     });
 });
