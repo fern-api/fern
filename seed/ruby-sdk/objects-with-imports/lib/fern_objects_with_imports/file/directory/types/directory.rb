@@ -1,54 +1,57 @@
 # frozen_string_literal: true
 
 require_relative "../../types/file"
+require "ostruct"
 require "json"
 
 module SeedObjectsWithImportsClient
   module File
     class Directory
       class Directory
-        attr_reader :name, :files, :directories, :additional_properties
-
+        attr_reader :name, :files, :directories, :additional_properties, :_field_set
+        protected :_field_set
+        OMIT = Object.new
         # @param name [String]
-        # @param files [Array<File::File>]
-        # @param directories [Array<File::Directory::Directory>]
+        # @param files [Array<SeedObjectsWithImportsClient::File::File>]
+        # @param directories [Array<SeedObjectsWithImportsClient::File::Directory::Directory>]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [File::Directory::Directory]
-        def initialize(name:, files: nil, directories: nil, additional_properties: nil)
+        # @return [SeedObjectsWithImportsClient::File::Directory::Directory]
+        def initialize(name:, files: OMIT, directories: OMIT, additional_properties: nil)
           # @type [String]
           @name = name
-          # @type [Array<File::File>]
-          @files = files
-          # @type [Array<File::Directory::Directory>]
-          @directories = directories
-          # @type [OpenStruct] Additional properties unmapped to the current class definition
-          @additional_properties = additional_properties
+          # @type [Array<SeedObjectsWithImportsClient::File::File>]
+          @files = files if files != OMIT
+          # @type [Array<SeedObjectsWithImportsClient::File::Directory::Directory>]
+          @directories = directories if directories != OMIT
+          @_field_set = { "name": @name, "files": @files, "directories": @directories }.reject do |_k, v|
+            v == OMIT
+          end
         end
 
         # Deserialize a JSON object to an instance of Directory
         #
-        # @param json_object [JSON]
-        # @return [File::Directory::Directory]
+        # @param json_object [String]
+        # @return [SeedObjectsWithImportsClient::File::Directory::Directory]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
-          name = struct.name
+          name = struct["name"]
           files = parsed_json["files"]&.map do |v|
             v = v.to_json
-            File::File.from_json(json_object: v)
+            SeedObjectsWithImportsClient::File::File.from_json(json_object: v)
           end
           directories = parsed_json["directories"]&.map do |v|
             v = v.to_json
-            File::Directory::Directory.from_json(json_object: v)
+            SeedObjectsWithImportsClient::File::Directory::Directory.from_json(json_object: v)
           end
           new(name: name, files: files, directories: directories, additional_properties: struct)
         end
 
         # Serialize an instance of Directory to a JSON object
         #
-        # @return [JSON]
+        # @return [String]
         def to_json(*_args)
-          { "name": @name, "files": @files, "directories": @directories }.to_json
+          @_field_set&.to_json
         end
 
         # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

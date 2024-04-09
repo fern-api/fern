@@ -8,32 +8,34 @@ module SeedUnionsClient
   class UnionClient
     attr_reader :request_client
 
-    # @param request_client [RequestClient]
-    # @return [UnionClient]
+    # @param request_client [SeedUnionsClient::RequestClient]
+    # @return [SeedUnionsClient::UnionClient]
     def initialize(request_client:)
-      # @type [RequestClient]
+      # @type [SeedUnionsClient::RequestClient]
       @request_client = request_client
     end
 
     # @param id [String]
-    # @param request_options [RequestOptions]
-    # @return [Union::Shape]
+    # @param request_options [SeedUnionsClient::RequestOptions]
+    # @return [SeedUnionsClient::Union::Shape]
     def get(id:, request_options: nil)
       response = @request_client.conn.get("/#{id}") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/#{id}"
       end
-      Union::Shape.from_json(json_object: response.body)
+      SeedUnionsClient::Union::Shape.from_json(json_object: response.body)
     end
 
-    # @param request [Union::Shape]
-    # @param request_options [RequestOptions]
+    # @param request [SeedUnionsClient::Union::Shape]
+    # @param request_options [SeedUnionsClient::RequestOptions]
     # @return [Boolean]
     def update(request:, request_options: nil)
       response = @request_client.conn.patch("/") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/"
       end
       response.body
     end
@@ -42,28 +44,29 @@ module SeedUnionsClient
   class AsyncUnionClient
     attr_reader :request_client
 
-    # @param request_client [AsyncRequestClient]
-    # @return [AsyncUnionClient]
+    # @param request_client [SeedUnionsClient::AsyncRequestClient]
+    # @return [SeedUnionsClient::AsyncUnionClient]
     def initialize(request_client:)
-      # @type [AsyncRequestClient]
+      # @type [SeedUnionsClient::AsyncRequestClient]
       @request_client = request_client
     end
 
     # @param id [String]
-    # @param request_options [RequestOptions]
-    # @return [Union::Shape]
+    # @param request_options [SeedUnionsClient::RequestOptions]
+    # @return [SeedUnionsClient::Union::Shape]
     def get(id:, request_options: nil)
       Async do
         response = @request_client.conn.get("/#{id}") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/#{id}"
         end
-        Union::Shape.from_json(json_object: response.body)
+        SeedUnionsClient::Union::Shape.from_json(json_object: response.body)
       end
     end
 
-    # @param request [Union::Shape]
-    # @param request_options [RequestOptions]
+    # @param request [SeedUnionsClient::Union::Shape]
+    # @param request_options [SeedUnionsClient::RequestOptions]
     # @return [Boolean]
     def update(request:, request_options: nil)
       Async do
@@ -71,6 +74,7 @@ module SeedUnionsClient
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/"
         end
         response.body
       end

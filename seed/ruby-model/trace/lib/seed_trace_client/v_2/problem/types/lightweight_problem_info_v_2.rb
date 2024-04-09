@@ -2,43 +2,51 @@
 
 require_relative "../../../commons/types/problem_id"
 require "set"
+require "ostruct"
 require "json"
 
 module SeedTraceClient
   module V2
     class Problem
       class LightweightProblemInfoV2
-        attr_reader :problem_id, :problem_name, :problem_version, :variable_types, :additional_properties
-
-        # @param problem_id [Commons::PROBLEM_ID]
+        attr_reader :problem_id, :problem_name, :problem_version, :variable_types, :additional_properties, :_field_set
+        protected :_field_set
+        OMIT = Object.new
+        # @param problem_id [SeedTraceClient::Commons::PROBLEM_ID]
         # @param problem_name [String]
         # @param problem_version [Integer]
-        # @param variable_types [Set<Commons::VariableType>]
+        # @param variable_types [Set<SeedTraceClient::Commons::VariableType>]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [V2::Problem::LightweightProblemInfoV2]
+        # @return [SeedTraceClient::V2::Problem::LightweightProblemInfoV2]
         def initialize(problem_id:, problem_name:, problem_version:, variable_types:, additional_properties: nil)
-          # @type [Commons::PROBLEM_ID]
+          # @type [SeedTraceClient::Commons::PROBLEM_ID]
           @problem_id = problem_id
           # @type [String]
           @problem_name = problem_name
           # @type [Integer]
           @problem_version = problem_version
-          # @type [Set<Commons::VariableType>]
+          # @type [Set<SeedTraceClient::Commons::VariableType>]
           @variable_types = variable_types
-          # @type [OpenStruct] Additional properties unmapped to the current class definition
-          @additional_properties = additional_properties
+          @_field_set = {
+            "problemId": @problem_id,
+            "problemName": @problem_name,
+            "problemVersion": @problem_version,
+            "variableTypes": @variable_types
+          }.reject do |_k, v|
+            v == OMIT
+          end
         end
 
         # Deserialize a JSON object to an instance of LightweightProblemInfoV2
         #
-        # @param json_object [JSON]
-        # @return [V2::Problem::LightweightProblemInfoV2]
+        # @param json_object [String]
+        # @return [SeedTraceClient::V2::Problem::LightweightProblemInfoV2]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
-          problem_id = struct.problemId
-          problem_name = struct.problemName
-          problem_version = struct.problemVersion
+          problem_id = struct["problemId"]
+          problem_name = struct["problemName"]
+          problem_version = struct["problemVersion"]
           if parsed_json["variableTypes"].nil?
             variable_types = nil
           else
@@ -51,14 +59,9 @@ module SeedTraceClient
 
         # Serialize an instance of LightweightProblemInfoV2 to a JSON object
         #
-        # @return [JSON]
+        # @return [String]
         def to_json(*_args)
-          {
-            "problemId": @problem_id,
-            "problemName": @problem_name,
-            "problemVersion": @problem_version,
-            "variableTypes": @variable_types
-          }.to_json
+          @_field_set&.to_json
         end
 
         # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

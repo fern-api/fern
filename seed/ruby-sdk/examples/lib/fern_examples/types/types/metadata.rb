@@ -14,7 +14,7 @@ module SeedExamplesClient
       # @param discriminant [String]
       # @param extra [Hash{String => String}]
       # @param tags [Set<String>]
-      # @return [Types::Metadata]
+      # @return [SeedExamplesClient::Types::Metadata]
       def initialize(member:, discriminant:, extra:, tags:)
         # @type [Object]
         @member = member
@@ -28,8 +28,8 @@ module SeedExamplesClient
 
       # Deserialize a JSON object to an instance of Metadata
       #
-      # @param json_object [JSON]
-      # @return [Types::Metadata]
+      # @param json_object [String]
+      # @return [SeedExamplesClient::Types::Metadata]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
@@ -45,7 +45,7 @@ module SeedExamplesClient
 
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
         case @discriminant
         when "html"
@@ -79,13 +79,13 @@ module SeedExamplesClient
       end
 
       # @param member [String]
-      # @return [Types::Metadata]
+      # @return [SeedExamplesClient::Types::Metadata]
       def self.html(member:)
         new(member: member, discriminant: "html")
       end
 
       # @param member [String]
-      # @return [Types::Metadata]
+      # @return [SeedExamplesClient::Types::Metadata]
       def self.markdown(member:)
         new(member: member, discriminant: "markdown")
       end

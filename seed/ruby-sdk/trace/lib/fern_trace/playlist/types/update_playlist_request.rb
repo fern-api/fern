@@ -1,43 +1,45 @@
 # frozen_string_literal: true
 
 require_relative "../../commons/types/problem_id"
+require "ostruct"
 require "json"
 
 module SeedTraceClient
   class Playlist
     class UpdatePlaylistRequest
-      attr_reader :name, :problems, :additional_properties
-
+      attr_reader :name, :problems, :additional_properties, :_field_set
+      protected :_field_set
+      OMIT = Object.new
       # @param name [String]
-      # @param problems [Array<Commons::PROBLEM_ID>] The problems that make up the playlist.
+      # @param problems [Array<SeedTraceClient::Commons::PROBLEM_ID>] The problems that make up the playlist.
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Playlist::UpdatePlaylistRequest]
+      # @return [SeedTraceClient::Playlist::UpdatePlaylistRequest]
       def initialize(name:, problems:, additional_properties: nil)
         # @type [String]
         @name = name
-        # @type [Array<Commons::PROBLEM_ID>] The problems that make up the playlist.
+        # @type [Array<SeedTraceClient::Commons::PROBLEM_ID>] The problems that make up the playlist.
         @problems = problems
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
-        @additional_properties = additional_properties
+        @_field_set = { "name": @name, "problems": @problems }.reject do |_k, v|
+          v == OMIT
+        end
       end
 
       # Deserialize a JSON object to an instance of UpdatePlaylistRequest
       #
-      # @param json_object [JSON]
-      # @return [Playlist::UpdatePlaylistRequest]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Playlist::UpdatePlaylistRequest]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        JSON.parse(json_object)
-        name = struct.name
-        problems = struct.problems
+        name = struct["name"]
+        problems = struct["problems"]
         new(name: name, problems: problems, additional_properties: struct)
       end
 
       # Serialize an instance of UpdatePlaylistRequest to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "name": @name, "problems": @problems }.to_json
+        @_field_set&.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

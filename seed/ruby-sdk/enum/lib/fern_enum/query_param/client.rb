@@ -8,18 +8,18 @@ module SeedEnumClient
   class QueryParamClient
     attr_reader :request_client
 
-    # @param request_client [RequestClient]
-    # @return [QueryParamClient]
+    # @param request_client [SeedEnumClient::RequestClient]
+    # @return [SeedEnumClient::QueryParamClient]
     def initialize(request_client:)
-      # @type [RequestClient]
+      # @type [SeedEnumClient::RequestClient]
       @request_client = request_client
     end
 
-    # @param operand [Operand]
-    # @param maybe_operand [Operand]
+    # @param operand [SeedEnumClient::Operand]
+    # @param maybe_operand [SeedEnumClient::Operand]
     # @param operand_or_color [String]
     # @param maybe_operand_or_color [String]
-    # @param request_options [RequestOptions]
+    # @param request_options [SeedEnumClient::RequestOptions]
     # @return [Void]
     def send(operand:, maybe_operand: nil, operand_or_color: nil, maybe_operand_or_color: nil, request_options: nil)
       @request_client.conn.post("/query") do |req|
@@ -32,14 +32,15 @@ module SeedEnumClient
           "operandOrColor": operand_or_color,
           "maybeOperandOrColor": maybe_operand_or_color
         }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/query"
       end
     end
 
-    # @param operand [Operand]
-    # @param maybe_operand [Operand]
+    # @param operand [SeedEnumClient::Operand]
+    # @param maybe_operand [SeedEnumClient::Operand]
     # @param operand_or_color [String]
     # @param maybe_operand_or_color [String]
-    # @param request_options [RequestOptions]
+    # @param request_options [SeedEnumClient::RequestOptions]
     # @return [Void]
     def send_list(operand:, maybe_operand: nil, operand_or_color: nil, maybe_operand_or_color: nil,
                   request_options: nil)
@@ -53,6 +54,7 @@ module SeedEnumClient
           "operandOrColor": operand_or_color,
           "maybeOperandOrColor": maybe_operand_or_color
         }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/query-list"
       end
     end
   end
@@ -60,18 +62,18 @@ module SeedEnumClient
   class AsyncQueryParamClient
     attr_reader :request_client
 
-    # @param request_client [AsyncRequestClient]
-    # @return [AsyncQueryParamClient]
+    # @param request_client [SeedEnumClient::AsyncRequestClient]
+    # @return [SeedEnumClient::AsyncQueryParamClient]
     def initialize(request_client:)
-      # @type [AsyncRequestClient]
+      # @type [SeedEnumClient::AsyncRequestClient]
       @request_client = request_client
     end
 
-    # @param operand [Operand]
-    # @param maybe_operand [Operand]
+    # @param operand [SeedEnumClient::Operand]
+    # @param maybe_operand [SeedEnumClient::Operand]
     # @param operand_or_color [String]
     # @param maybe_operand_or_color [String]
-    # @param request_options [RequestOptions]
+    # @param request_options [SeedEnumClient::RequestOptions]
     # @return [Void]
     def send(operand:, maybe_operand: nil, operand_or_color: nil, maybe_operand_or_color: nil, request_options: nil)
       Async do
@@ -85,15 +87,16 @@ module SeedEnumClient
             "operandOrColor": operand_or_color,
             "maybeOperandOrColor": maybe_operand_or_color
           }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/query"
         end
       end
     end
 
-    # @param operand [Operand]
-    # @param maybe_operand [Operand]
+    # @param operand [SeedEnumClient::Operand]
+    # @param maybe_operand [SeedEnumClient::Operand]
     # @param operand_or_color [String]
     # @param maybe_operand_or_color [String]
-    # @param request_options [RequestOptions]
+    # @param request_options [SeedEnumClient::RequestOptions]
     # @return [Void]
     def send_list(operand:, maybe_operand: nil, operand_or_color: nil, maybe_operand_or_color: nil,
                   request_options: nil)
@@ -108,6 +111,7 @@ module SeedEnumClient
             "operandOrColor": operand_or_color,
             "maybeOperandOrColor": maybe_operand_or_color
           }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/query-list"
         end
       end
     end

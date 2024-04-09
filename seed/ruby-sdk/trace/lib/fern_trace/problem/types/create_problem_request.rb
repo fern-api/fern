@@ -4,85 +4,42 @@ require_relative "problem_description"
 require_relative "variable_type_and_name"
 require_relative "../../commons/types/variable_type"
 require_relative "../../commons/types/test_case_with_expected_result"
+require "ostruct"
 require "json"
 
 module SeedTraceClient
   class Problem
     class CreateProblemRequest
       attr_reader :problem_name, :problem_description, :files, :input_params, :output_type, :testcases, :method_name,
-                  :additional_properties
-
+                  :additional_properties, :_field_set
+      protected :_field_set
+      OMIT = Object.new
       # @param problem_name [String]
-      # @param problem_description [Problem::ProblemDescription]
-      # @param files [Hash{Commons::Language => Problem::ProblemFiles}]
-      # @param input_params [Array<Problem::VariableTypeAndName>]
-      # @param output_type [Commons::VariableType]
-      # @param testcases [Array<Commons::TestCaseWithExpectedResult>]
+      # @param problem_description [SeedTraceClient::Problem::ProblemDescription]
+      # @param files [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::Problem::ProblemFiles}]
+      # @param input_params [Array<SeedTraceClient::Problem::VariableTypeAndName>]
+      # @param output_type [SeedTraceClient::Commons::VariableType]
+      # @param testcases [Array<SeedTraceClient::Commons::TestCaseWithExpectedResult>]
       # @param method_name [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Problem::CreateProblemRequest]
+      # @return [SeedTraceClient::Problem::CreateProblemRequest]
       def initialize(problem_name:, problem_description:, files:, input_params:, output_type:, testcases:,
                      method_name:, additional_properties: nil)
         # @type [String]
         @problem_name = problem_name
-        # @type [Problem::ProblemDescription]
+        # @type [SeedTraceClient::Problem::ProblemDescription]
         @problem_description = problem_description
-        # @type [Hash{Commons::Language => Problem::ProblemFiles}]
+        # @type [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::Problem::ProblemFiles}]
         @files = files
-        # @type [Array<Problem::VariableTypeAndName>]
+        # @type [Array<SeedTraceClient::Problem::VariableTypeAndName>]
         @input_params = input_params
-        # @type [Commons::VariableType]
+        # @type [SeedTraceClient::Commons::VariableType]
         @output_type = output_type
-        # @type [Array<Commons::TestCaseWithExpectedResult>]
+        # @type [Array<SeedTraceClient::Commons::TestCaseWithExpectedResult>]
         @testcases = testcases
         # @type [String]
         @method_name = method_name
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
-        @additional_properties = additional_properties
-      end
-
-      # Deserialize a JSON object to an instance of CreateProblemRequest
-      #
-      # @param json_object [JSON]
-      # @return [Problem::CreateProblemRequest]
-      def self.from_json(json_object:)
-        struct = JSON.parse(json_object, object_class: OpenStruct)
-        parsed_json = JSON.parse(json_object)
-        problem_name = struct.problemName
-        if parsed_json["problemDescription"].nil?
-          problem_description = nil
-        else
-          problem_description = parsed_json["problemDescription"].to_json
-          problem_description = Problem::ProblemDescription.from_json(json_object: problem_description)
-        end
-        files = parsed_json["files"]&.transform_values do |_k, v|
-          v = v.to_json
-          Problem::ProblemFiles.from_json(json_object: v)
-        end
-        input_params = parsed_json["inputParams"]&.map do |v|
-          v = v.to_json
-          Problem::VariableTypeAndName.from_json(json_object: v)
-        end
-        if parsed_json["outputType"].nil?
-          output_type = nil
-        else
-          output_type = parsed_json["outputType"].to_json
-          output_type = Commons::VariableType.from_json(json_object: output_type)
-        end
-        testcases = parsed_json["testcases"]&.map do |v|
-          v = v.to_json
-          Commons::TestCaseWithExpectedResult.from_json(json_object: v)
-        end
-        method_name = struct.methodName
-        new(problem_name: problem_name, problem_description: problem_description, files: files,
-            input_params: input_params, output_type: output_type, testcases: testcases, method_name: method_name, additional_properties: struct)
-      end
-
-      # Serialize an instance of CreateProblemRequest to a JSON object
-      #
-      # @return [JSON]
-      def to_json(*_args)
-        {
+        @_field_set = {
           "problemName": @problem_name,
           "problemDescription": @problem_description,
           "files": @files,
@@ -90,7 +47,52 @@ module SeedTraceClient
           "outputType": @output_type,
           "testcases": @testcases,
           "methodName": @method_name
-        }.to_json
+        }.reject do |_k, v|
+          v == OMIT
+        end
+      end
+
+      # Deserialize a JSON object to an instance of CreateProblemRequest
+      #
+      # @param json_object [String]
+      # @return [SeedTraceClient::Problem::CreateProblemRequest]
+      def self.from_json(json_object:)
+        struct = JSON.parse(json_object, object_class: OpenStruct)
+        problem_name = struct["problemName"]
+        if parsed_json["problemDescription"].nil?
+          problem_description = nil
+        else
+          problem_description = parsed_json["problemDescription"].to_json
+          problem_description = SeedTraceClient::Problem::ProblemDescription.from_json(json_object: problem_description)
+        end
+        files = parsed_json["files"]&.transform_values do |v|
+          v = v.to_json
+          SeedTraceClient::Problem::ProblemFiles.from_json(json_object: v)
+        end
+        input_params = parsed_json["inputParams"]&.map do |v|
+          v = v.to_json
+          SeedTraceClient::Problem::VariableTypeAndName.from_json(json_object: v)
+        end
+        if parsed_json["outputType"].nil?
+          output_type = nil
+        else
+          output_type = parsed_json["outputType"].to_json
+          output_type = SeedTraceClient::Commons::VariableType.from_json(json_object: output_type)
+        end
+        testcases = parsed_json["testcases"]&.map do |v|
+          v = v.to_json
+          SeedTraceClient::Commons::TestCaseWithExpectedResult.from_json(json_object: v)
+        end
+        method_name = struct["methodName"]
+        new(problem_name: problem_name, problem_description: problem_description, files: files,
+            input_params: input_params, output_type: output_type, testcases: testcases, method_name: method_name, additional_properties: struct)
+      end
+
+      # Serialize an instance of CreateProblemRequest to a JSON object
+      #
+      # @return [String]
+      def to_json(*_args)
+        @_field_set&.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
@@ -99,10 +101,10 @@ module SeedTraceClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.problem_name.is_a?(String) != false || raise("Passed value for field obj.problem_name is not the expected type, validation failed.")
-        Problem::ProblemDescription.validate_raw(obj: obj.problem_description)
+        SeedTraceClient::Problem::ProblemDescription.validate_raw(obj: obj.problem_description)
         obj.files.is_a?(Hash) != false || raise("Passed value for field obj.files is not the expected type, validation failed.")
         obj.input_params.is_a?(Array) != false || raise("Passed value for field obj.input_params is not the expected type, validation failed.")
-        Commons::VariableType.validate_raw(obj: obj.output_type)
+        SeedTraceClient::Commons::VariableType.validate_raw(obj: obj.output_type)
         obj.testcases.is_a?(Array) != false || raise("Passed value for field obj.testcases is not the expected type, validation failed.")
         obj.method_name.is_a?(String) != false || raise("Passed value for field obj.method_name is not the expected type, validation failed.")
       end

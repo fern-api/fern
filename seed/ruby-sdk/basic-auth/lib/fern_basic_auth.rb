@@ -8,30 +8,32 @@ module SeedBasicAuthClient
   class Client
     attr_reader :basic_auth
 
+    # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param username [String]
     # @param password [String]
-    # @return [Client]
-    def initialize(username:, password:, max_retries: nil, timeout_in_seconds: nil)
-      @request_client = RequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds,
-                                          username: username, password: password)
-      @basic_auth = BasicAuthClient.new(request_client: @request_client)
+    # @return [SeedBasicAuthClient::Client]
+    def initialize(username:, password:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
+      @request_client = SeedBasicAuthClient::RequestClient.new(base_url: base_url, max_retries: max_retries,
+                                                               timeout_in_seconds: timeout_in_seconds, username: username, password: password)
+      @basic_auth = SeedBasicAuthClient::BasicAuthClient.new(request_client: @request_client)
     end
   end
 
   class AsyncClient
     attr_reader :basic_auth
 
+    # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param username [String]
     # @param password [String]
-    # @return [AsyncClient]
-    def initialize(username:, password:, max_retries: nil, timeout_in_seconds: nil)
-      @async_request_client = AsyncRequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds,
-                                                     username: username, password: password)
-      @basic_auth = AsyncBasicAuthClient.new(request_client: @async_request_client)
+    # @return [SeedBasicAuthClient::AsyncClient]
+    def initialize(username:, password:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
+      @async_request_client = SeedBasicAuthClient::AsyncRequestClient.new(base_url: base_url, max_retries: max_retries,
+                                                                          timeout_in_seconds: timeout_in_seconds, username: username, password: password)
+      @basic_auth = SeedBasicAuthClient::AsyncBasicAuthClient.new(request_client: @async_request_client)
     end
   end
 end

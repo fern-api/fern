@@ -9,10 +9,10 @@ module SeedQueryParametersClient
   class UserClient
     attr_reader :request_client
 
-    # @param request_client [RequestClient]
-    # @return [UserClient]
+    # @param request_client [SeedQueryParametersClient::RequestClient]
+    # @return [SeedQueryParametersClient::UserClient]
     def initialize(request_client:)
-      # @type [RequestClient]
+      # @type [SeedQueryParametersClient::RequestClient]
       @request_client = request_client
     end
 
@@ -28,8 +28,8 @@ module SeedQueryParametersClient
     # @param optional_user [String]
     # @param exclude_user [String]
     # @param filter [String]
-    # @param request_options [RequestOptions]
-    # @return [User::User]
+    # @param request_options [SeedQueryParametersClient::RequestOptions]
+    # @return [SeedQueryParametersClient::User::User]
     def get_username(limit:, id:, date:, deadline:, bytes:, filter:, user: nil, key_value: nil, optional_string: nil,
                      nested_user: nil, optional_user: nil, exclude_user: nil, request_options: nil)
       response = @request_client.conn.get("/user") do |req|
@@ -50,18 +50,19 @@ module SeedQueryParametersClient
           "excludeUser": exclude_user,
           "filter": filter
         }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/user"
       end
-      User::User.from_json(json_object: response.body)
+      SeedQueryParametersClient::User::User.from_json(json_object: response.body)
     end
   end
 
   class AsyncUserClient
     attr_reader :request_client
 
-    # @param request_client [AsyncRequestClient]
-    # @return [AsyncUserClient]
+    # @param request_client [SeedQueryParametersClient::AsyncRequestClient]
+    # @return [SeedQueryParametersClient::AsyncUserClient]
     def initialize(request_client:)
-      # @type [AsyncRequestClient]
+      # @type [SeedQueryParametersClient::AsyncRequestClient]
       @request_client = request_client
     end
 
@@ -77,8 +78,8 @@ module SeedQueryParametersClient
     # @param optional_user [String]
     # @param exclude_user [String]
     # @param filter [String]
-    # @param request_options [RequestOptions]
-    # @return [User::User]
+    # @param request_options [SeedQueryParametersClient::RequestOptions]
+    # @return [SeedQueryParametersClient::User::User]
     def get_username(limit:, id:, date:, deadline:, bytes:, filter:, user: nil, key_value: nil, optional_string: nil,
                      nested_user: nil, optional_user: nil, exclude_user: nil, request_options: nil)
       Async do
@@ -100,8 +101,9 @@ module SeedQueryParametersClient
             "excludeUser": exclude_user,
             "filter": filter
           }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/user"
         end
-        User::User.from_json(json_object: response.body)
+        SeedQueryParametersClient::User::User.from_json(json_object: response.body)
       end
     end
   end

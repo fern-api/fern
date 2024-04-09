@@ -13,7 +13,7 @@ module SeedUnionsClient
       # @param member [Object]
       # @param discriminant [String]
       # @param id [String]
-      # @return [Types::UnionWithBaseProperties]
+      # @return [SeedUnionsClient::Types::UnionWithBaseProperties]
       def initialize(member:, discriminant:, id:)
         # @type [Object]
         @member = member
@@ -25,8 +25,8 @@ module SeedUnionsClient
 
       # Deserialize a JSON object to an instance of UnionWithBaseProperties
       #
-      # @param json_object [JSON]
-      # @return [Types::UnionWithBaseProperties]
+      # @param json_object [String]
+      # @return [SeedUnionsClient::Types::UnionWithBaseProperties]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
@@ -35,7 +35,7 @@ module SeedUnionsClient
                  when "string"
                    json_object.value
                  when "foo"
-                   Types::Foo.from_json(json_object: json_object)
+                   SeedUnionsClient::Types::Foo.from_json(json_object: json_object)
                  else
                    json_object
                  end
@@ -44,7 +44,7 @@ module SeedUnionsClient
 
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
         case @discriminant
         when "integer"
@@ -70,7 +70,7 @@ module SeedUnionsClient
         when "string"
           obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         when "foo"
-          Types::Foo.validate_raw(obj: obj)
+          SeedUnionsClient::Types::Foo.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -85,19 +85,19 @@ module SeedUnionsClient
       end
 
       # @param member [Integer]
-      # @return [Types::UnionWithBaseProperties]
+      # @return [SeedUnionsClient::Types::UnionWithBaseProperties]
       def self.integer(member:)
         new(member: member, discriminant: "integer")
       end
 
       # @param member [String]
-      # @return [Types::UnionWithBaseProperties]
+      # @return [SeedUnionsClient::Types::UnionWithBaseProperties]
       def self.string(member:)
         new(member: member, discriminant: "string")
       end
 
-      # @param member [Types::Foo]
-      # @return [Types::UnionWithBaseProperties]
+      # @param member [SeedUnionsClient::Types::Foo]
+      # @return [SeedUnionsClient::Types::UnionWithBaseProperties]
       def self.foo(member:)
         new(member: member, discriminant: "foo")
       end

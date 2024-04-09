@@ -12,17 +12,17 @@ module SeedTraceClient
       class ProblemClient
         attr_reader :request_client
 
-        # @param request_client [RequestClient]
-        # @return [V2::V3::ProblemClient]
+        # @param request_client [SeedTraceClient::RequestClient]
+        # @return [SeedTraceClient::V2::V3::ProblemClient]
         def initialize(request_client:)
-          # @type [RequestClient]
+          # @type [SeedTraceClient::RequestClient]
           @request_client = request_client
         end
 
         # Returns lightweight versions of all problems
         #
-        # @param request_options [RequestOptions]
-        # @return [Array<V2::V3::Problem::LightweightProblemInfoV2>]
+        # @param request_options [SeedTraceClient::RequestOptions]
+        # @return [Array<SeedTraceClient::V2::V3::Problem::LightweightProblemInfoV2>]
         def get_lightweight_problems(request_options: nil)
           response = @request_client.conn.get("/problems-v2/lightweight-problem-info") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -32,19 +32,20 @@ module SeedTraceClient
                 request_options.x_random_header
             end
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/lightweight-problem-info"
           end
           return if response.body.nil?
 
           response.body.map do |v|
             v = v.to_json
-            V2::V3::Problem::LightweightProblemInfoV2.from_json(json_object: v)
+            SeedTraceClient::V2::V3::Problem::LightweightProblemInfoV2.from_json(json_object: v)
           end
         end
 
         # Returns latest versions of all problems
         #
-        # @param request_options [RequestOptions]
-        # @return [Array<V2::V3::Problem::ProblemInfoV2>]
+        # @param request_options [SeedTraceClient::RequestOptions]
+        # @return [Array<SeedTraceClient::V2::V3::Problem::ProblemInfoV2>]
         def get_problems(request_options: nil)
           response = @request_client.conn.get("/problems-v2/problem-info") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -54,20 +55,21 @@ module SeedTraceClient
                 request_options.x_random_header
             end
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/problem-info"
           end
           return if response.body.nil?
 
           response.body.map do |v|
             v = v.to_json
-            V2::V3::Problem::ProblemInfoV2.from_json(json_object: v)
+            SeedTraceClient::V2::V3::Problem::ProblemInfoV2.from_json(json_object: v)
           end
         end
 
         # Returns latest version of a problem
         #
-        # @param problem_id [Commons::PROBLEM_ID]
-        # @param request_options [RequestOptions]
-        # @return [V2::V3::Problem::ProblemInfoV2]
+        # @param problem_id [SeedTraceClient::Commons::PROBLEM_ID]
+        # @param request_options [SeedTraceClient::RequestOptions]
+        # @return [SeedTraceClient::V2::V3::Problem::ProblemInfoV2]
         def get_latest_problem(problem_id:, request_options: nil)
           response = @request_client.conn.get("/problems-v2/problem-info/#{problem_id}") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -77,16 +79,17 @@ module SeedTraceClient
                 request_options.x_random_header
             end
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/problem-info/#{problem_id}"
           end
-          V2::V3::Problem::ProblemInfoV2.from_json(json_object: response.body)
+          SeedTraceClient::V2::V3::Problem::ProblemInfoV2.from_json(json_object: response.body)
         end
 
         # Returns requested version of a problem
         #
-        # @param problem_id [Commons::PROBLEM_ID]
+        # @param problem_id [SeedTraceClient::Commons::PROBLEM_ID]
         # @param problem_version [Integer]
-        # @param request_options [RequestOptions]
-        # @return [V2::V3::Problem::ProblemInfoV2]
+        # @param request_options [SeedTraceClient::RequestOptions]
+        # @return [SeedTraceClient::V2::V3::Problem::ProblemInfoV2]
         def get_problem_version(problem_id:, problem_version:, request_options: nil)
           response = @request_client.conn.get("/problems-v2/problem-info/#{problem_id}/version/#{problem_version}") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -96,25 +99,26 @@ module SeedTraceClient
                 request_options.x_random_header
             end
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/problem-info/#{problem_id}/version/#{problem_version}"
           end
-          V2::V3::Problem::ProblemInfoV2.from_json(json_object: response.body)
+          SeedTraceClient::V2::V3::Problem::ProblemInfoV2.from_json(json_object: response.body)
         end
       end
 
       class AsyncProblemClient
         attr_reader :request_client
 
-        # @param request_client [AsyncRequestClient]
-        # @return [V2::V3::AsyncProblemClient]
+        # @param request_client [SeedTraceClient::AsyncRequestClient]
+        # @return [SeedTraceClient::V2::V3::AsyncProblemClient]
         def initialize(request_client:)
-          # @type [AsyncRequestClient]
+          # @type [SeedTraceClient::AsyncRequestClient]
           @request_client = request_client
         end
 
         # Returns lightweight versions of all problems
         #
-        # @param request_options [RequestOptions]
-        # @return [Array<V2::V3::Problem::LightweightProblemInfoV2>]
+        # @param request_options [SeedTraceClient::RequestOptions]
+        # @return [Array<SeedTraceClient::V2::V3::Problem::LightweightProblemInfoV2>]
         def get_lightweight_problems(request_options: nil)
           Async do
             response = @request_client.conn.get("/problems-v2/lightweight-problem-info") do |req|
@@ -125,18 +129,19 @@ module SeedTraceClient
                   request_options.x_random_header
               end
               req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+              req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/lightweight-problem-info"
             end
             response.body&.map do |v|
               v = v.to_json
-              V2::V3::Problem::LightweightProblemInfoV2.from_json(json_object: v)
+              SeedTraceClient::V2::V3::Problem::LightweightProblemInfoV2.from_json(json_object: v)
             end
           end
         end
 
         # Returns latest versions of all problems
         #
-        # @param request_options [RequestOptions]
-        # @return [Array<V2::V3::Problem::ProblemInfoV2>]
+        # @param request_options [SeedTraceClient::RequestOptions]
+        # @return [Array<SeedTraceClient::V2::V3::Problem::ProblemInfoV2>]
         def get_problems(request_options: nil)
           Async do
             response = @request_client.conn.get("/problems-v2/problem-info") do |req|
@@ -147,19 +152,20 @@ module SeedTraceClient
                   request_options.x_random_header
               end
               req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+              req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/problem-info"
             end
             response.body&.map do |v|
               v = v.to_json
-              V2::V3::Problem::ProblemInfoV2.from_json(json_object: v)
+              SeedTraceClient::V2::V3::Problem::ProblemInfoV2.from_json(json_object: v)
             end
           end
         end
 
         # Returns latest version of a problem
         #
-        # @param problem_id [Commons::PROBLEM_ID]
-        # @param request_options [RequestOptions]
-        # @return [V2::V3::Problem::ProblemInfoV2]
+        # @param problem_id [SeedTraceClient::Commons::PROBLEM_ID]
+        # @param request_options [SeedTraceClient::RequestOptions]
+        # @return [SeedTraceClient::V2::V3::Problem::ProblemInfoV2]
         def get_latest_problem(problem_id:, request_options: nil)
           Async do
             response = @request_client.conn.get("/problems-v2/problem-info/#{problem_id}") do |req|
@@ -170,17 +176,18 @@ module SeedTraceClient
                   request_options.x_random_header
               end
               req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+              req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/problem-info/#{problem_id}"
             end
-            V2::V3::Problem::ProblemInfoV2.from_json(json_object: response.body)
+            SeedTraceClient::V2::V3::Problem::ProblemInfoV2.from_json(json_object: response.body)
           end
         end
 
         # Returns requested version of a problem
         #
-        # @param problem_id [Commons::PROBLEM_ID]
+        # @param problem_id [SeedTraceClient::Commons::PROBLEM_ID]
         # @param problem_version [Integer]
-        # @param request_options [RequestOptions]
-        # @return [V2::V3::Problem::ProblemInfoV2]
+        # @param request_options [SeedTraceClient::RequestOptions]
+        # @return [SeedTraceClient::V2::V3::Problem::ProblemInfoV2]
         def get_problem_version(problem_id:, problem_version:, request_options: nil)
           Async do
             response = @request_client.conn.get("/problems-v2/problem-info/#{problem_id}/version/#{problem_version}") do |req|
@@ -191,8 +198,9 @@ module SeedTraceClient
                   request_options.x_random_header
               end
               req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+              req.url "#{@request_client.get_url(request_options: request_options)}/problems-v2/problem-info/#{problem_id}/version/#{problem_version}"
             end
-            V2::V3::Problem::ProblemInfoV2.from_json(json_object: response.body)
+            SeedTraceClient::V2::V3::Problem::ProblemInfoV2.from_json(json_object: response.body)
           end
         end
       end

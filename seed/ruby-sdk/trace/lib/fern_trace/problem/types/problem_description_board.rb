@@ -12,7 +12,7 @@ module SeedTraceClient
       alias kind_of? is_a?
       # @param member [Object]
       # @param discriminant [String]
-      # @return [Problem::ProblemDescriptionBoard]
+      # @return [SeedTraceClient::Problem::ProblemDescriptionBoard]
       def initialize(member:, discriminant:)
         # @type [Object]
         @member = member
@@ -22,15 +22,15 @@ module SeedTraceClient
 
       # Deserialize a JSON object to an instance of ProblemDescriptionBoard
       #
-      # @param json_object [JSON]
-      # @return [Problem::ProblemDescriptionBoard]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Problem::ProblemDescriptionBoard]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "html"
                    json_object.value
                  when "variable"
-                   Commons::VariableValue.from_json(json_object: json_object.value)
+                   SeedTraceClient::Commons::VariableValue.from_json(json_object: json_object.value)
                  when "testCaseId"
                    json_object.value
                  else
@@ -41,7 +41,7 @@ module SeedTraceClient
 
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
         case @discriminant
         when "html"
@@ -61,7 +61,7 @@ module SeedTraceClient
         when "html"
           obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         when "variable"
-          Commons::VariableValue.validate_raw(obj: obj)
+          SeedTraceClient::Commons::VariableValue.validate_raw(obj: obj)
         when "testCaseId"
           obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         else
@@ -78,19 +78,19 @@ module SeedTraceClient
       end
 
       # @param member [String]
-      # @return [Problem::ProblemDescriptionBoard]
+      # @return [SeedTraceClient::Problem::ProblemDescriptionBoard]
       def self.html(member:)
         new(member: member, discriminant: "html")
       end
 
-      # @param member [Commons::VariableValue]
-      # @return [Problem::ProblemDescriptionBoard]
+      # @param member [SeedTraceClient::Commons::VariableValue]
+      # @return [SeedTraceClient::Problem::ProblemDescriptionBoard]
       def self.variable(member:)
         new(member: member, discriminant: "variable")
       end
 
       # @param member [String]
-      # @return [Problem::ProblemDescriptionBoard]
+      # @return [SeedTraceClient::Problem::ProblemDescriptionBoard]
       def self.test_case_id(member:)
         new(member: member, discriminant: "testCaseId")
       end

@@ -3,51 +3,58 @@
 require_relative "playlist_id"
 require_relative "../../commons/types/user_id"
 require_relative "../../commons/types/problem_id"
+require "ostruct"
 require "json"
 
 module SeedTraceClient
   class Playlist
     class Playlist
-      attr_reader :playlist_id, :owner_id, :name, :problems, :additional_properties
-
-      # @param playlist_id [Playlist::PLAYLIST_ID]
-      # @param owner_id [Commons::USER_ID]
+      attr_reader :playlist_id, :owner_id, :name, :problems, :additional_properties, :_field_set
+      protected :_field_set
+      OMIT = Object.new
+      # @param playlist_id [SeedTraceClient::Playlist::PLAYLIST_ID]
+      # @param owner_id [SeedTraceClient::Commons::USER_ID]
       # @param name [String]
-      # @param problems [Array<Commons::PROBLEM_ID>]
+      # @param problems [Array<SeedTraceClient::Commons::PROBLEM_ID>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Playlist::Playlist]
+      # @return [SeedTraceClient::Playlist::Playlist]
       def initialize(playlist_id:, owner_id:, name:, problems:, additional_properties: nil)
-        # @type [Playlist::PLAYLIST_ID]
+        # @type [SeedTraceClient::Playlist::PLAYLIST_ID]
         @playlist_id = playlist_id
-        # @type [Commons::USER_ID]
+        # @type [SeedTraceClient::Commons::USER_ID]
         @owner_id = owner_id
         # @type [String]
         @name = name
-        # @type [Array<Commons::PROBLEM_ID>]
+        # @type [Array<SeedTraceClient::Commons::PROBLEM_ID>]
         @problems = problems
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
-        @additional_properties = additional_properties
+        @_field_set = {
+          "playlist_id": @playlist_id,
+          "owner-id": @owner_id,
+          "name": @name,
+          "problems": @problems
+        }.reject do |_k, v|
+          v == OMIT
+        end
       end
 
       # Deserialize a JSON object to an instance of Playlist
       #
-      # @param json_object [JSON]
-      # @return [Playlist::Playlist]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Playlist::Playlist]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        JSON.parse(json_object)
-        playlist_id = struct.playlist_id
-        owner_id = struct.owner - id
-        name = struct.name
-        problems = struct.problems
+        playlist_id = struct["playlist_id"]
+        owner_id = struct["owner-id"]
+        name = struct["name"]
+        problems = struct["problems"]
         new(playlist_id: playlist_id, owner_id: owner_id, name: name, problems: problems, additional_properties: struct)
       end
 
       # Serialize an instance of Playlist to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "playlist_id": @playlist_id, "owner-id": @owner_id, "name": @name, "problems": @problems }.to_json
+        @_field_set&.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

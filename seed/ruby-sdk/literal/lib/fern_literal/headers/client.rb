@@ -8,18 +8,18 @@ module SeedLiteralClient
   class HeadersClient
     attr_reader :request_client
 
-    # @param request_client [RequestClient]
-    # @return [HeadersClient]
+    # @param request_client [SeedLiteralClient::RequestClient]
+    # @return [SeedLiteralClient::HeadersClient]
     def initialize(request_client:)
-      # @type [RequestClient]
+      # @type [SeedLiteralClient::RequestClient]
       @request_client = request_client
     end
 
     # @param endpoint_version [String]
     # @param async [Boolean]
     # @param query [String]
-    # @param request_options [RequestOptions]
-    # @return [SendResponse]
+    # @param request_options [SeedLiteralClient::RequestOptions]
+    # @return [SeedLiteralClient::SendResponse]
     def send(endpoint_version:, async:, query:, request_options: nil)
       response = @request_client.conn.post("/headers") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -35,26 +35,27 @@ module SeedLiteralClient
           "X-Async": async
         }.compact
         req.body = { **(request_options&.additional_body_parameters || {}), query: query }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/headers"
       end
-      SendResponse.from_json(json_object: response.body)
+      SeedLiteralClient::SendResponse.from_json(json_object: response.body)
     end
   end
 
   class AsyncHeadersClient
     attr_reader :request_client
 
-    # @param request_client [AsyncRequestClient]
-    # @return [AsyncHeadersClient]
+    # @param request_client [SeedLiteralClient::AsyncRequestClient]
+    # @return [SeedLiteralClient::AsyncHeadersClient]
     def initialize(request_client:)
-      # @type [AsyncRequestClient]
+      # @type [SeedLiteralClient::AsyncRequestClient]
       @request_client = request_client
     end
 
     # @param endpoint_version [String]
     # @param async [Boolean]
     # @param query [String]
-    # @param request_options [RequestOptions]
-    # @return [SendResponse]
+    # @param request_options [SeedLiteralClient::RequestOptions]
+    # @return [SeedLiteralClient::SendResponse]
     def send(endpoint_version:, async:, query:, request_options: nil)
       Async do
         response = @request_client.conn.post("/headers") do |req|
@@ -71,8 +72,9 @@ module SeedLiteralClient
             "X-Async": async
           }.compact
           req.body = { **(request_options&.additional_body_parameters || {}), query: query }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/headers"
         end
-        SendResponse.from_json(json_object: response.body)
+        SeedLiteralClient::SendResponse.from_json(json_object: response.body)
       end
     end
   end

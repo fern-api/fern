@@ -1,38 +1,40 @@
 # frozen_string_literal: true
 
+require "ostruct"
 require "json"
 
 module SeedTraceClient
   class Submission
     class GetTraceResponsesPageRequest
-      attr_reader :offset, :additional_properties
-
+      attr_reader :offset, :additional_properties, :_field_set
+      protected :_field_set
+      OMIT = Object.new
       # @param offset [Integer]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Submission::GetTraceResponsesPageRequest]
-      def initialize(offset: nil, additional_properties: nil)
+      # @return [SeedTraceClient::Submission::GetTraceResponsesPageRequest]
+      def initialize(offset: OMIT, additional_properties: nil)
         # @type [Integer]
-        @offset = offset
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
-        @additional_properties = additional_properties
+        @offset = offset if offset != OMIT
+        @_field_set = { "offset": @offset }.reject do |_k, v|
+          v == OMIT
+        end
       end
 
       # Deserialize a JSON object to an instance of GetTraceResponsesPageRequest
       #
-      # @param json_object [JSON]
-      # @return [Submission::GetTraceResponsesPageRequest]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Submission::GetTraceResponsesPageRequest]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        JSON.parse(json_object)
-        offset = struct.offset
+        offset = struct["offset"]
         new(offset: offset, additional_properties: struct)
       end
 
       # Serialize an instance of GetTraceResponsesPageRequest to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "offset": @offset }.to_json
+        @_field_set&.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

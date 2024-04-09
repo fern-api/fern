@@ -6,13 +6,15 @@ require "async/http/faraday"
 
 module SeedIdempotencyHeadersClient
   class RequestClient
-    attr_reader :headers, :base_url, :conn
+    attr_reader :headers, :default_environment, :conn, :base_url
 
+    # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param token [String]
-    # @return [RequestClient]
-    def initialize(token:, max_retries: nil, timeout_in_seconds: nil)
+    # @return [SeedIdempotencyHeadersClient::RequestClient]
+    def initialize(token:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
+      @base_url = base_url
       @headers = {
         "X-Fern-Language": "Ruby",
         "X-Fern-SDK-Name": "fern_idempotency_headers",
@@ -26,16 +28,24 @@ module SeedIdempotencyHeadersClient
         faraday.options.timeout = timeout_in_seconds unless timeout_in_seconds.nil?
       end
     end
+
+    # @param request_options [SeedIdempotencyHeadersClient::RequestOptions]
+    # @return [String]
+    def get_url(request_options:)
+      request_options&.base_url || @base_url
+    end
   end
 
   class AsyncRequestClient
-    attr_reader :headers, :base_url, :conn
+    attr_reader :headers, :default_environment, :conn, :base_url
 
+    # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param token [String]
-    # @return [AsyncRequestClient]
-    def initialize(token:, max_retries: nil, timeout_in_seconds: nil)
+    # @return [SeedIdempotencyHeadersClient::AsyncRequestClient]
+    def initialize(token:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
+      @base_url = base_url
       @headers = {
         "X-Fern-Language": "Ruby",
         "X-Fern-SDK-Name": "fern_idempotency_headers",
@@ -50,21 +60,30 @@ module SeedIdempotencyHeadersClient
         faraday.options.timeout = timeout_in_seconds unless timeout_in_seconds.nil?
       end
     end
+
+    # @param request_options [SeedIdempotencyHeadersClient::RequestOptions]
+    # @return [String]
+    def get_url(request_options:)
+      request_options&.base_url || @base_url
+    end
   end
 
   # Additional options for request-specific configuration when calling APIs via the SDK.
   class RequestOptions
-    attr_reader :token, :additional_headers, :additional_query_parameters, :additional_body_parameters,
+    attr_reader :base_url, :token, :additional_headers, :additional_query_parameters, :additional_body_parameters,
                 :timeout_in_seconds
 
+    # @param base_url [String]
     # @param token [String]
     # @param additional_headers [Hash{String => Object}]
     # @param additional_query_parameters [Hash{String => Object}]
     # @param additional_body_parameters [Hash{String => Object}]
     # @param timeout_in_seconds [Long]
-    # @return [RequestOptions]
-    def initialize(token: nil, additional_headers: nil, additional_query_parameters: nil,
+    # @return [SeedIdempotencyHeadersClient::RequestOptions]
+    def initialize(base_url: nil, token: nil, additional_headers: nil, additional_query_parameters: nil,
                    additional_body_parameters: nil, timeout_in_seconds: nil)
+      # @type [String]
+      @base_url = base_url
       # @type [String]
       @token = token
       # @type [Hash{String => Object}]
@@ -80,9 +99,10 @@ module SeedIdempotencyHeadersClient
 
   # Additional options for request-specific configuration when calling APIs via the SDK.
   class IdempotencyRequestOptions
-    attr_reader :token, :additional_headers, :additional_query_parameters, :additional_body_parameters,
+    attr_reader :base_url, :token, :additional_headers, :additional_query_parameters, :additional_body_parameters,
                 :timeout_in_seconds, :idempotency_key, :idempotency_expiration
 
+    # @param base_url [String]
     # @param token [String]
     # @param additional_headers [Hash{String => Object}]
     # @param additional_query_parameters [Hash{String => Object}]
@@ -90,9 +110,11 @@ module SeedIdempotencyHeadersClient
     # @param timeout_in_seconds [Long]
     # @param idempotency_key [String]
     # @param idempotency_expiration [Integer]
-    # @return [IdempotencyRequestOptions]
-    def initialize(token: nil, additional_headers: nil, additional_query_parameters: nil,
+    # @return [SeedIdempotencyHeadersClient::IdempotencyRequestOptions]
+    def initialize(base_url: nil, token: nil, additional_headers: nil, additional_query_parameters: nil,
                    additional_body_parameters: nil, timeout_in_seconds: nil, idempotency_key: nil, idempotency_expiration: nil)
+      # @type [String]
+      @base_url = base_url
       # @type [String]
       @token = token
       # @type [Hash{String => Object}]

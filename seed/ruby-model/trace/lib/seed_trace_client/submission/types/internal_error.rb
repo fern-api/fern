@@ -1,27 +1,30 @@
 # frozen_string_literal: true
 
 require_relative "exception_info"
+require "ostruct"
 require "json"
 
 module SeedTraceClient
   class Submission
     class InternalError
-      attr_reader :exception_info, :additional_properties
-
-      # @param exception_info [Submission::ExceptionInfo]
+      attr_reader :exception_info, :additional_properties, :_field_set
+      protected :_field_set
+      OMIT = Object.new
+      # @param exception_info [SeedTraceClient::Submission::ExceptionInfo]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Submission::InternalError]
+      # @return [SeedTraceClient::Submission::InternalError]
       def initialize(exception_info:, additional_properties: nil)
-        # @type [Submission::ExceptionInfo]
+        # @type [SeedTraceClient::Submission::ExceptionInfo]
         @exception_info = exception_info
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
-        @additional_properties = additional_properties
+        @_field_set = { "exceptionInfo": @exception_info }.reject do |_k, v|
+          v == OMIT
+        end
       end
 
       # Deserialize a JSON object to an instance of InternalError
       #
-      # @param json_object [JSON]
-      # @return [Submission::InternalError]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Submission::InternalError]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -29,16 +32,16 @@ module SeedTraceClient
           exception_info = nil
         else
           exception_info = parsed_json["exceptionInfo"].to_json
-          exception_info = Submission::ExceptionInfo.from_json(json_object: exception_info)
+          exception_info = SeedTraceClient::Submission::ExceptionInfo.from_json(json_object: exception_info)
         end
         new(exception_info: exception_info, additional_properties: struct)
       end
 
       # Serialize an instance of InternalError to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "exceptionInfo": @exception_info }.to_json
+        @_field_set&.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
@@ -46,7 +49,7 @@ module SeedTraceClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        Submission::ExceptionInfo.validate_raw(obj: obj.exception_info)
+        SeedTraceClient::Submission::ExceptionInfo.validate_raw(obj: obj.exception_info)
       end
     end
   end

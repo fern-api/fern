@@ -4,6 +4,7 @@ import {
     GenericClassReference,
     JsonClassReference,
     OpenStructClassReference,
+    StringClassReference,
     VoidClassReference
 } from "../classes/ClassReference";
 import { Class_ } from "../classes/Class_";
@@ -31,7 +32,7 @@ export class UndiscriminatedUnion extends Class_ {
     }
 
     private static createFromJsonFunction(subclasses: ClassReference[], classReference: ClassReference): Function_ {
-        const jsonObjectParameter = new Parameter({ name: "json_object", type: JsonClassReference });
+        const jsonObjectParameter = new Parameter({ name: "json_object", type: StringClassReference });
         const functionBody = [
             new Expression({
                 leftSide: "struct",

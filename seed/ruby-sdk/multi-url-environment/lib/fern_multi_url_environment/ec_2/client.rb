@@ -7,15 +7,15 @@ module SeedMultiUrlEnvironmentClient
   class Ec2Client
     attr_reader :request_client
 
-    # @param request_client [RequestClient]
-    # @return [Ec2Client]
+    # @param request_client [SeedMultiUrlEnvironmentClient::RequestClient]
+    # @return [SeedMultiUrlEnvironmentClient::Ec2Client]
     def initialize(request_client:)
-      # @type [RequestClient]
+      # @type [SeedMultiUrlEnvironmentClient::RequestClient]
       @request_client = request_client
     end
 
     # @param size [String]
-    # @param request_options [RequestOptions]
+    # @param request_options [SeedMultiUrlEnvironmentClient::RequestOptions]
     # @return [Void]
     def boot_instance(size:, request_options: nil)
       @request_client.conn.post do |req|
@@ -23,7 +23,7 @@ module SeedMultiUrlEnvironmentClient
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request_options&.additional_body_parameters || {}), size: size }.compact
-        req.url "#{@request_client.default_environment[:ec2]}/ec2/boot"
+        req.url "#{@request_client.get_url(environment: ec2, request_options: request_options)}/ec2/boot"
       end
     end
   end
@@ -31,15 +31,15 @@ module SeedMultiUrlEnvironmentClient
   class AsyncEc2Client
     attr_reader :request_client
 
-    # @param request_client [AsyncRequestClient]
-    # @return [AsyncEc2Client]
+    # @param request_client [SeedMultiUrlEnvironmentClient::AsyncRequestClient]
+    # @return [SeedMultiUrlEnvironmentClient::AsyncEc2Client]
     def initialize(request_client:)
-      # @type [AsyncRequestClient]
+      # @type [SeedMultiUrlEnvironmentClient::AsyncRequestClient]
       @request_client = request_client
     end
 
     # @param size [String]
-    # @param request_options [RequestOptions]
+    # @param request_options [SeedMultiUrlEnvironmentClient::RequestOptions]
     # @return [Void]
     def boot_instance(size:, request_options: nil)
       Async do
@@ -48,7 +48,7 @@ module SeedMultiUrlEnvironmentClient
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request_options&.additional_body_parameters || {}), size: size }.compact
-          req.url "#{@request_client.default_environment[:ec2]}/ec2/boot"
+          req.url "#{@request_client.get_url(environment: ec2, request_options: request_options)}/ec2/boot"
         end
       end
     end

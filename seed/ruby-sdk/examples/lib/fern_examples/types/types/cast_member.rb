@@ -10,25 +10,25 @@ module SeedExamplesClient
     class CastMember
       # Deserialize a JSON object to an instance of CastMember
       #
-      # @param json_object [JSON]
-      # @return [Types::CastMember]
+      # @param json_object [String]
+      # @return [SeedExamplesClient::Types::CastMember]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         begin
-          Types::Actor.validate_raw(obj: struct)
-          return Types::Actor.from_json(json_object: json_object)
+          SeedExamplesClient::Types::Actor.validate_raw(obj: struct)
+          return SeedExamplesClient::Types::Actor.from_json(json_object: json_object)
         rescue StandardError
           # noop
         end
         begin
-          Types::Actress.validate_raw(obj: struct)
-          return Types::Actress.from_json(json_object: json_object)
+          SeedExamplesClient::Types::Actress.validate_raw(obj: struct)
+          return SeedExamplesClient::Types::Actress.from_json(json_object: json_object)
         rescue StandardError
           # noop
         end
         begin
-          Types::StuntDouble.validate_raw(obj: struct)
-          return Types::StuntDouble.from_json(json_object: json_object)
+          SeedExamplesClient::Types::StuntDouble.validate_raw(obj: struct)
+          return SeedExamplesClient::Types::StuntDouble.from_json(json_object: json_object)
         rescue StandardError
           # noop
         end
@@ -41,17 +41,17 @@ module SeedExamplesClient
       # @return [Void]
       def self.validate_raw(obj:)
         begin
-          return Types::Actor.validate_raw(obj: obj)
+          return SeedExamplesClient::Types::Actor.validate_raw(obj: obj)
         rescue StandardError
           # noop
         end
         begin
-          return Types::Actress.validate_raw(obj: obj)
+          return SeedExamplesClient::Types::Actress.validate_raw(obj: obj)
         rescue StandardError
           # noop
         end
         begin
-          return Types::StuntDouble.validate_raw(obj: obj)
+          return SeedExamplesClient::Types::StuntDouble.validate_raw(obj: obj)
         rescue StandardError
           # noop
         end

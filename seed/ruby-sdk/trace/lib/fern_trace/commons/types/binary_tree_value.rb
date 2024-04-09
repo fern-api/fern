@@ -1,46 +1,49 @@
 # frozen_string_literal: true
 
 require_relative "node_id"
+require "ostruct"
 require "json"
 
 module SeedTraceClient
   class Commons
     class BinaryTreeValue
-      attr_reader :root, :nodes, :additional_properties
-
-      # @param root [Commons::NODE_ID]
-      # @param nodes [Hash{Commons::NODE_ID => Commons::BinaryTreeNodeValue}]
+      attr_reader :root, :nodes, :additional_properties, :_field_set
+      protected :_field_set
+      OMIT = Object.new
+      # @param root [SeedTraceClient::Commons::NODE_ID]
+      # @param nodes [Hash{SeedTraceClient::Commons::NODE_ID => SeedTraceClient::Commons::BinaryTreeNodeValue}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Commons::BinaryTreeValue]
-      def initialize(nodes:, root: nil, additional_properties: nil)
-        # @type [Commons::NODE_ID]
-        @root = root
-        # @type [Hash{Commons::NODE_ID => Commons::BinaryTreeNodeValue}]
+      # @return [SeedTraceClient::Commons::BinaryTreeValue]
+      def initialize(nodes:, root: OMIT, additional_properties: nil)
+        # @type [SeedTraceClient::Commons::NODE_ID]
+        @root = root if root != OMIT
+        # @type [Hash{SeedTraceClient::Commons::NODE_ID => SeedTraceClient::Commons::BinaryTreeNodeValue}]
         @nodes = nodes
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
-        @additional_properties = additional_properties
+        @_field_set = { "root": @root, "nodes": @nodes }.reject do |_k, v|
+          v == OMIT
+        end
       end
 
       # Deserialize a JSON object to an instance of BinaryTreeValue
       #
-      # @param json_object [JSON]
-      # @return [Commons::BinaryTreeValue]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Commons::BinaryTreeValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        root = struct.root
-        nodes = parsed_json["nodes"]&.transform_values do |_k, v|
+        root = struct["root"]
+        nodes = parsed_json["nodes"]&.transform_values do |v|
           v = v.to_json
-          Commons::BinaryTreeNodeValue.from_json(json_object: v)
+          SeedTraceClient::Commons::BinaryTreeNodeValue.from_json(json_object: v)
         end
         new(root: root, nodes: nodes, additional_properties: struct)
       end
 
       # Serialize an instance of BinaryTreeValue to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "root": @root, "nodes": @nodes }.to_json
+        @_field_set&.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

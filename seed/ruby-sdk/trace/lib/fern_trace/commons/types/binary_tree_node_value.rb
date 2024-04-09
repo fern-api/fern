@@ -1,51 +1,53 @@
 # frozen_string_literal: true
 
 require_relative "node_id"
+require "ostruct"
 require "json"
 
 module SeedTraceClient
   class Commons
     class BinaryTreeNodeValue
-      attr_reader :node_id, :val, :right, :left, :additional_properties
-
-      # @param node_id [Commons::NODE_ID]
+      attr_reader :node_id, :val, :right, :left, :additional_properties, :_field_set
+      protected :_field_set
+      OMIT = Object.new
+      # @param node_id [SeedTraceClient::Commons::NODE_ID]
       # @param val [Float]
-      # @param right [Commons::NODE_ID]
-      # @param left [Commons::NODE_ID]
+      # @param right [SeedTraceClient::Commons::NODE_ID]
+      # @param left [SeedTraceClient::Commons::NODE_ID]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Commons::BinaryTreeNodeValue]
-      def initialize(node_id:, val:, right: nil, left: nil, additional_properties: nil)
-        # @type [Commons::NODE_ID]
+      # @return [SeedTraceClient::Commons::BinaryTreeNodeValue]
+      def initialize(node_id:, val:, right: OMIT, left: OMIT, additional_properties: nil)
+        # @type [SeedTraceClient::Commons::NODE_ID]
         @node_id = node_id
         # @type [Float]
         @val = val
-        # @type [Commons::NODE_ID]
-        @right = right
-        # @type [Commons::NODE_ID]
-        @left = left
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
-        @additional_properties = additional_properties
+        # @type [SeedTraceClient::Commons::NODE_ID]
+        @right = right if right != OMIT
+        # @type [SeedTraceClient::Commons::NODE_ID]
+        @left = left if left != OMIT
+        @_field_set = { "nodeId": @node_id, "val": @val, "right": @right, "left": @left }.reject do |_k, v|
+          v == OMIT
+        end
       end
 
       # Deserialize a JSON object to an instance of BinaryTreeNodeValue
       #
-      # @param json_object [JSON]
-      # @return [Commons::BinaryTreeNodeValue]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Commons::BinaryTreeNodeValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        JSON.parse(json_object)
-        node_id = struct.nodeId
-        val = struct.val
-        right = struct.right
-        left = struct.left
+        node_id = struct["nodeId"]
+        val = struct["val"]
+        right = struct["right"]
+        left = struct["left"]
         new(node_id: node_id, val: val, right: right, left: left, additional_properties: struct)
       end
 
       # Serialize an instance of BinaryTreeNodeValue to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "nodeId": @node_id, "val": @val, "right": @right, "left": @left }.to_json
+        @_field_set&.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

@@ -6,14 +6,16 @@ require "async/http/faraday"
 
 module SeedAuthEnvironmentVariablesClient
   class RequestClient
-    attr_reader :headers, :base_url, :conn
+    attr_reader :headers, :default_environment, :conn, :base_url
 
+    # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param api_key [String]
     # @param x_another_header [String]
-    # @return [RequestClient]
-    def initialize(x_another_header:, max_retries: nil, timeout_in_seconds: nil, api_key: nil)
+    # @return [SeedAuthEnvironmentVariablesClient::RequestClient]
+    def initialize(x_another_header:, base_url: nil, max_retries: nil, timeout_in_seconds: nil, api_key: nil)
+      @base_url = base_url
       @headers = {
         "X-Fern-Language": "Ruby",
         "X-Fern-SDK-Name": "fern_auth_environment_variables",
@@ -28,17 +30,25 @@ module SeedAuthEnvironmentVariablesClient
         faraday.options.timeout = timeout_in_seconds unless timeout_in_seconds.nil?
       end
     end
+
+    # @param request_options [SeedAuthEnvironmentVariablesClient::RequestOptions]
+    # @return [String]
+    def get_url(request_options:)
+      request_options&.base_url || @base_url
+    end
   end
 
   class AsyncRequestClient
-    attr_reader :headers, :base_url, :conn
+    attr_reader :headers, :default_environment, :conn, :base_url
 
+    # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param api_key [String]
     # @param x_another_header [String]
-    # @return [AsyncRequestClient]
-    def initialize(x_another_header:, max_retries: nil, timeout_in_seconds: nil, api_key: nil)
+    # @return [SeedAuthEnvironmentVariablesClient::AsyncRequestClient]
+    def initialize(x_another_header:, base_url: nil, max_retries: nil, timeout_in_seconds: nil, api_key: nil)
+      @base_url = base_url
       @headers = {
         "X-Fern-Language": "Ruby",
         "X-Fern-SDK-Name": "fern_auth_environment_variables",
@@ -54,22 +64,31 @@ module SeedAuthEnvironmentVariablesClient
         faraday.options.timeout = timeout_in_seconds unless timeout_in_seconds.nil?
       end
     end
+
+    # @param request_options [SeedAuthEnvironmentVariablesClient::RequestOptions]
+    # @return [String]
+    def get_url(request_options:)
+      request_options&.base_url || @base_url
+    end
   end
 
   # Additional options for request-specific configuration when calling APIs via the SDK.
   class RequestOptions
-    attr_reader :api_key, :x_another_header, :additional_headers, :additional_query_parameters,
+    attr_reader :base_url, :api_key, :x_another_header, :additional_headers, :additional_query_parameters,
                 :additional_body_parameters, :timeout_in_seconds
 
+    # @param base_url [String]
     # @param api_key [String]
     # @param x_another_header [String]
     # @param additional_headers [Hash{String => Object}]
     # @param additional_query_parameters [Hash{String => Object}]
     # @param additional_body_parameters [Hash{String => Object}]
     # @param timeout_in_seconds [Long]
-    # @return [RequestOptions]
-    def initialize(api_key: nil, x_another_header: nil, additional_headers: nil, additional_query_parameters: nil,
-                   additional_body_parameters: nil, timeout_in_seconds: nil)
+    # @return [SeedAuthEnvironmentVariablesClient::RequestOptions]
+    def initialize(base_url: nil, api_key: nil, x_another_header: nil, additional_headers: nil,
+                   additional_query_parameters: nil, additional_body_parameters: nil, timeout_in_seconds: nil)
+      # @type [String]
+      @base_url = base_url
       # @type [String]
       @api_key = api_key
       # @type [String]
@@ -87,18 +106,21 @@ module SeedAuthEnvironmentVariablesClient
 
   # Additional options for request-specific configuration when calling APIs via the SDK.
   class IdempotencyRequestOptions
-    attr_reader :api_key, :x_another_header, :additional_headers, :additional_query_parameters,
+    attr_reader :base_url, :api_key, :x_another_header, :additional_headers, :additional_query_parameters,
                 :additional_body_parameters, :timeout_in_seconds
 
+    # @param base_url [String]
     # @param api_key [String]
     # @param x_another_header [String]
     # @param additional_headers [Hash{String => Object}]
     # @param additional_query_parameters [Hash{String => Object}]
     # @param additional_body_parameters [Hash{String => Object}]
     # @param timeout_in_seconds [Long]
-    # @return [IdempotencyRequestOptions]
-    def initialize(api_key: nil, x_another_header: nil, additional_headers: nil, additional_query_parameters: nil,
-                   additional_body_parameters: nil, timeout_in_seconds: nil)
+    # @return [SeedAuthEnvironmentVariablesClient::IdempotencyRequestOptions]
+    def initialize(base_url: nil, api_key: nil, x_another_header: nil, additional_headers: nil,
+                   additional_query_parameters: nil, additional_body_parameters: nil, timeout_in_seconds: nil)
+      # @type [String]
+      @base_url = base_url
       # @type [String]
       @api_key = api_key
       # @type [String]

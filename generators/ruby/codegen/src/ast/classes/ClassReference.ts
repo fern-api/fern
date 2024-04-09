@@ -116,7 +116,10 @@ export class ClassReference extends AstNode {
     }
 }
 
-export const OpenStructClassReference = new ClassReference({ name: RubyClass.OPENSTRUCT });
+export const OpenStructClassReference = new ClassReference({
+    name: RubyClass.OPENSTRUCT,
+    import_: new Import({ from: "ostruct", isExternal: true })
+});
 export const GenericClassReference = new ClassReference({ name: RubyClass.OBJECT });
 export const JsonClassReference = new ClassReference({
     name: RubyClass.JSON,
@@ -129,6 +132,7 @@ export const LongClassReference = new ClassReference({ name: RubyClass.LONG });
 export const FileClassReference = new ClassReference({ name: RubyClass.FILE });
 export const B64StringClassReference = new ClassReference({ name: RubyClass.BASE64 });
 export const NilValue = "nil";
+export const OmittedValue = "OMIT";
 
 export declare namespace SerializableObjectReference {
     export type InitReference = ClassReference.Init;
@@ -143,7 +147,7 @@ export class SerializableObjectReference extends ClassReference {
             baseFunction: new Function_({ name: "from_json", functionBody: [] }),
             onObject: this.qualifiedName,
             arguments_: [
-                new Argument({ type: GenericClassReference, value: variable, isNamed: true, name: "json_object" })
+                new Argument({ type: StringClassReference, value: variable, isNamed: true, name: "json_object" })
             ]
         });
     }
@@ -176,7 +180,11 @@ export class SerializableObjectReference extends ClassReference {
         locationGenerator: LocationGenerator
     ): ClassReference {
         const location = locationGenerator.getLocationForTypeDeclaration(declaredTypeName);
-        const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(declaredTypeName.fernFilepath, true);
+        const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(
+            declaredTypeName.fernFilepath,
+            true,
+            locationGenerator.rootModule
+        );
         return new SerializableObjectReference({
             name: declaredTypeName.name.pascalCase.safeName,
             import_: new Import({ from: location }),
@@ -199,7 +207,11 @@ export class DiscriminatedUnionClassReference extends SerializableObjectReferenc
         locationGenerator: LocationGenerator
     ): ClassReference {
         const location = locationGenerator.getLocationForTypeDeclaration(declaredTypeName);
-        const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(declaredTypeName.fernFilepath, true);
+        const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(
+            declaredTypeName.fernFilepath,
+            true,
+            locationGenerator.rootModule
+        );
         return new DiscriminatedUnionClassReference({
             name: declaredTypeName.name.pascalCase.safeName,
             import_: new Import({ from: location }),
@@ -236,7 +248,11 @@ export class AliasReference extends ClassReference {
         locationGenerator: LocationGenerator
     ): ClassReference {
         const location = locationGenerator.getLocationForTypeDeclaration(declaredTypeName);
-        const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(declaredTypeName.fernFilepath, true);
+        const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(
+            declaredTypeName.fernFilepath,
+            true,
+            locationGenerator.rootModule
+        );
         return new AliasReference({
             aliasOf,
             name: declaredTypeName.name.screamingSnakeCase.safeName,
@@ -366,7 +382,7 @@ export class HashReference extends ClassReference {
                               baseFunction: new Function_({ name: "transform_values", functionBody: [] }),
                               onObject: variable,
                               block: {
-                                  arguments: "k, v",
+                                  arguments: "v",
                                   expressions: [
                                       new Expression({
                                           leftSide: "v",
@@ -472,7 +488,11 @@ export class EnumReference extends ClassReference {
         locationGenerator: LocationGenerator
     ): EnumReference {
         const location = locationGenerator.getLocationForTypeDeclaration(declaredTypeName);
-        const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(declaredTypeName.fernFilepath, true);
+        const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(
+            declaredTypeName.fernFilepath,
+            true,
+            locationGenerator.rootModule
+        );
         return new EnumReference({
             name: declaredTypeName.name.pascalCase.safeName,
             import_: new Import({ from: location }),

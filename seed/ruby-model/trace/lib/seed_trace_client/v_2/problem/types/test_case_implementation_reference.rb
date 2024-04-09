@@ -14,7 +14,7 @@ module SeedTraceClient
         alias kind_of? is_a?
         # @param member [Object]
         # @param discriminant [String]
-        # @return [V2::Problem::TestCaseImplementationReference]
+        # @return [SeedTraceClient::V2::Problem::TestCaseImplementationReference]
         def initialize(member:, discriminant:)
           # @type [Object]
           @member = member
@@ -24,15 +24,15 @@ module SeedTraceClient
 
         # Deserialize a JSON object to an instance of TestCaseImplementationReference
         #
-        # @param json_object [JSON]
-        # @return [V2::Problem::TestCaseImplementationReference]
+        # @param json_object [String]
+        # @return [SeedTraceClient::V2::Problem::TestCaseImplementationReference]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           member = case struct.type
                    when "templateId"
                      json_object.value
                    when "implementation"
-                     V2::Problem::TestCaseImplementation.from_json(json_object: json_object)
+                     SeedTraceClient::V2::Problem::TestCaseImplementation.from_json(json_object: json_object)
                    else
                      json_object
                    end
@@ -41,7 +41,7 @@ module SeedTraceClient
 
         # For Union Types, to_json functionality is delegated to the wrapped member.
         #
-        # @return [JSON]
+        # @return [String]
         def to_json(*_args)
           case @discriminant
           when "templateId"
@@ -63,7 +63,7 @@ module SeedTraceClient
           when "templateId"
             obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
           when "implementation"
-            V2::Problem::TestCaseImplementation.validate_raw(obj: obj)
+            SeedTraceClient::V2::Problem::TestCaseImplementation.validate_raw(obj: obj)
           else
             raise("Passed value matched no type within the union, validation failed.")
           end
@@ -77,14 +77,14 @@ module SeedTraceClient
           @member.is_a?(obj)
         end
 
-        # @param member [V2::Problem::TEST_CASE_TEMPLATE_ID]
-        # @return [V2::Problem::TestCaseImplementationReference]
+        # @param member [SeedTraceClient::V2::Problem::TEST_CASE_TEMPLATE_ID]
+        # @return [SeedTraceClient::V2::Problem::TestCaseImplementationReference]
         def self.template_id(member:)
           new(member: member, discriminant: "templateId")
         end
 
-        # @param member [V2::Problem::TestCaseImplementation]
-        # @return [V2::Problem::TestCaseImplementationReference]
+        # @param member [SeedTraceClient::V2::Problem::TestCaseImplementation]
+        # @return [SeedTraceClient::V2::Problem::TestCaseImplementationReference]
         def self.implementation(member:)
           new(member: member, discriminant: "implementation")
         end

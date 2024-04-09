@@ -14,7 +14,7 @@ module SeedExhaustiveClient
         alias kind_of? is_a?
         # @param member [Object]
         # @param discriminant [String]
-        # @return [Types::Union::Animal]
+        # @return [SeedExhaustiveClient::Types::Union::Animal]
         def initialize(member:, discriminant:)
           # @type [Object]
           @member = member
@@ -24,24 +24,24 @@ module SeedExhaustiveClient
 
         # Deserialize a JSON object to an instance of Animal
         #
-        # @param json_object [JSON]
-        # @return [Types::Union::Animal]
+        # @param json_object [String]
+        # @return [SeedExhaustiveClient::Types::Union::Animal]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           member = case struct.animal
                    when "dog"
-                     Types::Union::Dog.from_json(json_object: json_object)
+                     SeedExhaustiveClient::Types::Union::Dog.from_json(json_object: json_object)
                    when "cat"
-                     Types::Union::Cat.from_json(json_object: json_object)
+                     SeedExhaustiveClient::Types::Union::Cat.from_json(json_object: json_object)
                    else
-                     Types::Union::Dog.from_json(json_object: json_object)
+                     SeedExhaustiveClient::Types::Union::Dog.from_json(json_object: json_object)
                    end
           new(member: member, discriminant: struct.animal)
         end
 
         # For Union Types, to_json functionality is delegated to the wrapped member.
         #
-        # @return [JSON]
+        # @return [String]
         def to_json(*_args)
           case @discriminant
           when "dog"
@@ -61,9 +61,9 @@ module SeedExhaustiveClient
         def self.validate_raw(obj:)
           case obj.animal
           when "dog"
-            Types::Union::Dog.validate_raw(obj: obj)
+            SeedExhaustiveClient::Types::Union::Dog.validate_raw(obj: obj)
           when "cat"
-            Types::Union::Cat.validate_raw(obj: obj)
+            SeedExhaustiveClient::Types::Union::Cat.validate_raw(obj: obj)
           else
             raise("Passed value matched no type within the union, validation failed.")
           end
@@ -77,14 +77,14 @@ module SeedExhaustiveClient
           @member.is_a?(obj)
         end
 
-        # @param member [Types::Union::Dog]
-        # @return [Types::Union::Animal]
+        # @param member [SeedExhaustiveClient::Types::Union::Dog]
+        # @return [SeedExhaustiveClient::Types::Union::Animal]
         def self.dog(member:)
           new(member: member, discriminant: "dog")
         end
 
-        # @param member [Types::Union::Cat]
-        # @return [Types::Union::Animal]
+        # @param member [SeedExhaustiveClient::Types::Union::Cat]
+        # @return [SeedExhaustiveClient::Types::Union::Animal]
         def self.cat(member:)
           new(member: member, discriminant: "cat")
         end

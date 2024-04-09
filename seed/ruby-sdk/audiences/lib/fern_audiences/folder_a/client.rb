@@ -8,20 +8,20 @@ module SeedAudiencesClient
     class Client
       attr_reader :service
 
-      # @param request_client [RequestClient]
-      # @return [FolderA::Client]
+      # @param request_client [SeedAudiencesClient::RequestClient]
+      # @return [SeedAudiencesClient::FolderA::Client]
       def initialize(request_client:)
-        @service = FolderA::ServiceClient.new(request_client: request_client)
+        @service = SeedAudiencesClient::FolderA::ServiceClient.new(request_client: request_client)
       end
     end
 
     class AsyncClient
       attr_reader :service
 
-      # @param request_client [RequestClient]
-      # @return [FolderA::AsyncClient]
+      # @param request_client [SeedAudiencesClient::AsyncRequestClient]
+      # @return [SeedAudiencesClient::FolderA::AsyncClient]
       def initialize(request_client:)
-        @service = FolderA::AsyncServiceClient.new(request_client: request_client)
+        @service = SeedAudiencesClient::FolderA::AsyncServiceClient.new(request_client: request_client)
       end
     end
   end

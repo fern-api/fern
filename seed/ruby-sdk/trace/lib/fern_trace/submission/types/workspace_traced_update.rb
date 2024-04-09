@@ -1,38 +1,40 @@
 # frozen_string_literal: true
 
+require "ostruct"
 require "json"
 
 module SeedTraceClient
   class Submission
     class WorkspaceTracedUpdate
-      attr_reader :trace_responses_size, :additional_properties
-
+      attr_reader :trace_responses_size, :additional_properties, :_field_set
+      protected :_field_set
+      OMIT = Object.new
       # @param trace_responses_size [Integer]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Submission::WorkspaceTracedUpdate]
+      # @return [SeedTraceClient::Submission::WorkspaceTracedUpdate]
       def initialize(trace_responses_size:, additional_properties: nil)
         # @type [Integer]
         @trace_responses_size = trace_responses_size
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
-        @additional_properties = additional_properties
+        @_field_set = { "traceResponsesSize": @trace_responses_size }.reject do |_k, v|
+          v == OMIT
+        end
       end
 
       # Deserialize a JSON object to an instance of WorkspaceTracedUpdate
       #
-      # @param json_object [JSON]
-      # @return [Submission::WorkspaceTracedUpdate]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Submission::WorkspaceTracedUpdate]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        JSON.parse(json_object)
-        trace_responses_size = struct.traceResponsesSize
+        trace_responses_size = struct["traceResponsesSize"]
         new(trace_responses_size: trace_responses_size, additional_properties: struct)
       end
 
       # Serialize an instance of WorkspaceTracedUpdate to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "traceResponsesSize": @trace_responses_size }.to_json
+        @_field_set&.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

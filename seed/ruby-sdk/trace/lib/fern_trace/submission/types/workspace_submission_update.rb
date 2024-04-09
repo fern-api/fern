@@ -2,30 +2,33 @@
 
 require "date"
 require_relative "workspace_submission_update_info"
+require "ostruct"
 require "json"
 
 module SeedTraceClient
   class Submission
     class WorkspaceSubmissionUpdate
-      attr_reader :update_time, :update_info, :additional_properties
-
+      attr_reader :update_time, :update_info, :additional_properties, :_field_set
+      protected :_field_set
+      OMIT = Object.new
       # @param update_time [DateTime]
-      # @param update_info [Submission::WorkspaceSubmissionUpdateInfo]
+      # @param update_info [SeedTraceClient::Submission::WorkspaceSubmissionUpdateInfo]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Submission::WorkspaceSubmissionUpdate]
+      # @return [SeedTraceClient::Submission::WorkspaceSubmissionUpdate]
       def initialize(update_time:, update_info:, additional_properties: nil)
         # @type [DateTime]
         @update_time = update_time
-        # @type [Submission::WorkspaceSubmissionUpdateInfo]
+        # @type [SeedTraceClient::Submission::WorkspaceSubmissionUpdateInfo]
         @update_info = update_info
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
-        @additional_properties = additional_properties
+        @_field_set = { "updateTime": @update_time, "updateInfo": @update_info }.reject do |_k, v|
+          v == OMIT
+        end
       end
 
       # Deserialize a JSON object to an instance of WorkspaceSubmissionUpdate
       #
-      # @param json_object [JSON]
-      # @return [Submission::WorkspaceSubmissionUpdate]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Submission::WorkspaceSubmissionUpdate]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -34,16 +37,16 @@ module SeedTraceClient
           update_info = nil
         else
           update_info = parsed_json["updateInfo"].to_json
-          update_info = Submission::WorkspaceSubmissionUpdateInfo.from_json(json_object: update_info)
+          update_info = SeedTraceClient::Submission::WorkspaceSubmissionUpdateInfo.from_json(json_object: update_info)
         end
         new(update_time: update_time, update_info: update_info, additional_properties: struct)
       end
 
       # Serialize an instance of WorkspaceSubmissionUpdate to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "updateTime": @update_time, "updateInfo": @update_info }.to_json
+        @_field_set&.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
@@ -52,7 +55,7 @@ module SeedTraceClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.update_time.is_a?(DateTime) != false || raise("Passed value for field obj.update_time is not the expected type, validation failed.")
-        Submission::WorkspaceSubmissionUpdateInfo.validate_raw(obj: obj.update_info)
+        SeedTraceClient::Submission::WorkspaceSubmissionUpdateInfo.validate_raw(obj: obj.update_info)
       end
     end
   end

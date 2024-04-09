@@ -12,7 +12,7 @@ module SeedUnionsClient
       # @param member [Object]
       # @param discriminant [String]
       # @param base [String]
-      # @return [Types::UnionWithLiteral]
+      # @return [SeedUnionsClient::Types::UnionWithLiteral]
       def initialize(member:, discriminant:, base:)
         # @type [Object]
         @member = member
@@ -24,8 +24,8 @@ module SeedUnionsClient
 
       # Deserialize a JSON object to an instance of UnionWithLiteral
       #
-      # @param json_object [JSON]
-      # @return [Types::UnionWithLiteral]
+      # @param json_object [String]
+      # @return [SeedUnionsClient::Types::UnionWithLiteral]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
@@ -39,7 +39,7 @@ module SeedUnionsClient
 
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
         case @discriminant
         when "fern"
@@ -70,7 +70,7 @@ module SeedUnionsClient
       end
 
       # @param member [String]
-      # @return [Types::UnionWithLiteral]
+      # @return [SeedUnionsClient::Types::UnionWithLiteral]
       def self.fern(member:)
         new(member: member, discriminant: "fern")
       end

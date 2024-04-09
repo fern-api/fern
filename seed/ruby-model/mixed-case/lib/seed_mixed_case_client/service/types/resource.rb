@@ -14,37 +14,37 @@ module SeedMixedCaseClient
       alias kind_of? is_a?
       # @param member [Object]
       # @param discriminant [String]
-      # @param status [Service::ResourceStatus]
-      # @return [Service::Resource]
+      # @param status [SeedMixedCaseClient::Service::ResourceStatus]
+      # @return [SeedMixedCaseClient::Service::Resource]
       def initialize(member:, discriminant:, status:)
         # @type [Object]
         @member = member
         # @type [String]
         @discriminant = discriminant
-        # @type [Service::ResourceStatus]
+        # @type [SeedMixedCaseClient::Service::ResourceStatus]
         @status = status
       end
 
       # Deserialize a JSON object to an instance of Resource
       #
-      # @param json_object [JSON]
-      # @return [Service::Resource]
+      # @param json_object [String]
+      # @return [SeedMixedCaseClient::Service::Resource]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.resource_type
                  when "user"
-                   Service::User.from_json(json_object: json_object)
+                   SeedMixedCaseClient::Service::User.from_json(json_object: json_object)
                  when "Organization"
-                   Service::Organization.from_json(json_object: json_object)
+                   SeedMixedCaseClient::Service::Organization.from_json(json_object: json_object)
                  else
-                   Service::User.from_json(json_object: json_object)
+                   SeedMixedCaseClient::Service::User.from_json(json_object: json_object)
                  end
         new(member: member, discriminant: struct.resource_type)
       end
 
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
         case @discriminant
         when "user"
@@ -64,9 +64,9 @@ module SeedMixedCaseClient
       def self.validate_raw(obj:)
         case obj.resource_type
         when "user"
-          Service::User.validate_raw(obj: obj)
+          SeedMixedCaseClient::Service::User.validate_raw(obj: obj)
         when "Organization"
-          Service::Organization.validate_raw(obj: obj)
+          SeedMixedCaseClient::Service::Organization.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -80,14 +80,14 @@ module SeedMixedCaseClient
         @member.is_a?(obj)
       end
 
-      # @param member [Service::User]
-      # @return [Service::Resource]
+      # @param member [SeedMixedCaseClient::Service::User]
+      # @return [SeedMixedCaseClient::Service::Resource]
       def self.user(member:)
         new(member: member, discriminant: "user")
       end
 
-      # @param member [Service::Organization]
-      # @return [Service::Resource]
+      # @param member [SeedMixedCaseClient::Service::Organization]
+      # @return [SeedMixedCaseClient::Service::Resource]
       def self.organization(member:)
         new(member: member, discriminant: "Organization")
       end

@@ -9,19 +9,20 @@ module SeedApiClient
       class CClient
         attr_reader :request_client
 
-        # @param request_client [RequestClient]
-        # @return [A::C::CClient]
+        # @param request_client [SeedApiClient::RequestClient]
+        # @return [SeedApiClient::A::C::CClient]
         def initialize(request_client:)
-          # @type [RequestClient]
+          # @type [SeedApiClient::RequestClient]
           @request_client = request_client
         end
 
-        # @param request_options [RequestOptions]
+        # @param request_options [SeedApiClient::RequestOptions]
         # @return [Void]
         def foo(request_options: nil)
           @request_client.conn.post("/") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.url "#{@request_client.get_url(request_options: request_options)}/"
           end
         end
       end
@@ -29,20 +30,21 @@ module SeedApiClient
       class AsyncCClient
         attr_reader :request_client
 
-        # @param request_client [AsyncRequestClient]
-        # @return [A::C::AsyncCClient]
+        # @param request_client [SeedApiClient::AsyncRequestClient]
+        # @return [SeedApiClient::A::C::AsyncCClient]
         def initialize(request_client:)
-          # @type [AsyncRequestClient]
+          # @type [SeedApiClient::AsyncRequestClient]
           @request_client = request_client
         end
 
-        # @param request_options [RequestOptions]
+        # @param request_options [SeedApiClient::RequestOptions]
         # @return [Void]
         def foo(request_options: nil)
           Async do
             @request_client.conn.post("/") do |req|
               req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
               req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+              req.url "#{@request_client.get_url(request_options: request_options)}/"
             end
           end
         end

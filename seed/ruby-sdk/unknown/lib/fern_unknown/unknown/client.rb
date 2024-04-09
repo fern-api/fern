@@ -7,21 +7,22 @@ module SeedUnknownAsAnyClient
   class UnknownClient
     attr_reader :request_client
 
-    # @param request_client [RequestClient]
-    # @return [UnknownClient]
+    # @param request_client [SeedUnknownAsAnyClient::RequestClient]
+    # @return [SeedUnknownAsAnyClient::UnknownClient]
     def initialize(request_client:)
-      # @type [RequestClient]
+      # @type [SeedUnknownAsAnyClient::RequestClient]
       @request_client = request_client
     end
 
     # @param request [Object]
-    # @param request_options [RequestOptions]
+    # @param request_options [SeedUnknownAsAnyClient::RequestOptions]
     # @return [Array<Object>]
     def post(request: nil, request_options: nil)
       response = @request_client.conn.post("/") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/"
       end
       response.body
     end
@@ -30,15 +31,15 @@ module SeedUnknownAsAnyClient
   class AsyncUnknownClient
     attr_reader :request_client
 
-    # @param request_client [AsyncRequestClient]
-    # @return [AsyncUnknownClient]
+    # @param request_client [SeedUnknownAsAnyClient::AsyncRequestClient]
+    # @return [SeedUnknownAsAnyClient::AsyncUnknownClient]
     def initialize(request_client:)
-      # @type [AsyncRequestClient]
+      # @type [SeedUnknownAsAnyClient::AsyncRequestClient]
       @request_client = request_client
     end
 
     # @param request [Object]
-    # @param request_options [RequestOptions]
+    # @param request_options [SeedUnknownAsAnyClient::RequestOptions]
     # @return [Array<Object>]
     def post(request: nil, request_options: nil)
       Async do
@@ -46,6 +47,7 @@ module SeedUnknownAsAnyClient
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/"
         end
         response.body
       end

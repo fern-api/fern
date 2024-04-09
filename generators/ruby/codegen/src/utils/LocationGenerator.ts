@@ -3,9 +3,11 @@ import { snakeCase } from "lodash-es";
 import { TYPES_DIRECTORY } from "./RubyConstants";
 
 export class LocationGenerator {
+    public rootModule: string;
     private directoryPrefix: string;
-    constructor(directoryPrefix: string) {
+    constructor(directoryPrefix: string, rootModule: string) {
         this.directoryPrefix = directoryPrefix;
+        this.rootModule = rootModule;
     }
 
     public getLocationForTypeDeclaration(declaredTypeName: DeclaredTypeName): string {

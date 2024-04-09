@@ -10,47 +10,49 @@ module SeedExamplesClient
       class ServiceClient
         attr_reader :request_client
 
-        # @param request_client [RequestClient]
-        # @return [File::Notification::ServiceClient]
+        # @param request_client [SeedExamplesClient::RequestClient]
+        # @return [SeedExamplesClient::File::Notification::ServiceClient]
         def initialize(request_client:)
-          # @type [RequestClient]
+          # @type [SeedExamplesClient::RequestClient]
           @request_client = request_client
         end
 
         # @param notification_id [String]
-        # @param request_options [RequestOptions]
-        # @return [Types::Exception]
+        # @param request_options [SeedExamplesClient::RequestOptions]
+        # @return [SeedExamplesClient::Types::Exception]
         def get_exception(notification_id:, request_options: nil)
           response = @request_client.conn.get("/file/notification/#{notification_id}") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.url "#{@request_client.get_url(request_options: request_options)}/file/notification/#{notification_id}"
           end
-          Types::Exception.from_json(json_object: response.body)
+          SeedExamplesClient::Types::Exception.from_json(json_object: response.body)
         end
       end
 
       class AsyncServiceClient
         attr_reader :request_client
 
-        # @param request_client [AsyncRequestClient]
-        # @return [File::Notification::AsyncServiceClient]
+        # @param request_client [SeedExamplesClient::AsyncRequestClient]
+        # @return [SeedExamplesClient::File::Notification::AsyncServiceClient]
         def initialize(request_client:)
-          # @type [AsyncRequestClient]
+          # @type [SeedExamplesClient::AsyncRequestClient]
           @request_client = request_client
         end
 
         # @param notification_id [String]
-        # @param request_options [RequestOptions]
-        # @return [Types::Exception]
+        # @param request_options [SeedExamplesClient::RequestOptions]
+        # @return [SeedExamplesClient::Types::Exception]
         def get_exception(notification_id:, request_options: nil)
           Async do
             response = @request_client.conn.get("/file/notification/#{notification_id}") do |req|
               req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
               req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
               req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+              req.url "#{@request_client.get_url(request_options: request_options)}/file/notification/#{notification_id}"
             end
-            Types::Exception.from_json(json_object: response.body)
+            SeedExamplesClient::Types::Exception.from_json(json_object: response.body)
           end
         end
       end

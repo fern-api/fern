@@ -10,28 +10,32 @@ module SeedEnumClient
   class Client
     attr_reader :inlined_request, :path_param, :query_param
 
+    # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
-    # @return [Client]
-    def initialize(max_retries: nil, timeout_in_seconds: nil)
-      @request_client = RequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds)
-      @inlined_request = InlinedRequestClient.new(request_client: @request_client)
-      @path_param = PathParamClient.new(request_client: @request_client)
-      @query_param = QueryParamClient.new(request_client: @request_client)
+    # @return [SeedEnumClient::Client]
+    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil)
+      @request_client = SeedEnumClient::RequestClient.new(base_url: base_url, max_retries: max_retries,
+                                                          timeout_in_seconds: timeout_in_seconds)
+      @inlined_request = SeedEnumClient::InlinedRequestClient.new(request_client: @request_client)
+      @path_param = SeedEnumClient::PathParamClient.new(request_client: @request_client)
+      @query_param = SeedEnumClient::QueryParamClient.new(request_client: @request_client)
     end
   end
 
   class AsyncClient
     attr_reader :inlined_request, :path_param, :query_param
 
+    # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
-    # @return [AsyncClient]
-    def initialize(max_retries: nil, timeout_in_seconds: nil)
-      @async_request_client = AsyncRequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds)
-      @inlined_request = AsyncInlinedRequestClient.new(request_client: @async_request_client)
-      @path_param = AsyncPathParamClient.new(request_client: @async_request_client)
-      @query_param = AsyncQueryParamClient.new(request_client: @async_request_client)
+    # @return [SeedEnumClient::AsyncClient]
+    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil)
+      @async_request_client = SeedEnumClient::AsyncRequestClient.new(base_url: base_url, max_retries: max_retries,
+                                                                     timeout_in_seconds: timeout_in_seconds)
+      @inlined_request = SeedEnumClient::AsyncInlinedRequestClient.new(request_client: @async_request_client)
+      @path_param = SeedEnumClient::AsyncPathParamClient.new(request_client: @async_request_client)
+      @query_param = SeedEnumClient::AsyncQueryParamClient.new(request_client: @async_request_client)
     end
   end
 end

@@ -1,46 +1,49 @@
 # frozen_string_literal: true
 
 require_relative "node_id"
+require "ostruct"
 require "json"
 
 module SeedTraceClient
   class Commons
     class SinglyLinkedListValue
-      attr_reader :head, :nodes, :additional_properties
-
-      # @param head [Commons::NODE_ID]
-      # @param nodes [Hash{Commons::NODE_ID => Commons::SinglyLinkedListNodeValue}]
+      attr_reader :head, :nodes, :additional_properties, :_field_set
+      protected :_field_set
+      OMIT = Object.new
+      # @param head [SeedTraceClient::Commons::NODE_ID]
+      # @param nodes [Hash{SeedTraceClient::Commons::NODE_ID => SeedTraceClient::Commons::SinglyLinkedListNodeValue}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Commons::SinglyLinkedListValue]
-      def initialize(nodes:, head: nil, additional_properties: nil)
-        # @type [Commons::NODE_ID]
-        @head = head
-        # @type [Hash{Commons::NODE_ID => Commons::SinglyLinkedListNodeValue}]
+      # @return [SeedTraceClient::Commons::SinglyLinkedListValue]
+      def initialize(nodes:, head: OMIT, additional_properties: nil)
+        # @type [SeedTraceClient::Commons::NODE_ID]
+        @head = head if head != OMIT
+        # @type [Hash{SeedTraceClient::Commons::NODE_ID => SeedTraceClient::Commons::SinglyLinkedListNodeValue}]
         @nodes = nodes
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
-        @additional_properties = additional_properties
+        @_field_set = { "head": @head, "nodes": @nodes }.reject do |_k, v|
+          v == OMIT
+        end
       end
 
       # Deserialize a JSON object to an instance of SinglyLinkedListValue
       #
-      # @param json_object [JSON]
-      # @return [Commons::SinglyLinkedListValue]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Commons::SinglyLinkedListValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        head = struct.head
-        nodes = parsed_json["nodes"]&.transform_values do |_k, v|
+        head = struct["head"]
+        nodes = parsed_json["nodes"]&.transform_values do |v|
           v = v.to_json
-          Commons::SinglyLinkedListNodeValue.from_json(json_object: v)
+          SeedTraceClient::Commons::SinglyLinkedListNodeValue.from_json(json_object: v)
         end
         new(head: head, nodes: nodes, additional_properties: struct)
       end
 
       # Serialize an instance of SinglyLinkedListValue to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "head": @head, "nodes": @nodes }.to_json
+        @_field_set&.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

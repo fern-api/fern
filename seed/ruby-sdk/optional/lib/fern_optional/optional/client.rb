@@ -7,21 +7,22 @@ module SeedObjectsWithImportsClient
   class OptionalClient
     attr_reader :request_client
 
-    # @param request_client [RequestClient]
-    # @return [OptionalClient]
+    # @param request_client [SeedObjectsWithImportsClient::RequestClient]
+    # @return [SeedObjectsWithImportsClient::OptionalClient]
     def initialize(request_client:)
-      # @type [RequestClient]
+      # @type [SeedObjectsWithImportsClient::RequestClient]
       @request_client = request_client
     end
 
     # @param request [Hash{String => Object}]
-    # @param request_options [RequestOptions]
+    # @param request_options [SeedObjectsWithImportsClient::RequestOptions]
     # @return [String]
     def send_optional_body(request: nil, request_options: nil)
       response = @request_client.conn.post("/send-optional-body") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/send-optional-body"
       end
       response.body
     end
@@ -30,15 +31,15 @@ module SeedObjectsWithImportsClient
   class AsyncOptionalClient
     attr_reader :request_client
 
-    # @param request_client [AsyncRequestClient]
-    # @return [AsyncOptionalClient]
+    # @param request_client [SeedObjectsWithImportsClient::AsyncRequestClient]
+    # @return [SeedObjectsWithImportsClient::AsyncOptionalClient]
     def initialize(request_client:)
-      # @type [AsyncRequestClient]
+      # @type [SeedObjectsWithImportsClient::AsyncRequestClient]
       @request_client = request_client
     end
 
     # @param request [Hash{String => Object}]
-    # @param request_options [RequestOptions]
+    # @param request_options [SeedObjectsWithImportsClient::RequestOptions]
     # @return [String]
     def send_optional_body(request: nil, request_options: nil)
       Async do
@@ -46,6 +47,7 @@ module SeedObjectsWithImportsClient
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/send-optional-body"
         end
         response.body
       end

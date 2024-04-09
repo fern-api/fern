@@ -7,7 +7,9 @@ import {
     HashInstance,
     HashReference,
     JsonClassReference,
+    OmittedValue,
     OpenStructClassReference,
+    StringClassReference,
     VoidClassReference
 } from "../classes/ClassReference";
 import { Class_ } from "../classes/Class_";
@@ -18,6 +20,7 @@ import { Function_ } from "../functions/Function_";
 import { Parameter } from "../Parameter";
 import { Property } from "../Property";
 import { Variable, VariableType } from "../Variable";
+import { Yardoc } from "../Yardoc";
 import { ConditionalStatement } from "./ConditionalStatement";
 
 const additional_properties_property = new Property({
@@ -25,6 +28,11 @@ const additional_properties_property = new Property({
     type: OpenStructClassReference,
     isOptional: true,
     documentation: "Additional properties unmapped to the current class definition"
+});
+const fieldset_property = new Property({
+    name: "_field_set",
+    type: new ArrayReference({ innerType: StringClassReference }),
+    isOptional: true
 });
 export declare namespace SerializableObject {
     export type Init = Omit<Class_.Init, "functions" | "includeInitializer" | "expressions">;
@@ -38,8 +46,72 @@ export class SerializableObject extends Class_ {
                 SerializableObject.createToJsonFunction(init.properties, init.classReference),
                 SerializableObject.createValidateRawFunction(init.properties)
             ],
-            includeInitializer: true,
-            properties: [...(init.properties ?? []), additional_properties_property]
+            includeInitializer: false,
+            initializerOverride: SerializableObject.createInitializerFunction(
+                init.properties ?? [],
+                init.classReference
+            ),
+            properties: [...(init.properties ?? []), additional_properties_property],
+            protectedProperties: [fieldset_property],
+            expressions: [SerializableObject.createOmitTypeExpression()],
+            shouldOmitOptionalFieldsInInitializer: true
+        });
+    }
+
+    private static createInitializerFunction(properties: Property[], classReference: ClassReference): Function_ {
+        return new Function_({
+            name: "initialize",
+            parameters: [
+                ...properties.map((prop) => prop.toParameter({ shouldOmitOptional: true })),
+                additional_properties_property.toParameter({})
+            ],
+            returnValue: classReference,
+            functionBody: [
+                ...properties.map((prop) => {
+                    const yardoc = new Yardoc({ reference: { name: "typeReference", type: prop } });
+                    return new Expression({
+                        leftSide: prop.toVariable(),
+                        rightSide: prop.isOptional
+                            ? new Expression({
+                                  leftSide: prop.name,
+                                  rightSide: `${prop.name} != ${OmittedValue}`,
+                                  isAssignment: false,
+                                  operation: "if"
+                              })
+                            : prop.name,
+                        isAssignment: true,
+                        yardoc
+                    });
+                }),
+                new Expression({
+                    leftSide: fieldset_property.toVariable(),
+                    rightSide: new FunctionInvocation({
+                        // Here we take only the keys that were explicitly set
+                        baseFunction: new Function_({ name: "reject", functionBody: [] }),
+                        block: {
+                            arguments: "_k, v",
+                            expressions: [new Expression({ leftSide: "v", rightSide: OmittedValue, operation: "==" })]
+                        },
+                        onObject: new HashInstance({
+                            contents: new Map(
+                                properties?.map((prop) => {
+                                    return [`"${prop.wireValue ?? prop.name}"`, prop.toVariable()];
+                                })
+                            )
+                        })
+                    }),
+                    isAssignment: true
+                })
+            ],
+            invocationName: "new"
+        });
+    }
+
+    private static createOmitTypeExpression(): Expression {
+        return new Expression({
+            leftSide: OmittedValue,
+            rightSide: "Object.new",
+            isAssignment: true
         });
     }
 
@@ -47,6 +119,7 @@ export class SerializableObject extends Class_ {
         properties: Property[] | undefined,
         classReference: ClassReference
     ): Function_ {
+        let usesParsedJson = false;
         const functionBody: AstNode[] = [
             new Expression({
                 leftSide: "struct",
@@ -68,25 +141,12 @@ export class SerializableObject extends Class_ {
                     ]
                 }),
                 isAssignment: true
-            }),
-            new Expression({
-                leftSide: "parsed_json",
-                rightSide: new FunctionInvocation({
-                    onObject: JsonClassReference,
-                    baseFunction: new Function_({ name: "parse", functionBody: [] }),
-                    arguments_: [
-                        new Argument({
-                            value: "json_object",
-                            type: GenericClassReference,
-                            isNamed: false
-                        })
-                    ]
-                }),
-                isAssignment: true
-            }),
+            })
+        ];
+        const functionBodyParameterManipulation = [
             ...(properties?.flatMap((prop) => {
                 const structVariable = new Variable({
-                    name: `struct.${prop.wireValue}`,
+                    name: `struct["${prop.wireValue}"]`,
                     variableType: VariableType.LOCAL,
                     type: prop.type
                 });
@@ -96,8 +156,9 @@ export class SerializableObject extends Class_ {
                     type: prop.type
                 });
 
+                usesParsedJson = parsedJsonVariable.fromJson() !== undefined;
                 const hasFromJson =
-                    parsedJsonVariable.fromJson() !== undefined &&
+                    usesParsedJson &&
                     !(prop.type[0] instanceof ArrayReference) &&
                     !(prop.type[0] instanceof HashReference) &&
                     !(prop.type[0] instanceof DateReference);
@@ -156,7 +217,29 @@ export class SerializableObject extends Class_ {
                 ]
             })
         ];
-        const parameters = [new Parameter({ name: "json_object", type: JsonClassReference })];
+        if (usesParsedJson) {
+            functionBody.push(
+                new Expression({
+                    leftSide: "parsed_json",
+                    rightSide: new FunctionInvocation({
+                        onObject: JsonClassReference,
+                        baseFunction: new Function_({ name: "parse", functionBody: [] }),
+                        arguments_: [
+                            new Argument({
+                                value: "json_object",
+                                type: GenericClassReference,
+                                isNamed: false
+                            })
+                        ]
+                    }),
+                    isAssignment: true
+                })
+            );
+        }
+
+        functionBody.push(...functionBodyParameterManipulation);
+
+        const parameters = [new Parameter({ name: "json_object", type: StringClassReference })];
         const fromJsonDocumentation = `Deserialize a JSON object to an instance of ${classReference.name}`;
         return new Function_({
             name: "from_json",
@@ -174,20 +257,13 @@ export class SerializableObject extends Class_ {
                 // TODO: should we have a FunctionReference so we don't need to make these dummy full Function_ objects?
                 // also see the definition of "new" in the function above
                 baseFunction: new Function_({ name: "to_json", functionBody: [] }),
-                onObject: new HashInstance({
-                    contents: new Map(
-                        properties?.map((prop) => {
-                            // TODO: confirm enums are the only special case here
-                            return [`"${prop.wireValue ?? prop.name}"`, prop.toVariable()];
-                        })
-                    )
-                })
+                onObject: fieldset_property.toVariable()
             })
         ];
         const toJsonDocumentation = `Serialize an instance of ${classReference.name} to a JSON object`;
         return new Function_({
             name: "to_json",
-            returnValue: JsonClassReference,
+            returnValue: StringClassReference,
             functionBody,
             documentation: toJsonDocumentation
         });

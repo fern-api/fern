@@ -63,10 +63,13 @@ export class Module_ extends AstNode {
         return moduleWrappedItem;
     }
 
-    static getModuleBreadcrumbs(path: FernFilepath, includeFilename: boolean): string[] {
+    static getModuleBreadcrumbs(path: FernFilepath, includeFilename: boolean, rootModule: string): string[] {
         const modulePath = Module_.getModulePathFromTypeName(path);
         const classPath = Module_.getClassPathFromTypeName(path);
-        return includeFilename && classPath !== undefined ? modulePath.concat([classPath]) : modulePath;
+        return [
+            rootModule,
+            ...(includeFilename && classPath !== undefined ? modulePath.concat([classPath]) : modulePath)
+        ];
     }
 
     static getModulePathFromTypeName(path: FernFilepath): string[] {

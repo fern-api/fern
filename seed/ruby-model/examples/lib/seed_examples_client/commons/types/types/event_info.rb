@@ -14,7 +14,7 @@ module SeedExamplesClient
         alias kind_of? is_a?
         # @param member [Object]
         # @param discriminant [String]
-        # @return [Commons::Types::EventInfo]
+        # @return [SeedExamplesClient::Commons::Types::EventInfo]
         def initialize(member:, discriminant:)
           # @type [Object]
           @member = member
@@ -24,24 +24,24 @@ module SeedExamplesClient
 
         # Deserialize a JSON object to an instance of EventInfo
         #
-        # @param json_object [JSON]
-        # @return [Commons::Types::EventInfo]
+        # @param json_object [String]
+        # @return [SeedExamplesClient::Commons::Types::EventInfo]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           member = case struct.type
                    when "metadata"
-                     Commons::Types::Metadata.from_json(json_object: json_object)
+                     SeedExamplesClient::Commons::Types::Metadata.from_json(json_object: json_object)
                    when "tag"
                      json_object.value
                    else
-                     Commons::Types::Metadata.from_json(json_object: json_object)
+                     SeedExamplesClient::Commons::Types::Metadata.from_json(json_object: json_object)
                    end
           new(member: member, discriminant: struct.type)
         end
 
         # For Union Types, to_json functionality is delegated to the wrapped member.
         #
-        # @return [JSON]
+        # @return [String]
         def to_json(*_args)
           case @discriminant
           when "metadata"
@@ -61,7 +61,7 @@ module SeedExamplesClient
         def self.validate_raw(obj:)
           case obj.type
           when "metadata"
-            Commons::Types::Metadata.validate_raw(obj: obj)
+            SeedExamplesClient::Commons::Types::Metadata.validate_raw(obj: obj)
           when "tag"
             obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
           else
@@ -77,14 +77,14 @@ module SeedExamplesClient
           @member.is_a?(obj)
         end
 
-        # @param member [Commons::Types::Metadata]
-        # @return [Commons::Types::EventInfo]
+        # @param member [SeedExamplesClient::Commons::Types::Metadata]
+        # @return [SeedExamplesClient::Commons::Types::EventInfo]
         def self.metadata(member:)
           new(member: member, discriminant: "metadata")
         end
 
-        # @param member [Commons::Types::TAG]
-        # @return [Commons::Types::EventInfo]
+        # @param member [SeedExamplesClient::Commons::Types::TAG]
+        # @return [SeedExamplesClient::Commons::Types::EventInfo]
         def self.tag(member:)
           new(member: member, discriminant: "tag")
         end

@@ -1,47 +1,49 @@
 # frozen_string_literal: true
 
 require_relative "node_id"
+require "ostruct"
 require "json"
 
 module SeedTraceClient
   class Commons
     class SinglyLinkedListNodeValue
-      attr_reader :node_id, :val, :next_, :additional_properties
-
-      # @param node_id [Commons::NODE_ID]
+      attr_reader :node_id, :val, :next_, :additional_properties, :_field_set
+      protected :_field_set
+      OMIT = Object.new
+      # @param node_id [SeedTraceClient::Commons::NODE_ID]
       # @param val [Float]
-      # @param next_ [Commons::NODE_ID]
+      # @param next_ [SeedTraceClient::Commons::NODE_ID]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Commons::SinglyLinkedListNodeValue]
-      def initialize(node_id:, val:, next_: nil, additional_properties: nil)
-        # @type [Commons::NODE_ID]
+      # @return [SeedTraceClient::Commons::SinglyLinkedListNodeValue]
+      def initialize(node_id:, val:, next_: OMIT, additional_properties: nil)
+        # @type [SeedTraceClient::Commons::NODE_ID]
         @node_id = node_id
         # @type [Float]
         @val = val
-        # @type [Commons::NODE_ID]
-        @next_ = next_
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
-        @additional_properties = additional_properties
+        # @type [SeedTraceClient::Commons::NODE_ID]
+        @next_ = next_ if next_ != OMIT
+        @_field_set = { "nodeId": @node_id, "val": @val, "next": @next_ }.reject do |_k, v|
+          v == OMIT
+        end
       end
 
       # Deserialize a JSON object to an instance of SinglyLinkedListNodeValue
       #
-      # @param json_object [JSON]
-      # @return [Commons::SinglyLinkedListNodeValue]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Commons::SinglyLinkedListNodeValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        JSON.parse(json_object)
-        node_id = struct.nodeId
-        val = struct.val
-        next_ = struct.next
+        node_id = struct["nodeId"]
+        val = struct["val"]
+        next_ = struct["next"]
         new(node_id: node_id, val: val, next_: next_, additional_properties: struct)
       end
 
       # Serialize an instance of SinglyLinkedListNodeValue to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "nodeId": @node_id, "val": @val, "next": @next_ }.to_json
+        @_field_set&.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

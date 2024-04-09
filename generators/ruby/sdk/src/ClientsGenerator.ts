@@ -79,7 +79,7 @@ export class ClientsGenerator {
 
         this.services = new Map(Object.entries(intermediateRepresentation.services));
         this.subpackages = new Map(Object.entries(intermediateRepresentation.subpackages));
-        this.locationGenerator = new LocationGenerator(this.gemName);
+        this.locationGenerator = new LocationGenerator(this.gemName, this.clientName);
         this.crf = new ClassReferenceFactory(this.types, this.locationGenerator);
         this.headersGenerator = new HeadersGenerator(
             this.intermediateRepresentation.headers,
@@ -99,7 +99,10 @@ export class ClientsGenerator {
 
         let environmentClass: Class_ | undefined;
         if (this.intermediateRepresentation.environments !== undefined) {
-            environmentClass = generateEnvironmentConstants(this.intermediateRepresentation.environments);
+            environmentClass = generateEnvironmentConstants(
+                this.intermediateRepresentation.environments,
+                this.clientName
+            );
             const environmentsModule = Module_.wrapInModules(this.clientName, environmentClass);
             clientFiles.push(
                 new GeneratedRubyFile({
@@ -109,13 +112,18 @@ export class ClientsGenerator {
             );
         }
 
-        const requestOptionsClass = new RequestOptions({ headersGenerator: this.headersGenerator });
+        const requestOptionsClass = new RequestOptions({
+            headersGenerator: this.headersGenerator,
+            clientName: this.clientName
+        });
         const idempotencyRequestOptionsClass = new IdempotencyRequestOptions({
             crf: this.crf,
             idempotencyHeaders: this.intermediateRepresentation.idempotencyHeaders,
-            headersGenerator: this.headersGenerator
+            headersGenerator: this.headersGenerator,
+            clientName: this.clientName
         });
         const [syncClientClass, asyncClientClass] = generateRequestClients(
+            this.clientName,
             this.intermediateRepresentation.sdkConfig,
             this.gemName,
             this.sdkVersion,
@@ -123,7 +131,8 @@ export class ClientsGenerator {
             environmentClass?.classReference,
             this.intermediateRepresentation.environments?.environments.type === "multipleBaseUrls",
             this.defaultEnvironment,
-            this.hasFileBasedDependencies
+            this.hasFileBasedDependencies,
+            requestOptionsClass
         );
         const requestsModule = Module_.wrapInModules(this.clientName, [
             syncClientClass,
@@ -139,7 +148,7 @@ export class ClientsGenerator {
             })
         );
 
-        const fileUtilityClass = new FileUploadUtility();
+        const fileUtilityClass = new FileUploadUtility(this.clientName);
         if (this.hasFileBasedDependencies) {
             const fileUtilityModule = Module_.wrapInModules(this.clientName, fileUtilityClass);
             clientFiles.push(
@@ -177,6 +186,7 @@ export class ClientsGenerator {
             }
 
             const serviceClasses = generateService(
+                clientName,
                 service,
                 subpackage,
                 syncClientClass.classReference,
@@ -261,6 +271,7 @@ export class ClientsGenerator {
                         .filter((cp) => cp !== undefined) as ClientClassPair[];
 
                     const subpackageClasses = generateSubpackage(
+                        clientName,
                         subpackageName,
                         subpackage,
                         syncClientClass.classReference,

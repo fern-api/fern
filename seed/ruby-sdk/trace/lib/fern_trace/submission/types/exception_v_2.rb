@@ -12,7 +12,7 @@ module SeedTraceClient
       alias kind_of? is_a?
       # @param member [Object]
       # @param discriminant [String]
-      # @return [Submission::ExceptionV2]
+      # @return [SeedTraceClient::Submission::ExceptionV2]
       def initialize(member:, discriminant:)
         # @type [Object]
         @member = member
@@ -22,24 +22,24 @@ module SeedTraceClient
 
       # Deserialize a JSON object to an instance of ExceptionV2
       #
-      # @param json_object [JSON]
-      # @return [Submission::ExceptionV2]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Submission::ExceptionV2]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "generic"
-                   Submission::ExceptionInfo.from_json(json_object: json_object)
+                   SeedTraceClient::Submission::ExceptionInfo.from_json(json_object: json_object)
                  when "timeout"
                    nil
                  else
-                   Submission::ExceptionInfo.from_json(json_object: json_object)
+                   SeedTraceClient::Submission::ExceptionInfo.from_json(json_object: json_object)
                  end
         new(member: member, discriminant: struct.type)
       end
 
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
         case @discriminant
         when "generic"
@@ -59,7 +59,7 @@ module SeedTraceClient
       def self.validate_raw(obj:)
         case obj.type
         when "generic"
-          Submission::ExceptionInfo.validate_raw(obj: obj)
+          SeedTraceClient::Submission::ExceptionInfo.validate_raw(obj: obj)
         when "timeout"
           # noop
         else
@@ -75,13 +75,13 @@ module SeedTraceClient
         @member.is_a?(obj)
       end
 
-      # @param member [Submission::ExceptionInfo]
-      # @return [Submission::ExceptionV2]
+      # @param member [SeedTraceClient::Submission::ExceptionInfo]
+      # @return [SeedTraceClient::Submission::ExceptionV2]
       def self.generic(member:)
         new(member: member, discriminant: "generic")
       end
 
-      # @return [Submission::ExceptionV2]
+      # @return [SeedTraceClient::Submission::ExceptionV2]
       def self.timeout
         new(member: nil, discriminant: "timeout")
       end

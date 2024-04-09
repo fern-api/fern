@@ -1,42 +1,44 @@
 # frozen_string_literal: true
 
+require "ostruct"
 require "json"
 
 module SeedAudiencesClient
   class Foo
     class FilteredType
-      attr_reader :public_property, :private_property, :additional_properties
-
+      attr_reader :public_property, :private_property, :additional_properties, :_field_set
+      protected :_field_set
+      OMIT = Object.new
       # @param public_property [String]
       # @param private_property [Integer]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Foo::FilteredType]
-      def initialize(private_property:, public_property: nil, additional_properties: nil)
+      # @return [SeedAudiencesClient::Foo::FilteredType]
+      def initialize(private_property:, public_property: OMIT, additional_properties: nil)
         # @type [String]
-        @public_property = public_property
+        @public_property = public_property if public_property != OMIT
         # @type [Integer]
         @private_property = private_property
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
-        @additional_properties = additional_properties
+        @_field_set = { "public_property": @public_property, "private_property": @private_property }.reject do |_k, v|
+          v == OMIT
+        end
       end
 
       # Deserialize a JSON object to an instance of FilteredType
       #
-      # @param json_object [JSON]
-      # @return [Foo::FilteredType]
+      # @param json_object [String]
+      # @return [SeedAudiencesClient::Foo::FilteredType]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        JSON.parse(json_object)
-        public_property = struct.public_property
-        private_property = struct.private_property
+        public_property = struct["public_property"]
+        private_property = struct["private_property"]
         new(public_property: public_property, private_property: private_property, additional_properties: struct)
       end
 
       # Serialize an instance of FilteredType to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "public_property": @public_property, "private_property": @private_property }.to_json
+        @_field_set&.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

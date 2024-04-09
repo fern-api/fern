@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "ostruct"
 require "json"
 
 module SeedTraceClient
@@ -7,38 +8,39 @@ module SeedTraceClient
     module V3
       class Problem
         class FunctionImplementation
-          attr_reader :impl, :imports, :additional_properties
-
+          attr_reader :impl, :imports, :additional_properties, :_field_set
+          protected :_field_set
+          OMIT = Object.new
           # @param impl [String]
           # @param imports [String]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-          # @return [V2::V3::Problem::FunctionImplementation]
-          def initialize(impl:, imports: nil, additional_properties: nil)
+          # @return [SeedTraceClient::V2::V3::Problem::FunctionImplementation]
+          def initialize(impl:, imports: OMIT, additional_properties: nil)
             # @type [String]
             @impl = impl
             # @type [String]
-            @imports = imports
-            # @type [OpenStruct] Additional properties unmapped to the current class definition
-            @additional_properties = additional_properties
+            @imports = imports if imports != OMIT
+            @_field_set = { "impl": @impl, "imports": @imports }.reject do |_k, v|
+              v == OMIT
+            end
           end
 
           # Deserialize a JSON object to an instance of FunctionImplementation
           #
-          # @param json_object [JSON]
-          # @return [V2::V3::Problem::FunctionImplementation]
+          # @param json_object [String]
+          # @return [SeedTraceClient::V2::V3::Problem::FunctionImplementation]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            JSON.parse(json_object)
-            impl = struct.impl
-            imports = struct.imports
+            impl = struct["impl"]
+            imports = struct["imports"]
             new(impl: impl, imports: imports, additional_properties: struct)
           end
 
           # Serialize an instance of FunctionImplementation to a JSON object
           #
-          # @return [JSON]
+          # @return [String]
           def to_json(*_args)
-            { "impl": @impl, "imports": @imports }.to_json
+            @_field_set&.to_json
           end
 
           # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

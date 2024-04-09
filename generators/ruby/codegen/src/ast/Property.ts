@@ -38,10 +38,12 @@ export class Property extends AstNode {
 
     public toParameter({
         defaultValue,
-        describeAsHashInYardoc
+        describeAsHashInYardoc,
+        shouldOmitOptional
     }: {
         defaultValue?: Variable | string;
         describeAsHashInYardoc?: boolean;
+        shouldOmitOptional?: boolean;
     }): Parameter {
         return new Parameter({
             name: this.name,
@@ -49,7 +51,8 @@ export class Property extends AstNode {
             isOptional: this.isOptional,
             documentation: this.documentation,
             defaultValue,
-            describeAsHashInYardoc
+            describeAsHashInYardoc,
+            shouldOmitOptional
         });
     }
 

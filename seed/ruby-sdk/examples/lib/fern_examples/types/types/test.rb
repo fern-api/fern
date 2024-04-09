@@ -11,7 +11,7 @@ module SeedExamplesClient
       alias kind_of? is_a?
       # @param member [Object]
       # @param discriminant [String]
-      # @return [Types::Test]
+      # @return [SeedExamplesClient::Types::Test]
       def initialize(member:, discriminant:)
         # @type [Object]
         @member = member
@@ -21,8 +21,8 @@ module SeedExamplesClient
 
       # Deserialize a JSON object to an instance of Test
       #
-      # @param json_object [JSON]
-      # @return [Types::Test]
+      # @param json_object [String]
+      # @return [SeedExamplesClient::Types::Test]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
@@ -38,7 +38,7 @@ module SeedExamplesClient
 
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
         case @discriminant
         when "and"
@@ -72,13 +72,13 @@ module SeedExamplesClient
       end
 
       # @param member [Boolean]
-      # @return [Types::Test]
+      # @return [SeedExamplesClient::Types::Test]
       def self.and_(member:)
         new(member: member, discriminant: "and")
       end
 
       # @param member [Boolean]
-      # @return [Types::Test]
+      # @return [SeedExamplesClient::Types::Test]
       def self.or_(member:)
         new(member: member, discriminant: "or")
       end

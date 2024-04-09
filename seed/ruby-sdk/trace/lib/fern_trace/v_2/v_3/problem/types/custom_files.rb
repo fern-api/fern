@@ -14,7 +14,7 @@ module SeedTraceClient
           alias kind_of? is_a?
           # @param member [Object]
           # @param discriminant [String]
-          # @return [V2::V3::Problem::CustomFiles]
+          # @return [SeedTraceClient::V2::V3::Problem::CustomFiles]
           def initialize(member:, discriminant:)
             # @type [Object]
             @member = member
@@ -24,27 +24,27 @@ module SeedTraceClient
 
           # Deserialize a JSON object to an instance of CustomFiles
           #
-          # @param json_object [JSON]
-          # @return [V2::V3::Problem::CustomFiles]
+          # @param json_object [String]
+          # @return [SeedTraceClient::V2::V3::Problem::CustomFiles]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             member = case struct.type
                      when "basic"
-                       V2::V3::Problem::BasicCustomFiles.from_json(json_object: json_object)
+                       SeedTraceClient::V2::V3::Problem::BasicCustomFiles.from_json(json_object: json_object)
                      when "custom"
-                       json_object.value&.transform_values do |_k, v|
+                       json_object.value&.transform_values do |v|
                          v = v.to_json
-                         V2::V3::Problem::Files.from_json(json_object: v)
+                         SeedTraceClient::V2::V3::Problem::Files.from_json(json_object: v)
                        end
                      else
-                       V2::V3::Problem::BasicCustomFiles.from_json(json_object: json_object)
+                       SeedTraceClient::V2::V3::Problem::BasicCustomFiles.from_json(json_object: json_object)
                      end
             new(member: member, discriminant: struct.type)
           end
 
           # For Union Types, to_json functionality is delegated to the wrapped member.
           #
-          # @return [JSON]
+          # @return [String]
           def to_json(*_args)
             case @discriminant
             when "basic"
@@ -64,7 +64,7 @@ module SeedTraceClient
           def self.validate_raw(obj:)
             case obj.type
             when "basic"
-              V2::V3::Problem::BasicCustomFiles.validate_raw(obj: obj)
+              SeedTraceClient::V2::V3::Problem::BasicCustomFiles.validate_raw(obj: obj)
             when "custom"
               obj.is_a?(Hash) != false || raise("Passed value for field obj is not the expected type, validation failed.")
             else
@@ -80,14 +80,14 @@ module SeedTraceClient
             @member.is_a?(obj)
           end
 
-          # @param member [V2::V3::Problem::BasicCustomFiles]
-          # @return [V2::V3::Problem::CustomFiles]
+          # @param member [SeedTraceClient::V2::V3::Problem::BasicCustomFiles]
+          # @return [SeedTraceClient::V2::V3::Problem::CustomFiles]
           def self.basic(member:)
             new(member: member, discriminant: "basic")
           end
 
-          # @param member [Hash{Commons::Language => V2::V3::Problem::Files}]
-          # @return [V2::V3::Problem::CustomFiles]
+          # @param member [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::V2::V3::Problem::Files}]
+          # @return [SeedTraceClient::V2::V3::Problem::CustomFiles]
           def self.custom(member:)
             new(member: member, discriminant: "custom")
           end

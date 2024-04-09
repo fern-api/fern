@@ -12,10 +12,10 @@ module SeedTraceClient
   class PlaylistClient
     attr_reader :request_client
 
-    # @param request_client [RequestClient]
-    # @return [PlaylistClient]
+    # @param request_client [SeedTraceClient::RequestClient]
+    # @return [SeedTraceClient::PlaylistClient]
     def initialize(request_client:)
-      # @type [RequestClient]
+      # @type [SeedTraceClient::RequestClient]
       @request_client = request_client
     end
 
@@ -24,11 +24,11 @@ module SeedTraceClient
     # @param service_param [Integer]
     # @param datetime [DateTime]
     # @param optional_datetime [DateTime]
-    # @param request [Hash] Request of type Playlist::PlaylistCreateRequest, as a Hash
+    # @param request [Hash] Request of type SeedTraceClient::Playlist::PlaylistCreateRequest, as a Hash
     #   * :name (String)
-    #   * :problems (Array<Commons::PROBLEM_ID>)
-    # @param request_options [RequestOptions]
-    # @return [Playlist::Playlist]
+    #   * :problems (Array<SeedTraceClient::Commons::PROBLEM_ID>)
+    # @param request_options [SeedTraceClient::RequestOptions]
+    # @return [SeedTraceClient::Playlist::Playlist]
     def create_playlist(service_param:, datetime:, request:, optional_datetime: nil, request_options: nil)
       response = @request_client.conn.post("/v2/playlist/#{service_param}/create") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -41,8 +41,9 @@ module SeedTraceClient
           "optionalDatetime": optional_datetime
         }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/create"
       end
-      Playlist::Playlist.from_json(json_object: response.body)
+      SeedTraceClient::Playlist::Playlist.from_json(json_object: response.body)
     end
 
     # Returns the user's playlists
@@ -54,8 +55,8 @@ module SeedTraceClient
     #   description
     # @param optional_multiple_field [String]
     # @param multiple_field [String]
-    # @param request_options [RequestOptions]
-    # @return [Array<Playlist::Playlist>]
+    # @param request_options [SeedTraceClient::RequestOptions]
+    # @return [Array<SeedTraceClient::Playlist::Playlist>]
     def get_playlists(service_param:, other_field:, multi_line_docs:, multiple_field:, limit: nil,
                       optional_multiple_field: nil, request_options: nil)
       response = @request_client.conn.get("/v2/playlist/#{service_param}/all") do |req|
@@ -71,40 +72,42 @@ module SeedTraceClient
           "optionalMultipleField": optional_multiple_field,
           "multipleField": multiple_field
         }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/all"
       end
       return if response.body.nil?
 
       response.body.map do |v|
         v = v.to_json
-        Playlist::Playlist.from_json(json_object: v)
+        SeedTraceClient::Playlist::Playlist.from_json(json_object: v)
       end
     end
 
     # Returns a playlist
     #
     # @param service_param [Integer]
-    # @param playlist_id [Playlist::PLAYLIST_ID]
-    # @param request_options [RequestOptions]
-    # @return [Playlist::Playlist]
+    # @param playlist_id [SeedTraceClient::Playlist::PLAYLIST_ID]
+    # @param request_options [SeedTraceClient::RequestOptions]
+    # @return [SeedTraceClient::Playlist::Playlist]
     def get_playlist(service_param:, playlist_id:, request_options: nil)
       response = @request_client.conn.get("/v2/playlist/#{service_param}/#{playlist_id}") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/#{playlist_id}"
       end
-      Playlist::Playlist.from_json(json_object: response.body)
+      SeedTraceClient::Playlist::Playlist.from_json(json_object: response.body)
     end
 
     # Updates a playlist
     #
     # @param service_param [Integer]
-    # @param playlist_id [Playlist::PLAYLIST_ID]
-    # @param request [Hash] Request of type Playlist::UpdatePlaylistRequest, as a Hash
+    # @param playlist_id [SeedTraceClient::Playlist::PLAYLIST_ID]
+    # @param request [Hash] Request of type SeedTraceClient::Playlist::UpdatePlaylistRequest, as a Hash
     #   * :name (String)
-    #   * :problems (Array<Commons::PROBLEM_ID>)
-    # @param request_options [RequestOptions]
-    # @return [Playlist::Playlist]
+    #   * :problems (Array<SeedTraceClient::Commons::PROBLEM_ID>)
+    # @param request_options [SeedTraceClient::RequestOptions]
+    # @return [SeedTraceClient::Playlist::Playlist]
     def update_playlist(service_param:, playlist_id:, request: nil, request_options: nil)
       response = @request_client.conn.put("/v2/playlist/#{service_param}/#{playlist_id}") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -112,15 +115,16 @@ module SeedTraceClient
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/#{playlist_id}"
       end
-      Playlist::Playlist.from_json(json_object: response.body)
+      SeedTraceClient::Playlist::Playlist.from_json(json_object: response.body)
     end
 
     # Deletes a playlist
     #
     # @param service_param [Integer]
-    # @param playlist_id [Playlist::PLAYLIST_ID]
-    # @param request_options [RequestOptions]
+    # @param playlist_id [SeedTraceClient::Playlist::PLAYLIST_ID]
+    # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
     def delete_playlist(service_param:, playlist_id:, request_options: nil)
       @request_client.conn.delete("/v2/playlist/#{service_param}/#{playlist_id}") do |req|
@@ -128,6 +132,7 @@ module SeedTraceClient
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/#{playlist_id}"
       end
     end
   end
@@ -135,10 +140,10 @@ module SeedTraceClient
   class AsyncPlaylistClient
     attr_reader :request_client
 
-    # @param request_client [AsyncRequestClient]
-    # @return [AsyncPlaylistClient]
+    # @param request_client [SeedTraceClient::AsyncRequestClient]
+    # @return [SeedTraceClient::AsyncPlaylistClient]
     def initialize(request_client:)
-      # @type [AsyncRequestClient]
+      # @type [SeedTraceClient::AsyncRequestClient]
       @request_client = request_client
     end
 
@@ -147,11 +152,11 @@ module SeedTraceClient
     # @param service_param [Integer]
     # @param datetime [DateTime]
     # @param optional_datetime [DateTime]
-    # @param request [Hash] Request of type Playlist::PlaylistCreateRequest, as a Hash
+    # @param request [Hash] Request of type SeedTraceClient::Playlist::PlaylistCreateRequest, as a Hash
     #   * :name (String)
-    #   * :problems (Array<Commons::PROBLEM_ID>)
-    # @param request_options [RequestOptions]
-    # @return [Playlist::Playlist]
+    #   * :problems (Array<SeedTraceClient::Commons::PROBLEM_ID>)
+    # @param request_options [SeedTraceClient::RequestOptions]
+    # @return [SeedTraceClient::Playlist::Playlist]
     def create_playlist(service_param:, datetime:, request:, optional_datetime: nil, request_options: nil)
       Async do
         response = @request_client.conn.post("/v2/playlist/#{service_param}/create") do |req|
@@ -165,8 +170,9 @@ module SeedTraceClient
             "optionalDatetime": optional_datetime
           }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/create"
         end
-        Playlist::Playlist.from_json(json_object: response.body)
+        SeedTraceClient::Playlist::Playlist.from_json(json_object: response.body)
       end
     end
 
@@ -179,8 +185,8 @@ module SeedTraceClient
     #   description
     # @param optional_multiple_field [String]
     # @param multiple_field [String]
-    # @param request_options [RequestOptions]
-    # @return [Array<Playlist::Playlist>]
+    # @param request_options [SeedTraceClient::RequestOptions]
+    # @return [Array<SeedTraceClient::Playlist::Playlist>]
     def get_playlists(service_param:, other_field:, multi_line_docs:, multiple_field:, limit: nil,
                       optional_multiple_field: nil, request_options: nil)
       Async do
@@ -197,10 +203,11 @@ module SeedTraceClient
             "optionalMultipleField": optional_multiple_field,
             "multipleField": multiple_field
           }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/all"
         end
         response.body&.map do |v|
           v = v.to_json
-          Playlist::Playlist.from_json(json_object: v)
+          SeedTraceClient::Playlist::Playlist.from_json(json_object: v)
         end
       end
     end
@@ -208,9 +215,9 @@ module SeedTraceClient
     # Returns a playlist
     #
     # @param service_param [Integer]
-    # @param playlist_id [Playlist::PLAYLIST_ID]
-    # @param request_options [RequestOptions]
-    # @return [Playlist::Playlist]
+    # @param playlist_id [SeedTraceClient::Playlist::PLAYLIST_ID]
+    # @param request_options [SeedTraceClient::RequestOptions]
+    # @return [SeedTraceClient::Playlist::Playlist]
     def get_playlist(service_param:, playlist_id:, request_options: nil)
       Async do
         response = @request_client.conn.get("/v2/playlist/#{service_param}/#{playlist_id}") do |req|
@@ -218,20 +225,21 @@ module SeedTraceClient
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/#{playlist_id}"
         end
-        Playlist::Playlist.from_json(json_object: response.body)
+        SeedTraceClient::Playlist::Playlist.from_json(json_object: response.body)
       end
     end
 
     # Updates a playlist
     #
     # @param service_param [Integer]
-    # @param playlist_id [Playlist::PLAYLIST_ID]
-    # @param request [Hash] Request of type Playlist::UpdatePlaylistRequest, as a Hash
+    # @param playlist_id [SeedTraceClient::Playlist::PLAYLIST_ID]
+    # @param request [Hash] Request of type SeedTraceClient::Playlist::UpdatePlaylistRequest, as a Hash
     #   * :name (String)
-    #   * :problems (Array<Commons::PROBLEM_ID>)
-    # @param request_options [RequestOptions]
-    # @return [Playlist::Playlist]
+    #   * :problems (Array<SeedTraceClient::Commons::PROBLEM_ID>)
+    # @param request_options [SeedTraceClient::RequestOptions]
+    # @return [SeedTraceClient::Playlist::Playlist]
     def update_playlist(service_param:, playlist_id:, request: nil, request_options: nil)
       Async do
         response = @request_client.conn.put("/v2/playlist/#{service_param}/#{playlist_id}") do |req|
@@ -240,16 +248,17 @@ module SeedTraceClient
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/#{playlist_id}"
         end
-        Playlist::Playlist.from_json(json_object: response.body)
+        SeedTraceClient::Playlist::Playlist.from_json(json_object: response.body)
       end
     end
 
     # Deletes a playlist
     #
     # @param service_param [Integer]
-    # @param playlist_id [Playlist::PLAYLIST_ID]
-    # @param request_options [RequestOptions]
+    # @param playlist_id [SeedTraceClient::Playlist::PLAYLIST_ID]
+    # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
     def delete_playlist(service_param:, playlist_id:, request_options: nil)
       Async do
@@ -258,6 +267,7 @@ module SeedTraceClient
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/v2/playlist/#{service_param}/#{playlist_id}"
         end
       end
     end

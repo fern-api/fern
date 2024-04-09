@@ -7,17 +7,17 @@ module SeedExhaustiveClient
   class NoAuthClient
     attr_reader :request_client
 
-    # @param request_client [RequestClient]
-    # @return [NoAuthClient]
+    # @param request_client [SeedExhaustiveClient::RequestClient]
+    # @return [SeedExhaustiveClient::NoAuthClient]
     def initialize(request_client:)
-      # @type [RequestClient]
+      # @type [SeedExhaustiveClient::RequestClient]
       @request_client = request_client
     end
 
     # POST request with no auth
     #
     # @param request [Object]
-    # @param request_options [RequestOptions]
+    # @param request_options [SeedExhaustiveClient::RequestOptions]
     # @return [Boolean]
     def post_with_no_auth(request: nil, request_options: nil)
       response = @request_client.conn.post("/no-auth") do |req|
@@ -25,6 +25,7 @@ module SeedExhaustiveClient
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/no-auth"
       end
       response.body
     end
@@ -33,17 +34,17 @@ module SeedExhaustiveClient
   class AsyncNoAuthClient
     attr_reader :request_client
 
-    # @param request_client [AsyncRequestClient]
-    # @return [AsyncNoAuthClient]
+    # @param request_client [SeedExhaustiveClient::AsyncRequestClient]
+    # @return [SeedExhaustiveClient::AsyncNoAuthClient]
     def initialize(request_client:)
-      # @type [AsyncRequestClient]
+      # @type [SeedExhaustiveClient::AsyncRequestClient]
       @request_client = request_client
     end
 
     # POST request with no auth
     #
     # @param request [Object]
-    # @param request_options [RequestOptions]
+    # @param request_options [SeedExhaustiveClient::RequestOptions]
     # @return [Boolean]
     def post_with_no_auth(request: nil, request_options: nil)
       Async do
@@ -52,6 +53,7 @@ module SeedExhaustiveClient
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/no-auth"
         end
         response.body
       end

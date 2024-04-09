@@ -1,41 +1,44 @@
 # frozen_string_literal: true
 
+require "ostruct"
 require "json"
 
 module SeedTraceClient
   class Submission
     class WorkspaceStarterFilesResponse
-      attr_reader :files, :additional_properties
-
-      # @param files [Hash{Commons::Language => Submission::WorkspaceFiles}]
+      attr_reader :files, :additional_properties, :_field_set
+      protected :_field_set
+      OMIT = Object.new
+      # @param files [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::Submission::WorkspaceFiles}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Submission::WorkspaceStarterFilesResponse]
+      # @return [SeedTraceClient::Submission::WorkspaceStarterFilesResponse]
       def initialize(files:, additional_properties: nil)
-        # @type [Hash{Commons::Language => Submission::WorkspaceFiles}]
+        # @type [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::Submission::WorkspaceFiles}]
         @files = files
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
-        @additional_properties = additional_properties
+        @_field_set = { "files": @files }.reject do |_k, v|
+          v == OMIT
+        end
       end
 
       # Deserialize a JSON object to an instance of WorkspaceStarterFilesResponse
       #
-      # @param json_object [JSON]
-      # @return [Submission::WorkspaceStarterFilesResponse]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Submission::WorkspaceStarterFilesResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        files = parsed_json["files"]&.transform_values do |_k, v|
+        files = parsed_json["files"]&.transform_values do |v|
           v = v.to_json
-          Submission::WorkspaceFiles.from_json(json_object: v)
+          SeedTraceClient::Submission::WorkspaceFiles.from_json(json_object: v)
         end
         new(files: files, additional_properties: struct)
       end
 
       # Serialize an instance of WorkspaceStarterFilesResponse to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "files": @files }.to_json
+        @_field_set&.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

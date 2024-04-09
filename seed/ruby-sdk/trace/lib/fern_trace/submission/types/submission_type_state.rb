@@ -13,7 +13,7 @@ module SeedTraceClient
       alias kind_of? is_a?
       # @param member [Object]
       # @param discriminant [String]
-      # @return [Submission::SubmissionTypeState]
+      # @return [SeedTraceClient::Submission::SubmissionTypeState]
       def initialize(member:, discriminant:)
         # @type [Object]
         @member = member
@@ -23,24 +23,24 @@ module SeedTraceClient
 
       # Deserialize a JSON object to an instance of SubmissionTypeState
       #
-      # @param json_object [JSON]
-      # @return [Submission::SubmissionTypeState]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Submission::SubmissionTypeState]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "test"
-                   Submission::TestSubmissionState.from_json(json_object: json_object)
+                   SeedTraceClient::Submission::TestSubmissionState.from_json(json_object: json_object)
                  when "workspace"
-                   Submission::WorkspaceSubmissionState.from_json(json_object: json_object)
+                   SeedTraceClient::Submission::WorkspaceSubmissionState.from_json(json_object: json_object)
                  else
-                   Submission::TestSubmissionState.from_json(json_object: json_object)
+                   SeedTraceClient::Submission::TestSubmissionState.from_json(json_object: json_object)
                  end
         new(member: member, discriminant: struct.type)
       end
 
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
         case @discriminant
         when "test"
@@ -60,9 +60,9 @@ module SeedTraceClient
       def self.validate_raw(obj:)
         case obj.type
         when "test"
-          Submission::TestSubmissionState.validate_raw(obj: obj)
+          SeedTraceClient::Submission::TestSubmissionState.validate_raw(obj: obj)
         when "workspace"
-          Submission::WorkspaceSubmissionState.validate_raw(obj: obj)
+          SeedTraceClient::Submission::WorkspaceSubmissionState.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -76,14 +76,14 @@ module SeedTraceClient
         @member.is_a?(obj)
       end
 
-      # @param member [Submission::TestSubmissionState]
-      # @return [Submission::SubmissionTypeState]
+      # @param member [SeedTraceClient::Submission::TestSubmissionState]
+      # @return [SeedTraceClient::Submission::SubmissionTypeState]
       def self.test(member:)
         new(member: member, discriminant: "test")
       end
 
-      # @param member [Submission::WorkspaceSubmissionState]
-      # @return [Submission::SubmissionTypeState]
+      # @param member [SeedTraceClient::Submission::WorkspaceSubmissionState]
+      # @return [SeedTraceClient::Submission::SubmissionTypeState]
       def self.workspace(member:)
         new(member: member, discriminant: "workspace")
       end

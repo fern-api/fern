@@ -12,20 +12,20 @@ module SeedPaginationClient
   class UsersClient
     attr_reader :request_client
 
-    # @param request_client [RequestClient]
-    # @return [UsersClient]
+    # @param request_client [SeedPaginationClient::RequestClient]
+    # @return [SeedPaginationClient::UsersClient]
     def initialize(request_client:)
-      # @type [RequestClient]
+      # @type [SeedPaginationClient::RequestClient]
       @request_client = request_client
     end
 
     # @param page [Integer] Defaults to first page
     # @param per_page [Integer] Defaults to per page
-    # @param order [Users::Order]
+    # @param order [SeedPaginationClient::Users::Order]
     # @param starting_after [String] The cursor used for pagination in order to fetch
     #   the next page of results.
-    # @param request_options [RequestOptions]
-    # @return [Users::ListUsersPaginationResponse]
+    # @param request_options [SeedPaginationClient::RequestOptions]
+    # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
     def list_with_cursor_pagination(page: nil, per_page: nil, order: nil, starting_after: nil, request_options: nil)
       response = @request_client.conn.get("/users") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -38,17 +38,18 @@ module SeedPaginationClient
           "order": order,
           "starting_after": starting_after
         }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/users"
       end
-      Users::ListUsersPaginationResponse.from_json(json_object: response.body)
+      SeedPaginationClient::Users::ListUsersPaginationResponse.from_json(json_object: response.body)
     end
 
     # @param page [Integer] Defaults to first page
     # @param per_page [Integer] Defaults to per page
-    # @param order [Users::Order]
+    # @param order [SeedPaginationClient::Users::Order]
     # @param starting_after [String] The cursor used for pagination in order to fetch
     #   the next page of results.
-    # @param request_options [RequestOptions]
-    # @return [Users::ListUsersPaginationResponse]
+    # @param request_options [SeedPaginationClient::RequestOptions]
+    # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
     def list_with_offset_pagination(page: nil, per_page: nil, order: nil, starting_after: nil, request_options: nil)
       response = @request_client.conn.get("/users") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -61,27 +62,29 @@ module SeedPaginationClient
           "order": order,
           "starting_after": starting_after
         }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/users"
       end
-      Users::ListUsersPaginationResponse.from_json(json_object: response.body)
+      SeedPaginationClient::Users::ListUsersPaginationResponse.from_json(json_object: response.body)
     end
 
     # @param cursor [String]
-    # @param request_options [RequestOptions]
-    # @return [Users::ListUsersExtendedResponse]
+    # @param request_options [SeedPaginationClient::RequestOptions]
+    # @return [SeedPaginationClient::Users::ListUsersExtendedResponse]
     def list_with_extended_results(cursor: nil, request_options: nil)
       response = @request_client.conn.get("/users") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.params = { **(request_options&.additional_query_parameters || {}), "cursor": cursor }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/users"
       end
-      Users::ListUsersExtendedResponse.from_json(json_object: response.body)
+      SeedPaginationClient::Users::ListUsersExtendedResponse.from_json(json_object: response.body)
     end
 
     # @param starting_after [String] The cursor used for pagination in order to fetch
     #   the next page of results.
-    # @param request_options [RequestOptions]
-    # @return [UsernameCursor]
+    # @param request_options [SeedPaginationClient::RequestOptions]
+    # @return [SeedPaginationClient::UsernameCursor]
     def list_usernames(starting_after: nil, request_options: nil)
       response = @request_client.conn.get("/users") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -91,41 +94,43 @@ module SeedPaginationClient
           **(request_options&.additional_query_parameters || {}),
           "starting_after": starting_after
         }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/users"
       end
-      UsernameCursor.from_json(json_object: response.body)
+      SeedPaginationClient::UsernameCursor.from_json(json_object: response.body)
     end
 
     # @param offset [Integer]
-    # @param request_options [RequestOptions]
-    # @return [Users::UsernameContainer]
+    # @param request_options [SeedPaginationClient::RequestOptions]
+    # @return [SeedPaginationClient::Users::UsernameContainer]
     def list_with_global_config(offset: nil, request_options: nil)
       response = @request_client.conn.get("/users") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.params = { **(request_options&.additional_query_parameters || {}), "offset": offset }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/users"
       end
-      Users::UsernameContainer.from_json(json_object: response.body)
+      SeedPaginationClient::Users::UsernameContainer.from_json(json_object: response.body)
     end
   end
 
   class AsyncUsersClient
     attr_reader :request_client
 
-    # @param request_client [AsyncRequestClient]
-    # @return [AsyncUsersClient]
+    # @param request_client [SeedPaginationClient::AsyncRequestClient]
+    # @return [SeedPaginationClient::AsyncUsersClient]
     def initialize(request_client:)
-      # @type [AsyncRequestClient]
+      # @type [SeedPaginationClient::AsyncRequestClient]
       @request_client = request_client
     end
 
     # @param page [Integer] Defaults to first page
     # @param per_page [Integer] Defaults to per page
-    # @param order [Users::Order]
+    # @param order [SeedPaginationClient::Users::Order]
     # @param starting_after [String] The cursor used for pagination in order to fetch
     #   the next page of results.
-    # @param request_options [RequestOptions]
-    # @return [Users::ListUsersPaginationResponse]
+    # @param request_options [SeedPaginationClient::RequestOptions]
+    # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
     def list_with_cursor_pagination(page: nil, per_page: nil, order: nil, starting_after: nil, request_options: nil)
       Async do
         response = @request_client.conn.get("/users") do |req|
@@ -139,18 +144,19 @@ module SeedPaginationClient
             "order": order,
             "starting_after": starting_after
           }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/users"
         end
-        Users::ListUsersPaginationResponse.from_json(json_object: response.body)
+        SeedPaginationClient::Users::ListUsersPaginationResponse.from_json(json_object: response.body)
       end
     end
 
     # @param page [Integer] Defaults to first page
     # @param per_page [Integer] Defaults to per page
-    # @param order [Users::Order]
+    # @param order [SeedPaginationClient::Users::Order]
     # @param starting_after [String] The cursor used for pagination in order to fetch
     #   the next page of results.
-    # @param request_options [RequestOptions]
-    # @return [Users::ListUsersPaginationResponse]
+    # @param request_options [SeedPaginationClient::RequestOptions]
+    # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
     def list_with_offset_pagination(page: nil, per_page: nil, order: nil, starting_after: nil, request_options: nil)
       Async do
         response = @request_client.conn.get("/users") do |req|
@@ -164,14 +170,15 @@ module SeedPaginationClient
             "order": order,
             "starting_after": starting_after
           }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/users"
         end
-        Users::ListUsersPaginationResponse.from_json(json_object: response.body)
+        SeedPaginationClient::Users::ListUsersPaginationResponse.from_json(json_object: response.body)
       end
     end
 
     # @param cursor [String]
-    # @param request_options [RequestOptions]
-    # @return [Users::ListUsersExtendedResponse]
+    # @param request_options [SeedPaginationClient::RequestOptions]
+    # @return [SeedPaginationClient::Users::ListUsersExtendedResponse]
     def list_with_extended_results(cursor: nil, request_options: nil)
       Async do
         response = @request_client.conn.get("/users") do |req|
@@ -179,15 +186,16 @@ module SeedPaginationClient
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.params = { **(request_options&.additional_query_parameters || {}), "cursor": cursor }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/users"
         end
-        Users::ListUsersExtendedResponse.from_json(json_object: response.body)
+        SeedPaginationClient::Users::ListUsersExtendedResponse.from_json(json_object: response.body)
       end
     end
 
     # @param starting_after [String] The cursor used for pagination in order to fetch
     #   the next page of results.
-    # @param request_options [RequestOptions]
-    # @return [UsernameCursor]
+    # @param request_options [SeedPaginationClient::RequestOptions]
+    # @return [SeedPaginationClient::UsernameCursor]
     def list_usernames(starting_after: nil, request_options: nil)
       Async do
         response = @request_client.conn.get("/users") do |req|
@@ -198,14 +206,15 @@ module SeedPaginationClient
             **(request_options&.additional_query_parameters || {}),
             "starting_after": starting_after
           }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/users"
         end
-        UsernameCursor.from_json(json_object: response.body)
+        SeedPaginationClient::UsernameCursor.from_json(json_object: response.body)
       end
     end
 
     # @param offset [Integer]
-    # @param request_options [RequestOptions]
-    # @return [Users::UsernameContainer]
+    # @param request_options [SeedPaginationClient::RequestOptions]
+    # @return [SeedPaginationClient::Users::UsernameContainer]
     def list_with_global_config(offset: nil, request_options: nil)
       Async do
         response = @request_client.conn.get("/users") do |req|
@@ -213,8 +222,9 @@ module SeedPaginationClient
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.params = { **(request_options&.additional_query_parameters || {}), "offset": offset }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/users"
         end
-        Users::UsernameContainer.from_json(json_object: response.body)
+        SeedPaginationClient::Users::UsernameContainer.from_json(json_object: response.body)
       end
     end
   end

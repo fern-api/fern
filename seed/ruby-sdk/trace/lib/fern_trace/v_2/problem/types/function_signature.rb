@@ -15,7 +15,7 @@ module SeedTraceClient
         alias kind_of? is_a?
         # @param member [Object]
         # @param discriminant [String]
-        # @return [V2::Problem::FunctionSignature]
+        # @return [SeedTraceClient::V2::Problem::FunctionSignature]
         def initialize(member:, discriminant:)
           # @type [Object]
           @member = member
@@ -25,26 +25,26 @@ module SeedTraceClient
 
         # Deserialize a JSON object to an instance of FunctionSignature
         #
-        # @param json_object [JSON]
-        # @return [V2::Problem::FunctionSignature]
+        # @param json_object [String]
+        # @return [SeedTraceClient::V2::Problem::FunctionSignature]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           member = case struct.type
                    when "void"
-                     V2::Problem::VoidFunctionSignature.from_json(json_object: json_object)
+                     SeedTraceClient::V2::Problem::VoidFunctionSignature.from_json(json_object: json_object)
                    when "nonVoid"
-                     V2::Problem::NonVoidFunctionSignature.from_json(json_object: json_object)
+                     SeedTraceClient::V2::Problem::NonVoidFunctionSignature.from_json(json_object: json_object)
                    when "voidThatTakesActualResult"
-                     V2::Problem::VoidFunctionSignatureThatTakesActualResult.from_json(json_object: json_object)
+                     SeedTraceClient::V2::Problem::VoidFunctionSignatureThatTakesActualResult.from_json(json_object: json_object)
                    else
-                     V2::Problem::VoidFunctionSignature.from_json(json_object: json_object)
+                     SeedTraceClient::V2::Problem::VoidFunctionSignature.from_json(json_object: json_object)
                    end
           new(member: member, discriminant: struct.type)
         end
 
         # For Union Types, to_json functionality is delegated to the wrapped member.
         #
-        # @return [JSON]
+        # @return [String]
         def to_json(*_args)
           case @discriminant
           when "void"
@@ -66,11 +66,11 @@ module SeedTraceClient
         def self.validate_raw(obj:)
           case obj.type
           when "void"
-            V2::Problem::VoidFunctionSignature.validate_raw(obj: obj)
+            SeedTraceClient::V2::Problem::VoidFunctionSignature.validate_raw(obj: obj)
           when "nonVoid"
-            V2::Problem::NonVoidFunctionSignature.validate_raw(obj: obj)
+            SeedTraceClient::V2::Problem::NonVoidFunctionSignature.validate_raw(obj: obj)
           when "voidThatTakesActualResult"
-            V2::Problem::VoidFunctionSignatureThatTakesActualResult.validate_raw(obj: obj)
+            SeedTraceClient::V2::Problem::VoidFunctionSignatureThatTakesActualResult.validate_raw(obj: obj)
           else
             raise("Passed value matched no type within the union, validation failed.")
           end
@@ -84,20 +84,20 @@ module SeedTraceClient
           @member.is_a?(obj)
         end
 
-        # @param member [V2::Problem::VoidFunctionSignature]
-        # @return [V2::Problem::FunctionSignature]
+        # @param member [SeedTraceClient::V2::Problem::VoidFunctionSignature]
+        # @return [SeedTraceClient::V2::Problem::FunctionSignature]
         def self.void(member:)
           new(member: member, discriminant: "void")
         end
 
-        # @param member [V2::Problem::NonVoidFunctionSignature]
-        # @return [V2::Problem::FunctionSignature]
+        # @param member [SeedTraceClient::V2::Problem::NonVoidFunctionSignature]
+        # @return [SeedTraceClient::V2::Problem::FunctionSignature]
         def self.non_void(member:)
           new(member: member, discriminant: "nonVoid")
         end
 
-        # @param member [V2::Problem::VoidFunctionSignatureThatTakesActualResult]
-        # @return [V2::Problem::FunctionSignature]
+        # @param member [SeedTraceClient::V2::Problem::VoidFunctionSignatureThatTakesActualResult]
+        # @return [SeedTraceClient::V2::Problem::FunctionSignature]
         def self.void_that_takes_actual_result(member:)
           new(member: member, discriminant: "voidThatTakesActualResult")
         end

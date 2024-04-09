@@ -7,15 +7,15 @@ module SeedBytesClient
   class ServiceClient
     attr_reader :request_client
 
-    # @param request_client [RequestClient]
-    # @return [ServiceClient]
+    # @param request_client [SeedBytesClient::RequestClient]
+    # @return [SeedBytesClient::ServiceClient]
     def initialize(request_client:)
-      # @type [RequestClient]
+      # @type [SeedBytesClient::RequestClient]
       @request_client = request_client
     end
 
     # @param request [String, IO] Base64 encoded bytes, or an IO object (e.g. Faraday::UploadIO, etc.)
-    # @param request_options [RequestOptions]
+    # @param request_options [SeedBytesClient::RequestOptions]
     # @return [Void]
     def upload(request:, request_options: nil)
       @request_client.conn.post("/upload-content") do |req|
@@ -23,6 +23,7 @@ module SeedBytesClient
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.headers["Content-Type"] = "application/octet-stream"
         req.body = request
+        req.url "#{@request_client.get_url(request_options: request_options)}/upload-content"
       end
     end
   end
@@ -30,15 +31,15 @@ module SeedBytesClient
   class AsyncServiceClient
     attr_reader :request_client
 
-    # @param request_client [AsyncRequestClient]
-    # @return [AsyncServiceClient]
+    # @param request_client [SeedBytesClient::AsyncRequestClient]
+    # @return [SeedBytesClient::AsyncServiceClient]
     def initialize(request_client:)
-      # @type [AsyncRequestClient]
+      # @type [SeedBytesClient::AsyncRequestClient]
       @request_client = request_client
     end
 
     # @param request [String, IO] Base64 encoded bytes, or an IO object (e.g. Faraday::UploadIO, etc.)
-    # @param request_options [RequestOptions]
+    # @param request_options [SeedBytesClient::RequestOptions]
     # @return [Void]
     def upload(request:, request_options: nil)
       Async do
@@ -47,6 +48,7 @@ module SeedBytesClient
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.headers["Content-Type"] = "application/octet-stream"
           req.body = request
+          req.url "#{@request_client.get_url(request_options: request_options)}/upload-content"
         end
       end
     end

@@ -12,7 +12,7 @@ module SeedExamplesClient
         alias kind_of? is_a?
         # @param member [Object]
         # @param discriminant [String]
-        # @return [Commons::Types::Data]
+        # @return [SeedExamplesClient::Commons::Types::Data]
         def initialize(member:, discriminant:)
           # @type [Object]
           @member = member
@@ -22,8 +22,8 @@ module SeedExamplesClient
 
         # Deserialize a JSON object to an instance of Data
         #
-        # @param json_object [JSON]
-        # @return [Commons::Types::Data]
+        # @param json_object [String]
+        # @return [SeedExamplesClient::Commons::Types::Data]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           member = case struct.type
@@ -39,7 +39,7 @@ module SeedExamplesClient
 
         # For Union Types, to_json functionality is delegated to the wrapped member.
         #
-        # @return [JSON]
+        # @return [String]
         def to_json(*_args)
           case @discriminant
           when "string"
@@ -73,13 +73,13 @@ module SeedExamplesClient
         end
 
         # @param member [String]
-        # @return [Commons::Types::Data]
+        # @return [SeedExamplesClient::Commons::Types::Data]
         def self.string(member:)
           new(member: member, discriminant: "string")
         end
 
         # @param member [String]
-        # @return [Commons::Types::Data]
+        # @return [SeedExamplesClient::Commons::Types::Data]
         def self.base_64(member:)
           new(member: member, discriminant: "base64")
         end

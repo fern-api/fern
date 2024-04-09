@@ -8,10 +8,10 @@ module SeedLiteralClient
   class InlinedClient
     attr_reader :request_client
 
-    # @param request_client [RequestClient]
-    # @return [InlinedClient]
+    # @param request_client [SeedLiteralClient::RequestClient]
+    # @return [SeedLiteralClient::InlinedClient]
     def initialize(request_client:)
-      # @type [RequestClient]
+      # @type [SeedLiteralClient::RequestClient]
       @request_client = request_client
     end
 
@@ -19,8 +19,8 @@ module SeedLiteralClient
     # @param query [String]
     # @param temperature [Float]
     # @param stream [Boolean]
-    # @param request_options [RequestOptions]
-    # @return [SendResponse]
+    # @param request_options [SeedLiteralClient::RequestOptions]
+    # @return [SeedLiteralClient::SendResponse]
     def send(prompt:, query:, stream:, temperature: nil, request_options: nil)
       response = @request_client.conn.post("/inlined") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -37,18 +37,19 @@ module SeedLiteralClient
           temperature: temperature,
           stream: stream
         }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/inlined"
       end
-      SendResponse.from_json(json_object: response.body)
+      SeedLiteralClient::SendResponse.from_json(json_object: response.body)
     end
   end
 
   class AsyncInlinedClient
     attr_reader :request_client
 
-    # @param request_client [AsyncRequestClient]
-    # @return [AsyncInlinedClient]
+    # @param request_client [SeedLiteralClient::AsyncRequestClient]
+    # @return [SeedLiteralClient::AsyncInlinedClient]
     def initialize(request_client:)
-      # @type [AsyncRequestClient]
+      # @type [SeedLiteralClient::AsyncRequestClient]
       @request_client = request_client
     end
 
@@ -56,8 +57,8 @@ module SeedLiteralClient
     # @param query [String]
     # @param temperature [Float]
     # @param stream [Boolean]
-    # @param request_options [RequestOptions]
-    # @return [SendResponse]
+    # @param request_options [SeedLiteralClient::RequestOptions]
+    # @return [SeedLiteralClient::SendResponse]
     def send(prompt:, query:, stream:, temperature: nil, request_options: nil)
       Async do
         response = @request_client.conn.post("/inlined") do |req|
@@ -75,8 +76,9 @@ module SeedLiteralClient
             temperature: temperature,
             stream: stream
           }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/inlined"
         end
-        SendResponse.from_json(json_object: response.body)
+        SeedLiteralClient::SendResponse.from_json(json_object: response.body)
       end
     end
   end

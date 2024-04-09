@@ -7,16 +7,16 @@ module SeedExhaustiveClient
   class ReqWithHeadersClient
     attr_reader :request_client
 
-    # @param request_client [RequestClient]
-    # @return [ReqWithHeadersClient]
+    # @param request_client [SeedExhaustiveClient::RequestClient]
+    # @return [SeedExhaustiveClient::ReqWithHeadersClient]
     def initialize(request_client:)
-      # @type [RequestClient]
+      # @type [SeedExhaustiveClient::RequestClient]
       @request_client = request_client
     end
 
     # @param x_test_endpoint_header [String]
     # @param request [String]
-    # @param request_options [RequestOptions]
+    # @param request_options [SeedExhaustiveClient::RequestOptions]
     # @return [Void]
     def get_with_custom_header(x_test_endpoint_header:, request:, request_options: nil)
       @request_client.conn.post("/test-headers/custom-header") do |req|
@@ -28,6 +28,7 @@ module SeedExhaustiveClient
           "X-TEST-ENDPOINT-HEADER": x_test_endpoint_header
         }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/test-headers/custom-header"
       end
     end
   end
@@ -35,16 +36,16 @@ module SeedExhaustiveClient
   class AsyncReqWithHeadersClient
     attr_reader :request_client
 
-    # @param request_client [AsyncRequestClient]
-    # @return [AsyncReqWithHeadersClient]
+    # @param request_client [SeedExhaustiveClient::AsyncRequestClient]
+    # @return [SeedExhaustiveClient::AsyncReqWithHeadersClient]
     def initialize(request_client:)
-      # @type [AsyncRequestClient]
+      # @type [SeedExhaustiveClient::AsyncRequestClient]
       @request_client = request_client
     end
 
     # @param x_test_endpoint_header [String]
     # @param request [String]
-    # @param request_options [RequestOptions]
+    # @param request_options [SeedExhaustiveClient::RequestOptions]
     # @return [Void]
     def get_with_custom_header(x_test_endpoint_header:, request:, request_options: nil)
       Async do
@@ -57,6 +58,7 @@ module SeedExhaustiveClient
             "X-TEST-ENDPOINT-HEADER": x_test_endpoint_header
           }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/test-headers/custom-header"
         end
       end
     end

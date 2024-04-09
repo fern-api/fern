@@ -1,39 +1,41 @@
 # frozen_string_literal: true
 
 require_relative "../../commons/types/imported"
+require "ostruct"
 require "json"
 
 module SeedAudiencesClient
   class Foo
     class ImportingType
-      attr_reader :imported, :additional_properties
-
-      # @param imported [Commons::IMPORTED]
+      attr_reader :imported, :additional_properties, :_field_set
+      protected :_field_set
+      OMIT = Object.new
+      # @param imported [SeedAudiencesClient::Commons::IMPORTED]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Foo::ImportingType]
+      # @return [SeedAudiencesClient::Foo::ImportingType]
       def initialize(imported:, additional_properties: nil)
-        # @type [Commons::IMPORTED]
+        # @type [SeedAudiencesClient::Commons::IMPORTED]
         @imported = imported
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
-        @additional_properties = additional_properties
+        @_field_set = { "imported": @imported }.reject do |_k, v|
+          v == OMIT
+        end
       end
 
       # Deserialize a JSON object to an instance of ImportingType
       #
-      # @param json_object [JSON]
-      # @return [Foo::ImportingType]
+      # @param json_object [String]
+      # @return [SeedAudiencesClient::Foo::ImportingType]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        JSON.parse(json_object)
-        imported = struct.imported
+        imported = struct["imported"]
         new(imported: imported, additional_properties: struct)
       end
 
       # Serialize an instance of ImportingType to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "imported": @imported }.to_json
+        @_field_set&.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

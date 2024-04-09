@@ -8,20 +8,20 @@ module SeedExamplesClient
     class Client
       attr_reader :service
 
-      # @param request_client [RequestClient]
-      # @return [Health::Client]
+      # @param request_client [SeedExamplesClient::RequestClient]
+      # @return [SeedExamplesClient::Health::Client]
       def initialize(request_client:)
-        @service = Health::ServiceClient.new(request_client: request_client)
+        @service = SeedExamplesClient::Health::ServiceClient.new(request_client: request_client)
       end
     end
 
     class AsyncClient
       attr_reader :service
 
-      # @param request_client [RequestClient]
-      # @return [Health::AsyncClient]
+      # @param request_client [SeedExamplesClient::AsyncRequestClient]
+      # @return [SeedExamplesClient::Health::AsyncClient]
       def initialize(request_client:)
-        @service = Health::AsyncServiceClient.new(request_client: request_client)
+        @service = SeedExamplesClient::Health::AsyncServiceClient.new(request_client: request_client)
       end
     end
   end

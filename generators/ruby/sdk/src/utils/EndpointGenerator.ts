@@ -442,15 +442,14 @@ export class EndpointGenerator {
         if (body !== undefined) {
             expressions.push(...body);
         }
-        const url = shouldOverwriteUrl
-            ? new Expression({
-                  leftSide: `${this.blockArg}.url`,
-                  rightSide: `"#{${requestClientVariable.write({})}.default_environment[:${
-                      this.endpoint.baseUrl
-                  }]}/${path}"`,
-                  isAssignment: false
-              })
-            : undefined;
+        const getUrlParams = shouldOverwriteUrl
+            ? `environment: ${this.endpoint.baseUrl}, request_options: ${this.requestOptionsVariable.name}`
+            : `request_options: ${this.requestOptionsVariable.name}`;
+        const url = new Expression({
+            leftSide: `${this.blockArg}.url`,
+            rightSide: `"#{${requestClientVariable.write({})}.get_url(${getUrlParams})}/${path}"`,
+            isAssignment: false
+        });
         if (url !== undefined) {
             expressions.push(url);
         }

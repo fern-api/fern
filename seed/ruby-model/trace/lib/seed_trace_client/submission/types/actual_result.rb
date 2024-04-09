@@ -14,7 +14,7 @@ module SeedTraceClient
       alias kind_of? is_a?
       # @param member [Object]
       # @param discriminant [String]
-      # @return [Submission::ActualResult]
+      # @return [SeedTraceClient::Submission::ActualResult]
       def initialize(member:, discriminant:)
         # @type [Object]
         @member = member
@@ -24,26 +24,26 @@ module SeedTraceClient
 
       # Deserialize a JSON object to an instance of ActualResult
       #
-      # @param json_object [JSON]
-      # @return [Submission::ActualResult]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Submission::ActualResult]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "value"
-                   Commons::VariableValue.from_json(json_object: json_object.value)
+                   SeedTraceClient::Commons::VariableValue.from_json(json_object: json_object.value)
                  when "exception"
-                   Submission::ExceptionInfo.from_json(json_object: json_object)
+                   SeedTraceClient::Submission::ExceptionInfo.from_json(json_object: json_object)
                  when "exceptionV2"
-                   Submission::ExceptionV2.from_json(json_object: json_object.value)
+                   SeedTraceClient::Submission::ExceptionV2.from_json(json_object: json_object.value)
                  else
-                   Commons::VariableValue.from_json(json_object: json_object)
+                   SeedTraceClient::Commons::VariableValue.from_json(json_object: json_object)
                  end
         new(member: member, discriminant: struct.type)
       end
 
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
         case @discriminant
         when "value"
@@ -65,11 +65,11 @@ module SeedTraceClient
       def self.validate_raw(obj:)
         case obj.type
         when "value"
-          Commons::VariableValue.validate_raw(obj: obj)
+          SeedTraceClient::Commons::VariableValue.validate_raw(obj: obj)
         when "exception"
-          Submission::ExceptionInfo.validate_raw(obj: obj)
+          SeedTraceClient::Submission::ExceptionInfo.validate_raw(obj: obj)
         when "exceptionV2"
-          Submission::ExceptionV2.validate_raw(obj: obj)
+          SeedTraceClient::Submission::ExceptionV2.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -83,20 +83,20 @@ module SeedTraceClient
         @member.is_a?(obj)
       end
 
-      # @param member [Commons::VariableValue]
-      # @return [Submission::ActualResult]
+      # @param member [SeedTraceClient::Commons::VariableValue]
+      # @return [SeedTraceClient::Submission::ActualResult]
       def self.value(member:)
         new(member: member, discriminant: "value")
       end
 
-      # @param member [Submission::ExceptionInfo]
-      # @return [Submission::ActualResult]
+      # @param member [SeedTraceClient::Submission::ExceptionInfo]
+      # @return [SeedTraceClient::Submission::ActualResult]
       def self.exception(member:)
         new(member: member, discriminant: "exception")
       end
 
-      # @param member [Submission::ExceptionV2]
-      # @return [Submission::ActualResult]
+      # @param member [SeedTraceClient::Submission::ExceptionV2]
+      # @return [SeedTraceClient::Submission::ActualResult]
       def self.exception_v_2(member:)
         new(member: member, discriminant: "exceptionV2")
       end

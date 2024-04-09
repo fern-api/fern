@@ -14,26 +14,26 @@ module SeedTraceClient
   class ProblemClient
     attr_reader :request_client
 
-    # @param request_client [RequestClient]
-    # @return [ProblemClient]
+    # @param request_client [SeedTraceClient::RequestClient]
+    # @return [SeedTraceClient::ProblemClient]
     def initialize(request_client:)
-      # @type [RequestClient]
+      # @type [SeedTraceClient::RequestClient]
       @request_client = request_client
     end
 
     # Creates a problem
     #
-    # @param request [Hash] Request of type Problem::CreateProblemRequest, as a Hash
+    # @param request [Hash] Request of type SeedTraceClient::Problem::CreateProblemRequest, as a Hash
     #   * :problem_name (String)
     #   * :problem_description (Hash)
-    #     * :boards (Array<Problem::ProblemDescriptionBoard>)
-    #   * :files (Hash{Commons::Language => Problem::ProblemFiles})
-    #   * :input_params (Array<Problem::VariableTypeAndName>)
+    #     * :boards (Array<SeedTraceClient::Problem::ProblemDescriptionBoard>)
+    #   * :files (Hash{SeedTraceClient::Commons::Language => SeedTraceClient::Problem::ProblemFiles})
+    #   * :input_params (Array<SeedTraceClient::Problem::VariableTypeAndName>)
     #   * :output_type (Hash)
-    #   * :testcases (Array<Commons::TestCaseWithExpectedResult>)
+    #   * :testcases (Array<SeedTraceClient::Commons::TestCaseWithExpectedResult>)
     #   * :method_name (String)
-    # @param request_options [RequestOptions]
-    # @return [Problem::CreateProblemResponse]
+    # @param request_options [SeedTraceClient::RequestOptions]
+    # @return [SeedTraceClient::Problem::CreateProblemResponse]
     def create_problem(request:, request_options: nil)
       response = @request_client.conn.post("/problem-crud/create") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -41,24 +41,25 @@ module SeedTraceClient
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/problem-crud/create"
       end
-      Problem::CreateProblemResponse.from_json(json_object: response.body)
+      SeedTraceClient::Problem::CreateProblemResponse.from_json(json_object: response.body)
     end
 
     # Updates a problem
     #
-    # @param problem_id [Commons::PROBLEM_ID]
-    # @param request [Hash] Request of type Problem::CreateProblemRequest, as a Hash
+    # @param problem_id [SeedTraceClient::Commons::PROBLEM_ID]
+    # @param request [Hash] Request of type SeedTraceClient::Problem::CreateProblemRequest, as a Hash
     #   * :problem_name (String)
     #   * :problem_description (Hash)
-    #     * :boards (Array<Problem::ProblemDescriptionBoard>)
-    #   * :files (Hash{Commons::Language => Problem::ProblemFiles})
-    #   * :input_params (Array<Problem::VariableTypeAndName>)
+    #     * :boards (Array<SeedTraceClient::Problem::ProblemDescriptionBoard>)
+    #   * :files (Hash{SeedTraceClient::Commons::Language => SeedTraceClient::Problem::ProblemFiles})
+    #   * :input_params (Array<SeedTraceClient::Problem::VariableTypeAndName>)
     #   * :output_type (Hash)
-    #   * :testcases (Array<Commons::TestCaseWithExpectedResult>)
+    #   * :testcases (Array<SeedTraceClient::Commons::TestCaseWithExpectedResult>)
     #   * :method_name (String)
-    # @param request_options [RequestOptions]
-    # @return [Problem::UpdateProblemResponse]
+    # @param request_options [SeedTraceClient::RequestOptions]
+    # @return [SeedTraceClient::Problem::UpdateProblemResponse]
     def update_problem(problem_id:, request:, request_options: nil)
       response = @request_client.conn.post("/problem-crud/update/#{problem_id}") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -66,14 +67,15 @@ module SeedTraceClient
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/problem-crud/update/#{problem_id}"
       end
-      Problem::UpdateProblemResponse.from_json(json_object: response.body)
+      SeedTraceClient::Problem::UpdateProblemResponse.from_json(json_object: response.body)
     end
 
     # Soft deletes a problem
     #
-    # @param problem_id [Commons::PROBLEM_ID]
-    # @param request_options [RequestOptions]
+    # @param problem_id [SeedTraceClient::Commons::PROBLEM_ID]
+    # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
     def delete_problem(problem_id:, request_options: nil)
       @request_client.conn.delete("/problem-crud/delete/#{problem_id}") do |req|
@@ -81,23 +83,24 @@ module SeedTraceClient
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/problem-crud/delete/#{problem_id}"
       end
     end
 
     # Returns default starter files for problem
     #
-    # @param input_params [Array<Hash>] Request of type Array<Problem::VariableTypeAndName>, as a Hash
+    # @param input_params [Array<Hash>] Request of type Array<SeedTraceClient::Problem::VariableTypeAndName>, as a Hash
     #   * :variable_type (Hash)
     #   * :name (String)
-    # @param output_type [Commons::VariableType]
+    # @param output_type [SeedTraceClient::Commons::VariableType]
     # @param method_name [String] The name of the `method` that the student has to complete.
     #   The method name cannot include the following characters:
     #   - Greater Than `>`
     #   - Less Than `<``
     #   - Equals `=`
     #   - Period `.`
-    # @param request_options [RequestOptions]
-    # @return [Problem::GetDefaultStarterFilesResponse]
+    # @param request_options [SeedTraceClient::RequestOptions]
+    # @return [SeedTraceClient::Problem::GetDefaultStarterFilesResponse]
     def get_default_starter_files(input_params:, output_type:, method_name:, request_options: nil)
       response = @request_client.conn.post("/problem-crud/default-starter-files") do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -110,34 +113,35 @@ module SeedTraceClient
           outputType: output_type,
           methodName: method_name
         }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/problem-crud/default-starter-files"
       end
-      Problem::GetDefaultStarterFilesResponse.from_json(json_object: response.body)
+      SeedTraceClient::Problem::GetDefaultStarterFilesResponse.from_json(json_object: response.body)
     end
   end
 
   class AsyncProblemClient
     attr_reader :request_client
 
-    # @param request_client [AsyncRequestClient]
-    # @return [AsyncProblemClient]
+    # @param request_client [SeedTraceClient::AsyncRequestClient]
+    # @return [SeedTraceClient::AsyncProblemClient]
     def initialize(request_client:)
-      # @type [AsyncRequestClient]
+      # @type [SeedTraceClient::AsyncRequestClient]
       @request_client = request_client
     end
 
     # Creates a problem
     #
-    # @param request [Hash] Request of type Problem::CreateProblemRequest, as a Hash
+    # @param request [Hash] Request of type SeedTraceClient::Problem::CreateProblemRequest, as a Hash
     #   * :problem_name (String)
     #   * :problem_description (Hash)
-    #     * :boards (Array<Problem::ProblemDescriptionBoard>)
-    #   * :files (Hash{Commons::Language => Problem::ProblemFiles})
-    #   * :input_params (Array<Problem::VariableTypeAndName>)
+    #     * :boards (Array<SeedTraceClient::Problem::ProblemDescriptionBoard>)
+    #   * :files (Hash{SeedTraceClient::Commons::Language => SeedTraceClient::Problem::ProblemFiles})
+    #   * :input_params (Array<SeedTraceClient::Problem::VariableTypeAndName>)
     #   * :output_type (Hash)
-    #   * :testcases (Array<Commons::TestCaseWithExpectedResult>)
+    #   * :testcases (Array<SeedTraceClient::Commons::TestCaseWithExpectedResult>)
     #   * :method_name (String)
-    # @param request_options [RequestOptions]
-    # @return [Problem::CreateProblemResponse]
+    # @param request_options [SeedTraceClient::RequestOptions]
+    # @return [SeedTraceClient::Problem::CreateProblemResponse]
     def create_problem(request:, request_options: nil)
       Async do
         response = @request_client.conn.post("/problem-crud/create") do |req|
@@ -146,25 +150,26 @@ module SeedTraceClient
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/problem-crud/create"
         end
-        Problem::CreateProblemResponse.from_json(json_object: response.body)
+        SeedTraceClient::Problem::CreateProblemResponse.from_json(json_object: response.body)
       end
     end
 
     # Updates a problem
     #
-    # @param problem_id [Commons::PROBLEM_ID]
-    # @param request [Hash] Request of type Problem::CreateProblemRequest, as a Hash
+    # @param problem_id [SeedTraceClient::Commons::PROBLEM_ID]
+    # @param request [Hash] Request of type SeedTraceClient::Problem::CreateProblemRequest, as a Hash
     #   * :problem_name (String)
     #   * :problem_description (Hash)
-    #     * :boards (Array<Problem::ProblemDescriptionBoard>)
-    #   * :files (Hash{Commons::Language => Problem::ProblemFiles})
-    #   * :input_params (Array<Problem::VariableTypeAndName>)
+    #     * :boards (Array<SeedTraceClient::Problem::ProblemDescriptionBoard>)
+    #   * :files (Hash{SeedTraceClient::Commons::Language => SeedTraceClient::Problem::ProblemFiles})
+    #   * :input_params (Array<SeedTraceClient::Problem::VariableTypeAndName>)
     #   * :output_type (Hash)
-    #   * :testcases (Array<Commons::TestCaseWithExpectedResult>)
+    #   * :testcases (Array<SeedTraceClient::Commons::TestCaseWithExpectedResult>)
     #   * :method_name (String)
-    # @param request_options [RequestOptions]
-    # @return [Problem::UpdateProblemResponse]
+    # @param request_options [SeedTraceClient::RequestOptions]
+    # @return [SeedTraceClient::Problem::UpdateProblemResponse]
     def update_problem(problem_id:, request:, request_options: nil)
       Async do
         response = @request_client.conn.post("/problem-crud/update/#{problem_id}") do |req|
@@ -173,15 +178,16 @@ module SeedTraceClient
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/problem-crud/update/#{problem_id}"
         end
-        Problem::UpdateProblemResponse.from_json(json_object: response.body)
+        SeedTraceClient::Problem::UpdateProblemResponse.from_json(json_object: response.body)
       end
     end
 
     # Soft deletes a problem
     #
-    # @param problem_id [Commons::PROBLEM_ID]
-    # @param request_options [RequestOptions]
+    # @param problem_id [SeedTraceClient::Commons::PROBLEM_ID]
+    # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
     def delete_problem(problem_id:, request_options: nil)
       Async do
@@ -190,24 +196,25 @@ module SeedTraceClient
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/problem-crud/delete/#{problem_id}"
         end
       end
     end
 
     # Returns default starter files for problem
     #
-    # @param input_params [Array<Hash>] Request of type Array<Problem::VariableTypeAndName>, as a Hash
+    # @param input_params [Array<Hash>] Request of type Array<SeedTraceClient::Problem::VariableTypeAndName>, as a Hash
     #   * :variable_type (Hash)
     #   * :name (String)
-    # @param output_type [Commons::VariableType]
+    # @param output_type [SeedTraceClient::Commons::VariableType]
     # @param method_name [String] The name of the `method` that the student has to complete.
     #   The method name cannot include the following characters:
     #   - Greater Than `>`
     #   - Less Than `<``
     #   - Equals `=`
     #   - Period `.`
-    # @param request_options [RequestOptions]
-    # @return [Problem::GetDefaultStarterFilesResponse]
+    # @param request_options [SeedTraceClient::RequestOptions]
+    # @return [SeedTraceClient::Problem::GetDefaultStarterFilesResponse]
     def get_default_starter_files(input_params:, output_type:, method_name:, request_options: nil)
       Async do
         response = @request_client.conn.post("/problem-crud/default-starter-files") do |req|
@@ -221,8 +228,9 @@ module SeedTraceClient
             outputType: output_type,
             methodName: method_name
           }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/problem-crud/default-starter-files"
         end
-        Problem::GetDefaultStarterFilesResponse.from_json(json_object: response.body)
+        SeedTraceClient::Problem::GetDefaultStarterFilesResponse.from_json(json_object: response.body)
       end
     end
   end

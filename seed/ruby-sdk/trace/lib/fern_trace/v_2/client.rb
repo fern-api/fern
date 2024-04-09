@@ -8,14 +8,14 @@ module SeedTraceClient
     class V2Client
       attr_reader :request_client
 
-      # @param request_client [RequestClient]
-      # @return [V2::V2Client]
+      # @param request_client [SeedTraceClient::RequestClient]
+      # @return [SeedTraceClient::V2::V2Client]
       def initialize(request_client:)
-        # @type [RequestClient]
+        # @type [SeedTraceClient::RequestClient]
         @request_client = request_client
       end
 
-      # @param request_options [RequestOptions]
+      # @param request_options [SeedTraceClient::RequestOptions]
       # @return [Void]
       def test(request_options: nil)
         @request_client.conn.get("/") do |req|
@@ -23,6 +23,7 @@ module SeedTraceClient
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/"
         end
       end
     end
@@ -30,14 +31,14 @@ module SeedTraceClient
     class AsyncV2Client
       attr_reader :request_client
 
-      # @param request_client [AsyncRequestClient]
-      # @return [V2::AsyncV2Client]
+      # @param request_client [SeedTraceClient::AsyncRequestClient]
+      # @return [SeedTraceClient::V2::AsyncV2Client]
       def initialize(request_client:)
-        # @type [AsyncRequestClient]
+        # @type [SeedTraceClient::AsyncRequestClient]
         @request_client = request_client
       end
 
-      # @param request_options [RequestOptions]
+      # @param request_options [SeedTraceClient::RequestOptions]
       # @return [Void]
       def test(request_options: nil)
         Async do
@@ -49,6 +50,7 @@ module SeedTraceClient
                 request_options.x_random_header
             end
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.url "#{@request_client.get_url(request_options: request_options)}/"
           end
         end
       end

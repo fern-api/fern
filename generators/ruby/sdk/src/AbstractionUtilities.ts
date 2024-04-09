@@ -162,7 +162,8 @@ export function generateRootPackage(
 ): GeneratedRubyFile {
     const classReference = new ClassReference({
         name: "Client",
-        import_: new Import({ from: gemName, isExternal: false })
+        import_: new Import({ from: gemName, isExternal: false }),
+        moduleBreadcrumbs: [clientName]
     });
 
     // Add Client class
@@ -237,7 +238,8 @@ export function generateRootPackage(
     });
     const asyncClassReference = new ClassReference({
         name: "AsyncClient",
-        import_: new Import({ from: gemName, isExternal: false })
+        import_: new Import({ from: gemName, isExternal: false }),
+        moduleBreadcrumbs: [clientName]
     });
     const asyncClientClass = new Class_({
         classReference: asyncClassReference,
@@ -315,6 +317,7 @@ export function generateRootPackage(
 }
 
 export function generateSubpackage(
+    clientName: string,
     subpackageName: Name,
     package_: Package,
     requestClientCr: ClassReference,
@@ -324,7 +327,7 @@ export function generateSubpackage(
     asyncSubpackages: Map<string, Class_> = new Map()
 ): ClientClassPair {
     const location = locationGenerator.getLocationFromFernFilepath(package_.fernFilepath, "client");
-    const moduleBreadcrumbs = getBreadcrumbsFromFilepath(package_.fernFilepath);
+    const moduleBreadcrumbs = getBreadcrumbsFromFilepath(package_.fernFilepath, clientName);
 
     // Add Client class
     const requestClientProperty = new Property({ name: "request_client", type: requestClientCr });
@@ -408,7 +411,7 @@ export function generateSubpackage(
                     isAssignment: true
                 });
             }),
-            parameters: [requestClientProperty.toParameter({})],
+            parameters: [asyncRequestClientProperty.toParameter({})],
             returnValue: asyncClassReference
         })
     });
@@ -416,6 +419,7 @@ export function generateSubpackage(
 }
 
 export function generateService(
+    clientName: string,
     service: HttpService,
     subpackage: Subpackage,
     requestClientCr: ClassReference,
@@ -434,7 +438,7 @@ export function generateService(
         from: locationGenerator.getLocationForServiceDeclaration(service.name),
         isExternal: false
     });
-    const moduleBreadcrumbs = getBreadcrumbsFromFilepath(service.name.fernFilepath);
+    const moduleBreadcrumbs = getBreadcrumbsFromFilepath(service.name.fernFilepath, clientName);
 
     // Add Client class
     const serviceBasePath = generateRubyPathTemplate(service.pathParameters, service.basePath);
@@ -513,11 +517,12 @@ export function getDefaultEnvironmentUrl(environmentsConfig?: EnvironmentsConfig
 }
 
 // Actually might just be: be able to reference the default + create the files, it looks like endpoints
-export function generateEnvironmentConstants(environmentsConfig: EnvironmentsConfig): Class_ {
+export function generateEnvironmentConstants(environmentsConfig: EnvironmentsConfig, clientName: string): Class_ {
     return new Class_({
         classReference: new ClassReference({
             name: "Environment",
-            import_: new Import({ from: "environment", isExternal: false })
+            import_: new Import({ from: "environment", isExternal: false }),
+            moduleBreadcrumbs: [clientName]
         }),
         expressions: environmentsConfig.environments._visit<Expression[]>({
             singleBaseUrl: (sbue: SingleBaseUrlEnvironments) =>
@@ -702,7 +707,6 @@ function generateRequestClientInitializer(
 
     const functionParams = [];
     const functionBody = [];
-    const faradayArgs = [];
 
     if (environmentCr !== undefined) {
         functionBody.push(
@@ -717,21 +721,28 @@ function generateRequestClientInitializer(
             functionBody.push(
                 new Expression({
                     leftSide: "@base_url",
-                    rightSide: "environment",
+                    rightSide: "environment || base_url",
                     isAssignment: true
                 })
             );
-            faradayArgs.push(new Argument({ isNamed: false, type: StringClassReference, value: "@base_url" }));
         }
-        functionParams.push(
-            new Parameter({
-                name: "environment",
-                type: environmentCr,
-                defaultValue: defaultEnvironment,
-                isOptional: true
+    } else {
+        functionBody.push(
+            new Expression({
+                leftSide: "@base_url",
+                rightSide: "base_url",
+                isAssignment: true
             })
         );
     }
+
+    functionParams.push(
+        new Parameter({
+            name: "base_url",
+            type: StringClassReference,
+            isOptional: true
+        })
+    );
 
     return new Function_({
         name: "initialize",
@@ -765,7 +776,6 @@ function generateRequestClientInitializer(
                     }),
                     baseFunction: new Function_({ name: "new", functionBody: [] }),
                     arguments_: [
-                        ...faradayArgs,
                         new Argument({
                             isNamed: true,
                             name: "headers",
@@ -781,7 +791,53 @@ function generateRequestClientInitializer(
     });
 }
 
+function requestClientFunctions(
+    requestOptions: RequestOptions,
+    baseUrlProperty: Property,
+    environmentProperty: Property | undefined,
+    isMultiBaseUrlEnvironments: boolean
+): Function_[] {
+    const requestOptionsParameter = new Parameter({ name: "request_options", type: requestOptions.classReference });
+    const environmentOverrideParameter = new Parameter({
+        name: "environment",
+        type: StringClassReference
+    });
+    const parameters = [requestOptionsParameter];
+    if (environmentProperty != null) {
+        parameters.push(environmentOverrideParameter);
+    }
+
+    return [
+        new Function_({
+            name: "get_url",
+            functionBody: [
+                new Expression({
+                    leftSide: requestOptions.getBaseUrlProperty(requestOptionsParameter.toVariable()),
+                    rightSide:
+                        environmentProperty != null
+                            ? new Expression({
+                                  rightSide: baseUrlProperty.toVariable(),
+                                  leftSide: isMultiBaseUrlEnvironments
+                                      ? `${environmentProperty.toVariable().write({})}[${environmentOverrideParameter
+                                            .toVariable()
+                                            .write({})}]`
+                                      : environmentOverrideParameter.toVariable(),
+                                  operation: "||",
+                                  isAssignment: false
+                              })
+                            : baseUrlProperty.toVariable(),
+                    operation: "||",
+                    isAssignment: false
+                })
+            ],
+            parameters,
+            returnValue: StringClassReference
+        })
+    ];
+}
+
 export function generateRequestClients(
+    clientName: string,
     sdkConfig: SdkConfig,
     gemName: string,
     sdkVersion: string | undefined,
@@ -789,11 +845,20 @@ export function generateRequestClients(
     environmentCr: ClassReference | undefined,
     isMultiBaseUrlEnvironments: boolean,
     defaultEnvironment: string | undefined,
-    hasFileBasedDependencies: boolean | undefined
+    hasFileBasedDependencies: boolean | undefined,
+    requestOptions: RequestOptions
 ): [Class_, Class_] {
     const faradayReference = new ClassReference({
         name: "Faraday",
         import_: new Import({ from: "faraday", isExternal: true })
+    });
+    const baseUrlProperty = new Property({
+        name: "base_url",
+        type: StringClassReference
+    });
+    const environmentProperty = new Property({
+        name: "default_environment",
+        type: StringClassReference
     });
     // Client properties
     const clientProperties = [
@@ -801,16 +866,15 @@ export function generateRequestClients(
             name: "headers",
             type: new HashReference({ keyType: StringClassReference, valueType: StringClassReference })
         }),
-        new Property({
-            name: isMultiBaseUrlEnvironments ? "default_environment" : "base_url",
-            type: StringClassReference
-        }),
-        new Property({ name: "conn", type: faradayReference })
+        environmentProperty,
+        new Property({ name: "conn", type: faradayReference }),
+        baseUrlProperty
     ];
     // Add Client class
     const clientClassReference = new ClassReference({
         name: "RequestClient",
-        import_: new Import({ from: "requests", isExternal: false })
+        import_: new Import({ from: "requests", isExternal: false }),
+        moduleBreadcrumbs: [clientName]
     });
     const clientClass = new Class_({
         classReference: clientClassReference,
@@ -827,13 +891,20 @@ export function generateRequestClients(
             isMultiBaseUrlEnvironments,
             defaultEnvironment,
             hasFileBasedDependencies
+        ),
+        functions: requestClientFunctions(
+            requestOptions,
+            baseUrlProperty,
+            environmentCr != null ? environmentProperty : undefined,
+            isMultiBaseUrlEnvironments
         )
     });
 
     // Add Async Client class
     const asyncClientClassReference = new ClassReference({
         name: "AsyncRequestClient",
-        import_: new Import({ from: "requests", isExternal: false })
+        import_: new Import({ from: "requests", isExternal: false }),
+        moduleBreadcrumbs: [clientName]
     });
     const asyncClientClass = new Class_({
         classReference: asyncClientClassReference,
@@ -850,6 +921,12 @@ export function generateRequestClients(
             isMultiBaseUrlEnvironments,
             defaultEnvironment,
             hasFileBasedDependencies
+        ),
+        functions: requestClientFunctions(
+            requestOptions,
+            baseUrlProperty,
+            environmentCr != null ? environmentProperty : undefined,
+            isMultiBaseUrlEnvironments
         )
     });
 

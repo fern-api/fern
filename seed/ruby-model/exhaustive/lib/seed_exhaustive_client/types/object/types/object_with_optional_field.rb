@@ -2,6 +2,7 @@
 
 require "date"
 require "set"
+require "ostruct"
 require "json"
 
 module SeedExhaustiveClient
@@ -9,8 +10,9 @@ module SeedExhaustiveClient
     class Object
       class ObjectWithOptionalField
         attr_reader :string, :integer, :long, :double, :bool, :datetime, :date, :uuid, :base_64, :list, :set, :map,
-                    :additional_properties
-
+                    :additional_properties, :_field_set
+        protected :_field_set
+        OMIT = Object.new
         # @param string [String]
         # @param integer [Integer]
         # @param long [Long]
@@ -24,70 +26,34 @@ module SeedExhaustiveClient
         # @param set [Set<String>]
         # @param map [Hash{Integer => String}]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [Types::Object::ObjectWithOptionalField]
-        def initialize(string: nil, integer: nil, long: nil, double: nil, bool: nil, datetime: nil, date: nil,
-                       uuid: nil, base_64: nil, list: nil, set: nil, map: nil, additional_properties: nil)
+        # @return [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
+        def initialize(string: OMIT, integer: OMIT, long: OMIT, double: OMIT, bool: OMIT, datetime: OMIT, date: OMIT,
+                       uuid: OMIT, base_64: OMIT, list: OMIT, set: OMIT, map: OMIT, additional_properties: nil)
           # @type [String]
-          @string = string
+          @string = string if string != OMIT
           # @type [Integer]
-          @integer = integer
+          @integer = integer if integer != OMIT
           # @type [Long]
-          @long = long
+          @long = long if long != OMIT
           # @type [Float]
-          @double = double
+          @double = double if double != OMIT
           # @type [Boolean]
-          @bool = bool
+          @bool = bool if bool != OMIT
           # @type [DateTime]
-          @datetime = datetime
+          @datetime = datetime if datetime != OMIT
           # @type [Date]
-          @date = date
+          @date = date if date != OMIT
           # @type [String]
-          @uuid = uuid
+          @uuid = uuid if uuid != OMIT
           # @type [String]
-          @base_64 = base_64
+          @base_64 = base_64 if base_64 != OMIT
           # @type [Array<String>]
-          @list = list
+          @list = list if list != OMIT
           # @type [Set<String>]
-          @set = set
+          @set = set if set != OMIT
           # @type [Hash{Integer => String}]
-          @map = map
-          # @type [OpenStruct] Additional properties unmapped to the current class definition
-          @additional_properties = additional_properties
-        end
-
-        # Deserialize a JSON object to an instance of ObjectWithOptionalField
-        #
-        # @param json_object [JSON]
-        # @return [Types::Object::ObjectWithOptionalField]
-        def self.from_json(json_object:)
-          struct = JSON.parse(json_object, object_class: OpenStruct)
-          parsed_json = JSON.parse(json_object)
-          string = struct.string
-          integer = struct.integer
-          long = struct.long
-          double = struct.double
-          bool = struct.bool
-          datetime = (DateTime.parse(parsed_json["datetime"]) unless parsed_json["datetime"].nil?)
-          date = (Date.parse(parsed_json["date"]) unless parsed_json["date"].nil?)
-          uuid = struct.uuid
-          base_64 = struct.base64
-          list = struct.list
-          if parsed_json["set"].nil?
-            set = nil
-          else
-            set = parsed_json["set"].to_json
-            set = Set.new(set)
-          end
-          map = struct.map
-          new(string: string, integer: integer, long: long, double: double, bool: bool, datetime: datetime, date: date,
-              uuid: uuid, base_64: base_64, list: list, set: set, map: map, additional_properties: struct)
-        end
-
-        # Serialize an instance of ObjectWithOptionalField to a JSON object
-        #
-        # @return [JSON]
-        def to_json(*_args)
-          {
+          @map = map if map != OMIT
+          @_field_set = {
             "string": @string,
             "integer": @integer,
             "long": @long,
@@ -100,7 +66,43 @@ module SeedExhaustiveClient
             "list": @list,
             "set": @set,
             "map": @map
-          }.to_json
+          }.reject do |_k, v|
+            v == OMIT
+          end
+        end
+
+        # Deserialize a JSON object to an instance of ObjectWithOptionalField
+        #
+        # @param json_object [String]
+        # @return [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
+        def self.from_json(json_object:)
+          struct = JSON.parse(json_object, object_class: OpenStruct)
+          string = struct["string"]
+          integer = struct["integer"]
+          long = struct["long"]
+          double = struct["double"]
+          bool = struct["bool"]
+          datetime = (DateTime.parse(parsed_json["datetime"]) unless parsed_json["datetime"].nil?)
+          date = (Date.parse(parsed_json["date"]) unless parsed_json["date"].nil?)
+          uuid = struct["uuid"]
+          base_64 = struct["base64"]
+          list = struct["list"]
+          if parsed_json["set"].nil?
+            set = nil
+          else
+            set = parsed_json["set"].to_json
+            set = Set.new(set)
+          end
+          map = struct["map"]
+          new(string: string, integer: integer, long: long, double: double, bool: bool, datetime: datetime, date: date,
+              uuid: uuid, base_64: base_64, list: list, set: set, map: map, additional_properties: struct)
+        end
+
+        # Serialize an instance of ObjectWithOptionalField to a JSON object
+        #
+        # @return [String]
+        def to_json(*_args)
+          @_field_set&.to_json
         end
 
         # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

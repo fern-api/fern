@@ -15,7 +15,7 @@ module SeedTraceClient
       alias kind_of? is_a?
       # @param member [Object]
       # @param discriminant [String]
-      # @return [Commons::VariableValue]
+      # @return [SeedTraceClient::Commons::VariableValue]
       def initialize(member:, discriminant:)
         # @type [Object]
         @member = member
@@ -25,8 +25,8 @@ module SeedTraceClient
 
       # Deserialize a JSON object to an instance of VariableValue
       #
-      # @param json_object [JSON]
-      # @return [Commons::VariableValue]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Commons::VariableValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
@@ -41,18 +41,18 @@ module SeedTraceClient
                  when "charValue"
                    json_object.value
                  when "mapValue"
-                   Commons::MapValue.from_json(json_object: json_object)
+                   SeedTraceClient::Commons::MapValue.from_json(json_object: json_object)
                  when "listValue"
                    json_object.value&.map do |v|
                      v = v.to_json
-                     Commons::VariableValue.from_json(json_object: v)
+                     SeedTraceClient::Commons::VariableValue.from_json(json_object: v)
                    end
                  when "binaryTreeValue"
-                   Commons::BinaryTreeValue.from_json(json_object: json_object)
+                   SeedTraceClient::Commons::BinaryTreeValue.from_json(json_object: json_object)
                  when "singlyLinkedListValue"
-                   Commons::SinglyLinkedListValue.from_json(json_object: json_object)
+                   SeedTraceClient::Commons::SinglyLinkedListValue.from_json(json_object: json_object)
                  when "doublyLinkedListValue"
-                   Commons::DoublyLinkedListValue.from_json(json_object: json_object)
+                   SeedTraceClient::Commons::DoublyLinkedListValue.from_json(json_object: json_object)
                  when "nullValue"
                    nil
                  else
@@ -63,7 +63,7 @@ module SeedTraceClient
 
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
         case @discriminant
         when "integerValue"
@@ -111,15 +111,15 @@ module SeedTraceClient
         when "charValue"
           obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         when "mapValue"
-          Commons::MapValue.validate_raw(obj: obj)
+          SeedTraceClient::Commons::MapValue.validate_raw(obj: obj)
         when "listValue"
           obj.is_a?(Array) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         when "binaryTreeValue"
-          Commons::BinaryTreeValue.validate_raw(obj: obj)
+          SeedTraceClient::Commons::BinaryTreeValue.validate_raw(obj: obj)
         when "singlyLinkedListValue"
-          Commons::SinglyLinkedListValue.validate_raw(obj: obj)
+          SeedTraceClient::Commons::SinglyLinkedListValue.validate_raw(obj: obj)
         when "doublyLinkedListValue"
-          Commons::DoublyLinkedListValue.validate_raw(obj: obj)
+          SeedTraceClient::Commons::DoublyLinkedListValue.validate_raw(obj: obj)
         when "nullValue"
           # noop
         else
@@ -136,66 +136,66 @@ module SeedTraceClient
       end
 
       # @param member [Integer]
-      # @return [Commons::VariableValue]
+      # @return [SeedTraceClient::Commons::VariableValue]
       def self.integer_value(member:)
         new(member: member, discriminant: "integerValue")
       end
 
       # @param member [Boolean]
-      # @return [Commons::VariableValue]
+      # @return [SeedTraceClient::Commons::VariableValue]
       def self.boolean_value(member:)
         new(member: member, discriminant: "booleanValue")
       end
 
       # @param member [Float]
-      # @return [Commons::VariableValue]
+      # @return [SeedTraceClient::Commons::VariableValue]
       def self.double_value(member:)
         new(member: member, discriminant: "doubleValue")
       end
 
       # @param member [String]
-      # @return [Commons::VariableValue]
+      # @return [SeedTraceClient::Commons::VariableValue]
       def self.string_value(member:)
         new(member: member, discriminant: "stringValue")
       end
 
       # @param member [String]
-      # @return [Commons::VariableValue]
+      # @return [SeedTraceClient::Commons::VariableValue]
       def self.char_value(member:)
         new(member: member, discriminant: "charValue")
       end
 
-      # @param member [Commons::MapValue]
-      # @return [Commons::VariableValue]
+      # @param member [SeedTraceClient::Commons::MapValue]
+      # @return [SeedTraceClient::Commons::VariableValue]
       def self.map_value(member:)
         new(member: member, discriminant: "mapValue")
       end
 
-      # @param member [Array<Commons::VariableValue>]
-      # @return [Commons::VariableValue]
+      # @param member [Array<SeedTraceClient::Commons::VariableValue>]
+      # @return [SeedTraceClient::Commons::VariableValue]
       def self.list_value(member:)
         new(member: member, discriminant: "listValue")
       end
 
-      # @param member [Commons::BinaryTreeValue]
-      # @return [Commons::VariableValue]
+      # @param member [SeedTraceClient::Commons::BinaryTreeValue]
+      # @return [SeedTraceClient::Commons::VariableValue]
       def self.binary_tree_value(member:)
         new(member: member, discriminant: "binaryTreeValue")
       end
 
-      # @param member [Commons::SinglyLinkedListValue]
-      # @return [Commons::VariableValue]
+      # @param member [SeedTraceClient::Commons::SinglyLinkedListValue]
+      # @return [SeedTraceClient::Commons::VariableValue]
       def self.singly_linked_list_value(member:)
         new(member: member, discriminant: "singlyLinkedListValue")
       end
 
-      # @param member [Commons::DoublyLinkedListValue]
-      # @return [Commons::VariableValue]
+      # @param member [SeedTraceClient::Commons::DoublyLinkedListValue]
+      # @return [SeedTraceClient::Commons::VariableValue]
       def self.doubly_linked_list_value(member:)
         new(member: member, discriminant: "doublyLinkedListValue")
       end
 
-      # @return [Commons::VariableValue]
+      # @return [SeedTraceClient::Commons::VariableValue]
       def self.null_value
         new(member: nil, discriminant: "nullValue")
       end

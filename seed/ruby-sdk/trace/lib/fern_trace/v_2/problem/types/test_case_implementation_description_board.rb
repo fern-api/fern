@@ -13,7 +13,7 @@ module SeedTraceClient
         alias kind_of? is_a?
         # @param member [Object]
         # @param discriminant [String]
-        # @return [V2::Problem::TestCaseImplementationDescriptionBoard]
+        # @return [SeedTraceClient::V2::Problem::TestCaseImplementationDescriptionBoard]
         def initialize(member:, discriminant:)
           # @type [Object]
           @member = member
@@ -23,8 +23,8 @@ module SeedTraceClient
 
         # Deserialize a JSON object to an instance of TestCaseImplementationDescriptionBoard
         #
-        # @param json_object [JSON]
-        # @return [V2::Problem::TestCaseImplementationDescriptionBoard]
+        # @param json_object [String]
+        # @return [SeedTraceClient::V2::Problem::TestCaseImplementationDescriptionBoard]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           member = case struct.type
@@ -40,7 +40,7 @@ module SeedTraceClient
 
         # For Union Types, to_json functionality is delegated to the wrapped member.
         #
-        # @return [JSON]
+        # @return [String]
         def to_json(*_args)
           case @discriminant
           when "html"
@@ -74,13 +74,13 @@ module SeedTraceClient
         end
 
         # @param member [String]
-        # @return [V2::Problem::TestCaseImplementationDescriptionBoard]
+        # @return [SeedTraceClient::V2::Problem::TestCaseImplementationDescriptionBoard]
         def self.html(member:)
           new(member: member, discriminant: "html")
         end
 
-        # @param member [V2::Problem::PARAMETER_ID]
-        # @return [V2::Problem::TestCaseImplementationDescriptionBoard]
+        # @param member [SeedTraceClient::V2::Problem::PARAMETER_ID]
+        # @return [SeedTraceClient::V2::Problem::TestCaseImplementationDescriptionBoard]
         def self.param_id(member:)
           new(member: member, discriminant: "paramId")
         end

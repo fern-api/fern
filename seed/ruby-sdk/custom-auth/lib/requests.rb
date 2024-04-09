@@ -6,13 +6,15 @@ require "async/http/faraday"
 
 module SeedCustomAuthClient
   class RequestClient
-    attr_reader :headers, :base_url, :conn
+    attr_reader :headers, :default_environment, :conn, :base_url
 
+    # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param custom_auth_scheme [String]
-    # @return [RequestClient]
-    def initialize(custom_auth_scheme:, max_retries: nil, timeout_in_seconds: nil)
+    # @return [SeedCustomAuthClient::RequestClient]
+    def initialize(custom_auth_scheme:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
+      @base_url = base_url
       @headers = {
         "X-Fern-Language": "Ruby",
         "X-Fern-SDK-Name": "fern_custom_auth",
@@ -26,16 +28,24 @@ module SeedCustomAuthClient
         faraday.options.timeout = timeout_in_seconds unless timeout_in_seconds.nil?
       end
     end
+
+    # @param request_options [SeedCustomAuthClient::RequestOptions]
+    # @return [String]
+    def get_url(request_options:)
+      request_options&.base_url || @base_url
+    end
   end
 
   class AsyncRequestClient
-    attr_reader :headers, :base_url, :conn
+    attr_reader :headers, :default_environment, :conn, :base_url
 
+    # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param custom_auth_scheme [String]
-    # @return [AsyncRequestClient]
-    def initialize(custom_auth_scheme:, max_retries: nil, timeout_in_seconds: nil)
+    # @return [SeedCustomAuthClient::AsyncRequestClient]
+    def initialize(custom_auth_scheme:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
+      @base_url = base_url
       @headers = {
         "X-Fern-Language": "Ruby",
         "X-Fern-SDK-Name": "fern_custom_auth",
@@ -50,21 +60,30 @@ module SeedCustomAuthClient
         faraday.options.timeout = timeout_in_seconds unless timeout_in_seconds.nil?
       end
     end
+
+    # @param request_options [SeedCustomAuthClient::RequestOptions]
+    # @return [String]
+    def get_url(request_options:)
+      request_options&.base_url || @base_url
+    end
   end
 
   # Additional options for request-specific configuration when calling APIs via the SDK.
   class RequestOptions
-    attr_reader :custom_auth_scheme, :additional_headers, :additional_query_parameters, :additional_body_parameters,
-                :timeout_in_seconds
+    attr_reader :base_url, :custom_auth_scheme, :additional_headers, :additional_query_parameters,
+                :additional_body_parameters, :timeout_in_seconds
 
+    # @param base_url [String]
     # @param custom_auth_scheme [String]
     # @param additional_headers [Hash{String => Object}]
     # @param additional_query_parameters [Hash{String => Object}]
     # @param additional_body_parameters [Hash{String => Object}]
     # @param timeout_in_seconds [Long]
-    # @return [RequestOptions]
-    def initialize(custom_auth_scheme: nil, additional_headers: nil, additional_query_parameters: nil,
+    # @return [SeedCustomAuthClient::RequestOptions]
+    def initialize(base_url: nil, custom_auth_scheme: nil, additional_headers: nil, additional_query_parameters: nil,
                    additional_body_parameters: nil, timeout_in_seconds: nil)
+      # @type [String]
+      @base_url = base_url
       # @type [String]
       @custom_auth_scheme = custom_auth_scheme
       # @type [Hash{String => Object}]
@@ -80,17 +99,20 @@ module SeedCustomAuthClient
 
   # Additional options for request-specific configuration when calling APIs via the SDK.
   class IdempotencyRequestOptions
-    attr_reader :custom_auth_scheme, :additional_headers, :additional_query_parameters, :additional_body_parameters,
-                :timeout_in_seconds
+    attr_reader :base_url, :custom_auth_scheme, :additional_headers, :additional_query_parameters,
+                :additional_body_parameters, :timeout_in_seconds
 
+    # @param base_url [String]
     # @param custom_auth_scheme [String]
     # @param additional_headers [Hash{String => Object}]
     # @param additional_query_parameters [Hash{String => Object}]
     # @param additional_body_parameters [Hash{String => Object}]
     # @param timeout_in_seconds [Long]
-    # @return [IdempotencyRequestOptions]
-    def initialize(custom_auth_scheme: nil, additional_headers: nil, additional_query_parameters: nil,
+    # @return [SeedCustomAuthClient::IdempotencyRequestOptions]
+    def initialize(base_url: nil, custom_auth_scheme: nil, additional_headers: nil, additional_query_parameters: nil,
                    additional_body_parameters: nil, timeout_in_seconds: nil)
+      # @type [String]
+      @base_url = base_url
       # @type [String]
       @custom_auth_scheme = custom_auth_scheme
       # @type [Hash{String => Object}]

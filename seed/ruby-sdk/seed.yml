@@ -8,7 +8,6 @@ fixtures: []
 allowedFailures:
   - streaming
   - objects-with-imports
-  - reserved-keywords
 features:
   requestOptions: true
   idempotency: false

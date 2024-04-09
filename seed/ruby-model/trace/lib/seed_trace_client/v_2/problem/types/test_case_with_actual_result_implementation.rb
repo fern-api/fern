@@ -2,31 +2,37 @@
 
 require_relative "non_void_function_definition"
 require_relative "assert_correctness_check"
+require "ostruct"
 require "json"
 
 module SeedTraceClient
   module V2
     class Problem
       class TestCaseWithActualResultImplementation
-        attr_reader :get_actual_result, :assert_correctness_check, :additional_properties
-
-        # @param get_actual_result [V2::Problem::NonVoidFunctionDefinition]
-        # @param assert_correctness_check [V2::Problem::AssertCorrectnessCheck]
+        attr_reader :get_actual_result, :assert_correctness_check, :additional_properties, :_field_set
+        protected :_field_set
+        OMIT = Object.new
+        # @param get_actual_result [SeedTraceClient::V2::Problem::NonVoidFunctionDefinition]
+        # @param assert_correctness_check [SeedTraceClient::V2::Problem::AssertCorrectnessCheck]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [V2::Problem::TestCaseWithActualResultImplementation]
+        # @return [SeedTraceClient::V2::Problem::TestCaseWithActualResultImplementation]
         def initialize(get_actual_result:, assert_correctness_check:, additional_properties: nil)
-          # @type [V2::Problem::NonVoidFunctionDefinition]
+          # @type [SeedTraceClient::V2::Problem::NonVoidFunctionDefinition]
           @get_actual_result = get_actual_result
-          # @type [V2::Problem::AssertCorrectnessCheck]
+          # @type [SeedTraceClient::V2::Problem::AssertCorrectnessCheck]
           @assert_correctness_check = assert_correctness_check
-          # @type [OpenStruct] Additional properties unmapped to the current class definition
-          @additional_properties = additional_properties
+          @_field_set = {
+            "getActualResult": @get_actual_result,
+            "assertCorrectnessCheck": @assert_correctness_check
+          }.reject do |_k, v|
+            v == OMIT
+          end
         end
 
         # Deserialize a JSON object to an instance of TestCaseWithActualResultImplementation
         #
-        # @param json_object [JSON]
-        # @return [V2::Problem::TestCaseWithActualResultImplementation]
+        # @param json_object [String]
+        # @return [SeedTraceClient::V2::Problem::TestCaseWithActualResultImplementation]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
@@ -34,13 +40,13 @@ module SeedTraceClient
             get_actual_result = nil
           else
             get_actual_result = parsed_json["getActualResult"].to_json
-            get_actual_result = V2::Problem::NonVoidFunctionDefinition.from_json(json_object: get_actual_result)
+            get_actual_result = SeedTraceClient::V2::Problem::NonVoidFunctionDefinition.from_json(json_object: get_actual_result)
           end
           if parsed_json["assertCorrectnessCheck"].nil?
             assert_correctness_check = nil
           else
             assert_correctness_check = parsed_json["assertCorrectnessCheck"].to_json
-            assert_correctness_check = V2::Problem::AssertCorrectnessCheck.from_json(json_object: assert_correctness_check)
+            assert_correctness_check = SeedTraceClient::V2::Problem::AssertCorrectnessCheck.from_json(json_object: assert_correctness_check)
           end
           new(get_actual_result: get_actual_result, assert_correctness_check: assert_correctness_check,
               additional_properties: struct)
@@ -48,9 +54,9 @@ module SeedTraceClient
 
         # Serialize an instance of TestCaseWithActualResultImplementation to a JSON object
         #
-        # @return [JSON]
+        # @return [String]
         def to_json(*_args)
-          { "getActualResult": @get_actual_result, "assertCorrectnessCheck": @assert_correctness_check }.to_json
+          @_field_set&.to_json
         end
 
         # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
@@ -58,8 +64,8 @@ module SeedTraceClient
         # @param obj [Object]
         # @return [Void]
         def self.validate_raw(obj:)
-          V2::Problem::NonVoidFunctionDefinition.validate_raw(obj: obj.get_actual_result)
-          V2::Problem::AssertCorrectnessCheck.validate_raw(obj: obj.assert_correctness_check)
+          SeedTraceClient::V2::Problem::NonVoidFunctionDefinition.validate_raw(obj: obj.get_actual_result)
+          SeedTraceClient::V2::Problem::AssertCorrectnessCheck.validate_raw(obj: obj.assert_correctness_check)
         end
       end
     end

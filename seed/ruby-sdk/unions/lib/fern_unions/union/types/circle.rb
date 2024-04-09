@@ -1,38 +1,40 @@
 # frozen_string_literal: true
 
+require "ostruct"
 require "json"
 
 module SeedUnionsClient
   class Union
     class Circle
-      attr_reader :radius, :additional_properties
-
+      attr_reader :radius, :additional_properties, :_field_set
+      protected :_field_set
+      OMIT = Object.new
       # @param radius [Float]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Union::Circle]
+      # @return [SeedUnionsClient::Union::Circle]
       def initialize(radius:, additional_properties: nil)
         # @type [Float]
         @radius = radius
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
-        @additional_properties = additional_properties
+        @_field_set = { "radius": @radius }.reject do |_k, v|
+          v == OMIT
+        end
       end
 
       # Deserialize a JSON object to an instance of Circle
       #
-      # @param json_object [JSON]
-      # @return [Union::Circle]
+      # @param json_object [String]
+      # @return [SeedUnionsClient::Union::Circle]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        JSON.parse(json_object)
-        radius = struct.radius
+        radius = struct["radius"]
         new(radius: radius, additional_properties: struct)
       end
 
       # Serialize an instance of Circle to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "radius": @radius }.to_json
+        @_field_set&.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

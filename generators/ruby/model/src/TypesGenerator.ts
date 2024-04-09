@@ -61,7 +61,7 @@ export class TypesGenerator {
             this.flattenedProperties.set(typeId, this.getFlattenedProperties(typeId));
         }
 
-        this.locationGenerator = new LocationGenerator(this.gemName);
+        this.locationGenerator = new LocationGenerator(this.gemName, this.clientName);
         this.classReferenceFactory = new ClassReferenceFactory(this.types, this.locationGenerator);
     }
 

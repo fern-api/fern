@@ -1,47 +1,49 @@
 # frozen_string_literal: true
 
+require "ostruct"
 require "json"
 
 module SeedExamplesClient
   module Commons
     class Types
       class Metadata
-        attr_reader :id, :data, :json_string, :additional_properties
-
+        attr_reader :id, :data, :json_string, :additional_properties, :_field_set
+        protected :_field_set
+        OMIT = Object.new
         # @param id [String]
         # @param data [Hash{String => String}]
         # @param json_string [String]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [Commons::Types::Metadata]
-        def initialize(id:, data: nil, json_string: nil, additional_properties: nil)
+        # @return [SeedExamplesClient::Commons::Types::Metadata]
+        def initialize(id:, data: OMIT, json_string: OMIT, additional_properties: nil)
           # @type [String]
           @id = id
           # @type [Hash{String => String}]
-          @data = data
+          @data = data if data != OMIT
           # @type [String]
-          @json_string = json_string
-          # @type [OpenStruct] Additional properties unmapped to the current class definition
-          @additional_properties = additional_properties
+          @json_string = json_string if json_string != OMIT
+          @_field_set = { "id": @id, "data": @data, "jsonString": @json_string }.reject do |_k, v|
+            v == OMIT
+          end
         end
 
         # Deserialize a JSON object to an instance of Metadata
         #
-        # @param json_object [JSON]
-        # @return [Commons::Types::Metadata]
+        # @param json_object [String]
+        # @return [SeedExamplesClient::Commons::Types::Metadata]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          JSON.parse(json_object)
-          id = struct.id
-          data = struct.data
-          json_string = struct.jsonString
+          id = struct["id"]
+          data = struct["data"]
+          json_string = struct["jsonString"]
           new(id: id, data: data, json_string: json_string, additional_properties: struct)
         end
 
         # Serialize an instance of Metadata to a JSON object
         #
-        # @return [JSON]
+        # @return [String]
         def to_json(*_args)
-          { "id": @id, "data": @data, "jsonString": @json_string }.to_json
+          @_field_set&.to_json
         end
 
         # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
