@@ -1,6 +1,4 @@
-
 ## Echo
-
 
 <details><summary> <code>seedExamples.<a href="./src/Client.ts">echo</a>({ ...params }) -> string</code> </summary>
 
@@ -40,9 +38,7 @@ await seedExamples.echo("Hello world!\\n\\nwith\\n\\tnewlines");
 
 <dd>
 
-
-**request: `string`** 
-
+**request: `string`**
 
 </dd>
 
@@ -52,9 +48,7 @@ await seedExamples.echo("Hello world!\\n\\nwith\\n\\tnewlines");
 
 <dd>
 
-
-**requestOptions: `SeedExamplesClient.RequestOptions`** 
-
+**requestOptions: `SeedExamplesClient.RequestOptions`**
 
 </dd>
 
@@ -63,19 +57,13 @@ await seedExamples.echo("Hello world!\\n\\nwith\\n\\tnewlines");
 </dd>
 
 </dl>
-
-
 
 </dd>
 
 </dl>
 </details>
 
-
-
-
 ## File Notification Service
-
 
 <details><summary> <code>seedExamples.file.notification.service.<a href="./src/api/resources/file/resources/notification/resources/service/client/Client.ts">getException</a>(notificationId) -> SeedExamples.Exception</code> </summary>
 
@@ -115,9 +103,7 @@ await seedExamples.file.notification.service.getException("notification-hsy129x"
 
 <dd>
 
-
-**notificationId: `string`** 
-
+**notificationId: `string`**
 
 </dd>
 
@@ -127,9 +113,7 @@ await seedExamples.file.notification.service.getException("notification-hsy129x"
 
 <dd>
 
-
-**requestOptions: `Service.RequestOptions`** 
-
+**requestOptions: `Service.RequestOptions`**
 
 </dd>
 
@@ -138,19 +122,13 @@ await seedExamples.file.notification.service.getException("notification-hsy129x"
 </dd>
 
 </dl>
-
-
 
 </dd>
 
 </dl>
 </details>
 
-
-
-
 ## File Service
-
 
 <details><summary> <code>seedExamples.file.service.<a href="./src/api/resources/file/resources/service/client/Client.ts">getFile</a>(filename, { ...params }) -> SeedExamples.File_</code> </summary>
 
@@ -190,7 +168,7 @@ This endpoint returns a file by its name.
 
 ```ts
 await seedExamples.file.service.getFile("file.txt", {
-    xFileApiVersion: "0.0.2"
+    xFileApiVersion: "0.0.2",
 });
 ```
 
@@ -212,9 +190,17 @@ await seedExamples.file.service.getFile("file.txt", {
 
 <dd>
 
-
 **filename: `string`** — This is a filename
 
+</dd>
+
+</dl>
+
+<dl>
+
+<dd>
+
+**request: `SeedExamples.file.GetFileRequest`**
 
 </dd>
 
@@ -224,21 +210,7 @@ await seedExamples.file.service.getFile("file.txt", {
 
 <dd>
 
-
-**request: `SeedExamples.file.GetFileRequest`** 
-
-
-</dd>
-
-</dl>
-
-<dl>
-
-<dd>
-
-
-**requestOptions: `Service.RequestOptions`** 
-
+**requestOptions: `Service.RequestOptions`**
 
 </dd>
 
@@ -247,19 +219,13 @@ await seedExamples.file.service.getFile("file.txt", {
 </dd>
 
 </dl>
-
-
 
 </dd>
 
 </dl>
 </details>
 
-
-
-
 ## Health Service
-
 
 <details><summary> <code>seedExamples.health.service.<a href="./src/api/resources/health/resources/service/client/Client.ts">check</a>(id) -> void</code> </summary>
 
@@ -319,9 +285,7 @@ await seedExamples.health.service.check("id-2sdx82h");
 
 <dd>
 
-
 **id: `string`** — The id to check
-
 
 </dd>
 
@@ -331,9 +295,7 @@ await seedExamples.health.service.check("id-2sdx82h");
 
 <dd>
 
-
-**requestOptions: `Service.RequestOptions`** 
-
+**requestOptions: `Service.RequestOptions`**
 
 </dd>
 
@@ -342,14 +304,11 @@ await seedExamples.health.service.check("id-2sdx82h");
 </dd>
 
 </dl>
-
-
 
 </dd>
 
 </dl>
 </details>
-
 
 <details><summary> <code>seedExamples.health.service.<a href="./src/api/resources/health/resources/service/client/Client.ts">ping</a>() -> boolean</code> </summary>
 
@@ -409,9 +368,7 @@ await seedExamples.health.service.ping();
 
 <dd>
 
-
-**requestOptions: `Service.RequestOptions`** 
-
+**requestOptions: `Service.RequestOptions`**
 
 </dd>
 
@@ -420,19 +377,13 @@ await seedExamples.health.service.ping();
 </dd>
 
 </dl>
-
-
 
 </dd>
 
 </dl>
 </details>
 
-
-
-
 ## Service
-
 
 <details><summary> <code>seedExamples.service.<a href="./src/api/resources/service/client/Client.ts">getMovie</a>(movieId) -> SeedExamples.Movie</code> </summary>
 
@@ -472,9 +423,7 @@ await seedExamples.service.getMovie("movie-c06a4ad7");
 
 <dd>
 
-
-**movieId: `SeedExamples.MovieId`** 
-
+**movieId: `SeedExamples.MovieId`**
 
 </dd>
 
@@ -484,9 +433,7 @@ await seedExamples.service.getMovie("movie-c06a4ad7");
 
 <dd>
 
-
-**requestOptions: `Service.RequestOptions`** 
-
+**requestOptions: `Service.RequestOptions`**
 
 </dd>
 
@@ -495,14 +442,11 @@ await seedExamples.service.getMovie("movie-c06a4ad7");
 </dd>
 
 </dl>
-
-
 
 </dd>
 
 </dl>
 </details>
-
 
 <details><summary> <code>seedExamples.service.<a href="./src/api/resources/service/client/Client.ts">createMovie</a>({ ...params }) -> SeedExamples.MovieId</code> </summary>
 
@@ -530,17 +474,13 @@ await seedExamples.service.createMovie({
     type: "movie",
     tag: "tag-wf9as23d",
     metadata: {
-        "actors": [
-            "Christian Bale",
-            "Florence Pugh",
-            "Willem Dafoe"
-        ],
-        "releaseDate": "2023-12-08",
-        "ratings": {
-            "rottenTomatoes": 97,
-            "imdb": 7.6
-        }
-    }
+        actors: ["Christian Bale", "Florence Pugh", "Willem Dafoe"],
+        releaseDate: "2023-12-08",
+        ratings: {
+            rottenTomatoes: 97,
+            imdb: 7.6,
+        },
+    },
 });
 ```
 
@@ -562,9 +502,7 @@ await seedExamples.service.createMovie({
 
 <dd>
 
-
-**request: `SeedExamples.Movie`** 
-
+**request: `SeedExamples.Movie`**
 
 </dd>
 
@@ -574,9 +512,7 @@ await seedExamples.service.createMovie({
 
 <dd>
 
-
-**requestOptions: `Service.RequestOptions`** 
-
+**requestOptions: `Service.RequestOptions`**
 
 </dd>
 
@@ -585,14 +521,11 @@ await seedExamples.service.createMovie({
 </dd>
 
 </dl>
-
-
 
 </dd>
 
 </dl>
 </details>
-
 
 <details><summary> <code>seedExamples.service.<a href="./src/api/resources/service/client/Client.ts">getMetadata</a>({ ...params }) -> SeedExamples.Metadata</code> </summary>
 
@@ -614,7 +547,7 @@ await seedExamples.service.createMovie({
 await seedExamples.service.getMetadata({
     xApiVersion: "0.0.1",
     shallow: false,
-    tag: "development"
+    tag: "development",
 });
 ```
 
@@ -636,9 +569,7 @@ await seedExamples.service.getMetadata({
 
 <dd>
 
-
-**request: `SeedExamples.GetMetadataRequest`** 
-
+**request: `SeedExamples.GetMetadataRequest`**
 
 </dd>
 
@@ -648,9 +579,7 @@ await seedExamples.service.getMetadata({
 
 <dd>
 
-
-**requestOptions: `Service.RequestOptions`** 
-
+**requestOptions: `Service.RequestOptions`**
 
 </dd>
 
@@ -659,12 +588,8 @@ await seedExamples.service.getMetadata({
 </dd>
 
 </dl>
-
-
 
 </dd>
 
 </dl>
 </details>
-
-

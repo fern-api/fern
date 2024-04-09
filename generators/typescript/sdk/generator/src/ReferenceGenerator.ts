@@ -33,7 +33,7 @@ function writeIndentedBlock(content: string): string {
 }
 
 function wrapInLink(content: string, link?: string) {
-    return link !== undefined ? `<a href="./src${link}">${content}</a>` : content;
+    return link !== undefined ? `<a href=".${link}">${content}</a>` : content;
 }
 
 function writeSignature(parameters: ReferenceParameterDeclaration[]): string {

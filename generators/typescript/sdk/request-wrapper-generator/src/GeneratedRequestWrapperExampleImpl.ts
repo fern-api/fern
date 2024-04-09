@@ -1,5 +1,5 @@
 import { ExampleEndpointCall, Name } from "@fern-fern/ir-sdk/api";
-import { GetReferenceOpts, PackageId } from "@fern-typescript/commons";
+import { GetReferenceOpts, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { GeneratedRequestWrapperExample, SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
@@ -30,16 +30,26 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
     }
 
     private buildExample({ context, opts }: { context: SdkContext; opts: GetReferenceOpts }): ts.Expression {
+        // We may need to wrap it in quotes if it contains special characters
+        // These get placed in the object literal as keys, so they may need to be strings
+        const asObjectProperty = (value: string) => {
+            const regex = /^[a-zA-Z_][a-zA-Z0-9_]*$/;
+            if (regex.test(value)) {
+                return value;
+            }
+            return ts.factory.createStringLiteral(value);
+        };
+
         const generatedType = context.requestWrapper.getGeneratedRequestWrapper(this.packageId, this.endpointName);
         const headerProperties = [...this.example.serviceHeaders, ...this.example.endpointHeaders].map((header) => {
             return ts.factory.createPropertyAssignment(
-                generatedType.getPropertyNameOfNonLiteralHeaderFromName(header.name).propertyName,
+                asObjectProperty(generatedType.getPropertyNameOfNonLiteralHeaderFromName(header.name).propertyName),
                 context.type.getGeneratedExample(header.value).build(context, opts)
             );
         });
         const queryParamProperties = [...this.example.queryParameters].map((queryParam) => {
             return ts.factory.createPropertyAssignment(
-                generatedType.getPropertyNameOfQueryParameterFromName(queryParam.name).propertyName,
+                asObjectProperty(generatedType.getPropertyNameOfQueryParameterFromName(queryParam.name).propertyName),
                 context.type.getGeneratedExample(queryParam.value).build(context, opts)
             );
         });
@@ -63,7 +73,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                             );
                         } else {
                             return ts.factory.createPropertyAssignment(
-                                generatedType.getInlinedRequestBodyPropertyKeyFromName(property.name),
+                                asObjectProperty(generatedType.getInlinedRequestBodyPropertyKeyFromName(property.name)),
                                 context.type.getGeneratedExample(property.value).build(context, opts)
                             );
                         }
