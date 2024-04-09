@@ -106,7 +106,7 @@ export function generateGemspec(
     });
     return new GeneratedRubyFile({
         rootNode: gemspec,
-        fullPath: `${gemName}`,
+        fullPath: gemName,
         fileExtension: "gemspec",
         isConfigurationFile: true
     });

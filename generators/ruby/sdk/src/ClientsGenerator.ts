@@ -154,7 +154,7 @@ export class ClientsGenerator {
             clientFiles.push(
                 new GeneratedRubyFile({
                     rootNode: fileUtilityModule,
-                    fullPath: `core/${fileUtilityClass.classReference.name}`
+                    fullPath: "core/file_utilities"
                 })
             );
         }

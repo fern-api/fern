@@ -312,7 +312,7 @@ export function generateRootPackage(
     );
     return new GeneratedRubyFile({
         rootNode,
-        fullPath: `${gemName}`
+        fullPath: gemName
     });
 }
 

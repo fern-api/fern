@@ -1,5 +1,4 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { snakeCase } from "lodash-es";
 import path from "path";
 import { AstNode } from "../ast/core/AstNode";
 import { GeneratedFile } from "./GeneratedFile";
@@ -30,7 +29,7 @@ export class GeneratedRubyFile extends GeneratedFile {
         // /lib/client_class_name/package_name/services/service_name.rb OR /lib/client_class_name/package_name/types/type_name.rb
         const updatedPrefix = isConfigurationFile ? "" : isTestFile ? "test" : "lib";
         // Make sure the filename is snakecase
-        const fileName = `${snakeCase(path.parse(fullPath).base)}.${fileExtension}`;
+        const fileName = `${path.parse(fullPath).base}.${fileExtension}`;
         const filePath = path.parse(fullPath).dir;
 
         const nodesToWrite = rootNode instanceof Array ? rootNode : [rootNode];
