@@ -1,22 +1,20 @@
-import { docsYml } from "@fern-api/configuration";
 import { entries } from "@fern-api/core-utils";
 import { APIV1Write } from "@fern-api/fdr-sdk";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
-import { convertIrToNavigation } from "./convertIrToNavigation";
 import { convertIrAvailability, convertPackage } from "./convertPackage";
 import { convertTypeReference, convertTypeShape } from "./convertTypeShape";
 import { convertAuth } from "./covertAuth";
 
 export function convertIrToFdrApi({
     ir,
-    snippetsConfig,
-    navigation
-}: {
+    snippetsConfig
+}: // navigation
+{
     ir: IntermediateRepresentation;
     snippetsConfig: APIV1Write.SnippetsConfig;
-    navigation: docsYml.APINavigationSchema | undefined;
+    // navigation: docsYml.APINavigationSchema | undefined;
 }): APIV1Write.ApiDefinition {
-    const convertedNavigation = convertIrToNavigation(ir, navigation);
+    // const convertedNavigation = convertIrToNavigation(ir, navigation);
     const fdrApi: APIV1Write.ApiDefinition = {
         types: {},
         subpackages: {},
@@ -29,8 +27,8 @@ export function convertIrToFdrApi({
                 key: header.name.wireValue,
                 type: convertTypeReference(header.valueType)
             })
-        ),
-        navigation: convertedNavigation
+        )
+        // navigation: convertedNavigation
     };
 
     for (const [typeId, type] of entries(ir.types)) {

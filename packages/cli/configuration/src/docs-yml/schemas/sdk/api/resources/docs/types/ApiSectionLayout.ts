@@ -15,9 +15,41 @@
  *
  * @example
  *     [
- *         "roles - get - create - update",
- *         "users - get - create - update",
- *         "permissions - get - create - update"
+ *         {
+ *             "roles": [
+ *                 "get",
+ *                 "create",
+ *                 "update"
+ *             ]
+ *         },
+ *         {
+ *             "users": [
+ *                 "get",
+ *                 "create",
+ *                 "update"
+ *             ]
+ *         },
+ *         {
+ *             "permissions": [
+ *                 "get",
+ *                 "create",
+ *                 "update"
+ *             ]
+ *         }
+ *     ]
+ *
+ * @example
+ *     [
+ *         "users",
+ *         {
+ *             "roles": [
+ *                 "get",
+ *                 "create",
+ *                 "./pages/inner-page.mdx",
+ *                 "update"
+ *             ]
+ *         },
+ *         "permissions"
  *     ]
  */
 export type ApiSectionLayout = unknown;

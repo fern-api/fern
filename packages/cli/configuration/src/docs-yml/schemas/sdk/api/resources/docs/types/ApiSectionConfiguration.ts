@@ -12,6 +12,8 @@ export interface ApiSectionConfiguration {
     /** Defaults to false */
     displayErrors?: boolean;
     snippets?: FernDocsConfig.SnippetsConfiguration;
+    /** Relative path to the markdown file. This summary is displayed at the top of the API section. */
+    summary?: string;
     /**
      * If `layout` is set to `sidebar`, the API section will render with a sidebar.
      * If `layout` is set to `full`, the API section will render without a sidebar.

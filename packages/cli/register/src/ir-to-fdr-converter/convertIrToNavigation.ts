@@ -1,11 +1,11 @@
 import { docsYml } from "@fern-api/configuration";
-import { APIV1Write } from "@fern-api/fdr-sdk";
+import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
 
 export function convertIrToNavigation(
     ir: IntermediateRepresentation,
     navigation: docsYml.APINavigationSchema | undefined
-): APIV1Write.ApiNavigationConfigRoot | undefined {
+): DocsV1Write.ApiNavigationConfigRoot | undefined {
     if (navigation == null) {
         return undefined;
     }

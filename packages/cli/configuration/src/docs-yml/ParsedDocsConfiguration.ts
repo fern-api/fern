@@ -157,6 +157,7 @@ export declare namespace DocsNavigationItem {
         audiences: Audiences;
         showErrors: boolean;
         snippetsConfiguration: SnippetsConfiguration | undefined;
+        summaryAbsolutePath: AbsoluteFilePath | undefined;
         navigation: APINavigationSchema | undefined;
     }
 

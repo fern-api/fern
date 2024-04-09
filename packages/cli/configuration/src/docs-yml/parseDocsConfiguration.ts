@@ -559,7 +559,14 @@ async function convertNavigationItem({
                 rawConfig.snippets != null
                     ? convertSnippetsConfiguration({ rawConfig: rawConfig.snippets })
                     : undefined,
-            navigation
+            navigation,
+            summaryAbsolutePath:
+                rawConfig.summary != null
+                    ? resolveFilepath({
+                          absolutePath: absolutePathToConfig,
+                          rawUnresolvedFilepath: rawConfig.summary
+                      })
+                    : undefined
         };
     }
     if (isRawLinkConfig(rawConfig)) {

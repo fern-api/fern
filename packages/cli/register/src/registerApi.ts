@@ -1,8 +1,9 @@
 import { FernToken } from "@fern-api/auth";
-import { Audiences, docsYml } from "@fern-api/configuration";
+import { Audiences } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import { APIV1Write, FdrAPI } from "@fern-api/fdr-sdk";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { convertIrToFdrApi } from "./ir-to-fdr-converter/convertIrToFdrApi";
@@ -13,17 +14,17 @@ export async function registerApi({
     context,
     token,
     audiences,
-    snippetsConfig,
-    navigation
-}: {
+    snippetsConfig
+}: // navigation
+{
     organization: string;
     workspace: FernWorkspace;
     context: TaskContext;
     token: FernToken;
     audiences: Audiences;
     snippetsConfig: APIV1Write.SnippetsConfig;
-    navigation: docsYml.APINavigationSchema | undefined;
-}): Promise<FdrAPI.ApiDefinitionId> {
+    // navigation: docsYml.APINavigationSchema | undefined;
+}): Promise<{ id: FdrAPI.ApiDefinitionId; ir: IntermediateRepresentation }> {
     const ir = await generateIntermediateRepresentation({
         workspace,
         audiences,
@@ -36,7 +37,7 @@ export async function registerApi({
         token: token.value
     });
 
-    const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig, navigation });
+    const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig });
     context.logger.debug("Calling registerAPI... ", JSON.stringify(apiDefinition, undefined, 4));
     const response = await fdrService.api.v1.register.registerApiDefinition({
         orgId: organization,
@@ -46,7 +47,7 @@ export async function registerApi({
 
     if (response.ok) {
         context.logger.debug(`Registered API Definition ${response.body.apiDefinitionId}`);
-        return response.body.apiDefinitionId;
+        return { id: response.body.apiDefinitionId, ir };
     } else {
         switch (response.error.error) {
             case "UnauthorizedError":

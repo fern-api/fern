@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/fdr-sdk": "^0.73.0-d986da306",
+    "@fern-api/fdr-sdk": "^0.73.1-9d67ec828",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-fern/fiddle-sdk": "^0.0.503",
