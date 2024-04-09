@@ -1,0 +1,12 @@
+imports:
+  enums: ../types/enum.yml
+
+service:
+  auth: true
+  base-path: /enum
+  endpoints:
+    getAndReturnEnum:
+      method: POST
+      path: ""
+      request: enums.WeatherReport
+      response: enums.WeatherReport
