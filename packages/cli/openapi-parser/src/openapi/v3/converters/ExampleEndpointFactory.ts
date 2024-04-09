@@ -316,43 +316,8 @@ function convertMultipartRequestToSchema(request: RequestWithExample.Multipart):
         properties: request.properties
             .map((property) => {
                 if (property.schema.type === "file") {
-                    // TODO: Support file properties in multipart requests
-                    const innerSchema = SchemaWithExample.primitive({
-                        schema: FernOpenapiIr.PrimitiveSchemaValueWithExample.string({
-                            minLength: undefined,
-                            maxLength: undefined,
-                            example: undefined
-                        }),
-                        description: property.description,
-                        nameOverride: undefined,
-                        generatedName: "",
-                        groupName: undefined
-                    });
-                    const maybeArraySchema = property.schema.isArray
-                        ? SchemaWithExample.array({
-                              value: innerSchema,
-                              groupName: undefined,
-                              nameOverride: undefined,
-                              generatedName: "",
-                              description: undefined
-                          })
-                        : innerSchema;
-                    const maybeOptionalSchema = property.schema.isOptional
-                        ? SchemaWithExample.optional({
-                              value: maybeArraySchema,
-                              groupName: undefined,
-                              nameOverride: undefined,
-                              generatedName: "",
-                              description: undefined
-                          })
-                        : maybeArraySchema;
-                    return {
-                        key: property.key,
-                        schema: maybeOptionalSchema,
-                        audiences: [],
-                        conflict: {},
-                        generatedName: property.key
-                    };
+                    // TODO: Handle file property examples in the Fern Definition
+                    return null;
                 }
                 return {
                     key: property.key,

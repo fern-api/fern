@@ -2,6 +2,7 @@
 
 
 from datetime import datetime, date
+from re import M
 from typing import cast
 import uuid
 from core_utilities.sdk.unchecked_base_model import construct_type
@@ -26,7 +27,8 @@ def test_construct_valid() -> None:
         "map": {"1": "string"},
         "union": {"type": "square", "id": "string", "length": 1.1},
         "undiscriminated_union": {"id": "string2", "length": 6.7},
-        "enum": "red"
+        "enum": "red",
+        "any": "something here"
     }
     cast_response = cast(ObjectWithOptionalField, construct_type(type_=ObjectWithOptionalField, object_=response))
 
@@ -44,6 +46,7 @@ def test_construct_valid() -> None:
     assert cast_response.set_ == {"string"}
     assert cast_response.map_ == {"1": "string"}
     assert cast_response.enum == "red"
+    assert cast_response.any == "something here"
 
     shape_expectation = Shape_Square(id="string", length=1.1)
     assert cast_response.union is not None
@@ -73,7 +76,8 @@ def test_construct_unset() -> None:
         "map": {"1": "string"},
         "union": {"type": "square", "id": "string", "length": 1.1},
         "undiscriminated_union": {"id": "string2", "length": 6.7},
-        "enum": "red"
+        "enum": "red",
+        "any": "something here"
     }
     cast_response = cast(ObjectWithOptionalField, construct_type(type_=ObjectWithOptionalField, object_=response))
 
@@ -94,7 +98,8 @@ def test_construct_unset() -> None:
         "map": {"1": "string"},
         "union": {"type": "square", "id": "string", "length": 1.1},
         "undiscriminated_union": {"id": "string2", "length": 6.7},
-        "enum": "red"
+        "enum": "red",
+        "any": "something here"
     }
 
 def test_construct_invalid() -> None:
@@ -132,6 +137,7 @@ def test_construct_invalid() -> None:
     assert cast_response.set_ == "testing"
     assert cast_response.map_ == "hello world"
     assert cast_response.enum == "bread"
+    assert cast_response.any is None
     
     shape_expectation = Shape_Square(id="123", length=1.1)
     assert cast_response.union is not None
