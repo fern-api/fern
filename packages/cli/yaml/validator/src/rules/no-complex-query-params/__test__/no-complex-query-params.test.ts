@@ -15,12 +15,6 @@ describe("no-complex-query-params", () => {
 
         expect(violations).toEqual([
             {
-                message: "list<string> is not a valid type for a query parameter",
-                nodePath: ["service", "endpoints", "bar", "request", "query-parameters", "c"],
-                relativeFilepath: RelativeFilePath.of("a.yml"),
-                severity: "error"
-            },
-            {
                 message: "unknown is not a valid type for a query parameter",
                 nodePath: ["service", "endpoints", "bar", "request", "query-parameters", "d"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
