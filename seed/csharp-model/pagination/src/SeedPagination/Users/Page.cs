@@ -12,7 +12,7 @@ public class Page
     public int Page_ { get; init; }
 
     [JsonPropertyName("next")]
-    public NextPage? Next { get; init; }
+    public List<NextPage?> Next { get; init; }
 
     [JsonPropertyName("per_page")]
     public int PerPage { get; init; }

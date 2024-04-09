@@ -9,5 +9,5 @@ public class StackInformation
     public int NumStackFrames { get; init; }
 
     [JsonPropertyName("topStackFrame")]
-    public StackFrame? TopStackFrame { get; init; }
+    public List<StackFrame?> TopStackFrame { get; init; }
 }

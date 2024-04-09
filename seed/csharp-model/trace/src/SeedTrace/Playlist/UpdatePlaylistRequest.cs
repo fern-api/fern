@@ -11,5 +11,5 @@ public class UpdatePlaylistRequest
     /// The problems that make up the playlist.
     /// </summary>
     [JsonPropertyName("problems")]
-    public List<string> Problems { get; init; }
+    public List<List<string>> Problems { get; init; }
 }

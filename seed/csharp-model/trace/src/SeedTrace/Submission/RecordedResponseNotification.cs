@@ -11,5 +11,5 @@ public class RecordedResponseNotification
     public int TraceResponsesSize { get; init; }
 
     [JsonPropertyName("testCaseId")]
-    public string? TestCaseId { get; init; }
+    public List<string?> TestCaseId { get; init; }
 }

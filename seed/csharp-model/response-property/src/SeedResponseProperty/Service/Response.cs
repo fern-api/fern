@@ -9,7 +9,7 @@ public class Response
     public Movie Data { get; init; }
 
     [JsonPropertyName("metadata")]
-    public Dictionary<string, string> Metadata { get; init; }
+    public List<Dictionary<string, string>> Metadata { get; init; }
 
     [JsonPropertyName("docs")]
     public string Docs { get; init; }

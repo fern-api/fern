@@ -50,3 +50,5 @@ packages/**/generated
 # environments
 .env*.local
 .vercel
+
+**/.idea/*

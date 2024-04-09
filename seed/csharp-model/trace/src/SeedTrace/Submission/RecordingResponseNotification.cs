@@ -9,7 +9,7 @@ public class RecordingResponseNotification
     public Guid SubmissionId { get; init; }
 
     [JsonPropertyName("testCaseId")]
-    public string? TestCaseId { get; init; }
+    public List<string?> TestCaseId { get; init; }
 
     [JsonPropertyName("lineNumber")]
     public int LineNumber { get; init; }
@@ -18,5 +18,5 @@ public class RecordingResponseNotification
     public LightweightStackframeInformation LightweightStackInfo { get; init; }
 
     [JsonPropertyName("tracedFile")]
-    public TracedFile? TracedFile { get; init; }
+    public List<TracedFile?> TracedFile { get; init; }
 }

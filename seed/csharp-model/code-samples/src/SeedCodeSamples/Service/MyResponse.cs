@@ -8,5 +8,5 @@ public class MyResponse
     public string Id { get; init; }
 
     [JsonPropertyName("name")]
-    public string? Name { get; init; }
+    public List<string?> Name { get; init; }
 }

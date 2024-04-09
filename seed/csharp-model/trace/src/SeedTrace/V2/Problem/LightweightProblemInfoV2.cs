@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using SeedTrace;
 
 namespace SeedTrace.V2;
@@ -16,5 +15,5 @@ public class LightweightProblemInfoV2
     public int ProblemVersion { get; init; }
 
     [JsonPropertyName("variableTypes")]
-    public HashSet<OneOf<VariableType._IntegerType, VariableType._DoubleType, VariableType._BooleanType, VariableType._StringType, VariableType._CharType, VariableType._ListType, VariableType._MapType, VariableType._BinaryTreeType, VariableType._SinglyLinkedListType, VariableType._DoublyLinkedListType>> VariableTypes { get; init; }
+    public List<HashSet<VariableType>> VariableTypes { get; init; }
 }

@@ -1,6 +1,5 @@
 using System.Text.Json.Serialization;
 using SeedTrace.V2;
-using OneOf;
 
 namespace SeedTrace.V2;
 
@@ -10,5 +9,5 @@ public class TestCaseImplementation
     public TestCaseImplementationDescription Description { get; init; }
 
     [JsonPropertyName("function")]
-    public OneOf<TestCaseFunction._WithActualResult, TestCaseFunction._Custom> Function { get; init; }
+    public TestCaseFunction Function { get; init; }
 }
