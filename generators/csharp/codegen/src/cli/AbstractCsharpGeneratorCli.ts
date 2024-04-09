@@ -2,8 +2,8 @@ import { AbstractGeneratorCli } from "@fern-api/generator-commons";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { readFile } from "fs/promises";
-import { AbstractCsharpGeneratorContext } from "./AbstractCsharpGeneratorContext";
-import { BaseCsharpCustomConfigSchema } from "./BaseCsharpCustomConfigSchema";
+import { AbstractCsharpGeneratorContext } from "../context/AbstractCsharpGeneratorContext";
+import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
 
 export abstract class AbstractCsharpGeneratorCli<
     CustomConfig extends BaseCsharpCustomConfigSchema,

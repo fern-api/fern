@@ -6,8 +6,8 @@ namespace SeedTrace;
 public class DoublyLinkedListValue
 {
     [JsonPropertyName("head")]
-    public string? Head { get; init; }
+    public List<string?> Head { get; init; }
 
     [JsonPropertyName("nodes")]
-    public Dictionary<string, DoublyLinkedListNodeValue> Nodes { get; init; }
+    public List<Dictionary<string, DoublyLinkedListNodeValue>> Nodes { get; init; }
 }

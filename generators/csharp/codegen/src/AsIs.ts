@@ -5,5 +5,6 @@ export enum AsIsFiles {
     TemplateCsProj = "Template.csproj",
     TemplateTestCsProj = "Template.Test.csproj",
     TemplateTestClientCs = "TemplateTestClient.cs",
-    UsingCs = "Using.cs"
+    UsingCs = "Using.cs",
+    RawClient = "RawClient.Template.cs"
 }

@@ -9,8 +9,8 @@ public class Node
     public string Id { get; init; }
 
     [JsonPropertyName("label")]
-    public string? Label { get; init; }
+    public List<string?> Label { get; init; }
 
     [JsonPropertyName("metadata")]
-    public Metadata? Metadata { get; init; }
+    public List<Metadata?> Metadata { get; init; }
 }

@@ -1,7 +1,7 @@
-import { AstNode } from "../core/AstNode";
-import { Writer } from "../core/Writer";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 import { Field } from "./Field";
 
 export declare namespace ClassInstantiation {

@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using OneOf;
 using SeedTrace;
 
 namespace SeedTrace;
@@ -10,5 +9,5 @@ public class ErroredResponse
     public Guid SubmissionId { get; init; }
 
     [JsonPropertyName("errorInfo")]
-    public OneOf<ErrorInfo._CompileError, ErrorInfo._RuntimeError, ErrorInfo._InternalError> ErrorInfo { get; init; }
+    public ErrorInfo ErrorInfo { get; init; }
 }

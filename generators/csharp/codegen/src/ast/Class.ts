@@ -1,13 +1,14 @@
-import { Access } from "../core/Access";
-import { AstNode } from "../core/AstNode";
-import { Writer } from "../core/Writer";
+import { Access } from "./Access";
 import { Annotation } from "./Annotation";
 import { ClassInstantiation } from "./ClassInstantiation";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 import { Field } from "./Field";
 import { Interface } from "./Interface";
 import { Method } from "./Method";
+import { Parameter } from "./Parameter";
 
 export declare namespace Class {
     interface Args {
@@ -30,6 +31,15 @@ export declare namespace Class {
         /* Any annotations to add to the class */
         annotations?: Annotation[];
     }
+
+    interface Constructor {
+        /* The body of the constructor */
+        body?: CodeBlock;
+        /* The parameters of the constructor */
+        parameters: Parameter[];
+        /* The access of the constructor */
+        access: Access;
+    }
 }
 
 export class Class extends AstNode {
@@ -45,6 +55,7 @@ export class Class extends AstNode {
     public readonly annotations: Annotation[] = [];
 
     private fields: Field[] = [];
+    private constructors: Class.Constructor[] = [];
     private methods: Method[] = [];
     private nestedClasses: Class[] = [];
     private nestedInterfaces: Interface[] = [];
@@ -78,6 +89,10 @@ export class Class extends AstNode {
 
     public addField(field: Field): void {
         this.fields.push(field);
+    }
+
+    public addConstructor(constructor: Class.Constructor): void {
+        this.constructors.push(constructor);
     }
 
     public addMethod(method: Method): void {
@@ -132,6 +147,25 @@ export class Class extends AstNode {
         }
         writer.writeNewLineIfLastLineNot();
         writer.writeLine("{");
+
+        writer.indent();
+        this.constructors.forEach((constructor) => {
+            writer.write(`${constructor.access} ${this.name} (`);
+            constructor.parameters.forEach((parameter, index) => {
+                parameter.write(writer);
+                if (index < constructor.parameters.length - 1) {
+                    writer.write(", ");
+                }
+            });
+            writer.write(")");
+
+            writer.writeLine("{");
+            writer.indent();
+            constructor.body?.write(writer);
+            writer.dedent();
+            writer.writeLine("}");
+        });
+        writer.dedent();
 
         writer.indent();
         this.fields.forEach((field, index) => {

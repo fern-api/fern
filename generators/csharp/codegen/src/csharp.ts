@@ -1,4 +1,5 @@
 import { Annotation, Class, ClassReference, CodeBlock, Enum, Field, Method, Parameter, Type } from "./ast";
+import { CoreClassReference } from "./ast/CoreClassReference";
 import { Interface } from "./ast/Interface";
 
 export function class_(args: Class.Args): Class {
@@ -11,6 +12,10 @@ export function annotation(args: Annotation.Args): Annotation {
 
 export function classReference(args: ClassReference.Args): ClassReference {
     return new ClassReference(args);
+}
+
+export function coreClassReference(args: CoreClassReference.Args): CoreClassReference {
+    return new CoreClassReference(args);
 }
 
 export function codeblock(args: CodeBlock.Args): CodeBlock {

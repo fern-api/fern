@@ -8,8 +8,8 @@ public class User
     public string UserName { get; init; }
 
     [JsonPropertyName("metadata_tags")]
-    public List<string> MetadataTags { get; init; }
+    public List<List<string>> MetadataTags { get; init; }
 
     [JsonPropertyName("EXTRA_PROPERTIES")]
-    public Dictionary<string, string> ExtraProperties { get; init; }
+    public List<Dictionary<string, string>> ExtraProperties { get; init; }
 }

@@ -1,7 +1,8 @@
 import { assertNever } from "@fern-api/core-utils";
-import { AstNode } from "../core/AstNode";
-import { Writer } from "../core/Writer";
 import { ClassReference, OneOfClassReference, StringEnumClassReference } from "./ClassReference";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
+import { CoreClassReference } from "./CoreClassReference";
 
 type InternalType =
     | Integer
@@ -19,7 +20,8 @@ type InternalType =
     | Optional
     | Reference
     | OneOf
-    | StringEnum;
+    | StringEnum
+    | CoreReference;
 
 interface Integer {
     type: "integer";
@@ -81,6 +83,11 @@ interface Optional {
 interface Reference {
     type: "reference";
     value: ClassReference;
+}
+
+interface CoreReference {
+    type: "coreReference";
+    value: CoreClassReference;
 }
 
 interface OneOf {
@@ -151,6 +158,9 @@ export class Type extends AstNode {
                 break;
             case "reference":
                 writer.addReference(this.internalType.value);
+                writer.write(this.internalType.value.name);
+                break;
+            case "coreReference":
                 writer.write(this.internalType.value.name);
                 break;
             case "oneOf":
@@ -262,6 +272,13 @@ export class Type extends AstNode {
     public static reference(value: ClassReference): Type {
         return new this({
             type: "reference",
+            value
+        });
+    }
+
+    public static coreClass(value: CoreClassReference): Type {
+        return new this({
+            type: "coreReference",
             value
         });
     }

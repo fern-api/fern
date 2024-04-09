@@ -8,5 +8,5 @@ public class FunctionImplementation
     public string Impl { get; init; }
 
     [JsonPropertyName("imports")]
-    public string? Imports { get; init; }
+    public List<string?> Imports { get; init; }
 }

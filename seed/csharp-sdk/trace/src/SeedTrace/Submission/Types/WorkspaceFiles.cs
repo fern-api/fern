@@ -9,5 +9,5 @@ public class WorkspaceFiles
     public FileInfo MainFile { get; init; }
 
     [JsonPropertyName("readOnlyFiles")]
-    public List<FileInfo> ReadOnlyFiles { get; init; }
+    public List<List<FileInfo>> ReadOnlyFiles { get; init; }
 }

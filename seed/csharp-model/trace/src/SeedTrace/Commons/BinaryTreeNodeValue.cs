@@ -11,8 +11,8 @@ public class BinaryTreeNodeValue
     public double Val { get; init; }
 
     [JsonPropertyName("right")]
-    public string? Right { get; init; }
+    public List<string?> Right { get; init; }
 
     [JsonPropertyName("left")]
-    public string? Left { get; init; }
+    public List<string?> Left { get; init; }
 }

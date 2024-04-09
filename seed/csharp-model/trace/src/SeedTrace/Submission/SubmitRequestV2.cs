@@ -12,14 +12,14 @@ public class SubmitRequestV2
     public Language Language { get; init; }
 
     [JsonPropertyName("submissionFiles")]
-    public List<SubmissionFileInfo> SubmissionFiles { get; init; }
+    public List<List<SubmissionFileInfo>> SubmissionFiles { get; init; }
 
     [JsonPropertyName("problemId")]
     public string ProblemId { get; init; }
 
     [JsonPropertyName("problemVersion")]
-    public int? ProblemVersion { get; init; }
+    public List<int?> ProblemVersion { get; init; }
 
     [JsonPropertyName("userId")]
-    public string? UserId { get; init; }
+    public List<string?> UserId { get; init; }
 }

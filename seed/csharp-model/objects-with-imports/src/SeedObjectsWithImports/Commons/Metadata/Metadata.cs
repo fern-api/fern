@@ -8,5 +8,5 @@ public class Metadata
     public string Id { get; init; }
 
     [JsonPropertyName("data")]
-    public Dictionary<string, string>? Data { get; init; }
+    public List<List<Dictionary<string, string>>?> Data { get; init; }
 }

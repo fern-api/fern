@@ -6,5 +6,5 @@ namespace SeedObjectsWithImports;
 public class Tree
 {
     [JsonPropertyName("nodes")]
-    public List<Node>? Nodes { get; init; }
+    public List<List<List<Node>>?> Nodes { get; init; }
 }

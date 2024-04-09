@@ -7,5 +7,5 @@ namespace SeedTrace.V2.V3;
 public class FunctionImplementationForMultipleLanguages
 {
     [JsonPropertyName("codeByLanguage")]
-    public Dictionary<Language, FunctionImplementation> CodeByLanguage { get; init; }
+    public List<Dictionary<Language, FunctionImplementation>> CodeByLanguage { get; init; }
 }

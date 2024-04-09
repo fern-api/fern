@@ -1,7 +1,7 @@
-import { AstNode } from "../../core/AstNode";
-import { Writer } from "../../core/Writer";
 import { Class } from "../Class";
 import { ClassInstantiation } from "../ClassInstantiation";
+import { AstNode } from "../core/AstNode";
+import { Writer } from "../core/Writer";
 
 export declare namespace RootClient {
     interface Args {

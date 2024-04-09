@@ -9,5 +9,5 @@ public class ProblemFiles
     public FileInfo SolutionFile { get; init; }
 
     [JsonPropertyName("readOnlyFiles")]
-    public List<FileInfo> ReadOnlyFiles { get; init; }
+    public List<List<FileInfo>> ReadOnlyFiles { get; init; }
 }

@@ -7,11 +7,11 @@ namespace SeedTrace.V2;
 public class GeneratedFiles
 {
     [JsonPropertyName("generatedTestCaseFiles")]
-    public Dictionary<Language, Files> GeneratedTestCaseFiles { get; init; }
+    public List<Dictionary<Language, Files>> GeneratedTestCaseFiles { get; init; }
 
     [JsonPropertyName("generatedTemplateFiles")]
-    public Dictionary<Language, Files> GeneratedTemplateFiles { get; init; }
+    public List<Dictionary<Language, Files>> GeneratedTemplateFiles { get; init; }
 
     [JsonPropertyName("other")]
-    public Dictionary<Language, Files> Other { get; init; }
+    public List<Dictionary<Language, Files>> Other { get; init; }
 }

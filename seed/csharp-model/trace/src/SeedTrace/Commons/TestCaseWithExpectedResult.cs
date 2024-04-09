@@ -1,6 +1,5 @@
 using System.Text.Json.Serialization;
 using SeedTrace;
-using OneOf;
 
 namespace SeedTrace;
 
@@ -10,5 +9,5 @@ public class TestCaseWithExpectedResult
     public TestCase TestCase { get; init; }
 
     [JsonPropertyName("expectedResult")]
-    public OneOf<VariableValue._IntegerValue, VariableValue._BooleanValue, VariableValue._DoubleValue, VariableValue._StringValue, VariableValue._CharValue, VariableValue._MapValue, VariableValue._ListValue, VariableValue._BinaryTreeValue, VariableValue._SinglyLinkedListValue, VariableValue._DoublyLinkedListValue, VariableValue._NullValue> ExpectedResult { get; init; }
+    public VariableValue ExpectedResult { get; init; }
 }

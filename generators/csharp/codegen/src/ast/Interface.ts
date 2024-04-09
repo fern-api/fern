@@ -1,7 +1,7 @@
-import { Access } from "../core/Access";
-import { AstNode } from "../core/AstNode";
-import { Writer } from "../core/Writer";
+import { Writer } from "./core/Writer";
 import { ClassReference } from "./ClassReference";
+import { Access } from "./Access";
+import { AstNode } from "./core/AstNode";
 import { Field } from "./Field";
 import { Method } from "./Method";
 

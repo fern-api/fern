@@ -6,5 +6,5 @@ namespace SeedApi;
 public class ImportingA
 {
     [JsonPropertyName("a")]
-    public A? A { get; init; }
+    public List<A?> A { get; init; }
 }

@@ -5,5 +5,5 @@ namespace SeedPagination;
 public class UsernameContainer
 {
     [JsonPropertyName("results")]
-    public List<string> Results { get; init; }
+    public List<List<string>> Results { get; init; }
 }

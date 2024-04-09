@@ -1,6 +1,5 @@
 using System.Text.Json.Serialization;
 using SeedTrace;
-using OneOf;
 
 namespace SeedTrace;
 
@@ -19,16 +18,16 @@ public class ProblemInfo
     public int ProblemVersion { get; init; }
 
     [JsonPropertyName("files")]
-    public Dictionary<Language, ProblemFiles> Files { get; init; }
+    public List<Dictionary<Language, ProblemFiles>> Files { get; init; }
 
     [JsonPropertyName("inputParams")]
-    public List<VariableTypeAndName> InputParams { get; init; }
+    public List<List<VariableTypeAndName>> InputParams { get; init; }
 
     [JsonPropertyName("outputType")]
-    public OneOf<VariableType._IntegerType, VariableType._DoubleType, VariableType._BooleanType, VariableType._StringType, VariableType._CharType, VariableType._ListType, VariableType._MapType, VariableType._BinaryTreeType, VariableType._SinglyLinkedListType, VariableType._DoublyLinkedListType> OutputType { get; init; }
+    public VariableType OutputType { get; init; }
 
     [JsonPropertyName("testcases")]
-    public List<TestCaseWithExpectedResult> Testcases { get; init; }
+    public List<List<TestCaseWithExpectedResult>> Testcases { get; init; }
 
     [JsonPropertyName("methodName")]
     public string MethodName { get; init; }

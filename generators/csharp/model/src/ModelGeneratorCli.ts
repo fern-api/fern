@@ -1,9 +1,8 @@
-import { AbstractCsharpGeneratorCli, CsharpProject } from "@fern-api/csharp-codegen";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbstractCsharpGeneratorCli } from "@fern-api/csharp-codegen";
 import { FernGeneratorExec, GeneratorNotificationService } from "@fern-api/generator-commons";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { generateModels } from "./generateModels";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
-import { ModelGenerator } from "./ModelGenerator";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 
 export class ModelGeneratorCLI extends AbstractCsharpGeneratorCli<ModelCustomConfigSchema, ModelGeneratorContext> {
@@ -31,20 +30,18 @@ export class ModelGeneratorCLI extends AbstractCsharpGeneratorCli<ModelCustomCon
     }
 
     protected async writeForGithub(context: ModelGeneratorContext): Promise<void> {
-        const project = new CsharpProject(context, context.getNamespace());
-        const files = new ModelGenerator(context).generateTypes();
-        for (const file of files) {
-            project.addSourceFiles(file);
+        const generatedTypes = generateModels({ context });
+        for (const file of generatedTypes) {
+            context.project.addSourceFiles(file);
         }
-        await project.persist(AbsoluteFilePath.of(context.config.output.path));
+        await context.project.persist();
     }
 
     protected async writeForDownload(context: ModelGeneratorContext): Promise<void> {
-        const project = new CsharpProject(context, context.getNamespace());
-        const files = new ModelGenerator(context).generateTypes();
-        for (const file of files) {
-            project.addSourceFiles(file);
+        const generatedTypes = generateModels({ context });
+        for (const file of generatedTypes) {
+            context.project.addSourceFiles(file);
         }
-        await project.persist(AbsoluteFilePath.of(context.config.output.path));
+        await context.project.persist();
     }
 }

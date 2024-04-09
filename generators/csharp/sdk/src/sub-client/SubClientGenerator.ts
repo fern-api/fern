@@ -1,22 +1,24 @@
-import { csharp, CSharpFile, Generator } from "@fern-api/csharp-codegen";
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { HttpService, ServiceId } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
-export class SubClientGenerator extends Generator<SdkCustomConfigSchema, SdkGeneratorContext> {
+export class SubClientGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+    private classReference: csharp.ClassReference;
+
     constructor(
         context: SdkGeneratorContext,
         private readonly serviceId: ServiceId,
         private readonly service: HttpService
     ) {
         super(context);
+        this.classReference = this.context.getServiceClassReference(serviceId);
     }
 
-    public generate(): CSharpFile {
+    public doGenerate(): CSharpFile {
         const class_ = csharp.class_({
-            name: `${this.service.name.fernFilepath.file?.pascalCase.unsafeName}Client`,
-            namespace: this.context.getNamespaceForServiceId(this.serviceId),
+            ...this.classReference,
             partial: false,
             access: "public"
         });
@@ -28,7 +30,7 @@ export class SubClientGenerator extends Generator<SdkCustomConfigSchema, SdkGene
                     access: "public",
                     isAsync: true,
                     parameters: [],
-                    docs: endpoint.docs
+                    summary: endpoint.docs
                 })
             );
         }
@@ -37,5 +39,12 @@ export class SubClientGenerator extends Generator<SdkCustomConfigSchema, SdkGene
             clazz: class_,
             directory: RelativeFilePath.of(this.context.getDirectoryForServiceId(this.serviceId))
         });
+    }
+
+    protected getFilepath(): RelativeFilePath {
+        return join(
+            this.context.project.filepaths.getSourceFileDirectory(),
+            RelativeFilePath.of(this.classReference.name + ".cs")
+        );
     }
 }

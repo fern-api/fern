@@ -1,9 +1,10 @@
-import { ENUM_MEMBER } from "../constants/System";
-import { Access } from "../core/Access";
-import { AstNode } from "../core/AstNode";
-import { Writer } from "../core/Writer";
+
+import { Access } from "./Access";
 import { Annotation } from "./Annotation";
 import { ClassReference } from "./ClassReference";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
+import { ENUM_MEMBER } from "./dependencies/System";
 
 export declare namespace Enum {
     interface Args {

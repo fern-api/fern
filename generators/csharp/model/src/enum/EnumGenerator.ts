@@ -1,23 +1,25 @@
-import { csharp, CSharpFile, Generator } from "@fern-api/csharp-codegen";
+import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { EnumTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
-export class EnumGenerator extends Generator<ModelCustomConfigSchema, ModelGeneratorContext> {
+export class EnumGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
+    private readonly classReference: csharp.ClassReference;
+
     constructor(
         context: ModelGeneratorContext,
         private readonly typeDeclaration: TypeDeclaration,
         private readonly enumDeclaration: EnumTypeDeclaration
     ) {
         super(context);
+        this.classReference = this.context.csharpTypeMapper.convertToClassReference(this.typeDeclaration.name);
     }
 
-    public generate(): CSharpFile {
+    protected doGenerate(): CSharpFile {
         const enum_ = csharp.enum_({
-            name: this.context.getPascalCaseSafeName(this.typeDeclaration.name.name),
-            namespace: this.context.getNamespaceForTypeId(this.typeDeclaration.name.typeId),
+            ...this.classReference,
             access: "public"
-            // annotations: [this.prebuiltUtilities.enumConverterAnnotation()]
         });
 
         this.enumDeclaration.values.forEach((member) =>
@@ -28,5 +30,12 @@ export class EnumGenerator extends Generator<ModelCustomConfigSchema, ModelGener
             clazz: enum_,
             directory: this.context.getDirectoryForTypeId(this.typeDeclaration.name.typeId)
         });
+    }
+
+    protected getFilepath(): RelativeFilePath {
+        return join(
+            this.context.project.filepaths.getSourceFileDirectory(),
+            RelativeFilePath.of(this.classReference.name + ".cs")
+        );
     }
 }

@@ -8,7 +8,7 @@ public class Movie
     public string Id { get; init; }
 
     [JsonPropertyName("prequel")]
-    public string? Prequel { get; init; }
+    public List<string?> Prequel { get; init; }
 
     [JsonPropertyName("title")]
     public string Title { get; init; }
@@ -23,14 +23,14 @@ public class Movie
     public double Rating { get; init; }
 
     [JsonPropertyName("type")]
-    public string Type { get; init; }
+    public List<string> Type { get; init; }
 
     [JsonPropertyName("tag")]
     public string Tag { get; init; }
 
     [JsonPropertyName("book")]
-    public string? Book { get; init; }
+    public List<string?> Book { get; init; }
 
     [JsonPropertyName("metadata")]
-    public Dictionary<string, object> Metadata { get; init; }
+    public List<Dictionary<string, object>> Metadata { get; init; }
 }

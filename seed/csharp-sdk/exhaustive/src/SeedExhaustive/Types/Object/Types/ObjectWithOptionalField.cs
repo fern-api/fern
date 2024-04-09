@@ -5,38 +5,38 @@ namespace SeedExhaustive.Types;
 public class ObjectWithOptionalField
 {
     [JsonPropertyName("string")]
-    public string? String { get; init; }
+    public List<string?> String { get; init; }
 
     [JsonPropertyName("integer")]
-    public int? Integer { get; init; }
+    public List<int?> Integer { get; init; }
 
     [JsonPropertyName("long")]
-    public long? Long { get; init; }
+    public List<long?> Long { get; init; }
 
     [JsonPropertyName("double")]
-    public double? Double { get; init; }
+    public List<double?> Double { get; init; }
 
     [JsonPropertyName("bool")]
-    public bool? Bool { get; init; }
+    public List<bool?> Bool { get; init; }
 
     [JsonPropertyName("datetime")]
-    public DateTime? Datetime { get; init; }
+    public List<DateTime?> Datetime { get; init; }
 
     [JsonPropertyName("date")]
-    public DateOnly? Date { get; init; }
+    public List<DateOnly?> Date { get; init; }
 
     [JsonPropertyName("uuid")]
-    public Guid? Uuid { get; init; }
+    public List<Guid?> Uuid { get; init; }
 
     [JsonPropertyName("base64")]
-    public string? Base64 { get; init; }
+    public List<string?> Base64 { get; init; }
 
     [JsonPropertyName("list")]
-    public List<string>? List { get; init; }
+    public List<List<List<string>>?> List { get; init; }
 
     [JsonPropertyName("set")]
-    public HashSet<string>? Set { get; init; }
+    public List<List<HashSet<string>>?> Set { get; init; }
 
     [JsonPropertyName("map")]
-    public Dictionary<int, string>? Map { get; init; }
+    public List<List<Dictionary<int, string>>?> Map { get; init; }
 }

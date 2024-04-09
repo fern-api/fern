@@ -6,8 +6,8 @@ namespace SeedExhaustive.Types;
 public class NestedObjectWithOptionalField
 {
     [JsonPropertyName("string")]
-    public string? String { get; init; }
+    public List<string?> String { get; init; }
 
     [JsonPropertyName("NestedObject")]
-    public ObjectWithOptionalField? NestedObject { get; init; }
+    public List<ObjectWithOptionalField?> NestedObject { get; init; }
 }

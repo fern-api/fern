@@ -3670,6 +3670,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/fern-csharp-sdk@workspace:generators/csharp/sdk"
   dependencies:
+    "@fern-api/core-utils": "workspace:*"
     "@fern-api/csharp-codegen": "workspace:*"
     "@fern-api/fern-csharp-model": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
@@ -3677,6 +3678,7 @@ __metadata:
     "@fern-fern/generator-exec-sdk": 0.0.687
     "@fern-fern/ir-sdk": 0.0.3318
     "@types/jest": ^29.0.3
+    "@types/lodash-es": ^4.17.9
     "@types/node": ^18.7.18
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
     depcheck: ^1.4.6
@@ -3684,6 +3686,7 @@ __metadata:
     esbuild: ^0.15.7
     eslint: ^8.56.0
     jest: ^29.7.0
+    lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     typescript: 4.6.4
