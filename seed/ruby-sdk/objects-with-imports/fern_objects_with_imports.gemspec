@@ -3,7 +3,7 @@
 require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
-  spec.name = "fern_objects-with-imports"
+  spec.name = "fern_objects_with_imports"
   spec.version = "0.0.1"
   spec.authors = SeedObjectsWithImportsClient::Gemconfig::AUTHORS
   spec.email = SeedObjectsWithImportsClient::Gemconfig::EMAIL

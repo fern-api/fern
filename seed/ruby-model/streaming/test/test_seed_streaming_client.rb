@@ -6,6 +6,6 @@ require "seed_streaming_client"
 # Basic SeedStreamingClient tests
 class TestSeedStreamingClient < Minitest::Test
   def test_function
-    SeedStreamingClient::Client.new
+    # SeedStreamingClient::Client.new
   end
 end

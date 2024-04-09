@@ -3,7 +3,7 @@
 require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
-  spec.name = "fern_api-wide-base-path"
+  spec.name = "fern_api_wide_base_path"
   spec.version = "0.0.1"
   spec.authors = SeedApiWideBasePathClient::Gemconfig::AUTHORS
   spec.email = SeedApiWideBasePathClient::Gemconfig::EMAIL

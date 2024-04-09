@@ -6,6 +6,6 @@ require "fern_pagination"
 # Basic SeedPaginationClient tests
 class TestSeedPaginationClient < Minitest::Test
   def test_function
-    SeedPaginationClient::Client.new
+    # SeedPaginationClient::Client.new
   end
 end

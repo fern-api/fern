@@ -13,11 +13,14 @@ jobs:
             with:
               ruby-version: 2.7
               bundler-cache: true
+
+          - name: Test gem
+            run: bundle install && bundle exec rake test
               
           - name: Build and Push Gem
             env:
               GEM_HOST_API_KEY: ${{ secrets. }}
             run: |
-              gem build fern_reserved-keywords.gemspec
+              gem build fern_reserved_keywords.gemspec
 
-              gem push fern_reserved-keywords-*.gem --host 
+              gem push fern_reserved_keywords-*.gem --host 

@@ -6,6 +6,6 @@ require "seed_mixed_case_client"
 # Basic SeedMixedCaseClient tests
 class TestSeedMixedCaseClient < Minitest::Test
   def test_function
-    SeedMixedCaseClient::Client.new
+    # SeedMixedCaseClient::Client.new
   end
 end

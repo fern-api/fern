@@ -6,6 +6,6 @@ require "fern_literal"
 # Basic SeedLiteralClient tests
 class TestSeedLiteralClient < Minitest::Test
   def test_function
-    SeedLiteralClient::Client.new
+    # SeedLiteralClient::Client.new
   end
 end

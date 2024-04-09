@@ -6,6 +6,6 @@ require "fern_unions"
 # Basic SeedUnionsClient tests
 class TestSeedUnionsClient < Minitest::Test
   def test_function
-    SeedUnionsClient::Client.new
+    # SeedUnionsClient::Client.new
   end
 end

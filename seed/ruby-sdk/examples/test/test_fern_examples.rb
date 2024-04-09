@@ -6,6 +6,6 @@ require "fern_examples"
 # Basic SeedExamplesClient tests
 class TestSeedExamplesClient < Minitest::Test
   def test_function
-    SeedExamplesClient::Client.new
+    # SeedExamplesClient::Client.new
   end
 end

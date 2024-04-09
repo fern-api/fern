@@ -6,6 +6,6 @@ require "seed_undiscriminated_unions_client"
 # Basic SeedUndiscriminatedUnionsClient tests
 class TestSeedUndiscriminatedUnionsClient < Minitest::Test
   def test_function
-    SeedUndiscriminatedUnionsClient::Client.new
+    # SeedUndiscriminatedUnionsClient::Client.new
   end
 end

@@ -3,7 +3,7 @@
 require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
-  spec.name = "fern_multi-url-environment"
+  spec.name = "fern_multi_url_environment"
   spec.version = "0.0.1"
   spec.authors = SeedMultiUrlEnvironmentClient::Gemconfig::AUTHORS
   spec.email = SeedMultiUrlEnvironmentClient::Gemconfig::EMAIL

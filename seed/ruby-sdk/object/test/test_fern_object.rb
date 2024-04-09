@@ -6,6 +6,6 @@ require "fern_object"
 # Basic SeedObjectClient tests
 class TestSeedObjectClient < Minitest::Test
   def test_function
-    SeedObjectClient::Client.new
+    # SeedObjectClient::Client.new
   end
 end

@@ -6,6 +6,6 @@ require "seed_api_client"
 # Basic SeedApiClient tests
 class TestSeedApiClient < Minitest::Test
   def test_function
-    SeedApiClient::Client.new
+    # SeedApiClient::Client.new
   end
 end

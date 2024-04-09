@@ -3,7 +3,7 @@
 require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
-  spec.name = "fern_circular-references-advanced"
+  spec.name = "fern_circular_references_advanced"
   spec.version = "0.0.1"
   spec.authors = SeedApiClient::Gemconfig::AUTHORS
   spec.email = SeedApiClient::Gemconfig::EMAIL

@@ -3,7 +3,7 @@
 require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
-  spec.name = "fern_idempotency-headers"
+  spec.name = "fern_idempotency_headers"
   spec.version = "0.0.1"
   spec.authors = SeedIdempotencyHeadersClient::Gemconfig::AUTHORS
   spec.email = SeedIdempotencyHeadersClient::Gemconfig::EMAIL

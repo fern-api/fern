@@ -112,15 +112,13 @@ export class ComplexQueryParamTypeDetector {
                     )
                 );
             case "optional":
+            case "list":
+            case "set":
                 return this.isResolvedReferenceComplex({
                     type: type.itemType,
                     file,
                     visited
                 });
-            case "list":
-            case "set":
-                // Users must specify allow-multiple instead.
-                return true;
             default:
                 assertNever(type);
         }

@@ -3,7 +3,7 @@
 require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
-  spec.name = "fern_undiscriminated-unions"
+  spec.name = "fern_undiscriminated_unions"
   spec.version = "0.0.1"
   spec.authors = SeedUndiscriminatedUnionsClient::Gemconfig::AUTHORS
   spec.email = SeedUndiscriminatedUnionsClient::Gemconfig::EMAIL

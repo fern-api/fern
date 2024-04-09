@@ -8,6 +8,7 @@ import {
 } from "@fern-api/generator-commons";
 import {
     Class_,
+    generateBasicRakefile,
     generateBasicTests,
     GeneratedFile,
     generateGemConfig,
@@ -83,6 +84,7 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
         boilerPlateFiles.push(generateGemConfig(clientName, repoUrl));
         // boilerPlateFiles.push(...generateBinDir(gemName));
         boilerPlateFiles.push(...generateBasicTests(gemName, clientName));
+        boilerPlateFiles.push(generateBasicRakefile());
 
         this.generatedFiles.push(...boilerPlateFiles);
     }

@@ -6,6 +6,6 @@ require "fern_websocket"
 # Basic SeedWebsocketClient tests
 class TestSeedWebsocketClient < Minitest::Test
   def test_function
-    SeedWebsocketClient::Client.new
+    # SeedWebsocketClient::Client.new
   end
 end

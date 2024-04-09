@@ -13,11 +13,14 @@ jobs:
             with:
               ruby-version: 2.7
               bundler-cache: true
+
+          - name: Test gem
+            run: bundle install && bundle exec rake test
               
           - name: Build and Push Gem
             env:
               GEM_HOST_API_KEY: ${{ secrets. }}
             run: |
-              gem build fern_undiscriminated-unions.gemspec
+              gem build fern_undiscriminated_unions.gemspec
 
-              gem push fern_undiscriminated-unions-*.gem --host 
+              gem push fern_undiscriminated_unions-*.gem --host 

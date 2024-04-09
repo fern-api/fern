@@ -3,7 +3,7 @@
 require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
-  spec.name = "fern_mixed-case"
+  spec.name = "fern_mixed_case"
   spec.version = "0.0.1"
   spec.authors = SeedMixedCaseClient::Gemconfig::AUTHORS
   spec.email = SeedMixedCaseClient::Gemconfig::EMAIL
