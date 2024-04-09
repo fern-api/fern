@@ -10,7 +10,10 @@ const client = new SeedMultiUrlEnvironmentClient({
 });
 
 describe("S3", () => {
-    test("constructor", () => {
-        expect(client.s3).toBeDefined();
+    test("getPresignedUrl", async () => {
+        const response = await client.s3.getPresignedUrl({
+            s3Key: "string",
+        });
+        expect(response).toEqual("string");
     });
 });

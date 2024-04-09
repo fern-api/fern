@@ -4,6 +4,14 @@
 
 import * as SeedAudiences from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         optionalString: "string",
+ *         publicProperty: "string",
+ *         privateProperty: 1
+ *     }
+ */
 export interface FindRequest {
     optionalString?: SeedAudiences.OptionalString;
     publicProperty?: string;

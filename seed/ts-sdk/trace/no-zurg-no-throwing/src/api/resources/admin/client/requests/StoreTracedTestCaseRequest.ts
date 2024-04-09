@@ -4,6 +4,26 @@
 
 import * as SeedTrace from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         result: {
+ *             result: {},
+ *             stdout: "string"
+ *         },
+ *         traceResponses: [{
+ *                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+ *                 lineNumber: 1,
+ *                 returnValue: {
+ *                     type: "integerValue",
+ *                     value: 1
+ *                 },
+ *                 expressionLocation: {},
+ *                 stack: {},
+ *                 stdout: "string"
+ *             }]
+ *     }
+ */
 export interface StoreTracedTestCaseRequest {
     result: SeedTrace.TestCaseResultWithStdout;
     traceResponses: SeedTrace.TraceResponse[];

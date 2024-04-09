@@ -7,7 +7,17 @@ import { SeedUnionsClient } from "../src/Client";
 const client = new SeedUnionsClient({ environment: process.env.TESTS_BASE_URL || "test" });
 
 describe("Union", () => {
-    test("constructor", () => {
-        expect(client.union).toBeDefined();
+    test("get", async () => {
+        const response = await client.union.get("string");
+        expect(response).toEqual({ type: "circle", id: "string", radius: 1.1 });
+    });
+
+    test("update", async () => {
+        const response = await client.union.update({
+            type: "circle",
+            id: "string",
+            radius: 1.1,
+        });
+        expect(response).toEqual(true);
     });
 });

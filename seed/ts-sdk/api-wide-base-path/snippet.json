@@ -1,4 +1,15 @@
 {
-    "endpoints": [],
+    "endpoints": [
+        {
+            "id": {
+                "path": "/test/{pathParam}/{serviceParam}/{endpointParam}",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiWideBasePathClient } from \"@fern/api-wide-base-path\";\n\nconst seedApiWideBasePath = new SeedApiWideBasePathClient;\nawait seedApiWideBasePath.service.post(\"string\", 1);\n"
+            }
+        }
+    ],
     "types": {}
 }

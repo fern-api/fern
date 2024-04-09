@@ -7,7 +7,8 @@ import { SeedVariablesClient } from "../src/Client";
 const client = new SeedVariablesClient({ environment: process.env.TESTS_BASE_URL || "test" });
 
 describe("Service", () => {
-    test("constructor", () => {
-        expect(client.service).toBeDefined();
+    test("post", async () => {
+        const response = await client.service.post();
+        expect(response).toEqual(undefined);
     });
 });

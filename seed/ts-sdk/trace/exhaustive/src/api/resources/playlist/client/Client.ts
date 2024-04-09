@@ -26,6 +26,16 @@ export class Playlist {
 
     /**
      * Create a new playlist
+     *
+     * @example
+     *     await seedTrace.playlist.createPlaylist(1, {
+     *         datetime: new Date("2024-01-15T09:30:00.000Z"),
+     *         optionalDatetime: new Date("2024-01-15T09:30:00.000Z"),
+     *         body: {
+     *             name: "string",
+     *             problems: [SeedTrace.ProblemId("string")]
+     *         }
+     *     })
      */
     public async createPlaylist(
         serviceParam: number,
@@ -84,6 +94,15 @@ export class Playlist {
 
     /**
      * Returns the user's playlists
+     *
+     * @example
+     *     await seedTrace.playlist.getPlaylists(1, {
+     *         limit: 1,
+     *         otherField: "string",
+     *         multiLineDocs: "string",
+     *         optionalMultipleField: "string",
+     *         multipleField: "string"
+     *     })
      */
     public async getPlaylists(
         serviceParam: number,
@@ -156,6 +175,9 @@ export class Playlist {
 
     /**
      * Returns a playlist
+     *
+     * @example
+     *     await seedTrace.playlist.getPlaylist(1, SeedTrace.PlaylistId("string"))
      */
     public async getPlaylist(
         serviceParam: number,
@@ -224,6 +246,12 @@ export class Playlist {
 
     /**
      * Updates a playlist
+     *
+     * @example
+     *     await seedTrace.playlist.updatePlaylist(1, SeedTrace.PlaylistId("string"), {
+     *         name: "string",
+     *         problems: [SeedTrace.ProblemId("string")]
+     *     })
      */
     public async updatePlaylist(
         serviceParam: number,
@@ -298,6 +326,9 @@ export class Playlist {
 
     /**
      * Deletes a playlist
+     *
+     * @example
+     *     await seedTrace.playlist.deletePlaylist(1, SeedTrace.PlaylistId("string"))
      */
     public async deletePlaylist(
         serviceParam: number,

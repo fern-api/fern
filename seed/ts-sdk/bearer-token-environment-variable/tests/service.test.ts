@@ -10,7 +10,8 @@ const client = new SeedBearerTokenEnvironmentVariableClient({
 });
 
 describe("Service", () => {
-    test("constructor", () => {
-        expect(client.service).toBeDefined();
+    test("getWithBearerToken", async () => {
+        const response = await client.service.getWithBearerToken();
+        expect(response).toEqual("string");
     });
 });

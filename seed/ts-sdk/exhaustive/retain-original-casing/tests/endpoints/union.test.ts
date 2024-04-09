@@ -10,7 +10,12 @@ const client = new SeedExhaustiveClient({
 });
 
 describe("Union", () => {
-    test("constructor", () => {
-        expect(client.endpoints.union).toBeDefined();
+    test("getAndReturnUnion", async () => {
+        const response = await client.endpoints.union.getAndReturnUnion({
+            animal: "dog",
+            name: "string",
+            likesToWoof: true,
+        });
+        expect(response).toEqual({ animal: "dog", name: "string", likesToWoof: true });
     });
 });

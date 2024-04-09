@@ -1,4 +1,25 @@
 {
-    "endpoints": [],
+    "endpoints": [
+        {
+            "id": {
+                "path": "/ec2/boot",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedMultiUrlEnvironmentClient } from \"@fern/multi-url-environment\";\n\nconst seedMultiUrlEnvironment = new SeedMultiUrlEnvironmentClient({ token: \"YOUR_TOKEN\" });\nawait seedMultiUrlEnvironment.ec2.bootInstance({\n    size: \"string\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/s3/presigned-url",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedMultiUrlEnvironmentClient } from \"@fern/multi-url-environment\";\n\nconst seedMultiUrlEnvironment = new SeedMultiUrlEnvironmentClient({ token: \"YOUR_TOKEN\" });\nawait seedMultiUrlEnvironment.s3.getPresignedUrl({\n    s3Key: \"string\"\n});\n"
+            }
+        }
+    ],
     "types": {}
 }

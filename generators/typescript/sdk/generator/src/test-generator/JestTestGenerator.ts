@@ -289,8 +289,8 @@ describe("test", () => {
                             string: (value) => literalOf(value.original),
                             boolean: (value) => literalOf(value),
                             long: (value) => literalOf(value),
-                            datetime: (value) => code`new Date(${value.toISOString()})`,
-                            date: (value) => code`new Date(${value})`,
+                            datetime: (value) => code`new Date(${literalOf(value.toISOString())})`,
+                            date: (value) => literalOf(value),
                             uuid: (value) => literalOf(value),
                             _other: (value) => literalOf(value)
                         });
@@ -298,7 +298,7 @@ describe("test", () => {
                     container: (value) => {
                         return value._visit({
                             list: (value) => {
-                                return arrayOf(value.map((item) => visitExampleTypeReference(item)));
+                                return arrayOf(...value.map((item) => visitExampleTypeReference(item)));
                             },
                             map: (value) => {
                                 return Object.fromEntries(
@@ -314,7 +314,9 @@ describe("test", () => {
                                 return visitExampleTypeReference(value);
                             },
                             set: (value) => {
-                                return code`new Set(${arrayOf(value.map(visitExampleTypeReference))})`;
+                                // return code`new Set(${arrayOf(value.map(visitExampleTypeReference))})`;
+                                // Sets are not supported in ts-sdk
+                                return arrayOf(...value.map(visitExampleTypeReference));
                             },
                             _other: (value) => {
                                 return jsonExample;
@@ -327,7 +329,7 @@ describe("test", () => {
                                 return code`${visitExampleTypeReference(value.value)}`;
                             },
                             enum: (value) => {
-                                return code`${value.value.wireValue}`;
+                                return literalOf(value.value.wireValue);
                             },
                             object: (value) => {
                                 return Object.fromEntries(
@@ -365,7 +367,9 @@ describe("test", () => {
         };
 
         const response = getExpectedResponse();
-        const expected = shouldJsonParseStringify ? code`${adaptResponse}(response)` : "response";
+        const expected = "response";
+        // Uncomment if/when we support Sets in responses from the TS-SDK
+        // const expected = shouldJsonParseStringify ? code`${adaptResponse}(response)` : "response";
 
         return code`
             test("${endpoint.name.camelCase.unsafeName}", async () => {

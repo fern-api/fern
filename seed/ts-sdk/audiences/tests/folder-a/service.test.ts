@@ -7,7 +7,8 @@ import { SeedAudiencesClient } from "../../src/Client";
 const client = new SeedAudiencesClient({ environment: process.env.TESTS_BASE_URL || "test" });
 
 describe("Service", () => {
-    test("constructor", () => {
-        expect(client.folderA.service).toBeDefined();
+    test("getDirectThread", async () => {
+        const response = await client.folderA.service.getDirectThread();
+        expect(response).toEqual({ foo: {} });
     });
 });

@@ -24,6 +24,11 @@ export class NoAuth {
 
     /**
      * POST request with no auth
+     *
+     * @example
+     *     await fiddle.noAuth.postWithNoAuth({
+     *         "key": "value"
+     *     })
      */
     public async postWithNoAuth(
         request?: unknown,

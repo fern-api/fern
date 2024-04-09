@@ -2717,6 +2717,7 @@
         ]
     },
     "webhookGroups": {},
+    "websocketChannels": {},
     "subpackages": {},
     "rootPackage": {
         "fernFilepath": {
@@ -2724,6 +2725,7 @@
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [
             "type_:Type",

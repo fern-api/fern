@@ -354,6 +354,11 @@ export class Service {
      *     await testSdk.file.service.getFile("file.txt", {
      *         xFileApiVersion: "0.0.2"
      *     })
+     *
+     * @example
+     *     await testSdk.file.service.getFile("string", {
+     *         xFileApiVersion: "string"
+     *     })
      */
     public async getFile(filename: string, request: TestSdk.file.GetFileRequest, requestOptions?: Service.RequestOptions): Promise<TestSdk.File_> {
         const { xFileApiVersion } = request;
@@ -423,6 +428,16 @@ export * from "./requests";
  * @example
  *     {
  *         xFileApiVersion: "0.0.2"
+ *     }
+ *
+ * @example
+ *     {
+ *         xFileApiVersion: "string"
+ *     }
+ *
+ * @example
+ *     {
+ *         xFileApiVersion: "string"
  *     }
  */
 export interface GetFileRequest {
@@ -533,6 +548,9 @@ export class Service {
      *
      * @example
      *     await testSdk.health.service.check("id-2sdx82h")
+     *
+     * @example
+     *     await testSdk.health.service.check("string")
      */
     public async check(id: string, requestOptions?: Service.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
@@ -837,6 +855,13 @@ export * from "./requests";
  *         xApiVersion: "0.0.1",
  *         shallow: false,
  *         tag: "development"
+ *     }
+ *
+ * @example
+ *     {
+ *         xApiVersion: "string",
+ *         shallow: true,
+ *         tag: "string"
  *     }
  */
 export interface GetMetadataRequest {
@@ -2381,14 +2406,10 @@ const client = new TestSdkClient({
     "token": process.env.TESTS_AUTH || "test",
 });
 
-function adaptResponse(response: unknown) {
-    return JSON.parse(JSON.stringify(response, (_key, value) => (value instanceof Set ? [...value] : value)));
-}
-
 describe("Service", () => {
     test("getException", async () => {
         const response = await client.file.notification.service.getException("notification-hsy129x");
-        expect(adaptResponse(response)).toEqual({
+        expect(response).toEqual({
             "type": "generic",
             "exceptionType": "Unavailable",
             "exceptionMessage": "This component is unavailable!",
@@ -2474,10 +2495,6 @@ const client = new TestSdkClient({
     "token": process.env.TESTS_AUTH || "test",
 });
 
-function adaptResponse(response: unknown) {
-    return JSON.parse(JSON.stringify(response, (_key, value) => (value instanceof Set ? [...value] : value)));
-}
-
 describe("Service", () => {
     test("getMovie", async () => {
         const response = await client.service.getMovie("movie-c06a4ad7");
@@ -2517,7 +2534,7 @@ describe("Service", () => {
 
     test("getMetadata", async () => {
         const response = await client.service.getMetadata({ xApiVersion: "0.0.1", shallow: false, tag: "development" });
-        expect(adaptResponse(response)).toEqual({
+        expect(response).toEqual({
             "type": "html",
             "extra": { "version": "0.0.1", "tenancy": "test" },
             "tags": ["development", "public"],

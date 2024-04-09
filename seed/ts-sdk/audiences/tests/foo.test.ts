@@ -7,7 +7,12 @@ import { SeedAudiencesClient } from "../src/Client";
 const client = new SeedAudiencesClient({ environment: process.env.TESTS_BASE_URL || "test" });
 
 describe("Foo", () => {
-    test("constructor", () => {
-        expect(client.foo).toBeDefined();
+    test("find", async () => {
+        const response = await client.foo.find({
+            optionalString: "string",
+            publicProperty: "string",
+            privateProperty: 1,
+        });
+        expect(response).toEqual({ imported: "string" });
     });
 });

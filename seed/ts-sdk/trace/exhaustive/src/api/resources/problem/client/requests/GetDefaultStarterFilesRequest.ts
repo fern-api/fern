@@ -4,6 +4,17 @@
 
 import * as SeedTrace from "../../../..";
 
+/**
+ * @example
+ *     {
+ *         inputParams: [{
+ *                 variableType: SeedTrace.VariableType.integerType(),
+ *                 name: "string"
+ *             }],
+ *         outputType: SeedTrace.VariableType.integerType(),
+ *         methodName: "string"
+ *     }
+ */
 export interface GetDefaultStarterFilesRequest {
     inputParams: SeedTrace.VariableTypeAndName[];
     outputType: SeedTrace.VariableType;

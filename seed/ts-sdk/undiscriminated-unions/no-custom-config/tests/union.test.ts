@@ -7,7 +7,8 @@ import { SeedUndiscriminatedUnionsClient } from "../src/Client";
 const client = new SeedUndiscriminatedUnionsClient({ environment: process.env.TESTS_BASE_URL || "test" });
 
 describe("Union", () => {
-    test("constructor", () => {
-        expect(client.union).toBeDefined();
+    test("get", async () => {
+        const response = await client.union.get("string");
+        expect(response).toEqual("string");
     });
 });

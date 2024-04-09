@@ -10,7 +10,12 @@ const client = new SeedExhaustiveClient({
 });
 
 describe("ReqWithHeaders", () => {
-    test("constructor", () => {
-        expect(client.reqWithHeaders).toBeDefined();
+    test("getWithCustomHeader", async () => {
+        const response = await client.reqWithHeaders.getWithCustomHeader({
+            "X-TEST-SERVICE-HEADER": "string",
+            "X-TEST-ENDPOINT-HEADER": "string",
+            body: "string",
+        });
+        expect(response).toEqual(undefined);
     });
 });

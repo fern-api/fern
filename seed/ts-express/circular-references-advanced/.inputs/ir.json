@@ -1722,6 +1722,7 @@
         ]
     },
     "webhookGroups": {},
+    "websocketChannels": {},
     "subpackages": {
         "subpackage_a": {
             "name": {
@@ -1794,6 +1795,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         },
@@ -1873,6 +1875,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         }
@@ -1883,6 +1886,7 @@
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [
             "type_:ImportingA",

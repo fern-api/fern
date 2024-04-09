@@ -7,7 +7,8 @@ import { SeedApiClient } from "../../src/Client";
 const client = new SeedApiClient({ environment: process.env.TESTS_BASE_URL || "test" });
 
 describe("Folder", () => {
-    test("constructor", () => {
-        expect(client.folder).toBeDefined();
+    test("foo", async () => {
+        const response = await client.folder.foo();
+        expect(response).toEqual(undefined);
     });
 });

@@ -7,7 +7,10 @@ import { SeedNurseryApiClient } from "../src/Client";
 const client = new SeedNurseryApiClient({ environment: process.env.TESTS_BASE_URL || "test" });
 
 describe("Package", () => {
-    test("constructor", () => {
-        expect(client.package).toBeDefined();
+    test("test", async () => {
+        const response = await client.package.test({
+            for: "string",
+        });
+        expect(response).toEqual(undefined);
     });
 });

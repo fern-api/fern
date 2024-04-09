@@ -1,4 +1,25 @@
 {
-    "endpoints": [],
+    "endpoints": [
+        {
+            "id": {
+                "path": "/payment",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedIdempotencyHeadersClient, SeedIdempotencyHeaders } from \"@fern/idempotency-headers\";\n\nconst seedIdempotencyHeaders = new SeedIdempotencyHeadersClient({ token: \"YOUR_TOKEN\" });\nawait seedIdempotencyHeaders.payment.create({\n    amount: 1,\n    currency: SeedIdempotencyHeaders.Currency.Usd\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/payment/{paymentId}",
+                "method": "DELETE"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedIdempotencyHeadersClient } from \"@fern/idempotency-headers\";\n\nconst seedIdempotencyHeaders = new SeedIdempotencyHeadersClient({ token: \"YOUR_TOKEN\" });\nawait seedIdempotencyHeaders.payment.delete(\"string\");\n"
+            }
+        }
+    ],
     "types": {}
 }

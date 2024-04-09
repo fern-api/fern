@@ -10,7 +10,48 @@ const client = new SeedExhaustiveClient({
 });
 
 describe("Primitive", () => {
-    test("constructor", () => {
-        expect(client.endpoints.primitive).toBeDefined();
+    test("getAndReturnString", async () => {
+        const response = await client.endpoints.primitive.getAndReturnString("string");
+        expect(response).toEqual("string");
+    });
+
+    test("getAndReturnInt", async () => {
+        const response = await client.endpoints.primitive.getAndReturnInt(1);
+        expect(response).toEqual(1);
+    });
+
+    test("getAndReturnLong", async () => {
+        const response = await client.endpoints.primitive.getAndReturnLong(1000000);
+        expect(response).toEqual(1000000);
+    });
+
+    test("getAndReturnDouble", async () => {
+        const response = await client.endpoints.primitive.getAndReturnDouble(1.1);
+        expect(response).toEqual(1.1);
+    });
+
+    test("getAndReturnBool", async () => {
+        const response = await client.endpoints.primitive.getAndReturnBool(true);
+        expect(response).toEqual(true);
+    });
+
+    test("getAndReturnDatetime", async () => {
+        const response = await client.endpoints.primitive.getAndReturnDatetime(new Date("2024-01-15T09:30:00.000Z"));
+        expect(response).toEqual(new Date("2024-01-15T09:30:00.000Z"));
+    });
+
+    test("getAndReturnDate", async () => {
+        const response = await client.endpoints.primitive.getAndReturnDate("2023-01-15");
+        expect(response).toEqual("2023-01-15");
+    });
+
+    test("getAndReturnUuid", async () => {
+        const response = await client.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
+        expect(response).toEqual("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
+    });
+
+    test("getAndReturnBase64", async () => {
+        const response = await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh");
+        expect(response).toEqual("SGVsbG8gd29ybGQh");
     });
 });

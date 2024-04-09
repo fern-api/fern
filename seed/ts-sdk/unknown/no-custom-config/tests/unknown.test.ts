@@ -7,7 +7,10 @@ import { SeedUnknownAsAnyClient } from "../src/Client";
 const client = new SeedUnknownAsAnyClient({ environment: process.env.TESTS_BASE_URL || "test" });
 
 describe("Unknown", () => {
-    test("constructor", () => {
-        expect(client.unknown).toBeDefined();
+    test("post", async () => {
+        const response = await client.unknown.post({
+            key: "value",
+        });
+        expect(response).toEqual([{ key: "value" }]);
     });
 });

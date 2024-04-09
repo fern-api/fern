@@ -9,14 +9,10 @@ const client = new SeedExamplesClient({
     token: process.env.TESTS_AUTH || "test",
 });
 
-function adaptResponse(response: unknown) {
-    return JSON.parse(JSON.stringify(response, (_key, value) => (value instanceof Set ? [...value] : value)));
-}
-
 describe("Service", () => {
     test("getException", async () => {
         const response = await client.file.notification.service.getException("notification-hsy129x");
-        expect(adaptResponse(response)).toEqual({
+        expect(response).toEqual({
             type: "generic",
             exceptionType: "Unavailable",
             exceptionMessage: "This component is unavailable!",

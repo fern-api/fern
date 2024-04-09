@@ -107,9 +107,10 @@
                         }
                     },
                     "displayName": null,
-                    "method": "POST",
-                    "headers": [],
+                    "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
+                    "method": "POST",
                     "path": {
                         "head": "/text",
                         "parts": []
@@ -121,6 +122,7 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
+                    "headers": [],
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": {
@@ -128,9 +130,38 @@
                         "docs": null
                     },
                     "errors": [],
-                    "auth": false,
-                    "idempotent": false,
-                    "examples": [],
+                    "examples": [
+                        {
+                            "exampleType": "generated",
+                            "url": "/text",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [],
+                            "request": null,
+                            "name": null,
+                            "codeSamples": null,
+                            "response": {
+                                "type": "ok",
+                                "body": {
+                                    "shape": {
+                                        "type": "primitive",
+                                        "primitive": {
+                                            "type": "string",
+                                            "string": {
+                                                "original": "string"
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": "string"
+                                }
+                            },
+                            "docs": null
+                        }
+                    ],
+                    "pagination": null,
                     "availability": null,
                     "docs": null
                 }

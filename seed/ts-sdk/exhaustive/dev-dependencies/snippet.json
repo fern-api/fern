@@ -1,4 +1,395 @@
 {
-    "endpoints": [],
+    "endpoints": [
+        {
+            "id": {
+                "path": "/container/list-of-primitives",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.container.getAndReturnListOfPrimitives([\"string\"]);\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/list-of-objects",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.container.getAndReturnListOfObjects([{\n        string: \"string\"\n    }]);\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/set-of-primitives",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.container.getAndReturnSetOfPrimitives(new Set([\"string\"]));\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/set-of-objects",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.container.getAndReturnSetOfObjects(new Set([{\n        string: \"string\"\n    }]));\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/map-prim-to-prim",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.container.getAndReturnMapPrimToPrim({\n    \"string\": \"string\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/map-prim-to-object",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.container.getAndReturnMapOfPrimToObject({\n    \"string\": {\n        string: \"string\"\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/container/opt-objects",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.container.getAndReturnOptional({\n    string: \"string\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/enum",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient, Fiddle } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.enum.getAndReturnEnum(Fiddle.WeatherReport.Sunny);\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.httpMethods.testGet(\"string\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.httpMethods.testPost({\n    string: \"string\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "PUT"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.httpMethods.testPut(\"string\", {\n    string: \"string\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "PATCH"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.httpMethods.testPatch(\"string\", {\n    string: \"string\",\n    integer: 1,\n    long: 1000000,\n    double: 1.1,\n    bool: true,\n    datetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    date: \"2023-01-15\",\n    uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    base64: \"SGVsbG8gd29ybGQh\",\n    list: [\"string\"],\n    set: new Set([\"string\"]),\n    map: {\n        1: \"string\"\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/http-methods/{id}",
+                "method": "DELETE"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.httpMethods.testDelete(\"string\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-with-optional-field",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.object.getAndReturnWithOptionalField({\n    string: \"string\",\n    integer: 1,\n    long: 1000000,\n    double: 1.1,\n    bool: true,\n    datetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n    date: \"2023-01-15\",\n    uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    base64: \"SGVsbG8gd29ybGQh\",\n    list: [\"string\"],\n    set: new Set([\"string\"]),\n    map: {\n        1: \"string\"\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-with-required-field",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.object.getAndReturnWithRequiredField({\n    string: \"string\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-with-map-of-map",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.object.getAndReturnWithMapOfMap({\n    map: {\n        \"string\": {\n            \"string\": \"string\"\n        }\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-nested-with-optional-field",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.object.getAndReturnNestedWithOptionalField({\n    string: \"string\",\n    nestedObject: {\n        string: \"string\",\n        integer: 1,\n        long: 1000000,\n        double: 1.1,\n        bool: true,\n        datetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n        date: \"2023-01-15\",\n        uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        base64: \"SGVsbG8gd29ybGQh\",\n        list: [\"string\"],\n        set: new Set([\"string\"]),\n        map: {\n            1: \"string\"\n        }\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-nested-with-required-field",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.object.getAndReturnNestedWithRequiredField({\n    string: \"string\",\n    nestedObject: {\n        string: \"string\",\n        integer: 1,\n        long: 1000000,\n        double: 1.1,\n        bool: true,\n        datetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n        date: \"2023-01-15\",\n        uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        base64: \"SGVsbG8gd29ybGQh\",\n        list: [\"string\"],\n        set: new Set([\"string\"]),\n        map: {\n            1: \"string\"\n        }\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/object/get-and-return-nested-with-required-field-list",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{\n        string: \"string\",\n        nestedObject: {\n            string: \"string\",\n            integer: 1,\n            long: 1000000,\n            double: 1.1,\n            bool: true,\n            datetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n            date: \"2023-01-15\",\n            uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            base64: \"SGVsbG8gd29ybGQh\",\n            list: [\"string\"],\n            set: new Set([\"string\"]),\n            map: {\n                1: \"string\"\n            }\n        }\n    }]);\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.params.getWithPath(\"string\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/params",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.params.getWithQuery({\n    query: \"string\",\n    number: 1\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/params",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.params.getWithAllowMultipleQuery({\n    query: \"string\",\n    numer: 1\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path-query/{param}",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.params.getWithPathAndQuery(\"string\", {\n    query: \"string\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/params/path/{param}",
+                "method": "PUT"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.params.modifyWithPath(\"string\", \"string\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/string",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.primitive.getAndReturnString(\"string\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/integer",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.primitive.getAndReturnInt(1);\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/long",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.primitive.getAndReturnLong(1000000);\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/double",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.primitive.getAndReturnDouble(1.1);\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/boolean",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.primitive.getAndReturnBool(true);\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/datetime",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.primitive.getAndReturnDatetime(new Date(\"2024-01-15T09:30:00.000Z\"));\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/date",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.primitive.getAndReturnDate(\"2023-01-15\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/uuid",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.primitive.getAndReturnUuid(\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/primitive/base64",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.primitive.getAndReturnBase64(\"SGVsbG8gd29ybGQh\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/union",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient, Fiddle } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.endpoints.union.getAndReturnUnion(Fiddle.Animal.dog({\n    name: \"string\",\n    likesToWoof: true\n}));\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/req-bodies/object",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.inlinedRequests.postWithObjectBodyandResponse({\n    string: \"string\",\n    integer: 1,\n    nestedObject: {\n        string: \"string\",\n        integer: 1,\n        long: 1000000,\n        double: 1.1,\n        bool: true,\n        datetime: new Date(\"2024-01-15T09:30:00.000Z\"),\n        date: \"2023-01-15\",\n        uuid: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        base64: \"SGVsbG8gd29ybGQh\",\n        list: [\"string\"],\n        set: new Set([\"string\"]),\n        map: {\n            1: \"string\"\n        }\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/no-auth",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.noAuth.postWithNoAuth({\n    \"key\": \"value\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/no-req-body",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.noReqBody.getWithNoRequestBody();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/no-req-body",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.noReqBody.postWithNoRequestBody();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/test-headers/custom-header",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { FiddleClient } from \"@fern/exhaustive\";\n\nconst fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\nawait fiddle.reqWithHeaders.getWithCustomHeader({\n    xTestServiceHeader: \"string\",\n    xTestEndpointHeader: \"string\",\n    body: \"string\"\n});\n"
+            }
+        }
+    ],
     "types": {}
 }

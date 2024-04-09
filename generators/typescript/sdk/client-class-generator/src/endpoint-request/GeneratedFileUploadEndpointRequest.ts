@@ -101,10 +101,10 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
             if (property.type === "file") {
                 parameters.push({
                     name: getParameterNameForFile({
-                        property,
+                        property: property.value,
                         retainOriginalCasing: context.retainOriginalCasing
                     }),
-                    type: getTextOfTsNode(this.getFileParameterType(property, context))
+                    type: getTextOfTsNode(this.getFileParameterType(property.value, context))
                 });
             }
         }

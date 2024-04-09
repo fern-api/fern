@@ -11,7 +11,13 @@ const client = new SeedTraceClient({
 });
 
 describe("Homepage", () => {
-    test("constructor", () => {
-        expect(client.homepage).toBeDefined();
+    test("getHomepageProblems", async () => {
+        const response = await client.homepage.getHomepageProblems();
+        expect(response).toEqual(["string"]);
+    });
+
+    test("setHomepageProblems", async () => {
+        const response = await client.homepage.setHomepageProblems(["string"]);
+        expect(response).toEqual(undefined);
     });
 });

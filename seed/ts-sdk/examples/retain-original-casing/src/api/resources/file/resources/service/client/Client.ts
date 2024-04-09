@@ -32,6 +32,11 @@ export class Service {
      *     await seedExamples.file.service.getFile("file.txt", {
      *         "X-File-API-Version": "0.0.2"
      *     })
+     *
+     * @example
+     *     await seedExamples.file.service.getFile("string", {
+     *         "X-File-API-Version": "string"
+     *     })
      */
     public async getFile(
         filename: string,

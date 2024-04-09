@@ -10,7 +10,56 @@ const client = new FiddleClient({
 });
 
 describe("Container", () => {
-    test("constructor", () => {
-        expect(client.endpoints.container).toBeDefined();
+    test("getAndReturnListOfPrimitives", async () => {
+        const response = await client.endpoints.container.getAndReturnListOfPrimitives(["string"]);
+        expect(response).toEqual(["string"]);
+    });
+
+    test("getAndReturnListOfObjects", async () => {
+        const response = await client.endpoints.container.getAndReturnListOfObjects([
+            {
+                string: "string",
+            },
+        ]);
+        expect(response).toEqual([{ string: "string" }]);
+    });
+
+    test("getAndReturnSetOfPrimitives", async () => {
+        const response = await client.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"]));
+        expect(response).toEqual(["string"]);
+    });
+
+    test("getAndReturnSetOfObjects", async () => {
+        const response = await client.endpoints.container.getAndReturnSetOfObjects(
+            new Set([
+                {
+                    string: "string",
+                },
+            ])
+        );
+        expect(response).toEqual([{ string: "string" }]);
+    });
+
+    test("getAndReturnMapPrimToPrim", async () => {
+        const response = await client.endpoints.container.getAndReturnMapPrimToPrim({
+            string: "string",
+        });
+        expect(response).toEqual({ string: "string" });
+    });
+
+    test("getAndReturnMapOfPrimToObject", async () => {
+        const response = await client.endpoints.container.getAndReturnMapOfPrimToObject({
+            string: {
+                string: "string",
+            },
+        });
+        expect(response).toEqual({ string: { string: "string" } });
+    });
+
+    test("getAndReturnOptional", async () => {
+        const response = await client.endpoints.container.getAndReturnOptional({
+            string: "string",
+        });
+        expect(response).toEqual({ string: "string" });
     });
 });

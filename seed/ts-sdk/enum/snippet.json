@@ -29,6 +29,16 @@
                 "type": "typescript",
                 "client": "import { SeedEnumClient, SeedEnum } from \"@fern/enum\";\n\nconst seedEnum = new SeedEnumClient;\nawait seedEnum.queryParam.send({\n    operand: SeedEnum.Operand.GreaterThan,\n    operandOrColor: SeedEnum.Color.Red\n});\n"
             }
+        },
+        {
+            "id": {
+                "path": "/query-list",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedEnumClient, SeedEnum } from \"@fern/enum\";\n\nconst seedEnum = new SeedEnumClient;\nawait seedEnum.queryParam.sendList({\n    operand: SeedEnum.Operand.GreaterThan,\n    maybeOperand: SeedEnum.Operand.GreaterThan,\n    operandOrColor: SeedEnum.Color.Red,\n    maybeOperandOrColor: SeedEnum.Color.Red\n});\n"
+            }
         }
     ],
     "types": {}

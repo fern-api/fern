@@ -98,8 +98,12 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             if (generatedExample == null) {
                 continue;
             }
-            const exampleStr = "@example\n" + getTextOfTsNode(generatedExample);
-            groups.push(exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`));
+            let exampleStr = "@example\n" + getTextOfTsNode(generatedExample);
+            exampleStr = exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`);
+            // Only add if it doesn't already exist
+            if (!groups.includes(exampleStr)) {
+                groups.push(exampleStr);
+            }
         }
 
         return groups.join("\n\n");

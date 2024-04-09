@@ -10,7 +10,8 @@ const client = new SeedApiWideBasePathClient({
 });
 
 describe("Service", () => {
-    test("constructor", () => {
-        expect(client.service).toBeDefined();
+    test("post", async () => {
+        const response = await client.service.post("string", 1);
+        expect(response).toEqual(undefined);
     });
 });

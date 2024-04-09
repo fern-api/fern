@@ -11,7 +11,10 @@ const client = new SeedTraceClient({
 });
 
 describe("Migration", () => {
-    test("constructor", () => {
-        expect(client.migration).toBeDefined();
+    test("getAttemptedMigrations", async () => {
+        const response = await client.migration.getAttemptedMigrations({
+            adminKeyHeader: "string",
+        });
+        expect(response).toEqual([{ name: "string", status: "RUNNING" }]);
     });
 });

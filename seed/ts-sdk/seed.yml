@@ -1,18 +1,18 @@
-irVersion: v33
+irVersion: v37
 docker: fernapi/fern-typescript-node-sdk:local
 dockerCommand: yarn workspace @fern-typescript/sdk-generator-cli dockerTagLocal:node
 language: typescript
 generatorType: SDK
 defaultOutputMode: github
 fixtures:
-  streaming: 
+  streaming:
     - customConfig: null
       outputFolder: no-custom-config
-    - customConfig: 
+    - customConfig:
         allowCustomFetcher: true
         timeoutInSeconds: 2
       outputFolder: allow-custom-fetcher
-  exhaustive: 
+  exhaustive:
     - customConfig: null
       audiences:
         - audience1
@@ -20,62 +20,62 @@ fixtures:
       outputFolder: with-audiences
     - customConfig: null
       outputFolder: no-custom-config
-    - customConfig: 
+    - customConfig:
         useBrandedStringAliases: true
         neverThrowErrors: true
         namespaceExport: "Fiddle"
         bundle: true
         includeUtilsOnUnionMembers: true
         includeOtherInUnionTypes: true
-        extraDependencies: 
+        extraDependencies:
             lodash-es: "^4.17.21"
       outputFolder: bundle
-    - customConfig: 
+    - customConfig:
         retainOriginalCasing: true
       outputFolder: retain-original-casing
-    - customConfig: 
+    - customConfig:
         useBrandedStringAliases: true
         neverThrowErrors: true
         namespaceExport: "Fiddle"
         bundle: true
         includeUtilsOnUnionMembers: true
         includeOtherInUnionTypes: true
-        extraDependencies: 
+        extraDependencies:
           lodash-es: "^4.17.21"
-        extraDevDependencies: 
+        extraDevDependencies:
           jest: "^29.7.0"
       outputFolder: dev-dependencies
-  error-property: 
-    - customConfig: 
+  error-property:
+    - customConfig:
         private: true
         includeUtilsOnUnionMembers: true
         includeOtherInUnionTypes: true
       outputFolder: union-utils
-  undiscriminated-unions: 
+  undiscriminated-unions:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
         skipResponseValidation: true
       outputFolder: skip-response-validation
-  file-download: 
+  file-download:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
         includeContentHeadersOnFileDownloadResponse: true
       outputFolder: file-download-reponse-headers
-  unknown: 
+  unknown:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
         treatUnknownAsAny: true
       outputFolder: unknown-as-any
-  query-parameters: 
+  query-parameters:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
         noSerdeLayer: true
       outputFolder: no-serde-layer-query
-  trace: 
+  trace:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
@@ -110,7 +110,7 @@ scripts:
   - docker: fernapi/ts-seed
     commands:
       - yarn install && yarn build
-allowedFailures: 
+allowedFailures:
   - response-property
   - bytes
   - plain-text

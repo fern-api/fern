@@ -28,6 +28,9 @@ export class Submission {
 
     /**
      * Returns sessionId and execution server URL for session. Spins up server.
+     *
+     * @example
+     *     await seedTrace.submission.createExecutionSession(SeedTrace.Language.Java)
      */
     public async createExecutionSession(
         language: SeedTrace.Language,
@@ -72,6 +75,9 @@ export class Submission {
 
     /**
      * Returns execution server URL for session. Returns empty if session isn't registered.
+     *
+     * @example
+     *     await seedTrace.submission.getExecutionSession("string")
      */
     public async getExecutionSession(
         sessionId: string,
@@ -116,6 +122,9 @@ export class Submission {
 
     /**
      * Stops execution session.
+     *
+     * @example
+     *     await seedTrace.submission.stopExecutionSession("string")
      */
     public async stopExecutionSession(
         sessionId: string,

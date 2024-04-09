@@ -1,4 +1,3 @@
-
 import { Access } from "./Access";
 import { Annotation } from "./Annotation";
 import { ClassReference } from "./ClassReference";

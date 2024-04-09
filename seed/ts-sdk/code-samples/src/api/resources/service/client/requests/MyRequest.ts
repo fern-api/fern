@@ -7,6 +7,11 @@
  *     {
  *         numEvents: 5
  *     }
+ *
+ * @example
+ *     {
+ *         numEvents: 5
+ *     }
  */
 export interface MyRequest {
     numEvents: number;
