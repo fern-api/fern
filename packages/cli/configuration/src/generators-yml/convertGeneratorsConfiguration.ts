@@ -16,6 +16,7 @@ import { GeneratorGroupSchema } from "./schemas/GeneratorGroupSchema";
 import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
 import { GeneratorOutputSchema } from "./schemas/GeneratorOutputSchema";
 import {
+    API_ORIGIN_LOCATION_KEY,
     ASYNC_API_LOCATION_KEY,
     GeneratorsConfigurationSchema,
     OPENAPI_LOCATION_KEY,
@@ -66,6 +67,7 @@ async function parseAPIConfiguration(
         if (typeof apiConfiguration === "string") {
             apiDefinitions.push({
                 path: apiConfiguration,
+                origin: undefined,
                 overrides: undefined
             });
         } else if (Array.isArray(apiConfiguration)) {
@@ -73,11 +75,13 @@ async function parseAPIConfiguration(
                 if (typeof definition === "string") {
                     apiDefinitions.push({
                         path: definition,
+                        origin: undefined,
                         overrides: undefined
                     });
                 } else {
                     apiDefinitions.push({
                         path: definition.path,
+                        origin: definition.origin,
                         overrides: definition.overrides
                     });
                 }
@@ -85,22 +89,26 @@ async function parseAPIConfiguration(
         } else {
             apiDefinitions.push({
                 path: apiConfiguration.path,
+                origin: apiConfiguration.origin,
                 overrides: apiConfiguration.overrides
             });
         }
     } else {
         const openapi = rawGeneratorsConfiguration[OPENAPI_LOCATION_KEY];
+        const apiOrigin = rawGeneratorsConfiguration[API_ORIGIN_LOCATION_KEY];
         const openapiOverrides = rawGeneratorsConfiguration[OPENAPI_OVERRIDES_LOCATION_KEY];
         const asyncapi = rawGeneratorsConfiguration[ASYNC_API_LOCATION_KEY];
 
         if (openapi != null && typeof openapi === "string") {
             apiDefinitions.push({
                 path: openapi,
+                origin: apiOrigin,
                 overrides: openapiOverrides
             });
         } else if (openapi != null) {
             apiDefinitions.push({
                 path: openapi.path,
+                origin: openapi.origin,
                 overrides: openapi.overrides
             });
         }
@@ -108,6 +116,7 @@ async function parseAPIConfiguration(
         if (asyncapi != null) {
             apiDefinitions.push({
                 path: asyncapi,
+                origin: apiOrigin,
                 overrides: undefined
             });
         }

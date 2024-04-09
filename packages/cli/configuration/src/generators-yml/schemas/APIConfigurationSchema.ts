@@ -22,6 +22,11 @@ export const APIDefinitionPathSchema = z.string().describe("Path to the OpenAPI,
  */
 export const APIDefintionWithOverridesSchema = z.object({
     path: APIDefinitionPathSchema,
+    // TODO: Add support for pulling the API definition from another github repo
+    // and from behind an authed URL. Right now this is for a basic cURL to get the def.
+    origin: z
+        .optional(z.string())
+        .describe("The URL of the API definition origin, from which the file should be polled."),
     overrides: z.optional(z.string()).describe("Path to the OpenAPI or AsyncAPI overrides")
 });
 
