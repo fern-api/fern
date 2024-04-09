@@ -18,7 +18,7 @@ service:
             maybeInteger: optional<integer>
             optionalListOfStrings: optional<list<string>>
             listOfObjects: list<MyObject>
-
+    
     justFile:
       path: /just-file
       method: POST
@@ -27,7 +27,7 @@ service:
         body:
           properties:
             file: file
-
+    
     justFileWithQueryParams:
       path: /just-file-with-query-params
       method: POST
