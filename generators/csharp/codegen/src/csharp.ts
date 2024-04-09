@@ -43,4 +43,4 @@ export function enum_(args: Enum.Args): Enum {
 }
 
 export const Types = Type;
-export { Annotation, Class, ClassReference, CodeBlock, Enum, Type } from "./ast";
+export { Annotation, Class, ClassReference, CodeBlock, Enum, Type, Method } from "./ast";

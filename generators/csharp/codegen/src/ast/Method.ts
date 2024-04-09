@@ -1,8 +1,8 @@
-import { Writer } from "./core/Writer";
+import { Access } from "./Access";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
-import { Access } from "./Access";
 import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 import { MethodInvocation } from "./MethodInvocation";
 import { Parameter } from "./Parameter";
 import { Type } from "./Type";
@@ -27,7 +27,7 @@ export declare namespace Method {
         /* The body of the method */
         body?: CodeBlock;
         /* Summary for the method */
-        summary: string | undefined;
+        summary?: string;
         /* The type of the method, defaults to INSTANCE */
         type?: MethodType;
         /* The class this method belongs to, if any */

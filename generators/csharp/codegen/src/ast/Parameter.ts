@@ -9,7 +9,7 @@ export declare namespace Parameter {
         /* The type of the parameter */
         type: Type;
         /* Docs for the parameter */
-        docs: string | undefined;
+        docs?: string;
     }
 }
 

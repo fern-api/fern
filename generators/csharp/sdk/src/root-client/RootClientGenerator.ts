@@ -84,6 +84,24 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             );
         }
 
+        const rootServiceId = this.context.ir.rootPackage.service;
+        if (rootServiceId != null) {
+            const service = this.context.getHttpServiceOrThrow(rootServiceId);
+            for (const endpoint of service.endpoints) {
+                class_.addMethod(
+                    csharp.method({
+                        name: endpoint.name.pascalCase.safeName,
+                        access: "public",
+                        isAsync: true,
+                        parameters: [],
+                        summary: endpoint.docs
+                    })
+                );
+            }
+        }
+
+        class_.addMethod(this.getFromEnvironmentOrThrowMethod());
+
         return new CSharpFile({
             clazz: class_,
             directory: RelativeFilePath.of("")
@@ -161,5 +179,33 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             isOptional: header.valueType.type === "container" && header.valueType.container.type === "optional",
             typeReference: header.valueType
         };
+    }
+
+    private getFromEnvironmentOrThrowMethod(): csharp.Method {
+        return csharp.method({
+            access: "private",
+            name: "GetFromEnvironmentOrThrow",
+            return_: csharp.Types.string(),
+            parameters: [
+                csharp.parameter({
+                    name: "env",
+                    type: csharp.Types.string()
+                }),
+                csharp.parameter({
+                    name: "message",
+                    type: csharp.Types.string()
+                })
+            ],
+            isAsync: false,
+            body: csharp.codeblock({
+                value: (writer) => {
+                    writer.writeLine("var value = Environment.GetEnvironmentVariable(env);");
+                    writer.writeLine("if (value == null) {");
+                    writer.writeLine("    throw new Exception(message)");
+                    writer.writeLine("}");
+                    writer.writeLine("return value;");
+                }
+            })
+        });
     }
 }
