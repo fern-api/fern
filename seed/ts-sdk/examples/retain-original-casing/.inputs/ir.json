@@ -15784,9 +15784,10 @@
                         }
                     },
                     "displayName": null,
-                    "method": "POST",
-                    "headers": [],
+                    "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
+                    "method": "POST",
                     "path": {
                         "head": "",
                         "parts": []
@@ -15798,6 +15799,7 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
+                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -15852,8 +15854,6 @@
                         }
                     },
                     "errors": [],
-                    "auth": false,
-                    "idempotent": false,
                     "examples": [
                         {
                             "name": null,
@@ -16089,9 +16089,10 @@
                         }
                     },
                     "displayName": null,
-                    "method": "GET",
-                    "headers": [],
+                    "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
+                    "method": "GET",
                     "path": {
                         "head": "",
                         "parts": []
@@ -16137,6 +16138,7 @@
                         }
                     ],
                     "queryParameters": [],
+                    "headers": [],
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": {
@@ -16213,8 +16215,6 @@
                         }
                     },
                     "errors": [],
-                    "auth": true,
-                    "idempotent": false,
                     "examples": [
                         {
                             "name": null,
@@ -16855,9 +16855,10 @@
                         }
                     },
                     "displayName": null,
-                    "method": "GET",
-                    "headers": [],
+                    "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
+                    "method": "GET",
                     "path": {
                         "head": "/",
                         "parts": [
@@ -16937,6 +16938,7 @@
                         }
                     ],
                     "queryParameters": [],
+                    "headers": [],
                     "requestBody": null,
                     "sdkRequest": {
                         "shape": {
@@ -17143,8 +17145,6 @@
                             "docs": null
                         }
                     ],
-                    "auth": true,
-                    "idempotent": false,
                     "examples": [
                         {
                             "name": null,
@@ -17432,9 +17432,10 @@
                         }
                     },
                     "displayName": null,
-                    "method": "GET",
-                    "headers": [],
+                    "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
+                    "method": "GET",
                     "path": {
                         "head": "/check/",
                         "parts": [
@@ -17514,12 +17515,11 @@
                         }
                     ],
                     "queryParameters": [],
+                    "headers": [],
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": null,
                     "errors": [],
-                    "auth": true,
-                    "idempotent": false,
                     "examples": [
                         {
                             "name": null,
@@ -17598,9 +17598,10 @@
                         }
                     },
                     "displayName": null,
-                    "method": "GET",
-                    "headers": [],
+                    "auth": true,
+                    "idempotent": false,
                     "baseUrl": null,
+                    "method": "GET",
                     "path": {
                         "head": "/ping",
                         "parts": []
@@ -17612,6 +17613,7 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
+                    "headers": [],
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": {
@@ -17626,8 +17628,6 @@
                         }
                     },
                     "errors": [],
-                    "auth": true,
-                    "idempotent": false,
                     "examples": [
                         {
                             "name": null,
@@ -17738,9 +17738,10 @@
                         }
                     },
                     "displayName": null,
-                    "method": "GET",
-                    "headers": [],
+                    "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
+                    "method": "GET",
                     "path": {
                         "head": "/movie/",
                         "parts": [
@@ -17944,6 +17945,7 @@
                         }
                     ],
                     "queryParameters": [],
+                    "headers": [],
                     "requestBody": null,
                     "sdkRequest": null,
                     "response": {
@@ -18020,8 +18022,6 @@
                         }
                     },
                     "errors": [],
-                    "auth": false,
-                    "idempotent": false,
                     "examples": [
                         {
                             "name": null,
@@ -19432,9 +19432,10 @@
                         }
                     },
                     "displayName": null,
-                    "method": "POST",
-                    "headers": [],
+                    "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
+                    "method": "POST",
                     "path": {
                         "head": "/movie",
                         "parts": []
@@ -19446,6 +19447,7 @@
                     "pathParameters": [],
                     "allPathParameters": [],
                     "queryParameters": [],
+                    "headers": [],
                     "requestBody": {
                         "type": "reference",
                         "requestBodyType": {
@@ -19686,8 +19688,6 @@
                         }
                     },
                     "errors": [],
-                    "auth": false,
-                    "idempotent": false,
                     "examples": [
                         {
                             "name": null,
@@ -21076,40 +21076,10 @@
                         }
                     },
                     "displayName": null,
-                    "method": "GET",
-                    "headers": [
-                        {
-                            "name": {
-                                "name": {
-                                    "originalName": "X-API-Version",
-                                    "camelCase": {
-                                        "unsafeName": "xApiVersion",
-                                        "safeName": "xApiVersion"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "x_api_version",
-                                        "safeName": "x_api_version"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "X_API_VERSION",
-                                        "safeName": "X_API_VERSION"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "XApiVersion",
-                                        "safeName": "XApiVersion"
-                                    }
-                                },
-                                "wireValue": "X-API-Version"
-                            },
-                            "valueType": {
-                                "_type": "primitive",
-                                "primitive": "STRING"
-                            },
-                            "availability": null,
-                            "docs": null
-                        }
-                    ],
+                    "auth": false,
+                    "idempotent": false,
                     "baseUrl": null,
+                    "method": "GET",
                     "path": {
                         "head": "/metadata",
                         "parts": []
@@ -21192,6 +21162,38 @@
                                 }
                             },
                             "allowMultiple": true,
+                            "availability": null,
+                            "docs": null
+                        }
+                    ],
+                    "headers": [
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "X-API-Version",
+                                    "camelCase": {
+                                        "unsafeName": "xApiVersion",
+                                        "safeName": "xApiVersion"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "x_api_version",
+                                        "safeName": "x_api_version"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "X_API_VERSION",
+                                        "safeName": "X_API_VERSION"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "XApiVersion",
+                                        "safeName": "XApiVersion"
+                                    }
+                                },
+                                "wireValue": "X-API-Version"
+                            },
+                            "valueType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
                             "availability": null,
                             "docs": null
                         }
@@ -21333,8 +21335,6 @@
                         }
                     },
                     "errors": [],
-                    "auth": false,
-                    "idempotent": false,
                     "examples": [
                         {
                             "name": null,
