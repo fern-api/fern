@@ -59,7 +59,6 @@ export class LocalTaskHandler {
     }
 
     private async copyGeneratedFilesWithFernIgnore(): Promise<void> {
-        console.log("copyGeneratedFilesWithFernIgnore");
         // Create temp directory to resolve .fernignore
         const tmpOutputResolutionDir = AbsoluteFilePath.of((await tmp.dir({})).path);
 
