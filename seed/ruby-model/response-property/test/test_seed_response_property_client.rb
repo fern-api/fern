@@ -6,6 +6,6 @@ require "seed_response_property_client"
 # Basic SeedResponsePropertyClient tests
 class TestSeedResponsePropertyClient < Minitest::Test
   def test_function
-    SeedResponsePropertyClient::Client.new
+    # SeedResponsePropertyClient::Client.new
   end
 end

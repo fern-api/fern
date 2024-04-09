@@ -13,7 +13,7 @@ import { GeneratedRubyFile } from "./GeneratedRubyFile";
 export const MINIMUM_RUBY_VERSION = "2.7";
 
 export function getGemName(organization: string, apiName: string, clientClassName?: string, gemName?: string): string {
-    return snakeCase(gemName) ?? snakeCase(getClientName(organization, apiName, clientClassName));
+    return gemName != null ? snakeCase(gemName) : snakeCase(getClientName(organization, apiName, clientClassName));
 }
 
 export function getClientName(organization: string, apiName: string, clientClassName?: string): string {

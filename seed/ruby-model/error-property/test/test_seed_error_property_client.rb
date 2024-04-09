@@ -6,6 +6,6 @@ require "seed_error_property_client"
 # Basic SeedErrorPropertyClient tests
 class TestSeedErrorPropertyClient < Minitest::Test
   def test_function
-    SeedErrorPropertyClient::Client.new
+    # SeedErrorPropertyClient::Client.new
   end
 end
