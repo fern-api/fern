@@ -7,5 +7,5 @@ namespace SeedTrace.V2.V3;
 public class GetBasicSolutionFileResponse
 {
     [JsonPropertyName("solutionFileByLanguage")]
-    public Dictionary<Language, FileInfoV2> SolutionFileByLanguage { get; init; }
+    public List<Dictionary<Language, FileInfoV2>> SolutionFileByLanguage { get; init; }
 }

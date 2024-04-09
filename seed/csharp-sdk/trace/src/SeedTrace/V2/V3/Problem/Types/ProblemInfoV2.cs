@@ -1,6 +1,5 @@
 using System.Text.Json.Serialization;
 using SeedTrace;
-using OneOf;
 using SeedTrace.V2.V3;
 
 namespace SeedTrace.V2.V3;
@@ -20,19 +19,19 @@ public class ProblemInfoV2
     public int ProblemVersion { get; init; }
 
     [JsonPropertyName("supportedLanguages")]
-    public HashSet<Language> SupportedLanguages { get; init; }
+    public List<HashSet<Language>> SupportedLanguages { get; init; }
 
     [JsonPropertyName("customFiles")]
-    public OneOf<CustomFiles._Basic, CustomFiles._Custom> CustomFiles { get; init; }
+    public CustomFiles CustomFiles { get; init; }
 
     [JsonPropertyName("generatedFiles")]
     public GeneratedFiles GeneratedFiles { get; init; }
 
     [JsonPropertyName("customTestCaseTemplates")]
-    public List<TestCaseTemplate> CustomTestCaseTemplates { get; init; }
+    public List<List<TestCaseTemplate>> CustomTestCaseTemplates { get; init; }
 
     [JsonPropertyName("testcases")]
-    public List<TestCaseV2> Testcases { get; init; }
+    public List<List<TestCaseV2>> Testcases { get; init; }
 
     [JsonPropertyName("isPublic")]
     public bool IsPublic { get; init; }

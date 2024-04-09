@@ -11,5 +11,5 @@ public class SendResponse
     public int Status { get; init; }
 
     [JsonPropertyName("success")]
-    public bool Success { get; init; }
+    public List<bool> Success { get; init; }
 }

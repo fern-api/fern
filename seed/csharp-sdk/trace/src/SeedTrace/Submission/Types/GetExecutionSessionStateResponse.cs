@@ -6,11 +6,11 @@ namespace SeedTrace;
 public class GetExecutionSessionStateResponse
 {
     [JsonPropertyName("states")]
-    public Dictionary<string, ExecutionSessionState> States { get; init; }
+    public List<Dictionary<string, ExecutionSessionState>> States { get; init; }
 
     [JsonPropertyName("numWarmingInstances")]
-    public int? NumWarmingInstances { get; init; }
+    public List<int?> NumWarmingInstances { get; init; }
 
     [JsonPropertyName("warmingSessionIds")]
-    public List<string> WarmingSessionIds { get; init; }
+    public List<List<string>> WarmingSessionIds { get; init; }
 }

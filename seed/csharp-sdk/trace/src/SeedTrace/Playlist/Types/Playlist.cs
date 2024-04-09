@@ -14,5 +14,5 @@ public class Playlist
     public string Name { get; init; }
 
     [JsonPropertyName("problems")]
-    public List<string> Problems { get; init; }
+    public List<List<string>> Problems { get; init; }
 }

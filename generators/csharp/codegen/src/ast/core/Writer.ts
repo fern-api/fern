@@ -76,6 +76,9 @@ export class Writer {
     }
 
     public addReference(reference: ClassReference): void {
+        if (reference.namespace == null) {
+            return;
+        }
         const namespace = this.references[reference.namespace];
         if (namespace != null) {
             namespace.push(reference);

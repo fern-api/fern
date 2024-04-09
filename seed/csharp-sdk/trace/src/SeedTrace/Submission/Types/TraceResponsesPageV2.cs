@@ -10,8 +10,8 @@ public class TraceResponsesPageV2
     /// The offset is the id of the next trace response to load.
     /// </summary>
     [JsonPropertyName("offset")]
-    public int? Offset { get; init; }
+    public List<int?> Offset { get; init; }
 
     [JsonPropertyName("traceResponses")]
-    public List<TraceResponseV2> TraceResponses { get; init; }
+    public List<List<TraceResponseV2>> TraceResponses { get; init; }
 }

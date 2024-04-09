@@ -1,4 +1,4 @@
-import { AbstractCsharpGeneratorContext, csharp } from "@fern-api/csharp-codegen";
+import { AbstractCsharpGeneratorContext, AsIsFiles, csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernFilepath, HttpService, ServiceId, Subpackage, SubpackageId, TypeId } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
@@ -52,7 +52,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getAsIsFiles(): string[] {
-        return [];
+        return [AsIsFiles.RawClient];
         // return [AsIsFiles.StringEnum, AsIsFiles.OneOfJsonConverter, AsIsFiles.EnumConverter];
     }
 

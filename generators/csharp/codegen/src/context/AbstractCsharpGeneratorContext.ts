@@ -1,3 +1,4 @@
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/generator-commons";
 import {
     AliasTypeDeclaration,
@@ -13,6 +14,7 @@ import {
 import { camelCase, upperFirst } from "lodash-es";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
 import { CsharpProject } from "../project";
+import { CORE_DIRECTORY_NAME } from "../project/CsharpProject";
 import { CsharpTypeMapper } from "./CsharpTypeMapper";
 
 export abstract class AbstractCsharpGeneratorContext<
@@ -62,6 +64,10 @@ export abstract class AbstractCsharpGeneratorContext<
             throw new Error(`Type declaration with id ${typeId} not found`);
         }
         return typeDeclaration;
+    }
+
+    public getCoreDirectory(): RelativeFilePath {
+        return RelativeFilePath.of(CORE_DIRECTORY_NAME);
     }
 
     public abstract getAsIsFiles(): string[];

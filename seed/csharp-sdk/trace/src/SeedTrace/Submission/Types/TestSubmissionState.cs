@@ -1,6 +1,5 @@
 using System.Text.Json.Serialization;
 using SeedTrace;
-using OneOf;
 
 namespace SeedTrace;
 
@@ -10,11 +9,11 @@ public class TestSubmissionState
     public string ProblemId { get; init; }
 
     [JsonPropertyName("defaultTestCases")]
-    public List<TestCase> DefaultTestCases { get; init; }
+    public List<List<TestCase>> DefaultTestCases { get; init; }
 
     [JsonPropertyName("customTestCases")]
-    public List<TestCase> CustomTestCases { get; init; }
+    public List<List<TestCase>> CustomTestCases { get; init; }
 
     [JsonPropertyName("status")]
-    public OneOf<TestSubmissionStatus._Stopped, TestSubmissionStatus._Errored, TestSubmissionStatus._Running, TestSubmissionStatus._TestCaseIdToState> Status { get; init; }
+    public TestSubmissionStatus Status { get; init; }
 }

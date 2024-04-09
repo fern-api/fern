@@ -3,6 +3,7 @@ import { generateModels } from "@fern-api/fern-csharp-model";
 import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { ClientOptionsGenerator } from "./client-options/ClientOptionsGenerator";
 import { RootClientGenerator } from "./root-client/RootClientGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
@@ -53,6 +54,9 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
             const subClient = new SubClientGenerator(context, subpackage.service, service);
             context.project.addSourceFiles(subClient.generate());
         }
+
+        const clientOptions = new ClientOptionsGenerator(context);
+        context.project.addSourceFiles(clientOptions.generate());
 
         const rootClient = new RootClientGenerator(context);
         context.project.addSourceFiles(rootClient.generate());

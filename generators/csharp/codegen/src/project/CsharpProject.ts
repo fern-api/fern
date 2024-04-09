@@ -11,7 +11,8 @@ import { File } from "./File";
 
 const SRC_DIRECTORY_NAME = "src";
 const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
-const CORE_DIRECTORY_NAME = "_Core";
+
+export const CORE_DIRECTORY_NAME = "Core";
 /**
  * In memory representation of a C# project.
  */
