@@ -5,7 +5,7 @@
 /**
  * @example
  *     {
- *         X-API-Version: "0.0.1",
+ *         "X-API-Version": "0.0.1",
  *         shallow: false,
  *         tag: "development"
  *     }

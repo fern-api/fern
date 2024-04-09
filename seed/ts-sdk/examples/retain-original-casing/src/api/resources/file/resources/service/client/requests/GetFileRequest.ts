@@ -5,7 +5,7 @@
 /**
  * @example
  *     {
- *         X-File-API-Version: "0.0.2"
+ *         "X-File-API-Version": "0.0.2"
  *     }
  */
 export interface GetFileRequest {
