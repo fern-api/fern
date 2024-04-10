@@ -12,7 +12,11 @@ const client = new FiddleClient({
 describe("Params", () => {
     test("getWithPath", async () => {
         const response = await client.endpoints.params.getWithPath("string");
-        expect(response).toEqual("string");
+        if (response.ok) {
+            expect(response.body).toEqual("string");
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("getWithQuery", async () => {
@@ -20,7 +24,11 @@ describe("Params", () => {
             query: "string",
             number: 1,
         });
-        expect(response).toEqual(undefined);
+        if (response.ok) {
+            expect(response.body).toEqual(undefined);
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("getWithAllowMultipleQuery", async () => {
@@ -28,18 +36,30 @@ describe("Params", () => {
             query: "string",
             numer: 1,
         });
-        expect(response).toEqual(undefined);
+        if (response.ok) {
+            expect(response.body).toEqual(undefined);
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("getWithPathAndQuery", async () => {
         const response = await client.endpoints.params.getWithPathAndQuery("string", {
             query: "string",
         });
-        expect(response).toEqual(undefined);
+        if (response.ok) {
+            expect(response.body).toEqual(undefined);
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("modifyWithPath", async () => {
         const response = await client.endpoints.params.modifyWithPath("string", "string");
-        expect(response).toEqual("string");
+        if (response.ok) {
+            expect(response.body).toEqual("string");
+        } else {
+            fail("Response was not ok");
+        }
     });
 });

@@ -4,7 +4,10 @@
 
 import { SeedVariablesClient } from "../src/Client";
 
-const client = new SeedVariablesClient({ environment: process.env.TESTS_BASE_URL || "test" });
+const client = new SeedVariablesClient({
+    environment: process.env.TESTS_BASE_URL || "test",
+    rootVariable: process.env.TESTS_VARIABLE || "test",
+});
 
 describe("Service", () => {
     test("post", async () => {

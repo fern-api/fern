@@ -16,6 +16,10 @@ describe("ReqWithHeaders", () => {
             xTestEndpointHeader: "string",
             body: "string",
         });
-        expect(response).toEqual(undefined);
+        if (response.ok) {
+            expect(response.body).toEqual(undefined);
+        } else {
+            fail("Response was not ok");
+        }
     });
 });

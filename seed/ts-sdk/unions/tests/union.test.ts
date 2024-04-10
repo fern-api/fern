@@ -6,10 +6,14 @@ import { SeedUnionsClient } from "../src/Client";
 
 const client = new SeedUnionsClient({ environment: process.env.TESTS_BASE_URL || "test" });
 
+function adaptResponse(response: unknown) {
+    return JSON.parse(JSON.stringify(response, (_key, value) => (value instanceof Set ? [...value] : value)));
+}
+
 describe("Union", () => {
     test("get", async () => {
         const response = await client.union.get("string");
-        expect(response).toEqual({ type: "circle", id: "string", radius: 1.1 });
+        expect(adaptResponse(response)).toEqual({ type: "circle", id: "string", radius: 1.1 });
     });
 
     test("update", async () => {

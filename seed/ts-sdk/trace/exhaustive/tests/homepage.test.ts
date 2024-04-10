@@ -14,11 +14,19 @@ const client = new SeedTraceClient({
 describe("Homepage", () => {
     test("getHomepageProblems", async () => {
         const response = await client.homepage.getHomepageProblems();
-        expect(response).toEqual(["string"]);
+        if (response.ok) {
+            expect(response.body).toEqual(["string"]);
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("setHomepageProblems", async () => {
         const response = await client.homepage.setHomepageProblems([SeedTrace.ProblemId("string")]);
-        expect(response).toEqual(undefined);
+        if (response.ok) {
+            expect(response.body).toEqual(undefined);
+        } else {
+            fail("Response was not ok");
+        }
     });
 });

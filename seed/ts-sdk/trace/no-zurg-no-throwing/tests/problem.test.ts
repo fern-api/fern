@@ -11,6 +11,10 @@ const client = new SeedTraceClient({
     xRandomHeader: process.env.TESTS_HEADER || "test",
 });
 
+function adaptResponse(response: unknown) {
+    return JSON.parse(JSON.stringify(response, (_key, value) => (value instanceof Set ? [...value] : value)));
+}
+
 describe("Problem", () => {
     test("createProblem", async () => {
         const response = await client.problem.createProblem({
@@ -67,7 +71,19 @@ describe("Problem", () => {
             ],
             methodName: "string",
         });
-        expect(response).toEqual({ "0": "s", "1": "t", "2": "r", "3": "i", "4": "n", "5": "g", type: "success" });
+        if (response.ok) {
+            expect(adaptResponse(response.body)).toEqual({
+                "0": "s",
+                "1": "t",
+                "2": "r",
+                "3": "i",
+                "4": "n",
+                "5": "g",
+                type: "success",
+            });
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("updateProblem", async () => {
@@ -125,12 +141,20 @@ describe("Problem", () => {
             ],
             methodName: "string",
         });
-        expect(response).toEqual({ problemVersion: 1 });
+        if (response.ok) {
+            expect(response.body).toEqual({ problemVersion: 1 });
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("deleteProblem", async () => {
         const response = await client.problem.deleteProblem("string");
-        expect(response).toEqual(undefined);
+        if (response.ok) {
+            expect(response.body).toEqual(undefined);
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("getDefaultStarterFiles", async () => {
@@ -148,13 +172,17 @@ describe("Problem", () => {
             },
             methodName: "string",
         });
-        expect(response).toEqual({
-            files: {
-                JAVA: {
-                    solutionFile: { filename: "string", contents: "string" },
-                    readOnlyFiles: [{ filename: "string", contents: "string" }],
+        if (response.ok) {
+            expect(response.body).toEqual({
+                files: {
+                    JAVA: {
+                        solutionFile: { filename: "string", contents: "string" },
+                        readOnlyFiles: [{ filename: "string", contents: "string" }],
+                    },
                 },
-            },
-        });
+            });
+        } else {
+            fail("Response was not ok");
+        }
     });
 });

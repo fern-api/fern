@@ -1,0 +1,8 @@
+{
+  "name": "@fern/seed-ts-sdk",
+  "scripts": {
+    "_": "These scripts run in all packages under the seed/ts-sdk folder",
+    "build": "pnpm -r --no-bail --workspace-concurrency=1 build",
+    "test": "pnpm -r --no-bail --workspace-concurrency=1 test"
+  }
+}

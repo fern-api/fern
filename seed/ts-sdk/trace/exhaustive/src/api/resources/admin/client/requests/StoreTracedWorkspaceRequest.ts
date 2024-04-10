@@ -9,15 +9,33 @@ import * as SeedTrace from "../../../..";
  *     {
  *         workspaceRunDetails: {
  *             exceptionV2: SeedTrace.ExceptionV2.generic({}),
- *             exception: {},
+ *             exception: {
+ *                 exceptionType: "string",
+ *                 exceptionMessage: "string",
+ *                 exceptionStacktrace: "string"
+ *             },
  *             stdout: "string"
  *         },
  *         traceResponses: [{
  *                 submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
  *                 lineNumber: 1,
  *                 returnValue: SeedTrace.DebugVariableValue.integerValue(1),
- *                 expressionLocation: {},
- *                 stack: {},
+ *                 expressionLocation: {
+ *                     start: 1,
+ *                     offset: 1
+ *                 },
+ *                 stack: {
+ *                     numStackFrames: 1,
+ *                     topStackFrame: {
+ *                         methodName: "string",
+ *                         lineNumber: 1,
+ *                         scopes: [{
+ *                                 variables: {
+ *                                     "string": SeedTrace.DebugVariableValue.integerValue(1)
+ *                                 }
+ *                             }]
+ *                     }
+ *                 },
  *                 stdout: "string"
  *             }]
  *     }

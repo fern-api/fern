@@ -11,6 +11,10 @@ const client = new SeedTraceClient({
     xRandomHeader: process.env.TESTS_HEADER || "test",
 });
 
+function adaptResponse(response: unknown) {
+    return JSON.parse(JSON.stringify(response, (_key, value) => (value instanceof Set ? [...value] : value)));
+}
+
 describe("Problem", () => {
     test("createProblem", async () => {
         const response = await client.problem.createProblem({
@@ -67,7 +71,15 @@ describe("Problem", () => {
             ],
             methodName: "string",
         });
-        expect(response).toEqual({ "0": "s", "1": "t", "2": "r", "3": "i", "4": "n", "5": "g", type: "success" });
+        expect(adaptResponse(response)).toEqual({
+            "0": "s",
+            "1": "t",
+            "2": "r",
+            "3": "i",
+            "4": "n",
+            "5": "g",
+            type: "success",
+        });
     });
 
     test("updateProblem", async () => {

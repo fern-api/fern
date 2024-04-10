@@ -12,9 +12,7 @@
  *
  * @example
  *     {
- *         prompt: "You are a helpful assistant",
- *         query: "string",
- *         stream: false
+ *         query: "string"
  *     }
  */
 export interface SendLiteralsInQueryRequest {

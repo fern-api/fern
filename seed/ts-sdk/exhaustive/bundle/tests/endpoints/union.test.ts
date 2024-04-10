@@ -10,6 +10,10 @@ const client = new FiddleClient({
     token: process.env.TESTS_AUTH || "test",
 });
 
+function adaptResponse(response: unknown) {
+    return JSON.parse(JSON.stringify(response, (_key, value) => (value instanceof Set ? [...value] : value)));
+}
+
 describe("Union", () => {
     test("getAndReturnUnion", async () => {
         const response = await client.endpoints.union.getAndReturnUnion(
@@ -18,6 +22,10 @@ describe("Union", () => {
                 likesToWoof: true,
             })
         );
-        expect(response).toEqual({ animal: "dog", name: "string", likesToWoof: true });
+        if (response.ok) {
+            expect(adaptResponse(response.body)).toEqual({ animal: "dog", name: "string", likesToWoof: true });
+        } else {
+            fail("Response was not ok");
+        }
     });
 });

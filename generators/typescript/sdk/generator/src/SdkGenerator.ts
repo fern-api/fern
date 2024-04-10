@@ -298,7 +298,8 @@ export class SdkGenerator {
         this.jestTestGenerator = new JestTestGenerator(
             intermediateRepresentation,
             this.dependencyManager,
-            this.rootDirectory
+            this.rootDirectory,
+            config.neverThrowErrors,
         );
     }
 

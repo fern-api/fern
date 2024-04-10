@@ -9,7 +9,8 @@ export class JestTestGenerator {
     constructor(
         private ir: IR.IntermediateRepresentation,
         private dependencyManager: DependencyManager,
-        private rootDirectory: Directory
+        private rootDirectory: Directory,
+        private neverThrowErrors: boolean
     ) {}
 
     private addJestConfig(): void {
@@ -211,6 +212,13 @@ describe("test", () => {
             }
             options.push([header.name.name.camelCase.unsafeName, code`process.env.TESTS_HEADER || "test"`]);
         });
+        this.ir.variables.forEach((variable) => {
+            // We don't need to include literal types because they will automatically be included
+            if (variable.type.type === "container" && variable.type.container.type === "literal") {
+                return;
+            }
+            options.push([variable.name.camelCase.unsafeName, code`process.env.TESTS_VARIABLE || "test"`]);
+        });
 
         return code`
             const client = new ${getTextOfTsNode(importStatement.getEntityName())}(${Object.fromEntries(options)});
@@ -314,9 +322,9 @@ describe("test", () => {
                                 return visitExampleTypeReference(value);
                             },
                             set: (value) => {
-                                // return code`new Set(${arrayOf(value.map(visitExampleTypeReference))})`;
+                                return code`new Set(${arrayOf(...value.map(visitExampleTypeReference))})`;
                                 // Sets are not supported in ts-sdk
-                                return arrayOf(...value.map(visitExampleTypeReference));
+                                // return arrayOf(...value.map(visitExampleTypeReference));
                             },
                             _other: (value) => {
                                 return jsonExample;
@@ -367,14 +375,30 @@ describe("test", () => {
         };
 
         const response = getExpectedResponse();
-        const expected = "response";
+        // const expected = "response";
         // Uncomment if/when we support Sets in responses from the TS-SDK
-        // const expected = shouldJsonParseStringify ? code`${adaptResponse}(response)` : "response";
+        const maybeAdaptResponse = (body: string) => {
+            return shouldJsonParseStringify ? code`${adaptResponse}(${body})` : body;
+        };
+        const testName = endpoint.name.camelCase.unsafeName;
+
+        if (this.neverThrowErrors) {
+            return code`
+                test("${testName}", async () => {
+                    const response = ${getTextOfTsNode(generatedExample)};
+                    if (response.ok) {
+                        expect(${maybeAdaptResponse("response.body")}).toEqual(${response});
+                    } else {
+                        fail("Response was not ok");
+                    }
+                });
+              `;
+        }
 
         return code`
-            test("${endpoint.name.camelCase.unsafeName}", async () => {
+            test("${testName}", async () => {
                 const response = ${getTextOfTsNode(generatedExample)};
-                expect(${expected}).toEqual(${response});
+                expect(${maybeAdaptResponse("response")}).toEqual(${response});
             });
           `;
     }

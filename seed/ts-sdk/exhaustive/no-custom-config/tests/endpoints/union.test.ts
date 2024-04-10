@@ -9,6 +9,10 @@ const client = new SeedExhaustiveClient({
     token: process.env.TESTS_AUTH || "test",
 });
 
+function adaptResponse(response: unknown) {
+    return JSON.parse(JSON.stringify(response, (_key, value) => (value instanceof Set ? [...value] : value)));
+}
+
 describe("Union", () => {
     test("getAndReturnUnion", async () => {
         const response = await client.endpoints.union.getAndReturnUnion({
@@ -16,6 +20,6 @@ describe("Union", () => {
             name: "string",
             likesToWoof: true,
         });
-        expect(response).toEqual({ animal: "dog", name: "string", likesToWoof: true });
+        expect(adaptResponse(response)).toEqual({ animal: "dog", name: "string", likesToWoof: true });
     });
 });

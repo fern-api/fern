@@ -1108,78 +1108,7 @@
                             "servicePathParameters": [],
                             "endpointPathParameters": [],
                             "serviceHeaders": [],
-                            "endpointHeaders": [
-                                {
-                                    "name": {
-                                        "name": {
-                                            "originalName": "endpointVersion",
-                                            "camelCase": {
-                                                "unsafeName": "endpointVersion",
-                                                "safeName": "endpointVersion"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "endpoint_version",
-                                                "safeName": "endpoint_version"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "ENDPOINT_VERSION",
-                                                "safeName": "ENDPOINT_VERSION"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "EndpointVersion",
-                                                "safeName": "EndpointVersion"
-                                            }
-                                        },
-                                        "wireValue": "X-Endpoint-Version"
-                                    },
-                                    "value": {
-                                        "shape": {
-                                            "type": "primitive",
-                                            "primitive": {
-                                                "type": "string",
-                                                "string": {
-                                                    "original": "02-12-2024"
-                                                }
-                                            }
-                                        },
-                                        "jsonExample": "\"02-12-2024\""
-                                    }
-                                },
-                                {
-                                    "name": {
-                                        "name": {
-                                            "originalName": "async",
-                                            "camelCase": {
-                                                "unsafeName": "async",
-                                                "safeName": "async"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "async",
-                                                "safeName": "async"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "ASYNC",
-                                                "safeName": "ASYNC"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Async",
-                                                "safeName": "Async"
-                                            }
-                                        },
-                                        "wireValue": "X-Async"
-                                    },
-                                    "value": {
-                                        "shape": {
-                                            "type": "primitive",
-                                            "primitive": {
-                                                "type": "boolean",
-                                                "boolean": true
-                                            }
-                                        },
-                                        "jsonExample": "true"
-                                    }
-                                }
-                            ],
+                            "endpointHeaders": [],
                             "queryParameters": [],
                             "request": {
                                 "type": "inlinedRequestBody",
@@ -3135,41 +3064,7 @@
                             "url": "/path/",
                             "rootPathParameters": [],
                             "servicePathParameters": [],
-                            "endpointPathParameters": [
-                                {
-                                    "name": {
-                                        "originalName": "id",
-                                        "camelCase": {
-                                            "unsafeName": "id",
-                                            "safeName": "id"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "id",
-                                            "safeName": "id"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "ID",
-                                            "safeName": "ID"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Id",
-                                            "safeName": "Id"
-                                        }
-                                    },
-                                    "value": {
-                                        "shape": {
-                                            "type": "primitive",
-                                            "primitive": {
-                                                "type": "string",
-                                                "string": {
-                                                    "original": "123"
-                                                }
-                                            }
-                                        },
-                                        "jsonExample": "\"123\""
-                                    }
-                                }
-                            ],
+                            "endpointPathParameters": [],
                             "serviceHeaders": [],
                             "endpointHeaders": [],
                             "queryParameters": [],
@@ -4077,42 +3972,6 @@
                                 {
                                     "name": {
                                         "name": {
-                                            "originalName": "prompt",
-                                            "camelCase": {
-                                                "unsafeName": "prompt",
-                                                "safeName": "prompt"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "prompt",
-                                                "safeName": "prompt"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "PROMPT",
-                                                "safeName": "PROMPT"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Prompt",
-                                                "safeName": "Prompt"
-                                            }
-                                        },
-                                        "wireValue": "prompt"
-                                    },
-                                    "value": {
-                                        "shape": {
-                                            "type": "primitive",
-                                            "primitive": {
-                                                "type": "string",
-                                                "string": {
-                                                    "original": "You are a helpful assistant"
-                                                }
-                                            }
-                                        },
-                                        "jsonExample": "\"You are a helpful assistant\""
-                                    }
-                                },
-                                {
-                                    "name": {
-                                        "name": {
                                             "originalName": "query",
                                             "camelCase": {
                                                 "unsafeName": "query",
@@ -4144,40 +4003,6 @@
                                             }
                                         },
                                         "jsonExample": "string"
-                                    }
-                                },
-                                {
-                                    "name": {
-                                        "name": {
-                                            "originalName": "stream",
-                                            "camelCase": {
-                                                "unsafeName": "stream",
-                                                "safeName": "stream"
-                                            },
-                                            "snakeCase": {
-                                                "unsafeName": "stream",
-                                                "safeName": "stream"
-                                            },
-                                            "screamingSnakeCase": {
-                                                "unsafeName": "STREAM",
-                                                "safeName": "STREAM"
-                                            },
-                                            "pascalCase": {
-                                                "unsafeName": "Stream",
-                                                "safeName": "Stream"
-                                            }
-                                        },
-                                        "wireValue": "stream"
-                                    },
-                                    "value": {
-                                        "shape": {
-                                            "type": "primitive",
-                                            "primitive": {
-                                                "type": "boolean",
-                                                "boolean": false
-                                            }
-                                        },
-                                        "jsonExample": "false"
                                     }
                                 }
                             ],

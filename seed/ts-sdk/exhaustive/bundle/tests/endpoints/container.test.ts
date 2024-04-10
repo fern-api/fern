@@ -12,7 +12,11 @@ const client = new FiddleClient({
 describe("Container", () => {
     test("getAndReturnListOfPrimitives", async () => {
         const response = await client.endpoints.container.getAndReturnListOfPrimitives(["string"]);
-        expect(response).toEqual(["string"]);
+        if (response.ok) {
+            expect(response.body).toEqual(["string"]);
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("getAndReturnListOfObjects", async () => {
@@ -21,12 +25,20 @@ describe("Container", () => {
                 string: "string",
             },
         ]);
-        expect(response).toEqual([{ string: "string" }]);
+        if (response.ok) {
+            expect(response.body).toEqual([{ string: "string" }]);
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("getAndReturnSetOfPrimitives", async () => {
         const response = await client.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"]));
-        expect(response).toEqual(["string"]);
+        if (response.ok) {
+            expect(response.body).toEqual(new Set(["string"]));
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("getAndReturnSetOfObjects", async () => {
@@ -37,14 +49,22 @@ describe("Container", () => {
                 },
             ])
         );
-        expect(response).toEqual([{ string: "string" }]);
+        if (response.ok) {
+            expect(response.body).toEqual(new Set([{ string: "string" }]));
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("getAndReturnMapPrimToPrim", async () => {
         const response = await client.endpoints.container.getAndReturnMapPrimToPrim({
             string: "string",
         });
-        expect(response).toEqual({ string: "string" });
+        if (response.ok) {
+            expect(response.body).toEqual({ string: "string" });
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("getAndReturnMapOfPrimToObject", async () => {
@@ -53,13 +73,21 @@ describe("Container", () => {
                 string: "string",
             },
         });
-        expect(response).toEqual({ string: { string: "string" } });
+        if (response.ok) {
+            expect(response.body).toEqual({ string: { string: "string" } });
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("getAndReturnOptional", async () => {
         const response = await client.endpoints.container.getAndReturnOptional({
             string: "string",
         });
-        expect(response).toEqual({ string: "string" });
+        if (response.ok) {
+            expect(response.body).toEqual({ string: "string" });
+        } else {
+            fail("Response was not ok");
+        }
     });
 });
