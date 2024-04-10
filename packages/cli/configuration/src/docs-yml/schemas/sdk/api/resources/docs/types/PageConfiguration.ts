@@ -6,4 +6,6 @@ export interface PageConfiguration {
     page: string;
     path: string;
     slug?: string;
+    icon?: string;
+    hidden?: boolean;
 }

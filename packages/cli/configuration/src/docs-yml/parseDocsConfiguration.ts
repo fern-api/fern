@@ -522,26 +522,32 @@ async function convertNavigationItem({
                 absolutePath: absolutePathToConfig,
                 rawUnresolvedFilepath: rawConfig.path
             }),
-            slug: rawConfig.slug ?? undefined
+            slug: rawConfig.slug,
+            icon: rawConfig.icon,
+            hidden: rawConfig.hidden
         };
     }
     if (isRawSectionConfig(rawConfig)) {
         return {
             type: "section",
             title: rawConfig.section,
+            icon: rawConfig.icon,
             contents: await Promise.all(
                 rawConfig.contents.map((item) =>
                     convertNavigationItem({ rawConfig: item, absolutePathToFernFolder, absolutePathToConfig, context })
                 )
             ),
             slug: rawConfig.slug ?? undefined,
-            collapsed: rawConfig.collapsed ?? undefined
+            collapsed: rawConfig.collapsed ?? undefined,
+            hidden: rawConfig.hidden ?? undefined,
+            skipUrlSlug: rawConfig.skipSlug ?? false
         };
     }
     if (isRawApiSectionConfig(rawConfig)) {
         return {
             type: "apiSection",
             title: rawConfig.api,
+            icon: rawConfig.icon,
             apiName: rawConfig.apiName ?? undefined,
             audiences:
                 rawConfig.audiences != null ? { type: "select", audiences: rawConfig.audiences } : { type: "all" },
@@ -557,7 +563,9 @@ async function convertNavigationItem({
                           absolutePath: absolutePathToConfig,
                           rawUnresolvedFilepath: rawConfig.summary
                       })
-                    : undefined
+                    : undefined,
+            hidden: rawConfig.hidden ?? undefined,
+            skipUrlSlug: rawConfig.skipSlug ?? false
         };
     }
     if (isRawLinkConfig(rawConfig)) {
@@ -575,12 +583,7 @@ function parseApiNavigationItem(
     absolutePathToConfig: AbsoluteFilePath
 ): ParsedApiNavigationItem[] {
     if (typeof item === "string") {
-        return [
-            {
-                type: "item",
-                value: item
-            }
-        ];
+        return [{ type: "item", value: item }];
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -593,7 +596,9 @@ function parseApiNavigationItem(
                     absolutePath: absolutePathToConfig,
                     rawUnresolvedFilepath: item.path
                 }),
-                slug: item.slug ?? undefined
+                slug: item.slug,
+                icon: item.icon,
+                hidden: item.hidden
             }
         ];
     }
