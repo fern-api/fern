@@ -1,7 +1,15 @@
+using SeedBytes;
+
 namespace SeedBytes;
 
 public class ServiceClient
 {
-    public async void  Upload(){
+    private RawClient _client;
+
+    public ServiceClient(RawClient client)
+    {
+        _client = client;
     }
+
+    public async void UploadAsync() { }
 }

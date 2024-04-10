@@ -1,7 +1,15 @@
+using SeedCodeSamples;
+
 namespace SeedCodeSamples;
 
 public class ServiceClient
 {
-    public async void  Hello(){
+    private RawClient _client;
+
+    public ServiceClient(RawClient client)
+    {
+        _client = client;
     }
+
+    public async void HelloAsync() { }
 }

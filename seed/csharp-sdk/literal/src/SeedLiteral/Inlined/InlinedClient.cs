@@ -1,7 +1,15 @@
+using SeedLiteral;
+
 namespace SeedLiteral;
 
 public class InlinedClient
 {
-    public async void  Send(){
+    private RawClient _client;
+
+    public InlinedClient(RawClient client)
+    {
+        _client = client;
     }
+
+    public async void SendAsync() { }
 }

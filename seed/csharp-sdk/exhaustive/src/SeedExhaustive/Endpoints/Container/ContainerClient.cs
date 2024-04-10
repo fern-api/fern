@@ -1,19 +1,27 @@
+using SeedExhaustive;
+
 namespace SeedExhaustive.Endpoints;
 
 public class ContainerClient
 {
-    public async void  GetAndReturnListOfPrimitives(){
+    private RawClient _client;
+
+    public ContainerClient(RawClient client)
+    {
+        _client = client;
     }
-    public async void  GetAndReturnListOfObjects(){
-    }
-    public async void  GetAndReturnSetOfPrimitives(){
-    }
-    public async void  GetAndReturnSetOfObjects(){
-    }
-    public async void  GetAndReturnMapPrimToPrim(){
-    }
-    public async void  GetAndReturnMapOfPrimToObject(){
-    }
-    public async void  GetAndReturnOptional(){
-    }
+
+    public async void GetAndReturnListOfPrimitivesAsync() { }
+
+    public async void GetAndReturnListOfObjectsAsync() { }
+
+    public async void GetAndReturnSetOfPrimitivesAsync() { }
+
+    public async void GetAndReturnSetOfObjectsAsync() { }
+
+    public async void GetAndReturnMapPrimToPrimAsync() { }
+
+    public async void GetAndReturnMapOfPrimToObjectAsync() { }
+
+    public async void GetAndReturnOptionalAsync() { }
 }

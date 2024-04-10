@@ -1,5 +1,3 @@
 namespace SeedAuthEnvironmentVariables.Test;
 
-public class TestClient
-{
-}
+public class TestClient { }

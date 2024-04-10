@@ -10,114 +10,109 @@ namespace SeedFileDownload;
 /// </summary>
 public class RawClient
 {
-  /// <summary>
-  /// The http client used to make requests.
-  /// </summary>
-  private readonly ClientOptions _clientOptions;
+    /// <summary>
+    /// The http client used to make requests.
+    /// </summary>
+    private readonly ClientOptions _clientOptions;
 
-  /// <summary>
-  /// Global headers to be sent with every request.
-  /// </summary>
-  private readonly Dictionary<String, String> _headers;
+    /// <summary>
+    /// Global headers to be sent with every request.
+    /// </summary>
+    private readonly Dictionary<String, String> _headers;
 
-  /// <summary>
-  /// Base URL for the API.
-  /// </summary>
-  private readonly string _apiBaseUrl;
-
-  public RawClient(string apiBaseUrl, ClientOptions clientOptions, Dictionary<String, String> headers)
-  {
-    _clientOptions = clientOptions;
-    _headers = headers;
-    _apiBaseUrl = apiBaseUrl;
-  }
-
-  public async Task<ApiResponse> MakeRequest<T>(HttpMethod method, string path, ApiRequest request)
-  {
-    var httpRequest = new HttpRequestMessage(method, this.BuildUrl(path, request.Query));
-    if (request.ContentType != null)
+    public RawClient(Dictionary<String, String> headers, ClientOptions clientOptions)
     {
-      request.Headers.Add("Content-Type", request.ContentType);
+        _clientOptions = clientOptions;
+        _headers = headers;
     }
-    // Add global headers to the request
-    foreach (var (key, value) in _headers)
+
+    public async Task<ApiResponse> MakeRequestAsync(
+        HttpMethod method,
+        string path,
+        ApiRequest request
+    )
     {
-      httpRequest.Headers.Add(key, value);
+        var httpRequest = new HttpRequestMessage(method, this.BuildUrl(path, request.Query));
+        if (request.ContentType != null)
+        {
+            request.Headers.Add("Content-Type", request.ContentType);
+        }
+        // Add global headers to the request
+        foreach (var (key, value) in _headers)
+        {
+            httpRequest.Headers.Add(key, value);
+        }
+        // Add request headers to the request
+        foreach (var (key, value) in request.Headers)
+        {
+            httpRequest.Headers.Add(key, value);
+        }
+        // Add the request body to the request
+        if (request.Body != null)
+        {
+            httpRequest.Content = new StringContent(
+                JsonSerializer.Serialize(request.Body),
+                Encoding.UTF8,
+                "application/json"
+            );
+        }
+        // Send the request
+        HttpResponseMessage response = await _clientOptions.HttpClient.SendAsync(httpRequest);
+        return new ApiResponse { StatusCode = (int)response.StatusCode, Body = response };
     }
-    // Add request headers to the request
-    foreach (var (key, value) in request.Headers)
+
+    /// <summary>
+    /// The request object to be sent to the API.
+    /// </summary>
+    public class ApiRequest
     {
-      httpRequest.Headers.Add(key, value);
+        public string? ContentType = null;
+
+        public object? Body { get; init; } = null;
+
+        public Dictionary<string, object> Query { get; init; } = new();
+
+        public Dictionary<string, string> Headers { get; init; } = new();
+
+        public object RequestOptions { get; init; }
     }
-    // Add the request body to the request
-    if (request.Body != null)
+
+    /// <summary>
+    /// The response object returned from the API.
+    /// </summary>
+    public class ApiResponse
     {
-      httpRequest.Content = new StringContent(
-          JsonSerializer.Serialize(request.Body), Encoding.UTF8, "application/json");
+        public int StatusCode;
+
+        public HttpResponseMessage Body;
     }
-    // Send the request
-    HttpResponseMessage response = await _clientOptions.HttpClient.SendAsync(httpRequest);
-    return new ApiResponse
+
+    private Dictionary<string, string> GetHeaders(ApiRequest request)
     {
-      StatusCode = (int)response.StatusCode,
-      Body = response
-    };
-  }
-
-  /// <summary>
-  /// The request object to be sent to the API.
-  /// </summary>
-  public class ApiRequest
-  {
-    public string? ContentType = null;
-
-    public object? Body { get; init; } = null;
-
-    public Dictionary<string, object> Query { get; init; } = new();
-
-    public Dictionary<string, string> Headers { get; init; } = new();
-
-    public ClientOptions ClientOptions { get; init; }
-
-    public object RequestOptions { get; init; }
-  }
-
-  /// <summary>
-  /// The response object returned from the API.
-  /// </summary>
-  public class ApiResponse
-  {
-    public int StatusCode;
-
-    public HttpResponseMessage Body;
-  }
-
-  private Dictionary<string, string> GetHeaders(ApiRequest request)
-  {
-    var headers = new Dictionary<string, string>();
-    foreach (var (key, value) in request.Headers)
-    {
-      headers.Add(key, value);
+        var headers = new Dictionary<string, string>();
+        foreach (var (key, value) in request.Headers)
+        {
+            headers.Add(key, value);
+        }
+        foreach (var (key, value) in _headers)
+        {
+            headers.Add(key, value);
+        }
+        return headers;
     }
-    foreach (var (key, value) in _headers)
-    {
-      headers.Add(key, value);
-    }
-    return headers;
-  }
 
-  private string BuildUrl(string path, Dictionary<string, object> query)
-  {
-    var url = $"{_apiBaseUrl}/{path}";
-    if (query.Count > 0)
+    private string BuildUrl(string path, Dictionary<string, object> query)
     {
-      url += "?";
-      foreach (var (key, value) in query)
-      {
-        url += $"{key}={value}&";
-      }
-      url = url.Substring(0, url.Length - 1);
+        var url = $"{_clientOptions.BaseUrl}/{path}";
+        if (query.Count > 0)
+        {
+            url += "?";
+            foreach (var (key, value) in query)
+            {
+                url += $"{key}={value}&";
+            }
+            url = url.Substring(0, url.Length - 1);
+        }
+        return url;
     }
-    return url;
-  }
 }

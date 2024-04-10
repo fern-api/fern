@@ -1,7 +1,15 @@
+using SeedMultiUrlEnvironment;
+
 namespace SeedMultiUrlEnvironment;
 
 public class S3Client
 {
-    public async void  GetPresignedUrl(){
+    private RawClient _client;
+
+    public S3Client(RawClient client)
+    {
+        _client = client;
     }
+
+    public async void GetPresignedUrlAsync() { }
 }

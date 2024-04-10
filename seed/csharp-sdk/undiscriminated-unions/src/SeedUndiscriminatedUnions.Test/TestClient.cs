@@ -1,5 +1,3 @@
 namespace SeedUndiscriminatedUnions.Test;
 
-public class TestClient
-{
-}
+public class TestClient { }

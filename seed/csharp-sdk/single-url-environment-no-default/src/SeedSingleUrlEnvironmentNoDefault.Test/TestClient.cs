@@ -1,5 +1,3 @@
 namespace SeedSingleUrlEnvironmentNoDefault.Test;
 
-public class TestClient
-{
-}
+public class TestClient { }

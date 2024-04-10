@@ -1,7 +1,15 @@
+using SeedObjectsWithImports;
+
 namespace SeedObjectsWithImports;
 
 public class OptionalClient
 {
-    public async void  SendOptionalBody(){
+    private RawClient _client;
+
+    public OptionalClient(RawClient client)
+    {
+        _client = client;
     }
+
+    public async void SendOptionalBodyAsync() { }
 }

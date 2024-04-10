@@ -1,5 +1,3 @@
 namespace SeedFileUpload.Test;
 
-public class TestClient
-{
-}
+public class TestClient { }

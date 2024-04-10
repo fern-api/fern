@@ -1,9 +1,17 @@
+using SeedIdempotencyHeaders;
+
 namespace SeedIdempotencyHeaders;
 
 public class PaymentClient
 {
-    public async void  Create(){
+    private RawClient _client;
+
+    public PaymentClient(RawClient client)
+    {
+        _client = client;
     }
-    public async void  Delete(){
-    }
+
+    public async void CreateAsync() { }
+
+    public async void DeleteAsync() { }
 }

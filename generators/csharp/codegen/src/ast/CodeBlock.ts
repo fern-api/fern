@@ -2,16 +2,15 @@ import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
 export declare namespace CodeBlock {
-    interface Args {
-        /* Write arbitrary code */
-        value: string | ((writer: Writer) => void);
-    }
+
+    /* Write arbitrary code */
+    type Arg = string | ((writer: Writer) => void);
 }
 
 export class CodeBlock extends AstNode {
     private value: string | ((writer: Writer) => void);
 
-    constructor({ value }: CodeBlock.Args) {
+    constructor(value: CodeBlock.Arg) {
         super();
         this.value = value;
     }

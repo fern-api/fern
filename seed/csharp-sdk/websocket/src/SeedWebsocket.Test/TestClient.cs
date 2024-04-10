@@ -1,5 +1,3 @@
 namespace SeedWebsocket.Test;
 
-public class TestClient
-{
-}
+public class TestClient { }

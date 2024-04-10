@@ -7,4 +7,10 @@ export { Enum } from "./Enum";
 export { Field } from "./Field";
 export { Method } from "./Method";
 export { Parameter } from "./Parameter";
-export { Type } from "./Type";
+export { Type } from "./Type";  
+export { Interface } from "./Interface";
+export { ClassInstantiation } from "./ClassInstantiation";
+export { MethodInvocation } from "./MethodInvocation";
+export { CoreClassReference } from "./CoreClassReference";
+export { Dictionary } from "./Dictionary";
+

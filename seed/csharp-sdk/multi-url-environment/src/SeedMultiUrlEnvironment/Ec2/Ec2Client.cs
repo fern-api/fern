@@ -1,7 +1,15 @@
+using SeedMultiUrlEnvironment;
+
 namespace SeedMultiUrlEnvironment;
 
 public class Ec2Client
 {
-    public async void  BootInstance(){
+    private RawClient _client;
+
+    public Ec2Client(RawClient client)
+    {
+        _client = client;
     }
+
+    public async void BootInstanceAsync() { }
 }

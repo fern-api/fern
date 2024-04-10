@@ -1,5 +1,3 @@
 namespace SeedLiteral.Test;
 
-public class TestClient
-{
-}
+public class TestClient { }

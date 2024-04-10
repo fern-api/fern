@@ -1,7 +1,16 @@
 import { AbstractCsharpGeneratorContext, AsIsFiles, csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { FernFilepath, HttpService, ServiceId, Subpackage, SubpackageId, TypeId } from "@fern-fern/ir-sdk/api";
+import {
+    FernFilepath,
+    HttpEndpoint,
+    HttpService,
+    ServiceId,
+    Subpackage,
+    SubpackageId,
+    TypeId
+} from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
+import { CLIENT_OPTIONS_CLASS_NAME } from "./client-options/ClientOptionsGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
 const TYPES_FOLDER_NAME = "Types";
@@ -81,6 +90,24 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             return this.customConfig["client-class-name"];
         }
         return `${upperFirst(camelCase(this.config.organization))}${this.ir.apiName.pascalCase.unsafeName}Client`;
+    }
+
+    public getRawClientClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "RawClient",
+            namespace: this.getNamespace()
+        });
+    }
+
+    public getClientOptionsClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: CLIENT_OPTIONS_CLASS_NAME,
+            namespace: this.getNamespace()
+        });
+    }
+
+    public getEndpointMethodName(endpoint: HttpEndpoint): string {
+        return `${endpoint.name.pascalCase.safeName}Async`;
     }
 
     private getNamespaceFromFernFilepath(fernFilepath: FernFilepath): string {

@@ -1,7 +1,15 @@
+using SeedApiWideBasePath;
+
 namespace SeedApiWideBasePath;
 
 public class ServiceClient
 {
-    public async void  Post(){
+    private RawClient _client;
+
+    public ServiceClient(RawClient client)
+    {
+        _client = client;
     }
+
+    public async void PostAsync() { }
 }

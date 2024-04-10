@@ -3,6 +3,8 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0-alpine3.18
 
 RUN apk --no-cache add bash curl git zip && git config --global user.name "fern" && git config --global user.email "hey@buildwithfern.com"
 
+RUN dotnet tool install -g csharpier
+ENV PATH="$PATH:/root/.dotnet/tools"
 ENV YARN_CACHE_FOLDER=/.yarn
 
 COPY generators/csharp/sdk/dist /dist

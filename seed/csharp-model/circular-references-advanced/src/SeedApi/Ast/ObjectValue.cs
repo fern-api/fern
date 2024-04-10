@@ -1,5 +1,3 @@
 namespace SeedApi;
 
-public class ObjectValue
-{
-}
+public class ObjectValue { }

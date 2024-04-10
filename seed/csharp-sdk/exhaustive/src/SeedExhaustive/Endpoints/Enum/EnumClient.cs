@@ -1,7 +1,15 @@
+using SeedExhaustive;
+
 namespace SeedExhaustive.Endpoints;
 
 public class EnumClient
 {
-    public async void  GetAndReturnEnum(){
+    private RawClient _client;
+
+    public EnumClient(RawClient client)
+    {
+        _client = client;
     }
+
+    public async void GetAndReturnEnumAsync() { }
 }

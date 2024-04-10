@@ -1,7 +1,15 @@
+using SeedSingleUrlEnvironmentDefault;
+
 namespace SeedSingleUrlEnvironmentDefault;
 
 public class DummyClient
 {
-    public async void  GetDummy(){
+    private RawClient _client;
+
+    public DummyClient(RawClient client)
+    {
+        _client = client;
     }
+
+    public async void GetDummyAsync() { }
 }

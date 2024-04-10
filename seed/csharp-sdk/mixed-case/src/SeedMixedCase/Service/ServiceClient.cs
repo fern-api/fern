@@ -1,9 +1,17 @@
+using SeedMixedCase;
+
 namespace SeedMixedCase;
 
 public class ServiceClient
 {
-    public async void  GetResource(){
+    private RawClient _client;
+
+    public ServiceClient(RawClient client)
+    {
+        _client = client;
     }
-    public async void  ListResources(){
-    }
+
+    public async void GetResourceAsync() { }
+
+    public async void ListResourcesAsync() { }
 }

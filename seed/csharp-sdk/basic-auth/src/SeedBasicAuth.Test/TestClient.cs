@@ -1,5 +1,3 @@
 namespace SeedBasicAuth.Test;
 
-public class TestClient
-{
-}
+public class TestClient { }

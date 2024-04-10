@@ -20,19 +20,13 @@ public class RawClient
   /// </summary>
   private readonly Dictionary<String, String> _headers;
 
-  /// <summary>
-  /// Base URL for the API.
-  /// </summary>
-  private readonly string _apiBaseUrl;
-
-  public RawClient(string apiBaseUrl, ClientOptions clientOptions, Dictionary<String, String> headers)
+  public RawClient(Dictionary<String, String> headers, ClientOptions clientOptions)
   {
     _clientOptions = clientOptions;
     _headers = headers;
-    _apiBaseUrl = apiBaseUrl;
   }
 
-  public async Task<ApiResponse> MakeRequest<T>(HttpMethod method, string path, ApiRequest request)
+  public async Task<ApiResponse> MakeRequestAsync(HttpMethod method, string path, ApiRequest request)
   {
     var httpRequest = new HttpRequestMessage(method, this.BuildUrl(path, request.Query));
     if (request.ContentType != null)
@@ -77,8 +71,6 @@ public class RawClient
 
     public Dictionary<string, string> Headers { get; init; } = new();
 
-    public ClientOptions ClientOptions { get; init; }
-
     public object RequestOptions { get; init; }
   }
 
@@ -108,7 +100,7 @@ public class RawClient
 
   private string BuildUrl(string path, Dictionary<string, object> query)
   {
-    var url = $"{_apiBaseUrl}/{path}";
+    var url = $"{_clientOptions.BaseUrl}/{path}";
     if (query.Count > 0)
     {
       url += "?";

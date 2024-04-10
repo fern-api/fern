@@ -1,7 +1,15 @@
+using SeedLiteral;
+
 namespace SeedLiteral;
 
 public class QueryClient
 {
-    public async void  Send(){
+    private RawClient _client;
+
+    public QueryClient(RawClient client)
+    {
+        _client = client;
     }
+
+    public async void SendAsync() { }
 }

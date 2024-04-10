@@ -1,5 +1,3 @@
 namespace SeedExtends.Test;
 
-public class TestClient
-{
-}
+public class TestClient { }

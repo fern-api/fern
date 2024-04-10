@@ -1,6 +1,5 @@
 import { Access } from "./Access";
 import { Annotation } from "./Annotation";
-import { ClassInstantiation } from "./ClassInstantiation";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
@@ -149,33 +148,15 @@ export class Class extends AstNode {
         writer.writeLine("{");
 
         writer.indent();
-        this.constructors.forEach((constructor) => {
-            writer.write(`${constructor.access} ${this.name} (`);
-            constructor.parameters.forEach((parameter, index) => {
-                parameter.write(writer);
-                if (index < constructor.parameters.length - 1) {
-                    writer.write(", ");
-                }
-            });
-            writer.write(")");
-
-            writer.writeLine("{");
-            writer.indent();
-            constructor.body?.write(writer);
-            writer.dedent();
-            writer.writeLine("}");
-        });
+        this.writeFields({ writer, fields: this.getFieldsByAccess(Access.Private) });
         writer.dedent();
 
         writer.indent();
-        this.fields.forEach((field, index) => {
-            field.write(writer);
-            writer.writeNewLineIfLastLineNot();
+        this.writeConstructors({ writer, constructors: this.constructors });
+        writer.dedent();
 
-            if (index < this.fields.length - 1) {
-                writer.newLine();
-            }
-        });
+        writer.indent();
+        this.writeFields({ writer, fields: this.getFieldsByAccess(Access.Public) });
         writer.dedent();
 
         writer.indent();
@@ -201,42 +182,64 @@ export class Class extends AstNode {
         writer.dedent();
 
         writer.indent();
-        this.methods.forEach((method, index) => {
+        this.writeMethods({ writer, methods: this.getMethodsByAccess(Access.Public) });
+        writer.dedent();
+
+        writer.indent();
+        this.writeMethods({ writer, methods: this.getMethodsByAccess(Access.Private) });
+        writer.dedent();
+
+        writer.writeLine("}");
+    }
+
+    private writeConstructors({ writer, constructors }: { writer: Writer; constructors: Class.Constructor[] }): void {
+        constructors.forEach((constructor, index) => {
+            writer.write(`${constructor.access} ${this.name} (`);
+            constructor.parameters.forEach((parameter, index) => {
+                parameter.write(writer);
+                if (index < constructor.parameters.length - 1) {
+                    writer.write(", ");
+                }
+            });
+            writer.write(")");
+
+            writer.writeLine(" {");
+            writer.indent();
+            constructor.body?.write(writer);
+            writer.dedent();
+            writer.writeLine("}");
+            writer.newLine();
+        });
+    }
+
+    private writeMethods({ writer, methods }: { writer: Writer; methods: Method[] }): void {
+        methods.forEach((method, index) => {
             method.write(writer);
+            writer.writeNewLineIfLastLineNot();
+            writer.newLine();
+        });
+    }
+
+    private getMethodsByAccess(access: Access): Method[] {
+        return this.methods.filter((method) => method.access === access);
+    }
+
+    private writeFields({ writer, fields }: { writer: Writer; fields: Field[] }): void {
+        fields.forEach((field, index) => {
+            field.write(writer);
             writer.writeNewLineIfLastLineNot();
 
             if (index < this.fields.length - 1) {
                 writer.newLine();
             }
         });
-        writer.dedent();
+    }
 
-        writer.writeLine("}");
+    private getFieldsByAccess(access: Access): Field[] {
+        return this.fields.filter((field) => field.access === access);
     }
 
     public getFields(): Field[] {
         return this.fields;
-    }
-
-    public getInitializer(args: Map<Field, CodeBlock>): ClassInstantiation {
-        return new ClassInstantiation({
-            classReference: this.reference,
-            arguments_: args
-        });
-    }
-
-    public getInitializerFromExample(example: Map<string, unknown>): ClassInstantiation {
-        const args = new Map<Field, CodeBlock>();
-        for (const field of this.fields) {
-            const value = example.get(field.name);
-            if (value !== undefined) {
-                // TODO: actually handle these examples
-                args.set(field, new CodeBlock({ value: value as string }));
-            }
-        }
-        return new ClassInstantiation({
-            classReference: this.reference,
-            arguments_: args
-        });
     }
 }

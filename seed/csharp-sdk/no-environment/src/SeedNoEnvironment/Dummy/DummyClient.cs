@@ -1,7 +1,15 @@
+using SeedNoEnvironment;
+
 namespace SeedNoEnvironment;
 
 public class DummyClient
 {
-    public async void  GetDummy(){
+    private RawClient _client;
+
+    public DummyClient(RawClient client)
+    {
+        _client = client;
     }
+
+    public async void GetDummyAsync() { }
 }

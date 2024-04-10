@@ -1,9 +1,17 @@
+using SeedTrace;
+
 namespace SeedTrace;
 
 public class SyspropClient
 {
-    public async void  SetNumWarmInstances(){
+    private RawClient _client;
+
+    public SyspropClient(RawClient client)
+    {
+        _client = client;
     }
-    public async void  GetNumWarmInstances(){
-    }
+
+    public async void SetNumWarmInstancesAsync() { }
+
+    public async void GetNumWarmInstancesAsync() { }
 }

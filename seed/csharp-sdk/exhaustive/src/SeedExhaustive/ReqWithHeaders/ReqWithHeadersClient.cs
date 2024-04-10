@@ -1,7 +1,15 @@
+using SeedExhaustive;
+
 namespace SeedExhaustive;
 
 public class ReqWithHeadersClient
 {
-    public async void  GetWithCustomHeader(){
+    private RawClient _client;
+
+    public ReqWithHeadersClient(RawClient client)
+    {
+        _client = client;
     }
+
+    public async void GetWithCustomHeaderAsync() { }
 }

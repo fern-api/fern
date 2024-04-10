@@ -1,6 +1,19 @@
-import { Annotation, Class, ClassReference, CodeBlock, Enum, Field, Method, Parameter, Type } from "./ast";
-import { CoreClassReference } from "./ast/CoreClassReference";
+import {
+    Annotation,
+    Class,
+    ClassInstantiation,
+    ClassReference,
+    CodeBlock,
+    CoreClassReference,
+    Dictionary,
+    Enum,
+    Field,
+    Method,
+    Parameter,
+    Type
+} from "./ast";
 import { Interface } from "./ast/Interface";
+import { MethodInvocation } from "./ast/MethodInvocation";
 
 export function class_(args: Class.Args): Class {
     return new Class(args);
@@ -14,12 +27,20 @@ export function classReference(args: ClassReference.Args): ClassReference {
     return new ClassReference(args);
 }
 
+export function instantiateClass(args: ClassInstantiation.Args): ClassInstantiation {
+    return new ClassInstantiation(args);
+}
+
+export function invokeMethod(args: MethodInvocation.Args): MethodInvocation {
+    return new MethodInvocation(args);
+}
+
 export function coreClassReference(args: CoreClassReference.Args): CoreClassReference {
     return new CoreClassReference(args);
 }
 
-export function codeblock(args: CodeBlock.Args): CodeBlock {
-    return new CodeBlock(args);
+export function codeblock(arg: CodeBlock.Arg): CodeBlock {
+    return new CodeBlock(arg);
 }
 
 export function field(args: Field.Args): Field {
@@ -42,5 +63,9 @@ export function enum_(args: Enum.Args): Enum {
     return new Enum(args);
 }
 
+export function dictionary(args: Dictionary.Args): Dictionary {
+    return new Dictionary(args);
+}
+
 export const Types = Type;
-export { Annotation, Class, ClassReference, CodeBlock, Enum, Type } from "./ast";
+export { Annotation, Class, ClassReference, CodeBlock, Dictionary, Enum, Method, Parameter, Type } from "./ast";

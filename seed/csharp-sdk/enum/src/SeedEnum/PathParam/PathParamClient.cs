@@ -1,7 +1,15 @@
+using SeedEnum;
+
 namespace SeedEnum;
 
 public class PathParamClient
 {
-    public async void  Send(){
+    private RawClient _client;
+
+    public PathParamClient(RawClient client)
+    {
+        _client = client;
     }
+
+    public async void SendAsync() { }
 }

@@ -1,15 +1,23 @@
+using SeedBasicAuth;
+
 namespace SeedBasicAuth;
 
 public class BasicAuthClient
 {
+    private RawClient _client;
+
+    public BasicAuthClient(RawClient client)
+    {
+        _client = client;
+    }
+
     /// <summary>
     /// GET request with basic auth scheme
     /// </summary>
-    public async void  GetWithBasicAuth(){
-    }
+    public async void GetWithBasicAuthAsync() { }
+
     /// <summary>
     /// POST request with basic auth scheme
     /// </summary>
-    public async void  PostWithBasicAuth(){
-    }
+    public async void PostWithBasicAuthAsync() { }
 }

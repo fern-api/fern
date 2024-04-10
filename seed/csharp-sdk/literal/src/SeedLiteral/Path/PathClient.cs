@@ -1,7 +1,15 @@
+using SeedLiteral;
+
 namespace SeedLiteral;
 
 public class PathClient
 {
-    public async void  Send(){
+    private RawClient _client;
+
+    public PathClient(RawClient client)
+    {
+        _client = client;
     }
+
+    public async void SendAsync() { }
 }

@@ -1,9 +1,17 @@
+using SeedTrace;
+
 namespace SeedTrace;
 
 public class HomepageClient
 {
-    public async void  GetHomepageProblems(){
+    private RawClient _client;
+
+    public HomepageClient(RawClient client)
+    {
+        _client = client;
     }
-    public async void  SetHomepageProblems(){
-    }
+
+    public async void GetHomepageProblemsAsync() { }
+
+    public async void SetHomepageProblemsAsync() { }
 }

@@ -1,7 +1,15 @@
+using SeedEnum;
+
 namespace SeedEnum;
 
 public class InlinedRequestClient
 {
-    public async void  Send(){
+    private RawClient _client;
+
+    public InlinedRequestClient(RawClient client)
+    {
+        _client = client;
     }
+
+    public async void SendAsync() { }
 }
