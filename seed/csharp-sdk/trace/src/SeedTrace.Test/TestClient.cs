@@ -1,5 +1,3 @@
 namespace SeedTrace.Test;
 
-public class TestClient
-{
-}
+public class TestClient { }

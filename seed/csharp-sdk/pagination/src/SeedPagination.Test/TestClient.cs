@@ -1,5 +1,3 @@
 namespace SeedPagination.Test;
 
-public class TestClient
-{
-}
+public class TestClient { }

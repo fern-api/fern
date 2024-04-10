@@ -1,11 +1,19 @@
+using SeedExamples;
+
 namespace SeedExamples;
 
 public class ServiceClient
 {
-    public async void  GetMovie(){
+    private RawClient _client;
+
+    public ServiceClient(RawClient client)
+    {
+        _client = client;
     }
-    public async void  CreateMovie(){
-    }
-    public async void  GetMetadata(){
-    }
+
+    public async void GetMovieAsync() { }
+
+    public async void CreateMovieAsync() { }
+
+    public async void GetMetadataAsync() { }
 }

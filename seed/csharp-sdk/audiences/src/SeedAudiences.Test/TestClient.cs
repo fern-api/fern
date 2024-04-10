@@ -1,5 +1,3 @@
 namespace SeedAudiences.Test;
 
-public class TestClient
-{
-}
+public class TestClient { }

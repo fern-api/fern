@@ -1,9 +1,17 @@
+using SeedApi;
+
 namespace SeedApi.Folder;
 
 public class ServiceClient
 {
-    public async void  Endpoint(){
+    private RawClient _client;
+
+    public ServiceClient(RawClient client)
+    {
+        _client = client;
     }
-    public async void  UnknownRequest(){
-    }
+
+    public async void EndpointAsync() { }
+
+    public async void UnknownRequestAsync() { }
 }

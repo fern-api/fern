@@ -1,7 +1,15 @@
+using SeedUndiscriminatedUnions;
+
 namespace SeedUndiscriminatedUnions;
 
 public class UnionClient
 {
-    public async void  Get(){
+    private RawClient _client;
+
+    public UnionClient(RawClient client)
+    {
+        _client = client;
     }
+
+    public async void GetAsync() { }
 }

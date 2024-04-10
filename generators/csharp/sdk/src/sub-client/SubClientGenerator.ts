@@ -23,10 +23,20 @@ export class SubClientGenerator extends FileGenerator<CSharpFile, SdkCustomConfi
             access: "public"
         });
 
+        class_.addField(
+            csharp.field({
+                access: "private",
+                name: "_client",
+                type: csharp.Type.reference(this.context.getRawClientClassReference())
+            })
+        );
+
+        class_.addConstructor(this.getConstructorMethod());
+
         for (const endpoint of this.service.endpoints) {
             class_.addMethod(
                 csharp.method({
-                    name: endpoint.name.pascalCase.safeName,
+                    name: this.context.getEndpointMethodName(endpoint),
                     access: "public",
                     isAsync: true,
                     parameters: [],
@@ -39,6 +49,21 @@ export class SubClientGenerator extends FileGenerator<CSharpFile, SdkCustomConfi
             clazz: class_,
             directory: RelativeFilePath.of(this.context.getDirectoryForServiceId(this.serviceId))
         });
+    }
+
+    private getConstructorMethod(): csharp.Class.Constructor {
+        return {
+            access: "public",
+            parameters: [
+                csharp.parameter({
+                    name: "client",
+                    type: csharp.Type.reference(this.context.getRawClientClassReference())
+                })
+            ],
+            body: csharp.codeblock((writer) => {
+                writer.writeLine("_client = client;");
+            })
+        };
     }
 
     protected getFilepath(): RelativeFilePath {

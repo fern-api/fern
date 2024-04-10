@@ -1,9 +1,17 @@
+using SeedExhaustive;
+
 namespace SeedExhaustive;
 
 public class NoReqBodyClient
 {
-    public async void  GetWithNoRequestBody(){
+    private RawClient _client;
+
+    public NoReqBodyClient(RawClient client)
+    {
+        _client = client;
     }
-    public async void  PostWithNoRequestBody(){
-    }
+
+    public async void GetWithNoRequestBodyAsync() { }
+
+    public async void PostWithNoRequestBodyAsync() { }
 }

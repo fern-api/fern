@@ -31,10 +31,10 @@ export declare namespace Field {
 
 export class Field extends AstNode {
     public readonly name: string;
+    public readonly access: Access;
     private type: Type;
     private get: boolean;
     private init: boolean;
-    private access: Access;
     private annotations: Annotation[];
     private initializer: CodeBlock | undefined;
     private summary: string | undefined;
@@ -86,6 +86,7 @@ export class Field extends AstNode {
         writer.write(`${this.access} `);
         writer.writeNode(this.type);
         writer.write(` ${this.name}`);
+
         if (this.get || this.init) {
             writer.write(" { ");
             if (this.get) {
@@ -100,6 +101,8 @@ export class Field extends AstNode {
         if (this.initializer != null) {
             writer.write(" = ");
             this.initializer.write(writer);
+            writer.writeLine(";");
+        } else if (!this.get && !this.init) {
             writer.writeLine(";");
         }
     }

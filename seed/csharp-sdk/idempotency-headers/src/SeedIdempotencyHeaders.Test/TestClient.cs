@@ -1,5 +1,3 @@
 namespace SeedIdempotencyHeaders.Test;
 
-public class TestClient
-{
-}
+public class TestClient { }

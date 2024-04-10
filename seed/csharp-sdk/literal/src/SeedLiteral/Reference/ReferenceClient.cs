@@ -1,7 +1,15 @@
+using SeedLiteral;
+
 namespace SeedLiteral;
 
 public class ReferenceClient
 {
-    public async void  Send(){
+    private RawClient _client;
+
+    public ReferenceClient(RawClient client)
+    {
+        _client = client;
     }
+
+    public async void SendAsync() { }
 }

@@ -1,5 +1,3 @@
 namespace SeedErrorProperty.Test;
 
-public class TestClient
-{
-}
+public class TestClient { }

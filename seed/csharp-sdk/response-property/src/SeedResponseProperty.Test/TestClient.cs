@@ -1,5 +1,3 @@
 namespace SeedResponseProperty.Test;
 
-public class TestClient
-{
-}
+public class TestClient { }

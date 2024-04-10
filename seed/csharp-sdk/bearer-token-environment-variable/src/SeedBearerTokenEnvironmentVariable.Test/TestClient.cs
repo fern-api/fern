@@ -1,5 +1,3 @@
 namespace SeedBearerTokenEnvironmentVariable.Test;
 
-public class TestClient
-{
-}
+public class TestClient { }

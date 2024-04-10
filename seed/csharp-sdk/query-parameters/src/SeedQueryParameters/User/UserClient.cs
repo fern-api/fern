@@ -1,7 +1,15 @@
+using SeedQueryParameters;
+
 namespace SeedQueryParameters;
 
 public class UserClient
 {
-    public async void  GetUsername(){
+    private RawClient _client;
+
+    public UserClient(RawClient client)
+    {
+        _client = client;
     }
+
+    public async void GetUsernameAsync() { }
 }

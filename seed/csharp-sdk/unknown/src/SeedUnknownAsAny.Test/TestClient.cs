@@ -1,5 +1,3 @@
 namespace SeedUnknownAsAny.Test;
 
-public class TestClient
-{
-}
+public class TestClient { }

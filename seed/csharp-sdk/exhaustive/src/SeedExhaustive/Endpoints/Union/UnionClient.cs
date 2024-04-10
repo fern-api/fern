@@ -1,7 +1,15 @@
+using SeedExhaustive;
+
 namespace SeedExhaustive.Endpoints;
 
 public class UnionClient
 {
-    public async void  GetAndReturnUnion(){
+    private RawClient _client;
+
+    public UnionClient(RawClient client)
+    {
+        _client = client;
     }
+
+    public async void GetAndReturnUnionAsync() { }
 }

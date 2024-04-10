@@ -1,7 +1,15 @@
+using SeedLiteral;
+
 namespace SeedLiteral;
 
 public class HeadersClient
 {
-    public async void  Send(){
+    private RawClient _client;
+
+    public HeadersClient(RawClient client)
+    {
+        _client = client;
     }
+
+    public async void SendAsync() { }
 }

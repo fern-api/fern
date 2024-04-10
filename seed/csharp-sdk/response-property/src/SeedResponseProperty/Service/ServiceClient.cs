@@ -1,19 +1,27 @@
+using SeedResponseProperty;
+
 namespace SeedResponseProperty;
 
 public class ServiceClient
 {
-    public async void  GetMovie(){
+    private RawClient _client;
+
+    public ServiceClient(RawClient client)
+    {
+        _client = client;
     }
-    public async void  GetMovieDocs(){
-    }
-    public async void  GetMovieName(){
-    }
-    public async void  GetMovieMetadata(){
-    }
-    public async void  GetOptionalMovie(){
-    }
-    public async void  GetOptionalMovieDocs(){
-    }
-    public async void  GetOptionalMovieName(){
-    }
+
+    public async void GetMovieAsync() { }
+
+    public async void GetMovieDocsAsync() { }
+
+    public async void GetMovieNameAsync() { }
+
+    public async void GetMovieMetadataAsync() { }
+
+    public async void GetOptionalMovieAsync() { }
+
+    public async void GetOptionalMovieDocsAsync() { }
+
+    public async void GetOptionalMovieNameAsync() { }
 }

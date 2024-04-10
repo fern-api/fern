@@ -1,7 +1,15 @@
+using SeedAudiences;
+
 namespace SeedAudiences;
 
 public class FooClient
 {
-    public async void  Find(){
+    private RawClient _client;
+
+    public FooClient(RawClient client)
+    {
+        _client = client;
     }
+
+    public async void FindAsync() { }
 }

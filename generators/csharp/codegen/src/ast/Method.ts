@@ -44,12 +44,10 @@ export class Method extends AstNode {
     public readonly summary: string | undefined;
     public readonly type: MethodType;
     public readonly reference: ClassReference | undefined;
+    private parameters: Parameter[];
 
-    private parameters: Parameter[] = [];
-
-    constructor({ name, isAsync, access, return_, body, summary, type, classReference }: Method.Args) {
+    constructor({ name, isAsync, access, return_, body, summary, type, classReference, parameters }: Method.Args) {
         super();
-
         this.name = name;
         this.isAsync = isAsync;
         this.access = access;
@@ -58,6 +56,7 @@ export class Method extends AstNode {
         this.summary = summary;
         this.type = type ?? MethodType.INSTANCE;
         this.reference = classReference;
+        this.parameters = parameters;
     }
 
     public addParameter(parameter: Parameter): void {
@@ -84,16 +83,17 @@ export class Method extends AstNode {
             writer.write("void ");
         } else {
             this.return.write(writer);
+            writer.write(" ");
         }
-        writer.write(` ${this.name}(`);
+        writer.write(`${this.name}(`);
         this.parameters.forEach((parameter, idx) => {
             parameter.write(writer);
-            if (idx < this.parameters.length - 2) {
+            if (idx < this.parameters.length - 1) {
                 writer.write(", ");
             }
         });
         writer.write(")");
-        writer.writeLine("{");
+        writer.writeLine(" {");
 
         writer.indent();
         this.body?.write(writer);
@@ -120,7 +120,7 @@ export class Method extends AstNode {
             const value = example.get(parameter.name);
             if (value !== undefined) {
                 // TODO: actually handle these examples
-                args.set(parameter, new CodeBlock({ value: value as string }));
+                // args.set(parameter, new CodeBlock({ value: value as string }));
             }
         }
         return new MethodInvocation({

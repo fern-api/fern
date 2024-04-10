@@ -1,17 +1,25 @@
+using SeedExhaustive;
+
 namespace SeedExhaustive.Endpoints;
 
 public class ObjectClient
 {
-    public async void  GetAndReturnWithOptionalField(){
+    private RawClient _client;
+
+    public ObjectClient(RawClient client)
+    {
+        _client = client;
     }
-    public async void  GetAndReturnWithRequiredField(){
-    }
-    public async void  GetAndReturnWithMapOfMap(){
-    }
-    public async void  GetAndReturnNestedWithOptionalField(){
-    }
-    public async void  GetAndReturnNestedWithRequiredField(){
-    }
-    public async void  GetAndReturnNestedWithRequiredFieldAsList(){
-    }
+
+    public async void GetAndReturnWithOptionalFieldAsync() { }
+
+    public async void GetAndReturnWithRequiredFieldAsync() { }
+
+    public async void GetAndReturnWithMapOfMapAsync() { }
+
+    public async void GetAndReturnNestedWithOptionalFieldAsync() { }
+
+    public async void GetAndReturnNestedWithRequiredFieldAsync() { }
+
+    public async void GetAndReturnNestedWithRequiredFieldAsListAsync() { }
 }

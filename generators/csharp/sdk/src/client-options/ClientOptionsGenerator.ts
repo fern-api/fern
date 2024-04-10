@@ -22,9 +22,7 @@ export const HTTP_CLIENT_FIELD = csharp.field({
             name: "HttpClient"
         })
     ),
-    initializer: csharp.codeblock({
-        value: "new HttpClient()"
-    }),
+    initializer: csharp.codeblock("new HttpClient()"),
     summary: "The http client used to make requests."
 });
 
@@ -34,9 +32,7 @@ export const MAX_RETRIES_FIELD = csharp.field({
     get: true,
     init: true,
     type: csharp.Type.integer(),
-    initializer: csharp.codeblock({
-        value: "2"
-    }),
+    initializer: csharp.codeblock("2"),
     summary: "The http client used to make requests."
 });
 
@@ -46,9 +42,7 @@ export const TIMEOUT_IN_SECONDS = csharp.field({
     get: true,
     init: true,
     type: csharp.Type.integer(),
-    initializer: csharp.codeblock({
-        value: "30"
-    }),
+    initializer: csharp.codeblock("30"),
     summary: "The timeout for the request in seconds."
 });
 

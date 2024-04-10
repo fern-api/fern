@@ -1,5 +1,3 @@
 namespace SeedObjectsWithImports.Test;
 
-public class TestClient
-{
-}
+public class TestClient { }

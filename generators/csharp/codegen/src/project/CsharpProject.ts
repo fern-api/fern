@@ -72,6 +72,14 @@ export class CsharpProject {
         }
 
         await this.createCoreDirectory({ absolutePathToProjectDirectory });
+
+        await loggingExeca(this.context.logger, "dotnet", ["csharpier", "."], {
+            doNotPipeOutput: true,
+            cwd: absolutePathToSrcDirectory, 
+            env: {
+                DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+            }
+        });
     }
 
     private async createProject({

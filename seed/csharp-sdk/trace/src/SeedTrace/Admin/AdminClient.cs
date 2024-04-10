@@ -1,21 +1,29 @@
+using SeedTrace;
+
 namespace SeedTrace;
 
 public class AdminClient
 {
-    public async void  UpdateTestSubmissionStatus(){
+    private RawClient _client;
+
+    public AdminClient(RawClient client)
+    {
+        _client = client;
     }
-    public async void  SendTestSubmissionUpdate(){
-    }
-    public async void  UpdateWorkspaceSubmissionStatus(){
-    }
-    public async void  SendWorkspaceSubmissionUpdate(){
-    }
-    public async void  StoreTracedTestCase(){
-    }
-    public async void  StoreTracedTestCaseV2(){
-    }
-    public async void  StoreTracedWorkspace(){
-    }
-    public async void  StoreTracedWorkspaceV2(){
-    }
+
+    public async void UpdateTestSubmissionStatusAsync() { }
+
+    public async void SendTestSubmissionUpdateAsync() { }
+
+    public async void UpdateWorkspaceSubmissionStatusAsync() { }
+
+    public async void SendWorkspaceSubmissionUpdateAsync() { }
+
+    public async void StoreTracedTestCaseAsync() { }
+
+    public async void StoreTracedTestCaseV2Async() { }
+
+    public async void StoreTracedWorkspaceAsync() { }
+
+    public async void StoreTracedWorkspaceV2Async() { }
 }

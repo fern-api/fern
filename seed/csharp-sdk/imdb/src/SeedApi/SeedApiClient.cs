@@ -2,40 +2,24 @@ using SeedApi;
 
 namespace SeedApi;
 
-/// <summary>
-/// 
-/// </summary>
 public partial class SeedApiClient
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="token"></param>
-    /// <param name="clientOptions"></param>
-    public SeedApiClient(string token = null, string accountId = null, ClientOptions clientOptions = null)
+    private RawClient _client;
+
+    public SeedApiClient(string token, ClientOptions clientOptions)
     {
-        token = token ?? GetFromEnvironmentOrThrow(
-            "MERGE_API_TOKEN", 
-            "The environment variable MERGE_API_TOKEN must be set.");
-        accountId = token ?? GetFromEnvironmentOrThrow(
-            "MERGE_ACCOUNT_ID", 
-            "The environment variable MERGE_ACCOUNT_ID must be set.");
-        var client = new RawClient(
-            new Dictionary<string, string>()
-            {
-                { "X-Hume-Api-Key", token },
-                { "X-Hume-Version", "1.0.0" }
-            },
+        _client = new RawClient(
+            new Dictionary<string, string> { { "X-Fern-Language", "C#" }, },
             clientOptions ?? new ClientOptions()
         );
-        Imdb = new ImdbClient(client);
+        Imdb = new ImdbClient(_client);
     }
-    
+
     public ImdbClient Imdb { get; }
 
-    private static string GetFromEnvironmentOrThrow(String variable, String message)
+    private string GetFromEnvironmentOrThrow(string env, string message)
     {
-        string value = Environment.GetEnvironmentVariable(variable);
+        var value = Environment.GetEnvironmentVariable(env);
         if (value == null)
         {
             throw new Exception(message);

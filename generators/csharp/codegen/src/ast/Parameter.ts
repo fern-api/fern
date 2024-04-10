@@ -10,15 +10,18 @@ export declare namespace Parameter {
         type: Type;
         /* Docs for the parameter */
         docs?: string;
+        /* The initializer for the parameter */
+        initializer?: string;
     }
 }
 
 export class Parameter extends AstNode {
     public readonly name: string;
     public readonly docs: string | undefined;
+    public readonly initializer: string | undefined;
     private type: Type;
 
-    constructor({ name, type, docs }: Parameter.Args) {
+    constructor({ name, type, docs, initializer }: Parameter.Args) {
         super();
         this.name = name;
         this.type = type;
@@ -28,5 +31,8 @@ export class Parameter extends AstNode {
     public write(writer: Writer): void {
         this.type.write(writer);
         writer.write(` ${this.name}`);
+        if (this.initializer != null) {
+            writer.write(` = ${this.initializer}`);
+        }
     }
 }

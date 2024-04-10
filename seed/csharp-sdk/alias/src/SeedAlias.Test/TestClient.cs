@@ -1,5 +1,3 @@
 namespace SeedAlias.Test;
 
-public class TestClient
-{
-}
+public class TestClient { }
