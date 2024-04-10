@@ -6,12 +6,12 @@ require "async"
 
 module SeedExhaustiveClient
   class InlinedRequestsClient
+    # @return [SeedExhaustiveClient::RequestClient]
     attr_reader :request_client
 
-    # @param request_client [RequestClient]
-    # @return [InlinedRequestsClient]
+    # @param request_client [SeedExhaustiveClient::RequestClient]
+    # @return [SeedExhaustiveClient::InlinedRequestsClient]
     def initialize(request_client:)
-      # @type [RequestClient]
       @request_client = request_client
     end
 
@@ -19,7 +19,7 @@ module SeedExhaustiveClient
     #
     # @param string [String]
     # @param integer [Integer]
-    # @param nested_object [Hash] Request of type Types::Object::ObjectWithOptionalField, as a Hash
+    # @param nested_object [Hash] Request of type SeedExhaustiveClient::Types::Object::ObjectWithOptionalField, as a Hash
     #   * :string (String)
     #   * :integer (Integer)
     #   * :long (Long)
@@ -32,10 +32,10 @@ module SeedExhaustiveClient
     #   * :list (Array<String>)
     #   * :set (Set<String>)
     #   * :map (Hash{Integer => String})
-    # @param request_options [RequestOptions]
-    # @return [Types::Object::ObjectWithOptionalField]
+    # @param request_options [SeedExhaustiveClient::RequestOptions]
+    # @return [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
     def post_with_object_bodyand_response(string:, integer:, nested_object:, request_options: nil)
-      response = @request_client.conn.post("/req-bodies/object") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -45,18 +45,19 @@ module SeedExhaustiveClient
           integer: integer,
           NestedObject: nested_object
         }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/req-bodies/object"
       end
-      Types::Object::ObjectWithOptionalField.from_json(json_object: response.body)
+      SeedExhaustiveClient::Types::Object::ObjectWithOptionalField.from_json(json_object: response.body)
     end
   end
 
   class AsyncInlinedRequestsClient
+    # @return [SeedExhaustiveClient::AsyncRequestClient]
     attr_reader :request_client
 
-    # @param request_client [AsyncRequestClient]
-    # @return [AsyncInlinedRequestsClient]
+    # @param request_client [SeedExhaustiveClient::AsyncRequestClient]
+    # @return [SeedExhaustiveClient::AsyncInlinedRequestsClient]
     def initialize(request_client:)
-      # @type [AsyncRequestClient]
       @request_client = request_client
     end
 
@@ -64,7 +65,7 @@ module SeedExhaustiveClient
     #
     # @param string [String]
     # @param integer [Integer]
-    # @param nested_object [Hash] Request of type Types::Object::ObjectWithOptionalField, as a Hash
+    # @param nested_object [Hash] Request of type SeedExhaustiveClient::Types::Object::ObjectWithOptionalField, as a Hash
     #   * :string (String)
     #   * :integer (Integer)
     #   * :long (Long)
@@ -77,11 +78,11 @@ module SeedExhaustiveClient
     #   * :list (Array<String>)
     #   * :set (Set<String>)
     #   * :map (Hash{Integer => String})
-    # @param request_options [RequestOptions]
-    # @return [Types::Object::ObjectWithOptionalField]
+    # @param request_options [SeedExhaustiveClient::RequestOptions]
+    # @return [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
     def post_with_object_bodyand_response(string:, integer:, nested_object:, request_options: nil)
       Async do
-        response = @request_client.conn.post("/req-bodies/object") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -91,8 +92,9 @@ module SeedExhaustiveClient
             integer: integer,
             NestedObject: nested_object
           }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/req-bodies/object"
         end
-        Types::Object::ObjectWithOptionalField.from_json(json_object: response.body)
+        SeedExhaustiveClient::Types::Object::ObjectWithOptionalField.from_json(json_object: response.body)
       end
     end
   end

@@ -8,34 +8,44 @@ require_relative "fern_multi_url_environment/s_3/client"
 
 module SeedMultiUrlEnvironmentClient
   class Client
-    attr_reader :ec_2, :s_3
+    # @return [SeedMultiUrlEnvironmentClient::Ec2Client]
+    attr_reader :ec_2
+    # @return [SeedMultiUrlEnvironmentClient::S3Client]
+    attr_reader :s_3
 
-    # @param environment [Environment]
+    # @param environment [SeedMultiUrlEnvironmentClient::Environment]
+    # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param token [String]
-    # @return [Client]
-    def initialize(token:, environment: Environment::PRODUCTION, max_retries: nil, timeout_in_seconds: nil)
-      @request_client = RequestClient.new(environment: environment, max_retries: max_retries,
-                                          timeout_in_seconds: timeout_in_seconds, token: token)
-      @ec_2 = Ec2Client.new(request_client: @request_client)
-      @s_3 = S3Client.new(request_client: @request_client)
+    # @return [SeedMultiUrlEnvironmentClient::Client]
+    def initialize(token:, environment: Environment::PRODUCTION, base_url: nil, max_retries: nil,
+                   timeout_in_seconds: nil)
+      @request_client = SeedMultiUrlEnvironmentClient::RequestClient.new(environment: environment, base_url: base_url,
+                                                                         max_retries: max_retries, timeout_in_seconds: timeout_in_seconds, token: token)
+      @ec_2 = SeedMultiUrlEnvironmentClient::Ec2Client.new(request_client: @request_client)
+      @s_3 = SeedMultiUrlEnvironmentClient::S3Client.new(request_client: @request_client)
     end
   end
 
   class AsyncClient
-    attr_reader :ec_2, :s_3
+    # @return [SeedMultiUrlEnvironmentClient::AsyncEc2Client]
+    attr_reader :ec_2
+    # @return [SeedMultiUrlEnvironmentClient::AsyncS3Client]
+    attr_reader :s_3
 
-    # @param environment [Environment]
+    # @param environment [SeedMultiUrlEnvironmentClient::Environment]
+    # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param token [String]
-    # @return [AsyncClient]
-    def initialize(token:, environment: Environment::PRODUCTION, max_retries: nil, timeout_in_seconds: nil)
-      @async_request_client = AsyncRequestClient.new(environment: environment, max_retries: max_retries,
-                                                     timeout_in_seconds: timeout_in_seconds, token: token)
-      @ec_2 = AsyncEc2Client.new(request_client: @async_request_client)
-      @s_3 = AsyncS3Client.new(request_client: @async_request_client)
+    # @return [SeedMultiUrlEnvironmentClient::AsyncClient]
+    def initialize(token:, environment: Environment::PRODUCTION, base_url: nil, max_retries: nil,
+                   timeout_in_seconds: nil)
+      @async_request_client = SeedMultiUrlEnvironmentClient::AsyncRequestClient.new(environment: environment,
+                                                                                    base_url: base_url, max_retries: max_retries, timeout_in_seconds: timeout_in_seconds, token: token)
+      @ec_2 = SeedMultiUrlEnvironmentClient::AsyncEc2Client.new(request_client: @async_request_client)
+      @s_3 = SeedMultiUrlEnvironmentClient::AsyncS3Client.new(request_client: @async_request_client)
     end
   end
 end

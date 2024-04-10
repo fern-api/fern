@@ -2,36 +2,37 @@
 
 require "json"
 require_relative "create_problem_error"
-require_relative "../../commons/types/problem_id"
 
 module SeedTraceClient
   class Problem
     class CreateProblemResponse
-      attr_reader :member, :discriminant
+      # @return [Object]
+      attr_reader :member
+      # @return [String]
+      attr_reader :discriminant
 
       private_class_method :new
       alias kind_of? is_a?
+
       # @param member [Object]
       # @param discriminant [String]
-      # @return [Problem::CreateProblemResponse]
+      # @return [SeedTraceClient::Problem::CreateProblemResponse]
       def initialize(member:, discriminant:)
-        # @type [Object]
         @member = member
-        # @type [String]
         @discriminant = discriminant
       end
 
       # Deserialize a JSON object to an instance of CreateProblemResponse
       #
-      # @param json_object [JSON]
-      # @return [Problem::CreateProblemResponse]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Problem::CreateProblemResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "success"
                    json_object.value
                  when "error"
-                   Problem::CreateProblemError.from_json(json_object: json_object.value)
+                   SeedTraceClient::Problem::CreateProblemError.from_json(json_object: json_object.value)
                  else
                    json_object
                  end
@@ -40,7 +41,7 @@ module SeedTraceClient
 
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
         case @discriminant
         when "success"
@@ -50,7 +51,9 @@ module SeedTraceClient
         @member.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]
@@ -59,7 +62,7 @@ module SeedTraceClient
         when "success"
           obj.is_a?(String) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         when "error"
-          Problem::CreateProblemError.validate_raw(obj: obj)
+          SeedTraceClient::Problem::CreateProblemError.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -73,14 +76,14 @@ module SeedTraceClient
         @member.is_a?(obj)
       end
 
-      # @param member [Commons::PROBLEM_ID]
-      # @return [Problem::CreateProblemResponse]
+      # @param member [String]
+      # @return [SeedTraceClient::Problem::CreateProblemResponse]
       def self.success(member:)
         new(member: member, discriminant: "success")
       end
 
-      # @param member [Problem::CreateProblemError]
-      # @return [Problem::CreateProblemResponse]
+      # @param member [SeedTraceClient::Problem::CreateProblemError]
+      # @return [SeedTraceClient::Problem::CreateProblemResponse]
       def self.error(member:)
         new(member: member, discriminant: "error")
       end

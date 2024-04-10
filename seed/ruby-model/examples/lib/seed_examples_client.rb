@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "seed_examples_client/commons/types/types/tag"
 require_relative "seed_examples_client/commons/types/types/metadata"
 require_relative "seed_examples_client/commons/types/types/event_info"
 require_relative "seed_examples_client/commons/types/types/data"
-require_relative "seed_examples_client/file/service/types/filename"
-require_relative "seed_examples_client/types/types/movie_id"
 require_relative "seed_examples_client/types/types/movie"
 require_relative "seed_examples_client/types/types/actor"
 require_relative "seed_examples_client/types/types/actress"

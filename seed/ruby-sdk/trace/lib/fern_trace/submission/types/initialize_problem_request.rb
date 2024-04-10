@@ -1,46 +1,57 @@
 # frozen_string_literal: true
 
-require_relative "../../commons/types/problem_id"
+require "ostruct"
 require "json"
 
 module SeedTraceClient
   class Submission
     class InitializeProblemRequest
-      attr_reader :problem_id, :problem_version, :additional_properties
+      # @return [String]
+      attr_reader :problem_id
+      # @return [Integer]
+      attr_reader :problem_version
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
+      protected :_field_set
 
-      # @param problem_id [Commons::PROBLEM_ID]
+      OMIT = Object.new
+
+      # @param problem_id [String]
       # @param problem_version [Integer]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Submission::InitializeProblemRequest]
-      def initialize(problem_id:, problem_version: nil, additional_properties: nil)
-        # @type [Commons::PROBLEM_ID]
+      # @return [SeedTraceClient::Submission::InitializeProblemRequest]
+      def initialize(problem_id:, problem_version: OMIT, additional_properties: nil)
         @problem_id = problem_id
-        # @type [Integer]
-        @problem_version = problem_version
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
+        @problem_version = problem_version if problem_version != OMIT
         @additional_properties = additional_properties
+        @_field_set = { "problemId": problem_id, "problemVersion": problem_version }.reject do |_k, v|
+          v == OMIT
+        end
       end
 
       # Deserialize a JSON object to an instance of InitializeProblemRequest
       #
-      # @param json_object [JSON]
-      # @return [Submission::InitializeProblemRequest]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Submission::InitializeProblemRequest]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        JSON.parse(json_object)
-        problem_id = struct.problemId
-        problem_version = struct.problemVersion
+        problem_id = struct["problemId"]
+        problem_version = struct["problemVersion"]
         new(problem_id: problem_id, problem_version: problem_version, additional_properties: struct)
       end
 
       # Serialize an instance of InitializeProblemRequest to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "problemId": @problem_id, "problemVersion": @problem_version }.to_json
+        @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

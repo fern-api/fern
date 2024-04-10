@@ -1,45 +1,55 @@
 # frozen_string_literal: true
 
 require_relative "user"
+require "ostruct"
 require "json"
 
 module SeedPaginationClient
   class Users
     class UserListContainer
-      attr_reader :users, :additional_properties
+      # @return [Array<SeedPaginationClient::Users::User>]
+      attr_reader :users
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
+      protected :_field_set
 
-      # @param users [Array<Users::User>]
+      OMIT = Object.new
+
+      # @param users [Array<SeedPaginationClient::Users::User>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Users::UserListContainer]
+      # @return [SeedPaginationClient::Users::UserListContainer]
       def initialize(users:, additional_properties: nil)
-        # @type [Array<Users::User>]
         @users = users
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
+        @_field_set = { "users": users }
       end
 
       # Deserialize a JSON object to an instance of UserListContainer
       #
-      # @param json_object [JSON]
-      # @return [Users::UserListContainer]
+      # @param json_object [String]
+      # @return [SeedPaginationClient::Users::UserListContainer]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         users = parsed_json["users"]&.map do |v|
           v = v.to_json
-          Users::User.from_json(json_object: v)
+          SeedPaginationClient::Users::User.from_json(json_object: v)
         end
         new(users: users, additional_properties: struct)
       end
 
       # Serialize an instance of UserListContainer to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "users": @users }.to_json
+        @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

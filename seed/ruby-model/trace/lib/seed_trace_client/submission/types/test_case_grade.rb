@@ -7,40 +7,42 @@ require_relative "test_case_non_hidden_grade"
 module SeedTraceClient
   class Submission
     class TestCaseGrade
-      attr_reader :member, :discriminant
+      # @return [Object]
+      attr_reader :member
+      # @return [String]
+      attr_reader :discriminant
 
       private_class_method :new
       alias kind_of? is_a?
+
       # @param member [Object]
       # @param discriminant [String]
-      # @return [Submission::TestCaseGrade]
+      # @return [SeedTraceClient::Submission::TestCaseGrade]
       def initialize(member:, discriminant:)
-        # @type [Object]
         @member = member
-        # @type [String]
         @discriminant = discriminant
       end
 
       # Deserialize a JSON object to an instance of TestCaseGrade
       #
-      # @param json_object [JSON]
-      # @return [Submission::TestCaseGrade]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Submission::TestCaseGrade]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "hidden"
-                   Submission::TestCaseHiddenGrade.from_json(json_object: json_object)
+                   SeedTraceClient::Submission::TestCaseHiddenGrade.from_json(json_object: json_object)
                  when "nonHidden"
-                   Submission::TestCaseNonHiddenGrade.from_json(json_object: json_object)
+                   SeedTraceClient::Submission::TestCaseNonHiddenGrade.from_json(json_object: json_object)
                  else
-                   Submission::TestCaseHiddenGrade.from_json(json_object: json_object)
+                   SeedTraceClient::Submission::TestCaseHiddenGrade.from_json(json_object: json_object)
                  end
         new(member: member, discriminant: struct.type)
       end
 
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
         case @discriminant
         when "hidden"
@@ -53,16 +55,18 @@ module SeedTraceClient
         @member.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
         case obj.type
         when "hidden"
-          Submission::TestCaseHiddenGrade.validate_raw(obj: obj)
+          SeedTraceClient::Submission::TestCaseHiddenGrade.validate_raw(obj: obj)
         when "nonHidden"
-          Submission::TestCaseNonHiddenGrade.validate_raw(obj: obj)
+          SeedTraceClient::Submission::TestCaseNonHiddenGrade.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -76,14 +80,14 @@ module SeedTraceClient
         @member.is_a?(obj)
       end
 
-      # @param member [Submission::TestCaseHiddenGrade]
-      # @return [Submission::TestCaseGrade]
+      # @param member [SeedTraceClient::Submission::TestCaseHiddenGrade]
+      # @return [SeedTraceClient::Submission::TestCaseGrade]
       def self.hidden(member:)
         new(member: member, discriminant: "hidden")
       end
 
-      # @param member [Submission::TestCaseNonHiddenGrade]
-      # @return [Submission::TestCaseGrade]
+      # @param member [SeedTraceClient::Submission::TestCaseNonHiddenGrade]
+      # @return [SeedTraceClient::Submission::TestCaseGrade]
       def self.non_hidden(member:)
         new(member: member, discriminant: "nonHidden")
       end

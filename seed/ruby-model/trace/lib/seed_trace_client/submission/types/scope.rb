@@ -1,44 +1,54 @@
 # frozen_string_literal: true
 
+require "ostruct"
 require "json"
 
 module SeedTraceClient
   class Submission
     class Scope
-      attr_reader :variables, :additional_properties
+      # @return [Hash{String => SeedTraceClient::Commons::DebugVariableValue}]
+      attr_reader :variables
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
+      protected :_field_set
 
-      # @param variables [Hash{String => Commons::DebugVariableValue}]
+      OMIT = Object.new
+
+      # @param variables [Hash{String => SeedTraceClient::Commons::DebugVariableValue}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Submission::Scope]
+      # @return [SeedTraceClient::Submission::Scope]
       def initialize(variables:, additional_properties: nil)
-        # @type [Hash{String => Commons::DebugVariableValue}]
         @variables = variables
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
+        @_field_set = { "variables": variables }
       end
 
       # Deserialize a JSON object to an instance of Scope
       #
-      # @param json_object [JSON]
-      # @return [Submission::Scope]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Submission::Scope]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        variables = parsed_json["variables"]&.transform_values do |_k, v|
+        variables = parsed_json["variables"]&.transform_values do |v|
           v = v.to_json
-          Commons::DebugVariableValue.from_json(json_object: v)
+          SeedTraceClient::Commons::DebugVariableValue.from_json(json_object: v)
         end
         new(variables: variables, additional_properties: struct)
       end
 
       # Serialize an instance of Scope to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "variables": @variables }.to_json
+        @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

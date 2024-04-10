@@ -1,49 +1,60 @@
 # frozen_string_literal: true
 
+require "ostruct"
 require "json"
 
 module SeedTraceClient
   class Submission
     class SubmissionFileInfo
-      attr_reader :directory, :filename, :contents, :additional_properties
+      # @return [String]
+      attr_reader :directory
+      # @return [String]
+      attr_reader :filename
+      # @return [String]
+      attr_reader :contents
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
+      protected :_field_set
+
+      OMIT = Object.new
 
       # @param directory [String]
       # @param filename [String]
       # @param contents [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Submission::SubmissionFileInfo]
+      # @return [SeedTraceClient::Submission::SubmissionFileInfo]
       def initialize(directory:, filename:, contents:, additional_properties: nil)
-        # @type [String]
         @directory = directory
-        # @type [String]
         @filename = filename
-        # @type [String]
         @contents = contents
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
+        @_field_set = { "directory": directory, "filename": filename, "contents": contents }
       end
 
       # Deserialize a JSON object to an instance of SubmissionFileInfo
       #
-      # @param json_object [JSON]
-      # @return [Submission::SubmissionFileInfo]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Submission::SubmissionFileInfo]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        JSON.parse(json_object)
-        directory = struct.directory
-        filename = struct.filename
-        contents = struct.contents
+        directory = struct["directory"]
+        filename = struct["filename"]
+        contents = struct["contents"]
         new(directory: directory, filename: filename, contents: contents, additional_properties: struct)
       end
 
       # Serialize an instance of SubmissionFileInfo to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "directory": @directory, "filename": @filename, "contents": @contents }.to_json
+        @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

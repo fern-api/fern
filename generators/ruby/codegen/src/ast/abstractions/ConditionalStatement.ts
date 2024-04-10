@@ -7,7 +7,7 @@ export interface Condition {
     rightSide?: string | AstNode;
     leftSide?: string | AstNode;
     operation?: string;
-    expressions: AstNode[];
+    expressions: (AstNode | string)[];
 }
 export declare namespace ConditionalStatement {
     export interface Init extends AstNode.Init {
@@ -48,7 +48,10 @@ export class ConditionalStatement extends AstNode {
             });
         }
         condition.expressions.forEach((exp) =>
-            this.addText({ stringContent: exp.write({}), startingTabSpaces: this.tabSizeSpaces + startingTabSpaces })
+            this.addText({
+                stringContent: exp instanceof AstNode ? exp.write({}) : exp,
+                startingTabSpaces: this.tabSizeSpaces + startingTabSpaces
+            })
         );
     }
 

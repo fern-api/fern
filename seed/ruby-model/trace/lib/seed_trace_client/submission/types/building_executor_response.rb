@@ -1,53 +1,62 @@
 # frozen_string_literal: true
 
-require_relative "submission_id"
 require_relative "execution_session_status"
+require "ostruct"
 require "json"
 
 module SeedTraceClient
   class Submission
     class BuildingExecutorResponse
-      attr_reader :submission_id, :status, :additional_properties
+      # @return [String]
+      attr_reader :submission_id
+      # @return [SeedTraceClient::Submission::ExecutionSessionStatus]
+      attr_reader :status
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
+      protected :_field_set
 
-      # @param submission_id [Submission::SUBMISSION_ID]
-      # @param status [Submission::ExecutionSessionStatus]
+      OMIT = Object.new
+
+      # @param submission_id [String]
+      # @param status [SeedTraceClient::Submission::ExecutionSessionStatus]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Submission::BuildingExecutorResponse]
+      # @return [SeedTraceClient::Submission::BuildingExecutorResponse]
       def initialize(submission_id:, status:, additional_properties: nil)
-        # @type [Submission::SUBMISSION_ID]
         @submission_id = submission_id
-        # @type [Submission::ExecutionSessionStatus]
         @status = status
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
+        @_field_set = { "submissionId": submission_id, "status": status }
       end
 
       # Deserialize a JSON object to an instance of BuildingExecutorResponse
       #
-      # @param json_object [JSON]
-      # @return [Submission::BuildingExecutorResponse]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Submission::BuildingExecutorResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        JSON.parse(json_object)
-        submission_id = struct.submissionId
-        status = struct.status
+        submission_id = struct["submissionId"]
+        status = struct["status"]
         new(submission_id: submission_id, status: status, additional_properties: struct)
       end
 
       # Serialize an instance of BuildingExecutorResponse to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "submissionId": @submission_id, "status": @status }.to_json
+        @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
         obj.submission_id.is_a?(String) != false || raise("Passed value for field obj.submission_id is not the expected type, validation failed.")
-        obj.status.is_a?(Submission::ExecutionSessionStatus) != false || raise("Passed value for field obj.status is not the expected type, validation failed.")
+        obj.status.is_a?(SeedTraceClient::Submission::ExecutionSessionStatus) != false || raise("Passed value for field obj.status is not the expected type, validation failed.")
       end
     end
   end

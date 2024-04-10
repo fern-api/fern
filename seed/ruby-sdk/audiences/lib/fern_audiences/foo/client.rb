@@ -7,22 +7,22 @@ require "async"
 
 module SeedAudiencesClient
   class FooClient
+    # @return [SeedAudiencesClient::RequestClient]
     attr_reader :request_client
 
-    # @param request_client [RequestClient]
-    # @return [FooClient]
+    # @param request_client [SeedAudiencesClient::RequestClient]
+    # @return [SeedAudiencesClient::FooClient]
     def initialize(request_client:)
-      # @type [RequestClient]
       @request_client = request_client
     end
 
-    # @param optional_string [Foo::OPTIONAL_STRING]
+    # @param optional_string [SeedAudiencesClient::Foo::OPTIONAL_STRING]
     # @param public_property [String]
     # @param private_property [Integer]
-    # @param request_options [RequestOptions]
-    # @return [Foo::ImportingType]
+    # @param request_options [SeedAudiencesClient::RequestOptions]
+    # @return [SeedAudiencesClient::Foo::ImportingType]
     def find(optional_string:, public_property: nil, private_property: nil, request_options: nil)
-      response = @request_client.conn.post("/") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.params = {
@@ -34,29 +34,30 @@ module SeedAudiencesClient
           publicProperty: public_property,
           privateProperty: private_property
         }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/"
       end
-      Foo::ImportingType.from_json(json_object: response.body)
+      SeedAudiencesClient::Foo::ImportingType.from_json(json_object: response.body)
     end
   end
 
   class AsyncFooClient
+    # @return [SeedAudiencesClient::AsyncRequestClient]
     attr_reader :request_client
 
-    # @param request_client [AsyncRequestClient]
-    # @return [AsyncFooClient]
+    # @param request_client [SeedAudiencesClient::AsyncRequestClient]
+    # @return [SeedAudiencesClient::AsyncFooClient]
     def initialize(request_client:)
-      # @type [AsyncRequestClient]
       @request_client = request_client
     end
 
-    # @param optional_string [Foo::OPTIONAL_STRING]
+    # @param optional_string [SeedAudiencesClient::Foo::OPTIONAL_STRING]
     # @param public_property [String]
     # @param private_property [Integer]
-    # @param request_options [RequestOptions]
-    # @return [Foo::ImportingType]
+    # @param request_options [SeedAudiencesClient::RequestOptions]
+    # @return [SeedAudiencesClient::Foo::ImportingType]
     def find(optional_string:, public_property: nil, private_property: nil, request_options: nil)
       Async do
-        response = @request_client.conn.post("/") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.params = {
@@ -68,8 +69,9 @@ module SeedAudiencesClient
             publicProperty: public_property,
             privateProperty: private_property
           }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/"
         end
-        Foo::ImportingType.from_json(json_object: response.body)
+        SeedAudiencesClient::Foo::ImportingType.from_json(json_object: response.body)
       end
     end
   end

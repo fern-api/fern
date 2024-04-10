@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.5.0-rc0] - 2024-04-09
+
+- Improvement: Consumers of the SDK can now pass in a base URL override into the root client, as well as the request's RequestOptions
+
+- Fix: this PR includes a number of typing annotation and cleanliness/QOL fixes.
+
 ## [0.4.0] - 2024-04-08
 
 - Improvement: The generators now create a rakefile to run any tests prefixed with `test_` in the `test` directory. A step is also added to CI to run these test. The dummy test now running also provides a sanity check on the health of the build of the gem, even if no tests are added given the gem is imported.

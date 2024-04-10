@@ -1,45 +1,57 @@
 # frozen_string_literal: true
 
+require "ostruct"
 require "json"
 
 module SeedTraceClient
   class Commons
     class GenericValue
-      attr_reader :stringified_type, :stringified_value, :additional_properties
+      # @return [String]
+      attr_reader :stringified_type
+      # @return [String]
+      attr_reader :stringified_value
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
+      protected :_field_set
+
+      OMIT = Object.new
 
       # @param stringified_type [String]
       # @param stringified_value [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Commons::GenericValue]
-      def initialize(stringified_value:, stringified_type: nil, additional_properties: nil)
-        # @type [String]
-        @stringified_type = stringified_type
-        # @type [String]
+      # @return [SeedTraceClient::Commons::GenericValue]
+      def initialize(stringified_value:, stringified_type: OMIT, additional_properties: nil)
+        @stringified_type = stringified_type if stringified_type != OMIT
         @stringified_value = stringified_value
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
+        @_field_set = { "stringifiedType": stringified_type, "stringifiedValue": stringified_value }.reject do |_k, v|
+          v == OMIT
+        end
       end
 
       # Deserialize a JSON object to an instance of GenericValue
       #
-      # @param json_object [JSON]
-      # @return [Commons::GenericValue]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Commons::GenericValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        JSON.parse(json_object)
-        stringified_type = struct.stringifiedType
-        stringified_value = struct.stringifiedValue
+        stringified_type = struct["stringifiedType"]
+        stringified_value = struct["stringifiedValue"]
         new(stringified_type: stringified_type, stringified_value: stringified_value, additional_properties: struct)
       end
 
       # Serialize an instance of GenericValue to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "stringifiedType": @stringified_type, "stringifiedValue": @stringified_value }.to_json
+        @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

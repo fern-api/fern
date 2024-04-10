@@ -61,7 +61,7 @@ export class TypesGenerator {
             this.flattenedProperties.set(typeId, this.getFlattenedProperties(typeId));
         }
 
-        this.locationGenerator = new LocationGenerator(this.gemName);
+        this.locationGenerator = new LocationGenerator(this.gemName, this.clientName);
         this.classReferenceFactory = new ClassReferenceFactory(this.types, this.locationGenerator);
     }
 
@@ -132,29 +132,35 @@ export class TypesGenerator {
             aliasTypeDeclaration,
             typeDeclaration
         );
-        aliasTypeDeclaration.resolvedType._visit<void>({
+
+        // For simplicity we do not generate aliases for primitive types
+        const shouldGenerate = aliasTypeDeclaration.resolvedType._visit<boolean>({
             container: () => {
-                return;
+                return true;
             },
             named: (rnt: ResolvedNamedType) => {
                 this.resolvedReferences.set(typeId, rnt.name.typeId);
+                return true;
             },
             primitive: () => {
-                return;
+                return false;
             },
             unknown: () => {
-                return;
+                return true;
             },
             _other: () => {
-                return;
+                return true;
             }
         });
 
-        const rootNode = Module_.wrapInModules(this.clientName, aliasExpression, typeDeclaration.name.fernFilepath);
-        return new GeneratedRubyFile({
-            rootNode,
-            fullPath: this.locationGenerator.getLocationForTypeDeclaration(typeDeclaration.name)
-        });
+        if (shouldGenerate) {
+            const rootNode = Module_.wrapInModules(this.clientName, aliasExpression, typeDeclaration.name.fernFilepath);
+            return new GeneratedRubyFile({
+                rootNode,
+                fullPath: this.locationGenerator.getLocationForTypeDeclaration(typeDeclaration.name)
+            });
+        }
+        return;
     }
     private generateEnumFile(
         enumTypeDeclaration: EnumTypeDeclaration,

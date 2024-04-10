@@ -20,10 +20,17 @@ export function getClientName(organization: string, apiName: string, clientClass
     return clientClassName ?? upperFirst(camelCase(organization)) + upperFirst(camelCase(apiName)) + "Client";
 }
 
-export function getBreadcrumbsFromFilepath(fernFilepath: FernFilepath, includeFullPath?: boolean): string[] {
-    return (includeFullPath === true ? fernFilepath.allParts : fernFilepath.packagePath).map(
-        (pathPart) => pathPart.pascalCase.safeName
-    );
+export function getBreadcrumbsFromFilepath(
+    fernFilepath: FernFilepath,
+    clientName: string,
+    includeFullPath?: boolean
+): string[] {
+    return [
+        clientName,
+        ...(includeFullPath === true ? fernFilepath.allParts : fernFilepath.packagePath).map(
+            (pathPart) => pathPart.pascalCase.safeName
+        )
+    ];
 }
 
 export function generateBasicRakefile(): GeneratedFile {
@@ -99,7 +106,7 @@ export function generateGemspec(
     });
     return new GeneratedRubyFile({
         rootNode: gemspec,
-        fullPath: `${gemName}`,
+        fullPath: gemName,
         fileExtension: "gemspec",
         isConfigurationFile: true
     });

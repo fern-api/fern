@@ -1,46 +1,55 @@
 # frozen_string_literal: true
 
-require_relative "../../v_2/problem/types/test_case_id"
+require "ostruct"
 require "json"
 
 module SeedTraceClient
   class Submission
     class RecordedTestCaseUpdate
-      attr_reader :test_case_id, :trace_responses_size, :additional_properties
+      # @return [String]
+      attr_reader :test_case_id
+      # @return [Integer]
+      attr_reader :trace_responses_size
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
+      protected :_field_set
 
-      # @param test_case_id [V2::Problem::TEST_CASE_ID]
+      OMIT = Object.new
+
+      # @param test_case_id [String]
       # @param trace_responses_size [Integer]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Submission::RecordedTestCaseUpdate]
+      # @return [SeedTraceClient::Submission::RecordedTestCaseUpdate]
       def initialize(test_case_id:, trace_responses_size:, additional_properties: nil)
-        # @type [V2::Problem::TEST_CASE_ID]
         @test_case_id = test_case_id
-        # @type [Integer]
         @trace_responses_size = trace_responses_size
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
+        @_field_set = { "testCaseId": test_case_id, "traceResponsesSize": trace_responses_size }
       end
 
       # Deserialize a JSON object to an instance of RecordedTestCaseUpdate
       #
-      # @param json_object [JSON]
-      # @return [Submission::RecordedTestCaseUpdate]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Submission::RecordedTestCaseUpdate]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        JSON.parse(json_object)
-        test_case_id = struct.testCaseId
-        trace_responses_size = struct.traceResponsesSize
+        test_case_id = struct["testCaseId"]
+        trace_responses_size = struct["traceResponsesSize"]
         new(test_case_id: test_case_id, trace_responses_size: trace_responses_size, additional_properties: struct)
       end
 
       # Serialize an instance of RecordedTestCaseUpdate to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "testCaseId": @test_case_id, "traceResponsesSize": @trace_responses_size }.to_json
+        @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

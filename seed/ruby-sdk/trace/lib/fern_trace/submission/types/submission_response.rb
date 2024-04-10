@@ -4,29 +4,30 @@ require "json"
 require_relative "exception_info"
 require_relative "code_execution_update"
 require_relative "terminated_response"
-require_relative "../../commons/types/problem_id"
 
 module SeedTraceClient
   class Submission
     class SubmissionResponse
-      attr_reader :member, :discriminant
+      # @return [Object]
+      attr_reader :member
+      # @return [String]
+      attr_reader :discriminant
 
       private_class_method :new
       alias kind_of? is_a?
+
       # @param member [Object]
       # @param discriminant [String]
-      # @return [Submission::SubmissionResponse]
+      # @return [SeedTraceClient::Submission::SubmissionResponse]
       def initialize(member:, discriminant:)
-        # @type [Object]
         @member = member
-        # @type [String]
         @discriminant = discriminant
       end
 
       # Deserialize a JSON object to an instance of SubmissionResponse
       #
-      # @param json_object [JSON]
-      # @return [Submission::SubmissionResponse]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Submission::SubmissionResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
@@ -37,11 +38,11 @@ module SeedTraceClient
                  when "workspaceInitialized"
                    nil
                  when "serverErrored"
-                   Submission::ExceptionInfo.from_json(json_object: json_object)
+                   SeedTraceClient::Submission::ExceptionInfo.from_json(json_object: json_object)
                  when "codeExecutionUpdate"
-                   Submission::CodeExecutionUpdate.from_json(json_object: json_object.value)
+                   SeedTraceClient::Submission::CodeExecutionUpdate.from_json(json_object: json_object.value)
                  when "terminated"
-                   Submission::TerminatedResponse.from_json(json_object: json_object)
+                   SeedTraceClient::Submission::TerminatedResponse.from_json(json_object: json_object)
                  else
                    json_object
                  end
@@ -50,7 +51,7 @@ module SeedTraceClient
 
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
         case @discriminant
         when "serverInitialized"
@@ -71,7 +72,9 @@ module SeedTraceClient
         @member.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]
@@ -84,11 +87,11 @@ module SeedTraceClient
         when "workspaceInitialized"
           # noop
         when "serverErrored"
-          Submission::ExceptionInfo.validate_raw(obj: obj)
+          SeedTraceClient::Submission::ExceptionInfo.validate_raw(obj: obj)
         when "codeExecutionUpdate"
-          Submission::CodeExecutionUpdate.validate_raw(obj: obj)
+          SeedTraceClient::Submission::CodeExecutionUpdate.validate_raw(obj: obj)
         when "terminated"
-          Submission::TerminatedResponse.validate_raw(obj: obj)
+          SeedTraceClient::Submission::TerminatedResponse.validate_raw(obj: obj)
         else
           raise("Passed value matched no type within the union, validation failed.")
         end
@@ -102,36 +105,36 @@ module SeedTraceClient
         @member.is_a?(obj)
       end
 
-      # @return [Submission::SubmissionResponse]
+      # @return [SeedTraceClient::Submission::SubmissionResponse]
       def self.server_initialized
         new(member: nil, discriminant: "serverInitialized")
       end
 
-      # @param member [Commons::PROBLEM_ID]
-      # @return [Submission::SubmissionResponse]
+      # @param member [String]
+      # @return [SeedTraceClient::Submission::SubmissionResponse]
       def self.problem_initialized(member:)
         new(member: member, discriminant: "problemInitialized")
       end
 
-      # @return [Submission::SubmissionResponse]
+      # @return [SeedTraceClient::Submission::SubmissionResponse]
       def self.workspace_initialized
         new(member: nil, discriminant: "workspaceInitialized")
       end
 
-      # @param member [Submission::ExceptionInfo]
-      # @return [Submission::SubmissionResponse]
+      # @param member [SeedTraceClient::Submission::ExceptionInfo]
+      # @return [SeedTraceClient::Submission::SubmissionResponse]
       def self.server_errored(member:)
         new(member: member, discriminant: "serverErrored")
       end
 
-      # @param member [Submission::CodeExecutionUpdate]
-      # @return [Submission::SubmissionResponse]
+      # @param member [SeedTraceClient::Submission::CodeExecutionUpdate]
+      # @return [SeedTraceClient::Submission::SubmissionResponse]
       def self.code_execution_update(member:)
         new(member: member, discriminant: "codeExecutionUpdate")
       end
 
-      # @param member [Submission::TerminatedResponse]
-      # @return [Submission::SubmissionResponse]
+      # @param member [SeedTraceClient::Submission::TerminatedResponse]
+      # @return [SeedTraceClient::Submission::SubmissionResponse]
       def self.terminated(member:)
         new(member: member, discriminant: "terminated")
       end

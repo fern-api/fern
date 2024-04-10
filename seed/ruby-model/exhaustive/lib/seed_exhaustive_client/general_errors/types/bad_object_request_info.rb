@@ -1,41 +1,50 @@
 # frozen_string_literal: true
 
+require "ostruct"
 require "json"
 
 module SeedExhaustiveClient
   class GeneralErrors
     class BadObjectRequestInfo
-      attr_reader :message, :additional_properties
+      # @return [String]
+      attr_reader :message
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
+      protected :_field_set
+
+      OMIT = Object.new
 
       # @param message [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [GeneralErrors::BadObjectRequestInfo]
+      # @return [SeedExhaustiveClient::GeneralErrors::BadObjectRequestInfo]
       def initialize(message:, additional_properties: nil)
-        # @type [String]
         @message = message
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
+        @_field_set = { "message": message }
       end
 
       # Deserialize a JSON object to an instance of BadObjectRequestInfo
       #
-      # @param json_object [JSON]
-      # @return [GeneralErrors::BadObjectRequestInfo]
+      # @param json_object [String]
+      # @return [SeedExhaustiveClient::GeneralErrors::BadObjectRequestInfo]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        JSON.parse(json_object)
-        message = struct.message
+        message = struct["message"]
         new(message: message, additional_properties: struct)
       end
 
       # Serialize an instance of BadObjectRequestInfo to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "message": @message }.to_json
+        @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

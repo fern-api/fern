@@ -1,42 +1,50 @@
 # frozen_string_literal: true
 
-require_relative "submission_id"
+require "ostruct"
 require "json"
 
 module SeedTraceClient
   class Submission
     class SubmissionIdNotFound
-      attr_reader :missing_submission_id, :additional_properties
+      # @return [String]
+      attr_reader :missing_submission_id
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
+      protected :_field_set
 
-      # @param missing_submission_id [Submission::SUBMISSION_ID]
+      OMIT = Object.new
+
+      # @param missing_submission_id [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Submission::SubmissionIdNotFound]
+      # @return [SeedTraceClient::Submission::SubmissionIdNotFound]
       def initialize(missing_submission_id:, additional_properties: nil)
-        # @type [Submission::SUBMISSION_ID]
         @missing_submission_id = missing_submission_id
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
+        @_field_set = { "missingSubmissionId": missing_submission_id }
       end
 
       # Deserialize a JSON object to an instance of SubmissionIdNotFound
       #
-      # @param json_object [JSON]
-      # @return [Submission::SubmissionIdNotFound]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Submission::SubmissionIdNotFound]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        JSON.parse(json_object)
-        missing_submission_id = struct.missingSubmissionId
+        missing_submission_id = struct["missingSubmissionId"]
         new(missing_submission_id: missing_submission_id, additional_properties: struct)
       end
 
       # Serialize an instance of SubmissionIdNotFound to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "missingSubmissionId": @missing_submission_id }.to_json
+        @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

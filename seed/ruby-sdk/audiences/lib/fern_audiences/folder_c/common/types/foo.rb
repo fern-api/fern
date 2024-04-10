@@ -1,42 +1,51 @@
 # frozen_string_literal: true
 
+require "ostruct"
 require "json"
 
 module SeedAudiencesClient
   module FolderC
     class Common
       class Foo
-        attr_reader :bar_property, :additional_properties
+        # @return [String]
+        attr_reader :bar_property
+        # @return [OpenStruct] Additional properties unmapped to the current class definition
+        attr_reader :additional_properties
+        # @return [Object]
+        attr_reader :_field_set
+        protected :_field_set
+
+        OMIT = Object.new
 
         # @param bar_property [String]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [FolderC::Common::Foo]
+        # @return [SeedAudiencesClient::FolderC::Common::Foo]
         def initialize(bar_property:, additional_properties: nil)
-          # @type [String]
           @bar_property = bar_property
-          # @type [OpenStruct] Additional properties unmapped to the current class definition
           @additional_properties = additional_properties
+          @_field_set = { "bar_property": bar_property }
         end
 
         # Deserialize a JSON object to an instance of Foo
         #
-        # @param json_object [JSON]
-        # @return [FolderC::Common::Foo]
+        # @param json_object [String]
+        # @return [SeedAudiencesClient::FolderC::Common::Foo]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          JSON.parse(json_object)
-          bar_property = struct.bar_property
+          bar_property = struct["bar_property"]
           new(bar_property: bar_property, additional_properties: struct)
         end
 
         # Serialize an instance of Foo to a JSON object
         #
-        # @return [JSON]
+        # @return [String]
         def to_json(*_args)
-          { "bar_property": @bar_property }.to_json
+          @_field_set&.to_json
         end
 
-        # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+        # Leveraged for Union-type generation, validate_raw attempts to parse the given
+        #  hash and check each fields type against the current object's property
+        #  definitions.
         #
         # @param obj [Object]
         # @return [Void]

@@ -3,5 +3,5 @@
 require_relative "string_response"
 
 module SeedResponsePropertyClient
-  OPTIONAL_STRING_RESPONSE = StringResponse
+  OPTIONAL_STRING_RESPONSE = SeedResponsePropertyClient::StringResponse
 end

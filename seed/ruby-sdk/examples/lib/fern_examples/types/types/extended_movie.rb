@@ -1,92 +1,110 @@
 # frozen_string_literal: true
 
-require_relative "movie_id"
-require_relative "../../commons/types/types/tag"
+require "ostruct"
 require "json"
 
 module SeedExamplesClient
   class Types
     class ExtendedMovie
-      attr_reader :cast, :id, :prequel, :title, :from, :rating, :type, :tag, :book, :metadata, :additional_properties
+      # @return [Array<String>]
+      attr_reader :cast
+      # @return [String]
+      attr_reader :id
+      # @return [String]
+      attr_reader :prequel
+      # @return [String]
+      attr_reader :title
+      # @return [String]
+      attr_reader :from
+      # @return [Float] The rating scale is one to five stars
+      attr_reader :rating
+      # @return [String]
+      attr_reader :type
+      # @return [String]
+      attr_reader :tag
+      # @return [String]
+      attr_reader :book
+      # @return [Hash{String => Object}]
+      attr_reader :metadata
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
+      protected :_field_set
+
+      OMIT = Object.new
 
       # @param cast [Array<String>]
-      # @param id [Types::MOVIE_ID]
-      # @param prequel [Types::MOVIE_ID]
+      # @param id [String]
+      # @param prequel [String]
       # @param title [String]
       # @param from [String]
       # @param rating [Float] The rating scale is one to five stars
       # @param type [String]
-      # @param tag [Commons::Types::TAG]
+      # @param tag [String]
       # @param book [String]
       # @param metadata [Hash{String => Object}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Types::ExtendedMovie]
-      def initialize(cast:, id:, title:, from:, rating:, type:, tag:, metadata:, prequel: nil, book: nil,
+      # @return [SeedExamplesClient::Types::ExtendedMovie]
+      def initialize(cast:, id:, title:, from:, rating:, type:, tag:, metadata:, prequel: OMIT, book: OMIT,
                      additional_properties: nil)
-        # @type [Array<String>]
         @cast = cast
-        # @type [Types::MOVIE_ID]
         @id = id
-        # @type [Types::MOVIE_ID]
-        @prequel = prequel
-        # @type [String]
+        @prequel = prequel if prequel != OMIT
         @title = title
-        # @type [String]
         @from = from
-        # @type [Float] The rating scale is one to five stars
         @rating = rating
-        # @type [String]
         @type = type
-        # @type [Commons::Types::TAG]
         @tag = tag
-        # @type [String]
-        @book = book
-        # @type [Hash{String => Object}]
+        @book = book if book != OMIT
         @metadata = metadata
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
+        @_field_set = {
+          "cast": cast,
+          "id": id,
+          "prequel": prequel,
+          "title": title,
+          "from": from,
+          "rating": rating,
+          "type": type,
+          "tag": tag,
+          "book": book,
+          "metadata": metadata
+        }.reject do |_k, v|
+          v == OMIT
+        end
       end
 
       # Deserialize a JSON object to an instance of ExtendedMovie
       #
-      # @param json_object [JSON]
-      # @return [Types::ExtendedMovie]
+      # @param json_object [String]
+      # @return [SeedExamplesClient::Types::ExtendedMovie]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        JSON.parse(json_object)
-        cast = struct.cast
-        id = struct.id
-        prequel = struct.prequel
-        title = struct.title
-        from = struct.from
-        rating = struct.rating
-        type = struct.type
-        tag = struct.tag
-        book = struct.book
-        metadata = struct.metadata
+        cast = struct["cast"]
+        id = struct["id"]
+        prequel = struct["prequel"]
+        title = struct["title"]
+        from = struct["from"]
+        rating = struct["rating"]
+        type = struct["type"]
+        tag = struct["tag"]
+        book = struct["book"]
+        metadata = struct["metadata"]
         new(cast: cast, id: id, prequel: prequel, title: title, from: from, rating: rating, type: type, tag: tag,
             book: book, metadata: metadata, additional_properties: struct)
       end
 
       # Serialize an instance of ExtendedMovie to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        {
-          "cast": @cast,
-          "id": @id,
-          "prequel": @prequel,
-          "title": @title,
-          "from": @from,
-          "rating": @rating,
-          "type": @type,
-          "tag": @tag,
-          "book": @book,
-          "metadata": @metadata
-        }.to_json
+        @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

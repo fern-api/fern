@@ -6,24 +6,26 @@ module SeedExamplesClient
   module Commons
     class Types
       class Data
-        attr_reader :member, :discriminant
+        # @return [Object]
+        attr_reader :member
+        # @return [String]
+        attr_reader :discriminant
 
         private_class_method :new
         alias kind_of? is_a?
+
         # @param member [Object]
         # @param discriminant [String]
-        # @return [Commons::Types::Data]
+        # @return [SeedExamplesClient::Commons::Types::Data]
         def initialize(member:, discriminant:)
-          # @type [Object]
           @member = member
-          # @type [String]
           @discriminant = discriminant
         end
 
         # Deserialize a JSON object to an instance of Data
         #
-        # @param json_object [JSON]
-        # @return [Commons::Types::Data]
+        # @param json_object [String]
+        # @return [SeedExamplesClient::Commons::Types::Data]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           member = case struct.type
@@ -39,7 +41,7 @@ module SeedExamplesClient
 
         # For Union Types, to_json functionality is delegated to the wrapped member.
         #
-        # @return [JSON]
+        # @return [String]
         def to_json(*_args)
           case @discriminant
           when "string"
@@ -49,7 +51,9 @@ module SeedExamplesClient
           @member.to_json
         end
 
-        # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+        # Leveraged for Union-type generation, validate_raw attempts to parse the given
+        #  hash and check each fields type against the current object's property
+        #  definitions.
         #
         # @param obj [Object]
         # @return [Void]
@@ -73,13 +77,13 @@ module SeedExamplesClient
         end
 
         # @param member [String]
-        # @return [Commons::Types::Data]
+        # @return [SeedExamplesClient::Commons::Types::Data]
         def self.string(member:)
           new(member: member, discriminant: "string")
         end
 
         # @param member [String]
-        # @return [Commons::Types::Data]
+        # @return [SeedExamplesClient::Commons::Types::Data]
         def self.base_64(member:)
           new(member: member, discriminant: "base64")
         end

@@ -1,5 +1,5 @@
 import { Argument } from "./Argument";
-import { ClassReference, NilValue } from "./classes/ClassReference";
+import { ClassReference, NilValue, OmittedValue } from "./classes/ClassReference";
 import { AstNode } from "./core/AstNode";
 import { Import } from "./Import";
 import { Variable, VariableType } from "./Variable";
@@ -10,6 +10,7 @@ export declare namespace Parameter {
         type: ClassReference | ClassReference[];
         defaultValue?: Variable | string;
         isOptional?: boolean;
+        shouldOmitOptional?: boolean;
         isNamed?: boolean;
         describeAsHashInYardoc?: boolean;
         isBlock?: boolean;
@@ -30,6 +31,7 @@ export class Parameter extends AstNode {
         type,
         defaultValue,
         isOptional = false,
+        shouldOmitOptional = false,
         isNamed = true,
         describeAsHashInYardoc = false,
         isBlock = false,
@@ -38,7 +40,9 @@ export class Parameter extends AstNode {
         super(rest);
         this.name = name;
         this.type = type instanceof ClassReference ? [type] : type;
-        this.defaultValue = isBlock ? undefined : defaultValue ?? (isOptional ? NilValue : undefined);
+        this.defaultValue = isBlock
+            ? undefined
+            : defaultValue ?? (isOptional ? (shouldOmitOptional ? OmittedValue : NilValue) : undefined);
         this.isNamed = isNamed || isBlock || this.defaultValue !== undefined;
         this.describeAsHashInYardoc = describeAsHashInYardoc;
 

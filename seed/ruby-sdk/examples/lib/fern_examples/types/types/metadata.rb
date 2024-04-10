@@ -6,30 +6,34 @@ require "json"
 module SeedExamplesClient
   class Types
     class Metadata
-      attr_reader :member, :discriminant, :extra, :tags
+      # @return [Object]
+      attr_reader :member
+      # @return [String]
+      attr_reader :discriminant
+      # @return [Hash{String => String}]
+      attr_reader :extra
+      # @return [Set<String>]
+      attr_reader :tags
 
       private_class_method :new
       alias kind_of? is_a?
+
       # @param member [Object]
       # @param discriminant [String]
       # @param extra [Hash{String => String}]
       # @param tags [Set<String>]
-      # @return [Types::Metadata]
+      # @return [SeedExamplesClient::Types::Metadata]
       def initialize(member:, discriminant:, extra:, tags:)
-        # @type [Object]
         @member = member
-        # @type [String]
         @discriminant = discriminant
-        # @type [Hash{String => String}]
         @extra = extra
-        # @type [Set<String>]
         @tags = tags
       end
 
       # Deserialize a JSON object to an instance of Metadata
       #
-      # @param json_object [JSON]
-      # @return [Types::Metadata]
+      # @param json_object [String]
+      # @return [SeedExamplesClient::Types::Metadata]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
@@ -45,7 +49,7 @@ module SeedExamplesClient
 
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
         case @discriminant
         when "html"
@@ -55,7 +59,9 @@ module SeedExamplesClient
         @member.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]
@@ -79,13 +85,13 @@ module SeedExamplesClient
       end
 
       # @param member [String]
-      # @return [Types::Metadata]
+      # @return [SeedExamplesClient::Types::Metadata]
       def self.html(member:)
         new(member: member, discriminant: "html")
       end
 
       # @param member [String]
-      # @return [Types::Metadata]
+      # @return [SeedExamplesClient::Types::Metadata]
       def self.markdown(member:)
         new(member: member, discriminant: "markdown")
       end

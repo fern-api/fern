@@ -1,45 +1,55 @@
 # frozen_string_literal: true
 
 require_relative "key_value_pair"
+require "ostruct"
 require "json"
 
 module SeedTraceClient
   class Commons
     class MapValue
-      attr_reader :key_value_pairs, :additional_properties
+      # @return [Array<SeedTraceClient::Commons::KeyValuePair>]
+      attr_reader :key_value_pairs
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
+      protected :_field_set
 
-      # @param key_value_pairs [Array<Commons::KeyValuePair>]
+      OMIT = Object.new
+
+      # @param key_value_pairs [Array<SeedTraceClient::Commons::KeyValuePair>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Commons::MapValue]
+      # @return [SeedTraceClient::Commons::MapValue]
       def initialize(key_value_pairs:, additional_properties: nil)
-        # @type [Array<Commons::KeyValuePair>]
         @key_value_pairs = key_value_pairs
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
+        @_field_set = { "keyValuePairs": key_value_pairs }
       end
 
       # Deserialize a JSON object to an instance of MapValue
       #
-      # @param json_object [JSON]
-      # @return [Commons::MapValue]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Commons::MapValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         key_value_pairs = parsed_json["keyValuePairs"]&.map do |v|
           v = v.to_json
-          Commons::KeyValuePair.from_json(json_object: v)
+          SeedTraceClient::Commons::KeyValuePair.from_json(json_object: v)
         end
         new(key_value_pairs: key_value_pairs, additional_properties: struct)
       end
 
       # Serialize an instance of MapValue to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "keyValuePairs": @key_value_pairs }.to_json
+        @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

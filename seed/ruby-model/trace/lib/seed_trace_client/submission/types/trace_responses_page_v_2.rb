@@ -1,51 +1,64 @@
 # frozen_string_literal: true
 
 require_relative "trace_response_v_2"
+require "ostruct"
 require "json"
 
 module SeedTraceClient
   class Submission
     class TraceResponsesPageV2
-      attr_reader :offset, :trace_responses, :additional_properties
+      # @return [Integer] If present, use this to load subseqent pages.
+      #  The offset is the id of the next trace response to load.
+      attr_reader :offset
+      # @return [Array<SeedTraceClient::Submission::TraceResponseV2>]
+      attr_reader :trace_responses
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
+      protected :_field_set
+
+      OMIT = Object.new
 
       # @param offset [Integer] If present, use this to load subseqent pages.
-      #   The offset is the id of the next trace response to load.
-      # @param trace_responses [Array<Submission::TraceResponseV2>]
+      #  The offset is the id of the next trace response to load.
+      # @param trace_responses [Array<SeedTraceClient::Submission::TraceResponseV2>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Submission::TraceResponsesPageV2]
-      def initialize(trace_responses:, offset: nil, additional_properties: nil)
-        # @type [Integer] If present, use this to load subseqent pages.
-        #   The offset is the id of the next trace response to load.
-        @offset = offset
-        # @type [Array<Submission::TraceResponseV2>]
+      # @return [SeedTraceClient::Submission::TraceResponsesPageV2]
+      def initialize(trace_responses:, offset: OMIT, additional_properties: nil)
+        @offset = offset if offset != OMIT
         @trace_responses = trace_responses
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
+        @_field_set = { "offset": offset, "traceResponses": trace_responses }.reject do |_k, v|
+          v == OMIT
+        end
       end
 
       # Deserialize a JSON object to an instance of TraceResponsesPageV2
       #
-      # @param json_object [JSON]
-      # @return [Submission::TraceResponsesPageV2]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Submission::TraceResponsesPageV2]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        offset = struct.offset
+        offset = struct["offset"]
         trace_responses = parsed_json["traceResponses"]&.map do |v|
           v = v.to_json
-          Submission::TraceResponseV2.from_json(json_object: v)
+          SeedTraceClient::Submission::TraceResponseV2.from_json(json_object: v)
         end
         new(offset: offset, trace_responses: trace_responses, additional_properties: struct)
       end
 
       # Serialize an instance of TraceResponsesPageV2 to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "offset": @offset, "traceResponses": @trace_responses }.to_json
+        @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

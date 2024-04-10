@@ -12,6 +12,7 @@ import { Property } from "./Property";
 export interface YardocDocString {
     readonly name: "docString";
 
+    documentation?: string[];
     parameters: Parameter[];
     returnValue?: ClassReference[];
 }
@@ -19,16 +20,21 @@ interface YardocTypeReference {
     readonly name: "typeReference";
     type: Property | ClassReference | string;
 }
+
+interface YardocDocUniversal {
+    readonly name: "universal";
+    documentation: string[];
+}
 export declare namespace Yardoc {
     export interface Init extends Omit<AstNode.Init, "documentation"> {
-        reference?: YardocDocString | YardocTypeReference;
+        reference?: YardocDocString | YardocTypeReference | YardocDocUniversal;
         flattenedProperties?: Map<TypeId, ObjectProperty[]>;
         crf?: ClassReferenceFactory;
     }
 }
 
 export class Yardoc extends AstNode {
-    public reference: YardocDocString | YardocTypeReference | undefined;
+    public reference: YardocDocString | YardocTypeReference | YardocDocUniversal | undefined;
 
     // TODO: we should likely make a yardoc generator so we're not passing in this map and the CRF into each instance
     private flattenedProperties: Map<TypeId, ObjectProperty[]> | undefined;
@@ -74,13 +80,15 @@ export class Yardoc extends AstNode {
         }
     }
 
-    private writeMultilineYardocComment(documentation?: string[], defaultComment?: string): void {
-        documentation?.forEach((doc, index) => {
+    private writeMultilineYardocComment(documentation?: string[], defaultComment?: string, beginsLine?: boolean): void {
+        // Attempt to apply a max line length for comments at 80 characters since Rubocop does not format comments.
+        const splitDocs = documentation?.flatMap((doc) => doc.match(/.{1,80}(?:\s|$)/g) ?? "");
+        splitDocs?.forEach((doc, index) => {
             const trimmedDoc = doc.trim();
             this.addText({
                 stringContent: trimmedDoc.length > 0 ? trimmedDoc : undefined,
-                templateString: index > 0 ? "#  " : undefined,
-                appendToLastString: index === 0
+                templateString: index > 0 ? "#  %s" : beginsLine === true ? "# %s" : undefined,
+                appendToLastString: index === 0 && beginsLine !== true
             });
         }) ?? this.addText({ stringContent: defaultComment, appendToLastString: true });
     }
@@ -162,18 +170,27 @@ export class Yardoc extends AstNode {
 
     public writeInternal(startingTabSpaces: number): void {
         if (this.reference !== undefined) {
-            if (this.reference.name === "typeReference") {
+            if (this.reference.name === "universal") {
+                this.writeMultilineYardocComment(this.reference.documentation, undefined, true);
+            } else if (this.reference.name === "typeReference") {
                 const typeName =
                     this.reference.type instanceof Property
                         ? this.reference.type.type.flatMap((prop) => this.getTypeHint(prop)).join(", ")
                         : this.reference.type instanceof ClassReference
                         ? this.getTypeHint(this.reference.type)
                         : this.reference.type;
-                this.addText({ stringContent: typeName, templateString: "# @type [%s] ", startingTabSpaces });
+                this.addText({ stringContent: typeName, templateString: "# @return [%s] ", startingTabSpaces });
                 this.writeMultilineYardocComment(
                     this.reference.type instanceof Property ? this.reference.type.documentation : []
                 );
             } else {
+                this.writeMultilineYardocComment(this.reference.documentation, undefined, true);
+                if (this.reference.documentation !== undefined && this.reference.documentation.length > 0) {
+                    this.addText({
+                        stringContent: "#",
+                        startingTabSpaces
+                    });
+                }
                 this.reference.parameters.forEach((parameter) => {
                     if (parameter.describeAsHashInYardoc) {
                         this.writeParameterAsHash(parameter, startingTabSpaces);

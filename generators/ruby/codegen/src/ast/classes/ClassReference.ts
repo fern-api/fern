@@ -116,7 +116,10 @@ export class ClassReference extends AstNode {
     }
 }
 
-export const OpenStructClassReference = new ClassReference({ name: RubyClass.OPENSTRUCT });
+export const OpenStructClassReference = new ClassReference({
+    name: RubyClass.OPENSTRUCT,
+    import_: new Import({ from: "ostruct", isExternal: true })
+});
 export const GenericClassReference = new ClassReference({ name: RubyClass.OBJECT });
 export const JsonClassReference = new ClassReference({
     name: RubyClass.JSON,
@@ -129,6 +132,7 @@ export const LongClassReference = new ClassReference({ name: RubyClass.LONG });
 export const FileClassReference = new ClassReference({ name: RubyClass.FILE });
 export const B64StringClassReference = new ClassReference({ name: RubyClass.BASE64 });
 export const NilValue = "nil";
+export const OmittedValue = "OMIT";
 
 export declare namespace SerializableObjectReference {
     export type InitReference = ClassReference.Init;
@@ -143,7 +147,7 @@ export class SerializableObjectReference extends ClassReference {
             baseFunction: new Function_({ name: "from_json", functionBody: [] }),
             onObject: this.qualifiedName,
             arguments_: [
-                new Argument({ type: GenericClassReference, value: variable, isNamed: true, name: "json_object" })
+                new Argument({ type: StringClassReference, value: variable, isNamed: true, name: "json_object" })
             ]
         });
     }
@@ -176,7 +180,11 @@ export class SerializableObjectReference extends ClassReference {
         locationGenerator: LocationGenerator
     ): ClassReference {
         const location = locationGenerator.getLocationForTypeDeclaration(declaredTypeName);
-        const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(declaredTypeName.fernFilepath, true);
+        const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(
+            declaredTypeName.fernFilepath,
+            true,
+            locationGenerator.rootModule
+        );
         return new SerializableObjectReference({
             name: declaredTypeName.name.pascalCase.safeName,
             import_: new Import({ from: location }),
@@ -199,7 +207,11 @@ export class DiscriminatedUnionClassReference extends SerializableObjectReferenc
         locationGenerator: LocationGenerator
     ): ClassReference {
         const location = locationGenerator.getLocationForTypeDeclaration(declaredTypeName);
-        const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(declaredTypeName.fernFilepath, true);
+        const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(
+            declaredTypeName.fernFilepath,
+            true,
+            locationGenerator.rootModule
+        );
         return new DiscriminatedUnionClassReference({
             name: declaredTypeName.name.pascalCase.safeName,
             import_: new Import({ from: location }),
@@ -236,7 +248,11 @@ export class AliasReference extends ClassReference {
         locationGenerator: LocationGenerator
     ): ClassReference {
         const location = locationGenerator.getLocationForTypeDeclaration(declaredTypeName);
-        const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(declaredTypeName.fernFilepath, true);
+        const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(
+            declaredTypeName.fernFilepath,
+            true,
+            locationGenerator.rootModule
+        );
         return new AliasReference({
             aliasOf,
             name: declaredTypeName.name.screamingSnakeCase.safeName,
@@ -273,36 +289,24 @@ export class ArrayReference extends ClassReference {
         const valueFromJsonFunction =
             this.innerType instanceof ClassReference ? this.innerType.fromJson("v") : undefined;
         return valueFromJsonFunction !== undefined
-            ? new ConditionalStatement({
-                  if_: {
-                      rightSide: new FunctionInvocation({
-                          // TODO: Do this field access on the client better
-                          onObject: variable,
-                          baseFunction: new Function_({ name: "nil?", functionBody: [] })
-                      }),
-                      operation: "!",
+            ? new FunctionInvocation({
+                  baseFunction: new Function_({ name: "map", functionBody: [] }),
+                  onObject: variable,
+                  optionalSafeCall: true,
+                  block: {
+                      arguments: "v",
                       expressions: [
-                          new FunctionInvocation({
-                              baseFunction: new Function_({ name: "map", functionBody: [] }),
-                              onObject: variable,
-                              block: {
-                                  arguments: "v",
-                                  expressions: [
-                                      new Expression({
-                                          leftSide: "v",
-                                          rightSide: new FunctionInvocation({
-                                              onObject: "v",
-                                              baseFunction: new Function_({ name: "to_json", functionBody: [] })
-                                          }),
-                                          isAssignment: true
-                                      }),
-                                      new Expression({ rightSide: valueFromJsonFunction, isAssignment: false })
-                                  ]
-                              }
-                          })
+                          new Expression({
+                              leftSide: "v",
+                              rightSide: new FunctionInvocation({
+                                  onObject: "v",
+                                  baseFunction: new Function_({ name: "to_json", functionBody: [] })
+                              }),
+                              isAssignment: true
+                          }),
+                          new Expression({ rightSide: valueFromJsonFunction, isAssignment: false })
                       ]
-                  },
-                  else_: [new Expression({ rightSide: "nil", isAssignment: false })]
+                  }
               })
             : undefined;
     }
@@ -336,6 +340,7 @@ export declare namespace Hash_ {
         additionalHashes?: DefaultingExpandableHash[];
         isFrozen?: boolean;
         shouldCompact?: boolean;
+        stringifyValues?: boolean;
     }
 }
 export class HashReference extends ClassReference {
@@ -353,36 +358,24 @@ export class HashReference extends ClassReference {
         const valueFromJsonFunction =
             this.valueType instanceof ClassReference ? this.valueType.fromJson("v") : undefined;
         return valueFromJsonFunction !== undefined
-            ? new ConditionalStatement({
-                  if_: {
-                      rightSide: new FunctionInvocation({
-                          // TODO: Do this field access on the client better
-                          onObject: variable,
-                          baseFunction: new Function_({ name: "nil?", functionBody: [] })
-                      }),
-                      operation: "!",
+            ? new FunctionInvocation({
+                  baseFunction: new Function_({ name: "transform_values", functionBody: [] }),
+                  onObject: variable,
+                  optionalSafeCall: true,
+                  block: {
+                      arguments: "v",
                       expressions: [
-                          new FunctionInvocation({
-                              baseFunction: new Function_({ name: "transform_values", functionBody: [] }),
-                              onObject: variable,
-                              block: {
-                                  arguments: "k, v",
-                                  expressions: [
-                                      new Expression({
-                                          leftSide: "v",
-                                          rightSide: new FunctionInvocation({
-                                              onObject: "v",
-                                              baseFunction: new Function_({ name: "to_json", functionBody: [] })
-                                          }),
-                                          isAssignment: true
-                                      }),
-                                      new Expression({ rightSide: valueFromJsonFunction, isAssignment: false })
-                                  ]
-                              }
-                          })
+                          new Expression({
+                              leftSide: "v",
+                              rightSide: new FunctionInvocation({
+                                  onObject: "v",
+                                  baseFunction: new Function_({ name: "to_json", functionBody: [] })
+                              }),
+                              isAssignment: true
+                          }),
+                          new Expression({ rightSide: valueFromJsonFunction, isAssignment: false })
                       ]
-                  },
-                  else_: [new Expression({ rightSide: "nil", isAssignment: false })]
+                  }
               })
             : undefined;
     }
@@ -398,12 +391,14 @@ export class HashInstance extends AstNode {
     public additionalHashes: DefaultingExpandableHash[];
     public shouldCompact: boolean;
     public isFrozen: boolean;
+    public stringifyValues: boolean;
 
     constructor({
         contents = new Map(),
         isFrozen = false,
         shouldCompact = false,
         additionalHashes = [],
+        stringifyValues = true,
         ...rest
     }: Hash_.InitInstance) {
         super(rest);
@@ -412,6 +407,7 @@ export class HashInstance extends AstNode {
         this.isFrozen = isFrozen;
         this.shouldCompact = shouldCompact;
         this.additionalHashes = additionalHashes;
+        this.stringifyValues = stringifyValues;
     }
 
     public writeInternal(): void {
@@ -431,7 +427,9 @@ export class HashInstance extends AstNode {
         this.addText({
             stringContent: `{ ${expandingHashes}${
                 hashContents.length > 0 && this.additionalHashes.length > 0 ? ", " : ""
-            }${hashContents.map(([k, v]) => k + ": " + (v instanceof AstNode ? v.write({}) : `'${v}'`)).join(", ")} }`
+            }${hashContents
+                .map(([k, v]) => k + ": " + (v instanceof AstNode ? v.write({}) : this.stringifyValues ? `'${v}'` : v))
+                .join(", ")} }`
         });
         this.addText({ stringContent: this.shouldCompact ? ".compact" : undefined, appendToLastString: true });
         this.addText({ stringContent: this.isFrozen ? ".freeze" : undefined, appendToLastString: true });
@@ -472,7 +470,11 @@ export class EnumReference extends ClassReference {
         locationGenerator: LocationGenerator
     ): EnumReference {
         const location = locationGenerator.getLocationForTypeDeclaration(declaredTypeName);
-        const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(declaredTypeName.fernFilepath, true);
+        const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(
+            declaredTypeName.fernFilepath,
+            true,
+            locationGenerator.rootModule
+        );
         return new EnumReference({
             name: declaredTypeName.name.pascalCase.safeName,
             import_: new Import({ from: location }),
@@ -587,19 +589,25 @@ export class ClassReferenceFactory {
             cr = type.shape._visit<ClassReference>({
                 alias: (atd: AliasTypeDeclaration) => {
                     const aliasOfCr = this.fromTypeReference(atd.aliasOf);
+                    let preferredClassReference = undefined;
                     const resolvedTypeId = atd.resolvedType._visit<TypeId | undefined>({
                         named: (rnt: ResolvedNamedType) => rnt.name.typeId,
                         container: (ct) => this.forContainerType(ct).resolvedTypeId,
-                        primitive: (pt) => this.forPrimitiveType(pt).resolvedTypeId,
+                        primitive: (pt) => {
+                            preferredClassReference = this.forPrimitiveType(pt);
+                            return preferredClassReference.resolvedTypeId;
+                        },
                         unknown: () => undefined,
                         _other: () => undefined
                     });
-                    return AliasReference.fromDeclaredTypeName(
-                        type.name,
-                        aliasOfCr,
-                        resolvedTypeId,
-                        this.locationGenerator
-                    );
+                    return preferredClassReference != null
+                        ? preferredClassReference
+                        : AliasReference.fromDeclaredTypeName(
+                              type.name,
+                              aliasOfCr,
+                              resolvedTypeId,
+                              this.locationGenerator
+                          );
                 },
                 enum: () => EnumReference.fromDeclaredTypeName(type.name, this.locationGenerator),
                 object: () => SerializableObjectReference.fromDeclaredTypeName(type.name, this.locationGenerator),

@@ -1,45 +1,55 @@
 # frozen_string_literal: true
 
 require_relative "problem_description_board"
+require "ostruct"
 require "json"
 
 module SeedTraceClient
   class Problem
     class ProblemDescription
-      attr_reader :boards, :additional_properties
+      # @return [Array<SeedTraceClient::Problem::ProblemDescriptionBoard>]
+      attr_reader :boards
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
+      protected :_field_set
 
-      # @param boards [Array<Problem::ProblemDescriptionBoard>]
+      OMIT = Object.new
+
+      # @param boards [Array<SeedTraceClient::Problem::ProblemDescriptionBoard>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Problem::ProblemDescription]
+      # @return [SeedTraceClient::Problem::ProblemDescription]
       def initialize(boards:, additional_properties: nil)
-        # @type [Array<Problem::ProblemDescriptionBoard>]
         @boards = boards
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
+        @_field_set = { "boards": boards }
       end
 
       # Deserialize a JSON object to an instance of ProblemDescription
       #
-      # @param json_object [JSON]
-      # @return [Problem::ProblemDescription]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Problem::ProblemDescription]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         boards = parsed_json["boards"]&.map do |v|
           v = v.to_json
-          Problem::ProblemDescriptionBoard.from_json(json_object: v)
+          SeedTraceClient::Problem::ProblemDescriptionBoard.from_json(json_object: v)
         end
         new(boards: boards, additional_properties: struct)
       end
 
       # Serialize an instance of ProblemDescription to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "boards": @boards }.to_json
+        @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

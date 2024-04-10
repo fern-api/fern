@@ -1,44 +1,54 @@
 # frozen_string_literal: true
 
+require "ostruct"
 require "json"
 
 module SeedTraceClient
   class Submission
     class WorkspaceStarterFilesResponseV2
-      attr_reader :files_by_language, :additional_properties
+      # @return [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::V2::Problem::Files}]
+      attr_reader :files_by_language
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
+      protected :_field_set
 
-      # @param files_by_language [Hash{Commons::Language => V2::Problem::Files}]
+      OMIT = Object.new
+
+      # @param files_by_language [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::V2::Problem::Files}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Submission::WorkspaceStarterFilesResponseV2]
+      # @return [SeedTraceClient::Submission::WorkspaceStarterFilesResponseV2]
       def initialize(files_by_language:, additional_properties: nil)
-        # @type [Hash{Commons::Language => V2::Problem::Files}]
         @files_by_language = files_by_language
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
+        @_field_set = { "filesByLanguage": files_by_language }
       end
 
       # Deserialize a JSON object to an instance of WorkspaceStarterFilesResponseV2
       #
-      # @param json_object [JSON]
-      # @return [Submission::WorkspaceStarterFilesResponseV2]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Submission::WorkspaceStarterFilesResponseV2]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        files_by_language = parsed_json["filesByLanguage"]&.transform_values do |_k, v|
+        files_by_language = parsed_json["filesByLanguage"]&.transform_values do |v|
           v = v.to_json
-          V2::Problem::Files.from_json(json_object: v)
+          SeedTraceClient::V2::Problem::Files.from_json(json_object: v)
         end
         new(files_by_language: files_by_language, additional_properties: struct)
       end
 
       # Serialize an instance of WorkspaceStarterFilesResponseV2 to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "filesByLanguage": @files_by_language }.to_json
+        @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

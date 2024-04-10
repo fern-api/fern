@@ -10,233 +10,247 @@ require "async"
 
 module SeedResponsePropertyClient
   class ServiceClient
+    # @return [SeedResponsePropertyClient::RequestClient]
     attr_reader :request_client
 
-    # @param request_client [RequestClient]
-    # @return [ServiceClient]
+    # @param request_client [SeedResponsePropertyClient::RequestClient]
+    # @return [SeedResponsePropertyClient::ServiceClient]
     def initialize(request_client:)
-      # @type [RequestClient]
       @request_client = request_client
     end
 
     # @param request [String]
-    # @param request_options [RequestOptions]
-    # @return [Service::Response]
+    # @param request_options [SeedResponsePropertyClient::RequestOptions]
+    # @return [SeedResponsePropertyClient::Service::Response]
     def get_movie(request:, request_options: nil)
-      response = @request_client.conn.post("/movie") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/movie"
       end
       parsed_json JSON.parse(response.body)
       nested_response_json parsed_json["data"].to_json
-      Service::Response.from_json(json_object: nested_response_json)
+      SeedResponsePropertyClient::Service::Response.from_json(json_object: nested_response_json)
     end
 
     # @param request [String]
-    # @param request_options [RequestOptions]
-    # @return [Service::Response]
+    # @param request_options [SeedResponsePropertyClient::RequestOptions]
+    # @return [SeedResponsePropertyClient::Service::Response]
     def get_movie_docs(request:, request_options: nil)
-      response = @request_client.conn.post("/movie") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/movie"
       end
       parsed_json JSON.parse(response.body)
       nested_response_json parsed_json["docs"].to_json
-      Service::Response.from_json(json_object: nested_response_json)
+      SeedResponsePropertyClient::Service::Response.from_json(json_object: nested_response_json)
     end
 
     # @param request [String]
-    # @param request_options [RequestOptions]
-    # @return [StringResponse]
+    # @param request_options [SeedResponsePropertyClient::RequestOptions]
+    # @return [SeedResponsePropertyClient::StringResponse]
     def get_movie_name(request:, request_options: nil)
-      response = @request_client.conn.post("/movie") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/movie"
       end
       parsed_json JSON.parse(response.body)
       nested_response_json parsed_json["data"].to_json
-      StringResponse.from_json(json_object: nested_response_json)
+      SeedResponsePropertyClient::StringResponse.from_json(json_object: nested_response_json)
     end
 
     # @param request [String]
-    # @param request_options [RequestOptions]
-    # @return [Service::Response]
+    # @param request_options [SeedResponsePropertyClient::RequestOptions]
+    # @return [SeedResponsePropertyClient::Service::Response]
     def get_movie_metadata(request:, request_options: nil)
-      response = @request_client.conn.post("/movie") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/movie"
       end
       parsed_json JSON.parse(response.body)
       nested_response_json parsed_json["metadata"].to_json
-      Service::Response.from_json(json_object: nested_response_json)
+      SeedResponsePropertyClient::Service::Response.from_json(json_object: nested_response_json)
     end
 
     # @param request [String]
-    # @param request_options [RequestOptions]
-    # @return [Service::Response]
+    # @param request_options [SeedResponsePropertyClient::RequestOptions]
+    # @return [SeedResponsePropertyClient::Service::Response]
     def get_optional_movie(request:, request_options: nil)
-      response = @request_client.conn.post("/movie") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/movie"
       end
       parsed_json JSON.parse(response.body)
       nested_response_json parsed_json["data"].to_json
-      Service::Response.from_json(json_object: nested_response_json)
+      SeedResponsePropertyClient::Service::Response.from_json(json_object: nested_response_json)
     end
 
     # @param request [String]
-    # @param request_options [RequestOptions]
-    # @return [Service::OPTIONAL_WITH_DOCS]
+    # @param request_options [SeedResponsePropertyClient::RequestOptions]
+    # @return [SeedResponsePropertyClient::Service::OPTIONAL_WITH_DOCS]
     def get_optional_movie_docs(request:, request_options: nil)
-      response = @request_client.conn.post("/movie") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/movie"
       end
       parsed_json JSON.parse(response.body)
       nested_response_json parsed_json["docs"].to_json
-      Service::WithDocs.from_json(json_object: nested_response_json)
+      SeedResponsePropertyClient::Service::WithDocs.from_json(json_object: nested_response_json)
     end
 
     # @param request [String]
-    # @param request_options [RequestOptions]
-    # @return [OPTIONAL_STRING_RESPONSE]
+    # @param request_options [SeedResponsePropertyClient::RequestOptions]
+    # @return [SeedResponsePropertyClient::OPTIONAL_STRING_RESPONSE]
     def get_optional_movie_name(request:, request_options: nil)
-      response = @request_client.conn.post("/movie") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/movie"
       end
       parsed_json JSON.parse(response.body)
       nested_response_json parsed_json["data"].to_json
-      StringResponse.from_json(json_object: nested_response_json)
+      SeedResponsePropertyClient::StringResponse.from_json(json_object: nested_response_json)
     end
   end
 
   class AsyncServiceClient
+    # @return [SeedResponsePropertyClient::AsyncRequestClient]
     attr_reader :request_client
 
-    # @param request_client [AsyncRequestClient]
-    # @return [AsyncServiceClient]
+    # @param request_client [SeedResponsePropertyClient::AsyncRequestClient]
+    # @return [SeedResponsePropertyClient::AsyncServiceClient]
     def initialize(request_client:)
-      # @type [AsyncRequestClient]
       @request_client = request_client
     end
 
     # @param request [String]
-    # @param request_options [RequestOptions]
-    # @return [Service::Response]
+    # @param request_options [SeedResponsePropertyClient::RequestOptions]
+    # @return [SeedResponsePropertyClient::Service::Response]
     def get_movie(request:, request_options: nil)
       Async do
-        response = @request_client.conn.post("/movie") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/movie"
         end
         parsed_json JSON.parse(response.body)
         nested_response_json parsed_json["data"].to_json
-        Service::Response.from_json(json_object: nested_response_json)
+        SeedResponsePropertyClient::Service::Response.from_json(json_object: nested_response_json)
       end
     end
 
     # @param request [String]
-    # @param request_options [RequestOptions]
-    # @return [Service::Response]
+    # @param request_options [SeedResponsePropertyClient::RequestOptions]
+    # @return [SeedResponsePropertyClient::Service::Response]
     def get_movie_docs(request:, request_options: nil)
       Async do
-        response = @request_client.conn.post("/movie") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/movie"
         end
         parsed_json JSON.parse(response.body)
         nested_response_json parsed_json["docs"].to_json
-        Service::Response.from_json(json_object: nested_response_json)
+        SeedResponsePropertyClient::Service::Response.from_json(json_object: nested_response_json)
       end
     end
 
     # @param request [String]
-    # @param request_options [RequestOptions]
-    # @return [StringResponse]
+    # @param request_options [SeedResponsePropertyClient::RequestOptions]
+    # @return [SeedResponsePropertyClient::StringResponse]
     def get_movie_name(request:, request_options: nil)
       Async do
-        response = @request_client.conn.post("/movie") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/movie"
         end
         parsed_json JSON.parse(response.body)
         nested_response_json parsed_json["data"].to_json
-        StringResponse.from_json(json_object: nested_response_json)
+        SeedResponsePropertyClient::StringResponse.from_json(json_object: nested_response_json)
       end
     end
 
     # @param request [String]
-    # @param request_options [RequestOptions]
-    # @return [Service::Response]
+    # @param request_options [SeedResponsePropertyClient::RequestOptions]
+    # @return [SeedResponsePropertyClient::Service::Response]
     def get_movie_metadata(request:, request_options: nil)
       Async do
-        response = @request_client.conn.post("/movie") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/movie"
         end
         parsed_json JSON.parse(response.body)
         nested_response_json parsed_json["metadata"].to_json
-        Service::Response.from_json(json_object: nested_response_json)
+        SeedResponsePropertyClient::Service::Response.from_json(json_object: nested_response_json)
       end
     end
 
     # @param request [String]
-    # @param request_options [RequestOptions]
-    # @return [Service::Response]
+    # @param request_options [SeedResponsePropertyClient::RequestOptions]
+    # @return [SeedResponsePropertyClient::Service::Response]
     def get_optional_movie(request:, request_options: nil)
       Async do
-        response = @request_client.conn.post("/movie") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/movie"
         end
         parsed_json JSON.parse(response.body)
         nested_response_json parsed_json["data"].to_json
-        Service::Response.from_json(json_object: nested_response_json)
+        SeedResponsePropertyClient::Service::Response.from_json(json_object: nested_response_json)
       end
     end
 
     # @param request [String]
-    # @param request_options [RequestOptions]
-    # @return [Service::OPTIONAL_WITH_DOCS]
+    # @param request_options [SeedResponsePropertyClient::RequestOptions]
+    # @return [SeedResponsePropertyClient::Service::OPTIONAL_WITH_DOCS]
     def get_optional_movie_docs(request:, request_options: nil)
       Async do
-        response = @request_client.conn.post("/movie") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/movie"
         end
         parsed_json JSON.parse(response.body)
         nested_response_json parsed_json["docs"].to_json
-        Service::WithDocs.from_json(json_object: nested_response_json)
+        SeedResponsePropertyClient::Service::WithDocs.from_json(json_object: nested_response_json)
       end
     end
 
     # @param request [String]
-    # @param request_options [RequestOptions]
-    # @return [OPTIONAL_STRING_RESPONSE]
+    # @param request_options [SeedResponsePropertyClient::RequestOptions]
+    # @return [SeedResponsePropertyClient::OPTIONAL_STRING_RESPONSE]
     def get_optional_movie_name(request:, request_options: nil)
       Async do
-        response = @request_client.conn.post("/movie") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/movie"
         end
         parsed_json JSON.parse(response.body)
         nested_response_json parsed_json["data"].to_json
-        StringResponse.from_json(json_object: nested_response_json)
+        SeedResponsePropertyClient::StringResponse.from_json(json_object: nested_response_json)
       end
     end
   end

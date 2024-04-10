@@ -1,51 +1,61 @@
 # frozen_string_literal: true
 
-require_relative "test_case_id"
+require "ostruct"
 require "json"
 
 module SeedTraceClient
   module V2
     class Problem
       class TestCaseMetadata
-        attr_reader :id, :name, :hidden, :additional_properties
+        # @return [String]
+        attr_reader :id
+        # @return [String]
+        attr_reader :name
+        # @return [Boolean]
+        attr_reader :hidden
+        # @return [OpenStruct] Additional properties unmapped to the current class definition
+        attr_reader :additional_properties
+        # @return [Object]
+        attr_reader :_field_set
+        protected :_field_set
 
-        # @param id [V2::Problem::TEST_CASE_ID]
+        OMIT = Object.new
+
+        # @param id [String]
         # @param name [String]
         # @param hidden [Boolean]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-        # @return [V2::Problem::TestCaseMetadata]
+        # @return [SeedTraceClient::V2::Problem::TestCaseMetadata]
         def initialize(id:, name:, hidden:, additional_properties: nil)
-          # @type [V2::Problem::TEST_CASE_ID]
           @id = id
-          # @type [String]
           @name = name
-          # @type [Boolean]
           @hidden = hidden
-          # @type [OpenStruct] Additional properties unmapped to the current class definition
           @additional_properties = additional_properties
+          @_field_set = { "id": id, "name": name, "hidden": hidden }
         end
 
         # Deserialize a JSON object to an instance of TestCaseMetadata
         #
-        # @param json_object [JSON]
-        # @return [V2::Problem::TestCaseMetadata]
+        # @param json_object [String]
+        # @return [SeedTraceClient::V2::Problem::TestCaseMetadata]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          JSON.parse(json_object)
-          id = struct.id
-          name = struct.name
-          hidden = struct.hidden
+          id = struct["id"]
+          name = struct["name"]
+          hidden = struct["hidden"]
           new(id: id, name: name, hidden: hidden, additional_properties: struct)
         end
 
         # Serialize an instance of TestCaseMetadata to a JSON object
         #
-        # @return [JSON]
+        # @return [String]
         def to_json(*_args)
-          { "id": @id, "name": @name, "hidden": @hidden }.to_json
+          @_field_set&.to_json
         end
 
-        # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+        # Leveraged for Union-type generation, validate_raw attempts to parse the given
+        #  hash and check each fields type against the current object's property
+        #  definitions.
         #
         # @param obj [Object]
         # @return [Void]

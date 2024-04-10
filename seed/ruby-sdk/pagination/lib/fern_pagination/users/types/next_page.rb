@@ -1,45 +1,55 @@
 # frozen_string_literal: true
 
+require "ostruct"
 require "json"
 
 module SeedPaginationClient
   class Users
     class NextPage
-      attr_reader :page, :starting_after, :additional_properties
+      # @return [Integer]
+      attr_reader :page
+      # @return [String]
+      attr_reader :starting_after
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
+      protected :_field_set
+
+      OMIT = Object.new
 
       # @param page [Integer]
       # @param starting_after [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Users::NextPage]
+      # @return [SeedPaginationClient::Users::NextPage]
       def initialize(page:, starting_after:, additional_properties: nil)
-        # @type [Integer]
         @page = page
-        # @type [String]
         @starting_after = starting_after
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
+        @_field_set = { "page": page, "starting_after": starting_after }
       end
 
       # Deserialize a JSON object to an instance of NextPage
       #
-      # @param json_object [JSON]
-      # @return [Users::NextPage]
+      # @param json_object [String]
+      # @return [SeedPaginationClient::Users::NextPage]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        JSON.parse(json_object)
-        page = struct.page
-        starting_after = struct.starting_after
+        page = struct["page"]
+        starting_after = struct["starting_after"]
         new(page: page, starting_after: starting_after, additional_properties: struct)
       end
 
       # Serialize an instance of NextPage to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "page": @page, "starting_after": @starting_after }.to_json
+        @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "fern_audiences/commons/types/imported"
 require_relative "fern_audiences/folder_a/service/types/response"
 require_relative "fern_audiences/folder_b/common/types/foo"
 require_relative "fern_audiences/folder_c/common/types/foo"

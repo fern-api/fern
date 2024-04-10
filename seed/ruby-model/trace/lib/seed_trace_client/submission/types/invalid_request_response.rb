@@ -2,30 +2,39 @@
 
 require_relative "submission_request"
 require_relative "invalid_request_cause"
+require "ostruct"
 require "json"
 
 module SeedTraceClient
   class Submission
     class InvalidRequestResponse
-      attr_reader :request, :cause, :additional_properties
+      # @return [SeedTraceClient::Submission::SubmissionRequest]
+      attr_reader :request
+      # @return [SeedTraceClient::Submission::InvalidRequestCause]
+      attr_reader :cause
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
+      protected :_field_set
 
-      # @param request [Submission::SubmissionRequest]
-      # @param cause [Submission::InvalidRequestCause]
+      OMIT = Object.new
+
+      # @param request [SeedTraceClient::Submission::SubmissionRequest]
+      # @param cause [SeedTraceClient::Submission::InvalidRequestCause]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Submission::InvalidRequestResponse]
+      # @return [SeedTraceClient::Submission::InvalidRequestResponse]
       def initialize(request:, cause:, additional_properties: nil)
-        # @type [Submission::SubmissionRequest]
         @request = request
-        # @type [Submission::InvalidRequestCause]
         @cause = cause
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
+        @_field_set = { "request": request, "cause": cause }
       end
 
       # Deserialize a JSON object to an instance of InvalidRequestResponse
       #
-      # @param json_object [JSON]
-      # @return [Submission::InvalidRequestResponse]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Submission::InvalidRequestResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
@@ -33,31 +42,33 @@ module SeedTraceClient
           request = nil
         else
           request = parsed_json["request"].to_json
-          request = Submission::SubmissionRequest.from_json(json_object: request)
+          request = SeedTraceClient::Submission::SubmissionRequest.from_json(json_object: request)
         end
         if parsed_json["cause"].nil?
           cause = nil
         else
           cause = parsed_json["cause"].to_json
-          cause = Submission::InvalidRequestCause.from_json(json_object: cause)
+          cause = SeedTraceClient::Submission::InvalidRequestCause.from_json(json_object: cause)
         end
         new(request: request, cause: cause, additional_properties: struct)
       end
 
       # Serialize an instance of InvalidRequestResponse to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "request": @request, "cause": @cause }.to_json
+        @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        Submission::SubmissionRequest.validate_raw(obj: obj.request)
-        Submission::InvalidRequestCause.validate_raw(obj: obj.cause)
+        SeedTraceClient::Submission::SubmissionRequest.validate_raw(obj: obj.request)
+        SeedTraceClient::Submission::InvalidRequestCause.validate_raw(obj: obj.cause)
       end
     end
   end

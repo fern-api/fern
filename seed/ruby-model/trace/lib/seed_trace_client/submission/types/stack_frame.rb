@@ -1,53 +1,65 @@
 # frozen_string_literal: true
 
 require_relative "scope"
+require "ostruct"
 require "json"
 
 module SeedTraceClient
   class Submission
     class StackFrame
-      attr_reader :method_name, :line_number, :scopes, :additional_properties
+      # @return [String]
+      attr_reader :method_name
+      # @return [Integer]
+      attr_reader :line_number
+      # @return [Array<SeedTraceClient::Submission::Scope>]
+      attr_reader :scopes
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
+      protected :_field_set
+
+      OMIT = Object.new
 
       # @param method_name [String]
       # @param line_number [Integer]
-      # @param scopes [Array<Submission::Scope>]
+      # @param scopes [Array<SeedTraceClient::Submission::Scope>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Submission::StackFrame]
+      # @return [SeedTraceClient::Submission::StackFrame]
       def initialize(method_name:, line_number:, scopes:, additional_properties: nil)
-        # @type [String]
         @method_name = method_name
-        # @type [Integer]
         @line_number = line_number
-        # @type [Array<Submission::Scope>]
         @scopes = scopes
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
+        @_field_set = { "methodName": method_name, "lineNumber": line_number, "scopes": scopes }
       end
 
       # Deserialize a JSON object to an instance of StackFrame
       #
-      # @param json_object [JSON]
-      # @return [Submission::StackFrame]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Submission::StackFrame]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        method_name = struct.methodName
-        line_number = struct.lineNumber
+        method_name = struct["methodName"]
+        line_number = struct["lineNumber"]
         scopes = parsed_json["scopes"]&.map do |v|
           v = v.to_json
-          Submission::Scope.from_json(json_object: v)
+          SeedTraceClient::Submission::Scope.from_json(json_object: v)
         end
         new(method_name: method_name, line_number: line_number, scopes: scopes, additional_properties: struct)
       end
 
       # Serialize an instance of StackFrame to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "methodName": @method_name, "lineNumber": @line_number, "scopes": @scopes }.to_json
+        @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

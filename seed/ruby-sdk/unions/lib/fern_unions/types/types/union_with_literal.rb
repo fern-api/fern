@@ -5,27 +5,30 @@ require "json"
 module SeedUnionsClient
   class Types
     class UnionWithLiteral
-      attr_reader :member, :discriminant, :base
+      # @return [Object]
+      attr_reader :member
+      # @return [String]
+      attr_reader :discriminant
+      # @return [String]
+      attr_reader :base
 
       private_class_method :new
       alias kind_of? is_a?
+
       # @param member [Object]
       # @param discriminant [String]
       # @param base [String]
-      # @return [Types::UnionWithLiteral]
+      # @return [SeedUnionsClient::Types::UnionWithLiteral]
       def initialize(member:, discriminant:, base:)
-        # @type [Object]
         @member = member
-        # @type [String]
         @discriminant = discriminant
-        # @type [String]
         @base = base
       end
 
       # Deserialize a JSON object to an instance of UnionWithLiteral
       #
-      # @param json_object [JSON]
-      # @return [Types::UnionWithLiteral]
+      # @param json_object [String]
+      # @return [SeedUnionsClient::Types::UnionWithLiteral]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
@@ -39,7 +42,7 @@ module SeedUnionsClient
 
       # For Union Types, to_json functionality is delegated to the wrapped member.
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
         case @discriminant
         when "fern"
@@ -48,7 +51,9 @@ module SeedUnionsClient
         @member.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]
@@ -70,7 +75,7 @@ module SeedUnionsClient
       end
 
       # @param member [String]
-      # @return [Types::UnionWithLiteral]
+      # @return [SeedUnionsClient::Types::UnionWithLiteral]
       def self.fern(member:)
         new(member: member, discriminant: "fern")
       end

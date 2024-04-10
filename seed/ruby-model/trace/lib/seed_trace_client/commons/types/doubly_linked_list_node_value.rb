@@ -1,54 +1,67 @@
 # frozen_string_literal: true
 
-require_relative "node_id"
+require "ostruct"
 require "json"
 
 module SeedTraceClient
   class Commons
     class DoublyLinkedListNodeValue
-      attr_reader :node_id, :val, :next_, :prev, :additional_properties
+      # @return [String]
+      attr_reader :node_id
+      # @return [Float]
+      attr_reader :val
+      # @return [String]
+      attr_reader :next_
+      # @return [String]
+      attr_reader :prev
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
+      protected :_field_set
 
-      # @param node_id [Commons::NODE_ID]
+      OMIT = Object.new
+
+      # @param node_id [String]
       # @param val [Float]
-      # @param next_ [Commons::NODE_ID]
-      # @param prev [Commons::NODE_ID]
+      # @param next_ [String]
+      # @param prev [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-      # @return [Commons::DoublyLinkedListNodeValue]
-      def initialize(node_id:, val:, next_: nil, prev: nil, additional_properties: nil)
-        # @type [Commons::NODE_ID]
+      # @return [SeedTraceClient::Commons::DoublyLinkedListNodeValue]
+      def initialize(node_id:, val:, next_: OMIT, prev: OMIT, additional_properties: nil)
         @node_id = node_id
-        # @type [Float]
         @val = val
-        # @type [Commons::NODE_ID]
-        @next_ = next_
-        # @type [Commons::NODE_ID]
-        @prev = prev
-        # @type [OpenStruct] Additional properties unmapped to the current class definition
+        @next_ = next_ if next_ != OMIT
+        @prev = prev if prev != OMIT
         @additional_properties = additional_properties
+        @_field_set = { "nodeId": node_id, "val": val, "next": next_, "prev": prev }.reject do |_k, v|
+          v == OMIT
+        end
       end
 
       # Deserialize a JSON object to an instance of DoublyLinkedListNodeValue
       #
-      # @param json_object [JSON]
-      # @return [Commons::DoublyLinkedListNodeValue]
+      # @param json_object [String]
+      # @return [SeedTraceClient::Commons::DoublyLinkedListNodeValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        JSON.parse(json_object)
-        node_id = struct.nodeId
-        val = struct.val
-        next_ = struct.next
-        prev = struct.prev
+        node_id = struct["nodeId"]
+        val = struct["val"]
+        next_ = struct["next"]
+        prev = struct["prev"]
         new(node_id: node_id, val: val, next_: next_, prev: prev, additional_properties: struct)
       end
 
       # Serialize an instance of DoublyLinkedListNodeValue to a JSON object
       #
-      # @return [JSON]
+      # @return [String]
       def to_json(*_args)
-        { "nodeId": @node_id, "val": @val, "next": @next_, "prev": @prev }.to_json
+        @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

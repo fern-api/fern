@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "parameter_id"
+require "ostruct"
 require "json"
 
 module SeedTraceClient
@@ -8,37 +8,45 @@ module SeedTraceClient
     module V3
       class Problem
         class DeepEqualityCorrectnessCheck
-          attr_reader :expected_value_parameter_id, :additional_properties
+          # @return [String]
+          attr_reader :expected_value_parameter_id
+          # @return [OpenStruct] Additional properties unmapped to the current class definition
+          attr_reader :additional_properties
+          # @return [Object]
+          attr_reader :_field_set
+          protected :_field_set
 
-          # @param expected_value_parameter_id [V2::V3::Problem::PARAMETER_ID]
+          OMIT = Object.new
+
+          # @param expected_value_parameter_id [String]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-          # @return [V2::V3::Problem::DeepEqualityCorrectnessCheck]
+          # @return [SeedTraceClient::V2::V3::Problem::DeepEqualityCorrectnessCheck]
           def initialize(expected_value_parameter_id:, additional_properties: nil)
-            # @type [V2::V3::Problem::PARAMETER_ID]
             @expected_value_parameter_id = expected_value_parameter_id
-            # @type [OpenStruct] Additional properties unmapped to the current class definition
             @additional_properties = additional_properties
+            @_field_set = { "expectedValueParameterId": expected_value_parameter_id }
           end
 
           # Deserialize a JSON object to an instance of DeepEqualityCorrectnessCheck
           #
-          # @param json_object [JSON]
-          # @return [V2::V3::Problem::DeepEqualityCorrectnessCheck]
+          # @param json_object [String]
+          # @return [SeedTraceClient::V2::V3::Problem::DeepEqualityCorrectnessCheck]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            JSON.parse(json_object)
-            expected_value_parameter_id = struct.expectedValueParameterId
+            expected_value_parameter_id = struct["expectedValueParameterId"]
             new(expected_value_parameter_id: expected_value_parameter_id, additional_properties: struct)
           end
 
           # Serialize an instance of DeepEqualityCorrectnessCheck to a JSON object
           #
-          # @return [JSON]
+          # @return [String]
           def to_json(*_args)
-            { "expectedValueParameterId": @expected_value_parameter_id }.to_json
+            @_field_set&.to_json
           end
 
-          # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+          # Leveraged for Union-type generation, validate_raw attempts to parse the given
+          #  hash and check each fields type against the current object's property
+          #  definitions.
           #
           # @param obj [Object]
           # @return [Void]

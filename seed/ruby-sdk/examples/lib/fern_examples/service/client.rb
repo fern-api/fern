@@ -1,52 +1,53 @@
 # frozen_string_literal: true
 
 require_relative "../../requests"
-require_relative "../types/types/movie_id"
 require_relative "../types/types/movie"
 require_relative "../types/types/metadata"
 require "async"
 
 module SeedExamplesClient
   class ServiceClient
+    # @return [SeedExamplesClient::RequestClient]
     attr_reader :request_client
 
-    # @param request_client [RequestClient]
-    # @return [ServiceClient]
+    # @param request_client [SeedExamplesClient::RequestClient]
+    # @return [SeedExamplesClient::ServiceClient]
     def initialize(request_client:)
-      # @type [RequestClient]
       @request_client = request_client
     end
 
-    # @param movie_id [Types::MOVIE_ID]
-    # @param request_options [RequestOptions]
-    # @return [Types::Movie]
+    # @param movie_id [String]
+    # @param request_options [SeedExamplesClient::RequestOptions]
+    # @return [SeedExamplesClient::Types::Movie]
     def get_movie(movie_id:, request_options: nil)
-      response = @request_client.conn.get("/movie/#{movie_id}") do |req|
+      response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/movie/#{movie_id}"
       end
-      Types::Movie.from_json(json_object: response.body)
+      SeedExamplesClient::Types::Movie.from_json(json_object: response.body)
     end
 
-    # @param request [Hash] Request of type Types::Movie, as a Hash
-    #   * :id (Types::MOVIE_ID)
-    #   * :prequel (Types::MOVIE_ID)
+    # @param request [Hash] Request of type SeedExamplesClient::Types::Movie, as a Hash
+    #   * :id (String)
+    #   * :prequel (String)
     #   * :title (String)
     #   * :from (String)
     #   * :rating (Float)
     #   * :type (String)
-    #   * :tag (Commons::Types::TAG)
+    #   * :tag (String)
     #   * :book (String)
     #   * :metadata (Hash{String => Object})
-    # @param request_options [RequestOptions]
-    # @return [Types::MOVIE_ID]
+    # @param request_options [SeedExamplesClient::RequestOptions]
+    # @return [String]
     def create_movie(request:, request_options: nil)
-      response = @request_client.conn.post("/movie") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/movie"
       end
       response.body
     end
@@ -54,10 +55,10 @@ module SeedExamplesClient
     # @param x_api_version [String]
     # @param shallow [Boolean]
     # @param tag [String]
-    # @param request_options [RequestOptions]
-    # @return [Types::Metadata]
+    # @param request_options [SeedExamplesClient::RequestOptions]
+    # @return [SeedExamplesClient::Types::Metadata]
     def get_metadata(x_api_version:, shallow: nil, tag: nil, request_options: nil)
-      response = @request_client.conn.get("/metadata") do |req|
+      response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers = {
@@ -66,54 +67,57 @@ module SeedExamplesClient
           "X-API-Version": x_api_version
         }.compact
         req.params = { **(request_options&.additional_query_parameters || {}), "shallow": shallow, "tag": tag }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/metadata"
       end
-      Types::Metadata.from_json(json_object: response.body)
+      SeedExamplesClient::Types::Metadata.from_json(json_object: response.body)
     end
   end
 
   class AsyncServiceClient
+    # @return [SeedExamplesClient::AsyncRequestClient]
     attr_reader :request_client
 
-    # @param request_client [AsyncRequestClient]
-    # @return [AsyncServiceClient]
+    # @param request_client [SeedExamplesClient::AsyncRequestClient]
+    # @return [SeedExamplesClient::AsyncServiceClient]
     def initialize(request_client:)
-      # @type [AsyncRequestClient]
       @request_client = request_client
     end
 
-    # @param movie_id [Types::MOVIE_ID]
-    # @param request_options [RequestOptions]
-    # @return [Types::Movie]
+    # @param movie_id [String]
+    # @param request_options [SeedExamplesClient::RequestOptions]
+    # @return [SeedExamplesClient::Types::Movie]
     def get_movie(movie_id:, request_options: nil)
       Async do
-        response = @request_client.conn.get("/movie/#{movie_id}") do |req|
+        response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/movie/#{movie_id}"
         end
-        Types::Movie.from_json(json_object: response.body)
+        SeedExamplesClient::Types::Movie.from_json(json_object: response.body)
       end
     end
 
-    # @param request [Hash] Request of type Types::Movie, as a Hash
-    #   * :id (Types::MOVIE_ID)
-    #   * :prequel (Types::MOVIE_ID)
+    # @param request [Hash] Request of type SeedExamplesClient::Types::Movie, as a Hash
+    #   * :id (String)
+    #   * :prequel (String)
     #   * :title (String)
     #   * :from (String)
     #   * :rating (Float)
     #   * :type (String)
-    #   * :tag (Commons::Types::TAG)
+    #   * :tag (String)
     #   * :book (String)
     #   * :metadata (Hash{String => Object})
-    # @param request_options [RequestOptions]
-    # @return [Types::MOVIE_ID]
+    # @param request_options [SeedExamplesClient::RequestOptions]
+    # @return [String]
     def create_movie(request:, request_options: nil)
       Async do
-        response = @request_client.conn.post("/movie") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/movie"
         end
         response.body
       end
@@ -122,11 +126,11 @@ module SeedExamplesClient
     # @param x_api_version [String]
     # @param shallow [Boolean]
     # @param tag [String]
-    # @param request_options [RequestOptions]
-    # @return [Types::Metadata]
+    # @param request_options [SeedExamplesClient::RequestOptions]
+    # @return [SeedExamplesClient::Types::Metadata]
     def get_metadata(x_api_version:, shallow: nil, tag: nil, request_options: nil)
       Async do
-        response = @request_client.conn.get("/metadata") do |req|
+        response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = {
@@ -139,8 +143,9 @@ module SeedExamplesClient
             "shallow": shallow,
             "tag": tag
           }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/metadata"
         end
-        Types::Metadata.from_json(json_object: response.body)
+        SeedExamplesClient::Types::Metadata.from_json(json_object: response.body)
       end
     end
   end

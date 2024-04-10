@@ -2,7 +2,7 @@
 
 module SeedEnumClient
   # Tests enum name and value can be
-  # different.
+  #  different.
   class Operand
     GREATER_THAN = ">"
     EQUAL_TO = "="

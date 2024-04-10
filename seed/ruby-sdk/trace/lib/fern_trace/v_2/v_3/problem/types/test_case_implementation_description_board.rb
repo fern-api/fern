@@ -1,31 +1,33 @@
 # frozen_string_literal: true
 
 require "json"
-require_relative "parameter_id"
 
 module SeedTraceClient
   module V2
     module V3
       class Problem
         class TestCaseImplementationDescriptionBoard
-          attr_reader :member, :discriminant
+          # @return [Object]
+          attr_reader :member
+          # @return [String]
+          attr_reader :discriminant
 
           private_class_method :new
           alias kind_of? is_a?
+
           # @param member [Object]
           # @param discriminant [String]
-          # @return [V2::V3::Problem::TestCaseImplementationDescriptionBoard]
+          # @return [SeedTraceClient::V2::V3::Problem::TestCaseImplementationDescriptionBoard]
           def initialize(member:, discriminant:)
-            # @type [Object]
             @member = member
-            # @type [String]
             @discriminant = discriminant
           end
 
-          # Deserialize a JSON object to an instance of TestCaseImplementationDescriptionBoard
+          # Deserialize a JSON object to an instance of
+          #  TestCaseImplementationDescriptionBoard
           #
-          # @param json_object [JSON]
-          # @return [V2::V3::Problem::TestCaseImplementationDescriptionBoard]
+          # @param json_object [String]
+          # @return [SeedTraceClient::V2::V3::Problem::TestCaseImplementationDescriptionBoard]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             member = case struct.type
@@ -41,7 +43,7 @@ module SeedTraceClient
 
           # For Union Types, to_json functionality is delegated to the wrapped member.
           #
-          # @return [JSON]
+          # @return [String]
           def to_json(*_args)
             case @discriminant
             when "html"
@@ -51,7 +53,9 @@ module SeedTraceClient
             @member.to_json
           end
 
-          # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+          # Leveraged for Union-type generation, validate_raw attempts to parse the given
+          #  hash and check each fields type against the current object's property
+          #  definitions.
           #
           # @param obj [Object]
           # @return [Void]
@@ -75,13 +79,13 @@ module SeedTraceClient
           end
 
           # @param member [String]
-          # @return [V2::V3::Problem::TestCaseImplementationDescriptionBoard]
+          # @return [SeedTraceClient::V2::V3::Problem::TestCaseImplementationDescriptionBoard]
           def self.html(member:)
             new(member: member, discriminant: "html")
           end
 
-          # @param member [V2::V3::Problem::PARAMETER_ID]
-          # @return [V2::V3::Problem::TestCaseImplementationDescriptionBoard]
+          # @param member [String]
+          # @return [SeedTraceClient::V2::V3::Problem::TestCaseImplementationDescriptionBoard]
           def self.param_id(member:)
             new(member: member, discriminant: "paramId")
           end

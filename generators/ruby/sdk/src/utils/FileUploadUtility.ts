@@ -17,7 +17,7 @@ import {
 
 export class FileUploadUtility extends Class_ {
     public convertToFaradayMultipart: Function_;
-    constructor() {
+    constructor(clientName: string) {
         const fileProperty = new Property({
             name: "file_like",
             documentation: "The file to be uploaded, or a string path to the file.",
@@ -128,7 +128,8 @@ export class FileUploadUtility extends Class_ {
         super({
             classReference: new ClassReference({
                 name: "FileUtilities",
-                import_: new Import({ from: "core/file_utilities", isExternal: false })
+                import_: new Import({ from: "core/file_utilities", isExternal: false }),
+                moduleBreadcrumbs: [clientName]
             }),
             includeInitializer: false,
             properties: [],

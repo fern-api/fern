@@ -152,7 +152,7 @@ export class DiscriminatedUnion extends Class_ {
                 ]
             })
         ];
-        const parameters = [new Parameter({ name: jsonObjectParamName, type: JsonClassReference })];
+        const parameters = [new Parameter({ name: jsonObjectParamName, type: StringClassReference })];
         const fromJsonDocumentation = `Deserialize a JSON object to an instance of ${unionClassReference.name}`;
         return new Function_({
             name: "from_json",
@@ -247,7 +247,7 @@ export class DiscriminatedUnion extends Class_ {
                     onObject: memberProperty.toVariable()
                 })
             ],
-            returnValue: JsonClassReference,
+            returnValue: StringClassReference,
             documentation: toJsonDocumentation
         });
     }

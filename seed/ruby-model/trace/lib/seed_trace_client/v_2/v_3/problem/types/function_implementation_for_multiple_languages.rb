@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "ostruct"
 require "json"
 
 module SeedTraceClient
@@ -7,40 +8,51 @@ module SeedTraceClient
     module V3
       class Problem
         class FunctionImplementationForMultipleLanguages
-          attr_reader :code_by_language, :additional_properties
+          # @return [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::V2::V3::Problem::FunctionImplementation}]
+          attr_reader :code_by_language
+          # @return [OpenStruct] Additional properties unmapped to the current class definition
+          attr_reader :additional_properties
+          # @return [Object]
+          attr_reader :_field_set
+          protected :_field_set
 
-          # @param code_by_language [Hash{Commons::Language => V2::V3::Problem::FunctionImplementation}]
+          OMIT = Object.new
+
+          # @param code_by_language [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::V2::V3::Problem::FunctionImplementation}]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-          # @return [V2::V3::Problem::FunctionImplementationForMultipleLanguages]
+          # @return [SeedTraceClient::V2::V3::Problem::FunctionImplementationForMultipleLanguages]
           def initialize(code_by_language:, additional_properties: nil)
-            # @type [Hash{Commons::Language => V2::V3::Problem::FunctionImplementation}]
             @code_by_language = code_by_language
-            # @type [OpenStruct] Additional properties unmapped to the current class definition
             @additional_properties = additional_properties
+            @_field_set = { "codeByLanguage": code_by_language }
           end
 
-          # Deserialize a JSON object to an instance of FunctionImplementationForMultipleLanguages
+          # Deserialize a JSON object to an instance of
+          #  FunctionImplementationForMultipleLanguages
           #
-          # @param json_object [JSON]
-          # @return [V2::V3::Problem::FunctionImplementationForMultipleLanguages]
+          # @param json_object [String]
+          # @return [SeedTraceClient::V2::V3::Problem::FunctionImplementationForMultipleLanguages]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             parsed_json = JSON.parse(json_object)
-            code_by_language = parsed_json["codeByLanguage"]&.transform_values do |_k, v|
+            code_by_language = parsed_json["codeByLanguage"]&.transform_values do |v|
               v = v.to_json
-              V2::V3::Problem::FunctionImplementation.from_json(json_object: v)
+              SeedTraceClient::V2::V3::Problem::FunctionImplementation.from_json(json_object: v)
             end
             new(code_by_language: code_by_language, additional_properties: struct)
           end
 
-          # Serialize an instance of FunctionImplementationForMultipleLanguages to a JSON object
+          # Serialize an instance of FunctionImplementationForMultipleLanguages to a JSON
+          #  object
           #
-          # @return [JSON]
+          # @return [String]
           def to_json(*_args)
-            { "codeByLanguage": @code_by_language }.to_json
+            @_field_set&.to_json
           end
 
-          # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+          # Leveraged for Union-type generation, validate_raw attempts to parse the given
+          #  hash and check each fields type against the current object's property
+          #  definitions.
           #
           # @param obj [Object]
           # @return [Void]

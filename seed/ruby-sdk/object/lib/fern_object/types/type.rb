@@ -3,13 +3,57 @@
 require "date"
 require "set"
 require_relative "name"
+require "ostruct"
 require "json"
 
 module SeedObjectClient
   # Exercises all of the built-in types.
   class Type
-    attr_reader :one, :two, :three, :four, :five, :six, :seven, :eight, :nine, :ten, :eleven, :twelve, :thirteen,
-                :fourteen, :fifteen, :sixteen, :seventeen, :eighteen, :nineteen, :additional_properties
+    # @return [Integer]
+    attr_reader :one
+    # @return [Float]
+    attr_reader :two
+    # @return [String]
+    attr_reader :three
+    # @return [Boolean]
+    attr_reader :four
+    # @return [Long]
+    attr_reader :five
+    # @return [DateTime]
+    attr_reader :six
+    # @return [Date]
+    attr_reader :seven
+    # @return [String]
+    attr_reader :eight
+    # @return [String]
+    attr_reader :nine
+    # @return [Array<Integer>]
+    attr_reader :ten
+    # @return [Set<Float>]
+    attr_reader :eleven
+    # @return [Hash{String => Boolean}]
+    attr_reader :twelve
+    # @return [Long]
+    attr_reader :thirteen
+    # @return [Object]
+    attr_reader :fourteen
+    # @return [Array<Array<Integer>>]
+    attr_reader :fifteen
+    # @return [Array<Hash{String => Integer}>]
+    attr_reader :sixteen
+    # @return [Array<String>]
+    attr_reader :seventeen
+    # @return [String]
+    attr_reader :eighteen
+    # @return [SeedObjectClient::Name]
+    attr_reader :nineteen
+    # @return [OpenStruct] Additional properties unmapped to the current class definition
+    attr_reader :additional_properties
+    # @return [Object]
+    attr_reader :_field_set
+    protected :_field_set
+
+    OMIT = Object.new
 
     # @param one [Integer]
     # @param two [Float]
@@ -29,88 +73,91 @@ module SeedObjectClient
     # @param sixteen [Array<Hash{String => Integer}>]
     # @param seventeen [Array<String>]
     # @param eighteen [String]
-    # @param nineteen [Name]
+    # @param nineteen [SeedObjectClient::Name]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
-    # @return [Type]
+    # @return [SeedObjectClient::Type]
     def initialize(one:, two:, three:, four:, five:, six:, seven:, eight:, nine:, ten:, eleven:, twelve:, fourteen:, fifteen:, sixteen:, seventeen:, eighteen:, nineteen:,
-                   thirteen: nil, additional_properties: nil)
-      # @type [Integer]
+                   thirteen: OMIT, additional_properties: nil)
       @one = one
-      # @type [Float]
       @two = two
-      # @type [String]
       @three = three
-      # @type [Boolean]
       @four = four
-      # @type [Long]
       @five = five
-      # @type [DateTime]
       @six = six
-      # @type [Date]
       @seven = seven
-      # @type [String]
       @eight = eight
-      # @type [String]
       @nine = nine
-      # @type [Array<Integer>]
       @ten = ten
-      # @type [Set<Float>]
       @eleven = eleven
-      # @type [Hash{String => Boolean}]
       @twelve = twelve
-      # @type [Long]
-      @thirteen = thirteen
-      # @type [Object]
+      @thirteen = thirteen if thirteen != OMIT
       @fourteen = fourteen
-      # @type [Array<Array<Integer>>]
       @fifteen = fifteen
-      # @type [Array<Hash{String => Integer}>]
       @sixteen = sixteen
-      # @type [Array<String>]
       @seventeen = seventeen
-      # @type [String]
       @eighteen = eighteen
-      # @type [Name]
       @nineteen = nineteen
-      # @type [OpenStruct] Additional properties unmapped to the current class definition
       @additional_properties = additional_properties
+      @_field_set = {
+        "one": one,
+        "two": two,
+        "three": three,
+        "four": four,
+        "five": five,
+        "six": six,
+        "seven": seven,
+        "eight": eight,
+        "nine": nine,
+        "ten": ten,
+        "eleven": eleven,
+        "twelve": twelve,
+        "thirteen": thirteen,
+        "fourteen": fourteen,
+        "fifteen": fifteen,
+        "sixteen": sixteen,
+        "seventeen": seventeen,
+        "eighteen": eighteen,
+        "nineteen": nineteen
+      }.reject do |_k, v|
+        v == OMIT
+      end
     end
 
     # Deserialize a JSON object to an instance of Type
     #
-    # @param json_object [JSON]
-    # @return [Type]
+    # @param json_object [String]
+    # @return [SeedObjectClient::Type]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
       parsed_json = JSON.parse(json_object)
-      one = struct.one
-      two = struct.two
-      three = struct.three
-      four = struct.four
-      five = struct.five
+      one = struct["one"]
+      two = struct["two"]
+      three = struct["three"]
+      four = struct["four"]
+      five = struct["five"]
       six = (DateTime.parse(parsed_json["six"]) unless parsed_json["six"].nil?)
       seven = (Date.parse(parsed_json["seven"]) unless parsed_json["seven"].nil?)
-      eight = struct.eight
-      nine = struct.nine
-      ten = struct.ten
+      eight = struct["eight"]
+      nine = struct["nine"]
+      ten = struct["ten"]
       if parsed_json["eleven"].nil?
         eleven = nil
       else
         eleven = parsed_json["eleven"].to_json
         eleven = Set.new(eleven)
       end
-      twelve = struct.twelve
-      thirteen = struct.thirteen
-      fourteen = struct.fourteen
-      fifteen = struct.fifteen
-      sixteen = struct.sixteen
-      seventeen = struct.seventeen
-      eighteen = struct.eighteen
+      twelve = struct["twelve"]
+      thirteen = struct["thirteen"]
+      fourteen = struct["fourteen"]
+      fifteen = struct["fifteen"]
+      sixteen = struct["sixteen"]
+      seventeen = struct["seventeen"]
+      eighteen = struct["eighteen"]
       if parsed_json["nineteen"].nil?
         nineteen = nil
       else
         nineteen = parsed_json["nineteen"].to_json
-        nineteen = Name.from_json(json_object: nineteen)
+        nineteen = SeedObjectClient::Name.from_json(json_object: nineteen)
       end
       new(one: one, two: two, three: three, four: four, five: five, six: six, seven: seven, eight: eight, nine: nine,
           ten: ten, eleven: eleven, twelve: twelve, thirteen: thirteen, fourteen: fourteen, fifteen: fifteen, sixteen: sixteen, seventeen: seventeen, eighteen: eighteen, nineteen: nineteen, additional_properties: struct)
@@ -118,32 +165,14 @@ module SeedObjectClient
 
     # Serialize an instance of Type to a JSON object
     #
-    # @return [JSON]
+    # @return [String]
     def to_json(*_args)
-      {
-        "one": @one,
-        "two": @two,
-        "three": @three,
-        "four": @four,
-        "five": @five,
-        "six": @six,
-        "seven": @seven,
-        "eight": @eight,
-        "nine": @nine,
-        "ten": @ten,
-        "eleven": @eleven,
-        "twelve": @twelve,
-        "thirteen": @thirteen,
-        "fourteen": @fourteen,
-        "fifteen": @fifteen,
-        "sixteen": @sixteen,
-        "seventeen": @seventeen,
-        "eighteen": @eighteen,
-        "nineteen": @nineteen
-      }.to_json
+      @_field_set&.to_json
     end
 
-    # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+    # Leveraged for Union-type generation, validate_raw attempts to parse the given
+    #  hash and check each fields type against the current object's property
+    #  definitions.
     #
     # @param obj [Object]
     # @return [Void]
@@ -166,7 +195,7 @@ module SeedObjectClient
       obj.sixteen.is_a?(Array) != false || raise("Passed value for field obj.sixteen is not the expected type, validation failed.")
       obj.seventeen.is_a?(Array) != false || raise("Passed value for field obj.seventeen is not the expected type, validation failed.")
       obj.eighteen.is_a?(String) != false || raise("Passed value for field obj.eighteen is not the expected type, validation failed.")
-      Name.validate_raw(obj: obj.nineteen)
+      SeedObjectClient::Name.validate_raw(obj: obj.nineteen)
     end
   end
 end
