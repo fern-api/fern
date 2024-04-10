@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "environment"
 require "faraday"
 require "faraday/retry"
 require "async/http/faraday"
@@ -8,19 +9,21 @@ module SeedMultiUrlEnvironmentClient
   class RequestClient
     # @return [Hash{String => String}]
     attr_reader :headers
-    # @return [String]
-    attr_reader :default_environment
     # @return [Faraday]
     attr_reader :conn
     # @return [String]
     attr_reader :base_url
+    # @return [String]
+    attr_reader :default_environment
 
+    # @param environment [SeedMultiUrlEnvironmentClient::Environment]
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param token [String]
     # @return [SeedMultiUrlEnvironmentClient::RequestClient]
-    def initialize(token:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
+    def initialize(token:, environment: Environment::PRODUCTION, base_url: nil, max_retries: nil,
+                   timeout_in_seconds: nil)
       @default_environment = environment
       @headers = {
         "X-Fern-Language": "Ruby",
@@ -39,7 +42,7 @@ module SeedMultiUrlEnvironmentClient
     # @param request_options [SeedMultiUrlEnvironmentClient::RequestOptions]
     # @param environment [String]
     # @return [String]
-    def get_url(request_options:, environment:)
+    def get_url(environment:, request_options: nil)
       request_options&.base_url || @default_environment[environment] || @base_url
     end
   end
@@ -47,19 +50,21 @@ module SeedMultiUrlEnvironmentClient
   class AsyncRequestClient
     # @return [Hash{String => String}]
     attr_reader :headers
-    # @return [String]
-    attr_reader :default_environment
     # @return [Faraday]
     attr_reader :conn
     # @return [String]
     attr_reader :base_url
+    # @return [String]
+    attr_reader :default_environment
 
+    # @param environment [SeedMultiUrlEnvironmentClient::Environment]
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param token [String]
     # @return [SeedMultiUrlEnvironmentClient::AsyncRequestClient]
-    def initialize(token:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
+    def initialize(token:, environment: Environment::PRODUCTION, base_url: nil, max_retries: nil,
+                   timeout_in_seconds: nil)
       @default_environment = environment
       @headers = {
         "X-Fern-Language": "Ruby",
@@ -79,7 +84,7 @@ module SeedMultiUrlEnvironmentClient
     # @param request_options [SeedMultiUrlEnvironmentClient::RequestOptions]
     # @param environment [String]
     # @return [String]
-    def get_url(request_options:, environment:)
+    def get_url(environment:, request_options: nil)
       request_options&.base_url || @default_environment[environment] || @base_url
     end
   end

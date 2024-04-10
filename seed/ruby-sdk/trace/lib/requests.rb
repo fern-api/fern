@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "environment"
 require "faraday"
 require "faraday/retry"
 require "async/http/faraday"
@@ -8,20 +9,22 @@ module SeedTraceClient
   class RequestClient
     # @return [Hash{String => String}]
     attr_reader :headers
-    # @return [String]
-    attr_reader :default_environment
     # @return [Faraday]
     attr_reader :conn
     # @return [String]
     attr_reader :base_url
+    # @return [String]
+    attr_reader :default_environment
 
+    # @param environment [SeedTraceClient::Environment]
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param token [String]
     # @param x_random_header [String]
     # @return [SeedTraceClient::RequestClient]
-    def initialize(token:, base_url: nil, max_retries: nil, timeout_in_seconds: nil, x_random_header: nil)
+    def initialize(token:, environment: Environment::PROD, base_url: nil, max_retries: nil, timeout_in_seconds: nil,
+                   x_random_header: nil)
       @default_environment = environment
       @base_url = environment || base_url
       @headers = {
@@ -40,30 +43,31 @@ module SeedTraceClient
     end
 
     # @param request_options [SeedTraceClient::RequestOptions]
-    # @param environment [String]
     # @return [String]
-    def get_url(request_options:, environment:)
-      request_options&.base_url || environment || @base_url
+    def get_url(request_options: nil)
+      request_options&.base_url || @default_environment || @base_url
     end
   end
 
   class AsyncRequestClient
     # @return [Hash{String => String}]
     attr_reader :headers
-    # @return [String]
-    attr_reader :default_environment
     # @return [Faraday]
     attr_reader :conn
     # @return [String]
     attr_reader :base_url
+    # @return [String]
+    attr_reader :default_environment
 
+    # @param environment [SeedTraceClient::Environment]
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param token [String]
     # @param x_random_header [String]
     # @return [SeedTraceClient::AsyncRequestClient]
-    def initialize(token:, base_url: nil, max_retries: nil, timeout_in_seconds: nil, x_random_header: nil)
+    def initialize(token:, environment: Environment::PROD, base_url: nil, max_retries: nil, timeout_in_seconds: nil,
+                   x_random_header: nil)
       @default_environment = environment
       @base_url = environment || base_url
       @headers = {
@@ -83,10 +87,9 @@ module SeedTraceClient
     end
 
     # @param request_options [SeedTraceClient::RequestOptions]
-    # @param environment [String]
     # @return [String]
-    def get_url(request_options:, environment:)
-      request_options&.base_url || environment || @base_url
+    def get_url(request_options: nil)
+      request_options&.base_url || @default_environment || @base_url
     end
   end
 

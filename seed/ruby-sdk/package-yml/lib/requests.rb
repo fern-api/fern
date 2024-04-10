@@ -8,8 +8,6 @@ module SeedPackageYmlClient
   class RequestClient
     # @return [Hash{String => String}]
     attr_reader :headers
-    # @return [String]
-    attr_reader :default_environment
     # @return [Faraday]
     attr_reader :conn
     # @return [String]
@@ -32,7 +30,7 @@ module SeedPackageYmlClient
 
     # @param request_options [SeedPackageYmlClient::RequestOptions]
     # @return [String]
-    def get_url(request_options:)
+    def get_url(request_options: nil)
       request_options&.base_url || @base_url
     end
   end
@@ -40,8 +38,6 @@ module SeedPackageYmlClient
   class AsyncRequestClient
     # @return [Hash{String => String}]
     attr_reader :headers
-    # @return [String]
-    attr_reader :default_environment
     # @return [Faraday]
     attr_reader :conn
     # @return [String]
@@ -65,7 +61,7 @@ module SeedPackageYmlClient
 
     # @param request_options [SeedPackageYmlClient::RequestOptions]
     # @return [String]
-    def get_url(request_options:)
+    def get_url(request_options: nil)
       request_options&.base_url || @base_url
     end
   end

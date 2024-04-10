@@ -706,6 +706,14 @@ function generateRequestClientInitializer(
     const functionBody = [];
 
     if (environmentCr !== undefined) {
+        functionParams.push(
+            new Parameter({
+                name: "environment",
+                type: environmentCr,
+                defaultValue: defaultEnvironment,
+                isOptional: true
+            })
+        );
         functionBody.push(
             new Expression({
                 leftSide: "@default_environment",
@@ -794,13 +802,17 @@ function requestClientFunctions(
     environmentProperty: Property | undefined,
     isMultiBaseUrlEnvironments: boolean
 ): Function_[] {
-    const requestOptionsParameter = new Parameter({ name: "request_options", type: requestOptions.classReference });
+    const requestOptionsParameter = new Parameter({
+        name: "request_options",
+        type: requestOptions.classReference,
+        isOptional: true
+    });
     const environmentOverrideParameter = new Parameter({
         name: "environment",
         type: StringClassReference
     });
     const parameters = [requestOptionsParameter];
-    if (environmentProperty != null) {
+    if (environmentProperty != null && isMultiBaseUrlEnvironments) {
         parameters.push(environmentOverrideParameter);
     }
 
@@ -818,7 +830,7 @@ function requestClientFunctions(
                                       ? `${environmentProperty.toVariable().write({})}[${environmentOverrideParameter
                                             .toVariable()
                                             .write({})}]`
-                                      : environmentOverrideParameter.toVariable(),
+                                      : environmentProperty.toVariable(),
                                   operation: "||",
                                   isAssignment: false
                               })
@@ -845,6 +857,7 @@ export function generateRequestClients(
     hasFileBasedDependencies: boolean | undefined,
     requestOptions: RequestOptions
 ): [Class_, Class_] {
+    const hasEnvironments = environmentCr != null;
     const faradayReference = new ClassReference({
         name: "Faraday",
         import_: new Import({ from: "faraday", isExternal: true })
@@ -863,10 +876,14 @@ export function generateRequestClients(
             name: "headers",
             type: new HashReference({ keyType: StringClassReference, valueType: StringClassReference })
         }),
-        environmentProperty,
         new Property({ name: "conn", type: faradayReference }),
         baseUrlProperty
     ];
+
+    if (hasEnvironments) {
+        clientProperties.push(environmentProperty);
+    }
+
     // Add Client class
     const clientClassReference = new ClassReference({
         name: "RequestClient",
