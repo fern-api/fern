@@ -2,7 +2,6 @@
 
 require "json"
 require_relative "create_problem_error"
-require_relative "../../commons/types/problem_id"
 
 module SeedTraceClient
   class Problem
@@ -73,7 +72,7 @@ module SeedTraceClient
         @member.is_a?(obj)
       end
 
-      # @param member [SeedTraceClient::Commons::PROBLEM_ID]
+      # @param member [String]
       # @return [SeedTraceClient::Problem::CreateProblemResponse]
       def self.success(member:)
         new(member: member, discriminant: "success")

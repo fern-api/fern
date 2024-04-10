@@ -20,7 +20,7 @@ module SeedMixedCaseClient
     # @param request_options [SeedMixedCaseClient::RequestOptions]
     # @return [SeedMixedCaseClient::Service::Resource]
     def get_resource(resource_id:, request_options: nil)
-      response = @request_client.conn.get("/resource/#{resource_id}") do |req|
+      response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/resource/#{resource_id}"
@@ -33,7 +33,7 @@ module SeedMixedCaseClient
     # @param request_options [SeedMixedCaseClient::RequestOptions]
     # @return [Array<SeedMixedCaseClient::Service::Resource>]
     def list_resources(page_limit:, before_date:, request_options: nil)
-      response = @request_client.conn.get("/resource") do |req|
+      response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.params = {
@@ -43,9 +43,7 @@ module SeedMixedCaseClient
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/resource"
       end
-      return if response.body.nil?
-
-      response.body.map do |v|
+      response.body&.map do |v|
         v = v.to_json
         SeedMixedCaseClient::Service::Resource.from_json(json_object: v)
       end
@@ -67,7 +65,7 @@ module SeedMixedCaseClient
     # @return [SeedMixedCaseClient::Service::Resource]
     def get_resource(resource_id:, request_options: nil)
       Async do
-        response = @request_client.conn.get("/resource/#{resource_id}") do |req|
+        response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/resource/#{resource_id}"
@@ -82,7 +80,7 @@ module SeedMixedCaseClient
     # @return [Array<SeedMixedCaseClient::Service::Resource>]
     def list_resources(page_limit:, before_date:, request_options: nil)
       Async do
-        response = @request_client.conn.get("/resource") do |req|
+        response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.params = {

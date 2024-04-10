@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "submission_id"
 require_relative "../../commons/types/debug_variable_value"
 require_relative "expression_location"
 require_relative "stack_information"
@@ -14,7 +13,7 @@ module SeedTraceClient
                   :additional_properties, :_field_set
       protected :_field_set
       OMIT = Object.new
-      # @param submission_id [SeedTraceClient::Submission::SUBMISSION_ID]
+      # @param submission_id [String]
       # @param line_number [Integer]
       # @param return_value [SeedTraceClient::Commons::DebugVariableValue]
       # @param expression_location [SeedTraceClient::Submission::ExpressionLocation]
@@ -24,7 +23,7 @@ module SeedTraceClient
       # @return [SeedTraceClient::Submission::TraceResponse]
       def initialize(submission_id:, line_number:, stack:, return_value: OMIT, expression_location: OMIT, stdout: OMIT,
                      additional_properties: nil)
-        # @type [SeedTraceClient::Submission::SUBMISSION_ID]
+        # @type [String]
         @submission_id = submission_id
         # @type [Integer]
         @line_number = line_number

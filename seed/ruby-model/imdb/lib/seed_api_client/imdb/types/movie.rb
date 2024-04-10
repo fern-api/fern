@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "movie_id"
 require "ostruct"
 require "json"
 
@@ -10,13 +9,13 @@ module SeedApiClient
       attr_reader :id, :title, :rating, :additional_properties, :_field_set
       protected :_field_set
       OMIT = Object.new
-      # @param id [SeedApiClient::Imdb::MOVIE_ID]
+      # @param id [String]
       # @param title [String]
       # @param rating [Float] The rating scale is one to five stars
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedApiClient::Imdb::Movie]
       def initialize(id:, title:, rating:, additional_properties: nil)
-        # @type [SeedApiClient::Imdb::MOVIE_ID]
+        # @type [String]
         @id = id
         # @type [String]
         @title = title

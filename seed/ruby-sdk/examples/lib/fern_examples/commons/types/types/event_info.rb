@@ -2,7 +2,6 @@
 
 require "json"
 require_relative "metadata"
-require_relative "tag"
 
 module SeedExamplesClient
   module Commons
@@ -83,7 +82,7 @@ module SeedExamplesClient
           new(member: member, discriminant: "metadata")
         end
 
-        # @param member [SeedExamplesClient::Commons::Types::TAG]
+        # @param member [String]
         # @return [SeedExamplesClient::Commons::Types::EventInfo]
         def self.tag(member:)
           new(member: member, discriminant: "tag")

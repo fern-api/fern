@@ -22,7 +22,7 @@ module SeedEnumClient
     # @param request_options [SeedEnumClient::RequestOptions]
     # @return [Void]
     def send(operand:, maybe_operand: nil, operand_or_color: nil, maybe_operand_or_color: nil, request_options: nil)
-      @request_client.conn.post("/query") do |req|
+      @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.params = {
@@ -44,7 +44,7 @@ module SeedEnumClient
     # @return [Void]
     def send_list(operand:, maybe_operand: nil, operand_or_color: nil, maybe_operand_or_color: nil,
                   request_options: nil)
-      @request_client.conn.post("/query-list") do |req|
+      @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.params = {
@@ -77,7 +77,7 @@ module SeedEnumClient
     # @return [Void]
     def send(operand:, maybe_operand: nil, operand_or_color: nil, maybe_operand_or_color: nil, request_options: nil)
       Async do
-        @request_client.conn.post("/query") do |req|
+        @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.params = {
@@ -101,7 +101,7 @@ module SeedEnumClient
     def send_list(operand:, maybe_operand: nil, operand_or_color: nil, maybe_operand_or_color: nil,
                   request_options: nil)
       Async do
-        @request_client.conn.post("/query-list") do |req|
+        @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.params = {

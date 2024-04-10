@@ -18,7 +18,7 @@ module SeedFileDownloadClient
     # @yield on_data[chunk, overall_received_bytes, env] Leverage the Faraday on_data callback which will receive tuples of strings, the sum of characters received so far, and the response environment. The latter will allow access to the response status, headers and reason, as well as the request info.
     # @return [Void]
     def download_file(request_options: nil, &on_data)
-      @request_client.conn.post("/") do |req|
+      @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.options.on_data = on_data
@@ -42,7 +42,7 @@ module SeedFileDownloadClient
     # @return [Void]
     def download_file(request_options: nil, &on_data)
       Async do
-        @request_client.conn.post("/") do |req|
+        @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.options.on_data = on_data

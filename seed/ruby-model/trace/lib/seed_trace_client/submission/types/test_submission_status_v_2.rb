@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative "test_submission_update"
-require_relative "../../commons/types/problem_id"
 require_relative "../../v_2/problem/types/problem_info_v_2"
 require "ostruct"
 require "json"
@@ -13,7 +12,7 @@ module SeedTraceClient
       protected :_field_set
       OMIT = Object.new
       # @param updates [Array<SeedTraceClient::Submission::TestSubmissionUpdate>]
-      # @param problem_id [SeedTraceClient::Commons::PROBLEM_ID]
+      # @param problem_id [String]
       # @param problem_version [Integer]
       # @param problem_info [SeedTraceClient::V2::Problem::ProblemInfoV2]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
@@ -21,7 +20,7 @@ module SeedTraceClient
       def initialize(updates:, problem_id:, problem_version:, problem_info:, additional_properties: nil)
         # @type [Array<SeedTraceClient::Submission::TestSubmissionUpdate>]
         @updates = updates
-        # @type [SeedTraceClient::Commons::PROBLEM_ID]
+        # @type [String]
         @problem_id = problem_id
         # @type [Integer]
         @problem_version = problem_version

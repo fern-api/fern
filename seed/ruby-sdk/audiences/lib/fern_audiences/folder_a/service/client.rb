@@ -19,7 +19,7 @@ module SeedAudiencesClient
       # @param request_options [SeedAudiencesClient::RequestOptions]
       # @return [SeedAudiencesClient::FolderA::Service::Response]
       def get_direct_thread(request_options: nil)
-        response = @request_client.conn.get("/") do |req|
+        response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/"
@@ -42,7 +42,7 @@ module SeedAudiencesClient
       # @return [SeedAudiencesClient::FolderA::Service::Response]
       def get_direct_thread(request_options: nil)
         Async do
-          response = @request_client.conn.get("/") do |req|
+          response = @request_client.conn.get do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/"

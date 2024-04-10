@@ -18,7 +18,7 @@ module SeedBytesClient
     # @param request_options [SeedBytesClient::RequestOptions]
     # @return [Void]
     def upload(request:, request_options: nil)
-      @request_client.conn.post("/upload-content") do |req|
+      @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.headers["Content-Type"] = "application/octet-stream"
@@ -43,7 +43,7 @@ module SeedBytesClient
     # @return [Void]
     def upload(request:, request_options: nil)
       Async do
-        @request_client.conn.post("/upload-content") do |req|
+        @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.headers["Content-Type"] = "application/octet-stream"

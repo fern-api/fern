@@ -23,7 +23,7 @@ module SeedPackageYmlClient
     # @param request_options [SeedPackageYmlClient::RequestOptions]
     # @return [String]
     def echo(id:, request:, request_options: nil)
-      response = @request_client.conn.post("/#{id}") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
@@ -51,7 +51,7 @@ module SeedPackageYmlClient
     # @param request_options [SeedPackageYmlClient::RequestOptions]
     # @return [String]
     def echo(id:, request:, request_options: nil)
-      response = @async_request_client.conn.post("/#{id}") do |req|
+      response = @async_request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact

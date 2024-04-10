@@ -3,7 +3,6 @@
 require_relative "../../requests"
 require_relative "types/create_problem_request"
 require_relative "types/create_problem_response"
-require_relative "../commons/types/problem_id"
 require_relative "types/update_problem_response"
 require_relative "types/variable_type_and_name"
 require_relative "../commons/types/variable_type"
@@ -35,7 +34,7 @@ module SeedTraceClient
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [SeedTraceClient::Problem::CreateProblemResponse]
     def create_problem(request:, request_options: nil)
-      response = @request_client.conn.post("/problem-crud/create") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -48,7 +47,7 @@ module SeedTraceClient
 
     # Updates a problem
     #
-    # @param problem_id [SeedTraceClient::Commons::PROBLEM_ID]
+    # @param problem_id [String]
     # @param request [Hash] Request of type SeedTraceClient::Problem::CreateProblemRequest, as a Hash
     #   * :problem_name (String)
     #   * :problem_description (Hash)
@@ -61,7 +60,7 @@ module SeedTraceClient
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [SeedTraceClient::Problem::UpdateProblemResponse]
     def update_problem(problem_id:, request:, request_options: nil)
-      response = @request_client.conn.post("/problem-crud/update/#{problem_id}") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -74,11 +73,11 @@ module SeedTraceClient
 
     # Soft deletes a problem
     #
-    # @param problem_id [SeedTraceClient::Commons::PROBLEM_ID]
+    # @param problem_id [String]
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
     def delete_problem(problem_id:, request_options: nil)
-      @request_client.conn.delete("/problem-crud/delete/#{problem_id}") do |req|
+      @request_client.conn.delete do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -102,7 +101,7 @@ module SeedTraceClient
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [SeedTraceClient::Problem::GetDefaultStarterFilesResponse]
     def get_default_starter_files(input_params:, output_type:, method_name:, request_options: nil)
-      response = @request_client.conn.post("/problem-crud/default-starter-files") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -144,7 +143,7 @@ module SeedTraceClient
     # @return [SeedTraceClient::Problem::CreateProblemResponse]
     def create_problem(request:, request_options: nil)
       Async do
-        response = @request_client.conn.post("/problem-crud/create") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -158,7 +157,7 @@ module SeedTraceClient
 
     # Updates a problem
     #
-    # @param problem_id [SeedTraceClient::Commons::PROBLEM_ID]
+    # @param problem_id [String]
     # @param request [Hash] Request of type SeedTraceClient::Problem::CreateProblemRequest, as a Hash
     #   * :problem_name (String)
     #   * :problem_description (Hash)
@@ -172,7 +171,7 @@ module SeedTraceClient
     # @return [SeedTraceClient::Problem::UpdateProblemResponse]
     def update_problem(problem_id:, request:, request_options: nil)
       Async do
-        response = @request_client.conn.post("/problem-crud/update/#{problem_id}") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -186,12 +185,12 @@ module SeedTraceClient
 
     # Soft deletes a problem
     #
-    # @param problem_id [SeedTraceClient::Commons::PROBLEM_ID]
+    # @param problem_id [String]
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
     def delete_problem(problem_id:, request_options: nil)
       Async do
-        @request_client.conn.delete("/problem-crud/delete/#{problem_id}") do |req|
+        @request_client.conn.delete do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -217,7 +216,7 @@ module SeedTraceClient
     # @return [SeedTraceClient::Problem::GetDefaultStarterFilesResponse]
     def get_default_starter_files(input_params:, output_type:, method_name:, request_options: nil)
       Async do
-        response = @request_client.conn.post("/problem-crud/default-starter-files") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?

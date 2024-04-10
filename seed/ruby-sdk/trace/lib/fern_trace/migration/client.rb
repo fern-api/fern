@@ -19,7 +19,7 @@ module SeedTraceClient
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Array<SeedTraceClient::Migration::Migration>]
     def get_attempted_migrations(admin_key_header:, request_options: nil)
-      response = @request_client.conn.get("/migration-info/all") do |req|
+      response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -30,9 +30,7 @@ module SeedTraceClient
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/migration-info/all"
       end
-      return if response.body.nil?
-
-      response.body.map do |v|
+      response.body&.map do |v|
         v = v.to_json
         SeedTraceClient::Migration::Migration.from_json(json_object: v)
       end
@@ -54,7 +52,7 @@ module SeedTraceClient
     # @return [Array<SeedTraceClient::Migration::Migration>]
     def get_attempted_migrations(admin_key_header:, request_options: nil)
       Async do
-        response = @request_client.conn.get("/migration-info/all") do |req|
+        response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?

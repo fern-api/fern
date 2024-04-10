@@ -22,7 +22,7 @@ module SeedAudiencesClient
     # @param request_options [SeedAudiencesClient::RequestOptions]
     # @return [SeedAudiencesClient::Foo::ImportingType]
     def find(optional_string:, public_property: nil, private_property: nil, request_options: nil)
-      response = @request_client.conn.post("/") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.params = {
@@ -57,7 +57,7 @@ module SeedAudiencesClient
     # @return [SeedAudiencesClient::Foo::ImportingType]
     def find(optional_string:, public_property: nil, private_property: nil, request_options: nil)
       Async do
-        response = @request_client.conn.post("/") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.params = {

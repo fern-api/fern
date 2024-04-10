@@ -2,7 +2,6 @@
 
 require "json"
 require_relative "test_case_implementation"
-require_relative "test_case_template_id"
 
 module SeedTraceClient
   module V2
@@ -78,7 +77,7 @@ module SeedTraceClient
             @member.is_a?(obj)
           end
 
-          # @param member [SeedTraceClient::V2::V3::Problem::TEST_CASE_TEMPLATE_ID]
+          # @param member [String]
           # @return [SeedTraceClient::V2::V3::Problem::TestCaseImplementationReference]
           def self.template_id(member:)
             new(member: member, discriminant: "templateId")

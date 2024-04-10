@@ -4,7 +4,6 @@ require "json"
 require_relative "exception_info"
 require_relative "code_execution_update"
 require_relative "terminated_response"
-require_relative "../../commons/types/problem_id"
 
 module SeedTraceClient
   class Submission
@@ -107,7 +106,7 @@ module SeedTraceClient
         new(member: nil, discriminant: "serverInitialized")
       end
 
-      # @param member [SeedTraceClient::Commons::PROBLEM_ID]
+      # @param member [String]
       # @return [SeedTraceClient::Submission::SubmissionResponse]
       def self.problem_initialized(member:)
         new(member: member, discriminant: "problemInitialized")

@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "playlist_id"
-require_relative "../../commons/types/user_id"
-require_relative "../../commons/types/problem_id"
 require "ostruct"
 require "json"
 
@@ -12,20 +9,20 @@ module SeedTraceClient
       attr_reader :playlist_id, :owner_id, :name, :problems, :additional_properties, :_field_set
       protected :_field_set
       OMIT = Object.new
-      # @param playlist_id [SeedTraceClient::Playlist::PLAYLIST_ID]
-      # @param owner_id [SeedTraceClient::Commons::USER_ID]
+      # @param playlist_id [String]
+      # @param owner_id [String]
       # @param name [String]
-      # @param problems [Array<SeedTraceClient::Commons::PROBLEM_ID>]
+      # @param problems [Array<String>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Playlist::Playlist]
       def initialize(playlist_id:, owner_id:, name:, problems:, additional_properties: nil)
-        # @type [SeedTraceClient::Playlist::PLAYLIST_ID]
+        # @type [String]
         @playlist_id = playlist_id
-        # @type [SeedTraceClient::Commons::USER_ID]
+        # @type [String]
         @owner_id = owner_id
         # @type [String]
         @name = name
-        # @type [Array<SeedTraceClient::Commons::PROBLEM_ID>]
+        # @type [Array<String>]
         @problems = problems
         @_field_set = {
           "playlist_id": @playlist_id,

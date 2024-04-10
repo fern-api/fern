@@ -23,13 +23,13 @@ import { Variable, VariableType } from "../Variable";
 import { Yardoc } from "../Yardoc";
 import { ConditionalStatement } from "./ConditionalStatement";
 
-const additional_properties_property = new Property({
+export const additional_properties_property = new Property({
     name: "additional_properties",
     type: OpenStructClassReference,
     isOptional: true,
     documentation: "Additional properties unmapped to the current class definition"
 });
-const fieldset_property = new Property({
+export const fieldset_property = new Property({
     name: "_field_set",
     type: new ArrayReference({ innerType: StringClassReference }),
     isOptional: true

@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "fern_examples/commons/types/types/tag"
 require_relative "fern_examples/commons/types/types/metadata"
 require_relative "fern_examples/commons/types/types/event_info"
 require_relative "fern_examples/commons/types/types/data"
-require_relative "fern_examples/file/service/types/filename"
-require_relative "fern_examples/types/types/movie_id"
 require_relative "fern_examples/types/types/movie"
 require_relative "fern_examples/types/types/actor"
 require_relative "fern_examples/types/types/actress"

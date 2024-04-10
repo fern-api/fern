@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "../../commons/types/problem_id"
 require_relative "../../commons/types/test_case"
 require_relative "test_submission_status"
 require "ostruct"
@@ -12,14 +11,14 @@ module SeedTraceClient
       attr_reader :problem_id, :default_test_cases, :custom_test_cases, :status, :additional_properties, :_field_set
       protected :_field_set
       OMIT = Object.new
-      # @param problem_id [SeedTraceClient::Commons::PROBLEM_ID]
+      # @param problem_id [String]
       # @param default_test_cases [Array<SeedTraceClient::Commons::TestCase>]
       # @param custom_test_cases [Array<SeedTraceClient::Commons::TestCase>]
       # @param status [SeedTraceClient::Submission::TestSubmissionStatus]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Submission::TestSubmissionState]
       def initialize(problem_id:, default_test_cases:, custom_test_cases:, status:, additional_properties: nil)
-        # @type [SeedTraceClient::Commons::PROBLEM_ID]
+        # @type [String]
         @problem_id = problem_id
         # @type [Array<SeedTraceClient::Commons::TestCase>]
         @default_test_cases = default_test_cases

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "../../../../commons/types/problem_id"
 require_relative "../../../../problem/types/problem_description"
 require "set"
 require_relative "custom_files"
@@ -19,7 +18,7 @@ module SeedTraceClient
                       :custom_files, :generated_files, :custom_test_case_templates, :testcases, :is_public, :additional_properties, :_field_set
           protected :_field_set
           OMIT = Object.new
-          # @param problem_id [SeedTraceClient::Commons::PROBLEM_ID]
+          # @param problem_id [String]
           # @param problem_description [SeedTraceClient::Problem::ProblemDescription]
           # @param problem_name [String]
           # @param problem_version [Integer]
@@ -33,7 +32,7 @@ module SeedTraceClient
           # @return [SeedTraceClient::V2::V3::Problem::ProblemInfoV2]
           def initialize(problem_id:, problem_description:, problem_name:, problem_version:, supported_languages:,
                          custom_files:, generated_files:, custom_test_case_templates:, testcases:, is_public:, additional_properties: nil)
-            # @type [SeedTraceClient::Commons::PROBLEM_ID]
+            # @type [String]
             @problem_id = problem_id
             # @type [SeedTraceClient::Problem::ProblemDescription]
             @problem_description = problem_description

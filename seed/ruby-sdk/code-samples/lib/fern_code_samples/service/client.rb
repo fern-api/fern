@@ -19,7 +19,7 @@ module SeedCodeSamplesClient
     # @param request_options [SeedCodeSamplesClient::RequestOptions]
     # @return [SeedCodeSamplesClient::Service::MyResponse]
     def hello(num_events:, request_options: nil)
-      response = @request_client.conn.post("/hello") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request_options&.additional_body_parameters || {}), num_events: num_events }.compact
@@ -44,7 +44,7 @@ module SeedCodeSamplesClient
     # @return [SeedCodeSamplesClient::Service::MyResponse]
     def hello(num_events:, request_options: nil)
       Async do
-        response = @request_client.conn.post("/hello") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request_options&.additional_body_parameters || {}), num_events: num_events }.compact

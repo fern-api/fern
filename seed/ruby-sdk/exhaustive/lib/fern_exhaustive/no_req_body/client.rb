@@ -18,7 +18,7 @@ module SeedExhaustiveClient
     # @param request_options [SeedExhaustiveClient::RequestOptions]
     # @return [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
     def get_with_no_request_body(request_options: nil)
-      response = @request_client.conn.get("/no-req-body") do |req|
+      response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -30,7 +30,7 @@ module SeedExhaustiveClient
     # @param request_options [SeedExhaustiveClient::RequestOptions]
     # @return [String]
     def post_with_no_request_body(request_options: nil)
-      response = @request_client.conn.post("/no-req-body") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -54,7 +54,7 @@ module SeedExhaustiveClient
     # @return [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
     def get_with_no_request_body(request_options: nil)
       Async do
-        response = @request_client.conn.get("/no-req-body") do |req|
+        response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -68,7 +68,7 @@ module SeedExhaustiveClient
     # @return [String]
     def post_with_no_request_body(request_options: nil)
       Async do
-        response = @request_client.conn.post("/no-req-body") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact

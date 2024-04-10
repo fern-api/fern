@@ -19,7 +19,7 @@ module SeedExhaustiveClient
     # @param request_options [SeedExhaustiveClient::RequestOptions]
     # @return [Void]
     def get_with_custom_header(x_test_endpoint_header:, request:, request_options: nil)
-      @request_client.conn.post("/test-headers/custom-header") do |req|
+      @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers = {
@@ -49,7 +49,7 @@ module SeedExhaustiveClient
     # @return [Void]
     def get_with_custom_header(x_test_endpoint_header:, request:, request_options: nil)
       Async do
-        @request_client.conn.post("/test-headers/custom-header") do |req|
+        @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = {

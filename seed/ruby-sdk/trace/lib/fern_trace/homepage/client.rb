@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative "../../requests"
-require_relative "../commons/types/problem_id"
 require "async"
 
 module SeedTraceClient
@@ -16,9 +15,9 @@ module SeedTraceClient
     end
 
     # @param request_options [SeedTraceClient::RequestOptions]
-    # @return [Array<SeedTraceClient::Commons::PROBLEM_ID>]
+    # @return [Array<String>]
     def get_homepage_problems(request_options: nil)
-      response = @request_client.conn.get("/homepage-problems") do |req|
+      response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -28,11 +27,11 @@ module SeedTraceClient
       response.body
     end
 
-    # @param request [Array<SeedTraceClient::Commons::PROBLEM_ID>]
+    # @param request [Array<String>]
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
     def set_homepage_problems(request:, request_options: nil)
-      @request_client.conn.post("/homepage-problems") do |req|
+      @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -54,10 +53,10 @@ module SeedTraceClient
     end
 
     # @param request_options [SeedTraceClient::RequestOptions]
-    # @return [Array<SeedTraceClient::Commons::PROBLEM_ID>]
+    # @return [Array<String>]
     def get_homepage_problems(request_options: nil)
       Async do
-        response = @request_client.conn.get("/homepage-problems") do |req|
+        response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -68,12 +67,12 @@ module SeedTraceClient
       end
     end
 
-    # @param request [Array<SeedTraceClient::Commons::PROBLEM_ID>]
+    # @param request [Array<String>]
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
     def set_homepage_problems(request:, request_options: nil)
       Async do
-        @request_client.conn.post("/homepage-problems") do |req|
+        @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?

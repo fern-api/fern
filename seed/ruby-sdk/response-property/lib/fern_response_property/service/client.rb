@@ -23,7 +23,7 @@ module SeedResponsePropertyClient
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
     # @return [SeedResponsePropertyClient::Service::Response]
     def get_movie(request:, request_options: nil)
-      response = @request_client.conn.post("/movie") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
@@ -38,7 +38,7 @@ module SeedResponsePropertyClient
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
     # @return [SeedResponsePropertyClient::Service::Response]
     def get_movie_docs(request:, request_options: nil)
-      response = @request_client.conn.post("/movie") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
@@ -53,7 +53,7 @@ module SeedResponsePropertyClient
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
     # @return [SeedResponsePropertyClient::StringResponse]
     def get_movie_name(request:, request_options: nil)
-      response = @request_client.conn.post("/movie") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
@@ -68,7 +68,7 @@ module SeedResponsePropertyClient
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
     # @return [SeedResponsePropertyClient::Service::Response]
     def get_movie_metadata(request:, request_options: nil)
-      response = @request_client.conn.post("/movie") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
@@ -83,7 +83,7 @@ module SeedResponsePropertyClient
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
     # @return [SeedResponsePropertyClient::Service::Response]
     def get_optional_movie(request:, request_options: nil)
-      response = @request_client.conn.post("/movie") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
@@ -98,7 +98,7 @@ module SeedResponsePropertyClient
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
     # @return [SeedResponsePropertyClient::Service::OPTIONAL_WITH_DOCS]
     def get_optional_movie_docs(request:, request_options: nil)
-      response = @request_client.conn.post("/movie") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
@@ -113,7 +113,7 @@ module SeedResponsePropertyClient
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
     # @return [SeedResponsePropertyClient::OPTIONAL_STRING_RESPONSE]
     def get_optional_movie_name(request:, request_options: nil)
-      response = @request_client.conn.post("/movie") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
@@ -140,7 +140,7 @@ module SeedResponsePropertyClient
     # @return [SeedResponsePropertyClient::Service::Response]
     def get_movie(request:, request_options: nil)
       Async do
-        response = @request_client.conn.post("/movie") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
@@ -157,7 +157,7 @@ module SeedResponsePropertyClient
     # @return [SeedResponsePropertyClient::Service::Response]
     def get_movie_docs(request:, request_options: nil)
       Async do
-        response = @request_client.conn.post("/movie") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
@@ -174,7 +174,7 @@ module SeedResponsePropertyClient
     # @return [SeedResponsePropertyClient::StringResponse]
     def get_movie_name(request:, request_options: nil)
       Async do
-        response = @request_client.conn.post("/movie") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
@@ -191,7 +191,7 @@ module SeedResponsePropertyClient
     # @return [SeedResponsePropertyClient::Service::Response]
     def get_movie_metadata(request:, request_options: nil)
       Async do
-        response = @request_client.conn.post("/movie") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
@@ -208,7 +208,7 @@ module SeedResponsePropertyClient
     # @return [SeedResponsePropertyClient::Service::Response]
     def get_optional_movie(request:, request_options: nil)
       Async do
-        response = @request_client.conn.post("/movie") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
@@ -225,7 +225,7 @@ module SeedResponsePropertyClient
     # @return [SeedResponsePropertyClient::Service::OPTIONAL_WITH_DOCS]
     def get_optional_movie_docs(request:, request_options: nil)
       Async do
-        response = @request_client.conn.post("/movie") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
@@ -242,7 +242,7 @@ module SeedResponsePropertyClient
     # @return [SeedResponsePropertyClient::OPTIONAL_STRING_RESPONSE]
     def get_optional_movie_name(request:, request_options: nil)
       Async do
-        response = @request_client.conn.post("/movie") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact

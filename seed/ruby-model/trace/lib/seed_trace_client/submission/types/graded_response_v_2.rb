@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "submission_id"
 require "ostruct"
 require "json"
 
@@ -10,14 +9,14 @@ module SeedTraceClient
       attr_reader :submission_id, :test_cases, :additional_properties, :_field_set
       protected :_field_set
       OMIT = Object.new
-      # @param submission_id [SeedTraceClient::Submission::SUBMISSION_ID]
-      # @param test_cases [Hash{SeedTraceClient::V2::Problem::TEST_CASE_ID => SeedTraceClient::Submission::TestCaseGrade}]
+      # @param submission_id [String]
+      # @param test_cases [Hash{String => SeedTraceClient::Submission::TestCaseGrade}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Submission::GradedResponseV2]
       def initialize(submission_id:, test_cases:, additional_properties: nil)
-        # @type [SeedTraceClient::Submission::SUBMISSION_ID]
+        # @type [String]
         @submission_id = submission_id
-        # @type [Hash{SeedTraceClient::V2::Problem::TEST_CASE_ID => SeedTraceClient::Submission::TestCaseGrade}]
+        # @type [Hash{String => SeedTraceClient::Submission::TestCaseGrade}]
         @test_cases = test_cases
         @_field_set = { "submissionId": @submission_id, "testCases": @test_cases }.reject do |_k, v|
           v == OMIT

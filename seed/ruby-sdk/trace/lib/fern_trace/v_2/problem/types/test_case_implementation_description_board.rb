@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "json"
-require_relative "parameter_id"
 
 module SeedTraceClient
   module V2
@@ -79,7 +78,7 @@ module SeedTraceClient
           new(member: member, discriminant: "html")
         end
 
-        # @param member [SeedTraceClient::V2::Problem::PARAMETER_ID]
+        # @param member [String]
         # @return [SeedTraceClient::V2::Problem::TestCaseImplementationDescriptionBoard]
         def self.param_id(member:)
           new(member: member, discriminant: "paramId")

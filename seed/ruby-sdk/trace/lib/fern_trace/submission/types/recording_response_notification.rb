@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "submission_id"
 require_relative "lightweight_stackframe_information"
 require_relative "traced_file"
 require "ostruct"
@@ -13,7 +12,7 @@ module SeedTraceClient
                   :additional_properties, :_field_set
       protected :_field_set
       OMIT = Object.new
-      # @param submission_id [SeedTraceClient::Submission::SUBMISSION_ID]
+      # @param submission_id [String]
       # @param test_case_id [String]
       # @param line_number [Integer]
       # @param lightweight_stack_info [SeedTraceClient::Submission::LightweightStackframeInformation]
@@ -22,7 +21,7 @@ module SeedTraceClient
       # @return [SeedTraceClient::Submission::RecordingResponseNotification]
       def initialize(submission_id:, line_number:, lightweight_stack_info:, test_case_id: OMIT, traced_file: OMIT,
                      additional_properties: nil)
-        # @type [SeedTraceClient::Submission::SUBMISSION_ID]
+        # @type [String]
         @submission_id = submission_id
         # @type [String]
         @test_case_id = test_case_id if test_case_id != OMIT

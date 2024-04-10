@@ -19,7 +19,7 @@ module SeedAuthEnvironmentVariablesClient
     # @param request_options [SeedAuthEnvironmentVariablesClient::RequestOptions]
     # @return [String]
     def get_with_api_key(request_options: nil)
-      response = @request_client.conn.get("/apiKey") do |req|
+      response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["X-FERN-API-KEY"] = request_options.api_key unless request_options&.api_key.nil?
         req.headers["X-Another-Header"] = request_options.x_another_header unless request_options&.x_another_header.nil?
@@ -35,7 +35,7 @@ module SeedAuthEnvironmentVariablesClient
     # @param request_options [SeedAuthEnvironmentVariablesClient::RequestOptions]
     # @return [String]
     def get_with_header(x_endpoint_header:, request_options: nil)
-      response = @request_client.conn.get("/apiKeyInHeader") do |req|
+      response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["X-FERN-API-KEY"] = request_options.api_key unless request_options&.api_key.nil?
         req.headers["X-Another-Header"] = request_options.x_another_header unless request_options&.x_another_header.nil?
@@ -66,7 +66,7 @@ module SeedAuthEnvironmentVariablesClient
     # @return [String]
     def get_with_api_key(request_options: nil)
       Async do
-        response = @request_client.conn.get("/apiKey") do |req|
+        response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["X-FERN-API-KEY"] = request_options.api_key unless request_options&.api_key.nil?
           unless request_options&.x_another_header.nil?
@@ -87,7 +87,7 @@ module SeedAuthEnvironmentVariablesClient
     # @return [String]
     def get_with_header(x_endpoint_header:, request_options: nil)
       Async do
-        response = @request_client.conn.get("/apiKeyInHeader") do |req|
+        response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["X-FERN-API-KEY"] = request_options.api_key unless request_options&.api_key.nil?
           unless request_options&.x_another_header.nil?

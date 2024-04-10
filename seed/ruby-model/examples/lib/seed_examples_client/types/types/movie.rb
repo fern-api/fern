@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "movie_id"
-require_relative "../../commons/types/types/tag"
 require "ostruct"
 require "json"
 
@@ -12,22 +10,22 @@ module SeedExamplesClient
                   :_field_set
       protected :_field_set
       OMIT = Object.new
-      # @param id [SeedExamplesClient::Types::MOVIE_ID]
-      # @param prequel [SeedExamplesClient::Types::MOVIE_ID]
+      # @param id [String]
+      # @param prequel [String]
       # @param title [String]
       # @param from [String]
       # @param rating [Float] The rating scale is one to five stars
       # @param type [String]
-      # @param tag [SeedExamplesClient::Commons::Types::TAG]
+      # @param tag [String]
       # @param book [String]
       # @param metadata [Hash{String => Object}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedExamplesClient::Types::Movie]
       def initialize(id:, title:, from:, rating:, type:, tag:, metadata:, prequel: OMIT, book: OMIT,
                      additional_properties: nil)
-        # @type [SeedExamplesClient::Types::MOVIE_ID]
+        # @type [String]
         @id = id
-        # @type [SeedExamplesClient::Types::MOVIE_ID]
+        # @type [String]
         @prequel = prequel if prequel != OMIT
         # @type [String]
         @title = title
@@ -37,7 +35,7 @@ module SeedExamplesClient
         @rating = rating
         # @type [String]
         @type = type
-        # @type [SeedExamplesClient::Commons::Types::TAG]
+        # @type [String]
         @tag = tag
         # @type [String]
         @book = book if book != OMIT

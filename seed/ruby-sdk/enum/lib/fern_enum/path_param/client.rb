@@ -23,7 +23,7 @@ module SeedEnumClient
     # @param request_options [SeedEnumClient::RequestOptions]
     # @return [Void]
     def send(operand:, operand_or_color:, maybe_operand: nil, maybe_operand_or_color: nil, request_options: nil)
-      @request_client.conn.post("/path/#{operand}/#{maybe_operand}/#{operand_or_color}/#{maybe_operand_or_color}") do |req|
+      @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/path/#{operand}/#{maybe_operand}/#{operand_or_color}/#{maybe_operand_or_color}"
@@ -49,7 +49,7 @@ module SeedEnumClient
     # @return [Void]
     def send(operand:, operand_or_color:, maybe_operand: nil, maybe_operand_or_color: nil, request_options: nil)
       Async do
-        @request_client.conn.post("/path/#{operand}/#{maybe_operand}/#{operand_or_color}/#{maybe_operand_or_color}") do |req|
+        @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/path/#{operand}/#{maybe_operand}/#{operand_or_color}/#{maybe_operand_or_color}"

@@ -22,6 +22,10 @@ import {
     VoidClassReference
 } from "@fern-api/ruby-codegen";
 import {
+    additional_properties_property,
+    fieldset_property
+} from "@fern-api/ruby-codegen/src/ast/abstractions/SerializableObject";
+import {
     BytesRequest,
     FileProperty,
     FileUploadRequest,
@@ -99,76 +103,80 @@ export class EndpointGenerator {
 
         const defaultBodyParameterName = "body";
         this.bodyAsProperties =
-            this.endpoint.requestBody?._visit<Property[]>({
-                inlinedRequestBody: (irb: InlinedRequestBody) => {
-                    const properties: Property[] = irb.extends
-                        .flatMap((dtn) => generatedClasses.get(dtn.typeId)?.properties)
-                        .filter((p) => p !== undefined) as Property[];
-                    return [
-                        ...properties,
-                        ...irb.properties.map((prop) => {
-                            return new Property({
-                                name: prop.name.name.snakeCase.safeName,
-                                wireValue: prop.name.wireValue,
-                                type: crf.fromTypeReference(prop.valueType),
-                                isOptional: isTypeOptional(prop.valueType),
-                                documentation: prop instanceof Property ? prop.documentation : prop.docs
+            this.endpoint.requestBody
+                ?._visit<Property[]>({
+                    inlinedRequestBody: (irb: InlinedRequestBody) => {
+                        const properties: Property[] = irb.extends
+                            .flatMap((dtn) => generatedClasses.get(dtn.typeId)?.properties)
+                            .filter((p) => p !== undefined) as Property[];
+                        return [
+                            ...properties,
+                            ...irb.properties.map((prop) => {
+                                return new Property({
+                                    name: prop.name.name.snakeCase.safeName,
+                                    wireValue: prop.name.wireValue,
+                                    type: crf.fromTypeReference(prop.valueType),
+                                    isOptional: isTypeOptional(prop.valueType),
+                                    documentation: prop instanceof Property ? prop.documentation : prop.docs
+                                });
+                            })
+                        ];
+                    },
+                    reference: (rbr: HttpRequestBodyReference) => {
+                        return [
+                            new Property({
+                                name:
+                                    this.endpoint.sdkRequest?.requestParameterName.snakeCase.safeName ??
+                                    defaultBodyParameterName,
+                                type: crf.fromTypeReference(rbr.requestBodyType),
+                                isOptional: isTypeOptional(rbr.requestBodyType),
+                                documentation: rbr.docs
+                            })
+                        ];
+                    },
+                    fileUpload: (fur: FileUploadRequest) => {
+                        return fur.properties.map((prop) => {
+                            return prop._visit<Property>({
+                                file: (fp: FileProperty) =>
+                                    new Property({
+                                        name: fp.key.name.snakeCase.safeName,
+                                        isOptional: fp.isOptional,
+                                        wireValue: fp.key.wireValue,
+                                        type: [StringClassReference, FileClassReference]
+                                    }),
+                                bodyProperty: (irbp: InlinedRequestBodyProperty) =>
+                                    new Property({
+                                        name: irbp.name.name.snakeCase.safeName,
+                                        isOptional: isTypeOptional(irbp.valueType),
+                                        wireValue: irbp.name.wireValue,
+                                        type: crf.fromTypeReference(irbp.valueType),
+                                        documentation: irbp.docs
+                                    }),
+                                _other: () => {
+                                    throw new Error("Unknown file upload property type.");
+                                }
                             });
-                        })
-                    ];
-                },
-                reference: (rbr: HttpRequestBodyReference) => {
-                    return [
-                        new Property({
-                            name:
-                                this.endpoint.sdkRequest?.requestParameterName.snakeCase.safeName ??
-                                defaultBodyParameterName,
-                            type: crf.fromTypeReference(rbr.requestBodyType),
-                            isOptional: isTypeOptional(rbr.requestBodyType),
-                            documentation: rbr.docs
-                        })
-                    ];
-                },
-                fileUpload: (fur: FileUploadRequest) => {
-                    return fur.properties.map((prop) => {
-                        return prop._visit<Property>({
-                            file: (fp: FileProperty) =>
-                                new Property({
-                                    name: fp.key.name.snakeCase.safeName,
-                                    isOptional: fp.isOptional,
-                                    wireValue: fp.key.wireValue,
-                                    type: [StringClassReference, FileClassReference]
-                                }),
-                            bodyProperty: (irbp: InlinedRequestBodyProperty) =>
-                                new Property({
-                                    name: irbp.name.name.snakeCase.safeName,
-                                    isOptional: isTypeOptional(irbp.valueType),
-                                    wireValue: irbp.name.wireValue,
-                                    type: crf.fromTypeReference(irbp.valueType),
-                                    documentation: irbp.docs
-                                }),
-                            _other: () => {
-                                throw new Error("Unknown file upload property type.");
-                            }
                         });
-                    });
-                },
-                bytes: (br: BytesRequest) => {
-                    return [
-                        new Property({
-                            name:
-                                this.endpoint.sdkRequest?.requestParameterName.snakeCase.safeName ??
-                                defaultBodyParameterName,
-                            type: [B64StringClassReference, FileClassReference],
-                            isOptional: br.isOptional,
-                            documentation: "Base64 encoded bytes, or an IO object (e.g. Faraday::UploadIO, etc.)"
-                        })
-                    ];
-                },
-                _other: () => {
-                    throw new Error("Unknown request body type.");
-                }
-            }) ?? [];
+                    },
+                    bytes: (br: BytesRequest) => {
+                        return [
+                            new Property({
+                                name:
+                                    this.endpoint.sdkRequest?.requestParameterName.snakeCase.safeName ??
+                                    defaultBodyParameterName,
+                                type: [B64StringClassReference, FileClassReference],
+                                isOptional: br.isOptional,
+                                documentation: "Base64 encoded bytes, or an IO object (e.g. Faraday::UploadIO, etc.)"
+                            })
+                        ];
+                    },
+                    _other: () => {
+                        throw new Error("Unknown request body type.");
+                    }
+                })
+                .filter(
+                    (prop) => prop.name !== additional_properties_property.name && prop.name !== fieldset_property.name
+                ) ?? [];
 
         this.streamProcessingBlock = this.isStreamingResponse()
             ? new Parameter({

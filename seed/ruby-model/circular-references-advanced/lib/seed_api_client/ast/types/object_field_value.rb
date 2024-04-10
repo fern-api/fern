@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "field_name"
 require_relative "field_value"
 require "ostruct"
 require "json"
@@ -12,12 +11,12 @@ module SeedApiClient
       attr_reader :name, :value, :additional_properties, :_field_set
       protected :_field_set
       OMIT = Object.new
-      # @param name [SeedApiClient::Ast::FIELD_NAME]
+      # @param name [String]
       # @param value [SeedApiClient::Ast::FieldValue]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedApiClient::Ast::ObjectFieldValue]
       def initialize(name:, value:, additional_properties: nil)
-        # @type [SeedApiClient::Ast::FIELD_NAME]
+        # @type [String]
         @name = name
         # @type [SeedApiClient::Ast::FieldValue]
         @value = value

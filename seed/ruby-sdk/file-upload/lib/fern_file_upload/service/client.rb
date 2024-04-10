@@ -30,7 +30,7 @@ module SeedFileUploadClient
     # @return [Void]
     def post(integer:, file:, file_list:, list_of_objects:, maybe_string: nil, maybe_file: nil, maybe_file_list: nil, maybe_integer: nil,
              optional_list_of_strings: nil, request_options: nil)
-      @request_client.conn.post("/") do |req|
+      @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = {
@@ -57,7 +57,7 @@ module SeedFileUploadClient
     # @param request_options [SeedFileUploadClient::RequestOptions]
     # @return [Void]
     def just_file(file:, request_options: nil)
-      @request_client.conn.post("/just-file") do |req|
+      @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = {
@@ -78,7 +78,7 @@ module SeedFileUploadClient
     # @return [Void]
     def just_file_with_query_params(integer:, list_of_strings:, file:, maybe_string: nil, maybe_integer: nil,
                                     optional_list_of_strings: nil, request_options: nil)
-      @request_client.conn.post("/just-file-with-query-params") do |req|
+      @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.params = {
@@ -123,7 +123,7 @@ module SeedFileUploadClient
     def post(integer:, file:, file_list:, list_of_objects:, maybe_string: nil, maybe_file: nil, maybe_file_list: nil, maybe_integer: nil,
              optional_list_of_strings: nil, request_options: nil)
       Async do
-        @request_client.conn.post("/") do |req|
+        @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = {
@@ -152,7 +152,7 @@ module SeedFileUploadClient
     # @return [Void]
     def just_file(file:, request_options: nil)
       Async do
-        @request_client.conn.post("/just-file") do |req|
+        @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = {
@@ -175,7 +175,7 @@ module SeedFileUploadClient
     def just_file_with_query_params(integer:, list_of_strings:, file:, maybe_string: nil, maybe_integer: nil,
                                     optional_list_of_strings: nil, request_options: nil)
       Async do
-        @request_client.conn.post("/just-file-with-query-params") do |req|
+        @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.params = {

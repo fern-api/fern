@@ -23,7 +23,7 @@ module SeedApiClient
     # @param request_options [SeedApiClient::RequestOptions]
     # @return [Void]
     def foo(request_options: nil)
-      @request_client.conn.post("/") do |req|
+      @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/"
@@ -48,7 +48,7 @@ module SeedApiClient
     # @param request_options [SeedApiClient::RequestOptions]
     # @return [Void]
     def foo(request_options: nil)
-      @async_request_client.conn.post("/") do |req|
+      @async_request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.url "#{@async_request_client.get_url(request_options: request_options)}/"

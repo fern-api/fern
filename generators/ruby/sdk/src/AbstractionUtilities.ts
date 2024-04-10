@@ -108,9 +108,6 @@ export function generateEndpoints(
                         // TODO: Do this field access on the client better
                         onObject: `${requestClientVariable.write({})}.conn`,
                         baseFunction: new Function_({ name: endpoint.method.toLowerCase(), functionBody: [] }),
-                        arguments_: shouldOverwriteUrl
-                            ? []
-                            : [new Argument({ isNamed: false, value: `"/${path}"`, type: StringClassReference })],
                         block: generator.getFaradayBlock(requestClientVariable, path, shouldOverwriteUrl)
                     }),
                     isAssignment: true

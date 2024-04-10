@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "type_id"
 require "ostruct"
 require "json"
 
@@ -10,12 +9,12 @@ module SeedAliasClient
     attr_reader :id, :name, :additional_properties, :_field_set
     protected :_field_set
     OMIT = Object.new
-    # @param id [SeedAliasClient::TYPE_ID]
+    # @param id [String]
     # @param name [String]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [SeedAliasClient::Type]
     def initialize(id:, name:, additional_properties: nil)
-      # @type [SeedAliasClient::TYPE_ID]
+      # @type [String]
       @id = id
       # @type [String]
       @name = name

@@ -21,7 +21,7 @@ module SeedExhaustiveClient
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [String]
       def test_get(id:, request_options: nil)
-        response = @request_client.conn.get("/http-methods/#{id}") do |req|
+        response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -35,7 +35,7 @@ module SeedExhaustiveClient
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
       def test_post(request:, request_options: nil)
-        response = @request_client.conn.post("/http-methods") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -51,7 +51,7 @@ module SeedExhaustiveClient
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
       def test_put(id:, request:, request_options: nil)
-        response = @request_client.conn.put("/http-methods/#{id}") do |req|
+        response = @request_client.conn.put do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -78,7 +78,7 @@ module SeedExhaustiveClient
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
       def test_patch(id:, request:, request_options: nil)
-        response = @request_client.conn.patch("/http-methods/#{id}") do |req|
+        response = @request_client.conn.patch do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -92,7 +92,7 @@ module SeedExhaustiveClient
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [Boolean]
       def test_delete(id:, request_options: nil)
-        response = @request_client.conn.delete("/http-methods/#{id}") do |req|
+        response = @request_client.conn.delete do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -117,7 +117,7 @@ module SeedExhaustiveClient
       # @return [String]
       def test_get(id:, request_options: nil)
         Async do
-          response = @request_client.conn.get("/http-methods/#{id}") do |req|
+          response = @request_client.conn.get do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -133,7 +133,7 @@ module SeedExhaustiveClient
       # @return [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
       def test_post(request:, request_options: nil)
         Async do
-          response = @request_client.conn.post("/http-methods") do |req|
+          response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -151,7 +151,7 @@ module SeedExhaustiveClient
       # @return [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
       def test_put(id:, request:, request_options: nil)
         Async do
-          response = @request_client.conn.put("/http-methods/#{id}") do |req|
+          response = @request_client.conn.put do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -180,7 +180,7 @@ module SeedExhaustiveClient
       # @return [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
       def test_patch(id:, request:, request_options: nil)
         Async do
-          response = @request_client.conn.patch("/http-methods/#{id}") do |req|
+          response = @request_client.conn.patch do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -196,7 +196,7 @@ module SeedExhaustiveClient
       # @return [Boolean]
       def test_delete(id:, request_options: nil)
         Async do
-          response = @request_client.conn.delete("/http-methods/#{id}") do |req|
+          response = @request_client.conn.delete do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact

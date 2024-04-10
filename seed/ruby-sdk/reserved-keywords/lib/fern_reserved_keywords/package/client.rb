@@ -18,7 +18,7 @@ module SeedNurseryApiClient
     # @param request_options [SeedNurseryApiClient::RequestOptions]
     # @return [Void]
     def test(for_:, request_options: nil)
-      @request_client.conn.post("/") do |req|
+      @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.params = { **(request_options&.additional_query_parameters || {}), "for": for_ }.compact
@@ -42,7 +42,7 @@ module SeedNurseryApiClient
     # @return [Void]
     def test(for_:, request_options: nil)
       Async do
-        @request_client.conn.post("/") do |req|
+        @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.params = { **(request_options&.additional_query_parameters || {}), "for": for_ }.compact

@@ -23,7 +23,7 @@ module SeedTraceClient
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [SeedTraceClient::Submission::ExecutionSessionResponse]
     def create_execution_session(language:, request_options: nil)
-      response = @request_client.conn.post("/sessions/create-session/#{language}") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -39,7 +39,7 @@ module SeedTraceClient
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [SeedTraceClient::Submission::ExecutionSessionResponse]
     def get_execution_session(session_id:, request_options: nil)
-      response = @request_client.conn.get("/sessions/#{session_id}") do |req|
+      response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -55,7 +55,7 @@ module SeedTraceClient
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
     def stop_execution_session(session_id:, request_options: nil)
-      @request_client.conn.delete("/sessions/stop/#{session_id}") do |req|
+      @request_client.conn.delete do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -67,7 +67,7 @@ module SeedTraceClient
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [SeedTraceClient::Submission::GetExecutionSessionStateResponse]
     def get_execution_sessions_state(request_options: nil)
-      response = @request_client.conn.get("/sessions/execution-sessions-state") do |req|
+      response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -95,7 +95,7 @@ module SeedTraceClient
     # @return [SeedTraceClient::Submission::ExecutionSessionResponse]
     def create_execution_session(language:, request_options: nil)
       Async do
-        response = @request_client.conn.post("/sessions/create-session/#{language}") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -113,7 +113,7 @@ module SeedTraceClient
     # @return [SeedTraceClient::Submission::ExecutionSessionResponse]
     def get_execution_session(session_id:, request_options: nil)
       Async do
-        response = @request_client.conn.get("/sessions/#{session_id}") do |req|
+        response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -131,7 +131,7 @@ module SeedTraceClient
     # @return [Void]
     def stop_execution_session(session_id:, request_options: nil)
       Async do
-        @request_client.conn.delete("/sessions/stop/#{session_id}") do |req|
+        @request_client.conn.delete do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -145,7 +145,7 @@ module SeedTraceClient
     # @return [SeedTraceClient::Submission::GetExecutionSessionStateResponse]
     def get_execution_sessions_state(request_options: nil)
       Async do
-        response = @request_client.conn.get("/sessions/execution-sessions-state") do |req|
+        response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?

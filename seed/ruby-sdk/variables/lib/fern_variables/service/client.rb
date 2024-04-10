@@ -18,7 +18,7 @@ module SeedVariablesClient
     # @param request_options [SeedVariablesClient::RequestOptions]
     # @return [Void]
     def post(endpoint_param:, request_options: nil)
-      @request_client.conn.post("/#{endpoint_param}") do |req|
+      @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/#{endpoint_param}"
@@ -41,7 +41,7 @@ module SeedVariablesClient
     # @return [Void]
     def post(endpoint_param:, request_options: nil)
       Async do
-        @request_client.conn.post("/#{endpoint_param}") do |req|
+        @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/#{endpoint_param}"

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "node_id"
 require "ostruct"
 require "json"
 
@@ -10,17 +9,17 @@ module SeedTraceClient
       attr_reader :node_id, :val, :next_, :additional_properties, :_field_set
       protected :_field_set
       OMIT = Object.new
-      # @param node_id [SeedTraceClient::Commons::NODE_ID]
+      # @param node_id [String]
       # @param val [Float]
-      # @param next_ [SeedTraceClient::Commons::NODE_ID]
+      # @param next_ [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Commons::SinglyLinkedListNodeValue]
       def initialize(node_id:, val:, next_: OMIT, additional_properties: nil)
-        # @type [SeedTraceClient::Commons::NODE_ID]
+        # @type [String]
         @node_id = node_id
         # @type [Float]
         @val = val
-        # @type [SeedTraceClient::Commons::NODE_ID]
+        # @type [String]
         @next_ = next_ if next_ != OMIT
         @_field_set = { "nodeId": @node_id, "val": @val, "next": @next_ }.reject do |_k, v|
           v == OMIT

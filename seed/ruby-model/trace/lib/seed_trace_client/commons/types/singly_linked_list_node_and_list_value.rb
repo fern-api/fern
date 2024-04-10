@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "node_id"
 require_relative "singly_linked_list_value"
 require "ostruct"
 require "json"
@@ -11,12 +10,12 @@ module SeedTraceClient
       attr_reader :node_id, :full_list, :additional_properties, :_field_set
       protected :_field_set
       OMIT = Object.new
-      # @param node_id [SeedTraceClient::Commons::NODE_ID]
+      # @param node_id [String]
       # @param full_list [SeedTraceClient::Commons::SinglyLinkedListValue]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Commons::SinglyLinkedListNodeAndListValue]
       def initialize(node_id:, full_list:, additional_properties: nil)
-        # @type [SeedTraceClient::Commons::NODE_ID]
+        # @type [String]
         @node_id = node_id
         # @type [SeedTraceClient::Commons::SinglyLinkedListValue]
         @full_list = full_list

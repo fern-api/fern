@@ -2,7 +2,6 @@
 
 require_relative "../../requests"
 require_relative "types/create_movie_request"
-require_relative "types/movie_id"
 require_relative "types/movie"
 require "async"
 
@@ -23,9 +22,9 @@ module SeedApiClient
     #   * :title (String)
     #   * :rating (Float)
     # @param request_options [SeedApiClient::RequestOptions]
-    # @return [SeedApiClient::Imdb::MOVIE_ID]
+    # @return [String]
     def create_movie(request:, request_options: nil)
-      response = @request_client.conn.post("/movies/create-movie") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -35,11 +34,11 @@ module SeedApiClient
       response.body
     end
 
-    # @param movie_id [SeedApiClient::Imdb::MOVIE_ID]
+    # @param movie_id [String]
     # @param request_options [SeedApiClient::RequestOptions]
     # @return [SeedApiClient::Imdb::Movie]
     def get_movie(movie_id:, request_options: nil)
-      response = @request_client.conn.get("/movies/#{movie_id}") do |req|
+      response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -65,10 +64,10 @@ module SeedApiClient
     #   * :title (String)
     #   * :rating (Float)
     # @param request_options [SeedApiClient::RequestOptions]
-    # @return [SeedApiClient::Imdb::MOVIE_ID]
+    # @return [String]
     def create_movie(request:, request_options: nil)
       Async do
-        response = @request_client.conn.post("/movies/create-movie") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -79,12 +78,12 @@ module SeedApiClient
       end
     end
 
-    # @param movie_id [SeedApiClient::Imdb::MOVIE_ID]
+    # @param movie_id [String]
     # @param request_options [SeedApiClient::RequestOptions]
     # @return [SeedApiClient::Imdb::Movie]
     def get_movie(movie_id:, request_options: nil)
       Async do
-        response = @request_client.conn.get("/movies/#{movie_id}") do |req|
+        response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact

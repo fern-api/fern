@@ -20,7 +20,7 @@ module SeedExhaustiveClient
     # @param request_options [SeedExhaustiveClient::RequestOptions]
     # @return [Boolean]
     def post_with_no_auth(request: nil, request_options: nil)
-      response = @request_client.conn.post("/no-auth") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -48,7 +48,7 @@ module SeedExhaustiveClient
     # @return [Boolean]
     def post_with_no_auth(request: nil, request_options: nil)
       Async do
-        response = @request_client.conn.post("/no-auth") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact

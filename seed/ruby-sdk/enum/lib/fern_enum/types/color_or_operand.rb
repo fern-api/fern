@@ -12,13 +12,17 @@ module SeedEnumClient
       struct = JSON.parse(json_object, object_class: OpenStruct)
       begin
         struct.is_a?(SeedEnumClient::Color) != false || raise("Passed value for field struct is not the expected type, validation failed.")
-        return json_object
+        return json_object unless json_object.nil?
+
+        return nil
       rescue StandardError
         # noop
       end
       begin
         struct.is_a?(SeedEnumClient::Operand) != false || raise("Passed value for field struct is not the expected type, validation failed.")
-        return json_object
+        return json_object unless json_object.nil?
+
+        return nil
       rescue StandardError
         # noop
       end

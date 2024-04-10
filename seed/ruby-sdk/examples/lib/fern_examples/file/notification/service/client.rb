@@ -21,7 +21,7 @@ module SeedExamplesClient
         # @param request_options [SeedExamplesClient::RequestOptions]
         # @return [SeedExamplesClient::Types::Exception]
         def get_exception(notification_id:, request_options: nil)
-          response = @request_client.conn.get("/file/notification/#{notification_id}") do |req|
+          response = @request_client.conn.get do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -46,7 +46,7 @@ module SeedExamplesClient
         # @return [SeedExamplesClient::Types::Exception]
         def get_exception(notification_id:, request_options: nil)
           Async do
-            response = @request_client.conn.get("/file/notification/#{notification_id}") do |req|
+            response = @request_client.conn.get do |req|
               req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
               req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
               req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact

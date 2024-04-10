@@ -1,14 +1,12 @@
 # frozen_string_literal: true
 
 require_relative "../../requests"
-require_relative "../submission/types/submission_id"
 require_relative "../submission/types/test_submission_status"
 require_relative "../submission/types/test_submission_update"
 require_relative "../submission/types/workspace_submission_status"
 require_relative "../submission/types/workspace_submission_update"
 require_relative "../submission/types/test_case_result_with_stdout"
 require_relative "../submission/types/trace_response"
-require_relative "../v_2/problem/types/test_case_id"
 require_relative "../submission/types/trace_response_v_2"
 require_relative "../submission/types/workspace_run_details"
 require "async"
@@ -24,12 +22,12 @@ module SeedTraceClient
       @request_client = request_client
     end
 
-    # @param submission_id [SeedTraceClient::Submission::SUBMISSION_ID]
+    # @param submission_id [String]
     # @param request [SeedTraceClient::Submission::TestSubmissionStatus]
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
     def update_test_submission_status(submission_id:, request:, request_options: nil)
-      @request_client.conn.post("/admin/store-test-submission-status/#{submission_id}") do |req|
+      @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -39,14 +37,14 @@ module SeedTraceClient
       end
     end
 
-    # @param submission_id [SeedTraceClient::Submission::SUBMISSION_ID]
+    # @param submission_id [String]
     # @param request [Hash] Request of type SeedTraceClient::Submission::TestSubmissionUpdate, as a Hash
     #   * :update_time (DateTime)
     #   * :update_info (Hash)
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
     def send_test_submission_update(submission_id:, request:, request_options: nil)
-      @request_client.conn.post("/admin/store-test-submission-status-v2/#{submission_id}") do |req|
+      @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -56,12 +54,12 @@ module SeedTraceClient
       end
     end
 
-    # @param submission_id [SeedTraceClient::Submission::SUBMISSION_ID]
+    # @param submission_id [String]
     # @param request [SeedTraceClient::Submission::WorkspaceSubmissionStatus]
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
     def update_workspace_submission_status(submission_id:, request:, request_options: nil)
-      @request_client.conn.post("/admin/store-workspace-submission-status/#{submission_id}") do |req|
+      @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -71,14 +69,14 @@ module SeedTraceClient
       end
     end
 
-    # @param submission_id [SeedTraceClient::Submission::SUBMISSION_ID]
+    # @param submission_id [String]
     # @param request [Hash] Request of type SeedTraceClient::Submission::WorkspaceSubmissionUpdate, as a Hash
     #   * :update_time (DateTime)
     #   * :update_info (Hash)
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
     def send_workspace_submission_update(submission_id:, request:, request_options: nil)
-      @request_client.conn.post("/admin/store-workspace-submission-status-v2/#{submission_id}") do |req|
+      @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -88,7 +86,7 @@ module SeedTraceClient
       end
     end
 
-    # @param submission_id [SeedTraceClient::Submission::SUBMISSION_ID]
+    # @param submission_id [String]
     # @param test_case_id [String]
     # @param result [Hash] Request of type SeedTraceClient::Submission::TestCaseResultWithStdout, as a Hash
     #   * :result (Hash)
@@ -97,7 +95,7 @@ module SeedTraceClient
     #     * :passed (Boolean)
     #   * :stdout (String)
     # @param trace_responses [Array<Hash>] Request of type Array<SeedTraceClient::Submission::TraceResponse>, as a Hash
-    #   * :submission_id (SeedTraceClient::Submission::SUBMISSION_ID)
+    #   * :submission_id (String)
     #   * :line_number (Integer)
     #   * :return_value (Hash)
     #   * :expression_location (Hash)
@@ -113,7 +111,7 @@ module SeedTraceClient
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
     def store_traced_test_case(submission_id:, test_case_id:, result:, trace_responses:, request_options: nil)
-      @request_client.conn.post("/admin/store-test-trace/submission/#{submission_id}/testCase/#{test_case_id}") do |req|
+      @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -127,10 +125,10 @@ module SeedTraceClient
       end
     end
 
-    # @param submission_id [SeedTraceClient::Submission::SUBMISSION_ID]
-    # @param test_case_id [SeedTraceClient::V2::Problem::TEST_CASE_ID]
+    # @param submission_id [String]
+    # @param test_case_id [String]
     # @param request [Array<Hash>] Request of type Array<SeedTraceClient::Submission::TraceResponseV2>, as a Hash
-    #   * :submission_id (SeedTraceClient::Submission::SUBMISSION_ID)
+    #   * :submission_id (String)
     #   * :line_number (Integer)
     #   * :file (Hash)
     #     * :filename (String)
@@ -149,7 +147,7 @@ module SeedTraceClient
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
     def store_traced_test_case_v_2(submission_id:, test_case_id:, request:, request_options: nil)
-      @request_client.conn.post("/admin/store-test-trace-v2/submission/#{submission_id}/testCase/#{test_case_id}") do |req|
+      @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -159,7 +157,7 @@ module SeedTraceClient
       end
     end
 
-    # @param submission_id [SeedTraceClient::Submission::SUBMISSION_ID]
+    # @param submission_id [String]
     # @param workspace_run_details [Hash] Request of type SeedTraceClient::Submission::WorkspaceRunDetails, as a Hash
     #   * :exception_v_2 (Hash)
     #   * :exception (Hash)
@@ -168,7 +166,7 @@ module SeedTraceClient
     #     * :exception_stacktrace (String)
     #   * :stdout (String)
     # @param trace_responses [Array<Hash>] Request of type Array<SeedTraceClient::Submission::TraceResponse>, as a Hash
-    #   * :submission_id (SeedTraceClient::Submission::SUBMISSION_ID)
+    #   * :submission_id (String)
     #   * :line_number (Integer)
     #   * :return_value (Hash)
     #   * :expression_location (Hash)
@@ -184,7 +182,7 @@ module SeedTraceClient
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
     def store_traced_workspace(submission_id:, workspace_run_details:, trace_responses:, request_options: nil)
-      @request_client.conn.post("/admin/store-workspace-trace/submission/#{submission_id}") do |req|
+      @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -198,9 +196,9 @@ module SeedTraceClient
       end
     end
 
-    # @param submission_id [SeedTraceClient::Submission::SUBMISSION_ID]
+    # @param submission_id [String]
     # @param request [Array<Hash>] Request of type Array<SeedTraceClient::Submission::TraceResponseV2>, as a Hash
-    #   * :submission_id (SeedTraceClient::Submission::SUBMISSION_ID)
+    #   * :submission_id (String)
     #   * :line_number (Integer)
     #   * :file (Hash)
     #     * :filename (String)
@@ -219,7 +217,7 @@ module SeedTraceClient
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
     def store_traced_workspace_v_2(submission_id:, request:, request_options: nil)
-      @request_client.conn.post("/admin/store-workspace-trace-v2/submission/#{submission_id}") do |req|
+      @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -240,13 +238,13 @@ module SeedTraceClient
       @request_client = request_client
     end
 
-    # @param submission_id [SeedTraceClient::Submission::SUBMISSION_ID]
+    # @param submission_id [String]
     # @param request [SeedTraceClient::Submission::TestSubmissionStatus]
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
     def update_test_submission_status(submission_id:, request:, request_options: nil)
       Async do
-        @request_client.conn.post("/admin/store-test-submission-status/#{submission_id}") do |req|
+        @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -257,7 +255,7 @@ module SeedTraceClient
       end
     end
 
-    # @param submission_id [SeedTraceClient::Submission::SUBMISSION_ID]
+    # @param submission_id [String]
     # @param request [Hash] Request of type SeedTraceClient::Submission::TestSubmissionUpdate, as a Hash
     #   * :update_time (DateTime)
     #   * :update_info (Hash)
@@ -265,7 +263,7 @@ module SeedTraceClient
     # @return [Void]
     def send_test_submission_update(submission_id:, request:, request_options: nil)
       Async do
-        @request_client.conn.post("/admin/store-test-submission-status-v2/#{submission_id}") do |req|
+        @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -276,13 +274,13 @@ module SeedTraceClient
       end
     end
 
-    # @param submission_id [SeedTraceClient::Submission::SUBMISSION_ID]
+    # @param submission_id [String]
     # @param request [SeedTraceClient::Submission::WorkspaceSubmissionStatus]
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
     def update_workspace_submission_status(submission_id:, request:, request_options: nil)
       Async do
-        @request_client.conn.post("/admin/store-workspace-submission-status/#{submission_id}") do |req|
+        @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -293,7 +291,7 @@ module SeedTraceClient
       end
     end
 
-    # @param submission_id [SeedTraceClient::Submission::SUBMISSION_ID]
+    # @param submission_id [String]
     # @param request [Hash] Request of type SeedTraceClient::Submission::WorkspaceSubmissionUpdate, as a Hash
     #   * :update_time (DateTime)
     #   * :update_info (Hash)
@@ -301,7 +299,7 @@ module SeedTraceClient
     # @return [Void]
     def send_workspace_submission_update(submission_id:, request:, request_options: nil)
       Async do
-        @request_client.conn.post("/admin/store-workspace-submission-status-v2/#{submission_id}") do |req|
+        @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -312,7 +310,7 @@ module SeedTraceClient
       end
     end
 
-    # @param submission_id [SeedTraceClient::Submission::SUBMISSION_ID]
+    # @param submission_id [String]
     # @param test_case_id [String]
     # @param result [Hash] Request of type SeedTraceClient::Submission::TestCaseResultWithStdout, as a Hash
     #   * :result (Hash)
@@ -321,7 +319,7 @@ module SeedTraceClient
     #     * :passed (Boolean)
     #   * :stdout (String)
     # @param trace_responses [Array<Hash>] Request of type Array<SeedTraceClient::Submission::TraceResponse>, as a Hash
-    #   * :submission_id (SeedTraceClient::Submission::SUBMISSION_ID)
+    #   * :submission_id (String)
     #   * :line_number (Integer)
     #   * :return_value (Hash)
     #   * :expression_location (Hash)
@@ -338,7 +336,7 @@ module SeedTraceClient
     # @return [Void]
     def store_traced_test_case(submission_id:, test_case_id:, result:, trace_responses:, request_options: nil)
       Async do
-        @request_client.conn.post("/admin/store-test-trace/submission/#{submission_id}/testCase/#{test_case_id}") do |req|
+        @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -353,10 +351,10 @@ module SeedTraceClient
       end
     end
 
-    # @param submission_id [SeedTraceClient::Submission::SUBMISSION_ID]
-    # @param test_case_id [SeedTraceClient::V2::Problem::TEST_CASE_ID]
+    # @param submission_id [String]
+    # @param test_case_id [String]
     # @param request [Array<Hash>] Request of type Array<SeedTraceClient::Submission::TraceResponseV2>, as a Hash
-    #   * :submission_id (SeedTraceClient::Submission::SUBMISSION_ID)
+    #   * :submission_id (String)
     #   * :line_number (Integer)
     #   * :file (Hash)
     #     * :filename (String)
@@ -376,7 +374,7 @@ module SeedTraceClient
     # @return [Void]
     def store_traced_test_case_v_2(submission_id:, test_case_id:, request:, request_options: nil)
       Async do
-        @request_client.conn.post("/admin/store-test-trace-v2/submission/#{submission_id}/testCase/#{test_case_id}") do |req|
+        @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -387,7 +385,7 @@ module SeedTraceClient
       end
     end
 
-    # @param submission_id [SeedTraceClient::Submission::SUBMISSION_ID]
+    # @param submission_id [String]
     # @param workspace_run_details [Hash] Request of type SeedTraceClient::Submission::WorkspaceRunDetails, as a Hash
     #   * :exception_v_2 (Hash)
     #   * :exception (Hash)
@@ -396,7 +394,7 @@ module SeedTraceClient
     #     * :exception_stacktrace (String)
     #   * :stdout (String)
     # @param trace_responses [Array<Hash>] Request of type Array<SeedTraceClient::Submission::TraceResponse>, as a Hash
-    #   * :submission_id (SeedTraceClient::Submission::SUBMISSION_ID)
+    #   * :submission_id (String)
     #   * :line_number (Integer)
     #   * :return_value (Hash)
     #   * :expression_location (Hash)
@@ -413,7 +411,7 @@ module SeedTraceClient
     # @return [Void]
     def store_traced_workspace(submission_id:, workspace_run_details:, trace_responses:, request_options: nil)
       Async do
-        @request_client.conn.post("/admin/store-workspace-trace/submission/#{submission_id}") do |req|
+        @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -428,9 +426,9 @@ module SeedTraceClient
       end
     end
 
-    # @param submission_id [SeedTraceClient::Submission::SUBMISSION_ID]
+    # @param submission_id [String]
     # @param request [Array<Hash>] Request of type Array<SeedTraceClient::Submission::TraceResponseV2>, as a Hash
-    #   * :submission_id (SeedTraceClient::Submission::SUBMISSION_ID)
+    #   * :submission_id (String)
     #   * :line_number (Integer)
     #   * :file (Hash)
     #     * :filename (String)
@@ -450,7 +448,7 @@ module SeedTraceClient
     # @return [Void]
     def store_traced_workspace_v_2(submission_id:, request:, request_options: nil)
       Async do
-        @request_client.conn.post("/admin/store-workspace-trace-v2/submission/#{submission_id}") do |req|
+        @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?

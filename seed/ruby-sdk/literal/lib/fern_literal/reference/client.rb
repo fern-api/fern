@@ -23,7 +23,7 @@ module SeedLiteralClient
     # @param request_options [SeedLiteralClient::RequestOptions]
     # @return [SeedLiteralClient::SendResponse]
     def send(request:, request_options: nil)
-      response = @request_client.conn.post("/reference") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["X-API-Version"] = request_options.version unless request_options&.version.nil?
         unless request_options&.audit_logging.nil?
@@ -56,7 +56,7 @@ module SeedLiteralClient
     # @return [SeedLiteralClient::SendResponse]
     def send(request:, request_options: nil)
       Async do
-        response = @request_client.conn.post("/reference") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["X-API-Version"] = request_options.version unless request_options&.version.nil?
           unless request_options&.audit_logging.nil?

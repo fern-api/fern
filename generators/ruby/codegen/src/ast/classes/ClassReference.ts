@@ -289,36 +289,24 @@ export class ArrayReference extends ClassReference {
         const valueFromJsonFunction =
             this.innerType instanceof ClassReference ? this.innerType.fromJson("v") : undefined;
         return valueFromJsonFunction !== undefined
-            ? new ConditionalStatement({
-                  if_: {
-                      rightSide: new FunctionInvocation({
-                          // TODO: Do this field access on the client better
-                          onObject: variable,
-                          baseFunction: new Function_({ name: "nil?", functionBody: [] })
-                      }),
-                      operation: "!",
+            ? new FunctionInvocation({
+                  baseFunction: new Function_({ name: "map", functionBody: [] }),
+                  onObject: variable,
+                  optionalSafeCall: true,
+                  block: {
+                      arguments: "v",
                       expressions: [
-                          new FunctionInvocation({
-                              baseFunction: new Function_({ name: "map", functionBody: [] }),
-                              onObject: variable,
-                              block: {
-                                  arguments: "v",
-                                  expressions: [
-                                      new Expression({
-                                          leftSide: "v",
-                                          rightSide: new FunctionInvocation({
-                                              onObject: "v",
-                                              baseFunction: new Function_({ name: "to_json", functionBody: [] })
-                                          }),
-                                          isAssignment: true
-                                      }),
-                                      new Expression({ rightSide: valueFromJsonFunction, isAssignment: false })
-                                  ]
-                              }
-                          })
+                          new Expression({
+                              leftSide: "v",
+                              rightSide: new FunctionInvocation({
+                                  onObject: "v",
+                                  baseFunction: new Function_({ name: "to_json", functionBody: [] })
+                              }),
+                              isAssignment: true
+                          }),
+                          new Expression({ rightSide: valueFromJsonFunction, isAssignment: false })
                       ]
-                  },
-                  else_: [new Expression({ rightSide: "nil", isAssignment: false })]
+                  }
               })
             : undefined;
     }
@@ -369,36 +357,24 @@ export class HashReference extends ClassReference {
         const valueFromJsonFunction =
             this.valueType instanceof ClassReference ? this.valueType.fromJson("v") : undefined;
         return valueFromJsonFunction !== undefined
-            ? new ConditionalStatement({
-                  if_: {
-                      rightSide: new FunctionInvocation({
-                          // TODO: Do this field access on the client better
-                          onObject: variable,
-                          baseFunction: new Function_({ name: "nil?", functionBody: [] })
-                      }),
-                      operation: "!",
+            ? new FunctionInvocation({
+                  baseFunction: new Function_({ name: "transform_values", functionBody: [] }),
+                  onObject: variable,
+                  optionalSafeCall: true,
+                  block: {
+                      arguments: "v",
                       expressions: [
-                          new FunctionInvocation({
-                              baseFunction: new Function_({ name: "transform_values", functionBody: [] }),
-                              onObject: variable,
-                              block: {
-                                  arguments: "v",
-                                  expressions: [
-                                      new Expression({
-                                          leftSide: "v",
-                                          rightSide: new FunctionInvocation({
-                                              onObject: "v",
-                                              baseFunction: new Function_({ name: "to_json", functionBody: [] })
-                                          }),
-                                          isAssignment: true
-                                      }),
-                                      new Expression({ rightSide: valueFromJsonFunction, isAssignment: false })
-                                  ]
-                              }
-                          })
+                          new Expression({
+                              leftSide: "v",
+                              rightSide: new FunctionInvocation({
+                                  onObject: "v",
+                                  baseFunction: new Function_({ name: "to_json", functionBody: [] })
+                              }),
+                              isAssignment: true
+                          }),
+                          new Expression({ rightSide: valueFromJsonFunction, isAssignment: false })
                       ]
-                  },
-                  else_: [new Expression({ rightSide: "nil", isAssignment: false })]
+                  }
               })
             : undefined;
     }
@@ -607,19 +583,25 @@ export class ClassReferenceFactory {
             cr = type.shape._visit<ClassReference>({
                 alias: (atd: AliasTypeDeclaration) => {
                     const aliasOfCr = this.fromTypeReference(atd.aliasOf);
+                    let preferredClassReference = undefined;
                     const resolvedTypeId = atd.resolvedType._visit<TypeId | undefined>({
                         named: (rnt: ResolvedNamedType) => rnt.name.typeId,
                         container: (ct) => this.forContainerType(ct).resolvedTypeId,
-                        primitive: (pt) => this.forPrimitiveType(pt).resolvedTypeId,
+                        primitive: (pt) => {
+                            preferredClassReference = this.forPrimitiveType(pt);
+                            return preferredClassReference.resolvedTypeId;
+                        },
                         unknown: () => undefined,
                         _other: () => undefined
                     });
-                    return AliasReference.fromDeclaredTypeName(
-                        type.name,
-                        aliasOfCr,
-                        resolvedTypeId,
-                        this.locationGenerator
-                    );
+                    return preferredClassReference != null
+                        ? preferredClassReference
+                        : AliasReference.fromDeclaredTypeName(
+                              type.name,
+                              aliasOfCr,
+                              resolvedTypeId,
+                              this.locationGenerator
+                          );
                 },
                 enum: () => EnumReference.fromDeclaredTypeName(type.name, this.locationGenerator),
                 object: () => SerializableObjectReference.fromDeclaredTypeName(type.name, this.locationGenerator),

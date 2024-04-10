@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "submission_id"
 require_relative "../../commons/types/language"
 require_relative "submission_file_info"
-require_relative "../../commons/types/problem_id"
 require "ostruct"
 require "json"
 
@@ -14,23 +12,23 @@ module SeedTraceClient
                   :additional_properties, :_field_set
       protected :_field_set
       OMIT = Object.new
-      # @param submission_id [SeedTraceClient::Submission::SUBMISSION_ID]
+      # @param submission_id [String]
       # @param language [SeedTraceClient::Commons::Language]
       # @param submission_files [Array<SeedTraceClient::Submission::SubmissionFileInfo>]
-      # @param problem_id [SeedTraceClient::Commons::PROBLEM_ID]
+      # @param problem_id [String]
       # @param problem_version [Integer]
       # @param user_id [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Submission::SubmitRequestV2]
       def initialize(submission_id:, language:, submission_files:, problem_id:, problem_version: OMIT, user_id: OMIT,
                      additional_properties: nil)
-        # @type [SeedTraceClient::Submission::SUBMISSION_ID]
+        # @type [String]
         @submission_id = submission_id
         # @type [SeedTraceClient::Commons::Language]
         @language = language
         # @type [Array<SeedTraceClient::Submission::SubmissionFileInfo>]
         @submission_files = submission_files
-        # @type [SeedTraceClient::Commons::PROBLEM_ID]
+        # @type [String]
         @problem_id = problem_id
         # @type [Integer]
         @problem_version = problem_version if problem_version != OMIT

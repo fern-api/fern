@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "submission_id"
 require_relative "../../commons/types/language"
 require_relative "submission_file_info"
 require "ostruct"
@@ -12,14 +11,14 @@ module SeedTraceClient
       attr_reader :submission_id, :language, :submission_files, :user_id, :additional_properties, :_field_set
       protected :_field_set
       OMIT = Object.new
-      # @param submission_id [SeedTraceClient::Submission::SUBMISSION_ID]
+      # @param submission_id [String]
       # @param language [SeedTraceClient::Commons::Language]
       # @param submission_files [Array<SeedTraceClient::Submission::SubmissionFileInfo>]
       # @param user_id [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Submission::WorkspaceSubmitRequest]
       def initialize(submission_id:, language:, submission_files:, user_id: OMIT, additional_properties: nil)
-        # @type [SeedTraceClient::Submission::SUBMISSION_ID]
+        # @type [String]
         @submission_id = submission_id
         # @type [SeedTraceClient::Commons::Language]
         @language = language

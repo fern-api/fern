@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "test_case_id"
 require "ostruct"
 require "json"
 
@@ -12,13 +11,13 @@ module SeedTraceClient
           attr_reader :id, :name, :hidden, :additional_properties, :_field_set
           protected :_field_set
           OMIT = Object.new
-          # @param id [SeedTraceClient::V2::V3::Problem::TEST_CASE_ID]
+          # @param id [String]
           # @param name [String]
           # @param hidden [Boolean]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [SeedTraceClient::V2::V3::Problem::TestCaseMetadata]
           def initialize(id:, name:, hidden:, additional_properties: nil)
-            # @type [SeedTraceClient::V2::V3::Problem::TEST_CASE_ID]
+            # @type [String]
             @id = id
             # @type [String]
             @name = name

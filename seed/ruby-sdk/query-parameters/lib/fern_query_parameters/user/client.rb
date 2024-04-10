@@ -32,7 +32,7 @@ module SeedQueryParametersClient
     # @return [SeedQueryParametersClient::User::User]
     def get_username(limit:, id:, date:, deadline:, bytes:, filter:, user: nil, key_value: nil, optional_string: nil,
                      nested_user: nil, optional_user: nil, exclude_user: nil, request_options: nil)
-      response = @request_client.conn.get("/user") do |req|
+      response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.params = {
@@ -83,7 +83,7 @@ module SeedQueryParametersClient
     def get_username(limit:, id:, date:, deadline:, bytes:, filter:, user: nil, key_value: nil, optional_string: nil,
                      nested_user: nil, optional_user: nil, exclude_user: nil, request_options: nil)
       Async do
-        response = @request_client.conn.get("/user") do |req|
+        response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.params = {

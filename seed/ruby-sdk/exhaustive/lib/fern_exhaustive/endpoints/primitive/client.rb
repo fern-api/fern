@@ -20,7 +20,7 @@ module SeedExhaustiveClient
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [String]
       def get_and_return_string(request:, request_options: nil)
-        response = @request_client.conn.post("/primitive/string") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -34,7 +34,7 @@ module SeedExhaustiveClient
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [Integer]
       def get_and_return_int(request:, request_options: nil)
-        response = @request_client.conn.post("/primitive/integer") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -48,7 +48,7 @@ module SeedExhaustiveClient
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [Long]
       def get_and_return_long(request:, request_options: nil)
-        response = @request_client.conn.post("/primitive/long") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -62,7 +62,7 @@ module SeedExhaustiveClient
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [Float]
       def get_and_return_double(request:, request_options: nil)
-        response = @request_client.conn.post("/primitive/double") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -76,7 +76,7 @@ module SeedExhaustiveClient
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [Boolean]
       def get_and_return_bool(request:, request_options: nil)
-        response = @request_client.conn.post("/primitive/boolean") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -90,7 +90,7 @@ module SeedExhaustiveClient
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [DateTime]
       def get_and_return_datetime(request:, request_options: nil)
-        response = @request_client.conn.post("/primitive/datetime") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -106,7 +106,7 @@ module SeedExhaustiveClient
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [Date]
       def get_and_return_date(request:, request_options: nil)
-        response = @request_client.conn.post("/primitive/date") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -122,7 +122,7 @@ module SeedExhaustiveClient
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [String]
       def get_and_return_uuid(request:, request_options: nil)
-        response = @request_client.conn.post("/primitive/uuid") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -136,7 +136,7 @@ module SeedExhaustiveClient
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [String]
       def get_and_return_base_64(request:, request_options: nil)
-        response = @request_client.conn.post("/primitive/base64") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -162,7 +162,7 @@ module SeedExhaustiveClient
       # @return [String]
       def get_and_return_string(request:, request_options: nil)
         Async do
-          response = @request_client.conn.post("/primitive/string") do |req|
+          response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -178,7 +178,7 @@ module SeedExhaustiveClient
       # @return [Integer]
       def get_and_return_int(request:, request_options: nil)
         Async do
-          response = @request_client.conn.post("/primitive/integer") do |req|
+          response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -194,7 +194,7 @@ module SeedExhaustiveClient
       # @return [Long]
       def get_and_return_long(request:, request_options: nil)
         Async do
-          response = @request_client.conn.post("/primitive/long") do |req|
+          response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -210,7 +210,7 @@ module SeedExhaustiveClient
       # @return [Float]
       def get_and_return_double(request:, request_options: nil)
         Async do
-          response = @request_client.conn.post("/primitive/double") do |req|
+          response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -226,7 +226,7 @@ module SeedExhaustiveClient
       # @return [Boolean]
       def get_and_return_bool(request:, request_options: nil)
         Async do
-          response = @request_client.conn.post("/primitive/boolean") do |req|
+          response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -242,7 +242,7 @@ module SeedExhaustiveClient
       # @return [DateTime]
       def get_and_return_datetime(request:, request_options: nil)
         Async do
-          response = @request_client.conn.post("/primitive/datetime") do |req|
+          response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -258,7 +258,7 @@ module SeedExhaustiveClient
       # @return [Date]
       def get_and_return_date(request:, request_options: nil)
         Async do
-          response = @request_client.conn.post("/primitive/date") do |req|
+          response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -274,7 +274,7 @@ module SeedExhaustiveClient
       # @return [String]
       def get_and_return_uuid(request:, request_options: nil)
         Async do
-          response = @request_client.conn.post("/primitive/uuid") do |req|
+          response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -290,7 +290,7 @@ module SeedExhaustiveClient
       # @return [String]
       def get_and_return_base_64(request:, request_options: nil)
         Async do
-          response = @request_client.conn.post("/primitive/base64") do |req|
+          response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact

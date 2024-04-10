@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "test_case_template_id"
 require_relative "test_case_implementation_description"
-require_relative "parameter_id"
 require "ostruct"
 require "json"
 
@@ -13,20 +11,20 @@ module SeedTraceClient
         attr_reader :template_id, :name, :description, :expected_value_parameter_id, :additional_properties, :_field_set
         protected :_field_set
         OMIT = Object.new
-        # @param template_id [SeedTraceClient::V2::Problem::TEST_CASE_TEMPLATE_ID]
+        # @param template_id [String]
         # @param name [String]
         # @param description [SeedTraceClient::V2::Problem::TestCaseImplementationDescription]
-        # @param expected_value_parameter_id [SeedTraceClient::V2::Problem::PARAMETER_ID]
+        # @param expected_value_parameter_id [String]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [SeedTraceClient::V2::Problem::BasicTestCaseTemplate]
         def initialize(template_id:, name:, description:, expected_value_parameter_id:, additional_properties: nil)
-          # @type [SeedTraceClient::V2::Problem::TEST_CASE_TEMPLATE_ID]
+          # @type [String]
           @template_id = template_id
           # @type [String]
           @name = name
           # @type [SeedTraceClient::V2::Problem::TestCaseImplementationDescription]
           @description = description
-          # @type [SeedTraceClient::V2::Problem::PARAMETER_ID]
+          # @type [String]
           @expected_value_parameter_id = expected_value_parameter_id
           @_field_set = {
             "templateId": @template_id,

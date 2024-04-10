@@ -21,7 +21,7 @@ module SeedExhaustiveClient
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [String]
       def get_with_path(param:, request_options: nil)
-        response = @request_client.conn.get("/params/path/#{param}") do |req|
+        response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -37,7 +37,7 @@ module SeedExhaustiveClient
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [Void]
       def get_with_query(query:, number:, request_options: nil)
-        @request_client.conn.get("/params") do |req|
+        @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -57,7 +57,7 @@ module SeedExhaustiveClient
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [Void]
       def get_with_allow_multiple_query(query:, numer:, request_options: nil)
-        @request_client.conn.get("/params") do |req|
+        @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -77,7 +77,7 @@ module SeedExhaustiveClient
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [Void]
       def get_with_path_and_query(param:, query:, request_options: nil)
-        @request_client.conn.get("/params/path-query/#{param}") do |req|
+        @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -93,7 +93,7 @@ module SeedExhaustiveClient
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [String]
       def modify_with_path(param:, request:, request_options: nil)
-        response = @request_client.conn.put("/params/path/#{param}") do |req|
+        response = @request_client.conn.put do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -121,7 +121,7 @@ module SeedExhaustiveClient
       # @return [String]
       def get_with_path(param:, request_options: nil)
         Async do
-          response = @request_client.conn.get("/params/path/#{param}") do |req|
+          response = @request_client.conn.get do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -139,7 +139,7 @@ module SeedExhaustiveClient
       # @return [Void]
       def get_with_query(query:, number:, request_options: nil)
         Async do
-          @request_client.conn.get("/params") do |req|
+          @request_client.conn.get do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -161,7 +161,7 @@ module SeedExhaustiveClient
       # @return [Void]
       def get_with_allow_multiple_query(query:, numer:, request_options: nil)
         Async do
-          @request_client.conn.get("/params") do |req|
+          @request_client.conn.get do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -183,7 +183,7 @@ module SeedExhaustiveClient
       # @return [Void]
       def get_with_path_and_query(param:, query:, request_options: nil)
         Async do
-          @request_client.conn.get("/params/path-query/#{param}") do |req|
+          @request_client.conn.get do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -201,7 +201,7 @@ module SeedExhaustiveClient
       # @return [String]
       def modify_with_path(param:, request:, request_options: nil)
         Async do
-          response = @request_client.conn.put("/params/path/#{param}") do |req|
+          response = @request_client.conn.put do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact

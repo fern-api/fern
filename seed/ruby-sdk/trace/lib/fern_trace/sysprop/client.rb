@@ -20,7 +20,7 @@ module SeedTraceClient
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
     def set_num_warm_instances(language:, num_warm_instances:, request_options: nil)
-      @request_client.conn.put("/sysprop/num-warm-instances/#{language}/#{num_warm_instances}") do |req|
+      @request_client.conn.put do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -32,7 +32,7 @@ module SeedTraceClient
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Hash{SeedTraceClient::Commons::Language => Integer}]
     def get_num_warm_instances(request_options: nil)
-      response = @request_client.conn.get("/sysprop/num-warm-instances") do |req|
+      response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -59,7 +59,7 @@ module SeedTraceClient
     # @return [Void]
     def set_num_warm_instances(language:, num_warm_instances:, request_options: nil)
       Async do
-        @request_client.conn.put("/sysprop/num-warm-instances/#{language}/#{num_warm_instances}") do |req|
+        @request_client.conn.put do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -73,7 +73,7 @@ module SeedTraceClient
     # @return [Hash{SeedTraceClient::Commons::Language => Integer}]
     def get_num_warm_instances(request_options: nil)
       Async do
-        response = @request_client.conn.get("/sysprop/num-warm-instances") do |req|
+        response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?

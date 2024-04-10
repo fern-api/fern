@@ -18,7 +18,7 @@ module SeedObjectsWithImportsClient
     # @param request_options [SeedObjectsWithImportsClient::RequestOptions]
     # @return [String]
     def send_optional_body(request: nil, request_options: nil)
-      response = @request_client.conn.post("/send-optional-body") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
@@ -43,7 +43,7 @@ module SeedObjectsWithImportsClient
     # @return [String]
     def send_optional_body(request: nil, request_options: nil)
       Async do
-        response = @request_client.conn.post("/send-optional-body") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact

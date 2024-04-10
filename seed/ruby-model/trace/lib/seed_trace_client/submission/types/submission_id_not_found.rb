@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "submission_id"
 require "ostruct"
 require "json"
 
@@ -10,11 +9,11 @@ module SeedTraceClient
       attr_reader :missing_submission_id, :additional_properties, :_field_set
       protected :_field_set
       OMIT = Object.new
-      # @param missing_submission_id [SeedTraceClient::Submission::SUBMISSION_ID]
+      # @param missing_submission_id [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Submission::SubmissionIdNotFound]
       def initialize(missing_submission_id:, additional_properties: nil)
-        # @type [SeedTraceClient::Submission::SUBMISSION_ID]
+        # @type [String]
         @missing_submission_id = missing_submission_id
         @_field_set = { "missingSubmissionId": @missing_submission_id }.reject do |_k, v|
           v == OMIT

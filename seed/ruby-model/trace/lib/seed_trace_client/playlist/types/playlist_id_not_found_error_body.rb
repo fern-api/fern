@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "json"
-require_relative "playlist_id"
 
 module SeedTraceClient
   class Playlist
@@ -67,7 +66,7 @@ module SeedTraceClient
         @member.is_a?(obj)
       end
 
-      # @param member [SeedTraceClient::Playlist::PLAYLIST_ID]
+      # @param member [String]
       # @return [SeedTraceClient::Playlist::PlaylistIdNotFoundErrorBody]
       def self.playlist_id(member:)
         new(member: member, discriminant: "playlistId")

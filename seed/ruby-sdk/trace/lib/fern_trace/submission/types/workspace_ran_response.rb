@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "submission_id"
 require_relative "workspace_run_details"
 require "ostruct"
 require "json"
@@ -11,12 +10,12 @@ module SeedTraceClient
       attr_reader :submission_id, :run_details, :additional_properties, :_field_set
       protected :_field_set
       OMIT = Object.new
-      # @param submission_id [SeedTraceClient::Submission::SUBMISSION_ID]
+      # @param submission_id [String]
       # @param run_details [SeedTraceClient::Submission::WorkspaceRunDetails]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Submission::WorkspaceRanResponse]
       def initialize(submission_id:, run_details:, additional_properties: nil)
-        # @type [SeedTraceClient::Submission::SUBMISSION_ID]
+        # @type [String]
         @submission_id = submission_id
         # @type [SeedTraceClient::Submission::WorkspaceRunDetails]
         @run_details = run_details

@@ -16,7 +16,7 @@ module SeedTraceClient
           OMIT = Object.new
           # @param metadata [SeedTraceClient::V2::V3::Problem::TestCaseMetadata]
           # @param implementation [SeedTraceClient::V2::V3::Problem::TestCaseImplementationReference]
-          # @param arguments [Hash{SeedTraceClient::V2::V3::Problem::PARAMETER_ID => SeedTraceClient::Commons::VariableValue}]
+          # @param arguments [Hash{String => SeedTraceClient::Commons::VariableValue}]
           # @param expects [SeedTraceClient::V2::V3::Problem::TestCaseExpects]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [SeedTraceClient::V2::V3::Problem::TestCaseV2]
@@ -25,7 +25,7 @@ module SeedTraceClient
             @metadata = metadata
             # @type [SeedTraceClient::V2::V3::Problem::TestCaseImplementationReference]
             @implementation = implementation
-            # @type [Hash{SeedTraceClient::V2::V3::Problem::PARAMETER_ID => SeedTraceClient::Commons::VariableValue}]
+            # @type [Hash{String => SeedTraceClient::Commons::VariableValue}]
             @arguments = arguments
             # @type [SeedTraceClient::V2::V3::Problem::TestCaseExpects]
             @expects = expects if expects != OMIT

@@ -19,7 +19,7 @@ module SeedUnionsClient
     # @param request_options [SeedUnionsClient::RequestOptions]
     # @return [SeedUnionsClient::Union::Shape]
     def get(id:, request_options: nil)
-      response = @request_client.conn.get("/#{id}") do |req|
+      response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/#{id}"
@@ -31,7 +31,7 @@ module SeedUnionsClient
     # @param request_options [SeedUnionsClient::RequestOptions]
     # @return [Boolean]
     def update(request:, request_options: nil)
-      response = @request_client.conn.patch("/") do |req|
+      response = @request_client.conn.patch do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
@@ -56,7 +56,7 @@ module SeedUnionsClient
     # @return [SeedUnionsClient::Union::Shape]
     def get(id:, request_options: nil)
       Async do
-        response = @request_client.conn.get("/#{id}") do |req|
+        response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/#{id}"
@@ -70,7 +70,7 @@ module SeedUnionsClient
     # @return [Boolean]
     def update(request:, request_options: nil)
       Async do
-        response = @request_client.conn.patch("/") do |req|
+        response = @request_client.conn.patch do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact

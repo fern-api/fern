@@ -27,7 +27,7 @@ module SeedPaginationClient
     # @param request_options [SeedPaginationClient::RequestOptions]
     # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
     def list_with_cursor_pagination(page: nil, per_page: nil, order: nil, starting_after: nil, request_options: nil)
-      response = @request_client.conn.get("/users") do |req|
+      response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -51,7 +51,7 @@ module SeedPaginationClient
     # @param request_options [SeedPaginationClient::RequestOptions]
     # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
     def list_with_offset_pagination(page: nil, per_page: nil, order: nil, starting_after: nil, request_options: nil)
-      response = @request_client.conn.get("/users") do |req|
+      response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -71,7 +71,7 @@ module SeedPaginationClient
     # @param request_options [SeedPaginationClient::RequestOptions]
     # @return [SeedPaginationClient::Users::ListUsersExtendedResponse]
     def list_with_extended_results(cursor: nil, request_options: nil)
-      response = @request_client.conn.get("/users") do |req|
+      response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -86,7 +86,7 @@ module SeedPaginationClient
     # @param request_options [SeedPaginationClient::RequestOptions]
     # @return [SeedPaginationClient::UsernameCursor]
     def list_usernames(starting_after: nil, request_options: nil)
-      response = @request_client.conn.get("/users") do |req|
+      response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -103,7 +103,7 @@ module SeedPaginationClient
     # @param request_options [SeedPaginationClient::RequestOptions]
     # @return [SeedPaginationClient::Users::UsernameContainer]
     def list_with_global_config(offset: nil, request_options: nil)
-      response = @request_client.conn.get("/users") do |req|
+      response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -133,7 +133,7 @@ module SeedPaginationClient
     # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
     def list_with_cursor_pagination(page: nil, per_page: nil, order: nil, starting_after: nil, request_options: nil)
       Async do
-        response = @request_client.conn.get("/users") do |req|
+        response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -159,7 +159,7 @@ module SeedPaginationClient
     # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
     def list_with_offset_pagination(page: nil, per_page: nil, order: nil, starting_after: nil, request_options: nil)
       Async do
-        response = @request_client.conn.get("/users") do |req|
+        response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -181,7 +181,7 @@ module SeedPaginationClient
     # @return [SeedPaginationClient::Users::ListUsersExtendedResponse]
     def list_with_extended_results(cursor: nil, request_options: nil)
       Async do
-        response = @request_client.conn.get("/users") do |req|
+        response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -198,7 +198,7 @@ module SeedPaginationClient
     # @return [SeedPaginationClient::UsernameCursor]
     def list_usernames(starting_after: nil, request_options: nil)
       Async do
-        response = @request_client.conn.get("/users") do |req|
+        response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -217,7 +217,7 @@ module SeedPaginationClient
     # @return [SeedPaginationClient::Users::UsernameContainer]
     def list_with_global_config(offset: nil, request_options: nil)
       Async do
-        response = @request_client.conn.get("/users") do |req|
+        response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact

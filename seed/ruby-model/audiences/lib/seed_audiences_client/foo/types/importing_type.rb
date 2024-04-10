@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "../../commons/types/imported"
 require "ostruct"
 require "json"
 
@@ -10,11 +9,11 @@ module SeedAudiencesClient
       attr_reader :imported, :additional_properties, :_field_set
       protected :_field_set
       OMIT = Object.new
-      # @param imported [SeedAudiencesClient::Commons::IMPORTED]
+      # @param imported [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedAudiencesClient::Foo::ImportingType]
       def initialize(imported:, additional_properties: nil)
-        # @type [SeedAudiencesClient::Commons::IMPORTED]
+        # @type [String]
         @imported = imported
         @_field_set = { "imported": @imported }.reject do |_k, v|
           v == OMIT

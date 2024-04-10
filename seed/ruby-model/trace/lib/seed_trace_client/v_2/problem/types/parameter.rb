@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "parameter_id"
 require_relative "../../../commons/types/variable_type"
 require "ostruct"
 require "json"
@@ -12,13 +11,13 @@ module SeedTraceClient
         attr_reader :parameter_id, :name, :variable_type, :additional_properties, :_field_set
         protected :_field_set
         OMIT = Object.new
-        # @param parameter_id [SeedTraceClient::V2::Problem::PARAMETER_ID]
+        # @param parameter_id [String]
         # @param name [String]
         # @param variable_type [SeedTraceClient::Commons::VariableType]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [SeedTraceClient::V2::Problem::Parameter]
         def initialize(parameter_id:, name:, variable_type:, additional_properties: nil)
-          # @type [SeedTraceClient::V2::Problem::PARAMETER_ID]
+          # @type [String]
           @parameter_id = parameter_id
           # @type [String]
           @name = name

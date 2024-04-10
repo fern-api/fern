@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "../../commons/types/problem_id"
 require "ostruct"
 require "json"
 
@@ -11,13 +10,13 @@ module SeedTraceClient
       protected :_field_set
       OMIT = Object.new
       # @param name [String]
-      # @param problems [Array<SeedTraceClient::Commons::PROBLEM_ID>]
+      # @param problems [Array<String>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Playlist::PlaylistCreateRequest]
       def initialize(name:, problems:, additional_properties: nil)
         # @type [String]
         @name = name
-        # @type [Array<SeedTraceClient::Commons::PROBLEM_ID>]
+        # @type [Array<String>]
         @problems = problems
         @_field_set = { "name": @name, "problems": @problems }.reject do |_k, v|
           v == OMIT

@@ -18,7 +18,7 @@ module SeedTraceClient
       # @param request_options [SeedTraceClient::RequestOptions]
       # @return [Void]
       def test(request_options: nil)
-        @request_client.conn.get("/") do |req|
+        @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
@@ -42,7 +42,7 @@ module SeedTraceClient
       # @return [Void]
       def test(request_options: nil)
         Async do
-          @request_client.conn.get("/") do |req|
+          @request_client.conn.get do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
             unless request_options&.x_random_header.nil?

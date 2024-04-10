@@ -19,7 +19,7 @@ module SeedBasicAuthClient
     # @param request_options [SeedBasicAuthClient::RequestOptions]
     # @return [Boolean]
     def get_with_basic_auth(request_options: nil)
-      response = @request_client.conn.get("/basic-auth") do |req|
+      response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["username"] = request_options.username unless request_options&.username.nil?
         req.headers["password"] = request_options.password unless request_options&.password.nil?
@@ -35,7 +35,7 @@ module SeedBasicAuthClient
     # @param request_options [SeedBasicAuthClient::RequestOptions]
     # @return [Boolean]
     def post_with_basic_auth(request: nil, request_options: nil)
-      response = @request_client.conn.post("/basic-auth") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["username"] = request_options.username unless request_options&.username.nil?
         req.headers["password"] = request_options.password unless request_options&.password.nil?
@@ -63,7 +63,7 @@ module SeedBasicAuthClient
     # @return [Boolean]
     def get_with_basic_auth(request_options: nil)
       Async do
-        response = @request_client.conn.get("/basic-auth") do |req|
+        response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["username"] = request_options.username unless request_options&.username.nil?
           req.headers["password"] = request_options.password unless request_options&.password.nil?
@@ -81,7 +81,7 @@ module SeedBasicAuthClient
     # @return [Boolean]
     def post_with_basic_auth(request: nil, request_options: nil)
       Async do
-        response = @request_client.conn.post("/basic-auth") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["username"] = request_options.username unless request_options&.username.nil?
           req.headers["password"] = request_options.password unless request_options&.password.nil?

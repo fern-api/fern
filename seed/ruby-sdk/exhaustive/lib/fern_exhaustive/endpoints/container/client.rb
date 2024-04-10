@@ -21,7 +21,7 @@ module SeedExhaustiveClient
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [Array<String>]
       def get_and_return_list_of_primitives(request:, request_options: nil)
-        response = @request_client.conn.post("/container/list-of-primitives") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -36,16 +36,14 @@ module SeedExhaustiveClient
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [Array<SeedExhaustiveClient::Types::Object::ObjectWithRequiredField>]
       def get_and_return_list_of_objects(request:, request_options: nil)
-        response = @request_client.conn.post("/container/list-of-objects") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/container/list-of-objects"
         end
-        return if response.body.nil?
-
-        response.body.map do |v|
+        response.body&.map do |v|
           v = v.to_json
           SeedExhaustiveClient::Types::Object::ObjectWithRequiredField.from_json(json_object: v)
         end
@@ -55,7 +53,7 @@ module SeedExhaustiveClient
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [Set<String>]
       def get_and_return_set_of_primitives(request:, request_options: nil)
-        response = @request_client.conn.post("/container/set-of-primitives") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -69,7 +67,7 @@ module SeedExhaustiveClient
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [Set<SeedExhaustiveClient::Types::Object::ObjectWithRequiredField>]
       def get_and_return_set_of_objects(request:, request_options: nil)
-        response = @request_client.conn.post("/container/set-of-objects") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -83,7 +81,7 @@ module SeedExhaustiveClient
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [Hash{String => String}]
       def get_and_return_map_prim_to_prim(request:, request_options: nil)
-        response = @request_client.conn.post("/container/map-prim-to-prim") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -97,16 +95,14 @@ module SeedExhaustiveClient
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [Hash{String => SeedExhaustiveClient::Types::Object::ObjectWithRequiredField}]
       def get_and_return_map_of_prim_to_object(request:, request_options: nil)
-        response = @request_client.conn.post("/container/map-prim-to-object") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/container/map-prim-to-object"
         end
-        return if response.body.nil?
-
-        response.body.transform_values do |v|
+        response.body&.transform_values do |v|
           v = v.to_json
           SeedExhaustiveClient::Types::Object::ObjectWithRequiredField.from_json(json_object: v)
         end
@@ -117,7 +113,7 @@ module SeedExhaustiveClient
       # @param request_options [SeedExhaustiveClient::RequestOptions]
       # @return [SeedExhaustiveClient::Types::Object::ObjectWithRequiredField]
       def get_and_return_optional(request: nil, request_options: nil)
-        response = @request_client.conn.post("/container/opt-objects") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -143,7 +139,7 @@ module SeedExhaustiveClient
       # @return [Array<String>]
       def get_and_return_list_of_primitives(request:, request_options: nil)
         Async do
-          response = @request_client.conn.post("/container/list-of-primitives") do |req|
+          response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -160,7 +156,7 @@ module SeedExhaustiveClient
       # @return [Array<SeedExhaustiveClient::Types::Object::ObjectWithRequiredField>]
       def get_and_return_list_of_objects(request:, request_options: nil)
         Async do
-          response = @request_client.conn.post("/container/list-of-objects") do |req|
+          response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -179,7 +175,7 @@ module SeedExhaustiveClient
       # @return [Set<String>]
       def get_and_return_set_of_primitives(request:, request_options: nil)
         Async do
-          response = @request_client.conn.post("/container/set-of-primitives") do |req|
+          response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -195,7 +191,7 @@ module SeedExhaustiveClient
       # @return [Set<SeedExhaustiveClient::Types::Object::ObjectWithRequiredField>]
       def get_and_return_set_of_objects(request:, request_options: nil)
         Async do
-          response = @request_client.conn.post("/container/set-of-objects") do |req|
+          response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -211,7 +207,7 @@ module SeedExhaustiveClient
       # @return [Hash{String => String}]
       def get_and_return_map_prim_to_prim(request:, request_options: nil)
         Async do
-          response = @request_client.conn.post("/container/map-prim-to-prim") do |req|
+          response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -227,7 +223,7 @@ module SeedExhaustiveClient
       # @return [Hash{String => SeedExhaustiveClient::Types::Object::ObjectWithRequiredField}]
       def get_and_return_map_of_prim_to_object(request:, request_options: nil)
         Async do
-          response = @request_client.conn.post("/container/map-prim-to-object") do |req|
+          response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -247,7 +243,7 @@ module SeedExhaustiveClient
       # @return [SeedExhaustiveClient::Types::Object::ObjectWithRequiredField]
       def get_and_return_optional(request: nil, request_options: nil)
         Async do
-          response = @request_client.conn.post("/container/opt-objects") do |req|
+          response = @request_client.conn.post do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
             req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact

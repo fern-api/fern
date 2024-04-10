@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative "../../requests"
-require_relative "../types/types/movie_id"
 require_relative "../types/types/movie"
 require_relative "../types/types/metadata"
 require "async"
@@ -17,11 +16,11 @@ module SeedExamplesClient
       @request_client = request_client
     end
 
-    # @param movie_id [SeedExamplesClient::Types::MOVIE_ID]
+    # @param movie_id [String]
     # @param request_options [SeedExamplesClient::RequestOptions]
     # @return [SeedExamplesClient::Types::Movie]
     def get_movie(movie_id:, request_options: nil)
-      response = @request_client.conn.get("/movie/#{movie_id}") do |req|
+      response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -31,19 +30,19 @@ module SeedExamplesClient
     end
 
     # @param request [Hash] Request of type SeedExamplesClient::Types::Movie, as a Hash
-    #   * :id (SeedExamplesClient::Types::MOVIE_ID)
-    #   * :prequel (SeedExamplesClient::Types::MOVIE_ID)
+    #   * :id (String)
+    #   * :prequel (String)
     #   * :title (String)
     #   * :from (String)
     #   * :rating (Float)
     #   * :type (String)
-    #   * :tag (SeedExamplesClient::Commons::Types::TAG)
+    #   * :tag (String)
     #   * :book (String)
     #   * :metadata (Hash{String => Object})
     # @param request_options [SeedExamplesClient::RequestOptions]
-    # @return [SeedExamplesClient::Types::MOVIE_ID]
+    # @return [String]
     def create_movie(request:, request_options: nil)
-      response = @request_client.conn.post("/movie") do |req|
+      response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -59,7 +58,7 @@ module SeedExamplesClient
     # @param request_options [SeedExamplesClient::RequestOptions]
     # @return [SeedExamplesClient::Types::Metadata]
     def get_metadata(x_api_version:, shallow: nil, tag: nil, request_options: nil)
-      response = @request_client.conn.get("/metadata") do |req|
+      response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers = {
@@ -84,12 +83,12 @@ module SeedExamplesClient
       @request_client = request_client
     end
 
-    # @param movie_id [SeedExamplesClient::Types::MOVIE_ID]
+    # @param movie_id [String]
     # @param request_options [SeedExamplesClient::RequestOptions]
     # @return [SeedExamplesClient::Types::Movie]
     def get_movie(movie_id:, request_options: nil)
       Async do
-        response = @request_client.conn.get("/movie/#{movie_id}") do |req|
+        response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -100,20 +99,20 @@ module SeedExamplesClient
     end
 
     # @param request [Hash] Request of type SeedExamplesClient::Types::Movie, as a Hash
-    #   * :id (SeedExamplesClient::Types::MOVIE_ID)
-    #   * :prequel (SeedExamplesClient::Types::MOVIE_ID)
+    #   * :id (String)
+    #   * :prequel (String)
     #   * :title (String)
     #   * :from (String)
     #   * :rating (Float)
     #   * :type (String)
-    #   * :tag (SeedExamplesClient::Commons::Types::TAG)
+    #   * :tag (String)
     #   * :book (String)
     #   * :metadata (Hash{String => Object})
     # @param request_options [SeedExamplesClient::RequestOptions]
-    # @return [SeedExamplesClient::Types::MOVIE_ID]
+    # @return [String]
     def create_movie(request:, request_options: nil)
       Async do
-        response = @request_client.conn.post("/movie") do |req|
+        response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
@@ -131,7 +130,7 @@ module SeedExamplesClient
     # @return [SeedExamplesClient::Types::Metadata]
     def get_metadata(x_api_version:, shallow: nil, tag: nil, request_options: nil)
       Async do
-        response = @request_client.conn.get("/metadata") do |req|
+        response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers = {
