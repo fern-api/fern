@@ -938,7 +938,8 @@ async function convertNavigationItem({
                     ir,
                     item.summaryAbsolutePath,
                     item.navigation,
-                    parsedDocsConfig.absoluteFilepath
+                    parsedDocsConfig.absoluteFilepath,
+                    fullSlugs
                 )
             };
             break;

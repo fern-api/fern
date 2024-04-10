@@ -7,7 +7,8 @@ export function convertIrToNavigation(
     ir: IntermediateRepresentation,
     rootSummaryAbsolutePath: AbsoluteFilePath | undefined,
     navigation: docsYml.ParsedApiNavigationItem[] | undefined,
-    absoluteFilepathToDocsConfig: AbsoluteFilePath
+    absoluteFilepathToDocsConfig: AbsoluteFilePath,
+    fullSlugs: Record<DocsV1Write.PageId, { fullSlug?: string }>
 ): DocsV1Write.ApiNavigationConfigRoot | undefined {
     if (navigation == null) {
         return undefined;
@@ -15,7 +16,13 @@ export function convertIrToNavigation(
 
     const defaultRoot = convertIrToDefaultNavigationConfigRoot(ir);
 
-    const items = visitAndSortNavigationSchema(navigation, defaultRoot.items, ir, absoluteFilepathToDocsConfig);
+    const items = visitAndSortNavigationSchema(
+        navigation,
+        defaultRoot.items,
+        ir,
+        absoluteFilepathToDocsConfig,
+        fullSlugs
+    );
 
     return {
         items,
@@ -102,7 +109,8 @@ function visitAndSortNavigationSchema(
     navigationItems: docsYml.ParsedApiNavigationItem[],
     defaultItems: DocsV1Write.ApiNavigationConfigItem[],
     ir: IntermediateRepresentation,
-    absoluteFilepathToDocsConfig: AbsoluteFilePath
+    absoluteFilepathToDocsConfig: AbsoluteFilePath,
+    fullSlugs: Record<DocsV1Write.PageId, { fullSlug?: string }>
 ): DocsV1Write.ApiNavigationConfigItem[] {
     const items: DocsV1Write.ApiNavigationConfigItem[] = [];
     for (const navigationItem of navigationItems) {
@@ -119,15 +127,14 @@ function visitAndSortNavigationSchema(
                 });
             }
         } else if (navigationItem.type === "page") {
-            const docsDir = dirname(absoluteFilepathToDocsConfig);
             items.push({
                 type: "page",
-                id: relative(docsDir, navigationItem.absolutePath),
+                id: relative(dirname(absoluteFilepathToDocsConfig), navigationItem.absolutePath),
                 title: navigationItem.title,
                 icon: undefined,
                 hidden: undefined,
                 urlSlugOverride: navigationItem.slug,
-                fullSlug: undefined
+                fullSlug: fullSlugs[navigationItem.absolutePath]?.fullSlug?.split("/")
             });
         } else {
             // item must be a collection of subpackages
@@ -137,11 +144,16 @@ function visitAndSortNavigationSchema(
                 items.push({
                     type: "subpackage",
                     subpackageId: foundItem.subpackageId,
+                    summaryPageId:
+                        navigationItem.summaryAbsolutePath == null
+                            ? undefined
+                            : relative(dirname(absoluteFilepathToDocsConfig), navigationItem.summaryAbsolutePath),
                     items: visitAndSortNavigationSchema(
                         navigationItem.items,
                         foundItem.items,
                         ir,
-                        absoluteFilepathToDocsConfig
+                        absoluteFilepathToDocsConfig,
+                        fullSlugs
                     )
                 });
             }

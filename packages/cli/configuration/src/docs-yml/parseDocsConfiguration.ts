@@ -602,7 +602,7 @@ function parseApiNavigationItem(
         return {
             type: "subpackage",
             subpackageId: key,
-            summaryAbsolutePath: undefined,
+            summaryAbsolutePath: undefined, // TODO: implement subpackage summary page
             items: values.flatMap((value) => parseApiNavigationItem(value, absolutePathToConfig))
         };
     });
