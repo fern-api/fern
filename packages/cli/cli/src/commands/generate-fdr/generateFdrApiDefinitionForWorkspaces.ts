@@ -38,8 +38,7 @@ export async function generateFdrApiDefinitionForWorkspaces({
 
                 const apiDefinition = convertIrToFdrApi({
                     ir,
-                    snippetsConfig: {},
-                    navigation: undefined
+                    snippetsConfig: {}
                 });
 
                 const resolvedOutputFilePath = path.resolve(outputFilepath);
