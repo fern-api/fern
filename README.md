@@ -1,7 +1,7 @@
 <br/>
 <div align="center">
   <a href="https://www.buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern&utm_content=logo">
-    <img src="/fern/docs/images/logo-green.png" height="80" align="center" alt="header" />
+    <img src="/fern/images/logo-green.png" height="80" align="center" alt="header" />
   </a>
 <br/>
 
@@ -18,7 +18,7 @@
 Fern is a toolkit that allows you to input your API Definition and output SDKs and API documentation. Fern is compatible with the OpenAPI specification (formerly Swagger).
 
 <div align="center">
-    <img src="/fern/docs/images/overview.png" width="700" alt="Overview Diagram">
+    <img src="/fern/images/overview.png" width="700" alt="Overview Diagram">
 </div>
 
 ## 🌿 SDKs
