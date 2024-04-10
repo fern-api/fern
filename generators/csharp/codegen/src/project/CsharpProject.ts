@@ -75,7 +75,7 @@ export class CsharpProject {
 
         await loggingExeca(this.context.logger, "dotnet", ["csharpier", "."], {
             doNotPipeOutput: true,
-            cwd: absolutePathToSrcDirectory, 
+            cwd: absolutePathToSrcDirectory,
             env: {
                 DOTNET_CLI_TELEMETRY_OPTOUT: "1"
             }

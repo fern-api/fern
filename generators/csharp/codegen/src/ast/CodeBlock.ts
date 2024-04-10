@@ -2,7 +2,6 @@ import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
 export declare namespace CodeBlock {
-
     /* Write arbitrary code */
     type Arg = string | ((writer: Writer) => void);
 }

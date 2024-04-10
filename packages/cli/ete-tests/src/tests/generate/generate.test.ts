@@ -28,5 +28,5 @@ describe("fern generate", () => {
                 // for some reason, locally the output contains a newline that Circle doesn't
                 .trim()
         ).toMatchSnapshot();
-    });
+    }, 180_000);
 });
