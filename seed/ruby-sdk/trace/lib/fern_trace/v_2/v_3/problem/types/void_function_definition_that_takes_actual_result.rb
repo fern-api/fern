@@ -11,24 +11,31 @@ module SeedTraceClient
       class Problem
         # The generated signature will include an additional param, actualResult
         class VoidFunctionDefinitionThatTakesActualResult
-          attr_reader :additional_parameters, :code, :additional_properties, :_field_set
+          # @return [Array<SeedTraceClient::V2::V3::Problem::Parameter>]
+          attr_reader :additional_parameters
+          # @return [SeedTraceClient::V2::V3::Problem::FunctionImplementationForMultipleLanguages]
+          attr_reader :code
+          # @return [OpenStruct] Additional properties unmapped to the current class definition
+          attr_reader :additional_properties
+          # @return [Object]
+          attr_reader :_field_set
           protected :_field_set
+
           OMIT = Object.new
+
           # @param additional_parameters [Array<SeedTraceClient::V2::V3::Problem::Parameter>]
           # @param code [SeedTraceClient::V2::V3::Problem::FunctionImplementationForMultipleLanguages]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [SeedTraceClient::V2::V3::Problem::VoidFunctionDefinitionThatTakesActualResult]
           def initialize(additional_parameters:, code:, additional_properties: nil)
-            # @type [Array<SeedTraceClient::V2::V3::Problem::Parameter>]
             @additional_parameters = additional_parameters
-            # @type [SeedTraceClient::V2::V3::Problem::FunctionImplementationForMultipleLanguages]
             @code = code
-            @_field_set = { "additionalParameters": @additional_parameters, "code": @code }.reject do |_k, v|
-              v == OMIT
-            end
+            @additional_properties = additional_properties
+            @_field_set = { "additionalParameters": additional_parameters, "code": code }
           end
 
-          # Deserialize a JSON object to an instance of VoidFunctionDefinitionThatTakesActualResult
+          # Deserialize a JSON object to an instance of
+          #  VoidFunctionDefinitionThatTakesActualResult
           #
           # @param json_object [String]
           # @return [SeedTraceClient::V2::V3::Problem::VoidFunctionDefinitionThatTakesActualResult]
@@ -48,14 +55,17 @@ module SeedTraceClient
             new(additional_parameters: additional_parameters, code: code, additional_properties: struct)
           end
 
-          # Serialize an instance of VoidFunctionDefinitionThatTakesActualResult to a JSON object
+          # Serialize an instance of VoidFunctionDefinitionThatTakesActualResult to a JSON
+          #  object
           #
           # @return [String]
           def to_json(*_args)
             @_field_set&.to_json
           end
 
-          # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+          # Leveraged for Union-type generation, validate_raw attempts to parse the given
+          #  hash and check each fields type against the current object's property
+          #  definitions.
           #
           # @param obj [Object]
           # @return [Void]

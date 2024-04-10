@@ -8,21 +8,27 @@ module SeedTraceClient
     module V3
       class Problem
         class FunctionImplementationForMultipleLanguages
-          attr_reader :code_by_language, :additional_properties, :_field_set
+          # @return [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::V2::V3::Problem::FunctionImplementation}]
+          attr_reader :code_by_language
+          # @return [OpenStruct] Additional properties unmapped to the current class definition
+          attr_reader :additional_properties
+          # @return [Object]
+          attr_reader :_field_set
           protected :_field_set
+
           OMIT = Object.new
+
           # @param code_by_language [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::V2::V3::Problem::FunctionImplementation}]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [SeedTraceClient::V2::V3::Problem::FunctionImplementationForMultipleLanguages]
           def initialize(code_by_language:, additional_properties: nil)
-            # @type [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::V2::V3::Problem::FunctionImplementation}]
             @code_by_language = code_by_language
-            @_field_set = { "codeByLanguage": @code_by_language }.reject do |_k, v|
-              v == OMIT
-            end
+            @additional_properties = additional_properties
+            @_field_set = { "codeByLanguage": code_by_language }
           end
 
-          # Deserialize a JSON object to an instance of FunctionImplementationForMultipleLanguages
+          # Deserialize a JSON object to an instance of
+          #  FunctionImplementationForMultipleLanguages
           #
           # @param json_object [String]
           # @return [SeedTraceClient::V2::V3::Problem::FunctionImplementationForMultipleLanguages]
@@ -36,14 +42,17 @@ module SeedTraceClient
             new(code_by_language: code_by_language, additional_properties: struct)
           end
 
-          # Serialize an instance of FunctionImplementationForMultipleLanguages to a JSON object
+          # Serialize an instance of FunctionImplementationForMultipleLanguages to a JSON
+          #  object
           #
           # @return [String]
           def to_json(*_args)
             @_field_set&.to_json
           end
 
-          # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+          # Leveraged for Union-type generation, validate_raw attempts to parse the given
+          #  hash and check each fields type against the current object's property
+          #  definitions.
           #
           # @param obj [Object]
           # @return [Void]

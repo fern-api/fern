@@ -6,12 +6,12 @@ require "async"
 
 module SeedExhaustiveClient
   class NoReqBodyClient
+    # @return [SeedExhaustiveClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedExhaustiveClient::RequestClient]
     # @return [SeedExhaustiveClient::NoReqBodyClient]
     def initialize(request_client:)
-      # @type [SeedExhaustiveClient::RequestClient]
       @request_client = request_client
     end
 
@@ -41,12 +41,12 @@ module SeedExhaustiveClient
   end
 
   class AsyncNoReqBodyClient
+    # @return [SeedExhaustiveClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedExhaustiveClient::AsyncRequestClient]
     # @return [SeedExhaustiveClient::AsyncNoReqBodyClient]
     def initialize(request_client:)
-      # @type [SeedExhaustiveClient::AsyncRequestClient]
       @request_client = request_client
     end
 

@@ -5,12 +5,12 @@ require "async"
 
 module SeedSingleUrlEnvironmentNoDefaultClient
   class DummyClient
+    # @return [SeedSingleUrlEnvironmentNoDefaultClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedSingleUrlEnvironmentNoDefaultClient::RequestClient]
     # @return [SeedSingleUrlEnvironmentNoDefaultClient::DummyClient]
     def initialize(request_client:)
-      # @type [SeedSingleUrlEnvironmentNoDefaultClient::RequestClient]
       @request_client = request_client
     end
 
@@ -28,12 +28,12 @@ module SeedSingleUrlEnvironmentNoDefaultClient
   end
 
   class AsyncDummyClient
+    # @return [SeedSingleUrlEnvironmentNoDefaultClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedSingleUrlEnvironmentNoDefaultClient::AsyncRequestClient]
     # @return [SeedSingleUrlEnvironmentNoDefaultClient::AsyncDummyClient]
     def initialize(request_client:)
-      # @type [SeedSingleUrlEnvironmentNoDefaultClient::AsyncRequestClient]
       @request_client = request_client
     end
 

@@ -340,6 +340,7 @@ export declare namespace Hash_ {
         additionalHashes?: DefaultingExpandableHash[];
         isFrozen?: boolean;
         shouldCompact?: boolean;
+        stringifyValues?: boolean;
     }
 }
 export class HashReference extends ClassReference {
@@ -390,12 +391,14 @@ export class HashInstance extends AstNode {
     public additionalHashes: DefaultingExpandableHash[];
     public shouldCompact: boolean;
     public isFrozen: boolean;
+    public stringifyValues: boolean;
 
     constructor({
         contents = new Map(),
         isFrozen = false,
         shouldCompact = false,
         additionalHashes = [],
+        stringifyValues = true,
         ...rest
     }: Hash_.InitInstance) {
         super(rest);
@@ -404,6 +407,7 @@ export class HashInstance extends AstNode {
         this.isFrozen = isFrozen;
         this.shouldCompact = shouldCompact;
         this.additionalHashes = additionalHashes;
+        this.stringifyValues = stringifyValues;
     }
 
     public writeInternal(): void {
@@ -423,7 +427,9 @@ export class HashInstance extends AstNode {
         this.addText({
             stringContent: `{ ${expandingHashes}${
                 hashContents.length > 0 && this.additionalHashes.length > 0 ? ", " : ""
-            }${hashContents.map(([k, v]) => k + ": " + (v instanceof AstNode ? v.write({}) : `'${v}'`)).join(", ")} }`
+            }${hashContents
+                .map(([k, v]) => k + ": " + (v instanceof AstNode ? v.write({}) : this.stringifyValues ? `'${v}'` : v))
+                .join(", ")} }`
         });
         this.addText({ stringContent: this.shouldCompact ? ".compact" : undefined, appendToLastString: true });
         this.addText({ stringContent: this.isFrozen ? ".freeze" : undefined, appendToLastString: true });

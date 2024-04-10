@@ -6,22 +6,27 @@ require "json"
 module SeedTraceClient
   class Commons
     class GenericValue
-      attr_reader :stringified_type, :stringified_value, :additional_properties, :_field_set
+      # @return [String]
+      attr_reader :stringified_type
+      # @return [String]
+      attr_reader :stringified_value
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param stringified_type [String]
       # @param stringified_value [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Commons::GenericValue]
       def initialize(stringified_value:, stringified_type: OMIT, additional_properties: nil)
-        # @type [String]
         @stringified_type = stringified_type if stringified_type != OMIT
-        # @type [String]
         @stringified_value = stringified_value
-        @_field_set = {
-          "stringifiedType": @stringified_type,
-          "stringifiedValue": @stringified_value
-        }.reject do |_k, v|
+        @additional_properties = additional_properties
+        @_field_set = { "stringifiedType": stringified_type, "stringifiedValue": stringified_value }.reject do |_k, v|
           v == OMIT
         end
       end
@@ -44,7 +49,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

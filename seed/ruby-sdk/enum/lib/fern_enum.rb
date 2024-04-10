@@ -8,7 +8,12 @@ require_relative "fern_enum/query_param/client"
 
 module SeedEnumClient
   class Client
-    attr_reader :inlined_request, :path_param, :query_param
+    # @return [SeedEnumClient::InlinedRequestClient]
+    attr_reader :inlined_request
+    # @return [SeedEnumClient::PathParamClient]
+    attr_reader :path_param
+    # @return [SeedEnumClient::QueryParamClient]
+    attr_reader :query_param
 
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
@@ -24,7 +29,12 @@ module SeedEnumClient
   end
 
   class AsyncClient
-    attr_reader :inlined_request, :path_param, :query_param
+    # @return [SeedEnumClient::AsyncInlinedRequestClient]
+    attr_reader :inlined_request
+    # @return [SeedEnumClient::AsyncPathParamClient]
+    attr_reader :path_param
+    # @return [SeedEnumClient::AsyncQueryParamClient]
+    attr_reader :query_param
 
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.

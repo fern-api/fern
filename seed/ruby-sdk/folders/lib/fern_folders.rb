@@ -7,7 +7,10 @@ require_relative "fern_folders/folder/client"
 
 module SeedApiClient
   class Client
-    attr_reader :a, :folder
+    # @return [SeedApiClient::A::Client]
+    attr_reader :a
+    # @return [SeedApiClient::Folder::FolderClient]
+    attr_reader :folder
 
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
@@ -32,7 +35,10 @@ module SeedApiClient
   end
 
   class AsyncClient
-    attr_reader :a, :folder
+    # @return [SeedApiClient::A::AsyncClient]
+    attr_reader :a
+    # @return [SeedApiClient::Folder::AsyncFolderClient]
+    attr_reader :folder
 
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.

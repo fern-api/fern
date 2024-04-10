@@ -6,6 +6,7 @@ require_relative "fern_idempotency_headers/payment/client"
 
 module SeedIdempotencyHeadersClient
   class Client
+    # @return [SeedIdempotencyHeadersClient::PaymentClient]
     attr_reader :payment
 
     # @param base_url [String]
@@ -21,6 +22,7 @@ module SeedIdempotencyHeadersClient
   end
 
   class AsyncClient
+    # @return [SeedIdempotencyHeadersClient::AsyncPaymentClient]
     attr_reader :payment
 
     # @param base_url [String]

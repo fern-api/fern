@@ -8,9 +8,22 @@ require "json"
 module SeedTraceClient
   class Submission
     class TestSubmissionStatusV2
-      attr_reader :updates, :problem_id, :problem_version, :problem_info, :additional_properties, :_field_set
+      # @return [Array<SeedTraceClient::Submission::TestSubmissionUpdate>]
+      attr_reader :updates
+      # @return [String]
+      attr_reader :problem_id
+      # @return [Integer]
+      attr_reader :problem_version
+      # @return [SeedTraceClient::V2::Problem::ProblemInfoV2]
+      attr_reader :problem_info
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param updates [Array<SeedTraceClient::Submission::TestSubmissionUpdate>]
       # @param problem_id [String]
       # @param problem_version [Integer]
@@ -18,22 +31,17 @@ module SeedTraceClient
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Submission::TestSubmissionStatusV2]
       def initialize(updates:, problem_id:, problem_version:, problem_info:, additional_properties: nil)
-        # @type [Array<SeedTraceClient::Submission::TestSubmissionUpdate>]
         @updates = updates
-        # @type [String]
         @problem_id = problem_id
-        # @type [Integer]
         @problem_version = problem_version
-        # @type [SeedTraceClient::V2::Problem::ProblemInfoV2]
         @problem_info = problem_info
+        @additional_properties = additional_properties
         @_field_set = {
-          "updates": @updates,
-          "problemId": @problem_id,
-          "problemVersion": @problem_version,
-          "problemInfo": @problem_info
-        }.reject do |_k, v|
-          v == OMIT
-        end
+          "updates": updates,
+          "problemId": problem_id,
+          "problemVersion": problem_version,
+          "problemInfo": problem_info
+        }
       end
 
       # Deserialize a JSON object to an instance of TestSubmissionStatusV2
@@ -66,7 +74,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

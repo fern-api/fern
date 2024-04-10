@@ -5,19 +5,27 @@ require "json"
 
 module SeedPaginationClient
   class UsernamePage
-    attr_reader :after, :data, :additional_properties, :_field_set
+    # @return [String]
+    attr_reader :after
+    # @return [Array<String>]
+    attr_reader :data
+    # @return [OpenStruct] Additional properties unmapped to the current class definition
+    attr_reader :additional_properties
+    # @return [Object]
+    attr_reader :_field_set
     protected :_field_set
+
     OMIT = Object.new
+
     # @param after [String]
     # @param data [Array<String>]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [SeedPaginationClient::UsernamePage]
     def initialize(data:, after: OMIT, additional_properties: nil)
-      # @type [String]
       @after = after if after != OMIT
-      # @type [Array<String>]
       @data = data
-      @_field_set = { "after": @after, "data": @data }.reject do |_k, v|
+      @additional_properties = additional_properties
+      @_field_set = { "after": after, "data": data }.reject do |_k, v|
         v == OMIT
       end
     end
@@ -40,7 +48,9 @@ module SeedPaginationClient
       @_field_set&.to_json
     end
 
-    # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+    # Leveraged for Union-type generation, validate_raw attempts to parse the given
+    #  hash and check each fields type against the current object's property
+    #  definitions.
     #
     # @param obj [Object]
     # @return [Void]

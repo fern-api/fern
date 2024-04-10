@@ -9,21 +9,27 @@ module SeedTraceClient
   module V2
     class Problem
       class VoidFunctionDefinition
-        attr_reader :parameters, :code, :additional_properties, :_field_set
+        # @return [Array<SeedTraceClient::V2::Problem::Parameter>]
+        attr_reader :parameters
+        # @return [SeedTraceClient::V2::Problem::FunctionImplementationForMultipleLanguages]
+        attr_reader :code
+        # @return [OpenStruct] Additional properties unmapped to the current class definition
+        attr_reader :additional_properties
+        # @return [Object]
+        attr_reader :_field_set
         protected :_field_set
+
         OMIT = Object.new
+
         # @param parameters [Array<SeedTraceClient::V2::Problem::Parameter>]
         # @param code [SeedTraceClient::V2::Problem::FunctionImplementationForMultipleLanguages]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [SeedTraceClient::V2::Problem::VoidFunctionDefinition]
         def initialize(parameters:, code:, additional_properties: nil)
-          # @type [Array<SeedTraceClient::V2::Problem::Parameter>]
           @parameters = parameters
-          # @type [SeedTraceClient::V2::Problem::FunctionImplementationForMultipleLanguages]
           @code = code
-          @_field_set = { "parameters": @parameters, "code": @code }.reject do |_k, v|
-            v == OMIT
-          end
+          @additional_properties = additional_properties
+          @_field_set = { "parameters": parameters, "code": code }
         end
 
         # Deserialize a JSON object to an instance of VoidFunctionDefinition
@@ -53,7 +59,9 @@ module SeedTraceClient
           @_field_set&.to_json
         end
 
-        # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+        # Leveraged for Union-type generation, validate_raw attempts to parse the given
+        #  hash and check each fields type against the current object's property
+        #  definitions.
         #
         # @param obj [Object]
         # @return [Void]

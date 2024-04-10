@@ -7,9 +7,22 @@ require "json"
 module SeedPaginationClient
   class Users
     class Page
-      attr_reader :page, :next_, :per_page, :total_page, :additional_properties, :_field_set
+      # @return [Integer] The current page
+      attr_reader :page
+      # @return [SeedPaginationClient::Users::NextPage]
+      attr_reader :next_
+      # @return [Integer]
+      attr_reader :per_page
+      # @return [Integer]
+      attr_reader :total_page
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param page [Integer] The current page
       # @param next_ [SeedPaginationClient::Users::NextPage]
       # @param per_page [Integer]
@@ -17,19 +30,16 @@ module SeedPaginationClient
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedPaginationClient::Users::Page]
       def initialize(page:, per_page:, total_page:, next_: OMIT, additional_properties: nil)
-        # @type [Integer] The current page
         @page = page
-        # @type [SeedPaginationClient::Users::NextPage]
         @next_ = next_ if next_ != OMIT
-        # @type [Integer]
         @per_page = per_page
-        # @type [Integer]
         @total_page = total_page
+        @additional_properties = additional_properties
         @_field_set = {
-          "page": @page,
-          "next": @next_,
-          "per_page": @per_page,
-          "total_page": @total_page
+          "page": page,
+          "next": next_,
+          "per_page": per_page,
+          "total_page": total_page
         }.reject do |_k, v|
           v == OMIT
         end
@@ -60,7 +70,9 @@ module SeedPaginationClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

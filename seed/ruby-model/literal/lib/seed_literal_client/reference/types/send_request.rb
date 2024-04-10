@@ -6,24 +6,31 @@ require "json"
 module SeedLiteralClient
   class Reference
     class SendRequest
-      attr_reader :prompt, :query, :stream, :additional_properties, :_field_set
+      # @return [String]
+      attr_reader :prompt
+      # @return [String]
+      attr_reader :query
+      # @return [Boolean]
+      attr_reader :stream
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param prompt [String]
       # @param query [String]
       # @param stream [Boolean]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedLiteralClient::Reference::SendRequest]
       def initialize(prompt:, query:, stream:, additional_properties: nil)
-        # @type [String]
         @prompt = prompt
-        # @type [String]
         @query = query
-        # @type [Boolean]
         @stream = stream
-        @_field_set = { "prompt": @prompt, "query": @query, "stream": @stream }.reject do |_k, v|
-          v == OMIT
-        end
+        @additional_properties = additional_properties
+        @_field_set = { "prompt": prompt, "query": query, "stream": stream }
       end
 
       # Deserialize a JSON object to an instance of SendRequest
@@ -45,7 +52,9 @@ module SeedLiteralClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

@@ -7,21 +7,27 @@ require "json"
 module SeedTraceClient
   class Submission
     class WorkspaceRanResponse
-      attr_reader :submission_id, :run_details, :additional_properties, :_field_set
+      # @return [String]
+      attr_reader :submission_id
+      # @return [SeedTraceClient::Submission::WorkspaceRunDetails]
+      attr_reader :run_details
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param submission_id [String]
       # @param run_details [SeedTraceClient::Submission::WorkspaceRunDetails]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Submission::WorkspaceRanResponse]
       def initialize(submission_id:, run_details:, additional_properties: nil)
-        # @type [String]
         @submission_id = submission_id
-        # @type [SeedTraceClient::Submission::WorkspaceRunDetails]
         @run_details = run_details
-        @_field_set = { "submissionId": @submission_id, "runDetails": @run_details }.reject do |_k, v|
-          v == OMIT
-        end
+        @additional_properties = additional_properties
+        @_field_set = { "submissionId": submission_id, "runDetails": run_details }
       end
 
       # Deserialize a JSON object to an instance of WorkspaceRanResponse
@@ -48,7 +54,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

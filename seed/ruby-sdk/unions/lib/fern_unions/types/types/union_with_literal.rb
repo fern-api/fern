@@ -5,20 +5,23 @@ require "json"
 module SeedUnionsClient
   class Types
     class UnionWithLiteral
-      attr_reader :member, :discriminant, :base
+      # @return [Object]
+      attr_reader :member
+      # @return [String]
+      attr_reader :discriminant
+      # @return [String]
+      attr_reader :base
 
       private_class_method :new
       alias kind_of? is_a?
+
       # @param member [Object]
       # @param discriminant [String]
       # @param base [String]
       # @return [SeedUnionsClient::Types::UnionWithLiteral]
       def initialize(member:, discriminant:, base:)
-        # @type [Object]
         @member = member
-        # @type [String]
         @discriminant = discriminant
-        # @type [String]
         @base = base
       end
 
@@ -48,7 +51,9 @@ module SeedUnionsClient
         @member.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

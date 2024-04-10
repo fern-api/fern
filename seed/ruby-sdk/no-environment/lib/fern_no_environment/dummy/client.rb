@@ -5,12 +5,12 @@ require "async"
 
 module SeedNoEnvironmentClient
   class DummyClient
+    # @return [SeedNoEnvironmentClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedNoEnvironmentClient::RequestClient]
     # @return [SeedNoEnvironmentClient::DummyClient]
     def initialize(request_client:)
-      # @type [SeedNoEnvironmentClient::RequestClient]
       @request_client = request_client
     end
 
@@ -28,12 +28,12 @@ module SeedNoEnvironmentClient
   end
 
   class AsyncDummyClient
+    # @return [SeedNoEnvironmentClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedNoEnvironmentClient::AsyncRequestClient]
     # @return [SeedNoEnvironmentClient::AsyncDummyClient]
     def initialize(request_client:)
-      # @type [SeedNoEnvironmentClient::AsyncRequestClient]
       @request_client = request_client
     end
 

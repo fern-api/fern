@@ -7,21 +7,27 @@ require "json"
 module SeedTraceClient
   class Commons
     class SinglyLinkedListNodeAndListValue
-      attr_reader :node_id, :full_list, :additional_properties, :_field_set
+      # @return [String]
+      attr_reader :node_id
+      # @return [SeedTraceClient::Commons::SinglyLinkedListValue]
+      attr_reader :full_list
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param node_id [String]
       # @param full_list [SeedTraceClient::Commons::SinglyLinkedListValue]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Commons::SinglyLinkedListNodeAndListValue]
       def initialize(node_id:, full_list:, additional_properties: nil)
-        # @type [String]
         @node_id = node_id
-        # @type [SeedTraceClient::Commons::SinglyLinkedListValue]
         @full_list = full_list
-        @_field_set = { "nodeId": @node_id, "fullList": @full_list }.reject do |_k, v|
-          v == OMIT
-        end
+        @additional_properties = additional_properties
+        @_field_set = { "nodeId": node_id, "fullList": full_list }
       end
 
       # Deserialize a JSON object to an instance of SinglyLinkedListNodeAndListValue
@@ -48,7 +54,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

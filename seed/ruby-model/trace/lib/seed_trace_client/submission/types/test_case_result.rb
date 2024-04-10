@@ -8,28 +8,31 @@ require "json"
 module SeedTraceClient
   class Submission
     class TestCaseResult
-      attr_reader :expected_result, :actual_result, :passed, :additional_properties, :_field_set
+      # @return [SeedTraceClient::Commons::VariableValue]
+      attr_reader :expected_result
+      # @return [SeedTraceClient::Submission::ActualResult]
+      attr_reader :actual_result
+      # @return [Boolean]
+      attr_reader :passed
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param expected_result [SeedTraceClient::Commons::VariableValue]
       # @param actual_result [SeedTraceClient::Submission::ActualResult]
       # @param passed [Boolean]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Submission::TestCaseResult]
       def initialize(expected_result:, actual_result:, passed:, additional_properties: nil)
-        # @type [SeedTraceClient::Commons::VariableValue]
         @expected_result = expected_result
-        # @type [SeedTraceClient::Submission::ActualResult]
         @actual_result = actual_result
-        # @type [Boolean]
         @passed = passed
-        @_field_set = {
-          "expectedResult": @expected_result,
-          "actualResult": @actual_result,
-          "passed": @passed
-        }.reject do |_k, v|
-          v == OMIT
-        end
+        @additional_properties = additional_properties
+        @_field_set = { "expectedResult": expected_result, "actualResult": actual_result, "passed": passed }
       end
 
       # Deserialize a JSON object to an instance of TestCaseResult
@@ -62,7 +65,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

@@ -8,9 +8,22 @@ module SeedTraceClient
   module V2
     class Problem
       class BasicTestCaseTemplate
-        attr_reader :template_id, :name, :description, :expected_value_parameter_id, :additional_properties, :_field_set
+        # @return [String]
+        attr_reader :template_id
+        # @return [String]
+        attr_reader :name
+        # @return [SeedTraceClient::V2::Problem::TestCaseImplementationDescription]
+        attr_reader :description
+        # @return [String]
+        attr_reader :expected_value_parameter_id
+        # @return [OpenStruct] Additional properties unmapped to the current class definition
+        attr_reader :additional_properties
+        # @return [Object]
+        attr_reader :_field_set
         protected :_field_set
+
         OMIT = Object.new
+
         # @param template_id [String]
         # @param name [String]
         # @param description [SeedTraceClient::V2::Problem::TestCaseImplementationDescription]
@@ -18,22 +31,17 @@ module SeedTraceClient
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [SeedTraceClient::V2::Problem::BasicTestCaseTemplate]
         def initialize(template_id:, name:, description:, expected_value_parameter_id:, additional_properties: nil)
-          # @type [String]
           @template_id = template_id
-          # @type [String]
           @name = name
-          # @type [SeedTraceClient::V2::Problem::TestCaseImplementationDescription]
           @description = description
-          # @type [String]
           @expected_value_parameter_id = expected_value_parameter_id
+          @additional_properties = additional_properties
           @_field_set = {
-            "templateId": @template_id,
-            "name": @name,
-            "description": @description,
-            "expectedValueParameterId": @expected_value_parameter_id
-          }.reject do |_k, v|
-            v == OMIT
-          end
+            "templateId": template_id,
+            "name": name,
+            "description": description,
+            "expectedValueParameterId": expected_value_parameter_id
+          }
         end
 
         # Deserialize a JSON object to an instance of BasicTestCaseTemplate
@@ -62,7 +70,9 @@ module SeedTraceClient
           @_field_set&.to_json
         end
 
-        # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+        # Leveraged for Union-type generation, validate_raw attempts to parse the given
+        #  hash and check each fields type against the current object's property
+        #  definitions.
         #
         # @param obj [Object]
         # @return [Void]

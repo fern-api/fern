@@ -6,12 +6,12 @@ require "async"
 
 module SeedTraceClient
   class SyspropClient
+    # @return [SeedTraceClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedTraceClient::RequestClient]
     # @return [SeedTraceClient::SyspropClient]
     def initialize(request_client:)
-      # @type [SeedTraceClient::RequestClient]
       @request_client = request_client
     end
 
@@ -44,12 +44,12 @@ module SeedTraceClient
   end
 
   class AsyncSyspropClient
+    # @return [SeedTraceClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedTraceClient::AsyncRequestClient]
     # @return [SeedTraceClient::AsyncSyspropClient]
     def initialize(request_client:)
-      # @type [SeedTraceClient::AsyncRequestClient]
       @request_client = request_client
     end
 

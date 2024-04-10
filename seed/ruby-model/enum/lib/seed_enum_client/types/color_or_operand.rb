@@ -29,7 +29,9 @@ module SeedEnumClient
       struct
     end
 
-    # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+    # Leveraged for Union-type generation, validate_raw attempts to parse the given
+    #  hash and check each fields type against the current object's property
+    #  definitions.
     #
     # @param obj [Object]
     # @return [Void]

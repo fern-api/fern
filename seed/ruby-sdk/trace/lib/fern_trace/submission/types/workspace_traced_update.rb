@@ -6,18 +6,23 @@ require "json"
 module SeedTraceClient
   class Submission
     class WorkspaceTracedUpdate
-      attr_reader :trace_responses_size, :additional_properties, :_field_set
+      # @return [Integer]
+      attr_reader :trace_responses_size
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param trace_responses_size [Integer]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Submission::WorkspaceTracedUpdate]
       def initialize(trace_responses_size:, additional_properties: nil)
-        # @type [Integer]
         @trace_responses_size = trace_responses_size
-        @_field_set = { "traceResponsesSize": @trace_responses_size }.reject do |_k, v|
-          v == OMIT
-        end
+        @additional_properties = additional_properties
+        @_field_set = { "traceResponsesSize": trace_responses_size }
       end
 
       # Deserialize a JSON object to an instance of WorkspaceTracedUpdate
@@ -37,7 +42,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

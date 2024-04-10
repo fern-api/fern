@@ -7,16 +7,23 @@ require "json"
 module SeedExamplesClient
   class Types
     class Tree
-      attr_reader :nodes, :additional_properties, :_field_set
+      # @return [Array<SeedExamplesClient::Types::Node>]
+      attr_reader :nodes
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param nodes [Array<SeedExamplesClient::Types::Node>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedExamplesClient::Types::Tree]
       def initialize(nodes: OMIT, additional_properties: nil)
-        # @type [Array<SeedExamplesClient::Types::Node>]
         @nodes = nodes if nodes != OMIT
-        @_field_set = { "nodes": @nodes }.reject do |_k, v|
+        @additional_properties = additional_properties
+        @_field_set = { "nodes": nodes }.reject do |_k, v|
           v == OMIT
         end
       end
@@ -42,7 +49,9 @@ module SeedExamplesClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

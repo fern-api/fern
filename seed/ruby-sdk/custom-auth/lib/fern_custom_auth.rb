@@ -6,6 +6,7 @@ require_relative "fern_custom_auth/custom_auth/client"
 
 module SeedCustomAuthClient
   class Client
+    # @return [SeedCustomAuthClient::CustomAuthClient]
     attr_reader :custom_auth
 
     # @param base_url [String]
@@ -21,6 +22,7 @@ module SeedCustomAuthClient
   end
 
   class AsyncClient
+    # @return [SeedCustomAuthClient::AsyncCustomAuthClient]
     attr_reader :custom_auth
 
     # @param base_url [String]

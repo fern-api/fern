@@ -6,6 +6,7 @@ require_relative "fern_bearer_token_environment_variable/service/client"
 
 module SeedBearerTokenEnvironmentVariableClient
   class Client
+    # @return [SeedBearerTokenEnvironmentVariableClient::ServiceClient]
     attr_reader :service
 
     # @param base_url [String]
@@ -21,6 +22,7 @@ module SeedBearerTokenEnvironmentVariableClient
   end
 
   class AsyncClient
+    # @return [SeedBearerTokenEnvironmentVariableClient::AsyncServiceClient]
     attr_reader :service
 
     # @param base_url [String]

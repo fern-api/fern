@@ -6,28 +6,35 @@ require "json"
 module SeedExamplesClient
   class Types
     class ExceptionInfo
-      attr_reader :exception_type, :exception_message, :exception_stacktrace, :additional_properties, :_field_set
+      # @return [String]
+      attr_reader :exception_type
+      # @return [String]
+      attr_reader :exception_message
+      # @return [String]
+      attr_reader :exception_stacktrace
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param exception_type [String]
       # @param exception_message [String]
       # @param exception_stacktrace [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedExamplesClient::Types::ExceptionInfo]
       def initialize(exception_type:, exception_message:, exception_stacktrace:, additional_properties: nil)
-        # @type [String]
         @exception_type = exception_type
-        # @type [String]
         @exception_message = exception_message
-        # @type [String]
         @exception_stacktrace = exception_stacktrace
+        @additional_properties = additional_properties
         @_field_set = {
-          "exceptionType": @exception_type,
-          "exceptionMessage": @exception_message,
-          "exceptionStacktrace": @exception_stacktrace
-        }.reject do |_k, v|
-          v == OMIT
-        end
+          "exceptionType": exception_type,
+          "exceptionMessage": exception_message,
+          "exceptionStacktrace": exception_stacktrace
+        }
       end
 
       # Deserialize a JSON object to an instance of ExceptionInfo
@@ -50,7 +57,9 @@ module SeedExamplesClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

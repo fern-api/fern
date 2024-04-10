@@ -7,22 +7,31 @@ require "json"
 module SeedExamplesClient
   class Types
     class Directory
-      attr_reader :name, :files, :directories, :additional_properties, :_field_set
+      # @return [String]
+      attr_reader :name
+      # @return [Array<SeedExamplesClient::Types::File>]
+      attr_reader :files
+      # @return [Array<SeedExamplesClient::Types::Directory>]
+      attr_reader :directories
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param name [String]
       # @param files [Array<SeedExamplesClient::Types::File>]
       # @param directories [Array<SeedExamplesClient::Types::Directory>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedExamplesClient::Types::Directory]
       def initialize(name:, files: OMIT, directories: OMIT, additional_properties: nil)
-        # @type [String]
         @name = name
-        # @type [Array<SeedExamplesClient::Types::File>]
         @files = files if files != OMIT
-        # @type [Array<SeedExamplesClient::Types::Directory>]
         @directories = directories if directories != OMIT
-        @_field_set = { "name": @name, "files": @files, "directories": @directories }.reject do |_k, v|
+        @additional_properties = additional_properties
+        @_field_set = { "name": name, "files": files, "directories": directories }.reject do |_k, v|
           v == OMIT
         end
       end
@@ -53,7 +62,9 @@ module SeedExamplesClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

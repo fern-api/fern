@@ -9,10 +9,26 @@ require "json"
 module SeedTraceClient
   class Submission
     class TraceResponse
-      attr_reader :submission_id, :line_number, :return_value, :expression_location, :stack, :stdout,
-                  :additional_properties, :_field_set
+      # @return [String]
+      attr_reader :submission_id
+      # @return [Integer]
+      attr_reader :line_number
+      # @return [SeedTraceClient::Commons::DebugVariableValue]
+      attr_reader :return_value
+      # @return [SeedTraceClient::Submission::ExpressionLocation]
+      attr_reader :expression_location
+      # @return [SeedTraceClient::Submission::StackInformation]
+      attr_reader :stack
+      # @return [String]
+      attr_reader :stdout
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param submission_id [String]
       # @param line_number [Integer]
       # @param return_value [SeedTraceClient::Commons::DebugVariableValue]
@@ -23,25 +39,20 @@ module SeedTraceClient
       # @return [SeedTraceClient::Submission::TraceResponse]
       def initialize(submission_id:, line_number:, stack:, return_value: OMIT, expression_location: OMIT, stdout: OMIT,
                      additional_properties: nil)
-        # @type [String]
         @submission_id = submission_id
-        # @type [Integer]
         @line_number = line_number
-        # @type [SeedTraceClient::Commons::DebugVariableValue]
         @return_value = return_value if return_value != OMIT
-        # @type [SeedTraceClient::Submission::ExpressionLocation]
         @expression_location = expression_location if expression_location != OMIT
-        # @type [SeedTraceClient::Submission::StackInformation]
         @stack = stack
-        # @type [String]
         @stdout = stdout if stdout != OMIT
+        @additional_properties = additional_properties
         @_field_set = {
-          "submissionId": @submission_id,
-          "lineNumber": @line_number,
-          "returnValue": @return_value,
-          "expressionLocation": @expression_location,
-          "stack": @stack,
-          "stdout": @stdout
+          "submissionId": submission_id,
+          "lineNumber": line_number,
+          "returnValue": return_value,
+          "expressionLocation": expression_location,
+          "stack": stack,
+          "stdout": stdout
         }.reject do |_k, v|
           v == OMIT
         end
@@ -85,7 +96,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

@@ -7,22 +7,31 @@ require "json"
 module SeedPaginationClient
   class Users
     class ListUsersExtendedResponse
-      attr_reader :total_count, :data, :next_, :additional_properties, :_field_set
+      # @return [Integer] The totall number of /users
+      attr_reader :total_count
+      # @return [SeedPaginationClient::Users::UserListContainer]
+      attr_reader :data
+      # @return [String]
+      attr_reader :next_
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param total_count [Integer] The totall number of /users
       # @param data [SeedPaginationClient::Users::UserListContainer]
       # @param next_ [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedPaginationClient::Users::ListUsersExtendedResponse]
       def initialize(total_count:, data:, next_: OMIT, additional_properties: nil)
-        # @type [Integer] The totall number of /users
         @total_count = total_count
-        # @type [SeedPaginationClient::Users::UserListContainer]
         @data = data
-        # @type [String]
         @next_ = next_ if next_ != OMIT
-        @_field_set = { "total_count": @total_count, "data": @data, "next": @next_ }.reject do |_k, v|
+        @additional_properties = additional_properties
+        @_field_set = { "total_count": total_count, "data": data, "next": next_ }.reject do |_k, v|
           v == OMIT
         end
       end
@@ -51,7 +60,9 @@ module SeedPaginationClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

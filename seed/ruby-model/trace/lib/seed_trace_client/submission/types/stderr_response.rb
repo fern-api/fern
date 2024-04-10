@@ -6,21 +6,27 @@ require "json"
 module SeedTraceClient
   class Submission
     class StderrResponse
-      attr_reader :submission_id, :stderr, :additional_properties, :_field_set
+      # @return [String]
+      attr_reader :submission_id
+      # @return [String]
+      attr_reader :stderr
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param submission_id [String]
       # @param stderr [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Submission::StderrResponse]
       def initialize(submission_id:, stderr:, additional_properties: nil)
-        # @type [String]
         @submission_id = submission_id
-        # @type [String]
         @stderr = stderr
-        @_field_set = { "submissionId": @submission_id, "stderr": @stderr }.reject do |_k, v|
-          v == OMIT
-        end
+        @additional_properties = additional_properties
+        @_field_set = { "submissionId": submission_id, "stderr": stderr }
       end
 
       # Deserialize a JSON object to an instance of StderrResponse
@@ -41,7 +47,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

@@ -8,12 +8,12 @@ require "async"
 
 module SeedTraceClient
   class SubmissionClient
+    # @return [SeedTraceClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedTraceClient::RequestClient]
     # @return [SeedTraceClient::SubmissionClient]
     def initialize(request_client:)
-      # @type [SeedTraceClient::RequestClient]
       @request_client = request_client
     end
 
@@ -33,7 +33,8 @@ module SeedTraceClient
       SeedTraceClient::Submission::ExecutionSessionResponse.from_json(json_object: response.body)
     end
 
-    # Returns execution server URL for session. Returns empty if session isn't registered.
+    # Returns execution server URL for session. Returns empty if session isn't
+    #  registered.
     #
     # @param session_id [String]
     # @param request_options [SeedTraceClient::RequestOptions]
@@ -79,12 +80,12 @@ module SeedTraceClient
   end
 
   class AsyncSubmissionClient
+    # @return [SeedTraceClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedTraceClient::AsyncRequestClient]
     # @return [SeedTraceClient::AsyncSubmissionClient]
     def initialize(request_client:)
-      # @type [SeedTraceClient::AsyncRequestClient]
       @request_client = request_client
     end
 
@@ -106,7 +107,8 @@ module SeedTraceClient
       end
     end
 
-    # Returns execution server URL for session. Returns empty if session isn't registered.
+    # Returns execution server URL for session. Returns empty if session isn't
+    #  registered.
     #
     # @param session_id [String]
     # @param request_options [SeedTraceClient::RequestOptions]

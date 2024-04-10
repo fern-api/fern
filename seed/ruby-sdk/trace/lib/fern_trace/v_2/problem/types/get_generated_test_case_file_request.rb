@@ -9,19 +9,27 @@ module SeedTraceClient
   module V2
     class Problem
       class GetGeneratedTestCaseFileRequest
-        attr_reader :template, :test_case, :additional_properties, :_field_set
+        # @return [SeedTraceClient::V2::Problem::TestCaseTemplate]
+        attr_reader :template
+        # @return [SeedTraceClient::V2::Problem::TestCaseV2]
+        attr_reader :test_case
+        # @return [OpenStruct] Additional properties unmapped to the current class definition
+        attr_reader :additional_properties
+        # @return [Object]
+        attr_reader :_field_set
         protected :_field_set
+
         OMIT = Object.new
+
         # @param template [SeedTraceClient::V2::Problem::TestCaseTemplate]
         # @param test_case [SeedTraceClient::V2::Problem::TestCaseV2]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [SeedTraceClient::V2::Problem::GetGeneratedTestCaseFileRequest]
         def initialize(test_case:, template: OMIT, additional_properties: nil)
-          # @type [SeedTraceClient::V2::Problem::TestCaseTemplate]
           @template = template if template != OMIT
-          # @type [SeedTraceClient::V2::Problem::TestCaseV2]
           @test_case = test_case
-          @_field_set = { "template": @template, "testCase": @test_case }.reject do |_k, v|
+          @additional_properties = additional_properties
+          @_field_set = { "template": template, "testCase": test_case }.reject do |_k, v|
             v == OMIT
           end
         end
@@ -55,7 +63,9 @@ module SeedTraceClient
           @_field_set&.to_json
         end
 
-        # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+        # Leveraged for Union-type generation, validate_raw attempts to parse the given
+        #  hash and check each fields type against the current object's property
+        #  definitions.
         #
         # @param obj [Object]
         # @return [Void]

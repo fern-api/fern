@@ -12,7 +12,20 @@ require_relative "union/client"
 module SeedExhaustiveClient
   module Endpoints
     class Client
-      attr_reader :container, :enum, :http_methods, :object, :params, :primitive, :union
+      # @return [SeedExhaustiveClient::Endpoints::ContainerClient]
+      attr_reader :container
+      # @return [SeedExhaustiveClient::Endpoints::EnumClient]
+      attr_reader :enum
+      # @return [SeedExhaustiveClient::Endpoints::HttpMethodsClient]
+      attr_reader :http_methods
+      # @return [SeedExhaustiveClient::Endpoints::ObjectClient]
+      attr_reader :object
+      # @return [SeedExhaustiveClient::Endpoints::ParamsClient]
+      attr_reader :params
+      # @return [SeedExhaustiveClient::Endpoints::PrimitiveClient]
+      attr_reader :primitive
+      # @return [SeedExhaustiveClient::Endpoints::UnionClient]
+      attr_reader :union
 
       # @param request_client [SeedExhaustiveClient::RequestClient]
       # @return [SeedExhaustiveClient::Endpoints::Client]
@@ -28,7 +41,20 @@ module SeedExhaustiveClient
     end
 
     class AsyncClient
-      attr_reader :container, :enum, :http_methods, :object, :params, :primitive, :union
+      # @return [SeedExhaustiveClient::Endpoints::AsyncContainerClient]
+      attr_reader :container
+      # @return [SeedExhaustiveClient::Endpoints::AsyncEnumClient]
+      attr_reader :enum
+      # @return [SeedExhaustiveClient::Endpoints::AsyncHttpMethodsClient]
+      attr_reader :http_methods
+      # @return [SeedExhaustiveClient::Endpoints::AsyncObjectClient]
+      attr_reader :object
+      # @return [SeedExhaustiveClient::Endpoints::AsyncParamsClient]
+      attr_reader :params
+      # @return [SeedExhaustiveClient::Endpoints::AsyncPrimitiveClient]
+      attr_reader :primitive
+      # @return [SeedExhaustiveClient::Endpoints::AsyncUnionClient]
+      attr_reader :union
 
       # @param request_client [SeedExhaustiveClient::AsyncRequestClient]
       # @return [SeedExhaustiveClient::Endpoints::AsyncClient]

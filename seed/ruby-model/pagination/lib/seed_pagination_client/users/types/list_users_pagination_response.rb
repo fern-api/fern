@@ -8,22 +8,31 @@ require "json"
 module SeedPaginationClient
   class Users
     class ListUsersPaginationResponse
-      attr_reader :page, :total_count, :data, :additional_properties, :_field_set
+      # @return [SeedPaginationClient::Users::Page]
+      attr_reader :page
+      # @return [Integer] The totall number of /users
+      attr_reader :total_count
+      # @return [Array<SeedPaginationClient::Users::User>]
+      attr_reader :data
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param page [SeedPaginationClient::Users::Page]
       # @param total_count [Integer] The totall number of /users
       # @param data [Array<SeedPaginationClient::Users::User>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
       def initialize(total_count:, data:, page: OMIT, additional_properties: nil)
-        # @type [SeedPaginationClient::Users::Page]
         @page = page if page != OMIT
-        # @type [Integer] The totall number of /users
         @total_count = total_count
-        # @type [Array<SeedPaginationClient::Users::User>]
         @data = data
-        @_field_set = { "page": @page, "total_count": @total_count, "data": @data }.reject do |_k, v|
+        @additional_properties = additional_properties
+        @_field_set = { "page": page, "total_count": total_count, "data": data }.reject do |_k, v|
           v == OMIT
         end
       end
@@ -56,7 +65,9 @@ module SeedPaginationClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

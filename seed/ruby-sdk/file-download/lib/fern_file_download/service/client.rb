@@ -5,17 +5,20 @@ require "async"
 
 module SeedFileDownloadClient
   class ServiceClient
+    # @return [SeedFileDownloadClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedFileDownloadClient::RequestClient]
     # @return [SeedFileDownloadClient::ServiceClient]
     def initialize(request_client:)
-      # @type [SeedFileDownloadClient::RequestClient]
       @request_client = request_client
     end
 
     # @param request_options [SeedFileDownloadClient::RequestOptions]
-    # @yield on_data[chunk, overall_received_bytes, env] Leverage the Faraday on_data callback which will receive tuples of strings, the sum of characters received so far, and the response environment. The latter will allow access to the response status, headers and reason, as well as the request info.
+    # @yield on_data[chunk, overall_received_bytes, env] Leverage the Faraday on_data callback which
+    #  will receive tuples of strings, the sum of characters received so far, and the
+    #  response environment. The latter will allow access to the response status,
+    #  headers and reason, as well as the request info.
     # @return [Void]
     def download_file(request_options: nil, &on_data)
       @request_client.conn.post do |req|
@@ -28,17 +31,20 @@ module SeedFileDownloadClient
   end
 
   class AsyncServiceClient
+    # @return [SeedFileDownloadClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedFileDownloadClient::AsyncRequestClient]
     # @return [SeedFileDownloadClient::AsyncServiceClient]
     def initialize(request_client:)
-      # @type [SeedFileDownloadClient::AsyncRequestClient]
       @request_client = request_client
     end
 
     # @param request_options [SeedFileDownloadClient::RequestOptions]
-    # @yield on_data[chunk, overall_received_bytes, env] Leverage the Faraday on_data callback which will receive tuples of strings, the sum of characters received so far, and the response environment. The latter will allow access to the response status, headers and reason, as well as the request info.
+    # @yield on_data[chunk, overall_received_bytes, env] Leverage the Faraday on_data callback which
+    #  will receive tuples of strings, the sum of characters received so far, and the
+    #  response environment. The latter will allow access to the response status,
+    #  headers and reason, as well as the request info.
     # @return [Void]
     def download_file(request_options: nil, &on_data)
       Async do

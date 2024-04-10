@@ -8,20 +8,23 @@ require_relative "organization"
 module SeedMixedCaseClient
   class Service
     class Resource
-      attr_reader :member, :discriminant, :status
+      # @return [Object]
+      attr_reader :member
+      # @return [String]
+      attr_reader :discriminant
+      # @return [SeedMixedCaseClient::Service::ResourceStatus]
+      attr_reader :status
 
       private_class_method :new
       alias kind_of? is_a?
+
       # @param member [Object]
       # @param discriminant [String]
       # @param status [SeedMixedCaseClient::Service::ResourceStatus]
       # @return [SeedMixedCaseClient::Service::Resource]
       def initialize(member:, discriminant:, status:)
-        # @type [Object]
         @member = member
-        # @type [String]
         @discriminant = discriminant
-        # @type [SeedMixedCaseClient::Service::ResourceStatus]
         @status = status
       end
 
@@ -57,7 +60,9 @@ module SeedMixedCaseClient
         @member.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

@@ -55,7 +55,12 @@ export class Function_ extends AstNode {
         this.invocationName = invocationName;
 
         this.yardoc = new Yardoc({
-            reference: { name: "docString", parameters, returnValue: this.returnValue },
+            reference: {
+                name: "docString",
+                parameters,
+                returnValue: this.returnValue,
+                documentation: this.documentation
+            },
             crf,
             flattenedProperties
         });
@@ -66,13 +71,8 @@ export class Function_ extends AstNode {
     }
 
     public writeInternal(startingTabSpaces: number): void {
-        this.documentation?.forEach((doc) =>
-            this.addText({ stringContent: doc, templateString: "# %s", startingTabSpaces })
-        );
         this.addText({
-            stringContent: this.yardoc.write({ startingTabSpaces }),
-            templateString: this.documentation !== undefined && this.documentation.length > 0 ? "#\n%s" : undefined,
-            startingTabSpaces: this.documentation !== undefined && this.documentation.length > 0 ? startingTabSpaces : 0
+            stringContent: this.yardoc.write({ startingTabSpaces })
         });
         this.addText({
             stringContent: this.isStatic ? `self.${this.name}` : this.name,

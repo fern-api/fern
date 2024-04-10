@@ -7,24 +7,31 @@ require "json"
 module SeedTraceClient
   class Submission
     class StackFrame
-      attr_reader :method_name, :line_number, :scopes, :additional_properties, :_field_set
+      # @return [String]
+      attr_reader :method_name
+      # @return [Integer]
+      attr_reader :line_number
+      # @return [Array<SeedTraceClient::Submission::Scope>]
+      attr_reader :scopes
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param method_name [String]
       # @param line_number [Integer]
       # @param scopes [Array<SeedTraceClient::Submission::Scope>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Submission::StackFrame]
       def initialize(method_name:, line_number:, scopes:, additional_properties: nil)
-        # @type [String]
         @method_name = method_name
-        # @type [Integer]
         @line_number = line_number
-        # @type [Array<SeedTraceClient::Submission::Scope>]
         @scopes = scopes
-        @_field_set = { "methodName": @method_name, "lineNumber": @line_number, "scopes": @scopes }.reject do |_k, v|
-          v == OMIT
-        end
+        @additional_properties = additional_properties
+        @_field_set = { "methodName": method_name, "lineNumber": line_number, "scopes": scopes }
       end
 
       # Deserialize a JSON object to an instance of StackFrame
@@ -50,7 +57,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

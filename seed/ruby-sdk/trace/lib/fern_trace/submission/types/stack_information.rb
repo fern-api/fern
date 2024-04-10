@@ -7,19 +7,27 @@ require "json"
 module SeedTraceClient
   class Submission
     class StackInformation
-      attr_reader :num_stack_frames, :top_stack_frame, :additional_properties, :_field_set
+      # @return [Integer]
+      attr_reader :num_stack_frames
+      # @return [SeedTraceClient::Submission::StackFrame]
+      attr_reader :top_stack_frame
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param num_stack_frames [Integer]
       # @param top_stack_frame [SeedTraceClient::Submission::StackFrame]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Submission::StackInformation]
       def initialize(num_stack_frames:, top_stack_frame: OMIT, additional_properties: nil)
-        # @type [Integer]
         @num_stack_frames = num_stack_frames
-        # @type [SeedTraceClient::Submission::StackFrame]
         @top_stack_frame = top_stack_frame if top_stack_frame != OMIT
-        @_field_set = { "numStackFrames": @num_stack_frames, "topStackFrame": @top_stack_frame }.reject do |_k, v|
+        @additional_properties = additional_properties
+        @_field_set = { "numStackFrames": num_stack_frames, "topStackFrame": top_stack_frame }.reject do |_k, v|
           v == OMIT
         end
       end
@@ -48,7 +56,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

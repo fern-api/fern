@@ -38,6 +38,8 @@ export class Class_ extends AstNode {
 
     public children: AstNode[];
 
+    private yardoc: Yardoc | undefined;
+
     constructor({
         classReference,
         initializerOverride,
@@ -66,12 +68,10 @@ export class Class_ extends AstNode {
                 returnValue: classReference,
                 functionBody: [
                     ...properties.map((prop) => {
-                        const yardoc = new Yardoc({ reference: { name: "typeReference", type: prop } });
                         return new Expression({
                             leftSide: prop.toVariable(),
                             rightSide: prop.name,
-                            isAssignment: true,
-                            yardoc
+                            isAssignment: true
                         });
                     }),
                     ...initializerAdditionalExpressions
@@ -86,21 +86,26 @@ export class Class_ extends AstNode {
         this.functions = functions;
         this.expressions = expressions;
         this.children = children instanceof AstNode ? [children] : children ?? [];
+
+        this.yardoc =
+            this.documentation != null
+                ? new Yardoc({ reference: { name: "universal", documentation: this.documentation } })
+                : undefined;
     }
 
     public writeInternal(startingTabSpaces: number): void {
-        this.documentation?.forEach((doc) =>
-            this.addText({ stringContent: doc, templateString: "# %s", startingTabSpaces })
-        );
+        this.addText({ stringContent: this.yardoc?.write({ startingTabSpaces }) });
         this.addText({ stringContent: this.classReference.name, templateString: "class %s", startingTabSpaces });
-        const classVariableAccessors =
-            this.properties.length > 0
-                ? `attr_reader ${this.properties.map((prop) => prop.write({})).join(", ")}`
-                : undefined;
-        this.addText({
-            stringContent: classVariableAccessors,
-            startingTabSpaces: this.tabSizeSpaces + startingTabSpaces
-        });
+
+        for (const prop of this.properties) {
+            const yardoc = new Yardoc({ reference: { name: "typeReference", type: prop } });
+            this.addText({ stringContent: yardoc.write({ startingTabSpaces }) });
+            this.addText({
+                stringContent: prop.write({}),
+                startingTabSpaces: this.tabSizeSpaces + startingTabSpaces,
+                templateString: "attr_reader %s"
+            });
+        }
         const protectedClassVariableAccessors =
             this.protectedProperties.length > 0
                 ? `protected ${this.protectedProperties.map((prop) => prop.write({})).join(", ")}`
@@ -110,9 +115,12 @@ export class Class_ extends AstNode {
             startingTabSpaces: this.tabSizeSpaces + startingTabSpaces
         });
 
+        this.addNewLine();
         this.expressions.map((exp) =>
             this.addText({ stringContent: exp.write({ startingTabSpaces: this.tabSizeSpaces + startingTabSpaces }) })
         );
+        this.addNewLine();
+
         this.functions.map((fun) =>
             this.addText({ stringContent: fun.write({ startingTabSpaces: this.tabSizeSpaces + startingTabSpaces }) })
         );

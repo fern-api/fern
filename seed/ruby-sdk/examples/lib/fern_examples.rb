@@ -9,7 +9,12 @@ require_relative "fern_examples/service/client"
 
 module SeedExamplesClient
   class Client
-    attr_reader :file, :health, :service
+    # @return [SeedExamplesClient::File::Client]
+    attr_reader :file
+    # @return [SeedExamplesClient::Health::Client]
+    attr_reader :health
+    # @return [SeedExamplesClient::ServiceClient]
+    attr_reader :service
 
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
@@ -40,7 +45,12 @@ module SeedExamplesClient
   end
 
   class AsyncClient
-    attr_reader :file, :health, :service
+    # @return [SeedExamplesClient::File::AsyncClient]
+    attr_reader :file
+    # @return [SeedExamplesClient::Health::AsyncClient]
+    attr_reader :health
+    # @return [SeedExamplesClient::AsyncServiceClient]
+    attr_reader :service
 
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.

@@ -13,10 +13,28 @@ module SeedTraceClient
     module V3
       class Problem
         class CreateProblemRequestV2
-          attr_reader :problem_name, :problem_description, :custom_files, :custom_test_case_templates, :testcases,
-                      :supported_languages, :is_public, :additional_properties, :_field_set
+          # @return [String]
+          attr_reader :problem_name
+          # @return [SeedTraceClient::Problem::ProblemDescription]
+          attr_reader :problem_description
+          # @return [SeedTraceClient::V2::V3::Problem::CustomFiles]
+          attr_reader :custom_files
+          # @return [Array<SeedTraceClient::V2::V3::Problem::TestCaseTemplate>]
+          attr_reader :custom_test_case_templates
+          # @return [Array<SeedTraceClient::V2::V3::Problem::TestCaseV2>]
+          attr_reader :testcases
+          # @return [Set<SeedTraceClient::Commons::Language>]
+          attr_reader :supported_languages
+          # @return [Boolean]
+          attr_reader :is_public
+          # @return [OpenStruct] Additional properties unmapped to the current class definition
+          attr_reader :additional_properties
+          # @return [Object]
+          attr_reader :_field_set
           protected :_field_set
+
           OMIT = Object.new
+
           # @param problem_name [String]
           # @param problem_description [SeedTraceClient::Problem::ProblemDescription]
           # @param custom_files [SeedTraceClient::V2::V3::Problem::CustomFiles]
@@ -28,31 +46,23 @@ module SeedTraceClient
           # @return [SeedTraceClient::V2::V3::Problem::CreateProblemRequestV2]
           def initialize(problem_name:, problem_description:, custom_files:, custom_test_case_templates:, testcases:,
                          supported_languages:, is_public:, additional_properties: nil)
-            # @type [String]
             @problem_name = problem_name
-            # @type [SeedTraceClient::Problem::ProblemDescription]
             @problem_description = problem_description
-            # @type [SeedTraceClient::V2::V3::Problem::CustomFiles]
             @custom_files = custom_files
-            # @type [Array<SeedTraceClient::V2::V3::Problem::TestCaseTemplate>]
             @custom_test_case_templates = custom_test_case_templates
-            # @type [Array<SeedTraceClient::V2::V3::Problem::TestCaseV2>]
             @testcases = testcases
-            # @type [Set<SeedTraceClient::Commons::Language>]
             @supported_languages = supported_languages
-            # @type [Boolean]
             @is_public = is_public
+            @additional_properties = additional_properties
             @_field_set = {
-              "problemName": @problem_name,
-              "problemDescription": @problem_description,
-              "customFiles": @custom_files,
-              "customTestCaseTemplates": @custom_test_case_templates,
-              "testcases": @testcases,
-              "supportedLanguages": @supported_languages,
-              "isPublic": @is_public
-            }.reject do |_k, v|
-              v == OMIT
-            end
+              "problemName": problem_name,
+              "problemDescription": problem_description,
+              "customFiles": custom_files,
+              "customTestCaseTemplates": custom_test_case_templates,
+              "testcases": testcases,
+              "supportedLanguages": supported_languages,
+              "isPublic": is_public
+            }
           end
 
           # Deserialize a JSON object to an instance of CreateProblemRequestV2
@@ -100,7 +110,9 @@ module SeedTraceClient
             @_field_set&.to_json
           end
 
-          # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+          # Leveraged for Union-type generation, validate_raw attempts to parse the given
+          #  hash and check each fields type against the current object's property
+          #  definitions.
           #
           # @param obj [Object]
           # @return [Void]

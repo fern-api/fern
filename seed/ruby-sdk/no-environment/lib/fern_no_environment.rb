@@ -6,6 +6,7 @@ require_relative "fern_no_environment/dummy/client"
 
 module SeedNoEnvironmentClient
   class Client
+    # @return [SeedNoEnvironmentClient::DummyClient]
     attr_reader :dummy
 
     # @param base_url [String]
@@ -21,6 +22,7 @@ module SeedNoEnvironmentClient
   end
 
   class AsyncClient
+    # @return [SeedNoEnvironmentClient::AsyncDummyClient]
     attr_reader :dummy
 
     # @param base_url [String]

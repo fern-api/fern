@@ -8,9 +8,22 @@ require "json"
 module SeedTraceClient
   class Submission
     class ExecutionSessionResponse
-      attr_reader :session_id, :execution_session_url, :language, :status, :additional_properties, :_field_set
+      # @return [String]
+      attr_reader :session_id
+      # @return [String]
+      attr_reader :execution_session_url
+      # @return [SeedTraceClient::Commons::Language]
+      attr_reader :language
+      # @return [SeedTraceClient::Submission::ExecutionSessionStatus]
+      attr_reader :status
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param session_id [String]
       # @param execution_session_url [String]
       # @param language [SeedTraceClient::Commons::Language]
@@ -18,19 +31,16 @@ module SeedTraceClient
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Submission::ExecutionSessionResponse]
       def initialize(session_id:, language:, status:, execution_session_url: OMIT, additional_properties: nil)
-        # @type [String]
         @session_id = session_id
-        # @type [String]
         @execution_session_url = execution_session_url if execution_session_url != OMIT
-        # @type [SeedTraceClient::Commons::Language]
         @language = language
-        # @type [SeedTraceClient::Submission::ExecutionSessionStatus]
         @status = status
+        @additional_properties = additional_properties
         @_field_set = {
-          "sessionId": @session_id,
-          "executionSessionUrl": @execution_session_url,
-          "language": @language,
-          "status": @status
+          "sessionId": session_id,
+          "executionSessionUrl": execution_session_url,
+          "language": language,
+          "status": status
         }.reject do |_k, v|
           v == OMIT
         end
@@ -57,7 +67,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

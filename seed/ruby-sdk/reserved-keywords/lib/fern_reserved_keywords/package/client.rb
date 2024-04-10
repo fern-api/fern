@@ -5,12 +5,12 @@ require "async"
 
 module SeedNurseryApiClient
   class PackageClient
+    # @return [SeedNurseryApiClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedNurseryApiClient::RequestClient]
     # @return [SeedNurseryApiClient::PackageClient]
     def initialize(request_client:)
-      # @type [SeedNurseryApiClient::RequestClient]
       @request_client = request_client
     end
 
@@ -28,12 +28,12 @@ module SeedNurseryApiClient
   end
 
   class AsyncPackageClient
+    # @return [SeedNurseryApiClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedNurseryApiClient::AsyncRequestClient]
     # @return [SeedNurseryApiClient::AsyncPackageClient]
     def initialize(request_client:)
-      # @type [SeedNurseryApiClient::AsyncRequestClient]
       @request_client = request_client
     end
 

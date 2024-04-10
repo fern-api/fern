@@ -7,12 +7,12 @@ require "async"
 
 module SeedApiClient
   class ImdbClient
+    # @return [SeedApiClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedApiClient::RequestClient]
     # @return [SeedApiClient::ImdbClient]
     def initialize(request_client:)
-      # @type [SeedApiClient::RequestClient]
       @request_client = request_client
     end
 
@@ -49,12 +49,12 @@ module SeedApiClient
   end
 
   class AsyncImdbClient
+    # @return [SeedApiClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedApiClient::AsyncRequestClient]
     # @return [SeedApiClient::AsyncImdbClient]
     def initialize(request_client:)
-      # @type [SeedApiClient::AsyncRequestClient]
       @request_client = request_client
     end
 

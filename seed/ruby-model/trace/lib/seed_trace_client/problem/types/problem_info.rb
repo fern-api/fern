@@ -10,10 +10,34 @@ require "json"
 module SeedTraceClient
   class Problem
     class ProblemInfo
-      attr_reader :problem_id, :problem_description, :problem_name, :problem_version, :files, :input_params,
-                  :output_type, :testcases, :method_name, :supports_custom_test_cases, :additional_properties, :_field_set
+      # @return [String]
+      attr_reader :problem_id
+      # @return [SeedTraceClient::Problem::ProblemDescription]
+      attr_reader :problem_description
+      # @return [String]
+      attr_reader :problem_name
+      # @return [Integer]
+      attr_reader :problem_version
+      # @return [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::Problem::ProblemFiles}]
+      attr_reader :files
+      # @return [Array<SeedTraceClient::Problem::VariableTypeAndName>]
+      attr_reader :input_params
+      # @return [SeedTraceClient::Commons::VariableType]
+      attr_reader :output_type
+      # @return [Array<SeedTraceClient::Commons::TestCaseWithExpectedResult>]
+      attr_reader :testcases
+      # @return [String]
+      attr_reader :method_name
+      # @return [Boolean]
+      attr_reader :supports_custom_test_cases
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param problem_id [String]
       # @param problem_description [SeedTraceClient::Problem::ProblemDescription]
       # @param problem_name [String]
@@ -28,40 +52,29 @@ module SeedTraceClient
       # @return [SeedTraceClient::Problem::ProblemInfo]
       def initialize(problem_id:, problem_description:, problem_name:, problem_version:, files:, input_params:,
                      output_type:, testcases:, method_name:, supports_custom_test_cases:, additional_properties: nil)
-        # @type [String]
         @problem_id = problem_id
-        # @type [SeedTraceClient::Problem::ProblemDescription]
         @problem_description = problem_description
-        # @type [String]
         @problem_name = problem_name
-        # @type [Integer]
         @problem_version = problem_version
-        # @type [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::Problem::ProblemFiles}]
         @files = files
-        # @type [Array<SeedTraceClient::Problem::VariableTypeAndName>]
         @input_params = input_params
-        # @type [SeedTraceClient::Commons::VariableType]
         @output_type = output_type
-        # @type [Array<SeedTraceClient::Commons::TestCaseWithExpectedResult>]
         @testcases = testcases
-        # @type [String]
         @method_name = method_name
-        # @type [Boolean]
         @supports_custom_test_cases = supports_custom_test_cases
+        @additional_properties = additional_properties
         @_field_set = {
-          "problemId": @problem_id,
-          "problemDescription": @problem_description,
-          "problemName": @problem_name,
-          "problemVersion": @problem_version,
-          "files": @files,
-          "inputParams": @input_params,
-          "outputType": @output_type,
-          "testcases": @testcases,
-          "methodName": @method_name,
-          "supportsCustomTestCases": @supports_custom_test_cases
-        }.reject do |_k, v|
-          v == OMIT
-        end
+          "problemId": problem_id,
+          "problemDescription": problem_description,
+          "problemName": problem_name,
+          "problemVersion": problem_version,
+          "files": files,
+          "inputParams": input_params,
+          "outputType": output_type,
+          "testcases": testcases,
+          "methodName": method_name,
+          "supportsCustomTestCases": supports_custom_test_cases
+        }
       end
 
       # Deserialize a JSON object to an instance of ProblemInfo
@@ -110,7 +123,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

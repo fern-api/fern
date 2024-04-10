@@ -10,12 +10,12 @@ require "async"
 
 module SeedResponsePropertyClient
   class ServiceClient
+    # @return [SeedResponsePropertyClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedResponsePropertyClient::RequestClient]
     # @return [SeedResponsePropertyClient::ServiceClient]
     def initialize(request_client:)
-      # @type [SeedResponsePropertyClient::RequestClient]
       @request_client = request_client
     end
 
@@ -126,12 +126,12 @@ module SeedResponsePropertyClient
   end
 
   class AsyncServiceClient
+    # @return [SeedResponsePropertyClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedResponsePropertyClient::AsyncRequestClient]
     # @return [SeedResponsePropertyClient::AsyncServiceClient]
     def initialize(request_client:)
-      # @type [SeedResponsePropertyClient::AsyncRequestClient]
       @request_client = request_client
     end
 

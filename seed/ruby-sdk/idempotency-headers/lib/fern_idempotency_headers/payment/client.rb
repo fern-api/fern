@@ -6,12 +6,12 @@ require "async"
 
 module SeedIdempotencyHeadersClient
   class PaymentClient
+    # @return [SeedIdempotencyHeadersClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedIdempotencyHeadersClient::RequestClient]
     # @return [SeedIdempotencyHeadersClient::PaymentClient]
     def initialize(request_client:)
-      # @type [SeedIdempotencyHeadersClient::RequestClient]
       @request_client = request_client
     end
 
@@ -48,12 +48,12 @@ module SeedIdempotencyHeadersClient
   end
 
   class AsyncPaymentClient
+    # @return [SeedIdempotencyHeadersClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedIdempotencyHeadersClient::AsyncRequestClient]
     # @return [SeedIdempotencyHeadersClient::AsyncPaymentClient]
     def initialize(request_client:)
-      # @type [SeedIdempotencyHeadersClient::AsyncRequestClient]
       @request_client = request_client
     end
 

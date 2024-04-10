@@ -6,6 +6,7 @@ require_relative "fern_api_wide_base_path/service/client"
 
 module SeedApiWideBasePathClient
   class Client
+    # @return [SeedApiWideBasePathClient::ServiceClient]
     attr_reader :service
 
     # @param base_url [String]
@@ -20,6 +21,7 @@ module SeedApiWideBasePathClient
   end
 
   class AsyncClient
+    # @return [SeedApiWideBasePathClient::AsyncServiceClient]
     attr_reader :service
 
     # @param base_url [String]

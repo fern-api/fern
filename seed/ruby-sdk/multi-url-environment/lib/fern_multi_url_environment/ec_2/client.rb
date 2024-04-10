@@ -5,12 +5,12 @@ require "async"
 
 module SeedMultiUrlEnvironmentClient
   class Ec2Client
+    # @return [SeedMultiUrlEnvironmentClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedMultiUrlEnvironmentClient::RequestClient]
     # @return [SeedMultiUrlEnvironmentClient::Ec2Client]
     def initialize(request_client:)
-      # @type [SeedMultiUrlEnvironmentClient::RequestClient]
       @request_client = request_client
     end
 
@@ -29,12 +29,12 @@ module SeedMultiUrlEnvironmentClient
   end
 
   class AsyncEc2Client
+    # @return [SeedMultiUrlEnvironmentClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedMultiUrlEnvironmentClient::AsyncRequestClient]
     # @return [SeedMultiUrlEnvironmentClient::AsyncEc2Client]
     def initialize(request_client:)
-      # @type [SeedMultiUrlEnvironmentClient::AsyncRequestClient]
       @request_client = request_client
     end
 

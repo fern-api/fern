@@ -6,19 +6,27 @@ require "json"
 module SeedTraceClient
   class Commons
     class BinaryTreeValue
-      attr_reader :root, :nodes, :additional_properties, :_field_set
+      # @return [String]
+      attr_reader :root
+      # @return [Hash{String => SeedTraceClient::Commons::BinaryTreeNodeValue}]
+      attr_reader :nodes
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param root [String]
       # @param nodes [Hash{String => SeedTraceClient::Commons::BinaryTreeNodeValue}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Commons::BinaryTreeValue]
       def initialize(nodes:, root: OMIT, additional_properties: nil)
-        # @type [String]
         @root = root if root != OMIT
-        # @type [Hash{String => SeedTraceClient::Commons::BinaryTreeNodeValue}]
         @nodes = nodes
-        @_field_set = { "root": @root, "nodes": @nodes }.reject do |_k, v|
+        @additional_properties = additional_properties
+        @_field_set = { "root": root, "nodes": nodes }.reject do |_k, v|
           v == OMIT
         end
       end
@@ -45,7 +53,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

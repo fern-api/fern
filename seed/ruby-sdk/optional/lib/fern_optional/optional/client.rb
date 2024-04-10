@@ -5,12 +5,12 @@ require "async"
 
 module SeedObjectsWithImportsClient
   class OptionalClient
+    # @return [SeedObjectsWithImportsClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedObjectsWithImportsClient::RequestClient]
     # @return [SeedObjectsWithImportsClient::OptionalClient]
     def initialize(request_client:)
-      # @type [SeedObjectsWithImportsClient::RequestClient]
       @request_client = request_client
     end
 
@@ -29,12 +29,12 @@ module SeedObjectsWithImportsClient
   end
 
   class AsyncOptionalClient
+    # @return [SeedObjectsWithImportsClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedObjectsWithImportsClient::AsyncRequestClient]
     # @return [SeedObjectsWithImportsClient::AsyncOptionalClient]
     def initialize(request_client:)
-      # @type [SeedObjectsWithImportsClient::AsyncRequestClient]
       @request_client = request_client
     end
 

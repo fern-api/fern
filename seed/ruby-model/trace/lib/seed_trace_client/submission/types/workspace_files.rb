@@ -7,21 +7,27 @@ require "json"
 module SeedTraceClient
   class Submission
     class WorkspaceFiles
-      attr_reader :main_file, :read_only_files, :additional_properties, :_field_set
+      # @return [SeedTraceClient::Commons::FileInfo]
+      attr_reader :main_file
+      # @return [Array<SeedTraceClient::Commons::FileInfo>]
+      attr_reader :read_only_files
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param main_file [SeedTraceClient::Commons::FileInfo]
       # @param read_only_files [Array<SeedTraceClient::Commons::FileInfo>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Submission::WorkspaceFiles]
       def initialize(main_file:, read_only_files:, additional_properties: nil)
-        # @type [SeedTraceClient::Commons::FileInfo]
         @main_file = main_file
-        # @type [Array<SeedTraceClient::Commons::FileInfo>]
         @read_only_files = read_only_files
-        @_field_set = { "mainFile": @main_file, "readOnlyFiles": @read_only_files }.reject do |_k, v|
-          v == OMIT
-        end
+        @additional_properties = additional_properties
+        @_field_set = { "mainFile": main_file, "readOnlyFiles": read_only_files }
       end
 
       # Deserialize a JSON object to an instance of WorkspaceFiles
@@ -51,7 +57,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

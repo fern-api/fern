@@ -6,6 +6,7 @@ require_relative "fern_mixed_case/service/client"
 
 module SeedMixedCaseClient
   class Client
+    # @return [SeedMixedCaseClient::ServiceClient]
     attr_reader :service
 
     # @param base_url [String]
@@ -20,6 +21,7 @@ module SeedMixedCaseClient
   end
 
   class AsyncClient
+    # @return [SeedMixedCaseClient::AsyncServiceClient]
     attr_reader :service
 
     # @param base_url [String]

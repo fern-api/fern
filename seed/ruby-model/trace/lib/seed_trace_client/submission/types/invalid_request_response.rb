@@ -8,21 +8,27 @@ require "json"
 module SeedTraceClient
   class Submission
     class InvalidRequestResponse
-      attr_reader :request, :cause, :additional_properties, :_field_set
+      # @return [SeedTraceClient::Submission::SubmissionRequest]
+      attr_reader :request
+      # @return [SeedTraceClient::Submission::InvalidRequestCause]
+      attr_reader :cause
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param request [SeedTraceClient::Submission::SubmissionRequest]
       # @param cause [SeedTraceClient::Submission::InvalidRequestCause]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Submission::InvalidRequestResponse]
       def initialize(request:, cause:, additional_properties: nil)
-        # @type [SeedTraceClient::Submission::SubmissionRequest]
         @request = request
-        # @type [SeedTraceClient::Submission::InvalidRequestCause]
         @cause = cause
-        @_field_set = { "request": @request, "cause": @cause }.reject do |_k, v|
-          v == OMIT
-        end
+        @additional_properties = additional_properties
+        @_field_set = { "request": request, "cause": cause }
       end
 
       # Deserialize a JSON object to an instance of InvalidRequestResponse
@@ -54,7 +60,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

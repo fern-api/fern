@@ -9,10 +9,38 @@ module SeedExhaustiveClient
   module Types
     class Object
       class ObjectWithOptionalField
-        attr_reader :string, :integer, :long, :double, :bool, :datetime, :date, :uuid, :base_64, :list, :set, :map,
-                    :additional_properties, :_field_set
+        # @return [String]
+        attr_reader :string
+        # @return [Integer]
+        attr_reader :integer
+        # @return [Long]
+        attr_reader :long
+        # @return [Float]
+        attr_reader :double
+        # @return [Boolean]
+        attr_reader :bool
+        # @return [DateTime]
+        attr_reader :datetime
+        # @return [Date]
+        attr_reader :date
+        # @return [String]
+        attr_reader :uuid
+        # @return [String]
+        attr_reader :base_64
+        # @return [Array<String>]
+        attr_reader :list
+        # @return [Set<String>]
+        attr_reader :set
+        # @return [Hash{Integer => String}]
+        attr_reader :map
+        # @return [OpenStruct] Additional properties unmapped to the current class definition
+        attr_reader :additional_properties
+        # @return [Object]
+        attr_reader :_field_set
         protected :_field_set
+
         OMIT = Object.new
+
         # @param string [String]
         # @param integer [Integer]
         # @param long [Long]
@@ -29,43 +57,32 @@ module SeedExhaustiveClient
         # @return [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
         def initialize(string: OMIT, integer: OMIT, long: OMIT, double: OMIT, bool: OMIT, datetime: OMIT, date: OMIT,
                        uuid: OMIT, base_64: OMIT, list: OMIT, set: OMIT, map: OMIT, additional_properties: nil)
-          # @type [String]
           @string = string if string != OMIT
-          # @type [Integer]
           @integer = integer if integer != OMIT
-          # @type [Long]
           @long = long if long != OMIT
-          # @type [Float]
           @double = double if double != OMIT
-          # @type [Boolean]
           @bool = bool if bool != OMIT
-          # @type [DateTime]
           @datetime = datetime if datetime != OMIT
-          # @type [Date]
           @date = date if date != OMIT
-          # @type [String]
           @uuid = uuid if uuid != OMIT
-          # @type [String]
           @base_64 = base_64 if base_64 != OMIT
-          # @type [Array<String>]
           @list = list if list != OMIT
-          # @type [Set<String>]
           @set = set if set != OMIT
-          # @type [Hash{Integer => String}]
           @map = map if map != OMIT
+          @additional_properties = additional_properties
           @_field_set = {
-            "string": @string,
-            "integer": @integer,
-            "long": @long,
-            "double": @double,
-            "bool": @bool,
-            "datetime": @datetime,
-            "date": @date,
-            "uuid": @uuid,
-            "base64": @base_64,
-            "list": @list,
-            "set": @set,
-            "map": @map
+            "string": string,
+            "integer": integer,
+            "long": long,
+            "double": double,
+            "bool": bool,
+            "datetime": datetime,
+            "date": date,
+            "uuid": uuid,
+            "base64": base_64,
+            "list": list,
+            "set": set,
+            "map": map
           }.reject do |_k, v|
             v == OMIT
           end
@@ -105,7 +122,9 @@ module SeedExhaustiveClient
           @_field_set&.to_json
         end
 
-        # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+        # Leveraged for Union-type generation, validate_raw attempts to parse the given
+        #  hash and check each fields type against the current object's property
+        #  definitions.
         #
         # @param obj [Object]
         # @return [Void]

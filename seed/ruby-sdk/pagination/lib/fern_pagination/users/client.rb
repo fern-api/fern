@@ -10,12 +10,12 @@ require "async"
 
 module SeedPaginationClient
   class UsersClient
+    # @return [SeedPaginationClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedPaginationClient::RequestClient]
     # @return [SeedPaginationClient::UsersClient]
     def initialize(request_client:)
-      # @type [SeedPaginationClient::RequestClient]
       @request_client = request_client
     end
 
@@ -23,7 +23,7 @@ module SeedPaginationClient
     # @param per_page [Integer] Defaults to per page
     # @param order [SeedPaginationClient::Users::Order]
     # @param starting_after [String] The cursor used for pagination in order to fetch
-    #   the next page of results.
+    #  the next page of results.
     # @param request_options [SeedPaginationClient::RequestOptions]
     # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
     def list_with_cursor_pagination(page: nil, per_page: nil, order: nil, starting_after: nil, request_options: nil)
@@ -47,7 +47,7 @@ module SeedPaginationClient
     # @param per_page [Integer] Defaults to per page
     # @param order [SeedPaginationClient::Users::Order]
     # @param starting_after [String] The cursor used for pagination in order to fetch
-    #   the next page of results.
+    #  the next page of results.
     # @param request_options [SeedPaginationClient::RequestOptions]
     # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
     def list_with_offset_pagination(page: nil, per_page: nil, order: nil, starting_after: nil, request_options: nil)
@@ -82,7 +82,7 @@ module SeedPaginationClient
     end
 
     # @param starting_after [String] The cursor used for pagination in order to fetch
-    #   the next page of results.
+    #  the next page of results.
     # @param request_options [SeedPaginationClient::RequestOptions]
     # @return [SeedPaginationClient::UsernameCursor]
     def list_usernames(starting_after: nil, request_options: nil)
@@ -115,12 +115,12 @@ module SeedPaginationClient
   end
 
   class AsyncUsersClient
+    # @return [SeedPaginationClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedPaginationClient::AsyncRequestClient]
     # @return [SeedPaginationClient::AsyncUsersClient]
     def initialize(request_client:)
-      # @type [SeedPaginationClient::AsyncRequestClient]
       @request_client = request_client
     end
 
@@ -128,7 +128,7 @@ module SeedPaginationClient
     # @param per_page [Integer] Defaults to per page
     # @param order [SeedPaginationClient::Users::Order]
     # @param starting_after [String] The cursor used for pagination in order to fetch
-    #   the next page of results.
+    #  the next page of results.
     # @param request_options [SeedPaginationClient::RequestOptions]
     # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
     def list_with_cursor_pagination(page: nil, per_page: nil, order: nil, starting_after: nil, request_options: nil)
@@ -154,7 +154,7 @@ module SeedPaginationClient
     # @param per_page [Integer] Defaults to per page
     # @param order [SeedPaginationClient::Users::Order]
     # @param starting_after [String] The cursor used for pagination in order to fetch
-    #   the next page of results.
+    #  the next page of results.
     # @param request_options [SeedPaginationClient::RequestOptions]
     # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
     def list_with_offset_pagination(page: nil, per_page: nil, order: nil, starting_after: nil, request_options: nil)
@@ -193,7 +193,7 @@ module SeedPaginationClient
     end
 
     # @param starting_after [String] The cursor used for pagination in order to fetch
-    #   the next page of results.
+    #  the next page of results.
     # @param request_options [SeedPaginationClient::RequestOptions]
     # @return [SeedPaginationClient::UsernameCursor]
     def list_usernames(starting_after: nil, request_options: nil)

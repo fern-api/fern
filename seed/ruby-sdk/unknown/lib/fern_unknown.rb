@@ -6,6 +6,7 @@ require_relative "fern_unknown/unknown/client"
 
 module SeedUnknownAsAnyClient
   class Client
+    # @return [SeedUnknownAsAnyClient::UnknownClient]
     attr_reader :unknown
 
     # @param base_url [String]
@@ -20,6 +21,7 @@ module SeedUnknownAsAnyClient
   end
 
   class AsyncClient
+    # @return [SeedUnknownAsAnyClient::AsyncUnknownClient]
     attr_reader :unknown
 
     # @param base_url [String]

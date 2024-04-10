@@ -7,6 +7,7 @@ module SeedTraceClient
   module V2
     module V3
       class Client
+        # @return [SeedTraceClient::V2::V3::ProblemClient]
         attr_reader :problem
 
         # @param request_client [SeedTraceClient::RequestClient]
@@ -17,6 +18,7 @@ module SeedTraceClient
       end
 
       class AsyncClient
+        # @return [SeedTraceClient::V2::V3::AsyncProblemClient]
         attr_reader :problem
 
         # @param request_client [SeedTraceClient::AsyncRequestClient]

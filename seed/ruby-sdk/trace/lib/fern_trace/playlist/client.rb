@@ -9,12 +9,12 @@ require "async"
 
 module SeedTraceClient
   class PlaylistClient
+    # @return [SeedTraceClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedTraceClient::RequestClient]
     # @return [SeedTraceClient::PlaylistClient]
     def initialize(request_client:)
-      # @type [SeedTraceClient::RequestClient]
       @request_client = request_client
     end
 
@@ -51,7 +51,7 @@ module SeedTraceClient
     # @param limit [Integer]
     # @param other_field [String] i'm another field
     # @param multi_line_docs [String] I'm a multiline
-    #   description
+    #  description
     # @param optional_multiple_field [String]
     # @param multiple_field [String]
     # @param request_options [SeedTraceClient::RequestOptions]
@@ -135,12 +135,12 @@ module SeedTraceClient
   end
 
   class AsyncPlaylistClient
+    # @return [SeedTraceClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedTraceClient::AsyncRequestClient]
     # @return [SeedTraceClient::AsyncPlaylistClient]
     def initialize(request_client:)
-      # @type [SeedTraceClient::AsyncRequestClient]
       @request_client = request_client
     end
 
@@ -179,7 +179,7 @@ module SeedTraceClient
     # @param limit [Integer]
     # @param other_field [String] i'm another field
     # @param multi_line_docs [String] I'm a multiline
-    #   description
+    #  description
     # @param optional_multiple_field [String]
     # @param multiple_field [String]
     # @param request_options [SeedTraceClient::RequestOptions]

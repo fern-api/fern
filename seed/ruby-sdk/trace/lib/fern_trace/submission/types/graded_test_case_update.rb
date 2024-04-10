@@ -7,21 +7,27 @@ require "json"
 module SeedTraceClient
   class Submission
     class GradedTestCaseUpdate
-      attr_reader :test_case_id, :grade, :additional_properties, :_field_set
+      # @return [String]
+      attr_reader :test_case_id
+      # @return [SeedTraceClient::Submission::TestCaseGrade]
+      attr_reader :grade
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param test_case_id [String]
       # @param grade [SeedTraceClient::Submission::TestCaseGrade]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Submission::GradedTestCaseUpdate]
       def initialize(test_case_id:, grade:, additional_properties: nil)
-        # @type [String]
         @test_case_id = test_case_id
-        # @type [SeedTraceClient::Submission::TestCaseGrade]
         @grade = grade
-        @_field_set = { "testCaseId": @test_case_id, "grade": @grade }.reject do |_k, v|
-          v == OMIT
-        end
+        @additional_properties = additional_properties
+        @_field_set = { "testCaseId": test_case_id, "grade": grade }
       end
 
       # Deserialize a JSON object to an instance of GradedTestCaseUpdate
@@ -48,7 +54,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

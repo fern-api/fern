@@ -5,21 +5,27 @@ require "json"
 
 module SeedObjectClient
   class Name
-    attr_reader :id, :value, :additional_properties, :_field_set
+    # @return [String]
+    attr_reader :id
+    # @return [String]
+    attr_reader :value
+    # @return [OpenStruct] Additional properties unmapped to the current class definition
+    attr_reader :additional_properties
+    # @return [Object]
+    attr_reader :_field_set
     protected :_field_set
+
     OMIT = Object.new
+
     # @param id [String]
     # @param value [String]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [SeedObjectClient::Name]
     def initialize(id:, value:, additional_properties: nil)
-      # @type [String]
       @id = id
-      # @type [String]
       @value = value
-      @_field_set = { "id": @id, "value": @value }.reject do |_k, v|
-        v == OMIT
-      end
+      @additional_properties = additional_properties
+      @_field_set = { "id": id, "value": value }
     end
 
     # Deserialize a JSON object to an instance of Name
@@ -40,7 +46,9 @@ module SeedObjectClient
       @_field_set&.to_json
     end
 
-    # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+    # Leveraged for Union-type generation, validate_raw attempts to parse the given
+    #  hash and check each fields type against the current object's property
+    #  definitions.
     #
     # @param obj [Object]
     # @return [Void]

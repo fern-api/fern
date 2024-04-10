@@ -6,12 +6,12 @@ require "async"
 module SeedApiClient
   module Folder
     class FolderClient
+      # @return [SeedApiClient::RequestClient]
       attr_reader :request_client
 
       # @param request_client [SeedApiClient::RequestClient]
       # @return [SeedApiClient::Folder::FolderClient]
       def initialize(request_client:)
-        # @type [SeedApiClient::RequestClient]
         @request_client = request_client
       end
 
@@ -27,12 +27,12 @@ module SeedApiClient
     end
 
     class AsyncFolderClient
+      # @return [SeedApiClient::AsyncRequestClient]
       attr_reader :request_client
 
       # @param request_client [SeedApiClient::AsyncRequestClient]
       # @return [SeedApiClient::Folder::AsyncFolderClient]
       def initialize(request_client:)
-        # @type [SeedApiClient::AsyncRequestClient]
         @request_client = request_client
       end
 

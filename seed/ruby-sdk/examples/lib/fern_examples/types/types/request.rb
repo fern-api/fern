@@ -6,18 +6,23 @@ require "json"
 module SeedExamplesClient
   class Types
     class Request
-      attr_reader :request, :additional_properties, :_field_set
+      # @return [Object]
+      attr_reader :request
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param request [Object]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedExamplesClient::Types::Request]
       def initialize(request:, additional_properties: nil)
-        # @type [Object]
         @request = request
-        @_field_set = { "request": @request }.reject do |_k, v|
-          v == OMIT
-        end
+        @additional_properties = additional_properties
+        @_field_set = { "request": request }
       end
 
       # Deserialize a JSON object to an instance of Request
@@ -37,7 +42,9 @@ module SeedExamplesClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

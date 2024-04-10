@@ -6,6 +6,7 @@ require_relative "service/client"
 module SeedAudiencesClient
   module FolderA
     class Client
+      # @return [SeedAudiencesClient::FolderA::ServiceClient]
       attr_reader :service
 
       # @param request_client [SeedAudiencesClient::RequestClient]
@@ -16,6 +17,7 @@ module SeedAudiencesClient
     end
 
     class AsyncClient
+      # @return [SeedAudiencesClient::FolderA::AsyncServiceClient]
       attr_reader :service
 
       # @param request_client [SeedAudiencesClient::AsyncRequestClient]

@@ -5,12 +5,12 @@ require "async"
 
 module SeedErrorPropertyClient
   class PropertyBasedErrorClient
+    # @return [SeedErrorPropertyClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedErrorPropertyClient::RequestClient]
     # @return [SeedErrorPropertyClient::PropertyBasedErrorClient]
     def initialize(request_client:)
-      # @type [SeedErrorPropertyClient::RequestClient]
       @request_client = request_client
     end
 
@@ -29,12 +29,12 @@ module SeedErrorPropertyClient
   end
 
   class AsyncPropertyBasedErrorClient
+    # @return [SeedErrorPropertyClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedErrorPropertyClient::AsyncRequestClient]
     # @return [SeedErrorPropertyClient::AsyncPropertyBasedErrorClient]
     def initialize(request_client:)
-      # @type [SeedErrorPropertyClient::AsyncRequestClient]
       @request_client = request_client
     end
 

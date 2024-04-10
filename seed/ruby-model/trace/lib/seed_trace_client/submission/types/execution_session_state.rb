@@ -8,10 +8,26 @@ require "json"
 module SeedTraceClient
   class Submission
     class ExecutionSessionState
-      attr_reader :last_time_contacted, :session_id, :is_warm_instance, :aws_task_id, :language, :status,
-                  :additional_properties, :_field_set
+      # @return [String]
+      attr_reader :last_time_contacted
+      # @return [String] The auto-generated session id. Formatted as a uuid.
+      attr_reader :session_id
+      # @return [Boolean]
+      attr_reader :is_warm_instance
+      # @return [String]
+      attr_reader :aws_task_id
+      # @return [SeedTraceClient::Commons::Language]
+      attr_reader :language
+      # @return [SeedTraceClient::Submission::ExecutionSessionStatus]
+      attr_reader :status
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param last_time_contacted [String]
       # @param session_id [String] The auto-generated session id. Formatted as a uuid.
       # @param is_warm_instance [Boolean]
@@ -22,25 +38,20 @@ module SeedTraceClient
       # @return [SeedTraceClient::Submission::ExecutionSessionState]
       def initialize(session_id:, is_warm_instance:, language:, status:, last_time_contacted: OMIT, aws_task_id: OMIT,
                      additional_properties: nil)
-        # @type [String]
         @last_time_contacted = last_time_contacted if last_time_contacted != OMIT
-        # @type [String] The auto-generated session id. Formatted as a uuid.
         @session_id = session_id
-        # @type [Boolean]
         @is_warm_instance = is_warm_instance
-        # @type [String]
         @aws_task_id = aws_task_id if aws_task_id != OMIT
-        # @type [SeedTraceClient::Commons::Language]
         @language = language
-        # @type [SeedTraceClient::Submission::ExecutionSessionStatus]
         @status = status
+        @additional_properties = additional_properties
         @_field_set = {
-          "lastTimeContacted": @last_time_contacted,
-          "sessionId": @session_id,
-          "isWarmInstance": @is_warm_instance,
-          "awsTaskId": @aws_task_id,
-          "language": @language,
-          "status": @status
+          "lastTimeContacted": last_time_contacted,
+          "sessionId": session_id,
+          "isWarmInstance": is_warm_instance,
+          "awsTaskId": aws_task_id,
+          "language": language,
+          "status": status
         }.reject do |_k, v|
           v == OMIT
         end
@@ -69,7 +80,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

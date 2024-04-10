@@ -5,12 +5,12 @@ require "async"
 
 module SeedUnknownAsAnyClient
   class UnknownClient
+    # @return [SeedUnknownAsAnyClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedUnknownAsAnyClient::RequestClient]
     # @return [SeedUnknownAsAnyClient::UnknownClient]
     def initialize(request_client:)
-      # @type [SeedUnknownAsAnyClient::RequestClient]
       @request_client = request_client
     end
 
@@ -29,12 +29,12 @@ module SeedUnknownAsAnyClient
   end
 
   class AsyncUnknownClient
+    # @return [SeedUnknownAsAnyClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedUnknownAsAnyClient::AsyncRequestClient]
     # @return [SeedUnknownAsAnyClient::AsyncUnknownClient]
     def initialize(request_client:)
-      # @type [SeedUnknownAsAnyClient::AsyncRequestClient]
       @request_client = request_client
     end
 

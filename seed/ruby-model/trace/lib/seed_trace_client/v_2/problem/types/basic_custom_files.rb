@@ -9,10 +9,22 @@ module SeedTraceClient
   module V2
     class Problem
       class BasicCustomFiles
-        attr_reader :method_name, :signature, :additional_files, :basic_test_case_template, :additional_properties,
-                    :_field_set
+        # @return [String]
+        attr_reader :method_name
+        # @return [SeedTraceClient::V2::Problem::NonVoidFunctionSignature]
+        attr_reader :signature
+        # @return [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::V2::Problem::Files}]
+        attr_reader :additional_files
+        # @return [SeedTraceClient::V2::Problem::BasicTestCaseTemplate]
+        attr_reader :basic_test_case_template
+        # @return [OpenStruct] Additional properties unmapped to the current class definition
+        attr_reader :additional_properties
+        # @return [Object]
+        attr_reader :_field_set
         protected :_field_set
+
         OMIT = Object.new
+
         # @param method_name [String]
         # @param signature [SeedTraceClient::V2::Problem::NonVoidFunctionSignature]
         # @param additional_files [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::V2::Problem::Files}]
@@ -21,22 +33,17 @@ module SeedTraceClient
         # @return [SeedTraceClient::V2::Problem::BasicCustomFiles]
         def initialize(method_name:, signature:, additional_files:, basic_test_case_template:,
                        additional_properties: nil)
-          # @type [String]
           @method_name = method_name
-          # @type [SeedTraceClient::V2::Problem::NonVoidFunctionSignature]
           @signature = signature
-          # @type [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::V2::Problem::Files}]
           @additional_files = additional_files
-          # @type [SeedTraceClient::V2::Problem::BasicTestCaseTemplate]
           @basic_test_case_template = basic_test_case_template
+          @additional_properties = additional_properties
           @_field_set = {
-            "methodName": @method_name,
-            "signature": @signature,
-            "additionalFiles": @additional_files,
-            "basicTestCaseTemplate": @basic_test_case_template
-          }.reject do |_k, v|
-            v == OMIT
-          end
+            "methodName": method_name,
+            "signature": signature,
+            "additionalFiles": additional_files,
+            "basicTestCaseTemplate": basic_test_case_template
+          }
         end
 
         # Deserialize a JSON object to an instance of BasicCustomFiles
@@ -74,7 +81,9 @@ module SeedTraceClient
           @_field_set&.to_json
         end
 
-        # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+        # Leveraged for Union-type generation, validate_raw attempts to parse the given
+        #  hash and check each fields type against the current object's property
+        #  definitions.
         #
         # @param obj [Object]
         # @return [Void]

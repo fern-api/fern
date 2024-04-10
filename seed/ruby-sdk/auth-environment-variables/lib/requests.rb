@@ -6,7 +6,14 @@ require "async/http/faraday"
 
 module SeedAuthEnvironmentVariablesClient
   class RequestClient
-    attr_reader :headers, :default_environment, :conn, :base_url
+    # @return [Hash{String => String}]
+    attr_reader :headers
+    # @return [String]
+    attr_reader :default_environment
+    # @return [Faraday]
+    attr_reader :conn
+    # @return [String]
+    attr_reader :base_url
 
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
@@ -39,7 +46,14 @@ module SeedAuthEnvironmentVariablesClient
   end
 
   class AsyncRequestClient
-    attr_reader :headers, :default_environment, :conn, :base_url
+    # @return [Hash{String => String}]
+    attr_reader :headers
+    # @return [String]
+    attr_reader :default_environment
+    # @return [Faraday]
+    attr_reader :conn
+    # @return [String]
+    attr_reader :base_url
 
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
@@ -72,10 +86,23 @@ module SeedAuthEnvironmentVariablesClient
     end
   end
 
-  # Additional options for request-specific configuration when calling APIs via the SDK.
+  # Additional options for request-specific configuration when calling APIs via the
+  #  SDK.
   class RequestOptions
-    attr_reader :base_url, :api_key, :x_another_header, :additional_headers, :additional_query_parameters,
-                :additional_body_parameters, :timeout_in_seconds
+    # @return [String]
+    attr_reader :base_url
+    # @return [String]
+    attr_reader :api_key
+    # @return [String]
+    attr_reader :x_another_header
+    # @return [Hash{String => Object}]
+    attr_reader :additional_headers
+    # @return [Hash{String => Object}]
+    attr_reader :additional_query_parameters
+    # @return [Hash{String => Object}]
+    attr_reader :additional_body_parameters
+    # @return [Long]
+    attr_reader :timeout_in_seconds
 
     # @param base_url [String]
     # @param api_key [String]
@@ -87,27 +114,33 @@ module SeedAuthEnvironmentVariablesClient
     # @return [SeedAuthEnvironmentVariablesClient::RequestOptions]
     def initialize(base_url: nil, api_key: nil, x_another_header: nil, additional_headers: nil,
                    additional_query_parameters: nil, additional_body_parameters: nil, timeout_in_seconds: nil)
-      # @type [String]
       @base_url = base_url
-      # @type [String]
       @api_key = api_key
-      # @type [String]
       @x_another_header = x_another_header
-      # @type [Hash{String => Object}]
       @additional_headers = additional_headers
-      # @type [Hash{String => Object}]
       @additional_query_parameters = additional_query_parameters
-      # @type [Hash{String => Object}]
       @additional_body_parameters = additional_body_parameters
-      # @type [Long]
       @timeout_in_seconds = timeout_in_seconds
     end
   end
 
-  # Additional options for request-specific configuration when calling APIs via the SDK.
+  # Additional options for request-specific configuration when calling APIs via the
+  #  SDK.
   class IdempotencyRequestOptions
-    attr_reader :base_url, :api_key, :x_another_header, :additional_headers, :additional_query_parameters,
-                :additional_body_parameters, :timeout_in_seconds
+    # @return [String]
+    attr_reader :base_url
+    # @return [String]
+    attr_reader :api_key
+    # @return [String]
+    attr_reader :x_another_header
+    # @return [Hash{String => Object}]
+    attr_reader :additional_headers
+    # @return [Hash{String => Object}]
+    attr_reader :additional_query_parameters
+    # @return [Hash{String => Object}]
+    attr_reader :additional_body_parameters
+    # @return [Long]
+    attr_reader :timeout_in_seconds
 
     # @param base_url [String]
     # @param api_key [String]
@@ -119,19 +152,12 @@ module SeedAuthEnvironmentVariablesClient
     # @return [SeedAuthEnvironmentVariablesClient::IdempotencyRequestOptions]
     def initialize(base_url: nil, api_key: nil, x_another_header: nil, additional_headers: nil,
                    additional_query_parameters: nil, additional_body_parameters: nil, timeout_in_seconds: nil)
-      # @type [String]
       @base_url = base_url
-      # @type [String]
       @api_key = api_key
-      # @type [String]
       @x_another_header = x_another_header
-      # @type [Hash{String => Object}]
       @additional_headers = additional_headers
-      # @type [Hash{String => Object}]
       @additional_query_parameters = additional_query_parameters
-      # @type [Hash{String => Object}]
       @additional_body_parameters = additional_body_parameters
-      # @type [Long]
       @timeout_in_seconds = timeout_in_seconds
     end
   end

@@ -6,20 +6,23 @@ require_relative "foo"
 module SeedUnionsClient
   class Types
     class UnionWithBaseProperties
-      attr_reader :member, :discriminant, :id
+      # @return [Object]
+      attr_reader :member
+      # @return [String]
+      attr_reader :discriminant
+      # @return [String]
+      attr_reader :id
 
       private_class_method :new
       alias kind_of? is_a?
+
       # @param member [Object]
       # @param discriminant [String]
       # @param id [String]
       # @return [SeedUnionsClient::Types::UnionWithBaseProperties]
       def initialize(member:, discriminant:, id:)
-        # @type [Object]
         @member = member
-        # @type [String]
         @discriminant = discriminant
-        # @type [String]
         @id = id
       end
 
@@ -59,7 +62,9 @@ module SeedUnionsClient
         @member.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

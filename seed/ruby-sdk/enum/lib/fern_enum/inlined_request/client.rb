@@ -7,12 +7,12 @@ require "async"
 
 module SeedEnumClient
   class InlinedRequestClient
+    # @return [SeedEnumClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedEnumClient::RequestClient]
     # @return [SeedEnumClient::InlinedRequestClient]
     def initialize(request_client:)
-      # @type [SeedEnumClient::RequestClient]
       @request_client = request_client
     end
 
@@ -39,12 +39,12 @@ module SeedEnumClient
   end
 
   class AsyncInlinedRequestClient
+    # @return [SeedEnumClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedEnumClient::AsyncRequestClient]
     # @return [SeedEnumClient::AsyncInlinedRequestClient]
     def initialize(request_client:)
-      # @type [SeedEnumClient::AsyncRequestClient]
       @request_client = request_client
     end
 

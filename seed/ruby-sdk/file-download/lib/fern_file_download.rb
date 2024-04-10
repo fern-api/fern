@@ -6,6 +6,7 @@ require_relative "fern_file_download/service/client"
 
 module SeedFileDownloadClient
   class Client
+    # @return [SeedFileDownloadClient::ServiceClient]
     attr_reader :service
 
     # @param base_url [String]
@@ -20,6 +21,7 @@ module SeedFileDownloadClient
   end
 
   class AsyncClient
+    # @return [SeedFileDownloadClient::AsyncServiceClient]
     attr_reader :service
 
     # @param base_url [String]

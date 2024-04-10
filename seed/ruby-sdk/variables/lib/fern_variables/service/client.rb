@@ -5,12 +5,12 @@ require "async"
 
 module SeedVariablesClient
   class ServiceClient
+    # @return [SeedVariablesClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedVariablesClient::RequestClient]
     # @return [SeedVariablesClient::ServiceClient]
     def initialize(request_client:)
-      # @type [SeedVariablesClient::RequestClient]
       @request_client = request_client
     end
 
@@ -27,12 +27,12 @@ module SeedVariablesClient
   end
 
   class AsyncServiceClient
+    # @return [SeedVariablesClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedVariablesClient::AsyncRequestClient]
     # @return [SeedVariablesClient::AsyncServiceClient]
     def initialize(request_client:)
-      # @type [SeedVariablesClient::AsyncRequestClient]
       @request_client = request_client
     end
 

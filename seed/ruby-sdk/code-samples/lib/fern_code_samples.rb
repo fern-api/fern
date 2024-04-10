@@ -6,6 +6,7 @@ require_relative "fern_code_samples/service/client"
 
 module SeedCodeSamplesClient
   class Client
+    # @return [SeedCodeSamplesClient::ServiceClient]
     attr_reader :service
 
     # @param base_url [String]
@@ -20,6 +21,7 @@ module SeedCodeSamplesClient
   end
 
   class AsyncClient
+    # @return [SeedCodeSamplesClient::AsyncServiceClient]
     attr_reader :service
 
     # @param base_url [String]

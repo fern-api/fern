@@ -14,10 +14,34 @@ module SeedTraceClient
     module V3
       class Problem
         class ProblemInfoV2
-          attr_reader :problem_id, :problem_description, :problem_name, :problem_version, :supported_languages,
-                      :custom_files, :generated_files, :custom_test_case_templates, :testcases, :is_public, :additional_properties, :_field_set
+          # @return [String]
+          attr_reader :problem_id
+          # @return [SeedTraceClient::Problem::ProblemDescription]
+          attr_reader :problem_description
+          # @return [String]
+          attr_reader :problem_name
+          # @return [Integer]
+          attr_reader :problem_version
+          # @return [Set<SeedTraceClient::Commons::Language>]
+          attr_reader :supported_languages
+          # @return [SeedTraceClient::V2::V3::Problem::CustomFiles]
+          attr_reader :custom_files
+          # @return [SeedTraceClient::V2::V3::Problem::GeneratedFiles]
+          attr_reader :generated_files
+          # @return [Array<SeedTraceClient::V2::V3::Problem::TestCaseTemplate>]
+          attr_reader :custom_test_case_templates
+          # @return [Array<SeedTraceClient::V2::V3::Problem::TestCaseV2>]
+          attr_reader :testcases
+          # @return [Boolean]
+          attr_reader :is_public
+          # @return [OpenStruct] Additional properties unmapped to the current class definition
+          attr_reader :additional_properties
+          # @return [Object]
+          attr_reader :_field_set
           protected :_field_set
+
           OMIT = Object.new
+
           # @param problem_id [String]
           # @param problem_description [SeedTraceClient::Problem::ProblemDescription]
           # @param problem_name [String]
@@ -32,40 +56,29 @@ module SeedTraceClient
           # @return [SeedTraceClient::V2::V3::Problem::ProblemInfoV2]
           def initialize(problem_id:, problem_description:, problem_name:, problem_version:, supported_languages:,
                          custom_files:, generated_files:, custom_test_case_templates:, testcases:, is_public:, additional_properties: nil)
-            # @type [String]
             @problem_id = problem_id
-            # @type [SeedTraceClient::Problem::ProblemDescription]
             @problem_description = problem_description
-            # @type [String]
             @problem_name = problem_name
-            # @type [Integer]
             @problem_version = problem_version
-            # @type [Set<SeedTraceClient::Commons::Language>]
             @supported_languages = supported_languages
-            # @type [SeedTraceClient::V2::V3::Problem::CustomFiles]
             @custom_files = custom_files
-            # @type [SeedTraceClient::V2::V3::Problem::GeneratedFiles]
             @generated_files = generated_files
-            # @type [Array<SeedTraceClient::V2::V3::Problem::TestCaseTemplate>]
             @custom_test_case_templates = custom_test_case_templates
-            # @type [Array<SeedTraceClient::V2::V3::Problem::TestCaseV2>]
             @testcases = testcases
-            # @type [Boolean]
             @is_public = is_public
+            @additional_properties = additional_properties
             @_field_set = {
-              "problemId": @problem_id,
-              "problemDescription": @problem_description,
-              "problemName": @problem_name,
-              "problemVersion": @problem_version,
-              "supportedLanguages": @supported_languages,
-              "customFiles": @custom_files,
-              "generatedFiles": @generated_files,
-              "customTestCaseTemplates": @custom_test_case_templates,
-              "testcases": @testcases,
-              "isPublic": @is_public
-            }.reject do |_k, v|
-              v == OMIT
-            end
+              "problemId": problem_id,
+              "problemDescription": problem_description,
+              "problemName": problem_name,
+              "problemVersion": problem_version,
+              "supportedLanguages": supported_languages,
+              "customFiles": custom_files,
+              "generatedFiles": generated_files,
+              "customTestCaseTemplates": custom_test_case_templates,
+              "testcases": testcases,
+              "isPublic": is_public
+            }
           end
 
           # Deserialize a JSON object to an instance of ProblemInfoV2
@@ -121,7 +134,9 @@ module SeedTraceClient
             @_field_set&.to_json
           end
 
-          # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+          # Leveraged for Union-type generation, validate_raw attempts to parse the given
+          #  hash and check each fields type against the current object's property
+          #  definitions.
           #
           # @param obj [Object]
           # @return [Void]

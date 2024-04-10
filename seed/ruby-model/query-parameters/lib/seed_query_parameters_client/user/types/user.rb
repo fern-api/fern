@@ -6,21 +6,27 @@ require "json"
 module SeedQueryParametersClient
   class User
     class User
-      attr_reader :name, :tags, :additional_properties, :_field_set
+      # @return [String]
+      attr_reader :name
+      # @return [Array<String>]
+      attr_reader :tags
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param name [String]
       # @param tags [Array<String>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedQueryParametersClient::User::User]
       def initialize(name:, tags:, additional_properties: nil)
-        # @type [String]
         @name = name
-        # @type [Array<String>]
         @tags = tags
-        @_field_set = { "name": @name, "tags": @tags }.reject do |_k, v|
-          v == OMIT
-        end
+        @additional_properties = additional_properties
+        @_field_set = { "name": name, "tags": tags }
       end
 
       # Deserialize a JSON object to an instance of User
@@ -41,7 +47,9 @@ module SeedQueryParametersClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

@@ -6,6 +6,7 @@ require_relative "fern_undiscriminated_unions/union/client"
 
 module SeedUndiscriminatedUnionsClient
   class Client
+    # @return [SeedUndiscriminatedUnionsClient::UnionClient]
     attr_reader :union
 
     # @param base_url [String]
@@ -20,6 +21,7 @@ module SeedUndiscriminatedUnionsClient
   end
 
   class AsyncClient
+    # @return [SeedUndiscriminatedUnionsClient::AsyncUnionClient]
     attr_reader :union
 
     # @param base_url [String]

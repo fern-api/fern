@@ -8,10 +8,24 @@ require "json"
 module SeedTraceClient
   class Submission
     class RecordingResponseNotification
-      attr_reader :submission_id, :test_case_id, :line_number, :lightweight_stack_info, :traced_file,
-                  :additional_properties, :_field_set
+      # @return [String]
+      attr_reader :submission_id
+      # @return [String]
+      attr_reader :test_case_id
+      # @return [Integer]
+      attr_reader :line_number
+      # @return [SeedTraceClient::Submission::LightweightStackframeInformation]
+      attr_reader :lightweight_stack_info
+      # @return [SeedTraceClient::Submission::TracedFile]
+      attr_reader :traced_file
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param submission_id [String]
       # @param test_case_id [String]
       # @param line_number [Integer]
@@ -21,22 +35,18 @@ module SeedTraceClient
       # @return [SeedTraceClient::Submission::RecordingResponseNotification]
       def initialize(submission_id:, line_number:, lightweight_stack_info:, test_case_id: OMIT, traced_file: OMIT,
                      additional_properties: nil)
-        # @type [String]
         @submission_id = submission_id
-        # @type [String]
         @test_case_id = test_case_id if test_case_id != OMIT
-        # @type [Integer]
         @line_number = line_number
-        # @type [SeedTraceClient::Submission::LightweightStackframeInformation]
         @lightweight_stack_info = lightweight_stack_info
-        # @type [SeedTraceClient::Submission::TracedFile]
         @traced_file = traced_file if traced_file != OMIT
+        @additional_properties = additional_properties
         @_field_set = {
-          "submissionId": @submission_id,
-          "testCaseId": @test_case_id,
-          "lineNumber": @line_number,
-          "lightweightStackInfo": @lightweight_stack_info,
-          "tracedFile": @traced_file
+          "submissionId": submission_id,
+          "testCaseId": test_case_id,
+          "lineNumber": line_number,
+          "lightweightStackInfo": lightweight_stack_info,
+          "tracedFile": traced_file
         }.reject do |_k, v|
           v == OMIT
         end
@@ -75,7 +85,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

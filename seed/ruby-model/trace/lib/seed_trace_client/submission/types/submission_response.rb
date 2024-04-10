@@ -8,17 +8,19 @@ require_relative "terminated_response"
 module SeedTraceClient
   class Submission
     class SubmissionResponse
-      attr_reader :member, :discriminant
+      # @return [Object]
+      attr_reader :member
+      # @return [String]
+      attr_reader :discriminant
 
       private_class_method :new
       alias kind_of? is_a?
+
       # @param member [Object]
       # @param discriminant [String]
       # @return [SeedTraceClient::Submission::SubmissionResponse]
       def initialize(member:, discriminant:)
-        # @type [Object]
         @member = member
-        # @type [String]
         @discriminant = discriminant
       end
 
@@ -70,7 +72,9 @@ module SeedTraceClient
         @member.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

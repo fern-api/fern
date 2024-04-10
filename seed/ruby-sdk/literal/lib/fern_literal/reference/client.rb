@@ -7,12 +7,12 @@ require "async"
 
 module SeedLiteralClient
   class ReferenceClient
+    # @return [SeedLiteralClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedLiteralClient::RequestClient]
     # @return [SeedLiteralClient::ReferenceClient]
     def initialize(request_client:)
-      # @type [SeedLiteralClient::RequestClient]
       @request_client = request_client
     end
 
@@ -39,12 +39,12 @@ module SeedLiteralClient
   end
 
   class AsyncReferenceClient
+    # @return [SeedLiteralClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedLiteralClient::AsyncRequestClient]
     # @return [SeedLiteralClient::AsyncReferenceClient]
     def initialize(request_client:)
-      # @type [SeedLiteralClient::AsyncRequestClient]
       @request_client = request_client
     end
 

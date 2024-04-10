@@ -6,6 +6,7 @@ require_relative "fern_optional/optional/client"
 
 module SeedObjectsWithImportsClient
   class Client
+    # @return [SeedObjectsWithImportsClient::OptionalClient]
     attr_reader :optional
 
     # @param base_url [String]
@@ -20,6 +21,7 @@ module SeedObjectsWithImportsClient
   end
 
   class AsyncClient
+    # @return [SeedObjectsWithImportsClient::AsyncOptionalClient]
     attr_reader :optional
 
     # @param base_url [String]

@@ -6,6 +6,7 @@ require_relative "fern_streaming/dummy/client"
 
 module SeedStreamingClient
   class Client
+    # @return [SeedStreamingClient::DummyClient]
     attr_reader :dummy
 
     # @param base_url [String]
@@ -20,6 +21,7 @@ module SeedStreamingClient
   end
 
   class AsyncClient
+    # @return [SeedStreamingClient::AsyncDummyClient]
     attr_reader :dummy
 
     # @param base_url [String]

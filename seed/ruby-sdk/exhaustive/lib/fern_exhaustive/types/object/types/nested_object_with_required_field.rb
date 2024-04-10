@@ -8,21 +8,27 @@ module SeedExhaustiveClient
   module Types
     class Object
       class NestedObjectWithRequiredField
-        attr_reader :string, :nested_object, :additional_properties, :_field_set
+        # @return [String]
+        attr_reader :string
+        # @return [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
+        attr_reader :nested_object
+        # @return [OpenStruct] Additional properties unmapped to the current class definition
+        attr_reader :additional_properties
+        # @return [Object]
+        attr_reader :_field_set
         protected :_field_set
+
         OMIT = Object.new
+
         # @param string [String]
         # @param nested_object [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [SeedExhaustiveClient::Types::Object::NestedObjectWithRequiredField]
         def initialize(string:, nested_object:, additional_properties: nil)
-          # @type [String]
           @string = string
-          # @type [SeedExhaustiveClient::Types::Object::ObjectWithOptionalField]
           @nested_object = nested_object
-          @_field_set = { "string": @string, "NestedObject": @nested_object }.reject do |_k, v|
-            v == OMIT
-          end
+          @additional_properties = additional_properties
+          @_field_set = { "string": string, "NestedObject": nested_object }
         end
 
         # Deserialize a JSON object to an instance of NestedObjectWithRequiredField
@@ -49,7 +55,9 @@ module SeedExhaustiveClient
           @_field_set&.to_json
         end
 
-        # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+        # Leveraged for Union-type generation, validate_raw attempts to parse the given
+        #  hash and check each fields type against the current object's property
+        #  definitions.
         #
         # @param obj [Object]
         # @return [Void]

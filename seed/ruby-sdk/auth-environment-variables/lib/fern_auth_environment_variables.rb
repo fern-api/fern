@@ -6,6 +6,7 @@ require_relative "fern_auth_environment_variables/service/client"
 
 module SeedAuthEnvironmentVariablesClient
   class Client
+    # @return [SeedAuthEnvironmentVariablesClient::ServiceClient]
     attr_reader :service
 
     # @param base_url [String]
@@ -22,6 +23,7 @@ module SeedAuthEnvironmentVariablesClient
   end
 
   class AsyncClient
+    # @return [SeedAuthEnvironmentVariablesClient::AsyncServiceClient]
     attr_reader :service
 
     # @param base_url [String]

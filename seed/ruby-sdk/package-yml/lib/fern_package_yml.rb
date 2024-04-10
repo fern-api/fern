@@ -6,6 +6,7 @@ require_relative "fern_package_yml/service/client"
 
 module SeedPackageYmlClient
   class Client
+    # @return [SeedPackageYmlClient::ServiceClient]
     attr_reader :service
 
     # @param base_url [String]
@@ -34,6 +35,7 @@ module SeedPackageYmlClient
   end
 
   class AsyncClient
+    # @return [SeedPackageYmlClient::AsyncServiceClient]
     attr_reader :service
 
     # @param base_url [String]

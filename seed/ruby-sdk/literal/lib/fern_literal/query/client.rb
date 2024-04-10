@@ -6,12 +6,12 @@ require "async"
 
 module SeedLiteralClient
   class QueryClient
+    # @return [SeedLiteralClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedLiteralClient::RequestClient]
     # @return [SeedLiteralClient::QueryClient]
     def initialize(request_client:)
-      # @type [SeedLiteralClient::RequestClient]
       @request_client = request_client
     end
 
@@ -42,12 +42,12 @@ module SeedLiteralClient
   end
 
   class AsyncQueryClient
+    # @return [SeedLiteralClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedLiteralClient::AsyncRequestClient]
     # @return [SeedLiteralClient::AsyncQueryClient]
     def initialize(request_client:)
-      # @type [SeedLiteralClient::AsyncRequestClient]
       @request_client = request_client
     end
 

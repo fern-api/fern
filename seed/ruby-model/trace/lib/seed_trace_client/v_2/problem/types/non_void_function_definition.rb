@@ -9,21 +9,27 @@ module SeedTraceClient
   module V2
     class Problem
       class NonVoidFunctionDefinition
-        attr_reader :signature, :code, :additional_properties, :_field_set
+        # @return [SeedTraceClient::V2::Problem::NonVoidFunctionSignature]
+        attr_reader :signature
+        # @return [SeedTraceClient::V2::Problem::FunctionImplementationForMultipleLanguages]
+        attr_reader :code
+        # @return [OpenStruct] Additional properties unmapped to the current class definition
+        attr_reader :additional_properties
+        # @return [Object]
+        attr_reader :_field_set
         protected :_field_set
+
         OMIT = Object.new
+
         # @param signature [SeedTraceClient::V2::Problem::NonVoidFunctionSignature]
         # @param code [SeedTraceClient::V2::Problem::FunctionImplementationForMultipleLanguages]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [SeedTraceClient::V2::Problem::NonVoidFunctionDefinition]
         def initialize(signature:, code:, additional_properties: nil)
-          # @type [SeedTraceClient::V2::Problem::NonVoidFunctionSignature]
           @signature = signature
-          # @type [SeedTraceClient::V2::Problem::FunctionImplementationForMultipleLanguages]
           @code = code
-          @_field_set = { "signature": @signature, "code": @code }.reject do |_k, v|
-            v == OMIT
-          end
+          @additional_properties = additional_properties
+          @_field_set = { "signature": signature, "code": code }
         end
 
         # Deserialize a JSON object to an instance of NonVoidFunctionDefinition
@@ -55,7 +61,9 @@ module SeedTraceClient
           @_field_set&.to_json
         end
 
-        # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+        # Leveraged for Union-type generation, validate_raw attempts to parse the given
+        #  hash and check each fields type against the current object's property
+        #  definitions.
         #
         # @param obj [Object]
         # @return [Void]

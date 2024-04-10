@@ -6,9 +6,22 @@ require "json"
 module SeedTraceClient
   class Playlist
     class Playlist
-      attr_reader :playlist_id, :owner_id, :name, :problems, :additional_properties, :_field_set
+      # @return [String]
+      attr_reader :playlist_id
+      # @return [String]
+      attr_reader :owner_id
+      # @return [String]
+      attr_reader :name
+      # @return [Array<String>]
+      attr_reader :problems
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param playlist_id [String]
       # @param owner_id [String]
       # @param name [String]
@@ -16,22 +29,12 @@ module SeedTraceClient
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Playlist::Playlist]
       def initialize(playlist_id:, owner_id:, name:, problems:, additional_properties: nil)
-        # @type [String]
         @playlist_id = playlist_id
-        # @type [String]
         @owner_id = owner_id
-        # @type [String]
         @name = name
-        # @type [Array<String>]
         @problems = problems
-        @_field_set = {
-          "playlist_id": @playlist_id,
-          "owner-id": @owner_id,
-          "name": @name,
-          "problems": @problems
-        }.reject do |_k, v|
-          v == OMIT
-        end
+        @additional_properties = additional_properties
+        @_field_set = { "playlist_id": playlist_id, "owner-id": owner_id, "name": name, "problems": problems }
       end
 
       # Deserialize a JSON object to an instance of Playlist
@@ -54,7 +57,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

@@ -7,12 +7,12 @@ require "async"
 module SeedExhaustiveClient
   module Endpoints
     class PrimitiveClient
+      # @return [SeedExhaustiveClient::RequestClient]
       attr_reader :request_client
 
       # @param request_client [SeedExhaustiveClient::RequestClient]
       # @return [SeedExhaustiveClient::Endpoints::PrimitiveClient]
       def initialize(request_client:)
-        # @type [SeedExhaustiveClient::RequestClient]
         @request_client = request_client
       end
 
@@ -148,12 +148,12 @@ module SeedExhaustiveClient
     end
 
     class AsyncPrimitiveClient
+      # @return [SeedExhaustiveClient::AsyncRequestClient]
       attr_reader :request_client
 
       # @param request_client [SeedExhaustiveClient::AsyncRequestClient]
       # @return [SeedExhaustiveClient::Endpoints::AsyncPrimitiveClient]
       def initialize(request_client:)
-        # @type [SeedExhaustiveClient::AsyncRequestClient]
         @request_client = request_client
       end
 

@@ -7,12 +7,12 @@ require "async"
 
 module SeedFileUploadClient
   class ServiceClient
+    # @return [SeedFileUploadClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedFileUploadClient::RequestClient]
     # @return [SeedFileUploadClient::ServiceClient]
     def initialize(request_client:)
-      # @type [SeedFileUploadClient::RequestClient]
       @request_client = request_client
     end
 
@@ -99,12 +99,12 @@ module SeedFileUploadClient
   end
 
   class AsyncServiceClient
+    # @return [SeedFileUploadClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedFileUploadClient::AsyncRequestClient]
     # @return [SeedFileUploadClient::AsyncServiceClient]
     def initialize(request_client:)
-      # @type [SeedFileUploadClient::AsyncRequestClient]
       @request_client = request_client
     end
 

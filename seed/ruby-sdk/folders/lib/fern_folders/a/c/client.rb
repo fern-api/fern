@@ -7,12 +7,12 @@ module SeedApiClient
   module A
     module C
       class CClient
+        # @return [SeedApiClient::RequestClient]
         attr_reader :request_client
 
         # @param request_client [SeedApiClient::RequestClient]
         # @return [SeedApiClient::A::C::CClient]
         def initialize(request_client:)
-          # @type [SeedApiClient::RequestClient]
           @request_client = request_client
         end
 
@@ -28,12 +28,12 @@ module SeedApiClient
       end
 
       class AsyncCClient
+        # @return [SeedApiClient::AsyncRequestClient]
         attr_reader :request_client
 
         # @param request_client [SeedApiClient::AsyncRequestClient]
         # @return [SeedApiClient::A::C::AsyncCClient]
         def initialize(request_client:)
-          # @type [SeedApiClient::AsyncRequestClient]
           @request_client = request_client
         end
 

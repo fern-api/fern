@@ -6,23 +6,30 @@ require "json"
 
 module SeedApiClient
   class Ast
-    # This type allows us to test a circular reference with a union type (see FieldValue).
+    # This type allows us to test a circular reference with a union type (see
+    #  FieldValue).
     class ObjectFieldValue
-      attr_reader :name, :value, :additional_properties, :_field_set
+      # @return [String]
+      attr_reader :name
+      # @return [SeedApiClient::Ast::FieldValue]
+      attr_reader :value
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param name [String]
       # @param value [SeedApiClient::Ast::FieldValue]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedApiClient::Ast::ObjectFieldValue]
       def initialize(name:, value:, additional_properties: nil)
-        # @type [String]
         @name = name
-        # @type [SeedApiClient::Ast::FieldValue]
         @value = value
-        @_field_set = { "name": @name, "value": @value }.reject do |_k, v|
-          v == OMIT
-        end
+        @additional_properties = additional_properties
+        @_field_set = { "name": name, "value": value }
       end
 
       # Deserialize a JSON object to an instance of ObjectFieldValue
@@ -49,7 +56,9 @@ module SeedApiClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

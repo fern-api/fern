@@ -7,6 +7,7 @@ require_relative "fern_single_url_environment_no_default/dummy/client"
 
 module SeedSingleUrlEnvironmentNoDefaultClient
   class Client
+    # @return [SeedSingleUrlEnvironmentNoDefaultClient::DummyClient]
     attr_reader :dummy
 
     # @param base_url [String]
@@ -22,6 +23,7 @@ module SeedSingleUrlEnvironmentNoDefaultClient
   end
 
   class AsyncClient
+    # @return [SeedSingleUrlEnvironmentNoDefaultClient::AsyncDummyClient]
     attr_reader :dummy
 
     # @param base_url [String]

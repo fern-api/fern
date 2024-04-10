@@ -6,6 +6,7 @@ require_relative "fern_error_property/property_based_error/client"
 
 module SeedErrorPropertyClient
   class Client
+    # @return [SeedErrorPropertyClient::PropertyBasedErrorClient]
     attr_reader :property_based_error
 
     # @param base_url [String]
@@ -20,6 +21,7 @@ module SeedErrorPropertyClient
   end
 
   class AsyncClient
+    # @return [SeedErrorPropertyClient::AsyncPropertyBasedErrorClient]
     attr_reader :property_based_error
 
     # @param base_url [String]

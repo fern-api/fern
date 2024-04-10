@@ -6,10 +6,32 @@ require "json"
 module SeedExamplesClient
   class Types
     class Movie
-      attr_reader :id, :prequel, :title, :from, :rating, :type, :tag, :book, :metadata, :additional_properties,
-                  :_field_set
+      # @return [String]
+      attr_reader :id
+      # @return [String]
+      attr_reader :prequel
+      # @return [String]
+      attr_reader :title
+      # @return [String]
+      attr_reader :from
+      # @return [Float] The rating scale is one to five stars
+      attr_reader :rating
+      # @return [String]
+      attr_reader :type
+      # @return [String]
+      attr_reader :tag
+      # @return [String]
+      attr_reader :book
+      # @return [Hash{String => Object}]
+      attr_reader :metadata
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param id [String]
       # @param prequel [String]
       # @param title [String]
@@ -23,34 +45,26 @@ module SeedExamplesClient
       # @return [SeedExamplesClient::Types::Movie]
       def initialize(id:, title:, from:, rating:, type:, tag:, metadata:, prequel: OMIT, book: OMIT,
                      additional_properties: nil)
-        # @type [String]
         @id = id
-        # @type [String]
         @prequel = prequel if prequel != OMIT
-        # @type [String]
         @title = title
-        # @type [String]
         @from = from
-        # @type [Float] The rating scale is one to five stars
         @rating = rating
-        # @type [String]
         @type = type
-        # @type [String]
         @tag = tag
-        # @type [String]
         @book = book if book != OMIT
-        # @type [Hash{String => Object}]
         @metadata = metadata
+        @additional_properties = additional_properties
         @_field_set = {
-          "id": @id,
-          "prequel": @prequel,
-          "title": @title,
-          "from": @from,
-          "rating": @rating,
-          "type": @type,
-          "tag": @tag,
-          "book": @book,
-          "metadata": @metadata
+          "id": id,
+          "prequel": prequel,
+          "title": title,
+          "from": from,
+          "rating": rating,
+          "type": type,
+          "tag": tag,
+          "book": book,
+          "metadata": metadata
         }.reject do |_k, v|
           v == OMIT
         end
@@ -82,7 +96,9 @@ module SeedExamplesClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

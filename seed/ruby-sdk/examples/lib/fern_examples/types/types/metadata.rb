@@ -6,23 +6,27 @@ require "json"
 module SeedExamplesClient
   class Types
     class Metadata
-      attr_reader :member, :discriminant, :extra, :tags
+      # @return [Object]
+      attr_reader :member
+      # @return [String]
+      attr_reader :discriminant
+      # @return [Hash{String => String}]
+      attr_reader :extra
+      # @return [Set<String>]
+      attr_reader :tags
 
       private_class_method :new
       alias kind_of? is_a?
+
       # @param member [Object]
       # @param discriminant [String]
       # @param extra [Hash{String => String}]
       # @param tags [Set<String>]
       # @return [SeedExamplesClient::Types::Metadata]
       def initialize(member:, discriminant:, extra:, tags:)
-        # @type [Object]
         @member = member
-        # @type [String]
         @discriminant = discriminant
-        # @type [Hash{String => String}]
         @extra = extra
-        # @type [Set<String>]
         @tags = tags
       end
 
@@ -55,7 +59,9 @@ module SeedExamplesClient
         @member.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

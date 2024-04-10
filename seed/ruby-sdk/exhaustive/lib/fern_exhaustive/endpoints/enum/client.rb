@@ -7,12 +7,12 @@ require "async"
 module SeedExhaustiveClient
   module Endpoints
     class EnumClient
+      # @return [SeedExhaustiveClient::RequestClient]
       attr_reader :request_client
 
       # @param request_client [SeedExhaustiveClient::RequestClient]
       # @return [SeedExhaustiveClient::Endpoints::EnumClient]
       def initialize(request_client:)
-        # @type [SeedExhaustiveClient::RequestClient]
         @request_client = request_client
       end
 
@@ -32,12 +32,12 @@ module SeedExhaustiveClient
     end
 
     class AsyncEnumClient
+      # @return [SeedExhaustiveClient::AsyncRequestClient]
       attr_reader :request_client
 
       # @param request_client [SeedExhaustiveClient::AsyncRequestClient]
       # @return [SeedExhaustiveClient::Endpoints::AsyncEnumClient]
       def initialize(request_client:)
-        # @type [SeedExhaustiveClient::AsyncRequestClient]
         @request_client = request_client
       end
 

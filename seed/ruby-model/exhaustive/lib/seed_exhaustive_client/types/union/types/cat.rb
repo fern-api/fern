@@ -7,21 +7,27 @@ module SeedExhaustiveClient
   module Types
     class Union
       class Cat
-        attr_reader :name, :likes_to_meow, :additional_properties, :_field_set
+        # @return [String]
+        attr_reader :name
+        # @return [Boolean]
+        attr_reader :likes_to_meow
+        # @return [OpenStruct] Additional properties unmapped to the current class definition
+        attr_reader :additional_properties
+        # @return [Object]
+        attr_reader :_field_set
         protected :_field_set
+
         OMIT = Object.new
+
         # @param name [String]
         # @param likes_to_meow [Boolean]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [SeedExhaustiveClient::Types::Union::Cat]
         def initialize(name:, likes_to_meow:, additional_properties: nil)
-          # @type [String]
           @name = name
-          # @type [Boolean]
           @likes_to_meow = likes_to_meow
-          @_field_set = { "name": @name, "likesToMeow": @likes_to_meow }.reject do |_k, v|
-            v == OMIT
-          end
+          @additional_properties = additional_properties
+          @_field_set = { "name": name, "likesToMeow": likes_to_meow }
         end
 
         # Deserialize a JSON object to an instance of Cat
@@ -42,7 +48,9 @@ module SeedExhaustiveClient
           @_field_set&.to_json
         end
 
-        # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+        # Leveraged for Union-type generation, validate_raw attempts to parse the given
+        #  hash and check each fields type against the current object's property
+        #  definitions.
         #
         # @param obj [Object]
         # @return [Void]

@@ -6,12 +6,12 @@ require "async"
 
 module SeedLiteralClient
   class InlinedClient
+    # @return [SeedLiteralClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedLiteralClient::RequestClient]
     # @return [SeedLiteralClient::InlinedClient]
     def initialize(request_client:)
-      # @type [SeedLiteralClient::RequestClient]
       @request_client = request_client
     end
 
@@ -44,12 +44,12 @@ module SeedLiteralClient
   end
 
   class AsyncInlinedClient
+    # @return [SeedLiteralClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedLiteralClient::AsyncRequestClient]
     # @return [SeedLiteralClient::AsyncInlinedClient]
     def initialize(request_client:)
-      # @type [SeedLiteralClient::AsyncRequestClient]
       @request_client = request_client
     end
 

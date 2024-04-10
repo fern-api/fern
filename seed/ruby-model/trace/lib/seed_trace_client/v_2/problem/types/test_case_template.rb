@@ -8,28 +8,31 @@ module SeedTraceClient
   module V2
     class Problem
       class TestCaseTemplate
-        attr_reader :template_id, :name, :implementation, :additional_properties, :_field_set
+        # @return [String]
+        attr_reader :template_id
+        # @return [String]
+        attr_reader :name
+        # @return [SeedTraceClient::V2::Problem::TestCaseImplementation]
+        attr_reader :implementation
+        # @return [OpenStruct] Additional properties unmapped to the current class definition
+        attr_reader :additional_properties
+        # @return [Object]
+        attr_reader :_field_set
         protected :_field_set
+
         OMIT = Object.new
+
         # @param template_id [String]
         # @param name [String]
         # @param implementation [SeedTraceClient::V2::Problem::TestCaseImplementation]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [SeedTraceClient::V2::Problem::TestCaseTemplate]
         def initialize(template_id:, name:, implementation:, additional_properties: nil)
-          # @type [String]
           @template_id = template_id
-          # @type [String]
           @name = name
-          # @type [SeedTraceClient::V2::Problem::TestCaseImplementation]
           @implementation = implementation
-          @_field_set = {
-            "templateId": @template_id,
-            "name": @name,
-            "implementation": @implementation
-          }.reject do |_k, v|
-            v == OMIT
-          end
+          @additional_properties = additional_properties
+          @_field_set = { "templateId": template_id, "name": name, "implementation": implementation }
         end
 
         # Deserialize a JSON object to an instance of TestCaseTemplate
@@ -57,7 +60,9 @@ module SeedTraceClient
           @_field_set&.to_json
         end
 
-        # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+        # Leveraged for Union-type generation, validate_raw attempts to parse the given
+        #  hash and check each fields type against the current object's property
+        #  definitions.
         #
         # @param obj [Object]
         # @return [Void]

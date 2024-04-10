@@ -8,9 +8,22 @@ module SeedTraceClient
   module V2
     class Problem
       class LightweightProblemInfoV2
-        attr_reader :problem_id, :problem_name, :problem_version, :variable_types, :additional_properties, :_field_set
+        # @return [String]
+        attr_reader :problem_id
+        # @return [String]
+        attr_reader :problem_name
+        # @return [Integer]
+        attr_reader :problem_version
+        # @return [Set<SeedTraceClient::Commons::VariableType>]
+        attr_reader :variable_types
+        # @return [OpenStruct] Additional properties unmapped to the current class definition
+        attr_reader :additional_properties
+        # @return [Object]
+        attr_reader :_field_set
         protected :_field_set
+
         OMIT = Object.new
+
         # @param problem_id [String]
         # @param problem_name [String]
         # @param problem_version [Integer]
@@ -18,22 +31,17 @@ module SeedTraceClient
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [SeedTraceClient::V2::Problem::LightweightProblemInfoV2]
         def initialize(problem_id:, problem_name:, problem_version:, variable_types:, additional_properties: nil)
-          # @type [String]
           @problem_id = problem_id
-          # @type [String]
           @problem_name = problem_name
-          # @type [Integer]
           @problem_version = problem_version
-          # @type [Set<SeedTraceClient::Commons::VariableType>]
           @variable_types = variable_types
+          @additional_properties = additional_properties
           @_field_set = {
-            "problemId": @problem_id,
-            "problemName": @problem_name,
-            "problemVersion": @problem_version,
-            "variableTypes": @variable_types
-          }.reject do |_k, v|
-            v == OMIT
-          end
+            "problemId": problem_id,
+            "problemName": problem_name,
+            "problemVersion": problem_version,
+            "variableTypes": variable_types
+          }
         end
 
         # Deserialize a JSON object to an instance of LightweightProblemInfoV2
@@ -63,7 +71,9 @@ module SeedTraceClient
           @_field_set&.to_json
         end
 
-        # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+        # Leveraged for Union-type generation, validate_raw attempts to parse the given
+        #  hash and check each fields type against the current object's property
+        #  definitions.
         #
         # @param obj [Object]
         # @return [Void]

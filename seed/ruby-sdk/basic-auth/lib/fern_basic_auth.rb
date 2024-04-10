@@ -6,6 +6,7 @@ require_relative "fern_basic_auth/basic_auth/client"
 
 module SeedBasicAuthClient
   class Client
+    # @return [SeedBasicAuthClient::BasicAuthClient]
     attr_reader :basic_auth
 
     # @param base_url [String]
@@ -22,6 +23,7 @@ module SeedBasicAuthClient
   end
 
   class AsyncClient
+    # @return [SeedBasicAuthClient::AsyncBasicAuthClient]
     attr_reader :basic_auth
 
     # @param base_url [String]

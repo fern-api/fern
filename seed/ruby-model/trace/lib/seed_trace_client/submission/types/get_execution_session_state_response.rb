@@ -6,25 +6,34 @@ require "json"
 module SeedTraceClient
   class Submission
     class GetExecutionSessionStateResponse
-      attr_reader :states, :num_warming_instances, :warming_session_ids, :additional_properties, :_field_set
+      # @return [Hash{String => SeedTraceClient::Submission::ExecutionSessionState}]
+      attr_reader :states
+      # @return [Integer]
+      attr_reader :num_warming_instances
+      # @return [Array<String>]
+      attr_reader :warming_session_ids
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param states [Hash{String => SeedTraceClient::Submission::ExecutionSessionState}]
       # @param num_warming_instances [Integer]
       # @param warming_session_ids [Array<String>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Submission::GetExecutionSessionStateResponse]
       def initialize(states:, warming_session_ids:, num_warming_instances: OMIT, additional_properties: nil)
-        # @type [Hash{String => SeedTraceClient::Submission::ExecutionSessionState}]
         @states = states
-        # @type [Integer]
         @num_warming_instances = num_warming_instances if num_warming_instances != OMIT
-        # @type [Array<String>]
         @warming_session_ids = warming_session_ids
+        @additional_properties = additional_properties
         @_field_set = {
-          "states": @states,
-          "numWarmingInstances": @num_warming_instances,
-          "warmingSessionIds": @warming_session_ids
+          "states": states,
+          "numWarmingInstances": num_warming_instances,
+          "warmingSessionIds": warming_session_ids
         }.reject do |_k, v|
           v == OMIT
         end
@@ -53,7 +62,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

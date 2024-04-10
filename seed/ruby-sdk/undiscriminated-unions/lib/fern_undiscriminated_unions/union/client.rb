@@ -6,12 +6,12 @@ require "async"
 
 module SeedUndiscriminatedUnionsClient
   class UnionClient
+    # @return [SeedUndiscriminatedUnionsClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedUndiscriminatedUnionsClient::RequestClient]
     # @return [SeedUndiscriminatedUnionsClient::UnionClient]
     def initialize(request_client:)
-      # @type [SeedUndiscriminatedUnionsClient::RequestClient]
       @request_client = request_client
     end
 
@@ -30,12 +30,12 @@ module SeedUndiscriminatedUnionsClient
   end
 
   class AsyncUnionClient
+    # @return [SeedUndiscriminatedUnionsClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedUndiscriminatedUnionsClient::AsyncRequestClient]
     # @return [SeedUndiscriminatedUnionsClient::AsyncUnionClient]
     def initialize(request_client:)
-      # @type [SeedUndiscriminatedUnionsClient::AsyncRequestClient]
       @request_client = request_client
     end
 

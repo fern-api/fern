@@ -6,12 +6,12 @@ require "async"
 
 module SeedCodeSamplesClient
   class ServiceClient
+    # @return [SeedCodeSamplesClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedCodeSamplesClient::RequestClient]
     # @return [SeedCodeSamplesClient::ServiceClient]
     def initialize(request_client:)
-      # @type [SeedCodeSamplesClient::RequestClient]
       @request_client = request_client
     end
 
@@ -30,12 +30,12 @@ module SeedCodeSamplesClient
   end
 
   class AsyncServiceClient
+    # @return [SeedCodeSamplesClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedCodeSamplesClient::AsyncRequestClient]
     # @return [SeedCodeSamplesClient::AsyncServiceClient]
     def initialize(request_client:)
-      # @type [SeedCodeSamplesClient::AsyncRequestClient]
       @request_client = request_client
     end
 

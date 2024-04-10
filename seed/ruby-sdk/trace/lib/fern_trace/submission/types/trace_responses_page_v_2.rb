@@ -7,21 +7,29 @@ require "json"
 module SeedTraceClient
   class Submission
     class TraceResponsesPageV2
-      attr_reader :offset, :trace_responses, :additional_properties, :_field_set
+      # @return [Integer] If present, use this to load subseqent pages.
+      #  The offset is the id of the next trace response to load.
+      attr_reader :offset
+      # @return [Array<SeedTraceClient::Submission::TraceResponseV2>]
+      attr_reader :trace_responses
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param offset [Integer] If present, use this to load subseqent pages.
-      #   The offset is the id of the next trace response to load.
+      #  The offset is the id of the next trace response to load.
       # @param trace_responses [Array<SeedTraceClient::Submission::TraceResponseV2>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Submission::TraceResponsesPageV2]
       def initialize(trace_responses:, offset: OMIT, additional_properties: nil)
-        # @type [Integer] If present, use this to load subseqent pages.
-        #   The offset is the id of the next trace response to load.
         @offset = offset if offset != OMIT
-        # @type [Array<SeedTraceClient::Submission::TraceResponseV2>]
         @trace_responses = trace_responses
-        @_field_set = { "offset": @offset, "traceResponses": @trace_responses }.reject do |_k, v|
+        @additional_properties = additional_properties
+        @_field_set = { "offset": offset, "traceResponses": trace_responses }.reject do |_k, v|
           v == OMIT
         end
       end
@@ -48,7 +56,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

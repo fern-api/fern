@@ -8,18 +8,23 @@ module SeedTraceClient
     module V3
       class Problem
         class GetFunctionSignatureResponse
-          attr_reader :function_by_language, :additional_properties, :_field_set
+          # @return [Hash{SeedTraceClient::Commons::Language => String}]
+          attr_reader :function_by_language
+          # @return [OpenStruct] Additional properties unmapped to the current class definition
+          attr_reader :additional_properties
+          # @return [Object]
+          attr_reader :_field_set
           protected :_field_set
+
           OMIT = Object.new
+
           # @param function_by_language [Hash{SeedTraceClient::Commons::Language => String}]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [SeedTraceClient::V2::V3::Problem::GetFunctionSignatureResponse]
           def initialize(function_by_language:, additional_properties: nil)
-            # @type [Hash{SeedTraceClient::Commons::Language => String}]
             @function_by_language = function_by_language
-            @_field_set = { "functionByLanguage": @function_by_language }.reject do |_k, v|
-              v == OMIT
-            end
+            @additional_properties = additional_properties
+            @_field_set = { "functionByLanguage": function_by_language }
           end
 
           # Deserialize a JSON object to an instance of GetFunctionSignatureResponse
@@ -39,7 +44,9 @@ module SeedTraceClient
             @_field_set&.to_json
           end
 
-          # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+          # Leveraged for Union-type generation, validate_raw attempts to parse the given
+          #  hash and check each fields type against the current object's property
+          #  definitions.
           #
           # @param obj [Object]
           # @return [Void]

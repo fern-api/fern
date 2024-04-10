@@ -7,18 +7,23 @@ require "json"
 module SeedPaginationClient
   class Users
     class UserListContainer
-      attr_reader :users, :additional_properties, :_field_set
+      # @return [Array<SeedPaginationClient::Users::User>]
+      attr_reader :users
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param users [Array<SeedPaginationClient::Users::User>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedPaginationClient::Users::UserListContainer]
       def initialize(users:, additional_properties: nil)
-        # @type [Array<SeedPaginationClient::Users::User>]
         @users = users
-        @_field_set = { "users": @users }.reject do |_k, v|
-          v == OMIT
-        end
+        @additional_properties = additional_properties
+        @_field_set = { "users": users }
       end
 
       # Deserialize a JSON object to an instance of UserListContainer
@@ -42,7 +47,9 @@ module SeedPaginationClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

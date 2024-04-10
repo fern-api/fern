@@ -6,6 +6,7 @@ require_relative "fern_pagination/users/client"
 
 module SeedPaginationClient
   class Client
+    # @return [SeedPaginationClient::UsersClient]
     attr_reader :users
 
     # @param base_url [String]
@@ -21,6 +22,7 @@ module SeedPaginationClient
   end
 
   class AsyncClient
+    # @return [SeedPaginationClient::AsyncUsersClient]
     attr_reader :users
 
     # @param base_url [String]

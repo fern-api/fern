@@ -6,19 +6,27 @@ require "json"
 module SeedTraceClient
   class Commons
     class DoublyLinkedListValue
-      attr_reader :head, :nodes, :additional_properties, :_field_set
+      # @return [String]
+      attr_reader :head
+      # @return [Hash{String => SeedTraceClient::Commons::DoublyLinkedListNodeValue}]
+      attr_reader :nodes
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param head [String]
       # @param nodes [Hash{String => SeedTraceClient::Commons::DoublyLinkedListNodeValue}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Commons::DoublyLinkedListValue]
       def initialize(nodes:, head: OMIT, additional_properties: nil)
-        # @type [String]
         @head = head if head != OMIT
-        # @type [Hash{String => SeedTraceClient::Commons::DoublyLinkedListNodeValue}]
         @nodes = nodes
-        @_field_set = { "head": @head, "nodes": @nodes }.reject do |_k, v|
+        @additional_properties = additional_properties
+        @_field_set = { "head": head, "nodes": nodes }.reject do |_k, v|
           v == OMIT
         end
       end
@@ -45,7 +53,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

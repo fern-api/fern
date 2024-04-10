@@ -7,21 +7,27 @@ require "json"
 module SeedMixedCaseClient
   class Service
     class NestedUser
-      attr_reader :name, :nested_user, :additional_properties, :_field_set
+      # @return [String]
+      attr_reader :name
+      # @return [SeedMixedCaseClient::Service::User]
+      attr_reader :nested_user
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param name [String]
       # @param nested_user [SeedMixedCaseClient::Service::User]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedMixedCaseClient::Service::NestedUser]
       def initialize(name:, nested_user:, additional_properties: nil)
-        # @type [String]
         @name = name
-        # @type [SeedMixedCaseClient::Service::User]
         @nested_user = nested_user
-        @_field_set = { "Name": @name, "NestedUser": @nested_user }.reject do |_k, v|
-          v == OMIT
-        end
+        @additional_properties = additional_properties
+        @_field_set = { "Name": name, "NestedUser": nested_user }
       end
 
       # Deserialize a JSON object to an instance of NestedUser
@@ -48,7 +54,9 @@ module SeedMixedCaseClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

@@ -8,7 +8,10 @@ require_relative "fern_multi_url_environment/s_3/client"
 
 module SeedMultiUrlEnvironmentClient
   class Client
-    attr_reader :ec_2, :s_3
+    # @return [SeedMultiUrlEnvironmentClient::Ec2Client]
+    attr_reader :ec_2
+    # @return [SeedMultiUrlEnvironmentClient::S3Client]
+    attr_reader :s_3
 
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
@@ -24,7 +27,10 @@ module SeedMultiUrlEnvironmentClient
   end
 
   class AsyncClient
-    attr_reader :ec_2, :s_3
+    # @return [SeedMultiUrlEnvironmentClient::AsyncEc2Client]
+    attr_reader :ec_2
+    # @return [SeedMultiUrlEnvironmentClient::AsyncS3Client]
+    attr_reader :s_3
 
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.

@@ -7,7 +7,10 @@ require_relative "fern_audiences/foo/client"
 
 module SeedAudiencesClient
   class Client
-    attr_reader :folder_a, :foo
+    # @return [SeedAudiencesClient::FolderA::Client]
+    attr_reader :folder_a
+    # @return [SeedAudiencesClient::FooClient]
+    attr_reader :foo
 
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
@@ -22,7 +25,10 @@ module SeedAudiencesClient
   end
 
   class AsyncClient
-    attr_reader :folder_a, :foo
+    # @return [SeedAudiencesClient::FolderA::AsyncClient]
+    attr_reader :folder_a
+    # @return [SeedAudiencesClient::AsyncFooClient]
+    attr_reader :foo
 
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.

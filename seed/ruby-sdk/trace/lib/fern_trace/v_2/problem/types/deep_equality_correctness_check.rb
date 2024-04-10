@@ -7,18 +7,23 @@ module SeedTraceClient
   module V2
     class Problem
       class DeepEqualityCorrectnessCheck
-        attr_reader :expected_value_parameter_id, :additional_properties, :_field_set
+        # @return [String]
+        attr_reader :expected_value_parameter_id
+        # @return [OpenStruct] Additional properties unmapped to the current class definition
+        attr_reader :additional_properties
+        # @return [Object]
+        attr_reader :_field_set
         protected :_field_set
+
         OMIT = Object.new
+
         # @param expected_value_parameter_id [String]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [SeedTraceClient::V2::Problem::DeepEqualityCorrectnessCheck]
         def initialize(expected_value_parameter_id:, additional_properties: nil)
-          # @type [String]
           @expected_value_parameter_id = expected_value_parameter_id
-          @_field_set = { "expectedValueParameterId": @expected_value_parameter_id }.reject do |_k, v|
-            v == OMIT
-          end
+          @additional_properties = additional_properties
+          @_field_set = { "expectedValueParameterId": expected_value_parameter_id }
         end
 
         # Deserialize a JSON object to an instance of DeepEqualityCorrectnessCheck
@@ -38,7 +43,9 @@ module SeedTraceClient
           @_field_set&.to_json
         end
 
-        # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+        # Leveraged for Union-type generation, validate_raw attempts to parse the given
+        #  hash and check each fields type against the current object's property
+        #  definitions.
         #
         # @param obj [Object]
         # @return [Void]

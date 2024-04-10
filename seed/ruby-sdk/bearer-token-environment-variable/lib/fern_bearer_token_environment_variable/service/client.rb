@@ -5,12 +5,12 @@ require "async"
 
 module SeedBearerTokenEnvironmentVariableClient
   class ServiceClient
+    # @return [SeedBearerTokenEnvironmentVariableClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedBearerTokenEnvironmentVariableClient::RequestClient]
     # @return [SeedBearerTokenEnvironmentVariableClient::ServiceClient]
     def initialize(request_client:)
-      # @type [SeedBearerTokenEnvironmentVariableClient::RequestClient]
       @request_client = request_client
     end
 
@@ -30,12 +30,12 @@ module SeedBearerTokenEnvironmentVariableClient
   end
 
   class AsyncServiceClient
+    # @return [SeedBearerTokenEnvironmentVariableClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedBearerTokenEnvironmentVariableClient::AsyncRequestClient]
     # @return [SeedBearerTokenEnvironmentVariableClient::AsyncServiceClient]
     def initialize(request_client:)
-      # @type [SeedBearerTokenEnvironmentVariableClient::AsyncRequestClient]
       @request_client = request_client
     end
 

@@ -6,6 +6,7 @@ require_relative "fern_plain_text/service/client"
 
 module SeedPlainTextClient
   class Client
+    # @return [SeedPlainTextClient::ServiceClient]
     attr_reader :service
 
     # @param base_url [String]
@@ -20,6 +21,7 @@ module SeedPlainTextClient
   end
 
   class AsyncClient
+    # @return [SeedPlainTextClient::AsyncServiceClient]
     attr_reader :service
 
     # @param base_url [String]

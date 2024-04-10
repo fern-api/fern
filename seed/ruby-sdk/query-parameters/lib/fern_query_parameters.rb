@@ -6,6 +6,7 @@ require_relative "fern_query_parameters/user/client"
 
 module SeedQueryParametersClient
   class Client
+    # @return [SeedQueryParametersClient::UserClient]
     attr_reader :user
 
     # @param base_url [String]
@@ -20,6 +21,7 @@ module SeedQueryParametersClient
   end
 
   class AsyncClient
+    # @return [SeedQueryParametersClient::AsyncUserClient]
     attr_reader :user
 
     # @param base_url [String]

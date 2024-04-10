@@ -7,12 +7,12 @@ require "async"
 
 module SeedMixedCaseClient
   class ServiceClient
+    # @return [SeedMixedCaseClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedMixedCaseClient::RequestClient]
     # @return [SeedMixedCaseClient::ServiceClient]
     def initialize(request_client:)
-      # @type [SeedMixedCaseClient::RequestClient]
       @request_client = request_client
     end
 
@@ -51,12 +51,12 @@ module SeedMixedCaseClient
   end
 
   class AsyncServiceClient
+    # @return [SeedMixedCaseClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedMixedCaseClient::AsyncRequestClient]
     # @return [SeedMixedCaseClient::AsyncServiceClient]
     def initialize(request_client:)
-      # @type [SeedMixedCaseClient::AsyncRequestClient]
       @request_client = request_client
     end
 

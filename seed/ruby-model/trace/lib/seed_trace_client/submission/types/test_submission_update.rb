@@ -8,21 +8,27 @@ require "json"
 module SeedTraceClient
   class Submission
     class TestSubmissionUpdate
-      attr_reader :update_time, :update_info, :additional_properties, :_field_set
+      # @return [DateTime]
+      attr_reader :update_time
+      # @return [SeedTraceClient::Submission::TestSubmissionUpdateInfo]
+      attr_reader :update_info
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param update_time [DateTime]
       # @param update_info [SeedTraceClient::Submission::TestSubmissionUpdateInfo]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Submission::TestSubmissionUpdate]
       def initialize(update_time:, update_info:, additional_properties: nil)
-        # @type [DateTime]
         @update_time = update_time
-        # @type [SeedTraceClient::Submission::TestSubmissionUpdateInfo]
         @update_info = update_info
-        @_field_set = { "updateTime": @update_time, "updateInfo": @update_info }.reject do |_k, v|
-          v == OMIT
-        end
+        @additional_properties = additional_properties
+        @_field_set = { "updateTime": update_time, "updateInfo": update_info }
       end
 
       # Deserialize a JSON object to an instance of TestSubmissionUpdate
@@ -49,7 +55,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

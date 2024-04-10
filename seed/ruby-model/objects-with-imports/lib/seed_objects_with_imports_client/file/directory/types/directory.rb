@@ -8,22 +8,31 @@ module SeedObjectsWithImportsClient
   module File
     class Directory
       class Directory
-        attr_reader :name, :files, :directories, :additional_properties, :_field_set
+        # @return [String]
+        attr_reader :name
+        # @return [Array<SeedObjectsWithImportsClient::File::File>]
+        attr_reader :files
+        # @return [Array<SeedObjectsWithImportsClient::File::Directory::Directory>]
+        attr_reader :directories
+        # @return [OpenStruct] Additional properties unmapped to the current class definition
+        attr_reader :additional_properties
+        # @return [Object]
+        attr_reader :_field_set
         protected :_field_set
+
         OMIT = Object.new
+
         # @param name [String]
         # @param files [Array<SeedObjectsWithImportsClient::File::File>]
         # @param directories [Array<SeedObjectsWithImportsClient::File::Directory::Directory>]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [SeedObjectsWithImportsClient::File::Directory::Directory]
         def initialize(name:, files: OMIT, directories: OMIT, additional_properties: nil)
-          # @type [String]
           @name = name
-          # @type [Array<SeedObjectsWithImportsClient::File::File>]
           @files = files if files != OMIT
-          # @type [Array<SeedObjectsWithImportsClient::File::Directory::Directory>]
           @directories = directories if directories != OMIT
-          @_field_set = { "name": @name, "files": @files, "directories": @directories }.reject do |_k, v|
+          @additional_properties = additional_properties
+          @_field_set = { "name": name, "files": files, "directories": directories }.reject do |_k, v|
             v == OMIT
           end
         end
@@ -54,7 +63,9 @@ module SeedObjectsWithImportsClient
           @_field_set&.to_json
         end
 
-        # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+        # Leveraged for Union-type generation, validate_raw attempts to parse the given
+        #  hash and check each fields type against the current object's property
+        #  definitions.
         #
         # @param obj [Object]
         # @return [Void]

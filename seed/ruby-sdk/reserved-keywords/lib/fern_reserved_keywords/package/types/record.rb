@@ -6,21 +6,27 @@ require "json"
 module SeedNurseryApiClient
   class Package
     class Record
-      attr_reader :foo, :_3_d, :additional_properties, :_field_set
+      # @return [Hash{String => String}]
+      attr_reader :foo
+      # @return [Integer]
+      attr_reader :_3_d
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param foo [Hash{String => String}]
       # @param _3_d [Integer]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedNurseryApiClient::Package::Record]
       def initialize(foo:, _3_d:, additional_properties: nil)
-        # @type [Hash{String => String}]
         @foo = foo
-        # @type [Integer]
         @_3_d = _3_d
-        @_field_set = { "foo": @foo, "3d": @_3_d }.reject do |_k, v|
-          v == OMIT
-        end
+        @additional_properties = additional_properties
+        @_field_set = { "foo": foo, "3d": _3_d }
       end
 
       # Deserialize a JSON object to an instance of Record
@@ -41,7 +47,9 @@ module SeedNurseryApiClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

@@ -6,6 +6,7 @@ require_relative "fern_variables/service/client"
 
 module SeedVariablesClient
   class Client
+    # @return [SeedVariablesClient::ServiceClient]
     attr_reader :service
 
     # @param base_url [String]
@@ -20,6 +21,7 @@ module SeedVariablesClient
   end
 
   class AsyncClient
+    # @return [SeedVariablesClient::AsyncServiceClient]
     attr_reader :service
 
     # @param base_url [String]

@@ -10,9 +10,22 @@ module SeedTraceClient
   module V2
     class Problem
       class TestCaseV2
-        attr_reader :metadata, :implementation, :arguments, :expects, :additional_properties, :_field_set
+        # @return [SeedTraceClient::V2::Problem::TestCaseMetadata]
+        attr_reader :metadata
+        # @return [SeedTraceClient::V2::Problem::TestCaseImplementationReference]
+        attr_reader :implementation
+        # @return [Hash{String => SeedTraceClient::Commons::VariableValue}]
+        attr_reader :arguments
+        # @return [SeedTraceClient::V2::Problem::TestCaseExpects]
+        attr_reader :expects
+        # @return [OpenStruct] Additional properties unmapped to the current class definition
+        attr_reader :additional_properties
+        # @return [Object]
+        attr_reader :_field_set
         protected :_field_set
+
         OMIT = Object.new
+
         # @param metadata [SeedTraceClient::V2::Problem::TestCaseMetadata]
         # @param implementation [SeedTraceClient::V2::Problem::TestCaseImplementationReference]
         # @param arguments [Hash{String => SeedTraceClient::Commons::VariableValue}]
@@ -20,19 +33,16 @@ module SeedTraceClient
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [SeedTraceClient::V2::Problem::TestCaseV2]
         def initialize(metadata:, implementation:, arguments:, expects: OMIT, additional_properties: nil)
-          # @type [SeedTraceClient::V2::Problem::TestCaseMetadata]
           @metadata = metadata
-          # @type [SeedTraceClient::V2::Problem::TestCaseImplementationReference]
           @implementation = implementation
-          # @type [Hash{String => SeedTraceClient::Commons::VariableValue}]
           @arguments = arguments
-          # @type [SeedTraceClient::V2::Problem::TestCaseExpects]
           @expects = expects if expects != OMIT
+          @additional_properties = additional_properties
           @_field_set = {
-            "metadata": @metadata,
-            "implementation": @implementation,
-            "arguments": @arguments,
-            "expects": @expects
+            "metadata": metadata,
+            "implementation": implementation,
+            "arguments": arguments,
+            "expects": expects
           }.reject do |_k, v|
             v == OMIT
           end
@@ -78,7 +88,9 @@ module SeedTraceClient
           @_field_set&.to_json
         end
 
-        # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+        # Leveraged for Union-type generation, validate_raw attempts to parse the given
+        #  hash and check each fields type against the current object's property
+        #  definitions.
         #
         # @param obj [Object]
         # @return [Void]

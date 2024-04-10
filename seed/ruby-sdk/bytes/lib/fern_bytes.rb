@@ -6,6 +6,7 @@ require_relative "fern_bytes/service/client"
 
 module SeedBytesClient
   class Client
+    # @return [SeedBytesClient::ServiceClient]
     attr_reader :service
 
     # @param base_url [String]
@@ -20,6 +21,7 @@ module SeedBytesClient
   end
 
   class AsyncClient
+    # @return [SeedBytesClient::AsyncServiceClient]
     attr_reader :service
 
     # @param base_url [String]

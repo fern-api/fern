@@ -9,12 +9,12 @@ module SeedTraceClient
   module V2
     module V3
       class ProblemClient
+        # @return [SeedTraceClient::RequestClient]
         attr_reader :request_client
 
         # @param request_client [SeedTraceClient::RequestClient]
         # @return [SeedTraceClient::V2::V3::ProblemClient]
         def initialize(request_client:)
-          # @type [SeedTraceClient::RequestClient]
           @request_client = request_client
         end
 
@@ -101,12 +101,12 @@ module SeedTraceClient
       end
 
       class AsyncProblemClient
+        # @return [SeedTraceClient::AsyncRequestClient]
         attr_reader :request_client
 
         # @param request_client [SeedTraceClient::AsyncRequestClient]
         # @return [SeedTraceClient::V2::V3::AsyncProblemClient]
         def initialize(request_client:)
-          # @type [SeedTraceClient::AsyncRequestClient]
           @request_client = request_client
         end
 

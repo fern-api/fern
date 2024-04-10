@@ -7,24 +7,31 @@ require "json"
 module SeedExamplesClient
   class Types
     class Moment
-      attr_reader :id, :date, :datetime, :additional_properties, :_field_set
+      # @return [String]
+      attr_reader :id
+      # @return [Date]
+      attr_reader :date
+      # @return [DateTime]
+      attr_reader :datetime
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param id [String]
       # @param date [Date]
       # @param datetime [DateTime]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedExamplesClient::Types::Moment]
       def initialize(id:, date:, datetime:, additional_properties: nil)
-        # @type [String]
         @id = id
-        # @type [Date]
         @date = date
-        # @type [DateTime]
         @datetime = datetime
-        @_field_set = { "id": @id, "date": @date, "datetime": @datetime }.reject do |_k, v|
-          v == OMIT
-        end
+        @additional_properties = additional_properties
+        @_field_set = { "id": id, "date": date, "datetime": datetime }
       end
 
       # Deserialize a JSON object to an instance of Moment
@@ -47,7 +54,9 @@ module SeedExamplesClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

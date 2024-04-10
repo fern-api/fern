@@ -8,9 +8,22 @@ require "json"
 module SeedTraceClient
   class Submission
     class TestCaseNonHiddenGrade
-      attr_reader :passed, :actual_result, :exception, :stdout, :additional_properties, :_field_set
+      # @return [Boolean]
+      attr_reader :passed
+      # @return [SeedTraceClient::Commons::VariableValue]
+      attr_reader :actual_result
+      # @return [SeedTraceClient::Submission::ExceptionV2]
+      attr_reader :exception
+      # @return [String]
+      attr_reader :stdout
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param passed [Boolean]
       # @param actual_result [SeedTraceClient::Commons::VariableValue]
       # @param exception [SeedTraceClient::Submission::ExceptionV2]
@@ -18,19 +31,16 @@ module SeedTraceClient
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Submission::TestCaseNonHiddenGrade]
       def initialize(passed:, stdout:, actual_result: OMIT, exception: OMIT, additional_properties: nil)
-        # @type [Boolean]
         @passed = passed
-        # @type [SeedTraceClient::Commons::VariableValue]
         @actual_result = actual_result if actual_result != OMIT
-        # @type [SeedTraceClient::Submission::ExceptionV2]
         @exception = exception if exception != OMIT
-        # @type [String]
         @stdout = stdout
+        @additional_properties = additional_properties
         @_field_set = {
-          "passed": @passed,
-          "actualResult": @actual_result,
-          "exception": @exception,
-          "stdout": @stdout
+          "passed": passed,
+          "actualResult": actual_result,
+          "exception": exception,
+          "stdout": stdout
         }.reject do |_k, v|
           v == OMIT
         end
@@ -67,7 +77,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

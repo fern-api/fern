@@ -6,24 +6,31 @@ require "json"
 module SeedApiClient
   class Imdb
     class Movie
-      attr_reader :id, :title, :rating, :additional_properties, :_field_set
+      # @return [String]
+      attr_reader :id
+      # @return [String]
+      attr_reader :title
+      # @return [Float] The rating scale is one to five stars
+      attr_reader :rating
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param id [String]
       # @param title [String]
       # @param rating [Float] The rating scale is one to five stars
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedApiClient::Imdb::Movie]
       def initialize(id:, title:, rating:, additional_properties: nil)
-        # @type [String]
         @id = id
-        # @type [String]
         @title = title
-        # @type [Float] The rating scale is one to five stars
         @rating = rating
-        @_field_set = { "id": @id, "title": @title, "rating": @rating }.reject do |_k, v|
-          v == OMIT
-        end
+        @additional_properties = additional_properties
+        @_field_set = { "id": id, "title": title, "rating": rating }
       end
 
       # Deserialize a JSON object to an instance of Movie
@@ -45,7 +52,9 @@ module SeedApiClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

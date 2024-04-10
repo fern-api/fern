@@ -6,12 +6,12 @@ require "async"
 
 module SeedEnumClient
   class QueryParamClient
+    # @return [SeedEnumClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedEnumClient::RequestClient]
     # @return [SeedEnumClient::QueryParamClient]
     def initialize(request_client:)
-      # @type [SeedEnumClient::RequestClient]
       @request_client = request_client
     end
 
@@ -60,12 +60,12 @@ module SeedEnumClient
   end
 
   class AsyncQueryParamClient
+    # @return [SeedEnumClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedEnumClient::AsyncRequestClient]
     # @return [SeedEnumClient::AsyncQueryParamClient]
     def initialize(request_client:)
-      # @type [SeedEnumClient::AsyncRequestClient]
       @request_client = request_client
     end
 

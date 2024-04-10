@@ -9,10 +9,52 @@ require "json"
 module SeedObjectClient
   # Exercises all of the built-in types.
   class Type
-    attr_reader :one, :two, :three, :four, :five, :six, :seven, :eight, :nine, :ten, :eleven, :twelve, :thirteen,
-                :fourteen, :fifteen, :sixteen, :seventeen, :eighteen, :nineteen, :additional_properties, :_field_set
+    # @return [Integer]
+    attr_reader :one
+    # @return [Float]
+    attr_reader :two
+    # @return [String]
+    attr_reader :three
+    # @return [Boolean]
+    attr_reader :four
+    # @return [Long]
+    attr_reader :five
+    # @return [DateTime]
+    attr_reader :six
+    # @return [Date]
+    attr_reader :seven
+    # @return [String]
+    attr_reader :eight
+    # @return [String]
+    attr_reader :nine
+    # @return [Array<Integer>]
+    attr_reader :ten
+    # @return [Set<Float>]
+    attr_reader :eleven
+    # @return [Hash{String => Boolean}]
+    attr_reader :twelve
+    # @return [Long]
+    attr_reader :thirteen
+    # @return [Object]
+    attr_reader :fourteen
+    # @return [Array<Array<Integer>>]
+    attr_reader :fifteen
+    # @return [Array<Hash{String => Integer}>]
+    attr_reader :sixteen
+    # @return [Array<String>]
+    attr_reader :seventeen
+    # @return [String]
+    attr_reader :eighteen
+    # @return [SeedObjectClient::Name]
+    attr_reader :nineteen
+    # @return [OpenStruct] Additional properties unmapped to the current class definition
+    attr_reader :additional_properties
+    # @return [Object]
+    attr_reader :_field_set
     protected :_field_set
+
     OMIT = Object.new
+
     # @param one [Integer]
     # @param two [Float]
     # @param three [String]
@@ -36,64 +78,46 @@ module SeedObjectClient
     # @return [SeedObjectClient::Type]
     def initialize(one:, two:, three:, four:, five:, six:, seven:, eight:, nine:, ten:, eleven:, twelve:, fourteen:, fifteen:, sixteen:, seventeen:, eighteen:, nineteen:,
                    thirteen: OMIT, additional_properties: nil)
-      # @type [Integer]
       @one = one
-      # @type [Float]
       @two = two
-      # @type [String]
       @three = three
-      # @type [Boolean]
       @four = four
-      # @type [Long]
       @five = five
-      # @type [DateTime]
       @six = six
-      # @type [Date]
       @seven = seven
-      # @type [String]
       @eight = eight
-      # @type [String]
       @nine = nine
-      # @type [Array<Integer>]
       @ten = ten
-      # @type [Set<Float>]
       @eleven = eleven
-      # @type [Hash{String => Boolean}]
       @twelve = twelve
-      # @type [Long]
       @thirteen = thirteen if thirteen != OMIT
-      # @type [Object]
       @fourteen = fourteen
-      # @type [Array<Array<Integer>>]
       @fifteen = fifteen
-      # @type [Array<Hash{String => Integer}>]
       @sixteen = sixteen
-      # @type [Array<String>]
       @seventeen = seventeen
-      # @type [String]
       @eighteen = eighteen
-      # @type [SeedObjectClient::Name]
       @nineteen = nineteen
+      @additional_properties = additional_properties
       @_field_set = {
-        "one": @one,
-        "two": @two,
-        "three": @three,
-        "four": @four,
-        "five": @five,
-        "six": @six,
-        "seven": @seven,
-        "eight": @eight,
-        "nine": @nine,
-        "ten": @ten,
-        "eleven": @eleven,
-        "twelve": @twelve,
-        "thirteen": @thirteen,
-        "fourteen": @fourteen,
-        "fifteen": @fifteen,
-        "sixteen": @sixteen,
-        "seventeen": @seventeen,
-        "eighteen": @eighteen,
-        "nineteen": @nineteen
+        "one": one,
+        "two": two,
+        "three": three,
+        "four": four,
+        "five": five,
+        "six": six,
+        "seven": seven,
+        "eight": eight,
+        "nine": nine,
+        "ten": ten,
+        "eleven": eleven,
+        "twelve": twelve,
+        "thirteen": thirteen,
+        "fourteen": fourteen,
+        "fifteen": fifteen,
+        "sixteen": sixteen,
+        "seventeen": seventeen,
+        "eighteen": eighteen,
+        "nineteen": nineteen
       }.reject do |_k, v|
         v == OMIT
       end
@@ -146,7 +170,9 @@ module SeedObjectClient
       @_field_set&.to_json
     end
 
-    # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+    # Leveraged for Union-type generation, validate_raw attempts to parse the given
+    #  hash and check each fields type against the current object's property
+    #  definitions.
     #
     # @param obj [Object]
     # @return [Void]

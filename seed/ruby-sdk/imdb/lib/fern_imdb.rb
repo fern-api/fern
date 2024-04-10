@@ -6,6 +6,7 @@ require_relative "fern_imdb/imdb/client"
 
 module SeedApiClient
   class Client
+    # @return [SeedApiClient::ImdbClient]
     attr_reader :imdb
 
     # @param base_url [String]
@@ -21,6 +22,7 @@ module SeedApiClient
   end
 
   class AsyncClient
+    # @return [SeedApiClient::AsyncImdbClient]
     attr_reader :imdb
 
     # @param base_url [String]

@@ -7,18 +7,23 @@ require "json"
 module SeedTraceClient
   class Submission
     class InternalError
-      attr_reader :exception_info, :additional_properties, :_field_set
+      # @return [SeedTraceClient::Submission::ExceptionInfo]
+      attr_reader :exception_info
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param exception_info [SeedTraceClient::Submission::ExceptionInfo]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Submission::InternalError]
       def initialize(exception_info:, additional_properties: nil)
-        # @type [SeedTraceClient::Submission::ExceptionInfo]
         @exception_info = exception_info
-        @_field_set = { "exceptionInfo": @exception_info }.reject do |_k, v|
-          v == OMIT
-        end
+        @additional_properties = additional_properties
+        @_field_set = { "exceptionInfo": exception_info }
       end
 
       # Deserialize a JSON object to an instance of InternalError
@@ -44,7 +49,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

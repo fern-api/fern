@@ -7,12 +7,12 @@ require "async"
 module SeedAudiencesClient
   module FolderA
     class ServiceClient
+      # @return [SeedAudiencesClient::RequestClient]
       attr_reader :request_client
 
       # @param request_client [SeedAudiencesClient::RequestClient]
       # @return [SeedAudiencesClient::FolderA::ServiceClient]
       def initialize(request_client:)
-        # @type [SeedAudiencesClient::RequestClient]
         @request_client = request_client
       end
 
@@ -29,12 +29,12 @@ module SeedAudiencesClient
     end
 
     class AsyncServiceClient
+      # @return [SeedAudiencesClient::AsyncRequestClient]
       attr_reader :request_client
 
       # @param request_client [SeedAudiencesClient::AsyncRequestClient]
       # @return [SeedAudiencesClient::FolderA::AsyncServiceClient]
       def initialize(request_client:)
-        # @type [SeedAudiencesClient::AsyncRequestClient]
         @request_client = request_client
       end
 

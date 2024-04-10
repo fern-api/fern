@@ -6,6 +6,7 @@ require_relative "fern_reserved_keywords/package/client"
 
 module SeedNurseryApiClient
   class Client
+    # @return [SeedNurseryApiClient::PackageClient]
     attr_reader :package
 
     # @param base_url [String]
@@ -20,6 +21,7 @@ module SeedNurseryApiClient
   end
 
   class AsyncClient
+    # @return [SeedNurseryApiClient::AsyncPackageClient]
     attr_reader :package
 
     # @param base_url [String]

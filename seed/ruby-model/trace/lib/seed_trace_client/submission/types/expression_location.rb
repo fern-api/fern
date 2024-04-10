@@ -6,21 +6,27 @@ require "json"
 module SeedTraceClient
   class Submission
     class ExpressionLocation
-      attr_reader :start, :offset, :additional_properties, :_field_set
+      # @return [Integer]
+      attr_reader :start
+      # @return [Integer]
+      attr_reader :offset
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param start [Integer]
       # @param offset [Integer]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Submission::ExpressionLocation]
       def initialize(start:, offset:, additional_properties: nil)
-        # @type [Integer]
         @start = start
-        # @type [Integer]
         @offset = offset
-        @_field_set = { "start": @start, "offset": @offset }.reject do |_k, v|
-          v == OMIT
-        end
+        @additional_properties = additional_properties
+        @_field_set = { "start": start, "offset": offset }
       end
 
       # Deserialize a JSON object to an instance of ExpressionLocation
@@ -41,7 +47,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

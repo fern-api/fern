@@ -7,19 +7,27 @@ module SeedObjectsWithImportsClient
   module Commons
     class Metadata
       class Metadata
-        attr_reader :id, :data, :additional_properties, :_field_set
+        # @return [String]
+        attr_reader :id
+        # @return [Hash{String => String}]
+        attr_reader :data
+        # @return [OpenStruct] Additional properties unmapped to the current class definition
+        attr_reader :additional_properties
+        # @return [Object]
+        attr_reader :_field_set
         protected :_field_set
+
         OMIT = Object.new
+
         # @param id [String]
         # @param data [Hash{String => String}]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [SeedObjectsWithImportsClient::Commons::Metadata::Metadata]
         def initialize(id:, data: OMIT, additional_properties: nil)
-          # @type [String]
           @id = id
-          # @type [Hash{String => String}]
           @data = data if data != OMIT
-          @_field_set = { "id": @id, "data": @data }.reject do |_k, v|
+          @additional_properties = additional_properties
+          @_field_set = { "id": id, "data": data }.reject do |_k, v|
             v == OMIT
           end
         end
@@ -42,7 +50,9 @@ module SeedObjectsWithImportsClient
           @_field_set&.to_json
         end
 
-        # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+        # Leveraged for Union-type generation, validate_raw attempts to parse the given
+        #  hash and check each fields type against the current object's property
+        #  definitions.
         #
         # @param obj [Object]
         # @return [Void]

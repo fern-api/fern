@@ -6,12 +6,12 @@ require "async"
 module SeedExamplesClient
   module Health
     class ServiceClient
+      # @return [SeedExamplesClient::RequestClient]
       attr_reader :request_client
 
       # @param request_client [SeedExamplesClient::RequestClient]
       # @return [SeedExamplesClient::Health::ServiceClient]
       def initialize(request_client:)
-        # @type [SeedExamplesClient::RequestClient]
         @request_client = request_client
       end
 
@@ -45,12 +45,12 @@ module SeedExamplesClient
     end
 
     class AsyncServiceClient
+      # @return [SeedExamplesClient::AsyncRequestClient]
       attr_reader :request_client
 
       # @param request_client [SeedExamplesClient::AsyncRequestClient]
       # @return [SeedExamplesClient::Health::AsyncServiceClient]
       def initialize(request_client:)
-        # @type [SeedExamplesClient::AsyncRequestClient]
         @request_client = request_client
       end
 

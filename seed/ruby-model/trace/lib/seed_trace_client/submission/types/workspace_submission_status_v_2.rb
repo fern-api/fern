@@ -7,18 +7,23 @@ require "json"
 module SeedTraceClient
   class Submission
     class WorkspaceSubmissionStatusV2
-      attr_reader :updates, :additional_properties, :_field_set
+      # @return [Array<SeedTraceClient::Submission::WorkspaceSubmissionUpdate>]
+      attr_reader :updates
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param updates [Array<SeedTraceClient::Submission::WorkspaceSubmissionUpdate>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Submission::WorkspaceSubmissionStatusV2]
       def initialize(updates:, additional_properties: nil)
-        # @type [Array<SeedTraceClient::Submission::WorkspaceSubmissionUpdate>]
         @updates = updates
-        @_field_set = { "updates": @updates }.reject do |_k, v|
-          v == OMIT
-        end
+        @additional_properties = additional_properties
+        @_field_set = { "updates": updates }
       end
 
       # Deserialize a JSON object to an instance of WorkspaceSubmissionStatusV2
@@ -42,7 +47,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

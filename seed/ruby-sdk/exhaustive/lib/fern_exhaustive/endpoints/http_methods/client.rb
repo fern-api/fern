@@ -8,12 +8,12 @@ require "async"
 module SeedExhaustiveClient
   module Endpoints
     class HttpMethodsClient
+      # @return [SeedExhaustiveClient::RequestClient]
       attr_reader :request_client
 
       # @param request_client [SeedExhaustiveClient::RequestClient]
       # @return [SeedExhaustiveClient::Endpoints::HttpMethodsClient]
       def initialize(request_client:)
-        # @type [SeedExhaustiveClient::RequestClient]
         @request_client = request_client
       end
 
@@ -103,12 +103,12 @@ module SeedExhaustiveClient
     end
 
     class AsyncHttpMethodsClient
+      # @return [SeedExhaustiveClient::AsyncRequestClient]
       attr_reader :request_client
 
       # @param request_client [SeedExhaustiveClient::AsyncRequestClient]
       # @return [SeedExhaustiveClient::Endpoints::AsyncHttpMethodsClient]
       def initialize(request_client:)
-        # @type [SeedExhaustiveClient::AsyncRequestClient]
         @request_client = request_client
       end
 

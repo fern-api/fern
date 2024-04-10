@@ -10,7 +10,16 @@ require_relative "fern_literal/reference/client"
 
 module SeedLiteralClient
   class Client
-    attr_reader :headers, :inlined, :path, :query, :reference
+    # @return [SeedLiteralClient::HeadersClient]
+    attr_reader :headers
+    # @return [SeedLiteralClient::InlinedClient]
+    attr_reader :inlined
+    # @return [SeedLiteralClient::PathClient]
+    attr_reader :path
+    # @return [SeedLiteralClient::QueryClient]
+    attr_reader :query
+    # @return [SeedLiteralClient::ReferenceClient]
+    attr_reader :reference
 
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
@@ -30,7 +39,16 @@ module SeedLiteralClient
   end
 
   class AsyncClient
-    attr_reader :headers, :inlined, :path, :query, :reference
+    # @return [SeedLiteralClient::AsyncHeadersClient]
+    attr_reader :headers
+    # @return [SeedLiteralClient::AsyncInlinedClient]
+    attr_reader :inlined
+    # @return [SeedLiteralClient::AsyncPathClient]
+    attr_reader :path
+    # @return [SeedLiteralClient::AsyncQueryClient]
+    attr_reader :query
+    # @return [SeedLiteralClient::AsyncReferenceClient]
+    attr_reader :reference
 
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.

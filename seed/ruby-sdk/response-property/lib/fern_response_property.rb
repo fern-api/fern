@@ -6,6 +6,7 @@ require_relative "fern_response_property/service/client"
 
 module SeedResponsePropertyClient
   class Client
+    # @return [SeedResponsePropertyClient::ServiceClient]
     attr_reader :service
 
     # @param base_url [String]
@@ -20,6 +21,7 @@ module SeedResponsePropertyClient
   end
 
   class AsyncClient
+    # @return [SeedResponsePropertyClient::AsyncServiceClient]
     attr_reader :service
 
     # @param base_url [String]

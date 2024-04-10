@@ -6,19 +6,27 @@ require "json"
 module SeedAudiencesClient
   class Foo
     class FilteredType
-      attr_reader :public_property, :private_property, :additional_properties, :_field_set
+      # @return [String]
+      attr_reader :public_property
+      # @return [Integer]
+      attr_reader :private_property
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param public_property [String]
       # @param private_property [Integer]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedAudiencesClient::Foo::FilteredType]
       def initialize(private_property:, public_property: OMIT, additional_properties: nil)
-        # @type [String]
         @public_property = public_property if public_property != OMIT
-        # @type [Integer]
         @private_property = private_property
-        @_field_set = { "public_property": @public_property, "private_property": @private_property }.reject do |_k, v|
+        @additional_properties = additional_properties
+        @_field_set = { "public_property": public_property, "private_property": private_property }.reject do |_k, v|
           v == OMIT
         end
       end
@@ -41,7 +49,9 @@ module SeedAudiencesClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

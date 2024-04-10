@@ -7,21 +7,27 @@ require "json"
 module SeedTraceClient
   class Commons
     class MapType
-      attr_reader :key_type, :value_type, :additional_properties, :_field_set
+      # @return [SeedTraceClient::Commons::VariableType]
+      attr_reader :key_type
+      # @return [SeedTraceClient::Commons::VariableType]
+      attr_reader :value_type
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param key_type [SeedTraceClient::Commons::VariableType]
       # @param value_type [SeedTraceClient::Commons::VariableType]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Commons::MapType]
       def initialize(key_type:, value_type:, additional_properties: nil)
-        # @type [SeedTraceClient::Commons::VariableType]
         @key_type = key_type
-        # @type [SeedTraceClient::Commons::VariableType]
         @value_type = value_type
-        @_field_set = { "keyType": @key_type, "valueType": @value_type }.reject do |_k, v|
-          v == OMIT
-        end
+        @additional_properties = additional_properties
+        @_field_set = { "keyType": key_type, "valueType": value_type }
       end
 
       # Deserialize a JSON object to an instance of MapType
@@ -53,7 +59,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

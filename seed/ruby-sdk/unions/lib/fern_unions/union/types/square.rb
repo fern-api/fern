@@ -6,18 +6,23 @@ require "json"
 module SeedUnionsClient
   class Union
     class Square
-      attr_reader :length, :additional_properties, :_field_set
+      # @return [Float]
+      attr_reader :length
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param length [Float]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedUnionsClient::Union::Square]
       def initialize(length:, additional_properties: nil)
-        # @type [Float]
         @length = length
-        @_field_set = { "length": @length }.reject do |_k, v|
-          v == OMIT
-        end
+        @additional_properties = additional_properties
+        @_field_set = { "length": length }
       end
 
       # Deserialize a JSON object to an instance of Square
@@ -37,7 +42,9 @@ module SeedUnionsClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

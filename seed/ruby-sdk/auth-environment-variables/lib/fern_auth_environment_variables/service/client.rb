@@ -5,12 +5,12 @@ require "async"
 
 module SeedAuthEnvironmentVariablesClient
   class ServiceClient
+    # @return [SeedAuthEnvironmentVariablesClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedAuthEnvironmentVariablesClient::RequestClient]
     # @return [SeedAuthEnvironmentVariablesClient::ServiceClient]
     def initialize(request_client:)
-      # @type [SeedAuthEnvironmentVariablesClient::RequestClient]
       @request_client = request_client
     end
 
@@ -51,12 +51,12 @@ module SeedAuthEnvironmentVariablesClient
   end
 
   class AsyncServiceClient
+    # @return [SeedAuthEnvironmentVariablesClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedAuthEnvironmentVariablesClient::AsyncRequestClient]
     # @return [SeedAuthEnvironmentVariablesClient::AsyncServiceClient]
     def initialize(request_client:)
-      # @type [SeedAuthEnvironmentVariablesClient::AsyncRequestClient]
       @request_client = request_client
     end
 

@@ -7,7 +7,10 @@ require_relative "c/client"
 module SeedApiClient
   module A
     class Client
-      attr_reader :b, :c
+      # @return [SeedApiClient::A::B::BClient]
+      attr_reader :b
+      # @return [SeedApiClient::A::C::CClient]
+      attr_reader :c
 
       # @param request_client [SeedApiClient::RequestClient]
       # @return [SeedApiClient::A::Client]
@@ -18,7 +21,10 @@ module SeedApiClient
     end
 
     class AsyncClient
-      attr_reader :b, :c
+      # @return [SeedApiClient::A::B::AsyncBClient]
+      attr_reader :b
+      # @return [SeedApiClient::A::C::AsyncCClient]
+      attr_reader :c
 
       # @param request_client [SeedApiClient::AsyncRequestClient]
       # @return [SeedApiClient::A::AsyncClient]

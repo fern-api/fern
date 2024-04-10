@@ -6,9 +6,22 @@ require "json"
 module SeedTraceClient
   class Commons
     class DoublyLinkedListNodeValue
-      attr_reader :node_id, :val, :next_, :prev, :additional_properties, :_field_set
+      # @return [String]
+      attr_reader :node_id
+      # @return [Float]
+      attr_reader :val
+      # @return [String]
+      attr_reader :next_
+      # @return [String]
+      attr_reader :prev
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param node_id [String]
       # @param val [Float]
       # @param next_ [String]
@@ -16,15 +29,12 @@ module SeedTraceClient
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Commons::DoublyLinkedListNodeValue]
       def initialize(node_id:, val:, next_: OMIT, prev: OMIT, additional_properties: nil)
-        # @type [String]
         @node_id = node_id
-        # @type [Float]
         @val = val
-        # @type [String]
         @next_ = next_ if next_ != OMIT
-        # @type [String]
         @prev = prev if prev != OMIT
-        @_field_set = { "nodeId": @node_id, "val": @val, "next": @next_, "prev": @prev }.reject do |_k, v|
+        @additional_properties = additional_properties
+        @_field_set = { "nodeId": node_id, "val": val, "next": next_, "prev": prev }.reject do |_k, v|
           v == OMIT
         end
       end
@@ -49,7 +59,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

@@ -10,7 +10,16 @@ require_relative "fern_exhaustive/req_with_headers/client"
 
 module SeedExhaustiveClient
   class Client
-    attr_reader :endpoints, :inlined_requests, :no_auth, :no_req_body, :req_with_headers
+    # @return [SeedExhaustiveClient::Endpoints::Client]
+    attr_reader :endpoints
+    # @return [SeedExhaustiveClient::InlinedRequestsClient]
+    attr_reader :inlined_requests
+    # @return [SeedExhaustiveClient::NoAuthClient]
+    attr_reader :no_auth
+    # @return [SeedExhaustiveClient::NoReqBodyClient]
+    attr_reader :no_req_body
+    # @return [SeedExhaustiveClient::ReqWithHeadersClient]
+    attr_reader :req_with_headers
 
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
@@ -29,7 +38,16 @@ module SeedExhaustiveClient
   end
 
   class AsyncClient
-    attr_reader :endpoints, :inlined_requests, :no_auth, :no_req_body, :req_with_headers
+    # @return [SeedExhaustiveClient::Endpoints::AsyncClient]
+    attr_reader :endpoints
+    # @return [SeedExhaustiveClient::AsyncInlinedRequestsClient]
+    attr_reader :inlined_requests
+    # @return [SeedExhaustiveClient::AsyncNoAuthClient]
+    attr_reader :no_auth
+    # @return [SeedExhaustiveClient::AsyncNoReqBodyClient]
+    attr_reader :no_req_body
+    # @return [SeedExhaustiveClient::AsyncReqWithHeadersClient]
+    attr_reader :req_with_headers
 
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.

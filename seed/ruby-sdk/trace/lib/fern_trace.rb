@@ -14,7 +14,22 @@ require_relative "fern_trace/sysprop/client"
 
 module SeedTraceClient
   class Client
-    attr_reader :v_2, :admin, :homepage, :migration, :playlist, :problem, :submission, :sysprop
+    # @return [SeedTraceClient::V2::V2Client]
+    attr_reader :v_2
+    # @return [SeedTraceClient::AdminClient]
+    attr_reader :admin
+    # @return [SeedTraceClient::HomepageClient]
+    attr_reader :homepage
+    # @return [SeedTraceClient::MigrationClient]
+    attr_reader :migration
+    # @return [SeedTraceClient::PlaylistClient]
+    attr_reader :playlist
+    # @return [SeedTraceClient::ProblemClient]
+    attr_reader :problem
+    # @return [SeedTraceClient::SubmissionClient]
+    attr_reader :submission
+    # @return [SeedTraceClient::SyspropClient]
+    attr_reader :sysprop
 
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
@@ -37,7 +52,22 @@ module SeedTraceClient
   end
 
   class AsyncClient
-    attr_reader :v_2, :admin, :homepage, :migration, :playlist, :problem, :submission, :sysprop
+    # @return [SeedTraceClient::V2::AsyncV2Client]
+    attr_reader :v_2
+    # @return [SeedTraceClient::AsyncAdminClient]
+    attr_reader :admin
+    # @return [SeedTraceClient::AsyncHomepageClient]
+    attr_reader :homepage
+    # @return [SeedTraceClient::AsyncMigrationClient]
+    attr_reader :migration
+    # @return [SeedTraceClient::AsyncPlaylistClient]
+    attr_reader :playlist
+    # @return [SeedTraceClient::AsyncProblemClient]
+    attr_reader :problem
+    # @return [SeedTraceClient::AsyncSubmissionClient]
+    attr_reader :submission
+    # @return [SeedTraceClient::AsyncSyspropClient]
+    attr_reader :sysprop
 
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.

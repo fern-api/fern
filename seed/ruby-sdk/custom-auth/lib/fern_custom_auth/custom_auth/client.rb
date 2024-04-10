@@ -5,12 +5,12 @@ require "async"
 
 module SeedCustomAuthClient
   class CustomAuthClient
+    # @return [SeedCustomAuthClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedCustomAuthClient::RequestClient]
     # @return [SeedCustomAuthClient::CustomAuthClient]
     def initialize(request_client:)
-      # @type [SeedCustomAuthClient::RequestClient]
       @request_client = request_client
     end
 
@@ -46,12 +46,12 @@ module SeedCustomAuthClient
   end
 
   class AsyncCustomAuthClient
+    # @return [SeedCustomAuthClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedCustomAuthClient::AsyncRequestClient]
     # @return [SeedCustomAuthClient::AsyncCustomAuthClient]
     def initialize(request_client:)
-      # @type [SeedCustomAuthClient::AsyncRequestClient]
       @request_client = request_client
     end
 

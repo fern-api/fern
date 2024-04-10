@@ -20,7 +20,6 @@ import { Function_ } from "../functions/Function_";
 import { Parameter } from "../Parameter";
 import { Property } from "../Property";
 import { Variable, VariableType } from "../Variable";
-import { Yardoc } from "../Yardoc";
 import { ConditionalStatement } from "./ConditionalStatement";
 
 export const AdditionalPropertiesProperty = new Property({
@@ -31,7 +30,7 @@ export const AdditionalPropertiesProperty = new Property({
 });
 export const FieldsetProperty = new Property({
     name: "_field_set",
-    type: new ArrayReference({ innerType: StringClassReference }),
+    type: GenericClassReference,
     isOptional: true
 });
 export declare namespace SerializableObject {
@@ -59,6 +58,14 @@ export class SerializableObject extends Class_ {
     }
 
     private static createInitializerFunction(properties: Property[], classReference: ClassReference): Function_ {
+        const propertyHash = new HashInstance({
+            contents: new Map(
+                properties?.map((prop) => {
+                    return [`"${prop.wireValue ?? prop.name}"`, prop.name];
+                })
+            ),
+            stringifyValues: false
+        });
         return new Function_({
             name: "initialize",
             parameters: [
@@ -68,7 +75,6 @@ export class SerializableObject extends Class_ {
             returnValue: classReference,
             functionBody: [
                 ...properties.map((prop) => {
-                    const yardoc = new Yardoc({ reference: { name: "typeReference", type: prop } });
                     return new Expression({
                         leftSide: prop.toVariable(),
                         rightSide: prop.isOptional
@@ -79,27 +85,29 @@ export class SerializableObject extends Class_ {
                                   operation: "if"
                               })
                             : prop.name,
-                        isAssignment: true,
-                        yardoc
+                        isAssignment: true
                     });
                 }),
                 new Expression({
+                    leftSide: AdditionalPropertiesProperty.toVariable(),
+                    rightSide: AdditionalPropertiesProperty.name,
+                    isAssignment: true
+                }),
+                new Expression({
                     leftSide: FieldsetProperty.toVariable(),
-                    rightSide: new FunctionInvocation({
-                        // Here we take only the keys that were explicitly set
-                        baseFunction: new Function_({ name: "reject", functionBody: [] }),
-                        block: {
-                            arguments: "_k, v",
-                            expressions: [new Expression({ leftSide: "v", rightSide: OmittedValue, operation: "==" })]
-                        },
-                        onObject: new HashInstance({
-                            contents: new Map(
-                                properties?.map((prop) => {
-                                    return [`"${prop.wireValue ?? prop.name}"`, prop.toVariable()];
-                                })
-                            )
-                        })
-                    }),
+                    rightSide: properties.some((prop) => prop.isOptional)
+                        ? new FunctionInvocation({
+                              // Here we take only the keys that were explicitly set
+                              baseFunction: new Function_({ name: "reject", functionBody: [] }),
+                              block: {
+                                  arguments: "_k, v",
+                                  expressions: [
+                                      new Expression({ leftSide: "v", rightSide: OmittedValue, operation: "==" })
+                                  ]
+                              },
+                              onObject: propertyHash
+                          })
+                        : propertyHash,
                     isAssignment: true
                 })
             ],

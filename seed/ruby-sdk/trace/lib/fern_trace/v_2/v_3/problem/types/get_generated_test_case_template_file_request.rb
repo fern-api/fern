@@ -9,21 +9,27 @@ module SeedTraceClient
     module V3
       class Problem
         class GetGeneratedTestCaseTemplateFileRequest
-          attr_reader :template, :additional_properties, :_field_set
+          # @return [SeedTraceClient::V2::V3::Problem::TestCaseTemplate]
+          attr_reader :template
+          # @return [OpenStruct] Additional properties unmapped to the current class definition
+          attr_reader :additional_properties
+          # @return [Object]
+          attr_reader :_field_set
           protected :_field_set
+
           OMIT = Object.new
+
           # @param template [SeedTraceClient::V2::V3::Problem::TestCaseTemplate]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [SeedTraceClient::V2::V3::Problem::GetGeneratedTestCaseTemplateFileRequest]
           def initialize(template:, additional_properties: nil)
-            # @type [SeedTraceClient::V2::V3::Problem::TestCaseTemplate]
             @template = template
-            @_field_set = { "template": @template }.reject do |_k, v|
-              v == OMIT
-            end
+            @additional_properties = additional_properties
+            @_field_set = { "template": template }
           end
 
-          # Deserialize a JSON object to an instance of GetGeneratedTestCaseTemplateFileRequest
+          # Deserialize a JSON object to an instance of
+          #  GetGeneratedTestCaseTemplateFileRequest
           #
           # @param json_object [String]
           # @return [SeedTraceClient::V2::V3::Problem::GetGeneratedTestCaseTemplateFileRequest]
@@ -39,14 +45,17 @@ module SeedTraceClient
             new(template: template, additional_properties: struct)
           end
 
-          # Serialize an instance of GetGeneratedTestCaseTemplateFileRequest to a JSON object
+          # Serialize an instance of GetGeneratedTestCaseTemplateFileRequest to a JSON
+          #  object
           #
           # @return [String]
           def to_json(*_args)
             @_field_set&.to_json
           end
 
-          # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+          # Leveraged for Union-type generation, validate_raw attempts to parse the given
+          #  hash and check each fields type against the current object's property
+          #  definitions.
           #
           # @param obj [Object]
           # @return [Void]

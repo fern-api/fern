@@ -5,18 +5,23 @@ require "json"
 
 module SeedResponsePropertyClient
   class StringResponse
-    attr_reader :data, :additional_properties, :_field_set
+    # @return [String]
+    attr_reader :data
+    # @return [OpenStruct] Additional properties unmapped to the current class definition
+    attr_reader :additional_properties
+    # @return [Object]
+    attr_reader :_field_set
     protected :_field_set
+
     OMIT = Object.new
+
     # @param data [String]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [SeedResponsePropertyClient::StringResponse]
     def initialize(data:, additional_properties: nil)
-      # @type [String]
       @data = data
-      @_field_set = { "data": @data }.reject do |_k, v|
-        v == OMIT
-      end
+      @additional_properties = additional_properties
+      @_field_set = { "data": data }
     end
 
     # Deserialize a JSON object to an instance of StringResponse
@@ -36,7 +41,9 @@ module SeedResponsePropertyClient
       @_field_set&.to_json
     end
 
-    # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+    # Leveraged for Union-type generation, validate_raw attempts to parse the given
+    #  hash and check each fields type against the current object's property
+    #  definitions.
     #
     # @param obj [Object]
     # @return [Void]

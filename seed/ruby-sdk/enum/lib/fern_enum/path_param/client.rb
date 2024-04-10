@@ -7,12 +7,12 @@ require "async"
 
 module SeedEnumClient
   class PathParamClient
+    # @return [SeedEnumClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedEnumClient::RequestClient]
     # @return [SeedEnumClient::PathParamClient]
     def initialize(request_client:)
-      # @type [SeedEnumClient::RequestClient]
       @request_client = request_client
     end
 
@@ -32,12 +32,12 @@ module SeedEnumClient
   end
 
   class AsyncPathParamClient
+    # @return [SeedEnumClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedEnumClient::AsyncRequestClient]
     # @return [SeedEnumClient::AsyncPathParamClient]
     def initialize(request_client:)
-      # @type [SeedEnumClient::AsyncRequestClient]
       @request_client = request_client
     end
 

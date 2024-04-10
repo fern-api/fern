@@ -10,10 +10,28 @@ require "json"
 module SeedTraceClient
   class Problem
     class CreateProblemRequest
-      attr_reader :problem_name, :problem_description, :files, :input_params, :output_type, :testcases, :method_name,
-                  :additional_properties, :_field_set
+      # @return [String]
+      attr_reader :problem_name
+      # @return [SeedTraceClient::Problem::ProblemDescription]
+      attr_reader :problem_description
+      # @return [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::Problem::ProblemFiles}]
+      attr_reader :files
+      # @return [Array<SeedTraceClient::Problem::VariableTypeAndName>]
+      attr_reader :input_params
+      # @return [SeedTraceClient::Commons::VariableType]
+      attr_reader :output_type
+      # @return [Array<SeedTraceClient::Commons::TestCaseWithExpectedResult>]
+      attr_reader :testcases
+      # @return [String]
+      attr_reader :method_name
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param problem_name [String]
       # @param problem_description [SeedTraceClient::Problem::ProblemDescription]
       # @param files [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::Problem::ProblemFiles}]
@@ -25,31 +43,23 @@ module SeedTraceClient
       # @return [SeedTraceClient::Problem::CreateProblemRequest]
       def initialize(problem_name:, problem_description:, files:, input_params:, output_type:, testcases:,
                      method_name:, additional_properties: nil)
-        # @type [String]
         @problem_name = problem_name
-        # @type [SeedTraceClient::Problem::ProblemDescription]
         @problem_description = problem_description
-        # @type [Hash{SeedTraceClient::Commons::Language => SeedTraceClient::Problem::ProblemFiles}]
         @files = files
-        # @type [Array<SeedTraceClient::Problem::VariableTypeAndName>]
         @input_params = input_params
-        # @type [SeedTraceClient::Commons::VariableType]
         @output_type = output_type
-        # @type [Array<SeedTraceClient::Commons::TestCaseWithExpectedResult>]
         @testcases = testcases
-        # @type [String]
         @method_name = method_name
+        @additional_properties = additional_properties
         @_field_set = {
-          "problemName": @problem_name,
-          "problemDescription": @problem_description,
-          "files": @files,
-          "inputParams": @input_params,
-          "outputType": @output_type,
-          "testcases": @testcases,
-          "methodName": @method_name
-        }.reject do |_k, v|
-          v == OMIT
-        end
+          "problemName": problem_name,
+          "problemDescription": problem_description,
+          "files": files,
+          "inputParams": input_params,
+          "outputType": output_type,
+          "testcases": testcases,
+          "methodName": method_name
+        }
       end
 
       # Deserialize a JSON object to an instance of CreateProblemRequest
@@ -95,7 +105,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

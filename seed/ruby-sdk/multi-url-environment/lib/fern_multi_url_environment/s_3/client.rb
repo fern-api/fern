@@ -5,12 +5,12 @@ require "async"
 
 module SeedMultiUrlEnvironmentClient
   class S3Client
+    # @return [SeedMultiUrlEnvironmentClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedMultiUrlEnvironmentClient::RequestClient]
     # @return [SeedMultiUrlEnvironmentClient::S3Client]
     def initialize(request_client:)
-      # @type [SeedMultiUrlEnvironmentClient::RequestClient]
       @request_client = request_client
     end
 
@@ -30,12 +30,12 @@ module SeedMultiUrlEnvironmentClient
   end
 
   class AsyncS3Client
+    # @return [SeedMultiUrlEnvironmentClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedMultiUrlEnvironmentClient::AsyncRequestClient]
     # @return [SeedMultiUrlEnvironmentClient::AsyncS3Client]
     def initialize(request_client:)
-      # @type [SeedMultiUrlEnvironmentClient::AsyncRequestClient]
       @request_client = request_client
     end
 

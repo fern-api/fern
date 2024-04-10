@@ -5,12 +5,12 @@ require "async"
 
 module SeedPackageYmlClient
   class ServiceClient
+    # @return [SeedPackageYmlClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedPackageYmlClient::RequestClient]
     # @return [SeedPackageYmlClient::ServiceClient]
     def initialize(request_client:)
-      # @type [SeedPackageYmlClient::RequestClient]
       @request_client = request_client
     end
 
@@ -28,12 +28,12 @@ module SeedPackageYmlClient
   end
 
   class AsyncServiceClient
+    # @return [SeedPackageYmlClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedPackageYmlClient::AsyncRequestClient]
     # @return [SeedPackageYmlClient::AsyncServiceClient]
     def initialize(request_client:)
-      # @type [SeedPackageYmlClient::AsyncRequestClient]
       @request_client = request_client
     end
 

@@ -7,21 +7,27 @@ require "json"
 module SeedTraceClient
   class Submission
     class UnexpectedLanguageError
-      attr_reader :expected_language, :actual_language, :additional_properties, :_field_set
+      # @return [SeedTraceClient::Commons::Language]
+      attr_reader :expected_language
+      # @return [SeedTraceClient::Commons::Language]
+      attr_reader :actual_language
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param expected_language [SeedTraceClient::Commons::Language]
       # @param actual_language [SeedTraceClient::Commons::Language]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Submission::UnexpectedLanguageError]
       def initialize(expected_language:, actual_language:, additional_properties: nil)
-        # @type [SeedTraceClient::Commons::Language]
         @expected_language = expected_language
-        # @type [SeedTraceClient::Commons::Language]
         @actual_language = actual_language
-        @_field_set = { "expectedLanguage": @expected_language, "actualLanguage": @actual_language }.reject do |_k, v|
-          v == OMIT
-        end
+        @additional_properties = additional_properties
+        @_field_set = { "expectedLanguage": expected_language, "actualLanguage": actual_language }
       end
 
       # Deserialize a JSON object to an instance of UnexpectedLanguageError
@@ -42,7 +48,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

@@ -6,6 +6,7 @@ require_relative "service/client"
 module SeedExamplesClient
   module Health
     class Client
+      # @return [SeedExamplesClient::Health::ServiceClient]
       attr_reader :service
 
       # @param request_client [SeedExamplesClient::RequestClient]
@@ -16,6 +17,7 @@ module SeedExamplesClient
     end
 
     class AsyncClient
+      # @return [SeedExamplesClient::Health::AsyncServiceClient]
       attr_reader :service
 
       # @param request_client [SeedExamplesClient::AsyncRequestClient]

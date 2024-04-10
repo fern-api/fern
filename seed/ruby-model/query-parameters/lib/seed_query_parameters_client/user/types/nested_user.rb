@@ -7,21 +7,27 @@ require "json"
 module SeedQueryParametersClient
   class User
     class NestedUser
-      attr_reader :name, :user, :additional_properties, :_field_set
+      # @return [String]
+      attr_reader :name
+      # @return [SeedQueryParametersClient::User::User]
+      attr_reader :user
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param name [String]
       # @param user [SeedQueryParametersClient::User::User]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedQueryParametersClient::User::NestedUser]
       def initialize(name:, user:, additional_properties: nil)
-        # @type [String]
         @name = name
-        # @type [SeedQueryParametersClient::User::User]
         @user = user
-        @_field_set = { "name": @name, "user": @user }.reject do |_k, v|
-          v == OMIT
-        end
+        @additional_properties = additional_properties
+        @_field_set = { "name": name, "user": user }
       end
 
       # Deserialize a JSON object to an instance of NestedUser
@@ -48,7 +54,9 @@ module SeedQueryParametersClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

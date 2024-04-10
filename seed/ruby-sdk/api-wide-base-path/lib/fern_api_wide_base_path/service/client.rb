@@ -5,12 +5,12 @@ require "async"
 
 module SeedApiWideBasePathClient
   class ServiceClient
+    # @return [SeedApiWideBasePathClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedApiWideBasePathClient::RequestClient]
     # @return [SeedApiWideBasePathClient::ServiceClient]
     def initialize(request_client:)
-      # @type [SeedApiWideBasePathClient::RequestClient]
       @request_client = request_client
     end
 
@@ -29,12 +29,12 @@ module SeedApiWideBasePathClient
   end
 
   class AsyncServiceClient
+    # @return [SeedApiWideBasePathClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedApiWideBasePathClient::AsyncRequestClient]
     # @return [SeedApiWideBasePathClient::AsyncServiceClient]
     def initialize(request_client:)
-      # @type [SeedApiWideBasePathClient::AsyncRequestClient]
       @request_client = request_client
     end
 

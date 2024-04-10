@@ -6,28 +6,31 @@ require "json"
 module SeedMixedCaseClient
   class Service
     class User
-      attr_reader :user_name, :metadata_tags, :extra_properties, :additional_properties, :_field_set
+      # @return [String]
+      attr_reader :user_name
+      # @return [Array<String>]
+      attr_reader :metadata_tags
+      # @return [Hash{String => String}]
+      attr_reader :extra_properties
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param user_name [String]
       # @param metadata_tags [Array<String>]
       # @param extra_properties [Hash{String => String}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedMixedCaseClient::Service::User]
       def initialize(user_name:, metadata_tags:, extra_properties:, additional_properties: nil)
-        # @type [String]
         @user_name = user_name
-        # @type [Array<String>]
         @metadata_tags = metadata_tags
-        # @type [Hash{String => String}]
         @extra_properties = extra_properties
-        @_field_set = {
-          "userName": @user_name,
-          "metadata_tags": @metadata_tags,
-          "EXTRA_PROPERTIES": @extra_properties
-        }.reject do |_k, v|
-          v == OMIT
-        end
+        @additional_properties = additional_properties
+        @_field_set = { "userName": user_name, "metadata_tags": metadata_tags, "EXTRA_PROPERTIES": extra_properties }
       end
 
       # Deserialize a JSON object to an instance of User
@@ -50,7 +53,9 @@ module SeedMixedCaseClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

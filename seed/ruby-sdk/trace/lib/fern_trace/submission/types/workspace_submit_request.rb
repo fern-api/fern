@@ -8,9 +8,22 @@ require "json"
 module SeedTraceClient
   class Submission
     class WorkspaceSubmitRequest
-      attr_reader :submission_id, :language, :submission_files, :user_id, :additional_properties, :_field_set
+      # @return [String]
+      attr_reader :submission_id
+      # @return [SeedTraceClient::Commons::Language]
+      attr_reader :language
+      # @return [Array<SeedTraceClient::Submission::SubmissionFileInfo>]
+      attr_reader :submission_files
+      # @return [String]
+      attr_reader :user_id
+      # @return [OpenStruct] Additional properties unmapped to the current class definition
+      attr_reader :additional_properties
+      # @return [Object]
+      attr_reader :_field_set
       protected :_field_set
+
       OMIT = Object.new
+
       # @param submission_id [String]
       # @param language [SeedTraceClient::Commons::Language]
       # @param submission_files [Array<SeedTraceClient::Submission::SubmissionFileInfo>]
@@ -18,19 +31,16 @@ module SeedTraceClient
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedTraceClient::Submission::WorkspaceSubmitRequest]
       def initialize(submission_id:, language:, submission_files:, user_id: OMIT, additional_properties: nil)
-        # @type [String]
         @submission_id = submission_id
-        # @type [SeedTraceClient::Commons::Language]
         @language = language
-        # @type [Array<SeedTraceClient::Submission::SubmissionFileInfo>]
         @submission_files = submission_files
-        # @type [String]
         @user_id = user_id if user_id != OMIT
+        @additional_properties = additional_properties
         @_field_set = {
-          "submissionId": @submission_id,
-          "language": @language,
-          "submissionFiles": @submission_files,
-          "userId": @user_id
+          "submissionId": submission_id,
+          "language": language,
+          "submissionFiles": submission_files,
+          "userId": user_id
         }.reject do |_k, v|
           v == OMIT
         end
@@ -60,7 +70,9 @@ module SeedTraceClient
         @_field_set&.to_json
       end
 
-      # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.
+      # Leveraged for Union-type generation, validate_raw attempts to parse the given
+      #  hash and check each fields type against the current object's property
+      #  definitions.
       #
       # @param obj [Object]
       # @return [Void]

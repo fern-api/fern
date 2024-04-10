@@ -7,7 +7,10 @@ require_relative "service/client"
 module SeedExamplesClient
   module File
     class Client
-      attr_reader :file, :service
+      # @return [SeedExamplesClient::File::Notification::Client]
+      attr_reader :file
+      # @return [SeedExamplesClient::File::ServiceClient]
+      attr_reader :service
 
       # @param request_client [SeedExamplesClient::RequestClient]
       # @return [SeedExamplesClient::File::Client]
@@ -18,7 +21,10 @@ module SeedExamplesClient
     end
 
     class AsyncClient
-      attr_reader :file, :service
+      # @return [SeedExamplesClient::File::Notification::AsyncClient]
+      attr_reader :file
+      # @return [SeedExamplesClient::File::AsyncServiceClient]
+      attr_reader :service
 
       # @param request_client [SeedExamplesClient::AsyncRequestClient]
       # @return [SeedExamplesClient::File::AsyncClient]

@@ -11,12 +11,12 @@ require "async"
 
 module SeedTraceClient
   class ProblemClient
+    # @return [SeedTraceClient::RequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedTraceClient::RequestClient]
     # @return [SeedTraceClient::ProblemClient]
     def initialize(request_client:)
-      # @type [SeedTraceClient::RequestClient]
       @request_client = request_client
     end
 
@@ -93,11 +93,11 @@ module SeedTraceClient
     #   * :name (String)
     # @param output_type [SeedTraceClient::Commons::VariableType]
     # @param method_name [String] The name of the `method` that the student has to complete.
-    #   The method name cannot include the following characters:
-    #   - Greater Than `>`
-    #   - Less Than `<``
-    #   - Equals `=`
-    #   - Period `.`
+    #  The method name cannot include the following characters:
+    #  - Greater Than `>`
+    #  - Less Than `<``
+    #  - Equals `=`
+    #  - Period `.`
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [SeedTraceClient::Problem::GetDefaultStarterFilesResponse]
     def get_default_starter_files(input_params:, output_type:, method_name:, request_options: nil)
@@ -119,12 +119,12 @@ module SeedTraceClient
   end
 
   class AsyncProblemClient
+    # @return [SeedTraceClient::AsyncRequestClient]
     attr_reader :request_client
 
     # @param request_client [SeedTraceClient::AsyncRequestClient]
     # @return [SeedTraceClient::AsyncProblemClient]
     def initialize(request_client:)
-      # @type [SeedTraceClient::AsyncRequestClient]
       @request_client = request_client
     end
 
@@ -207,11 +207,11 @@ module SeedTraceClient
     #   * :name (String)
     # @param output_type [SeedTraceClient::Commons::VariableType]
     # @param method_name [String] The name of the `method` that the student has to complete.
-    #   The method name cannot include the following characters:
-    #   - Greater Than `>`
-    #   - Less Than `<``
-    #   - Equals `=`
-    #   - Period `.`
+    #  The method name cannot include the following characters:
+    #  - Greater Than `>`
+    #  - Less Than `<``
+    #  - Equals `=`
+    #  - Period `.`
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [SeedTraceClient::Problem::GetDefaultStarterFilesResponse]
     def get_default_starter_files(input_params:, output_type:, method_name:, request_options: nil)
