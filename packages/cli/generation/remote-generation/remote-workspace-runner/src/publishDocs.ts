@@ -17,6 +17,7 @@ import * as mime from "mime-types";
 import terminalLink from "terminal-link";
 import { promisify } from "util";
 import { convertIrToNavigation } from "./convertIrToNavigation";
+import { extractDatetimeFromChangelogTitle } from "./extractDatetimeFromChangelogTitle";
 
 export async function publishDocs({
     token,
@@ -915,11 +916,25 @@ async function convertNavigationItem({
                     }
                 })
             });
+            const changelogItems: DocsV1Write.ChangelogItem[] = [];
             if (workspace.changelog != null) {
                 for (const file of workspace.changelog.files) {
+                    const splitFilepath = file.absoluteFilepath.split("/");
+                    const filename = splitFilepath[splitFilepath.length - 1];
+                    if (filename == null) {
+                        continue;
+                    }
+                    const changelogDate = extractDatetimeFromChangelogTitle(filename);
+                    if (changelogDate == null) {
+                        continue;
+                    }
                     pages[file.absoluteFilepath] = {
                         markdown: file.contents
                     };
+                    changelogItems.push({
+                        date: changelogDate.toISOString(),
+                        pageId: file.absoluteFilepath
+                    });
                 }
             }
             convertedItem = {
@@ -928,15 +943,10 @@ async function convertNavigationItem({
                 api: apiDefinitionId,
                 showErrors: item.showErrors,
                 changelog:
-                    workspace.changelog != null
+                    changelogItems.length > 0
                         ? {
                               urlSlug: "changelog",
-                              items: workspace.changelog.files.map((file) => {
-                                  return {
-                                      date: new Date().toISOString(),
-                                      pageId: file.absoluteFilepath
-                                  };
-                              })
+                              items: changelogItems
                           }
                         : undefined,
                 navigation: convertIrToNavigation(
