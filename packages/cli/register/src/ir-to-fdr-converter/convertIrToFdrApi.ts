@@ -8,13 +8,10 @@ import { convertAuth } from "./covertAuth";
 export function convertIrToFdrApi({
     ir,
     snippetsConfig
-}: // navigation
-{
+}: {
     ir: IntermediateRepresentation;
     snippetsConfig: APIV1Write.SnippetsConfig;
-    // navigation: docsYml.APINavigationSchema | undefined;
 }): APIV1Write.ApiDefinition {
-    // const convertedNavigation = convertIrToNavigation(ir, navigation);
     const fdrApi: APIV1Write.ApiDefinition = {
         types: {},
         subpackages: {},
@@ -28,7 +25,6 @@ export function convertIrToFdrApi({
                 type: convertTypeReference(header.valueType)
             })
         )
-        // navigation: convertedNavigation
     };
 
     for (const [typeId, type] of entries(ir.types)) {

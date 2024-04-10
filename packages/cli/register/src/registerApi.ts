@@ -15,15 +15,13 @@ export async function registerApi({
     token,
     audiences,
     snippetsConfig
-}: // navigation
-{
+}: {
     organization: string;
     workspace: FernWorkspace;
     context: TaskContext;
     token: FernToken;
     audiences: Audiences;
     snippetsConfig: APIV1Write.SnippetsConfig;
-    // navigation: docsYml.APINavigationSchema | undefined;
 }): Promise<{ id: FdrAPI.ApiDefinitionId; ir: IntermediateRepresentation }> {
     const ir = await generateIntermediateRepresentation({
         workspace,
