@@ -137,27 +137,35 @@ export declare namespace DocsNavigationItem {
     export interface Page {
         type: "page";
         title: string;
+        icon: string | undefined;
         absolutePath: AbsoluteFilePath;
         slug: string | undefined;
+        hidden: boolean | undefined;
     }
 
     export interface Section {
         type: "section";
         title: string;
+        icon: string | undefined;
         contents: DocsNavigationItem[];
         collapsed: boolean | undefined;
         slug: string | undefined;
+        hidden: boolean | undefined;
+        skipUrlSlug: boolean | undefined;
     }
 
     export interface ApiSection {
         type: "apiSection";
         title: string;
+        icon: string | undefined;
         apiName: string | undefined;
         audiences: Audiences;
         showErrors: boolean;
         snippetsConfiguration: SnippetsConfiguration | undefined;
         summaryAbsolutePath: AbsoluteFilePath | undefined;
         navigation: ParsedApiNavigationItem[];
+        hidden: boolean | undefined;
+        skipUrlSlug: boolean | undefined;
     }
 
     export interface Link {

@@ -9,4 +9,7 @@ export interface SectionConfiguration {
     contents: FernDocsConfig.NavigationItem[];
     collapsed?: boolean;
     slug?: string;
+    icon?: string;
+    hidden?: boolean;
+    skipSlug?: boolean;
 }

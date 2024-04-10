@@ -350,6 +350,8 @@ types:
       page: string
       path: string
       slug: optional<string>
+      icon: optional<string>
+      hidden: optional<boolean>
 
   SectionConfiguration:
     properties:
@@ -357,6 +359,9 @@ types:
       contents: list<NavigationItem>
       collapsed: optional<boolean>
       slug: optional<string>
+      icon: optional<string>
+      hidden: optional<boolean>
+      skip-slug: optional<boolean>
 
   ApiSectionConfiguration:
     properties:
@@ -377,6 +382,9 @@ types:
         type: optional<ApiNavigationItems>
         docs: |
           Advanced usage: when specified, this object will be used to customize the order that your API endpoints are displayed in the docs site, including subpackages, and additional markdown pages (to be rendered in between API endpoints). If not specified, the order will be inferred from the OpenAPI Spec or Fern Definition.
+      icon: optional<string>
+      hidden: optional<boolean>
+      skip-slug: optional<boolean>
 
   ApiNavigationItem:
     docs: |

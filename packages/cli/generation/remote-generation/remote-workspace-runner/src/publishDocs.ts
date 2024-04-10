@@ -856,9 +856,11 @@ async function convertNavigationItem({
             convertedItem = {
                 type: "page",
                 title: item.title,
+                icon: item.icon,
                 id: relative(dirname(parsedDocsConfig.absoluteFilepath), item.absolutePath),
                 urlSlugOverride: item.slug,
-                fullSlug: fullSlugs[item.absolutePath]?.fullSlug?.split("/")
+                fullSlug: fullSlugs[item.absolutePath]?.fullSlug?.split("/"),
+                hidden: item.hidden
             };
             break;
         }
@@ -882,7 +884,10 @@ async function convertNavigationItem({
                 title: item.title,
                 items: sectionItems.map((sectionItem) => sectionItem.item),
                 urlSlugOverride: item.slug,
-                collapsed: item.collapsed
+                collapsed: item.collapsed,
+                icon: item.icon,
+                hidden: item.hidden,
+                skipUrlSlug: item.skipUrlSlug
             };
             for (const sectionItem of sectionItems) {
                 pages = {

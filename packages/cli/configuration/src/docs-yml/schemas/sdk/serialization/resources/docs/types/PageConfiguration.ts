@@ -13,6 +13,8 @@ export const PageConfiguration: core.serialization.ObjectSchema<
     page: core.serialization.string(),
     path: core.serialization.string(),
     slug: core.serialization.string().optional(),
+    icon: core.serialization.string().optional(),
+    hidden: core.serialization.boolean().optional(),
 });
 
 export declare namespace PageConfiguration {
@@ -20,5 +22,7 @@ export declare namespace PageConfiguration {
         page: string;
         path: string;
         slug?: string | null;
+        icon?: string | null;
+        hidden?: boolean | null;
     }
 }

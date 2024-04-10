@@ -16,4 +16,7 @@ export interface ApiSectionConfiguration {
     summary?: string;
     /** Advanced usage: when specified, this object will be used to customize the order that your API endpoints are displayed in the docs site, including subpackages, and additional markdown pages (to be rendered in between API endpoints). If not specified, the order will be inferred from the OpenAPI Spec or Fern Definition. */
     layout?: FernDocsConfig.ApiNavigationItems;
+    icon?: string;
+    hidden?: boolean;
+    skipSlug?: boolean;
 }
