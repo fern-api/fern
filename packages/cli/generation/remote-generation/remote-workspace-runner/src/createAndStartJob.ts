@@ -1,7 +1,7 @@
 import { FernToken } from "@fern-api/auth";
 import { generatorsYml } from "@fern-api/configuration";
 import { createFiddleService, getFiddleOrigin } from "@fern-api/core";
-import { stringifyLargeObject } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import {
     migrateIntermediateRepresentationForGenerator,
     migrateIntermediateRepresentationToVersionForGenerator
@@ -30,7 +30,8 @@ export async function createAndStartJob({
     shouldLogS3Url,
     token,
     whitelabel,
-    irVersionOverride
+    irVersionOverride,
+    absolutePathToPreview
 }: {
     workspace: APIWorkspace;
     organization: string;
@@ -42,6 +43,7 @@ export async function createAndStartJob({
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     irVersionOverride: string | undefined;
+    absolutePathToPreview: AbsoluteFilePath | undefined;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const job = await createJob({
         workspace,
@@ -51,7 +53,8 @@ export async function createAndStartJob({
         context,
         shouldLogS3Url,
         token,
-        whitelabel
+        whitelabel,
+        absolutePathToPreview
     });
     await startJob({ intermediateRepresentation, job, context, generatorInvocation, irVersionOverride });
     return job;
@@ -65,7 +68,8 @@ async function createJob({
     context,
     shouldLogS3Url,
     token,
-    whitelabel
+    whitelabel,
+    absolutePathToPreview
 }: {
     workspace: APIWorkspace;
     organization: string;
@@ -75,6 +79,7 @@ async function createJob({
     shouldLogS3Url: boolean;
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
+    absolutePathToPreview: AbsoluteFilePath | undefined;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const generatorConfig: FernFiddle.GeneratorConfigV2 = {
         id: generatorInvocation.name,
@@ -140,12 +145,15 @@ async function createJob({
         version,
         organizationName: organization,
         generators: [generatorConfigsWithEnvVarSubstitutions],
-        uploadToS3:
-            shouldLogS3Url ||
-            generatorInvocation.absolutePathToLocalSnippets != null ||
-            generatorConfigsWithEnvVarSubstitutions.outputMode.type === "downloadFiles",
+        uploadToS3: shouldUploadToS3({
+            outputMode: generatorInvocation.outputMode,
+            generatorInvocation,
+            absolutePathToPreview,
+            shouldLogS3Url
+        }),
         whitelabel: whitelabelWithEnvVarSubstiutions,
-        fernDefinitionMetadata
+        fernDefinitionMetadata,
+        preview: absolutePathToPreview != null
     });
 
     if (!createResponse.ok) {
@@ -270,4 +278,23 @@ function convertCreateJobError(error: any): FernFiddle.remoteGen.createJobV3.Err
         }
     }
     return error;
+}
+
+function shouldUploadToS3({
+    outputMode,
+    generatorInvocation,
+    absolutePathToPreview,
+    shouldLogS3Url
+}: {
+    outputMode: FernFiddle.OutputMode;
+    generatorInvocation: generatorsYml.GeneratorInvocation;
+    absolutePathToPreview: AbsoluteFilePath | undefined;
+    shouldLogS3Url: boolean;
+}): boolean {
+    return (
+        outputMode.type === "downloadFiles" ||
+        generatorInvocation.absolutePathToLocalSnippets != null ||
+        absolutePathToPreview != null ||
+        shouldLogS3Url
+    );
 }

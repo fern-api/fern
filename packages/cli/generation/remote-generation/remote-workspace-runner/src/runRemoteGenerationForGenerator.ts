@@ -1,5 +1,6 @@
 import { FernToken } from "@fern-api/auth";
 import { Audiences, generatorsYml } from "@fern-api/configuration";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { InteractiveTaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
@@ -18,7 +19,8 @@ export async function runRemoteGenerationForGenerator({
     shouldLogS3Url,
     token,
     whitelabel,
-    irVersionOverride
+    irVersionOverride,
+    absolutePathToPreview
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -30,6 +32,7 @@ export async function runRemoteGenerationForGenerator({
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     irVersionOverride: string | undefined;
+    absolutePathToPreview: AbsoluteFilePath | undefined;
 }): Promise<RemoteTaskHandler.Response | undefined> {
     const intermediateRepresentation = await generateIntermediateRepresentation({
         workspace,
@@ -49,7 +52,8 @@ export async function runRemoteGenerationForGenerator({
         shouldLogS3Url,
         token,
         whitelabel,
-        irVersionOverride
+        irVersionOverride,
+        absolutePathToPreview
     });
     interactiveTaskContext.logger.debug(`Job ID: ${job.jobId}`);
 
@@ -64,7 +68,8 @@ export async function runRemoteGenerationForGenerator({
         job,
         taskId,
         generatorInvocation,
-        interactiveTaskContext
+        interactiveTaskContext,
+        absolutePathToPreview
     });
 
     return await pollJobAndReportStatus({
