@@ -23,13 +23,13 @@ import { Variable, VariableType } from "../Variable";
 import { Yardoc } from "../Yardoc";
 import { ConditionalStatement } from "./ConditionalStatement";
 
-export const additional_properties_property = new Property({
+export const AdditionalPropertiesProperty = new Property({
     name: "additional_properties",
     type: OpenStructClassReference,
     isOptional: true,
     documentation: "Additional properties unmapped to the current class definition"
 });
-export const fieldset_property = new Property({
+export const FieldsetProperty = new Property({
     name: "_field_set",
     type: new ArrayReference({ innerType: StringClassReference }),
     isOptional: true
@@ -51,8 +51,8 @@ export class SerializableObject extends Class_ {
                 init.properties ?? [],
                 init.classReference
             ),
-            properties: [...(init.properties ?? []), additional_properties_property],
-            protectedProperties: [fieldset_property],
+            properties: [...(init.properties ?? []), AdditionalPropertiesProperty],
+            protectedProperties: [FieldsetProperty],
             expressions: [SerializableObject.createOmitTypeExpression()],
             shouldOmitOptionalFieldsInInitializer: true
         });
@@ -63,7 +63,7 @@ export class SerializableObject extends Class_ {
             name: "initialize",
             parameters: [
                 ...properties.map((prop) => prop.toParameter({ shouldOmitOptional: true })),
-                additional_properties_property.toParameter({})
+                AdditionalPropertiesProperty.toParameter({})
             ],
             returnValue: classReference,
             functionBody: [
@@ -84,7 +84,7 @@ export class SerializableObject extends Class_ {
                     });
                 }),
                 new Expression({
-                    leftSide: fieldset_property.toVariable(),
+                    leftSide: FieldsetProperty.toVariable(),
                     rightSide: new FunctionInvocation({
                         // Here we take only the keys that were explicitly set
                         baseFunction: new Function_({ name: "reject", functionBody: [] }),
@@ -213,7 +213,7 @@ export class SerializableObject extends Class_ {
                 baseFunction: new Function_({ name: "new", functionBody: [] }),
                 arguments_: [
                     ...(properties?.map((prop) => prop.toArgument(prop.name, true)) ?? []),
-                    additional_properties_property.toArgument("struct", true)
+                    AdditionalPropertiesProperty.toArgument("struct", true)
                 ]
             })
         ];
@@ -257,7 +257,7 @@ export class SerializableObject extends Class_ {
                 // TODO: should we have a FunctionReference so we don't need to make these dummy full Function_ objects?
                 // also see the definition of "new" in the function above
                 baseFunction: new Function_({ name: "to_json", functionBody: [] }),
-                onObject: fieldset_property.toVariable()
+                onObject: FieldsetProperty.toVariable()
             })
         ];
         const toJsonDocumentation = `Serialize an instance of ${classReference.name} to a JSON object`;

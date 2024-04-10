@@ -3,7 +3,11 @@ export * from "./ast/abstractions/ConditionalStatement";
 export { DiscriminatedUnion } from "./ast/abstractions/DiscriminatedUnion";
 export { Enum } from "./ast/abstractions/Enum";
 export { RescueStatement } from "./ast/abstractions/RescueStatement";
-export { SerializableObject } from "./ast/abstractions/SerializableObject";
+export {
+    AdditionalPropertiesProperty,
+    FieldsetProperty,
+    SerializableObject
+} from "./ast/abstractions/SerializableObject";
 export { UndiscriminatedUnion } from "./ast/abstractions/UndiscriminatedUnion";
 export { Argument } from "./ast/Argument";
 export * from "./ast/classes/ClassReference";

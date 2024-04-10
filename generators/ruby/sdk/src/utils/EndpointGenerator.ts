@@ -1,4 +1,5 @@
 import {
+    AdditionalPropertiesProperty,
     Argument,
     AstNode,
     B64StringClassReference,
@@ -8,6 +9,7 @@ import {
     Class_,
     ConditionalStatement,
     Expression,
+    FieldsetProperty,
     FileClassReference,
     FunctionInvocation,
     Function_,
@@ -21,10 +23,6 @@ import {
     VariableType,
     VoidClassReference
 } from "@fern-api/ruby-codegen";
-import {
-    additional_properties_property,
-    fieldset_property
-} from "@fern-api/ruby-codegen/src/ast/abstractions/SerializableObject";
 import {
     BytesRequest,
     FileProperty,
@@ -175,7 +173,7 @@ export class EndpointGenerator {
                     }
                 })
                 .filter(
-                    (prop) => prop.name !== additional_properties_property.name && prop.name !== fieldset_property.name
+                    (prop) => prop.name !== AdditionalPropertiesProperty.name && prop.name !== FieldsetProperty.name
                 ) ?? [];
 
         this.streamProcessingBlock = this.isStreamingResponse()
