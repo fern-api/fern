@@ -369,37 +369,62 @@ types:
         type: optional<boolean>
         docs: Defaults to false
       snippets: optional<SnippetsConfiguration>
-      layout: 
-        type: optional<ApiSectionLayout>
+      summary:
+        type: optional<string>
         docs: |
-          If `layout` is set to `sidebar`, the API section will render with a sidebar.
-          If `layout` is set to `full`, the API section will render without a sidebar.
-  
-  ApiSectionLayout: 
-    docs: | 
+          Relative path to the markdown file. This summary is displayed at the top of the API section.
+      layout:
+        type: optional<ApiNavigationItems>
+        docs: |
+          Advanced usage: when specified, this object will be used to customize the order that your API endpoints are displayed in the docs site, including subpackages, and additional markdown pages (to be rendered in between API endpoints). If not specified, the order will be inferred from the OpenAPI Spec or Fern Definition.
+
+  ApiNavigationItem:
+    docs: |
       Use the `layout` object to customize the order that your API endpoints
       are displayed in the docs site.
-    type: unknown
-    examples: 
+    discriminated: false
+    union:
+      - type: string
+        docs: |
+          This should be either an endpoint, websocket, webhook, or subpackage ID
+      - type: map<string, ApiNavigationItems>
+        docs: |
+          Keyed by subpackage ID, this object allows you to group endpoints and pages together.
+      - type: PageConfiguration
+        docs: |
+          This should be a markdown file that will be displayed in the API section.
+
+  ApiNavigationItems:
+    type: list<ApiNavigationItem>
+    examples:
       - name: Ordering Groups
-        value: 
+        value:
           - users # users endpoints will be displayed first
           - roles
           - permissions
       - name: Ordering Endpoints
-        value: 
-          - roles
-            - get
-            - create
-            - update
+        value:
+          - roles:
+              - get
+              - create
+              - update
+          - users:
+              - get
+              - create
+              - update
+          - permissions:
+              - get
+              - create
+              - update
+      - name: Ordering Groups and Pages
+        value:
           - users
-            - get
-            - create
-            - update
+          - roles:
+              - get
+              - create
+              - ./pages/inner-page.mdx
+              - update
           - permissions
-            - get
-            - create
-            - update
 
   LinkConfiguration:
     properties:
@@ -421,12 +446,12 @@ types:
           The primary accent color is used for buttons, links, and other interactive elements. 
 
           @default: #818CF8
-      
+
       accentPrimary:
         type: optional<ColorConfig>
         name: accentPrimaryDeprecated
         availability: deprecated
-        docs: | 
+        docs: |
           Use `accent-primary` instead.
 
       background:

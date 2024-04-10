@@ -16,6 +16,7 @@ import { imageSize } from "image-size";
 import * as mime from "mime-types";
 import terminalLink from "terminal-link";
 import { promisify } from "util";
+import { convertIrToNavigation } from "./convertIrToNavigation";
 
 export async function publishDocs({
     token,
@@ -316,7 +317,7 @@ async function convertDocsConfiguration({
         version,
         fullSlugs
     });
-    const config: Omit<WithoutQuestionMarks<DocsV1Write.DocsConfig>, "logo" | "colors" | "typography" | "colorsV2"> = {
+    const config: ConvertedDocsConfiguration["config"] = {
         title: parsedDocsConfig.title,
         // deprecated, use colorsV3 instead of logoV2
         logoV2: undefined,
@@ -893,13 +894,13 @@ async function convertNavigationItem({
         }
         case "apiSection": {
             const workspace = getFernWorkspaceForApiSection({ apiSection: item, fernWorkspaces });
-            const apiDefinitionId = await registerApi({
+            const { id: apiDefinitionId, ir } = await registerApi({
                 organization,
                 workspace,
                 context,
                 token,
                 audiences: item.audiences,
-                navigation: item.navigation,
+                // navigation: item.navigation,
                 snippetsConfig: convertDocsSnippetsConfigurationToFdr({
                     snippetsConfiguration: item.snippetsConfiguration ?? {
                         python: undefined,
@@ -932,7 +933,14 @@ async function convertNavigationItem({
                                   };
                               })
                           }
-                        : undefined
+                        : undefined,
+                navigation: convertIrToNavigation(
+                    ir,
+                    item.summaryAbsolutePath,
+                    item.navigation,
+                    parsedDocsConfig.absoluteFilepath,
+                    fullSlugs
+                )
             };
             break;
         }
