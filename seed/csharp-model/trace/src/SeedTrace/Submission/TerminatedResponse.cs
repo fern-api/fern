@@ -1,5 +1,3 @@
 namespace SeedTrace;
 
-public class TerminatedResponse
-{
-}
+public class TerminatedResponse { }
