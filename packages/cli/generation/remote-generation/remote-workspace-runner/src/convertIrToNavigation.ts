@@ -1,10 +1,13 @@
 import { docsYml } from "@fern-api/configuration";
 import { DocsV1Write } from "@fern-api/fdr-sdk";
+import { AbsoluteFilePath, dirname, relative } from "@fern-api/fs-utils";
 import { FernIr, IntermediateRepresentation } from "@fern-api/ir-sdk";
 
 export function convertIrToNavigation(
     ir: IntermediateRepresentation,
-    navigation: docsYml.APINavigationSchema | undefined
+    rootSummaryAbsolutePath: AbsoluteFilePath | undefined,
+    navigation: docsYml.ParsedApiNavigationItem[] | undefined,
+    absoluteFilepathToDocsConfig: AbsoluteFilePath
 ): DocsV1Write.ApiNavigationConfigRoot | undefined {
     if (navigation == null) {
         return undefined;
@@ -12,22 +15,28 @@ export function convertIrToNavigation(
 
     const defaultRoot = convertIrToDefaultNavigationConfigRoot(ir);
 
-    const items = visitAndSortNavigationSchema(navigation, defaultRoot.items, ir);
+    const items = visitAndSortNavigationSchema(navigation, defaultRoot.items, ir, absoluteFilepathToDocsConfig);
 
-    return { items };
+    return {
+        items,
+        summaryPageId:
+            rootSummaryAbsolutePath == null
+                ? undefined
+                : relative(dirname(absoluteFilepathToDocsConfig), rootSummaryAbsolutePath)
+    };
 }
 
 export function convertIrToDefaultNavigationConfigRoot(
     ir: IntermediateRepresentation
-): APIV1Write.ApiNavigationConfigRoot {
-    const items: APIV1Write.ApiNavigationConfigItem[] = convertPackageToNavigationConfigItems(ir.rootPackage, ir);
+): DocsV1Write.ApiNavigationConfigRoot {
+    const items: DocsV1Write.ApiNavigationConfigItem[] = convertPackageToNavigationConfigItems(ir.rootPackage, ir);
     return { items };
 }
 
 function convertPackageToNavigationConfigItems(
     package_: FernIr.Package,
     ir: IntermediateRepresentation
-): APIV1Write.ApiNavigationConfigItem[] {
+): DocsV1Write.ApiNavigationConfigItem[] {
     if (package_.navigationConfig != null) {
         const pointsToPackage = ir.subpackages[package_.navigationConfig.pointsTo];
         if (pointsToPackage != null) {
@@ -35,7 +44,7 @@ function convertPackageToNavigationConfigItems(
         }
     }
 
-    const items: APIV1Write.ApiNavigationConfigItem[] = [];
+    const items: DocsV1Write.ApiNavigationConfigItem[] = [];
 
     if (package_.service != null) {
         const httpService = ir.services[package_.service];
@@ -76,10 +85,12 @@ function convertPackageToNavigationConfigItems(
 }
 
 function createItemMatcher(key: string, ir: IntermediateRepresentation) {
-    return function (item: APIV1Write.ApiNavigationConfigItem): boolean {
+    return function (item: DocsV1Write.ApiNavigationConfigItem): boolean {
         if (item.type === "subpackage") {
             // subpackages are keyed by a generated ID, so we need to look up the original name
             return ir.subpackages[item.subpackageId]?.name.originalName === key;
+        } else if (item.type === "page") {
+            return false;
         } else {
             // endpoints, webhooks, and websockets are keyed by their original name
             return key === item.value;
@@ -88,14 +99,15 @@ function createItemMatcher(key: string, ir: IntermediateRepresentation) {
 }
 
 function visitAndSortNavigationSchema(
-    navigationItems: docsYml.APINavigationSchema,
-    defaultItems: APIV1Write.ApiNavigationConfigItem[],
-    ir: IntermediateRepresentation
-): APIV1Write.ApiNavigationConfigItem[] {
-    const items: APIV1Write.ApiNavigationConfigItem[] = [];
+    navigationItems: docsYml.ParsedApiNavigationItem[],
+    defaultItems: DocsV1Write.ApiNavigationConfigItem[],
+    ir: IntermediateRepresentation,
+    absoluteFilepathToDocsConfig: AbsoluteFilePath
+): DocsV1Write.ApiNavigationConfigItem[] {
+    const items: DocsV1Write.ApiNavigationConfigItem[] = [];
     for (const navigationItem of navigationItems) {
-        if (typeof navigationItem === "string") {
-            const foundItem = defaultItems.find(createItemMatcher(navigationItem, ir));
+        if (navigationItem.type === "item") {
+            const foundItem = defaultItems.find(createItemMatcher(navigationItem.value, ir));
 
             if (foundItem != null && foundItem.type !== "subpackage") {
                 items.push(foundItem);
@@ -106,20 +118,32 @@ function visitAndSortNavigationSchema(
                     items: []
                 });
             }
+        } else if (navigationItem.type === "page") {
+            const docsDir = dirname(absoluteFilepathToDocsConfig);
+            items.push({
+                type: "page",
+                id: relative(docsDir, navigationItem.absolutePath),
+                title: navigationItem.title,
+                icon: undefined,
+                hidden: undefined,
+                urlSlugOverride: navigationItem.slug,
+                fullSlug: undefined
+            });
         } else {
-            // item must be a collection of groups
+            // item must be a collection of subpackages
+            const foundItem = defaultItems.find(createItemMatcher(navigationItem.subpackageId, ir));
 
-            for (const [groupName, group] of Object.entries(navigationItem)) {
-                // item could either be a group name or method name
-                const foundItem = defaultItems.find(createItemMatcher(groupName, ir));
-
-                if (foundItem != null && foundItem.type === "subpackage") {
-                    items.push({
-                        type: "subpackage",
-                        subpackageId: foundItem.subpackageId,
-                        items: visitAndSortNavigationSchema(group, foundItem.items, ir)
-                    });
-                }
+            if (foundItem != null && foundItem.type === "subpackage") {
+                items.push({
+                    type: "subpackage",
+                    subpackageId: foundItem.subpackageId,
+                    items: visitAndSortNavigationSchema(
+                        navigationItem.items,
+                        foundItem.items,
+                        ir,
+                        absoluteFilepathToDocsConfig
+                    )
+                });
             }
         }
     }

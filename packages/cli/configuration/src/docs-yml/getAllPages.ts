@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath, relativize } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
-import { DocsNavigationConfiguration, DocsNavigationItem } from "./ParsedDocsConfiguration";
+import { DocsNavigationConfiguration, DocsNavigationItem, ParsedApiNavigationItem } from "./ParsedDocsConfiguration";
 
 export async function getAllPages({
     navigation,
@@ -63,7 +63,21 @@ export async function getAllPagesFromNavigationItem({
     absolutePathToFernFolder: AbsoluteFilePath;
 }): Promise<Record<RelativeFilePath, string>> {
     switch (item.type) {
-        case "apiSection":
+        case "apiSection": {
+            const toRet = combineMaps(
+                await Promise.all(
+                    item.navigation.map((apiNavigation) =>
+                        getAllPagesFromApiNavigationItem({ item: apiNavigation, absolutePathToFernFolder })
+                    )
+                )
+            );
+            if (item.summaryAbsolutePath != null) {
+                toRet[await relativize(absolutePathToFernFolder, item.summaryAbsolutePath)] = (
+                    await readFile(item.summaryAbsolutePath)
+                ).toString();
+            }
+            return toRet;
+        }
         case "link":
             return {};
         case "page":
@@ -87,4 +101,37 @@ export async function getAllPagesFromNavigationItem({
 
 function combineMaps(maps: Record<RelativeFilePath, string>[]) {
     return maps.reduce((acc, record) => ({ ...acc, ...record }), {});
+}
+
+async function getAllPagesFromApiNavigationItem({
+    item,
+    absolutePathToFernFolder
+}: {
+    item: ParsedApiNavigationItem;
+    absolutePathToFernFolder: AbsoluteFilePath;
+}): Promise<Record<RelativeFilePath, string>> {
+    if (item.type === "page") {
+        return {
+            [await relativize(absolutePathToFernFolder, item.absolutePath)]: (
+                await readFile(item.absolutePath)
+            ).toString()
+        };
+    } else if (item.type === "subpackage") {
+        const toRet = combineMaps(
+            await Promise.all(
+                item.items.map(async (subItem) => {
+                    return await getAllPagesFromApiNavigationItem({ item: subItem, absolutePathToFernFolder });
+                })
+            )
+        );
+
+        if (item.summaryAbsolutePath != null) {
+            toRet[await relativize(absolutePathToFernFolder, item.summaryAbsolutePath)] = (
+                await readFile(item.summaryAbsolutePath)
+            ).toString();
+        }
+
+        return toRet;
+    }
+    return {};
 }

@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, isPlainObject } from "@fern-api/core-utils";
 import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
@@ -9,12 +9,12 @@ import { convertColorsConfiguration } from "./convertColorsConfiguration";
 import { getAllPages } from "./getAllPages";
 import {
     AbsoluteJsFileConfig,
-    APINavigationSchema,
     DocsNavigationConfiguration,
     DocsNavigationItem,
     FontConfig,
     ImageReference,
     JavascriptConfig,
+    ParsedApiNavigationItem,
     ParsedDocsConfiguration,
     TabbedDocsNavigation,
     TypographyConfig,
@@ -539,15 +539,6 @@ async function convertNavigationItem({
         };
     }
     if (isRawApiSectionConfig(rawConfig)) {
-        let navigation: APINavigationSchema | undefined = undefined;
-        if (rawConfig.layout != null) {
-            const parseResponse = APINavigationSchema.safeParse(rawConfig.layout);
-            if (parseResponse.success) {
-                navigation = parseResponse.data;
-            } else {
-                context.logger.error(`Failed to parse API layout configuration: ${parseResponse.error.message}`);
-            }
-        }
         return {
             type: "apiSection",
             title: rawConfig.api,
@@ -559,7 +550,7 @@ async function convertNavigationItem({
                 rawConfig.snippets != null
                     ? convertSnippetsConfiguration({ rawConfig: rawConfig.snippets })
                     : undefined,
-            navigation,
+            navigation: rawConfig.layout?.flatMap((item) => parseApiNavigationItem(item, absolutePathToConfig)) ?? [],
             summaryAbsolutePath:
                 rawConfig.summary != null
                     ? resolveFilepath({
@@ -579,6 +570,44 @@ async function convertNavigationItem({
     assertNever(rawConfig);
 }
 
+function parseApiNavigationItem(
+    item: RawDocs.ApiNavigationItem,
+    absolutePathToConfig: AbsoluteFilePath
+): ParsedApiNavigationItem[] {
+    if (typeof item === "string") {
+        return [
+            {
+                type: "item",
+                value: item
+            }
+        ];
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if (isRawPageConfig(item)) {
+        return [
+            {
+                type: "page",
+                title: item.page,
+                absolutePath: resolveFilepath({
+                    absolutePath: absolutePathToConfig,
+                    rawUnresolvedFilepath: item.path
+                }),
+                slug: item.slug ?? undefined
+            }
+        ];
+    }
+
+    return Object.entries(item).map(([key, values]): ParsedApiNavigationItem.Subpackage => {
+        return {
+            type: "subpackage",
+            subpackageId: key,
+            summaryAbsolutePath: undefined,
+            items: values.flatMap((value) => parseApiNavigationItem(value, absolutePathToConfig))
+        };
+    });
+}
+
 function convertSnippetsConfiguration({
     rawConfig
 }: {
@@ -592,9 +621,8 @@ function convertSnippetsConfiguration({
     };
 }
 
-function isRawPageConfig(item: RawDocs.NavigationItem): item is RawDocs.PageConfiguration {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (item as RawDocs.PageConfiguration).page != null;
+function isRawPageConfig(item: unknown): item is RawDocs.PageConfiguration {
+    return isPlainObject(item) && typeof item.page === "string" && typeof item.path === "string";
 }
 
 function isRawSectionConfig(item: RawDocs.NavigationItem): item is RawDocs.SectionConfiguration {

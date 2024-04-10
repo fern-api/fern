@@ -16,7 +16,7 @@ export const ApiSectionConfiguration: core.serialization.ObjectSchema<
     displayErrors: core.serialization.property("display-errors", core.serialization.boolean().optional()),
     snippets: core.serialization.lazyObject(async () => (await import("../../..")).SnippetsConfiguration).optional(),
     summary: core.serialization.string().optional(),
-    layout: core.serialization.lazy(async () => (await import("../../..")).ApiSectionLayout).optional(),
+    layout: core.serialization.lazy(async () => (await import("../../..")).ApiNavigationItems).optional(),
 });
 
 export declare namespace ApiSectionConfiguration {
@@ -27,6 +27,6 @@ export declare namespace ApiSectionConfiguration {
         "display-errors"?: boolean | null;
         snippets?: serializers.SnippetsConfiguration.Raw | null;
         summary?: string | null;
-        layout?: (serializers.ApiSectionLayout.Raw | undefined) | null;
+        layout?: serializers.ApiNavigationItems.Raw | null;
     }
 }

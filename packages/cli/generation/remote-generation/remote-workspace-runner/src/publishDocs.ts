@@ -16,6 +16,7 @@ import { imageSize } from "image-size";
 import * as mime from "mime-types";
 import terminalLink from "terminal-link";
 import { promisify } from "util";
+import { convertIrToNavigation } from "./convertIrToNavigation";
 
 export async function publishDocs({
     token,
@@ -933,7 +934,12 @@ async function convertNavigationItem({
                               })
                           }
                         : undefined,
-                navigation: undefined
+                navigation: convertIrToNavigation(
+                    ir,
+                    item.summaryAbsolutePath,
+                    item.navigation,
+                    parsedDocsConfig.absoluteFilepath
+                )
             };
             break;
         }
