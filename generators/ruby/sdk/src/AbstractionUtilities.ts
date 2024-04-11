@@ -624,7 +624,8 @@ function generateRequestClientInitializer(
                     rightSide: new ClassReference({
                         name: ":multipart",
                         import_: new Import({ from: "faraday/multipart", isExternal: true })
-                    })
+                    }),
+                    isAssignment: false
                 }),
                 isAssignment: false
             })
@@ -674,7 +675,8 @@ function generateRequestClientInitializer(
                                 import_: new Import({ from: "faraday/retry", isExternal: true })
                             }),
                             rightSide: retryOptions,
-                            operation: ", "
+                            operation: ", ",
+                            isAssignment: false
                         }),
                         isAssignment: false
                     })

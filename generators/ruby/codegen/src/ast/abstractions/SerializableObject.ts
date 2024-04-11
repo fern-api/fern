@@ -1,5 +1,6 @@
 import { Argument } from "../Argument";
 import {
+    AliasReference,
     ArrayReference,
     ClassReference,
     DateReference,
@@ -102,7 +103,12 @@ export class SerializableObject extends Class_ {
                               block: {
                                   arguments: "_k, v",
                                   expressions: [
-                                      new Expression({ leftSide: "v", rightSide: OmittedValue, operation: "==" })
+                                      new Expression({
+                                          leftSide: "v",
+                                          rightSide: OmittedValue,
+                                          operation: "==",
+                                          isAssignment: false
+                                      })
                                   ]
                               },
                               onObject: propertyHash
@@ -165,11 +171,18 @@ export class SerializableObject extends Class_ {
                 });
 
                 usesParsedJson = parsedJsonVariable.fromJson() !== undefined;
+                const classReferenceForCast = prop.type[0];
                 const hasFromJson =
                     usesParsedJson &&
-                    !(prop.type[0] instanceof ArrayReference) &&
-                    !(prop.type[0] instanceof HashReference) &&
-                    !(prop.type[0] instanceof DateReference);
+                    !(classReferenceForCast instanceof ArrayReference) &&
+                    !(classReferenceForCast instanceof HashReference) &&
+                    !(classReferenceForCast instanceof DateReference) &&
+                    !(
+                        classReferenceForCast instanceof AliasReference &&
+                        (classReferenceForCast.aliasOf instanceof ArrayReference ||
+                            classReferenceForCast.aliasOf instanceof HashReference ||
+                            classReferenceForCast.aliasOf instanceof DateReference)
+                    );
                 if (hasFromJson) {
                     // If there's a special fromJson, then cast the object back to JSON before proceeding
                     const variable = new Variable({

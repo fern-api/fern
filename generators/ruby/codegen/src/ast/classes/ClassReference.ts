@@ -227,7 +227,7 @@ export declare namespace AliasReference {
     }
 }
 export class AliasReference extends ClassReference {
-    private aliasOf: ClassReference;
+    public aliasOf: ClassReference;
     constructor({ aliasOf, ...rest }: AliasReference.Init) {
         super(rest);
         this.aliasOf = aliasOf;
