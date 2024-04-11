@@ -2,8 +2,11 @@ import {
     AliasTypeDeclaration,
     ContainerType,
     DeclaredTypeName,
+    EnumTypeDeclaration,
+    EnumValue,
     Literal,
     MapType,
+    ObjectTypeDeclaration,
     PrimitiveType,
     ResolvedNamedType,
     SingleUnionTypeProperties,
@@ -16,6 +19,7 @@ import {
 import { format } from "util";
 import { LocationGenerator } from "../../utils/LocationGenerator";
 import { ConditionalStatement } from "../abstractions/ConditionalStatement";
+import { generateEnumNameFromValues } from "../abstractions/Enum";
 import { Argument } from "../Argument";
 import { AstNode } from "../core/AstNode";
 import { Expression } from "../expressions/Expression";
@@ -23,6 +27,7 @@ import { FunctionInvocation } from "../functions/FunctionInvocation";
 import { Function_ } from "../functions/Function_";
 import { Import } from "../Import";
 import { Module_ } from "../Module_";
+import { Property } from "../Property";
 import { Variable } from "../Variable";
 
 enum RubyClass {
@@ -93,7 +98,7 @@ export class ClassReference extends AstNode {
         const fi = new FunctionInvocation({
             baseFunction: new Function_({ name: "is_a?", functionBody: [] }),
             onObject: variable,
-            arguments_: [new Argument({ value: this.qualifiedName, isNamed: false, type: GenericClassReference })],
+            arguments_: [new Argument({ value: this.qualifiedName, isNamed: false })],
             optionalSafeCall: isOptional
         });
         return new Expression({
@@ -114,8 +119,13 @@ export class ClassReference extends AstNode {
     public getImports(): Set<Import> {
         return new Set(this.import_ ? [this.import_] : []);
     }
+
+    public generateSnippet(example: unknown): AstNode | string {
+        return example as string;
+    }
 }
 
+// Basic or primitve class references for which we don't do much
 export const OpenStructClassReference = new ClassReference({
     name: RubyClass.OPENSTRUCT,
     import_: new Import({ from: "ostruct", isExternal: true })
@@ -134,21 +144,25 @@ export const B64StringClassReference = new ClassReference({ name: RubyClass.BASE
 export const NilValue = "nil";
 export const OmittedValue = "OMIT";
 
+// Extended class references
 export declare namespace SerializableObjectReference {
-    export type InitReference = ClassReference.Init;
+    export interface InitReference extends ClassReference.Init {
+        properties: Map<string, ClassReference>;
+    }
 }
 export class SerializableObjectReference extends ClassReference {
-    constructor(init: SerializableObjectReference.InitReference) {
-        super({ ...init });
+    properties: Map<string, ClassReference>;
+
+    constructor({ properties, ...rest }: SerializableObjectReference.InitReference) {
+        super({ ...rest });
+        this.properties = properties;
     }
 
     public fromJson(variable: string | Variable): AstNode | undefined {
         return new FunctionInvocation({
             baseFunction: new Function_({ name: "from_json", functionBody: [] }),
             onObject: this.qualifiedName,
-            arguments_: [
-                new Argument({ type: StringClassReference, value: variable, isNamed: true, name: "json_object" })
-            ]
+            arguments_: [new Argument({ value: variable, isNamed: true, name: "json_object" })]
         });
     }
 
@@ -157,7 +171,7 @@ export class SerializableObjectReference extends ClassReference {
             baseFunction: new Function_({ name: "validate_raw", functionBody: [] }),
             // Recreate the variable to force isOptional to raise if a required variable is optional
             onObject: this,
-            arguments_: [new Argument({ value: variable, isNamed: true, name: "obj", type: GenericClassReference })]
+            arguments_: [new Argument({ value: variable, isNamed: true, name: "obj" })]
         });
 
         return !isOptional
@@ -177,7 +191,8 @@ export class SerializableObjectReference extends ClassReference {
 
     static fromDeclaredTypeName(
         declaredTypeName: DeclaredTypeName,
-        locationGenerator: LocationGenerator
+        locationGenerator: LocationGenerator,
+        properties: Map<string, ClassReference>
     ): ClassReference {
         const location = locationGenerator.getLocationForTypeDeclaration(declaredTypeName);
         const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(
@@ -189,7 +204,19 @@ export class SerializableObjectReference extends ClassReference {
             name: declaredTypeName.name.pascalCase.safeName,
             import_: new Import({ from: location }),
             moduleBreadcrumbs,
-            resolvedTypeId: declaredTypeName.typeId
+            resolvedTypeId: declaredTypeName.typeId,
+            properties
+        });
+    }
+
+    public generateSnippet(example: unknown): string | AstNode {
+        return new FunctionInvocation({
+            baseFunction: new Function_({ name: "new", functionBody: [] }),
+            onObject: this,
+            arguments_: Array.from(this.properties.entries()).map(
+                ([key, value]) =>
+                    new Argument({ isNamed: true, name: key, value: value.generateSnippet((example as any)[key]) })
+            )
         });
     }
 }
@@ -204,7 +231,8 @@ export class DiscriminatedUnionClassReference extends SerializableObjectReferenc
 
     static fromDeclaredTypeName(
         declaredTypeName: DeclaredTypeName,
-        locationGenerator: LocationGenerator
+        locationGenerator: LocationGenerator,
+        properties: Map<string, ClassReference>
     ): ClassReference {
         const location = locationGenerator.getLocationForTypeDeclaration(declaredTypeName);
         const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(
@@ -216,8 +244,15 @@ export class DiscriminatedUnionClassReference extends SerializableObjectReferenc
             name: declaredTypeName.name.pascalCase.safeName,
             import_: new Import({ from: location }),
             moduleBreadcrumbs,
-            resolvedTypeId: declaredTypeName.typeId
+            resolvedTypeId: declaredTypeName.typeId,
+            properties
         });
+    }
+
+    public generateSnippet(example: unknown): string {
+        // TODO: generate discriminated union snippets
+        // Blocked on generating a more attractive class
+        return "nil";
     }
 }
 
@@ -261,6 +296,10 @@ export class AliasReference extends ClassReference {
             resolvedTypeId
         });
     }
+
+    public generateSnippet(example: unknown): AstNode | string {
+        return this.aliasOf.generateSnippet(example);
+    }
 }
 
 export declare namespace ArrayReference {
@@ -268,7 +307,7 @@ export declare namespace ArrayReference {
         innerType: ClassReference | string;
     }
     export interface InitInstance extends AstNode.Init {
-        contents?: string[];
+        contents?: (AstNode | string)[];
     }
 }
 export class ArrayReference extends ClassReference {
@@ -310,10 +349,18 @@ export class ArrayReference extends ClassReference {
               })
             : undefined;
     }
+
+    public generateSnippet(example: unknown): string | AstNode {
+        return new ArrayInstance({
+            contents: (example as unknown[]).map((element) =>
+                this.innerType instanceof ClassReference ? this.innerType.generateSnippet(element) : (element as string)
+            )
+        });
+    }
 }
 
 export class ArrayInstance extends AstNode {
-    public contents: string[];
+    public contents: (AstNode | string)[];
     constructor({ contents = [], ...rest }: ArrayReference.InitInstance) {
         super(rest);
         this.contents = contents;
@@ -321,7 +368,10 @@ export class ArrayInstance extends AstNode {
 
     public writeInternal(): void {
         this.addText({
-            stringContent: this.contents.length > 0 ? this.contents.join(", ") : undefined,
+            stringContent:
+                this.contents.length > 0
+                    ? this.contents.map((c) => (c instanceof AstNode ? c.write({}) : c)).join(", ")
+                    : undefined,
             templateString: "[%s]"
         });
     }
@@ -378,6 +428,17 @@ export class HashReference extends ClassReference {
                   }
               })
             : undefined;
+    }
+
+    public generateSnippet(example: unknown): string | AstNode {
+        return new HashInstance({
+            contents: new Map(
+                Array.from((example as Map<string, unknown>).entries()).map(([key, value]) => [
+                    key,
+                    this.valueType instanceof ClassReference ? this.valueType.generateSnippet(value) : (value as string)
+                ])
+            )
+        });
     }
 }
 
@@ -456,18 +517,21 @@ export class HashInstance extends AstNode {
 
 export declare namespace EnumReference {
     export interface Init extends ClassReference.Init {
-        name: string;
+        values: EnumValue[];
     }
 }
 
 export class EnumReference extends ClassReference {
-    constructor({ name, ...rest }: ClassReference.Init) {
-        super({ name, ...rest });
+    private values: EnumValue[];
+    constructor({ values, ...rest }: EnumReference.Init) {
+        super({ ...rest });
+        this.values = values;
     }
 
     static fromDeclaredTypeName(
         declaredTypeName: DeclaredTypeName,
-        locationGenerator: LocationGenerator
+        locationGenerator: LocationGenerator,
+        enumValues: EnumValue[]
     ): EnumReference {
         const location = locationGenerator.getLocationForTypeDeclaration(declaredTypeName);
         const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(
@@ -478,8 +542,13 @@ export class EnumReference extends ClassReference {
         return new EnumReference({
             name: declaredTypeName.name.pascalCase.safeName,
             import_: new Import({ from: location }),
-            moduleBreadcrumbs
+            moduleBreadcrumbs,
+            values: enumValues
         });
+    }
+
+    public generateSnippet(example: unknown): string | AstNode {
+        return `${this.qualifiedName}::${generateEnumNameFromValues(example as string, this.values)}`;
     }
 }
 
@@ -488,10 +557,12 @@ export declare namespace Set_ {
         innerType: ClassReference | string;
     }
     export interface InitInstance extends AstNode.Init {
-        contents?: string[];
+        contents?: (AstNode | string)[];
     }
 }
 export class SetReference extends ClassReference {
+    private innerType: ClassReference | string;
+
     constructor({ innerType, ...rest }: Set_.InitReference) {
         const typeName = innerType instanceof ClassReference ? innerType.qualifiedName : innerType;
         super({
@@ -500,19 +571,29 @@ export class SetReference extends ClassReference {
             import_: new Import({ from: "set", isExternal: true }),
             ...rest
         });
+
+        this.innerType = innerType;
     }
 
     public fromJson(variable: Variable | string): AstNode | undefined {
         return new FunctionInvocation({
             baseFunction: new Function_({ name: "new", functionBody: [] }),
             onObject: new ClassReference({ name: "Set", import_: new Import({ from: "set", isExternal: true }) }),
-            arguments_: [new Argument({ value: variable, isNamed: false, type: GenericClassReference })]
+            arguments_: [new Argument({ value: variable, isNamed: false })]
+        });
+    }
+
+    public generateSnippet(example: unknown): string | AstNode {
+        return new SetInstance({
+            contents: (example as unknown[]).map((element) =>
+                this.innerType instanceof ClassReference ? this.innerType.generateSnippet(element) : (element as string)
+            )
         });
     }
 }
 
 export class SetInstance extends AstNode {
-    public contents: string[];
+    public contents: (AstNode | string)[];
     constructor({ contents = [], ...rest }: Set_.InitInstance) {
         super(rest);
         this.contents = contents;
@@ -520,7 +601,10 @@ export class SetInstance extends AstNode {
 
     public writeInternal(): void {
         this.addText({
-            stringContent: this.contents.length > 0 ? this.contents.join(", ") : undefined,
+            stringContent:
+                this.contents.length > 0
+                    ? this.contents.map((c) => (c instanceof AstNode ? c.write({}) : c)).join(", ")
+                    : undefined,
             templateString: "Set[%s]"
         });
     }
@@ -556,11 +640,19 @@ export class DateReference extends ClassReference {
                     new FunctionInvocation({
                         baseFunction: new Function_({ name: "parse", functionBody: [] }),
                         onObject: this,
-                        arguments_: [new Argument({ value: variable, isNamed: false, type: GenericClassReference })]
+                        arguments_: [new Argument({ value: variable, isNamed: false })]
                     })
                 ]
             },
             else_: [new Expression({ rightSide: "nil", isAssignment: false })]
+        });
+    }
+
+    public generateSnippet(example: unknown): string | AstNode {
+        return new FunctionInvocation({
+            baseFunction: new Function_({ name: "parse", functionBody: [] }),
+            onObject: this,
+            arguments_: [new Argument({ value: example as string, isNamed: false })]
         });
     }
 }
@@ -609,15 +701,39 @@ export class ClassReferenceFactory {
                               this.locationGenerator
                           );
                 },
-                enum: () => EnumReference.fromDeclaredTypeName(type.name, this.locationGenerator),
-                object: () => SerializableObjectReference.fromDeclaredTypeName(type.name, this.locationGenerator),
-                union: () => DiscriminatedUnionClassReference.fromDeclaredTypeName(type.name, this.locationGenerator),
+                enum: (etd: EnumTypeDeclaration) =>
+                    EnumReference.fromDeclaredTypeName(type.name, this.locationGenerator, etd.values),
+                object: (otd: ObjectTypeDeclaration) => {
+                    const properties = new Map(
+                        otd.properties.map((prop) => [
+                            Property.getNameFromIr(prop.name.name),
+                            this.fromTypeReference(prop.valueType)
+                        ])
+                    );
+                    return SerializableObjectReference.fromDeclaredTypeName(
+                        type.name,
+                        this.locationGenerator,
+                        properties
+                    );
+                },
+                // TODO: improve discriminated union codegen
+                union: () =>
+                    DiscriminatedUnionClassReference.fromDeclaredTypeName(type.name, this.locationGenerator, new Map()),
                 undiscriminatedUnion: (uutd: UndiscriminatedUnionTypeDeclaration) => {
                     this.resolvedReferences.set(
                         typeId,
                         uutd.members.map((member) => this.fromTypeReference(member.type))
                     );
-                    return SerializableObjectReference.fromDeclaredTypeName(type.name, this.locationGenerator);
+
+                    // This should essentially never be used.
+                    return SerializableObjectReference.fromDeclaredTypeName(
+                        type.name,
+                        this.locationGenerator,
+                        // Undiscriminated unions boil down to type hints of the union members
+                        // so there's no need to provide properties, the right ClassReferences will
+                        // be retrieved from the type hint.
+                        new Map()
+                    );
                 },
                 _other: () => {
                     throw new Error("Attempting to generate a class reference for an unknown type.");

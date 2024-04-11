@@ -6,12 +6,15 @@ import {
     DiscriminatedUnionClassReference
 } from "./classes/ClassReference";
 import { AstNode } from "./core/AstNode";
+import { ExampleGenerator } from "./ExampleGenerator";
+import { Function_ } from "./functions/Function_";
 import { Parameter } from "./Parameter";
 import { Property } from "./Property";
 
 export interface YardocDocString {
     readonly name: "docString";
 
+    baseFunction?: Function_;
     documentation?: string[];
     parameters: Parameter[];
     returnValue?: ClassReference[];
@@ -30,6 +33,7 @@ export declare namespace Yardoc {
         reference?: YardocDocString | YardocTypeReference | YardocDocUniversal;
         flattenedProperties?: Map<TypeId, ObjectProperty[]>;
         crf?: ClassReferenceFactory;
+        eg?: ExampleGenerator;
     }
 }
 
@@ -39,12 +43,14 @@ export class Yardoc extends AstNode {
     // TODO: we should likely make a yardoc generator so we're not passing in this map and the CRF into each instance
     private flattenedProperties: Map<TypeId, ObjectProperty[]> | undefined;
     private crf: ClassReferenceFactory | undefined;
+    private eg: ExampleGenerator | undefined;
 
-    constructor({ reference, flattenedProperties, crf, ...rest }: Yardoc.Init) {
+    constructor({ reference, flattenedProperties, crf, eg, ...rest }: Yardoc.Init) {
         super(rest);
         this.reference = reference;
         this.flattenedProperties = flattenedProperties;
         this.crf = crf;
+        this.eg = eg;
     }
 
     private writeHashContents(
@@ -204,6 +210,15 @@ export class Yardoc extends AstNode {
                         templateString: "# @return [%s]",
                         startingTabSpaces
                     });
+                }
+
+                if (this.eg != null) {
+                    // TODO: add the example's docs, they'd go on this line, ex: `# @example This is an example with a file object`
+                    this.addText({ stringContent: "# @example", startingTabSpaces });
+                    const snippet = this.eg.generateEndpointSnippet(this.reference.baseFunction, ["TODO"]);
+                    const snippetString = snippet instanceof AstNode ? snippet.write({}) : snippet;
+
+                    this.writeMultilineYardocComment(snippetString.split("\n"));
                 }
             }
         }

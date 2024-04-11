@@ -6,7 +6,6 @@ import {
     GenericClassReference,
     HashInstance,
     JsonClassReference,
-    OpenStructClassReference,
     StringClassReference,
     VoidClassReference
 } from "../classes/ClassReference";
@@ -115,13 +114,11 @@ export class DiscriminatedUnion extends Class_ {
                     arguments_: [
                         new Argument({
                             value: jsonObjectParamName,
-                            type: GenericClassReference,
                             isNamed: false
                         }),
                         new Argument({
                             name: "object_class",
                             value: "OpenStruct",
-                            type: OpenStructClassReference,
                             isNamed: true
                         })
                     ]
@@ -331,7 +328,7 @@ export class DiscriminatedUnion extends Class_ {
                 new FunctionInvocation({
                     baseFunction: new Function_({ name: "is_a?", functionBody: [] }),
                     onObject: memberProperty.toVariable(),
-                    arguments_: [new Argument({ isNamed: false, type: GenericClassReference, value: parameterName })]
+                    arguments_: [new Argument({ isNamed: false, value: parameterName })]
                 })
             ],
             parameters: [new Parameter({ name: parameterName, type: GenericClassReference, isNamed: false })],

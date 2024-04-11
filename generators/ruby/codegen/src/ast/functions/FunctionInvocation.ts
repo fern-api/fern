@@ -76,7 +76,7 @@ export class FunctionInvocation extends AstNode {
             startingTabSpaces
         });
         this.addText({
-            stringContent: this.baseFunction?.invocationName ?? this.baseFunction?.name,
+            stringContent: this.baseFunction?.getInvocationName(),
             templateString: onObject === undefined ? undefined : this.optionalSafeCall ? "&.%s" : ".%s",
             startingTabSpaces,
             appendToLastString: true

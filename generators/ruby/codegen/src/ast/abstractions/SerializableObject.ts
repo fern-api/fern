@@ -143,13 +143,11 @@ export class SerializableObject extends Class_ {
                     arguments_: [
                         new Argument({
                             value: "json_object",
-                            type: GenericClassReference,
                             isNamed: false
                         }),
                         new Argument({
                             name: "object_class",
                             value: "OpenStruct",
-                            type: OpenStructClassReference,
                             isNamed: true
                         })
                     ]
@@ -248,7 +246,6 @@ export class SerializableObject extends Class_ {
                         arguments_: [
                             new Argument({
                                 value: "json_object",
-                                type: GenericClassReference,
                                 isNamed: false
                             })
                         ]

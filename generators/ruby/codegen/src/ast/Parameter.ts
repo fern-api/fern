@@ -8,6 +8,7 @@ export declare namespace Parameter {
     export interface Init extends AstNode.Init {
         name: string;
         type: ClassReference | ClassReference[];
+        wireValue?: string;
         defaultValue?: Variable | string;
         isOptional?: boolean;
         shouldOmitOptional?: boolean;
@@ -19,6 +20,7 @@ export declare namespace Parameter {
 
 export class Parameter extends AstNode {
     public name: string;
+    public wireValue: string | undefined;
     public type: ClassReference[];
     // TODO: deal with constants in a more structured way.
     public defaultValue: Variable | string | undefined;
@@ -30,6 +32,7 @@ export class Parameter extends AstNode {
         name,
         type,
         defaultValue,
+        wireValue,
         isOptional = false,
         shouldOmitOptional = false,
         isNamed = true,
@@ -45,6 +48,8 @@ export class Parameter extends AstNode {
             : defaultValue ?? (isOptional ? (shouldOmitOptional ? OmittedValue : NilValue) : undefined);
         this.isNamed = isNamed || isBlock || this.defaultValue !== undefined;
         this.describeAsHashInYardoc = describeAsHashInYardoc;
+
+        this.wireValue = wireValue;
 
         this.isBlock = isBlock;
     }
@@ -67,7 +72,6 @@ export class Parameter extends AstNode {
     public toArgument(value: Variable | string): Argument {
         return new Argument({
             name: this.name,
-            type: this.type,
             value,
             isNamed: this.isNamed,
             documentation: this.documentation

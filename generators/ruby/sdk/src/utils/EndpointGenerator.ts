@@ -342,7 +342,6 @@ export class EndpointGenerator {
                                     arguments_: [
                                         new Argument({
                                             value: prop.toVariable(VariableType.LOCAL),
-                                            type: FileClassReference,
                                             isNamed: true,
                                             name: "file_like"
                                         })
@@ -525,7 +524,6 @@ export class EndpointGenerator {
                                         arguments_: [
                                             new Argument({
                                                 value: responseVariableBody,
-                                                type: GenericClassReference,
                                                 isNamed: false
                                             })
                                         ]

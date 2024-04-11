@@ -200,7 +200,6 @@ export class HeadersGenerator {
             arguments_: [
                 new Argument({
                     isNamed: false,
-                    type: StringClassReference,
                     value: `"#{${userName.write({})}}:#{${password.write({})}}"`
                 })
             ]

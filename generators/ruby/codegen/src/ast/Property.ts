@@ -1,3 +1,4 @@
+import { Name } from "@fern-fern/ir-sdk/api";
 import { Argument } from "./Argument";
 import { ClassReference } from "./classes/ClassReference";
 import { AstNode } from "./core/AstNode";
@@ -30,7 +31,6 @@ export class Property extends AstNode {
     public toArgument(value: Variable | string, isNamed: boolean): Argument {
         return new Argument({
             name: this.name,
-            type: this.type,
             value,
             isNamed
         });
@@ -73,5 +73,9 @@ export class Property extends AstNode {
         let imports = new Set<Import>();
         this.type.forEach((cr) => (imports = new Set([...imports, ...cr.getImports()])));
         return imports;
+    }
+
+    public static getNameFromIr(name: Name): string {
+        return name.snakeCase.safeName;
     }
 }
