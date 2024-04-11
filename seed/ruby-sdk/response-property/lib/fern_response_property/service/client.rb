@@ -29,8 +29,8 @@ module SeedResponsePropertyClient
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/movie"
       end
-      parsed_json JSON.parse(response.body)
-      nested_response_json parsed_json["data"].to_json
+      parsed_json = JSON.parse(response.body)
+      nested_response_json = parsed_json["data"].to_json
       SeedResponsePropertyClient::Service::Response.from_json(json_object: nested_response_json)
     end
 
@@ -44,8 +44,8 @@ module SeedResponsePropertyClient
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/movie"
       end
-      parsed_json JSON.parse(response.body)
-      nested_response_json parsed_json["docs"].to_json
+      parsed_json = JSON.parse(response.body)
+      nested_response_json = parsed_json["docs"].to_json
       SeedResponsePropertyClient::Service::Response.from_json(json_object: nested_response_json)
     end
 
@@ -59,8 +59,8 @@ module SeedResponsePropertyClient
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/movie"
       end
-      parsed_json JSON.parse(response.body)
-      nested_response_json parsed_json["data"].to_json
+      parsed_json = JSON.parse(response.body)
+      nested_response_json = parsed_json["data"].to_json
       SeedResponsePropertyClient::StringResponse.from_json(json_object: nested_response_json)
     end
 
@@ -74,8 +74,8 @@ module SeedResponsePropertyClient
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/movie"
       end
-      parsed_json JSON.parse(response.body)
-      nested_response_json parsed_json["metadata"].to_json
+      parsed_json = JSON.parse(response.body)
+      nested_response_json = parsed_json["metadata"].to_json
       SeedResponsePropertyClient::Service::Response.from_json(json_object: nested_response_json)
     end
 
@@ -89,8 +89,8 @@ module SeedResponsePropertyClient
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/movie"
       end
-      parsed_json JSON.parse(response.body)
-      nested_response_json parsed_json["data"].to_json
+      parsed_json = JSON.parse(response.body)
+      nested_response_json = parsed_json["data"].to_json
       SeedResponsePropertyClient::Service::Response.from_json(json_object: nested_response_json)
     end
 
@@ -104,8 +104,8 @@ module SeedResponsePropertyClient
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/movie"
       end
-      parsed_json JSON.parse(response.body)
-      nested_response_json parsed_json["docs"].to_json
+      parsed_json = JSON.parse(response.body)
+      nested_response_json = parsed_json["docs"].to_json
       SeedResponsePropertyClient::Service::WithDocs.from_json(json_object: nested_response_json)
     end
 
@@ -119,8 +119,8 @@ module SeedResponsePropertyClient
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/movie"
       end
-      parsed_json JSON.parse(response.body)
-      nested_response_json parsed_json["data"].to_json
+      parsed_json = JSON.parse(response.body)
+      nested_response_json = parsed_json["data"].to_json
       SeedResponsePropertyClient::StringResponse.from_json(json_object: nested_response_json)
     end
   end
@@ -146,8 +146,8 @@ module SeedResponsePropertyClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/movie"
         end
-        parsed_json JSON.parse(response.body)
-        nested_response_json parsed_json["data"].to_json
+        parsed_json = JSON.parse(response.body)
+        nested_response_json = parsed_json["data"].to_json
         SeedResponsePropertyClient::Service::Response.from_json(json_object: nested_response_json)
       end
     end
@@ -163,8 +163,8 @@ module SeedResponsePropertyClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/movie"
         end
-        parsed_json JSON.parse(response.body)
-        nested_response_json parsed_json["docs"].to_json
+        parsed_json = JSON.parse(response.body)
+        nested_response_json = parsed_json["docs"].to_json
         SeedResponsePropertyClient::Service::Response.from_json(json_object: nested_response_json)
       end
     end
@@ -180,8 +180,8 @@ module SeedResponsePropertyClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/movie"
         end
-        parsed_json JSON.parse(response.body)
-        nested_response_json parsed_json["data"].to_json
+        parsed_json = JSON.parse(response.body)
+        nested_response_json = parsed_json["data"].to_json
         SeedResponsePropertyClient::StringResponse.from_json(json_object: nested_response_json)
       end
     end
@@ -197,8 +197,8 @@ module SeedResponsePropertyClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/movie"
         end
-        parsed_json JSON.parse(response.body)
-        nested_response_json parsed_json["metadata"].to_json
+        parsed_json = JSON.parse(response.body)
+        nested_response_json = parsed_json["metadata"].to_json
         SeedResponsePropertyClient::Service::Response.from_json(json_object: nested_response_json)
       end
     end
@@ -214,8 +214,8 @@ module SeedResponsePropertyClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/movie"
         end
-        parsed_json JSON.parse(response.body)
-        nested_response_json parsed_json["data"].to_json
+        parsed_json = JSON.parse(response.body)
+        nested_response_json = parsed_json["data"].to_json
         SeedResponsePropertyClient::Service::Response.from_json(json_object: nested_response_json)
       end
     end
@@ -231,8 +231,8 @@ module SeedResponsePropertyClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/movie"
         end
-        parsed_json JSON.parse(response.body)
-        nested_response_json parsed_json["docs"].to_json
+        parsed_json = JSON.parse(response.body)
+        nested_response_json = parsed_json["docs"].to_json
         SeedResponsePropertyClient::Service::WithDocs.from_json(json_object: nested_response_json)
       end
     end
@@ -248,8 +248,8 @@ module SeedResponsePropertyClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/movie"
         end
-        parsed_json JSON.parse(response.body)
-        nested_response_json parsed_json["data"].to_json
+        parsed_json = JSON.parse(response.body)
+        nested_response_json = parsed_json["data"].to_json
         SeedResponsePropertyClient::StringResponse.from_json(json_object: nested_response_json)
       end
     end

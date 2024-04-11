@@ -1,6 +1,8 @@
 import {
     AdditionalPropertiesProperty,
+    AliasReference,
     Argument,
+    ArrayReference,
     AstNode,
     B64StringClassReference,
     BlockConfiguration,
@@ -8,6 +10,7 @@ import {
     ClassReferenceFactory,
     Class_,
     ConditionalStatement,
+    DateReference,
     Expression,
     FieldsetProperty,
     FileClassReference,
@@ -15,6 +18,7 @@ import {
     Function_,
     GenericClassReference,
     HashInstance,
+    HashReference,
     JsonClassReference,
     Parameter,
     Property,
@@ -512,7 +516,7 @@ export class EndpointGenerator {
                                 type: GenericClassReference,
                                 variableType: VariableType.LOCAL
                             });
-                            return [
+                            const parsingExpressions = [
                                 new Expression({
                                     leftSide: "parsed_json",
                                     rightSide: new FunctionInvocation({
@@ -525,12 +529,33 @@ export class EndpointGenerator {
                                                 isNamed: false
                                             })
                                         ]
+                                    }),
+                                    isAssignment: true
+                                })
+                            ];
+                            const hasFromJson =
+                                responseCr.fromJson(nestedResponseValueVariable) !== undefined &&
+                                !(responseCr instanceof ArrayReference) &&
+                                !(responseCr instanceof HashReference) &&
+                                !(responseCr instanceof DateReference) &&
+                                !(
+                                    responseCr instanceof AliasReference &&
+                                    (responseCr.aliasOf instanceof ArrayReference ||
+                                        responseCr.aliasOf instanceof HashReference ||
+                                        responseCr.aliasOf instanceof DateReference)
+                                );
+
+                            if (hasFromJson) {
+                                parsingExpressions.push(
+                                    new Expression({
+                                        leftSide: nestedResponseValueVariable,
+                                        rightSide: `parsed_json["${jrbwp.responseProperty.name.wireValue}"].to_json`,
+                                        isAssignment: true
                                     })
-                                }),
-                                new Expression({
-                                    leftSide: nestedResponseValueVariable,
-                                    rightSide: `parsed_json["${jrbwp.responseProperty.name.wireValue}"].to_json`
-                                }),
+                                );
+                            }
+                            return [
+                                ...parsingExpressions,
                                 responseCr.fromJson(nestedResponseValueVariable) ?? nestedResponseValueVariable
                             ];
                         } else {
