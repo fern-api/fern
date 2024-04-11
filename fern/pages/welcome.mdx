@@ -5,52 +5,53 @@ slug: home
 layout: overview
 ---
 
-<br />
+## Products
 
-<Cards cols={2}>
+<Cards cols={3}>
   <Card
     title="Docs"
     icon="fa-solid fa-browser"
     href="/docs"
   >
-    Generate a Stripe-like docs website
+    A beautiful documentation website
   </Card>
   <Card
     title="SDKs"
     icon="fa-brands fa-codepen"
     href="/sdks"
   >
-    Generate client libraries in multiple languages
+    Idiomatic client libraries
   </Card>
   <Card
-    title="Server-side boilerplate"
+    title="API First Development"
     icon="fa-solid fa-pen"
     href="/sdks/other-generators/server-side/"
   >
-    Generate boilerplate on the server side
-  </Card>
-  <Card
-    title="Schedule a demo"
-    icon="fa-solid fa-face-awesome"
-    href="https://buildwithfern.com/contact"
-  >
-    Schedule a demo with our team
+    Start with an API Definition
   </Card>
 </Cards>
 
----
+## Motivation
 
-<ColumnGroup cols={2}>
+<div className="motivation">
+  Stripe, Twilio, and AWS have the resources to invest in internal tooling for developer 
+  experience. They provide client libraries in multiple language and developer documentation
+  that stays up-to-date. 
 
-<Column>
-<Button href="https://buildwithfern.com/contact" text="Questions? Contact us" icon="duotone life-ring" large minimal/><br/>
-</Column>
+  We are building Fern to productize this process and make it accessible to all
+  software companies.
+</div>
 
-<Column>
-<Button href="https://github.com/fern-api" icon="brands github" text="Github" large minimal /><br />
-<Button href="https://buildwithfern.com/showcase" icon="brands github" text="Showcase" large minimal /><br />
-<Button href="https://discord.gg/ed9VWDnrh7" icon="brands discord" text="Discord" large minimal /><br />
-<Button href="https://blog.buildwithfern.com/" icon="duotone square-rss" text="Blog" large minimal />
-</Column>
+<ButtonGroup>
+<Button href="https://buildwithfern.com/contact" intent="primary" rightIcon="arrow-right" large>
+  Schedule a demo with our team!
+</Button>
 
-</ColumnGroup>
+<Button href="https://buildwithfern.com/showcase" minimal large>
+  View our showcase
+</Button>
+</ButtonGroup>
+
+
+
+
