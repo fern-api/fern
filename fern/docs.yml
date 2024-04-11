@@ -22,9 +22,9 @@ tabs:
     slug: sdks
   overview:
     display-name: Configuration
-  api:
+  configure:
     display-name: API Reference
-    slug: api
+    slug: configure
 
 css: ./assets/styles.css
 
@@ -33,83 +33,6 @@ navigation:
     layout:
       - page: Welcome
         path: pages/welcome.mdx
-  - tab: overview
-    layout:
-      - section: OpenAPI
-        slug: openapi
-        contents:
-          - page: Overview
-            path: ./pages/overview/define-your-api/openapi/openapi-overview.mdx
-          - page: OpenAPI Extensions
-            path: ./pages/overview/define-your-api/openapi/extensions.mdx
-            slug: extensions
-          - page: OpenAPI Examples
-            path: ./pages/overview/define-your-api/openapi/examples.mdx
-            slug: examples
-      - section: Fern Definition
-        slug: ferndef
-        contents:
-          - page: Overview
-            path: ./pages/overview/define-your-api/ferndef/ferndef-overview.mdx
-          - page: Export to OpenAPI
-            slug: export-openapi
-            path: ./pages/overview/define-your-api/ferndef/export-openapi.mdx
-          - page: Types
-            path: ./pages/overview/define-your-api/ferndef/types.mdx
-          - page: Endpoints
-            path: ./pages/overview/define-your-api/ferndef/endpoints.mdx
-          - page: Errors
-            path: ./pages/overview/define-your-api/ferndef/errors.mdx
-          - page: Imports
-            path: ./pages/overview/define-your-api/ferndef/imports.mdx
-          - page: Examples
-            path: ./pages/overview/define-your-api/ferndef/examples.mdx
-          - page: Audiences
-            path: ./pages/overview/define-your-api/ferndef/audiences.mdx
-          - page: Availability
-            path: ./pages/overview/define-your-api/ferndef/availability.mdx
-          - page: api.yml reference
-            path: ./pages/overview/define-your-api/ferndef/api-yml.mdx
-          - page: Packages
-            path: ./pages/overview/define-your-api/ferndef/packages.mdx
-          - page: Comparison with OpenAPI
-            path: ./pages/overview/define-your-api/ferndef/comparison.mdx
-      - section: Fern CLI tool
-        slug: cli
-        contents:
-          - page: Overview
-            path: ./pages/overview/cli/cli-overview.mdx
-          - section: CLI commands
-            slug: commands
-            contents:
-              - page: fern generate
-                path: ./pages/overview/cli/cli-commands/fern-generate.mdx
-              - page: fern check
-                path: ./pages/overview/cli/cli-commands/fern-check.mdx
-              - page: fern add
-                path: ./pages/overview/cli/cli-commands/fern-add.mdx
-              - page: fern init
-                path: ./pages/overview/cli/cli-commands/fern-init.mdx
-              - page: fern write-definition
-                path: ./pages/overview/cli/cli-commands/fern-write-definition.mdx
-              - page: fern upgrade
-                path: ./pages/overview/cli/cli-commands/fern-upgrade.mdx
-              - page: fern token
-                path: ./pages/overview/cli/cli-commands/fern-token.mdx
-              - page: fern login
-                path: ./pages/overview/cli/cli-commands/fern-login.mdx
-              - page: fern format
-                path: ./pages/overview/cli/cli-commands/fern-format.mdx
-              - page: fern help
-                path: ./pages/overview/cli/cli-commands/fern-help.mdx
-              - page: fern version
-                path: ./pages/overview/cli/cli-commands/fern-version.mdx
-      - section: Changelog
-        contents:
-          - page: December 2023
-            path: ./pages/overview/changelog/december-2023.mdx
-          - page: February 2024
-            path: ./pages/overview/changelog/february-2024.mdx
   - tab: sdks
     layout:
       - page: Overview
@@ -269,6 +192,83 @@ navigation:
         snippets:
           python: fern-api
           typescript: "@fern-api/node-sdk"
+  - tab: configure
+    layout:
+      - section: OpenAPI
+        slug: openapi
+        contents:
+          - page: Overview
+            path: ./pages/overview/define-your-api/openapi/openapi-overview.mdx
+          - page: OpenAPI Extensions
+            path: ./pages/overview/define-your-api/openapi/extensions.mdx
+            slug: extensions
+          - page: OpenAPI Examples
+            path: ./pages/overview/define-your-api/openapi/examples.mdx
+            slug: examples
+      - section: Fern Definition
+        slug: ferndef
+        contents:
+          - page: Overview
+            path: ./pages/overview/define-your-api/ferndef/ferndef-overview.mdx
+          - page: Export to OpenAPI
+            slug: export-openapi
+            path: ./pages/overview/define-your-api/ferndef/export-openapi.mdx
+          - page: Types
+            path: ./pages/overview/define-your-api/ferndef/types.mdx
+          - page: Endpoints
+            path: ./pages/overview/define-your-api/ferndef/endpoints.mdx
+          - page: Errors
+            path: ./pages/overview/define-your-api/ferndef/errors.mdx
+          - page: Imports
+            path: ./pages/overview/define-your-api/ferndef/imports.mdx
+          - page: Examples
+            path: ./pages/overview/define-your-api/ferndef/examples.mdx
+          - page: Audiences
+            path: ./pages/overview/define-your-api/ferndef/audiences.mdx
+          - page: Availability
+            path: ./pages/overview/define-your-api/ferndef/availability.mdx
+          - page: api.yml reference
+            path: ./pages/overview/define-your-api/ferndef/api-yml.mdx
+          - page: Packages
+            path: ./pages/overview/define-your-api/ferndef/packages.mdx
+          - page: Comparison with OpenAPI
+            path: ./pages/overview/define-your-api/ferndef/comparison.mdx
+      - section: Fern CLI tool
+        slug: cli
+        contents:
+          - page: Overview
+            path: ./pages/overview/cli/cli-overview.mdx
+          - section: CLI commands
+            slug: commands
+            contents:
+              - page: fern generate
+                path: ./pages/overview/cli/cli-commands/fern-generate.mdx
+              - page: fern check
+                path: ./pages/overview/cli/cli-commands/fern-check.mdx
+              - page: fern add
+                path: ./pages/overview/cli/cli-commands/fern-add.mdx
+              - page: fern init
+                path: ./pages/overview/cli/cli-commands/fern-init.mdx
+              - page: fern write-definition
+                path: ./pages/overview/cli/cli-commands/fern-write-definition.mdx
+              - page: fern upgrade
+                path: ./pages/overview/cli/cli-commands/fern-upgrade.mdx
+              - page: fern token
+                path: ./pages/overview/cli/cli-commands/fern-token.mdx
+              - page: fern login
+                path: ./pages/overview/cli/cli-commands/fern-login.mdx
+              - page: fern format
+                path: ./pages/overview/cli/cli-commands/fern-format.mdx
+              - page: fern help
+                path: ./pages/overview/cli/cli-commands/fern-help.mdx
+              - page: fern version
+                path: ./pages/overview/cli/cli-commands/fern-version.mdx
+      - section: Changelog
+        contents:
+          - page: December 2023
+            path: ./pages/overview/changelog/december-2023.mdx
+          - page: February 2024
+            path: ./pages/overview/changelog/february-2024.mdx
   
 
 navbar-links:
