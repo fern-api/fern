@@ -14,14 +14,14 @@ tabs:
   home:
     display-name: Home
     slug: home
-  overview:
-    display-name: Configuration
   docs:
     display-name: Docs
     slug: docs
   sdks:
     display-name: SDKs
     slug: sdks
+  overview:
+    display-name: Configuration
   api:
     display-name: API Reference
     slug: api
