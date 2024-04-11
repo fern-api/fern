@@ -15,7 +15,7 @@ tabs:
     display-name: Home
     slug: home
   overview:
-    display-name: Overview
+    display-name: Configuration
   docs:
     display-name: Docs
     slug: docs
@@ -35,56 +35,45 @@ navigation:
         path: pages/welcome.mdx
   - tab: overview
     layout:
-      - page: Introduction
-        path: ./pages/overview/introduction.mdx
-      - page: Why Fern?
-        path: ./pages/overview/why-fern.mdx
-      - page: Get started
-        path: ./pages/overview/get-started.mdx
-      - section: Define your API
+      - section: OpenAPI
+        slug: openapi
         contents:
-          # TBD
-          # - page: Overview
-          #   path: ./pages/overview/define-your-api/api-overview.mdx
-          - section: OpenAPI
-            slug: openapi
-            contents:
-              - page: Overview
-                path: ./pages/overview/define-your-api/openapi/openapi-overview.mdx
-              - page: OpenAPI Extensions
-                path: ./pages/overview/define-your-api/openapi/extensions.mdx
-                slug: extensions
-              - page: OpenAPI Examples
-                path: ./pages/overview/define-your-api/openapi/examples.mdx
-                slug: examples
-          - section: Fern Definition
-            slug: ferndef
-            contents:
-              - page: Overview
-                path: ./pages/overview/define-your-api/ferndef/ferndef-overview.mdx
-              - page: Export to OpenAPI
-                slug: export-openapi
-                path: ./pages/overview/define-your-api/ferndef/export-openapi.mdx
-              - page: Types
-                path: ./pages/overview/define-your-api/ferndef/types.mdx
-              - page: Endpoints
-                path: ./pages/overview/define-your-api/ferndef/endpoints.mdx
-              - page: Errors
-                path: ./pages/overview/define-your-api/ferndef/errors.mdx
-              - page: Imports
-                path: ./pages/overview/define-your-api/ferndef/imports.mdx
-              - page: Examples
-                path: ./pages/overview/define-your-api/ferndef/examples.mdx
-              - page: Audiences
-                path: ./pages/overview/define-your-api/ferndef/audiences.mdx
-              - page: Availability
-                path: ./pages/overview/define-your-api/ferndef/availability.mdx
-              - page: api.yml reference
-                path: ./pages/overview/define-your-api/ferndef/api-yml.mdx
-              - page: Packages
-                path: ./pages/overview/define-your-api/ferndef/packages.mdx
-              - page: Comparison with OpenAPI
-                path: ./pages/overview/define-your-api/ferndef/comparison.mdx
+          - page: Overview
+            path: ./pages/overview/define-your-api/openapi/openapi-overview.mdx
+          - page: OpenAPI Extensions
+            path: ./pages/overview/define-your-api/openapi/extensions.mdx
+            slug: extensions
+          - page: OpenAPI Examples
+            path: ./pages/overview/define-your-api/openapi/examples.mdx
+            slug: examples
+      - section: Fern Definition
+        slug: ferndef
+        contents:
+          - page: Overview
+            path: ./pages/overview/define-your-api/ferndef/ferndef-overview.mdx
+          - page: Export to OpenAPI
+            slug: export-openapi
+            path: ./pages/overview/define-your-api/ferndef/export-openapi.mdx
+          - page: Types
+            path: ./pages/overview/define-your-api/ferndef/types.mdx
+          - page: Endpoints
+            path: ./pages/overview/define-your-api/ferndef/endpoints.mdx
+          - page: Errors
+            path: ./pages/overview/define-your-api/ferndef/errors.mdx
+          - page: Imports
+            path: ./pages/overview/define-your-api/ferndef/imports.mdx
+          - page: Examples
+            path: ./pages/overview/define-your-api/ferndef/examples.mdx
+          - page: Audiences
+            path: ./pages/overview/define-your-api/ferndef/audiences.mdx
+          - page: Availability
+            path: ./pages/overview/define-your-api/ferndef/availability.mdx
+          - page: api.yml reference
+            path: ./pages/overview/define-your-api/ferndef/api-yml.mdx
+          - page: Packages
+            path: ./pages/overview/define-your-api/ferndef/packages.mdx
+          - page: Comparison with OpenAPI
+            path: ./pages/overview/define-your-api/ferndef/comparison.mdx
       - section: Fern CLI tool
         slug: cli
         contents:
