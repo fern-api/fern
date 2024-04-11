@@ -11,6 +11,9 @@ instances:
 title: Fern | Documentation
 
 tabs:
+  home:
+    display-name: Home
+    slug: home
   overview:
     display-name: Overview
   sdks:
@@ -24,6 +27,10 @@ tabs:
     slug: api
 
 navigation:
+  - tab: home
+    layout:
+      - page: Welcome
+        path: pages/welcome.mdx
   - tab: overview
     layout:
       - page: Introduction
@@ -299,6 +306,6 @@ favicon: ./images/favicon.ico
 
 layout:
   page-width: 1504px
-  header-height: 83px
+  header-height: 75px
   searchbar-placement: header
   tabs-placement: header
