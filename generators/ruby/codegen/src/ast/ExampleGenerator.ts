@@ -1,22 +1,23 @@
-import { ClassReference } from "./classes/ClassReference";
+import { ExampleEndpointCall } from "@fern-fern/ir-sdk/api";
+import { Class_ } from "./classes/Class_";
 import { AstNode } from "./core/AstNode";
 import { Expression } from "./expressions/Expression";
 import { Function_ } from "./functions/Function_";
 
 export declare namespace ExampleGenerator {
     export interface Init extends AstNode.Init {
-        rootClientClassReference: ClassReference;
+        rootClientClass: Class_;
         gemName: string;
         apiName: string;
     }
 }
 export class ExampleGenerator {
-    private rootClientClassReference: ClassReference;
+    private rootClientClass: Class_;
     private gemName: string;
     private apiName: string;
 
-    constructor({ rootClientClassReference, gemName, apiName }: ExampleGenerator.Init) {
-        this.rootClientClassReference = rootClientClassReference;
+    constructor({ rootClientClass, gemName, apiName }: ExampleGenerator.Init) {
+        this.rootClientClass = rootClientClass;
         this.gemName = gemName;
         this.apiName = apiName;
     }
@@ -27,14 +28,16 @@ export class ExampleGenerator {
 
     public generateClientSnippet(): Expression {
         return new Expression({
-            // TODO: make this take in API key, etc.
-            rightSide: this.rootClientClassReference.generateSnippet({}),
+            rightSide: this.rootClientClass.generateSnippet(),
             leftSide: this.apiName,
             isAssignment: true
         });
     }
 
-    public generateEndpointSnippet(func: Function_, example: unknown): string | AstNode {
-        return func.generateSnippet(this.apiName, example);
+    public generateEndpointSnippet(
+        func: Function_,
+        exampleOverride?: ExampleEndpointCall
+    ): string | AstNode | undefined {
+        return func.generateSnippet(this.apiName, exampleOverride);
     }
 }

@@ -1,4 +1,5 @@
-import { EnumTypeDeclaration, EnumValue } from "@fern-fern/ir-sdk/api";
+import { EnumTypeDeclaration } from "@fern-fern/ir-sdk/api";
+import { generateEnumName, generateEnumValue } from "../../utils/NamingUtilities";
 import { Class_ } from "../classes/Class_";
 import { Expression } from "../expressions/Expression";
 
@@ -25,17 +26,4 @@ export class Enum extends Class_ {
             documentation
         });
     }
-}
-
-function generateEnumName(enumValue: EnumValue): string {
-    return enumValue.name.name.screamingSnakeCase.safeName;
-}
-
-function generateEnumValue(enumValue: EnumValue): string {
-    return enumValue.name.wireValue;
-}
-
-export function generateEnumNameFromValues(example: string, values: EnumValue[]): string | undefined {
-    const enumValue = values.find((ev) => generateEnumValue(ev) === example);
-    return enumValue != null ? generateEnumName(enumValue) : undefined;
 }

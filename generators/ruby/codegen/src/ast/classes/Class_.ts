@@ -1,6 +1,8 @@
 import { BLOCK_END } from "../../utils/RubyConstants";
+import { Argument } from "../Argument";
 import { AstNode } from "../core/AstNode";
 import { Expression } from "../expressions/Expression";
+import { FunctionInvocation } from "../functions/FunctionInvocation";
 import { Function_ } from "../functions/Function_";
 import { Import } from "../Import";
 import { Property } from "../Property";
@@ -138,5 +140,15 @@ export class Class_ extends AstNode {
         this.children.forEach((child) => (imports = new Set([...imports, ...child.getImports()])));
         // Do not import self
         return new Set([...imports].filter((i) => i !== this.classReference.import_));
+    }
+
+    public generateSnippet(): string | AstNode | undefined {
+        return new FunctionInvocation({
+            baseFunction: this.initializer,
+            onObject: this.classReference.qualifiedName,
+            arguments_: this.initializer?.parameters
+                .map((prop) => (prop.generateSnippet() != null ? prop.generateSnippet() : undefined))
+                .filter((arg): arg is Argument => arg != null)
+        });
     }
 }

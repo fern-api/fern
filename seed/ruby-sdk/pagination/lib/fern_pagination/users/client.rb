@@ -26,6 +26,47 @@ module SeedPaginationClient
     #  the next page of results.
     # @param request_options [SeedPaginationClient::RequestOptions]
     # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
+    # @example
+    #   require "fern_pagination"
+    #
+    # pagination = class RequestClient
+    #  # @return [Hash{String => String}]
+    #  attr_reader :headers
+    #  # @return [Faraday]
+    #  attr_reader :conn
+    #  # @return [String]
+    #  attr_reader :base_url
+    #  # @param base_url [String]
+    #  # @param max_retries [Long] The number of times to retry a failed request,
+    #  defaults to 2.
+    #  # @param timeout_in_seconds [Long]
+    #  # @param token [String]
+    #  # @return [SeedPaginationClient::RequestClient]
+    #  def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil,
+    #  token:)
+    #  @base_url = base_url
+    #  @headers = { "X-Fern-Language": 'Ruby', "X-Fern-SDK-Name":
+    #  'fern_pagination', "X-Fern-SDK-Version": '0.0.1', "Authorization": 'Bearer
+    #  #{token}' }
+    #  @conn = Faraday.new(headers: @headers) do | faraday |
+    #  faraday.request :json
+    #  faraday.response :raise_error, include_request: true
+    #  unless max_retries.nil?
+    #  faraday.request :retry ,  { max: max_retries }
+    #  end
+    #  unless timeout_in_seconds.nil?
+    #  faraday.options.timeout = timeout_in_seconds
+    #  end
+    #  end
+    #  end
+    #  # @param request_options [SeedPaginationClient::RequestOptions]
+    #  # @return [String]
+    #  def get_url(request_options: nil)
+    #  request_options&.base_url || @base_url
+    #  end
+    #  end.new
+    #
+    # pagination.list_with_cursor_pagination
     def list_with_cursor_pagination(page: nil, per_page: nil, order: nil, starting_after: nil, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -50,6 +91,47 @@ module SeedPaginationClient
     #  the next page of results.
     # @param request_options [SeedPaginationClient::RequestOptions]
     # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
+    # @example
+    #   require "fern_pagination"
+    #
+    # pagination = class RequestClient
+    #  # @return [Hash{String => String}]
+    #  attr_reader :headers
+    #  # @return [Faraday]
+    #  attr_reader :conn
+    #  # @return [String]
+    #  attr_reader :base_url
+    #  # @param base_url [String]
+    #  # @param max_retries [Long] The number of times to retry a failed request,
+    #  defaults to 2.
+    #  # @param timeout_in_seconds [Long]
+    #  # @param token [String]
+    #  # @return [SeedPaginationClient::RequestClient]
+    #  def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil,
+    #  token:)
+    #  @base_url = base_url
+    #  @headers = { "X-Fern-Language": 'Ruby', "X-Fern-SDK-Name":
+    #  'fern_pagination', "X-Fern-SDK-Version": '0.0.1', "Authorization": 'Bearer
+    #  #{token}' }
+    #  @conn = Faraday.new(headers: @headers) do | faraday |
+    #  faraday.request :json
+    #  faraday.response :raise_error, include_request: true
+    #  unless max_retries.nil?
+    #  faraday.request :retry ,  { max: max_retries }
+    #  end
+    #  unless timeout_in_seconds.nil?
+    #  faraday.options.timeout = timeout_in_seconds
+    #  end
+    #  end
+    #  end
+    #  # @param request_options [SeedPaginationClient::RequestOptions]
+    #  # @return [String]
+    #  def get_url(request_options: nil)
+    #  request_options&.base_url || @base_url
+    #  end
+    #  end.new
+    #
+    # pagination.list_with_offset_pagination
     def list_with_offset_pagination(page: nil, per_page: nil, order: nil, starting_after: nil, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -70,6 +152,47 @@ module SeedPaginationClient
     # @param cursor [String]
     # @param request_options [SeedPaginationClient::RequestOptions]
     # @return [SeedPaginationClient::Users::ListUsersExtendedResponse]
+    # @example
+    #   require "fern_pagination"
+    #
+    # pagination = class RequestClient
+    #  # @return [Hash{String => String}]
+    #  attr_reader :headers
+    #  # @return [Faraday]
+    #  attr_reader :conn
+    #  # @return [String]
+    #  attr_reader :base_url
+    #  # @param base_url [String]
+    #  # @param max_retries [Long] The number of times to retry a failed request,
+    #  defaults to 2.
+    #  # @param timeout_in_seconds [Long]
+    #  # @param token [String]
+    #  # @return [SeedPaginationClient::RequestClient]
+    #  def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil,
+    #  token:)
+    #  @base_url = base_url
+    #  @headers = { "X-Fern-Language": 'Ruby', "X-Fern-SDK-Name":
+    #  'fern_pagination', "X-Fern-SDK-Version": '0.0.1', "Authorization": 'Bearer
+    #  #{token}' }
+    #  @conn = Faraday.new(headers: @headers) do | faraday |
+    #  faraday.request :json
+    #  faraday.response :raise_error, include_request: true
+    #  unless max_retries.nil?
+    #  faraday.request :retry ,  { max: max_retries }
+    #  end
+    #  unless timeout_in_seconds.nil?
+    #  faraday.options.timeout = timeout_in_seconds
+    #  end
+    #  end
+    #  end
+    #  # @param request_options [SeedPaginationClient::RequestOptions]
+    #  # @return [String]
+    #  def get_url(request_options: nil)
+    #  request_options&.base_url || @base_url
+    #  end
+    #  end.new
+    #
+    # pagination.list_with_extended_results
     def list_with_extended_results(cursor: nil, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -85,6 +208,47 @@ module SeedPaginationClient
     #  the next page of results.
     # @param request_options [SeedPaginationClient::RequestOptions]
     # @return [SeedPaginationClient::UsernameCursor]
+    # @example
+    #   require "fern_pagination"
+    #
+    # pagination = class RequestClient
+    #  # @return [Hash{String => String}]
+    #  attr_reader :headers
+    #  # @return [Faraday]
+    #  attr_reader :conn
+    #  # @return [String]
+    #  attr_reader :base_url
+    #  # @param base_url [String]
+    #  # @param max_retries [Long] The number of times to retry a failed request,
+    #  defaults to 2.
+    #  # @param timeout_in_seconds [Long]
+    #  # @param token [String]
+    #  # @return [SeedPaginationClient::RequestClient]
+    #  def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil,
+    #  token:)
+    #  @base_url = base_url
+    #  @headers = { "X-Fern-Language": 'Ruby', "X-Fern-SDK-Name":
+    #  'fern_pagination', "X-Fern-SDK-Version": '0.0.1', "Authorization": 'Bearer
+    #  #{token}' }
+    #  @conn = Faraday.new(headers: @headers) do | faraday |
+    #  faraday.request :json
+    #  faraday.response :raise_error, include_request: true
+    #  unless max_retries.nil?
+    #  faraday.request :retry ,  { max: max_retries }
+    #  end
+    #  unless timeout_in_seconds.nil?
+    #  faraday.options.timeout = timeout_in_seconds
+    #  end
+    #  end
+    #  end
+    #  # @param request_options [SeedPaginationClient::RequestOptions]
+    #  # @return [String]
+    #  def get_url(request_options: nil)
+    #  request_options&.base_url || @base_url
+    #  end
+    #  end.new
+    #
+    # pagination.list_usernames
     def list_usernames(starting_after: nil, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -102,6 +266,47 @@ module SeedPaginationClient
     # @param offset [Integer]
     # @param request_options [SeedPaginationClient::RequestOptions]
     # @return [SeedPaginationClient::Users::UsernameContainer]
+    # @example
+    #   require "fern_pagination"
+    #
+    # pagination = class RequestClient
+    #  # @return [Hash{String => String}]
+    #  attr_reader :headers
+    #  # @return [Faraday]
+    #  attr_reader :conn
+    #  # @return [String]
+    #  attr_reader :base_url
+    #  # @param base_url [String]
+    #  # @param max_retries [Long] The number of times to retry a failed request,
+    #  defaults to 2.
+    #  # @param timeout_in_seconds [Long]
+    #  # @param token [String]
+    #  # @return [SeedPaginationClient::RequestClient]
+    #  def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil,
+    #  token:)
+    #  @base_url = base_url
+    #  @headers = { "X-Fern-Language": 'Ruby', "X-Fern-SDK-Name":
+    #  'fern_pagination', "X-Fern-SDK-Version": '0.0.1', "Authorization": 'Bearer
+    #  #{token}' }
+    #  @conn = Faraday.new(headers: @headers) do | faraday |
+    #  faraday.request :json
+    #  faraday.response :raise_error, include_request: true
+    #  unless max_retries.nil?
+    #  faraday.request :retry ,  { max: max_retries }
+    #  end
+    #  unless timeout_in_seconds.nil?
+    #  faraday.options.timeout = timeout_in_seconds
+    #  end
+    #  end
+    #  end
+    #  # @param request_options [SeedPaginationClient::RequestOptions]
+    #  # @return [String]
+    #  def get_url(request_options: nil)
+    #  request_options&.base_url || @base_url
+    #  end
+    #  end.new
+    #
+    # pagination.list_with_global_config
     def list_with_global_config(offset: nil, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -131,6 +336,47 @@ module SeedPaginationClient
     #  the next page of results.
     # @param request_options [SeedPaginationClient::RequestOptions]
     # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
+    # @example
+    #   require "fern_pagination"
+    #
+    # pagination = class RequestClient
+    #  # @return [Hash{String => String}]
+    #  attr_reader :headers
+    #  # @return [Faraday]
+    #  attr_reader :conn
+    #  # @return [String]
+    #  attr_reader :base_url
+    #  # @param base_url [String]
+    #  # @param max_retries [Long] The number of times to retry a failed request,
+    #  defaults to 2.
+    #  # @param timeout_in_seconds [Long]
+    #  # @param token [String]
+    #  # @return [SeedPaginationClient::RequestClient]
+    #  def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil,
+    #  token:)
+    #  @base_url = base_url
+    #  @headers = { "X-Fern-Language": 'Ruby', "X-Fern-SDK-Name":
+    #  'fern_pagination', "X-Fern-SDK-Version": '0.0.1', "Authorization": 'Bearer
+    #  #{token}' }
+    #  @conn = Faraday.new(headers: @headers) do | faraday |
+    #  faraday.request :json
+    #  faraday.response :raise_error, include_request: true
+    #  unless max_retries.nil?
+    #  faraday.request :retry ,  { max: max_retries }
+    #  end
+    #  unless timeout_in_seconds.nil?
+    #  faraday.options.timeout = timeout_in_seconds
+    #  end
+    #  end
+    #  end
+    #  # @param request_options [SeedPaginationClient::RequestOptions]
+    #  # @return [String]
+    #  def get_url(request_options: nil)
+    #  request_options&.base_url || @base_url
+    #  end
+    #  end.new
+    #
+    # pagination.list_with_cursor_pagination
     def list_with_cursor_pagination(page: nil, per_page: nil, order: nil, starting_after: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
@@ -157,6 +403,47 @@ module SeedPaginationClient
     #  the next page of results.
     # @param request_options [SeedPaginationClient::RequestOptions]
     # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
+    # @example
+    #   require "fern_pagination"
+    #
+    # pagination = class RequestClient
+    #  # @return [Hash{String => String}]
+    #  attr_reader :headers
+    #  # @return [Faraday]
+    #  attr_reader :conn
+    #  # @return [String]
+    #  attr_reader :base_url
+    #  # @param base_url [String]
+    #  # @param max_retries [Long] The number of times to retry a failed request,
+    #  defaults to 2.
+    #  # @param timeout_in_seconds [Long]
+    #  # @param token [String]
+    #  # @return [SeedPaginationClient::RequestClient]
+    #  def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil,
+    #  token:)
+    #  @base_url = base_url
+    #  @headers = { "X-Fern-Language": 'Ruby', "X-Fern-SDK-Name":
+    #  'fern_pagination', "X-Fern-SDK-Version": '0.0.1', "Authorization": 'Bearer
+    #  #{token}' }
+    #  @conn = Faraday.new(headers: @headers) do | faraday |
+    #  faraday.request :json
+    #  faraday.response :raise_error, include_request: true
+    #  unless max_retries.nil?
+    #  faraday.request :retry ,  { max: max_retries }
+    #  end
+    #  unless timeout_in_seconds.nil?
+    #  faraday.options.timeout = timeout_in_seconds
+    #  end
+    #  end
+    #  end
+    #  # @param request_options [SeedPaginationClient::RequestOptions]
+    #  # @return [String]
+    #  def get_url(request_options: nil)
+    #  request_options&.base_url || @base_url
+    #  end
+    #  end.new
+    #
+    # pagination.list_with_offset_pagination
     def list_with_offset_pagination(page: nil, per_page: nil, order: nil, starting_after: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
@@ -179,6 +466,47 @@ module SeedPaginationClient
     # @param cursor [String]
     # @param request_options [SeedPaginationClient::RequestOptions]
     # @return [SeedPaginationClient::Users::ListUsersExtendedResponse]
+    # @example
+    #   require "fern_pagination"
+    #
+    # pagination = class RequestClient
+    #  # @return [Hash{String => String}]
+    #  attr_reader :headers
+    #  # @return [Faraday]
+    #  attr_reader :conn
+    #  # @return [String]
+    #  attr_reader :base_url
+    #  # @param base_url [String]
+    #  # @param max_retries [Long] The number of times to retry a failed request,
+    #  defaults to 2.
+    #  # @param timeout_in_seconds [Long]
+    #  # @param token [String]
+    #  # @return [SeedPaginationClient::RequestClient]
+    #  def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil,
+    #  token:)
+    #  @base_url = base_url
+    #  @headers = { "X-Fern-Language": 'Ruby', "X-Fern-SDK-Name":
+    #  'fern_pagination', "X-Fern-SDK-Version": '0.0.1', "Authorization": 'Bearer
+    #  #{token}' }
+    #  @conn = Faraday.new(headers: @headers) do | faraday |
+    #  faraday.request :json
+    #  faraday.response :raise_error, include_request: true
+    #  unless max_retries.nil?
+    #  faraday.request :retry ,  { max: max_retries }
+    #  end
+    #  unless timeout_in_seconds.nil?
+    #  faraday.options.timeout = timeout_in_seconds
+    #  end
+    #  end
+    #  end
+    #  # @param request_options [SeedPaginationClient::RequestOptions]
+    #  # @return [String]
+    #  def get_url(request_options: nil)
+    #  request_options&.base_url || @base_url
+    #  end
+    #  end.new
+    #
+    # pagination.list_with_extended_results
     def list_with_extended_results(cursor: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
@@ -196,6 +524,47 @@ module SeedPaginationClient
     #  the next page of results.
     # @param request_options [SeedPaginationClient::RequestOptions]
     # @return [SeedPaginationClient::UsernameCursor]
+    # @example
+    #   require "fern_pagination"
+    #
+    # pagination = class RequestClient
+    #  # @return [Hash{String => String}]
+    #  attr_reader :headers
+    #  # @return [Faraday]
+    #  attr_reader :conn
+    #  # @return [String]
+    #  attr_reader :base_url
+    #  # @param base_url [String]
+    #  # @param max_retries [Long] The number of times to retry a failed request,
+    #  defaults to 2.
+    #  # @param timeout_in_seconds [Long]
+    #  # @param token [String]
+    #  # @return [SeedPaginationClient::RequestClient]
+    #  def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil,
+    #  token:)
+    #  @base_url = base_url
+    #  @headers = { "X-Fern-Language": 'Ruby', "X-Fern-SDK-Name":
+    #  'fern_pagination', "X-Fern-SDK-Version": '0.0.1', "Authorization": 'Bearer
+    #  #{token}' }
+    #  @conn = Faraday.new(headers: @headers) do | faraday |
+    #  faraday.request :json
+    #  faraday.response :raise_error, include_request: true
+    #  unless max_retries.nil?
+    #  faraday.request :retry ,  { max: max_retries }
+    #  end
+    #  unless timeout_in_seconds.nil?
+    #  faraday.options.timeout = timeout_in_seconds
+    #  end
+    #  end
+    #  end
+    #  # @param request_options [SeedPaginationClient::RequestOptions]
+    #  # @return [String]
+    #  def get_url(request_options: nil)
+    #  request_options&.base_url || @base_url
+    #  end
+    #  end.new
+    #
+    # pagination.list_usernames
     def list_usernames(starting_after: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
@@ -215,6 +584,47 @@ module SeedPaginationClient
     # @param offset [Integer]
     # @param request_options [SeedPaginationClient::RequestOptions]
     # @return [SeedPaginationClient::Users::UsernameContainer]
+    # @example
+    #   require "fern_pagination"
+    #
+    # pagination = class RequestClient
+    #  # @return [Hash{String => String}]
+    #  attr_reader :headers
+    #  # @return [Faraday]
+    #  attr_reader :conn
+    #  # @return [String]
+    #  attr_reader :base_url
+    #  # @param base_url [String]
+    #  # @param max_retries [Long] The number of times to retry a failed request,
+    #  defaults to 2.
+    #  # @param timeout_in_seconds [Long]
+    #  # @param token [String]
+    #  # @return [SeedPaginationClient::RequestClient]
+    #  def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil,
+    #  token:)
+    #  @base_url = base_url
+    #  @headers = { "X-Fern-Language": 'Ruby', "X-Fern-SDK-Name":
+    #  'fern_pagination', "X-Fern-SDK-Version": '0.0.1', "Authorization": 'Bearer
+    #  #{token}' }
+    #  @conn = Faraday.new(headers: @headers) do | faraday |
+    #  faraday.request :json
+    #  faraday.response :raise_error, include_request: true
+    #  unless max_retries.nil?
+    #  faraday.request :retry ,  { max: max_retries }
+    #  end
+    #  unless timeout_in_seconds.nil?
+    #  faraday.options.timeout = timeout_in_seconds
+    #  end
+    #  end
+    #  end
+    #  # @param request_options [SeedPaginationClient::RequestOptions]
+    #  # @return [String]
+    #  def get_url(request_options: nil)
+    #  request_options&.base_url || @base_url
+    #  end
+    #  end.new
+    #
+    # pagination.list_with_global_config
     def list_with_global_config(offset: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|

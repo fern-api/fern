@@ -29,6 +29,7 @@ import {
 } from "@fern-api/ruby-codegen";
 import {
     BytesRequest,
+    ExampleEndpointCall,
     FileProperty,
     FileUploadRequest,
     HttpEndpoint,
@@ -58,6 +59,8 @@ export class EndpointGenerator {
     private streamProcessingBlock: Parameter | undefined;
     private fileUploadUtility: FileUploadUtility;
 
+    private example: ExampleEndpointCall | undefined;
+
     constructor(
         endpoint: HttpEndpoint,
         requestOptionsVariable: Variable,
@@ -67,21 +70,29 @@ export class EndpointGenerator {
         fileUploadUtility: FileUploadUtility
     ) {
         this.endpoint = endpoint;
+        this.example = endpoint.examples[0];
+
         this.blockArg = "req";
         this.requestOptions = requestOptions;
         this.crf = crf;
 
         this.requestOptionsVariable = requestOptionsVariable;
 
+        const pathParameterExamples = (this.example?.rootPathParameters ?? [])
+            .concat(this.example?.servicePathParameters ?? [])
+            .concat(this.example?.endpointPathParameters ?? []);
         this.pathParametersAsProperties = this.endpoint.allPathParameters.map(
             (pp) =>
                 new Property({
                     name: pp.name.snakeCase.safeName,
                     type: crf.fromTypeReference(pp.valueType),
                     isOptional: isTypeOptional(pp.valueType),
-                    documentation: pp.docs
+                    documentation: pp.docs,
+                    shouldCastExample: true,
+                    example: pathParameterExamples.find((param) => pp.name === param.name)?.value.jsonExample
                 })
         );
+
         this.queryParametersAsProperties = this.endpoint.queryParameters.map(
             (qp) =>
                 new Property({
@@ -89,9 +100,13 @@ export class EndpointGenerator {
                     wireValue: qp.name.wireValue,
                     type: crf.fromTypeReference(qp.valueType),
                     isOptional: isTypeOptional(qp.valueType),
-                    documentation: qp.docs
+                    documentation: qp.docs,
+                    shouldCastExample: true,
+                    example: this.example?.queryParameters.find((param) => qp.name === param.name)?.value.jsonExample
                 })
         );
+
+        const headerExamples = (this.example?.serviceHeaders ?? []).concat(this.example?.endpointHeaders ?? []);
         this.headersAsProperties = this.endpoint.headers.map(
             (header) =>
                 new Property({
@@ -99,7 +114,7 @@ export class EndpointGenerator {
                     wireValue: header.name.wireValue,
                     type: crf.fromTypeReference(header.valueType),
                     isOptional: isTypeOptional(header.valueType),
-                    documentation: header.docs
+                    example: headerExamples.find((he) => header.name === he.name)?.value.jsonExample
                 })
         );
 
@@ -111,6 +126,10 @@ export class EndpointGenerator {
                         const properties: Property[] = irb.extends
                             .flatMap((dtn) => generatedClasses.get(dtn.typeId)?.properties)
                             .filter((p) => p !== undefined) as Property[];
+                        const exampleRequestProperties =
+                            this.example?.request?.type === "inlinedRequestBody"
+                                ? this.example.request.properties
+                                : undefined;
                         return [
                             ...properties,
                             ...irb.properties.map((prop) => {
@@ -119,7 +138,10 @@ export class EndpointGenerator {
                                     wireValue: prop.name.wireValue,
                                     type: crf.fromTypeReference(prop.valueType),
                                     isOptional: isTypeOptional(prop.valueType),
-                                    documentation: prop instanceof Property ? prop.documentation : prop.docs
+                                    documentation: prop instanceof Property ? prop.documentation : prop.docs,
+                                    shouldCastExample: true,
+                                    example: exampleRequestProperties?.find((erp) => prop.name === erp.name)?.value
+                                        .jsonExample
                                 });
                             })
                         ];
@@ -132,7 +154,9 @@ export class EndpointGenerator {
                                     defaultBodyParameterName,
                                 type: crf.fromTypeReference(rbr.requestBodyType),
                                 isOptional: isTypeOptional(rbr.requestBodyType),
-                                documentation: rbr.docs
+                                documentation: rbr.docs,
+                                shouldCastExample: true,
+                                example: this.example?.request?.jsonExample
                             })
                         ];
                     },
@@ -144,8 +168,10 @@ export class EndpointGenerator {
                                         name: fp.key.name.snakeCase.safeName,
                                         isOptional: fp.isOptional,
                                         wireValue: fp.key.wireValue,
-                                        type: [StringClassReference, FileClassReference]
+                                        type: [StringClassReference, FileClassReference],
+                                        example: "my_file.txt"
                                     }),
+                                // TODO: add examples for fileUpload parameters
                                 bodyProperty: (irbp: InlinedRequestBodyProperty) =>
                                     new Property({
                                         name: irbp.name.name.snakeCase.safeName,

@@ -12,6 +12,8 @@ export declare namespace Property {
         type: ClassReference | ClassReference[];
         wireValue?: string;
         isOptional?: boolean;
+        example?: unknown;
+        shouldCastExample?: boolean;
     }
 }
 export class Property extends AstNode {
@@ -20,12 +22,19 @@ export class Property extends AstNode {
     public wireValue: string | undefined;
     public isOptional: boolean;
 
-    constructor({ name, type, wireValue, isOptional = false, ...rest }: Property.Init) {
+    // Really just convenience properties to pass through to the Parameter
+    public example: unknown;
+    public shouldCastExample: boolean | undefined;
+
+    constructor({ name, type, wireValue, example, shouldCastExample, isOptional = false, ...rest }: Property.Init) {
         super(rest);
         this.name = name;
         this.type = type instanceof ClassReference ? [type] : type;
         this.wireValue = wireValue;
         this.isOptional = isOptional;
+
+        this.example = example;
+        this.shouldCastExample = shouldCastExample;
     }
 
     public toArgument(value: Variable | string, isNamed: boolean): Argument {
@@ -52,7 +61,9 @@ export class Property extends AstNode {
             documentation: this.documentation,
             defaultValue,
             describeAsHashInYardoc,
-            shouldOmitOptional
+            shouldOmitOptional,
+            shouldCastExample: this.shouldCastExample,
+            example: this.example
         });
     }
 

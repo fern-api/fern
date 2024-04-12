@@ -18,8 +18,8 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { format } from "util";
 import { LocationGenerator } from "../../utils/LocationGenerator";
+import { generateEnumNameFromValues } from "../../utils/NamingUtilities";
 import { ConditionalStatement } from "../abstractions/ConditionalStatement";
-import { generateEnumNameFromValues } from "../abstractions/Enum";
 import { Argument } from "../Argument";
 import { AstNode } from "../core/AstNode";
 import { Expression } from "../expressions/Expression";
@@ -120,7 +120,7 @@ export class ClassReference extends AstNode {
         return new Set(this.import_ ? [this.import_] : []);
     }
 
-    public generateSnippet(example: unknown): AstNode | string {
+    public generateSnippet(example: unknown): AstNode | string | undefined {
         return example as string;
     }
 }
@@ -209,14 +209,16 @@ export class SerializableObjectReference extends ClassReference {
         });
     }
 
-    public generateSnippet(example: unknown): string | AstNode {
+    public generateSnippet(example: unknown): AstNode | string | undefined {
         return new FunctionInvocation({
             baseFunction: new Function_({ name: "new", functionBody: [] }),
             onObject: this,
-            arguments_: Array.from(this.properties.entries()).map(
-                ([key, value]) =>
-                    new Argument({ isNamed: true, name: key, value: value.generateSnippet((example as any)[key]) })
-            )
+            arguments_: Array.from(this.properties.entries())
+                .map(([key, value]) => {
+                    const argValue = value.generateSnippet((example as any)[key]);
+                    return argValue != null ? new Argument({ isNamed: true, name: key, value: argValue }) : undefined;
+                })
+                .filter((arg): arg is Argument => arg != null)
         });
     }
 }
@@ -249,10 +251,10 @@ export class DiscriminatedUnionClassReference extends SerializableObjectReferenc
         });
     }
 
-    public generateSnippet(example: unknown): string {
+    public generateSnippet(example: unknown): AstNode | string | undefined {
         // TODO: generate discriminated union snippets
         // Blocked on generating a more attractive class
-        return "nil";
+        return undefined;
     }
 }
 
@@ -297,7 +299,7 @@ export class AliasReference extends ClassReference {
         });
     }
 
-    public generateSnippet(example: unknown): AstNode | string {
+    public generateSnippet(example: unknown): AstNode | string | undefined {
         return this.aliasOf.generateSnippet(example);
     }
 }
@@ -350,11 +352,15 @@ export class ArrayReference extends ClassReference {
             : undefined;
     }
 
-    public generateSnippet(example: unknown): string | AstNode {
+    public generateSnippet(example: unknown): AstNode | string | undefined {
         return new ArrayInstance({
-            contents: (example as unknown[]).map((element) =>
-                this.innerType instanceof ClassReference ? this.innerType.generateSnippet(element) : (element as string)
-            )
+            contents: (example as unknown[])
+                .map((element) =>
+                    this.innerType instanceof ClassReference
+                        ? this.innerType.generateSnippet(element)
+                        : (element as string)
+                )
+                .filter((e): e is AstNode | string => e !== undefined)
         });
     }
 }
@@ -430,13 +436,17 @@ export class HashReference extends ClassReference {
             : undefined;
     }
 
-    public generateSnippet(example: unknown): string | AstNode {
+    public generateSnippet(example: unknown): AstNode | string | undefined {
         return new HashInstance({
             contents: new Map(
-                Array.from((example as Map<string, unknown>).entries()).map(([key, value]) => [
-                    key,
-                    this.valueType instanceof ClassReference ? this.valueType.generateSnippet(value) : (value as string)
-                ])
+                Array.from((example as Map<string, unknown>).entries())
+                    .map(([key, value]) => [
+                        key,
+                        this.valueType instanceof ClassReference
+                            ? this.valueType.generateSnippet(value)
+                            : (value as string)
+                    ])
+                    .filter((e): e is [string, string | AstNode] => e !== undefined)
             )
         });
     }
@@ -547,7 +557,7 @@ export class EnumReference extends ClassReference {
         });
     }
 
-    public generateSnippet(example: unknown): string | AstNode {
+    public generateSnippet(example: unknown): AstNode | string | undefined {
         return `${this.qualifiedName}::${generateEnumNameFromValues(example as string, this.values)}`;
     }
 }
@@ -583,11 +593,15 @@ export class SetReference extends ClassReference {
         });
     }
 
-    public generateSnippet(example: unknown): string | AstNode {
+    public generateSnippet(example: unknown): AstNode | string | undefined {
         return new SetInstance({
-            contents: (example as unknown[]).map((element) =>
-                this.innerType instanceof ClassReference ? this.innerType.generateSnippet(element) : (element as string)
-            )
+            contents: (example as unknown[])
+                .map((element) =>
+                    this.innerType instanceof ClassReference
+                        ? this.innerType.generateSnippet(element)
+                        : (element as string)
+                )
+                .filter((e): e is AstNode | string => e !== undefined)
         });
     }
 }
@@ -648,7 +662,7 @@ export class DateReference extends ClassReference {
         });
     }
 
-    public generateSnippet(example: unknown): string | AstNode {
+    public generateSnippet(example: unknown): AstNode | string | undefined {
         return new FunctionInvocation({
             baseFunction: new Function_({ name: "parse", functionBody: [] }),
             onObject: this,

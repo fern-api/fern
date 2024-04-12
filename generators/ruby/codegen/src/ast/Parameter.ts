@@ -15,6 +15,8 @@ export declare namespace Parameter {
         isNamed?: boolean;
         describeAsHashInYardoc?: boolean;
         isBlock?: boolean;
+        example?: unknown;
+        shouldCastExample?: boolean;
     }
 }
 
@@ -27,17 +29,21 @@ export class Parameter extends AstNode {
     public isNamed: boolean;
     public isBlock: boolean;
     public describeAsHashInYardoc: boolean;
+    public example: unknown;
+    public shouldCastExample: boolean;
 
     constructor({
         name,
         type,
         defaultValue,
         wireValue,
+        example,
         isOptional = false,
         shouldOmitOptional = false,
         isNamed = true,
         describeAsHashInYardoc = false,
         isBlock = false,
+        shouldCastExample = false,
         ...rest
     }: Parameter.Init) {
         super(rest);
@@ -52,6 +58,7 @@ export class Parameter extends AstNode {
         this.wireValue = wireValue;
 
         this.isBlock = isBlock;
+        this.shouldCastExample = shouldCastExample;
     }
 
     public writeInternal(): void {
@@ -85,5 +92,14 @@ export class Parameter extends AstNode {
             documentation: this.documentation,
             variableType: VariableType.LOCAL
         });
+    }
+
+    public generateSnippet(): string | AstNode | undefined {
+        const typeForSnippet = this.type.find((t) => t.generateSnippet != null);
+        return this.example != null
+            ? this.shouldCastExample && typeForSnippet != null
+                ? typeForSnippet.generateSnippet(this.example)
+                : (this.example as string)
+            : undefined;
     }
 }

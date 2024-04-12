@@ -143,6 +143,30 @@ export function generateEndpoints(
         .filter((fun) => fun !== undefined) as Function_[];
 }
 
+// HACK: we generate the root package at the end to have all the subpackages generated, but we also need to know
+// how to instantiate the root client to be able to generate the snippets as we go.
+export function generateDummyRootClient(gemName: string, clientName: string, requestClient: Class_): Class_ {
+    const classReference = new ClassReference({
+        name: "Client",
+        import_: new Import({ from: gemName, isExternal: false }),
+        moduleBreadcrumbs: [clientName]
+    });
+
+    return new Class_({
+        classReference,
+        properties: [],
+        functions: [],
+        includeInitializer: false,
+        initializerOverride: new Function_({
+            name: "initialize",
+            invocationName: "new",
+            functionBody: [],
+            parameters: requestClient.initializer?.parameters,
+            returnValue: classReference
+        })
+    });
+}
+
 export function generateRootPackage(
     gemName: string,
     clientName: string,
@@ -729,7 +753,8 @@ function generateRequestClientInitializer(
                 name: "environment",
                 type: environmentCr,
                 defaultValue: defaultEnvironment,
-                isOptional: true
+                isOptional: true,
+                example: defaultEnvironment
             })
         );
         functionBody.push(
@@ -763,7 +788,8 @@ function generateRequestClientInitializer(
         new Parameter({
             name: "base_url",
             type: StringClassReference,
-            isOptional: true
+            isOptional: true,
+            example: "https://api.example.com"
         })
     );
 

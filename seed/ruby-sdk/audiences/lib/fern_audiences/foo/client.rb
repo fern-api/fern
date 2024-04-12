@@ -21,6 +21,12 @@ module SeedAudiencesClient
     # @param private_property [Integer]
     # @param request_options [SeedAudiencesClient::RequestOptions]
     # @return [SeedAudiencesClient::Foo::ImportingType]
+    # @example
+    #  require "fern_audiences"
+    #
+    #  audiences = SeedAudiencesClient::Client.new
+    #
+    #  audiences.find
     def find(optional_string:, public_property: nil, private_property: nil, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -55,6 +61,12 @@ module SeedAudiencesClient
     # @param private_property [Integer]
     # @param request_options [SeedAudiencesClient::RequestOptions]
     # @return [SeedAudiencesClient::Foo::ImportingType]
+    # @example
+    #  require "fern_audiences"
+    #
+    #  audiences = SeedAudiencesClient::Client.new
+    #
+    #  audiences.find
     def find(optional_string:, public_property: nil, private_property: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|

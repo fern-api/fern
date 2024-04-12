@@ -1,6 +1,12 @@
 import { AbstractGeneratorContext } from "@fern-api/generator-commons";
-import { ClassReferenceFactory, Class_, GeneratedRubyFile, LocationGenerator, Module_ } from "@fern-api/ruby-codegen";
-import { ExampleGenerator } from "@fern-api/ruby-codegen/src/ast/ExampleGenerator";
+import {
+    ClassReferenceFactory,
+    Class_,
+    ExampleGenerator,
+    GeneratedRubyFile,
+    LocationGenerator,
+    Module_
+} from "@fern-api/ruby-codegen";
 import {
     HttpService,
     IntermediateRepresentation,
@@ -14,6 +20,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import {
     ClientClassPair,
+    generateDummyRootClient,
     generateEnvironmentConstants,
     generateRequestClients,
     generateRootPackage,
@@ -40,6 +47,7 @@ export class ClientsGenerator {
     private flattenedProperties: Map<TypeId, ObjectProperty[]>;
     private subpackagePaths: Map<SubpackageId, string[]>;
 
+    private apiName: string;
     private clientName: string;
     private gemName: string;
     private sdkVersion: string | undefined;
@@ -69,6 +77,7 @@ export class ClientsGenerator {
         this.intermediateRepresentation = intermediateRepresentation;
         this.clientName = clientName;
         this.gemName = gemName;
+        this.apiName = intermediateRepresentation.apiName.snakeCase.safeName;
         this.hasFileBasedDependencies = hasFileBasedDependencies;
 
         this.generatedClasses = generatedClasses;
@@ -164,10 +173,11 @@ export class ClientsGenerator {
             })
         );
 
+        const dummyRootClientDoNotUse = generateDummyRootClient(this.gemName, this.clientName, syncClientClass);
         const eg = new ExampleGenerator({
-            rootClientClassReference: syncClientClass.classReference,
+            rootClientClass: dummyRootClientDoNotUse,
             gemName: this.gemName,
-            apiName: this.clientName
+            apiName: this.apiName
         });
 
         const fileUtilityClass = new FileUploadUtility(this.clientName);
