@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
+require_relative "node"
 require "ostruct"
 require "json"
 
 module SeedExamplesClient
   class Types
     class Tree
-      # @return [Object]
+      # @return [Array<SeedExamplesClient::Types::Node>]
       attr_reader :nodes
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -16,7 +17,7 @@ module SeedExamplesClient
 
       OMIT = Object.new
 
-      # @param nodes [Object]
+      # @param nodes [Array<SeedExamplesClient::Types::Node>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedExamplesClient::Types::Tree]
       def initialize(nodes: OMIT, additional_properties: nil)
@@ -33,7 +34,11 @@ module SeedExamplesClient
       # @return [SeedExamplesClient::Types::Tree]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        nodes = struct["nodes"]
+        parsed_json = JSON.parse(json_object)
+        nodes = parsed_json["nodes"]&.map do |v|
+          v = v.to_json
+          SeedExamplesClient::Types::Node.from_json(json_object: v)
+        end
         new(nodes: nodes, additional_properties: struct)
       end
 
@@ -51,7 +56,7 @@ module SeedExamplesClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        obj.nodes&.is_a?(Object) != false || raise("Passed value for field obj.nodes is not the expected type, validation failed.")
+        obj.nodes&.is_a?(Array) != false || raise("Passed value for field obj.nodes is not the expected type, validation failed.")
       end
     end
   end

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "tree"
 require "ostruct"
 require "json"
 
@@ -8,9 +9,9 @@ module SeedExamplesClient
     class Node
       # @return [String]
       attr_reader :name
-      # @return [Object]
+      # @return [Array<SeedExamplesClient::Types::Node>]
       attr_reader :nodes
-      # @return [Object]
+      # @return [Array<SeedExamplesClient::Types::Tree>]
       attr_reader :trees
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -21,8 +22,8 @@ module SeedExamplesClient
       OMIT = Object.new
 
       # @param name [String]
-      # @param nodes [Object]
-      # @param trees [Object]
+      # @param nodes [Array<SeedExamplesClient::Types::Node>]
+      # @param trees [Array<SeedExamplesClient::Types::Tree>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedExamplesClient::Types::Node]
       def initialize(name:, nodes: OMIT, trees: OMIT, additional_properties: nil)
@@ -41,9 +42,16 @@ module SeedExamplesClient
       # @return [SeedExamplesClient::Types::Node]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         name = struct["name"]
-        nodes = struct["nodes"]
-        trees = struct["trees"]
+        nodes = parsed_json["nodes"]&.map do |v|
+          v = v.to_json
+          SeedExamplesClient::Types::Node.from_json(json_object: v)
+        end
+        trees = parsed_json["trees"]&.map do |v|
+          v = v.to_json
+          SeedExamplesClient::Types::Tree.from_json(json_object: v)
+        end
         new(
           name: name,
           nodes: nodes,
@@ -67,8 +75,8 @@ module SeedExamplesClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
-        obj.nodes&.is_a?(Object) != false || raise("Passed value for field obj.nodes is not the expected type, validation failed.")
-        obj.trees&.is_a?(Object) != false || raise("Passed value for field obj.trees is not the expected type, validation failed.")
+        obj.nodes&.is_a?(Array) != false || raise("Passed value for field obj.nodes is not the expected type, validation failed.")
+        obj.trees&.is_a?(Array) != false || raise("Passed value for field obj.trees is not the expected type, validation failed.")
       end
     end
   end

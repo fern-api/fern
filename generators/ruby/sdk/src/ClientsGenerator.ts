@@ -176,6 +176,7 @@ export class ClientsGenerator {
         const dummyRootClientDoNotUse = generateDummyRootClient(this.gemName, this.clientName, syncClientClass);
         const eg = new ExampleGenerator({
             rootClientClass: dummyRootClientDoNotUse,
+            crf: this.crf,
             gemName: this.gemName,
             apiName: this.apiName
         });

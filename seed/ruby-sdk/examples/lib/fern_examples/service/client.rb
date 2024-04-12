@@ -34,28 +34,19 @@ module SeedExamplesClient
 
     # @param request [Hash] Request of type SeedExamplesClient::Types::Movie, as a Hash
     #   * :id (String)
-    #   * :prequel (Object)
+    #   * :prequel (String)
     #   * :title (String)
     #   * :from (String)
     #   * :rating (Float)
-    #   * :type (Object)
+    #   * :type (String)
     #   * :tag (String)
-    #   * :book (Object)
-    #   * :metadata (Object)
+    #   * :book (String)
+    #   * :metadata (Hash{String => Object})
     # @param request_options [SeedExamplesClient::RequestOptions]
     # @return [String]
     # @example
     #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  examples.create_movie(request: SeedExamplesClient::Types::Movie.new(
-    #    id: movie-c06a4ad7,
-    #    prequel: movie-cv9b914f,
-    #    title: The Boy and the Heron,
-    #    from: Hayao Miyazaki,
-    #    rating: 8,
-    #    type: movie,
-    #    tag: tag-wf9as23d,
-    #    metadata: [object Object]
-    #  ))
+    #  examples.create_movie(request: SeedExamplesClient::Types::Movie.new)
     def create_movie(request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -68,8 +59,8 @@ module SeedExamplesClient
     end
 
     # @param x_api_version [String]
-    # @param shallow [Object]
-    # @param tag [Object]
+    # @param shallow [Boolean]
+    # @param tag [String]
     # @param request_options [SeedExamplesClient::RequestOptions]
     # @return [SeedExamplesClient::Types::Metadata]
     # @example
@@ -121,28 +112,19 @@ module SeedExamplesClient
 
     # @param request [Hash] Request of type SeedExamplesClient::Types::Movie, as a Hash
     #   * :id (String)
-    #   * :prequel (Object)
+    #   * :prequel (String)
     #   * :title (String)
     #   * :from (String)
     #   * :rating (Float)
-    #   * :type (Object)
+    #   * :type (String)
     #   * :tag (String)
-    #   * :book (Object)
-    #   * :metadata (Object)
+    #   * :book (String)
+    #   * :metadata (Hash{String => Object})
     # @param request_options [SeedExamplesClient::RequestOptions]
     # @return [String]
     # @example
     #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  examples.create_movie(request: SeedExamplesClient::Types::Movie.new(
-    #    id: movie-c06a4ad7,
-    #    prequel: movie-cv9b914f,
-    #    title: The Boy and the Heron,
-    #    from: Hayao Miyazaki,
-    #    rating: 8,
-    #    type: movie,
-    #    tag: tag-wf9as23d,
-    #    metadata: [object Object]
-    #  ))
+    #  examples.create_movie(request: SeedExamplesClient::Types::Movie.new)
     def create_movie(request:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
@@ -157,8 +139,8 @@ module SeedExamplesClient
     end
 
     # @param x_api_version [String]
-    # @param shallow [Object]
-    # @param tag [Object]
+    # @param shallow [Boolean]
+    # @param tag [String]
     # @param request_options [SeedExamplesClient::RequestOptions]
     # @return [SeedExamplesClient::Types::Metadata]
     # @example

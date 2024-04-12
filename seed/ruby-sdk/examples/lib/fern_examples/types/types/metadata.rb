@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require "set"
 require "json"
 
 module SeedExamplesClient
@@ -9,9 +10,9 @@ module SeedExamplesClient
       attr_reader :member
       # @return [String]
       attr_reader :discriminant
-      # @return [Object]
+      # @return [Hash{String => String}]
       attr_reader :extra
-      # @return [Object]
+      # @return [Set<String>]
       attr_reader :tags
 
       private_class_method :new
@@ -19,8 +20,8 @@ module SeedExamplesClient
 
       # @param member [Object]
       # @param discriminant [String]
-      # @param extra [Object]
-      # @param tags [Object]
+      # @param extra [Hash{String => String}]
+      # @param tags [Set<String>]
       # @return [SeedExamplesClient::Types::Metadata]
       def initialize(member:, discriminant:, extra:, tags:)
         @member = member

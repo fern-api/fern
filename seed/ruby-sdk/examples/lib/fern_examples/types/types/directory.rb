@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "file"
 require "ostruct"
 require "json"
 
@@ -8,9 +9,9 @@ module SeedExamplesClient
     class Directory
       # @return [String]
       attr_reader :name
-      # @return [Object]
+      # @return [Array<SeedExamplesClient::Types::File>]
       attr_reader :files
-      # @return [Object]
+      # @return [Array<SeedExamplesClient::Types::Directory>]
       attr_reader :directories
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -21,8 +22,8 @@ module SeedExamplesClient
       OMIT = Object.new
 
       # @param name [String]
-      # @param files [Object]
-      # @param directories [Object]
+      # @param files [Array<SeedExamplesClient::Types::File>]
+      # @param directories [Array<SeedExamplesClient::Types::Directory>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedExamplesClient::Types::Directory]
       def initialize(name:, files: OMIT, directories: OMIT, additional_properties: nil)
@@ -41,9 +42,16 @@ module SeedExamplesClient
       # @return [SeedExamplesClient::Types::Directory]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         name = struct["name"]
-        files = struct["files"]
-        directories = struct["directories"]
+        files = parsed_json["files"]&.map do |v|
+          v = v.to_json
+          SeedExamplesClient::Types::File.from_json(json_object: v)
+        end
+        directories = parsed_json["directories"]&.map do |v|
+          v = v.to_json
+          SeedExamplesClient::Types::Directory.from_json(json_object: v)
+        end
         new(
           name: name,
           files: files,
@@ -67,8 +75,8 @@ module SeedExamplesClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
-        obj.files&.is_a?(Object) != false || raise("Passed value for field obj.files is not the expected type, validation failed.")
-        obj.directories&.is_a?(Object) != false || raise("Passed value for field obj.directories is not the expected type, validation failed.")
+        obj.files&.is_a?(Array) != false || raise("Passed value for field obj.files is not the expected type, validation failed.")
+        obj.directories&.is_a?(Array) != false || raise("Passed value for field obj.directories is not the expected type, validation failed.")
       end
     end
   end

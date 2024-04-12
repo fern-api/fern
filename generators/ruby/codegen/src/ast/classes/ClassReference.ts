@@ -120,8 +120,8 @@ export class ClassReference extends AstNode {
         return new Set(this.import_ ? [this.import_] : []);
     }
 
-    public generateSnippet(example: unknown): AstNode | string | undefined {
-        return example as string;
+    public generateSnippet(example: unknown, crf: ClassReferenceFactory): AstNode | string | undefined {
+        return `"${example as string}"`;
     }
 }
 
@@ -147,11 +147,11 @@ export const OmittedValue = "OMIT";
 // Extended class references
 export declare namespace SerializableObjectReference {
     export interface InitReference extends ClassReference.Init {
-        properties: Map<string, ClassReference>;
+        properties: Map<string, TypeReference>;
     }
 }
 export class SerializableObjectReference extends ClassReference {
-    properties: Map<string, ClassReference>;
+    properties: Map<string, TypeReference>;
 
     constructor({ properties, ...rest }: SerializableObjectReference.InitReference) {
         super({ ...rest });
@@ -192,7 +192,7 @@ export class SerializableObjectReference extends ClassReference {
     static fromDeclaredTypeName(
         declaredTypeName: DeclaredTypeName,
         locationGenerator: LocationGenerator,
-        properties: Map<string, ClassReference>
+        properties: Map<string, TypeReference>
     ): ClassReference {
         const location = locationGenerator.getLocationForTypeDeclaration(declaredTypeName);
         const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(
@@ -209,17 +209,32 @@ export class SerializableObjectReference extends ClassReference {
         });
     }
 
-    public generateSnippet(example: unknown): AstNode | string | undefined {
-        return new FunctionInvocation({
-            baseFunction: new Function_({ name: "new", functionBody: [] }),
-            onObject: this,
-            arguments_: Array.from(this.properties.entries())
-                .map(([key, value]) => {
-                    const argValue = value.generateSnippet((example as any)[key]);
-                    return argValue != null ? new Argument({ isNamed: true, name: key, value: argValue }) : undefined;
-                })
-                .filter((arg): arg is Argument => arg != null)
-        });
+    public generateSnippet(example: unknown, crf: ClassReferenceFactory): AstNode | string | undefined {
+        const maybeExample = example as Map<string, unknown>;
+
+        throw new Error(JSON.stringify(maybeExample));
+        // const properties = new Map(
+        //     Array.from(this.properties.entries())
+        //         .map(([key, value]) => {
+        //             const valueClassReference = crf.fromTypeReference(value);
+        //             return valueClassReference != null ? [key, valueClassReference] : undefined;
+        //         })
+        //         .filter((e): e is [string, ClassReference] => e != null)
+        // );
+        // return maybeExample != null
+        //     ? new FunctionInvocation({
+        //           baseFunction: new Function_({ name: "new", functionBody: [] }),
+        //           onObject: this,
+        //           arguments_: Array.from(properties.entries())
+        //               .map(([key, value]) => {
+        //                   const argValue = value.generateSnippet(maybeExample.get(key), crf);
+        //                   return argValue != null
+        //                       ? new Argument({ isNamed: true, name: key, value: argValue })
+        //                       : undefined;
+        //               })
+        //               .filter((arg): arg is Argument => arg != null)
+        //       })
+        //     : maybeExample;
     }
 }
 
@@ -234,7 +249,7 @@ export class DiscriminatedUnionClassReference extends SerializableObjectReferenc
     static fromDeclaredTypeName(
         declaredTypeName: DeclaredTypeName,
         locationGenerator: LocationGenerator,
-        properties: Map<string, ClassReference>
+        properties: Map<string, TypeReference>
     ): ClassReference {
         const location = locationGenerator.getLocationForTypeDeclaration(declaredTypeName);
         const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(
@@ -251,7 +266,7 @@ export class DiscriminatedUnionClassReference extends SerializableObjectReferenc
         });
     }
 
-    public generateSnippet(example: unknown): AstNode | string | undefined {
+    public generateSnippet(example: unknown, crf: ClassReferenceFactory): AstNode | string | undefined {
         // TODO: generate discriminated union snippets
         // Blocked on generating a more attractive class
         return undefined;
@@ -299,8 +314,8 @@ export class AliasReference extends ClassReference {
         });
     }
 
-    public generateSnippet(example: unknown): AstNode | string | undefined {
-        return this.aliasOf.generateSnippet(example);
+    public generateSnippet(example: unknown, crf: ClassReferenceFactory): AstNode | string | undefined {
+        return this.aliasOf.generateSnippet(example, crf);
     }
 }
 
@@ -352,12 +367,12 @@ export class ArrayReference extends ClassReference {
             : undefined;
     }
 
-    public generateSnippet(example: unknown): AstNode | string | undefined {
+    public generateSnippet(example: unknown, crf: ClassReferenceFactory): AstNode | string | undefined {
         return new ArrayInstance({
             contents: (example as unknown[])
                 .map((element) =>
                     this.innerType instanceof ClassReference
-                        ? this.innerType.generateSnippet(element)
+                        ? this.innerType.generateSnippet(element, crf)
                         : (element as string)
                 )
                 .filter((e): e is AstNode | string => e !== undefined)
@@ -436,19 +451,22 @@ export class HashReference extends ClassReference {
             : undefined;
     }
 
-    public generateSnippet(example: unknown): AstNode | string | undefined {
-        return new HashInstance({
-            contents: new Map(
-                Array.from((example as Map<string, unknown>).entries())
-                    .map(([key, value]) => [
-                        key,
-                        this.valueType instanceof ClassReference
-                            ? this.valueType.generateSnippet(value)
-                            : (value as string)
-                    ])
-                    .filter((e): e is [string, string | AstNode] => e !== undefined)
-            )
-        });
+    public generateSnippet(example: unknown, crf: ClassReferenceFactory): AstNode | string | undefined {
+        const hashExample = example as Map<string, unknown>;
+        return hashExample != null
+            ? new HashInstance({
+                  contents: new Map(
+                      Array.from(hashExample.entries())
+                          .map(([key, value]) => [
+                              key,
+                              this.valueType instanceof ClassReference
+                                  ? this.valueType.generateSnippet(value, crf)
+                                  : (value as string)
+                          ])
+                          .filter((e): e is [string, string | AstNode] => e !== undefined)
+                  )
+              })
+            : undefined;
     }
 }
 
@@ -557,8 +575,11 @@ export class EnumReference extends ClassReference {
         });
     }
 
-    public generateSnippet(example: unknown): AstNode | string | undefined {
-        return `${this.qualifiedName}::${generateEnumNameFromValues(example as string, this.values)}`;
+    public generateSnippet(example: unknown, crf: ClassReferenceFactory): AstNode | string | undefined {
+        const exampleString = example as string;
+        return exampleString != null
+            ? `${this.qualifiedName}::${generateEnumNameFromValues(exampleString, this.values)}`
+            : undefined;
     }
 }
 
@@ -593,12 +614,12 @@ export class SetReference extends ClassReference {
         });
     }
 
-    public generateSnippet(example: unknown): AstNode | string | undefined {
+    public generateSnippet(example: unknown, crf: ClassReferenceFactory): AstNode | string | undefined {
         return new SetInstance({
             contents: (example as unknown[])
                 .map((element) =>
                     this.innerType instanceof ClassReference
-                        ? this.innerType.generateSnippet(element)
+                        ? this.innerType.generateSnippet(element, crf)
                         : (element as string)
                 )
                 .filter((e): e is AstNode | string => e !== undefined)
@@ -662,12 +683,15 @@ export class DateReference extends ClassReference {
         });
     }
 
-    public generateSnippet(example: unknown): AstNode | string | undefined {
-        return new FunctionInvocation({
-            baseFunction: new Function_({ name: "parse", functionBody: [] }),
-            onObject: this,
-            arguments_: [new Argument({ value: example as string, isNamed: false })]
-        });
+    public generateSnippet(example: unknown, crf: ClassReferenceFactory): AstNode | string | undefined {
+        const exampleString = example as string;
+        return exampleString != null
+            ? new FunctionInvocation({
+                  baseFunction: new Function_({ name: "parse", functionBody: [] }),
+                  onObject: this,
+                  arguments_: [new Argument({ value: example as string, isNamed: false })]
+              })
+            : undefined;
     }
 }
 
@@ -722,10 +746,7 @@ export class ClassReferenceFactory {
                     EnumReference.fromDeclaredTypeName(type.name, this.locationGenerator, etd.values),
                 object: (otd: ObjectTypeDeclaration) => {
                     const properties = new Map(
-                        otd.properties.map((prop) => [
-                            Property.getNameFromIr(prop.name.name),
-                            this.fromTypeReference(prop.valueType)
-                        ])
+                        otd.properties.map((prop) => [Property.getNameFromIr(prop.name.name), prop.valueType])
                     );
                     return SerializableObjectReference.fromDeclaredTypeName(
                         type.name,

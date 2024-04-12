@@ -1,5 +1,5 @@
 import { Argument } from "./Argument";
-import { ClassReference, NilValue, OmittedValue } from "./classes/ClassReference";
+import { ClassReference, ClassReferenceFactory, NilValue, OmittedValue } from "./classes/ClassReference";
 import { AstNode } from "./core/AstNode";
 import { Import } from "./Import";
 import { Variable, VariableType } from "./Variable";
@@ -95,11 +95,11 @@ export class Parameter extends AstNode {
         });
     }
 
-    public generateSnippet(): string | AstNode | undefined {
+    public generateSnippet(crf: ClassReferenceFactory): string | AstNode | undefined {
         const typeForSnippet = this.type.find((t) => t.generateSnippet != null);
         return this.example != null
             ? this.shouldCastExample && typeForSnippet != null
-                ? typeForSnippet.generateSnippet(this.example)
+                ? typeForSnippet.generateSnippet(this.example, crf)
                 : (this.example as string)
             : undefined;
     }
