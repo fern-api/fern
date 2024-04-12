@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../../requests"
+require "json"
 require "async"
 
 module SeedUnknownAsAnyClient
@@ -24,7 +25,7 @@ module SeedUnknownAsAnyClient
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/"
       end
-      response.body
+      JSON.parse(response.body)
     end
   end
 
@@ -49,7 +50,8 @@ module SeedUnknownAsAnyClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/"
         end
-        response.body
+        parsed_json = JSON.parse(response.body)
+        parsed_json
       end
     end
   end

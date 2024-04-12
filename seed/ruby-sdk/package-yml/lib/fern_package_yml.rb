@@ -3,6 +3,7 @@
 require_relative "types_export"
 require_relative "requests"
 require_relative "fern_package_yml/service/client"
+require "json"
 
 module SeedPackageYmlClient
   class Client
@@ -30,7 +31,7 @@ module SeedPackageYmlClient
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/#{id}"
       end
-      response.body
+      JSON.parse(response.body)
     end
   end
 
@@ -59,7 +60,7 @@ module SeedPackageYmlClient
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@async_request_client.get_url(request_options: request_options)}/#{id}"
       end
-      response.body
+      JSON.parse(response.body)
     end
   end
 end

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../../../requests"
+require "json"
 require "async"
 
 module SeedExamplesClient
@@ -40,7 +41,7 @@ module SeedExamplesClient
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/ping"
         end
-        response.body
+        JSON.parse(response.body)
       end
     end
 
@@ -82,7 +83,8 @@ module SeedExamplesClient
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/ping"
           end
-          response.body
+          parsed_json = JSON.parse(response.body)
+          parsed_json
         end
       end
     end

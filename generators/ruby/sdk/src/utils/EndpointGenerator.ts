@@ -507,7 +507,46 @@ export class EndpointGenerator {
             json: (jr: JsonResponse) => {
                 const responseCr = this.crf.fromTypeReference(jr.responseBodyType);
                 return jr._visit<AstNode[]>({
-                    response: () => [responseCr.fromJson(responseVariableBody) ?? responseVariableBody],
+                    response: () => {
+                        const hasFromJson =
+                            responseCr.fromJson(responseVariableBody) !== undefined &&
+                            !(responseCr instanceof ArrayReference) &&
+                            !(responseCr instanceof HashReference) &&
+                            !(responseCr instanceof DateReference) &&
+                            !(
+                                responseCr instanceof AliasReference &&
+                                (responseCr.aliasOf instanceof ArrayReference ||
+                                    responseCr.aliasOf instanceof HashReference ||
+                                    responseCr.aliasOf instanceof DateReference)
+                            );
+                        if (hasFromJson) {
+                            return [responseCr.fromJson(responseVariableBody) ?? responseVariableBody];
+                        }
+
+                        const parsedJsonVariable = new Variable({
+                            name: "parsed_json",
+                            type: GenericClassReference,
+                            variableType: VariableType.LOCAL
+                        });
+                        return [
+                            new Expression({
+                                leftSide: parsedJsonVariable,
+                                rightSide: new FunctionInvocation({
+                                    onObject: JsonClassReference,
+                                    baseFunction: new Function_({ name: "parse", functionBody: [] }),
+                                    arguments_: [
+                                        new Argument({
+                                            value: responseVariableBody,
+                                            type: GenericClassReference,
+                                            isNamed: false
+                                        })
+                                    ]
+                                }),
+                                isAssignment: true
+                            }),
+                            responseCr.fromJson(parsedJsonVariable) ?? parsedJsonVariable
+                        ];
+                    },
                     nestedPropertyAsResponse: (jrbwp: JsonResponseBodyWithProperty) => {
                         if (jrbwp.responseProperty !== undefined) {
                             // Turn to struct, then get the field, then reconvert to JSON (to_json)

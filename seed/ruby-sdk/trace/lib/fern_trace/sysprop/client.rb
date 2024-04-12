@@ -2,6 +2,7 @@
 
 require_relative "../../requests"
 require_relative "../commons/types/language"
+require "json"
 require "async"
 
 module SeedTraceClient
@@ -39,7 +40,7 @@ module SeedTraceClient
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/sysprop/num-warm-instances"
       end
-      response.body
+      JSON.parse(response.body)
     end
   end
 
@@ -80,7 +81,8 @@ module SeedTraceClient
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/sysprop/num-warm-instances"
         end
-        response.body
+        parsed_json = JSON.parse(response.body)
+        parsed_json
       end
     end
   end

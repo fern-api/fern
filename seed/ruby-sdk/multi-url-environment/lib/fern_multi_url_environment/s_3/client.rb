@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../../requests"
+require "json"
 require "async"
 
 module SeedMultiUrlEnvironmentClient
@@ -25,7 +26,7 @@ module SeedMultiUrlEnvironmentClient
         req.body = { **(request_options&.additional_body_parameters || {}), s3Key: s_3_key }.compact
         req.url "#{@request_client.get_url(environment: s3, request_options: request_options)}/s3/presigned-url"
       end
-      response.body
+      JSON.parse(response.body)
     end
   end
 
@@ -51,7 +52,8 @@ module SeedMultiUrlEnvironmentClient
           req.body = { **(request_options&.additional_body_parameters || {}), s3Key: s_3_key }.compact
           req.url "#{@request_client.get_url(environment: s3, request_options: request_options)}/s3/presigned-url"
         end
-        response.body
+        parsed_json = JSON.parse(response.body)
+        parsed_json
       end
     end
   end
