@@ -1,0 +1,108 @@
+---
+title: Forward compatibility 
+excerpt: Prevent breaking your users as the API evolves 
+---
+
+Fern SDKs are designed so that you can evolve your API without 
+breaking users on legacy SDKs. In particular, as you add additional properties, 
+new enum values, and new union members the legacy SDKs will continue to work. 
+
+<Tabs>
+<Tab title="TypeScript">
+  ### Additional Response Properties
+  As you make new response properties available on your server, 
+  the legacy SDKs will continue to work. 
+
+  For example, let's say you generated an SDK that had the following
+  `Movie` object: 
+  ```ts
+  export interface Movie {
+    name: string;
+    id: string;
+  }
+  ```
+
+  If you decided to add a new `genre` property on your server, then 
+  legacy SDKs would not break. Users would also be able to access
+  the property by doing
+
+  ```ts
+  const genre = movie['genre'];
+  ```
+
+  ### Additional Enum values
+  As you add additional enum properties on your server, the 
+  legacy SDks will continue to work. 
+
+  For example, let's say your generated SDK that had the following 
+  `Genre` type: 
+
+  ```ts
+  export type Genre =
+    | "horror"
+    | "action"
+    | "thriller"
+    | "drama";
+  ```
+
+  If your server responded added a new enum value `comedy` then the 
+  SDK would not fail to deserialize. Instead the user would simply receive
+  a string called `comedy`. 
+
+  ```ts {6-7}
+  switch(genre) {
+    case "horror": 
+    case "action": 
+    case "thriller": 
+    case "drama": 
+    default: 
+      // handle unknown case here
+  }
+  ```
+
+  ### Additional Union variants
+  Similar to additional enum properties, if you add additional union types 
+  on your server, the legacy SDKs will continue to work. 
+
+  For example, let's say your generated SDK had the following `Shape` type: 
+
+  ```ts
+  export type Shape = Square | Circle;
+
+  export interface Circle {
+    type: "circle",
+    radius: number
+  }
+
+  export interface Square {
+    type: "square",
+    side: number
+  }
+  ```
+
+  If you decided to add an additional union type called `Triangle` 
+
+  ```ts
+  export type Shape = Square | Circle | Triangle;
+
+  export interface Triangle {
+    type: "triangle",
+    a: number
+    b: number
+    c: number
+  }
+  ```
+  then the user could simply handle the unknown case in their legacy SDK. 
+
+  ```ts {6-7}
+  switch (type) {
+    case "circle": 
+      ...
+    case "square": 
+      ...
+    default: 
+      // handle unknown case
+  }
+  ```
+</Tab>
+</Tabs>

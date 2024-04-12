@@ -53,7 +53,7 @@ navigation:
           - page: Multipart form data
             path: ./pages/sdks/features/multipart-form-data.mdx
           - page: Forward compatibility
-            path: ./pages/sdks/features/dummy.mdx
+            path: ./pages/sdks/features/forward-compatibility.mdx
           - page: Auto-Pagination
             path: ./pages/sdks/features/dummy.mdx
             icon: pro
