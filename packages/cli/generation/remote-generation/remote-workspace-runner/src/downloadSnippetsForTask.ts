@@ -1,9 +1,9 @@
-import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, doesPathExist } from "@fern-api/fs-utils";
 import { InteractiveTaskContext } from "@fern-api/task-context";
 import axios from "axios";
 import chalk from "chalk";
 import { createWriteStream } from "fs";
-import { rm } from "fs/promises";
+import { mkdir, rm } from "fs/promises";
 import { pipeline } from "stream/promises";
 
 export async function downloadSnippetsForTask({
@@ -39,5 +39,6 @@ async function downloadFileForTask({
     if (await doesPathExist(absolutePathToLocalOutput)) {
         await rm(absolutePathToLocalOutput, { recursive: true });
     }
+    await mkdir(dirname(absolutePathToLocalOutput), { recursive: true });
     await pipeline(request.data, createWriteStream(absolutePathToLocalOutput));
 }
