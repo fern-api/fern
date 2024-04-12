@@ -74,7 +74,7 @@ export class HeadersGenerator {
                         name: bas.token.snakeCase.safeName,
                         type: StringClassReference,
                         isOptional: bas.tokenEnvVar !== undefined || !this.isAuthRequired,
-                        example: "YOUR_AUTH_TOKEN"
+                        example: '"YOUR_AUTH_TOKEN"'
                     })
                 ],
                 basic: (bas: BasicAuthScheme) => [
@@ -82,13 +82,13 @@ export class HeadersGenerator {
                         name: bas.username.snakeCase.safeName,
                         type: StringClassReference,
                         isOptional: bas.usernameEnvVar !== undefined || !this.isAuthRequired,
-                        example: "YOUR_USERNAME"
+                        example: '"YOUR_USERNAME"'
                     }),
                     new Parameter({
                         name: bas.password.snakeCase.safeName,
                         type: StringClassReference,
                         isOptional: bas.passwordEnvVar !== undefined || !this.isAuthRequired,
-                        example: "YOUR_PASSWORD"
+                        example: '"YOUR_PASSWORD"'
                     })
                 ],
                 header: (has: HeaderAuthScheme) => [
@@ -96,7 +96,7 @@ export class HeadersGenerator {
                         name: has.name.name.snakeCase.safeName,
                         type: StringClassReference,
                         isOptional: has.headerEnvVar !== undefined || !this.isAuthRequired,
-                        example: `YOUR_${has.name.name.screamingSnakeCase.safeName}`
+                        example: `"YOUR_${has.name.name.screamingSnakeCase.safeName}"`
                     })
                 ],
                 _other: () => {

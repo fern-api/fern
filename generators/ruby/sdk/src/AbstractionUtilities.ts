@@ -137,7 +137,8 @@ export function generateEndpoints(
                 eg,
                 flattenedProperties,
                 documentation: endpoint.docs,
-                packagePath
+                packagePath,
+                skipExample: !generator.endpointHasExamples
             });
         })
         .filter((fun) => fun !== undefined) as Function_[];
@@ -157,13 +158,7 @@ export function generateDummyRootClient(gemName: string, clientName: string, req
         properties: [],
         functions: [],
         includeInitializer: false,
-        initializerOverride: new Function_({
-            name: "initialize",
-            invocationName: "new",
-            functionBody: [],
-            parameters: requestClient.initializer?.parameters,
-            returnValue: classReference
-        })
+        initializerOverride: requestClient.initializer
     });
 }
 
@@ -789,7 +784,7 @@ function generateRequestClientInitializer(
             name: "base_url",
             type: StringClassReference,
             isOptional: true,
-            example: "https://api.example.com"
+            example: '"https://api.example.com"'
         })
     );
 

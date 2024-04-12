@@ -64,8 +64,30 @@ export class FunctionInvocation extends AstNode {
         }
     }
 
-    private writeArgmuments(): string | undefined {
-        return this.arguments_.length > 0 ? `(${this.arguments_.map((a) => a.write({})).join(", ")})` : undefined;
+    private writeArgmuments(startingTabSpaces: number) {
+        if (this.arguments_.length > 2) {
+            this.addText({ stringContent: "(", appendToLastString: true });
+            this.arguments_.forEach((arg, idx) =>
+                this.addText({
+                    stringContent: arg.write({}),
+                    appendToLastString: false,
+                    templateString: idx < this.arguments_.length - 1 ? "%s," : undefined,
+                    startingTabSpaces: this.tabSizeSpaces + startingTabSpaces
+                })
+            );
+            this.addText({ stringContent: ")", appendToLastString: false, startingTabSpaces });
+        } else if (this.arguments_.length > 0) {
+            this.addText({ stringContent: "(", appendToLastString: true });
+            this.arguments_.forEach((arg, idx) =>
+                this.addText({
+                    stringContent: arg.write({}),
+                    appendToLastString: true,
+                    templateString: idx === 0 ? undefined : ", %s",
+                    startingTabSpaces
+                })
+            );
+            this.addText({ stringContent: ")", appendToLastString: true, startingTabSpaces });
+        }
     }
 
     // When writing the definition
@@ -81,7 +103,7 @@ export class FunctionInvocation extends AstNode {
             startingTabSpaces,
             appendToLastString: true
         });
-        this.addText({ stringContent: this.writeArgmuments(), appendToLastString: true });
+        this.writeArgmuments(startingTabSpaces);
         this.writeBlock(startingTabSpaces);
     }
 

@@ -1,5 +1,4 @@
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { format } from "util";
 import { Import } from "../Import";
 
 export enum NewLinePlacement {
@@ -59,7 +58,18 @@ export abstract class AstNode {
             return;
         }
         if (templateString !== undefined) {
-            stringContent = format(templateString, stringContent);
+            // HACK: format trims stringContent, which we don't want...
+            const stringLiteralTemplate = templateString.split("%s");
+            if (stringLiteralTemplate.length === 1) {
+                stringContent = `${stringLiteralTemplate[0]}${stringContent}`;
+            } else if (stringLiteralTemplate.length === 2) {
+                stringContent = `${stringLiteralTemplate[0]}${stringContent}${stringLiteralTemplate[1]}`;
+            } else if (stringLiteralTemplate.length > 2) {
+                // We only allow for passing in one argument anyway, so we should only ever see one arg in the template
+                throw new Error("Template string is invalid");
+            } else {
+                stringContent = `${templateString}${stringContent}`;
+            }
         }
 
         if (appendToLastString && this.text.length > 0) {

@@ -20,6 +20,9 @@ module SeedExamplesClient
       # @param id [String] The id to check
       # @param request_options [SeedExamplesClient::RequestOptions]
       # @return [Void]
+      # @example
+      #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  examples.health.check
       def check(id:, request_options: nil)
         @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -33,6 +36,9 @@ module SeedExamplesClient
       #
       # @param request_options [SeedExamplesClient::RequestOptions]
       # @return [Boolean]
+      # @example
+      #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  examples.health.ping
       def ping(request_options: nil)
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -59,6 +65,9 @@ module SeedExamplesClient
       # @param id [String] The id to check
       # @param request_options [SeedExamplesClient::RequestOptions]
       # @return [Void]
+      # @example
+      #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  examples.health.check
       def check(id:, request_options: nil)
         Async do
           @request_client.conn.get do |req|
@@ -74,6 +83,9 @@ module SeedExamplesClient
       #
       # @param request_options [SeedExamplesClient::RequestOptions]
       # @return [Boolean]
+      # @example
+      #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  examples.health.ping
       def ping(request_options: nil)
         Async do
           response = @request_client.conn.get do |req|

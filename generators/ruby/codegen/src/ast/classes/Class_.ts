@@ -147,7 +147,10 @@ export class Class_ extends AstNode {
             baseFunction: this.initializer,
             onObject: this.classReference.qualifiedName,
             arguments_: this.initializer?.parameters
-                .map((prop) => (prop.generateSnippet() != null ? prop.generateSnippet() : undefined))
+                .map((param) => {
+                    const parameterValue = param.generateSnippet();
+                    return parameterValue != null ? param.toArgument(parameterValue) : undefined;
+                })
                 .filter((arg): arg is Argument => arg != null)
         });
     }

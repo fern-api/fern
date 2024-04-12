@@ -9,9 +9,9 @@ module SeedExamplesClient
       class Metadata
         # @return [String]
         attr_reader :id
-        # @return [Hash{String => String}]
+        # @return [Object]
         attr_reader :data
-        # @return [String]
+        # @return [Object]
         attr_reader :json_string
         # @return [OpenStruct] Additional properties unmapped to the current class definition
         attr_reader :additional_properties
@@ -22,8 +22,8 @@ module SeedExamplesClient
         OMIT = Object.new
 
         # @param id [String]
-        # @param data [Hash{String => String}]
-        # @param json_string [String]
+        # @param data [Object]
+        # @param json_string [Object]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [SeedExamplesClient::Commons::Types::Metadata]
         def initialize(id:, data: OMIT, json_string: OMIT, additional_properties: nil)
@@ -45,7 +45,12 @@ module SeedExamplesClient
           id = struct["id"]
           data = struct["data"]
           json_string = struct["jsonString"]
-          new(id: id, data: data, json_string: json_string, additional_properties: struct)
+          new(
+            id: id,
+            data: data,
+            json_string: json_string,
+            additional_properties: struct
+          )
         end
 
         # Serialize an instance of Metadata to a JSON object
@@ -63,8 +68,8 @@ module SeedExamplesClient
         # @return [Void]
         def self.validate_raw(obj:)
           obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
-          obj.data&.is_a?(Hash) != false || raise("Passed value for field obj.data is not the expected type, validation failed.")
-          obj.json_string&.is_a?(String) != false || raise("Passed value for field obj.json_string is not the expected type, validation failed.")
+          obj.data&.is_a?(Object) != false || raise("Passed value for field obj.data is not the expected type, validation failed.")
+          obj.json_string&.is_a?(Object) != false || raise("Passed value for field obj.json_string is not the expected type, validation failed.")
         end
       end
     end

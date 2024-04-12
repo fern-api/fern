@@ -89,12 +89,15 @@ export class Yardoc extends AstNode {
     private writeMultilineYardocComment(
         documentation?: string[],
         defaultComment?: string,
-        templateString?: string
+        templateString?: string,
+        shouldSplitOnLength = true
     ): void {
         // Attempt to apply a max line length for comments at 80 characters since Rubocop does not format comments.
-        const splitDocs = documentation?.flatMap((doc) => doc.match(/.{1,80}(?:\s|$)/g) ?? "");
+        const splitDocs = shouldSplitOnLength
+            ? documentation?.flatMap((doc) => doc.match(/.{1,80}(?:\s|$)/g) ?? "")
+            : documentation;
         splitDocs?.forEach((doc, index) => {
-            const trimmedDoc = doc.trim();
+            const trimmedDoc = shouldSplitOnLength ? doc.trim() : doc;
             this.addText({
                 stringContent: trimmedDoc.length > 0 ? trimmedDoc : undefined,
                 templateString: index > 0 ? "#  %s" : templateString,
@@ -225,14 +228,15 @@ export class Yardoc extends AstNode {
                     // TODO: add the example's docs, they'd go on this line, ex: `# @example This is an example with a file object`
                     this.addText({ stringContent: "# @example", startingTabSpaces });
                     const rootClientSnippet = this.eg.generateClientSnippet();
-                    this.writeMultilineYardocComment(rootClientSnippet.write({}).split("\n"), undefined, "#  %s");
-                    this.addText({
-                        stringContent: "#",
-                        startingTabSpaces
-                    });
+                    this.writeMultilineYardocComment(
+                        rootClientSnippet.write({}).split("\n"),
+                        undefined,
+                        "#  %s",
+                        false
+                    );
 
                     const snippetString = snippet instanceof AstNode ? snippet.write({}) : snippet;
-                    this.writeMultilineYardocComment(snippetString.split("\n"), undefined, "#  %s");
+                    this.writeMultilineYardocComment(snippetString.split("\n"), undefined, "#  %s", false);
                 }
             }
         }

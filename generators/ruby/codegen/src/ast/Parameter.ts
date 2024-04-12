@@ -59,6 +59,7 @@ export class Parameter extends AstNode {
 
         this.isBlock = isBlock;
         this.shouldCastExample = shouldCastExample;
+        this.example = example;
     }
 
     public writeInternal(): void {
@@ -76,7 +77,7 @@ export class Parameter extends AstNode {
         return imports;
     }
 
-    public toArgument(value: Variable | string): Argument {
+    public toArgument(value: AstNode | string): Argument {
         return new Argument({
             name: this.name,
             value,

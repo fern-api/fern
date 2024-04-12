@@ -25,6 +25,8 @@ export declare namespace Function_ {
         crf?: ClassReferenceFactory;
         eg?: ExampleGenerator;
         invocationName?: string;
+
+        skipExample?: boolean;
     }
 }
 export class Function_ extends AstNode {
@@ -40,6 +42,7 @@ export class Function_ extends AstNode {
     public invocationName: string | undefined;
 
     private packagePath: string[];
+    private skipExample: boolean;
 
     constructor({
         name,
@@ -51,6 +54,7 @@ export class Function_ extends AstNode {
         parameters = [],
         isAsync = false,
         isStatic = false,
+        skipExample = false,
         returnValue,
         invocationName,
         ...rest
@@ -64,6 +68,7 @@ export class Function_ extends AstNode {
         this.isAsync = isAsync;
         this.isStatic = isStatic;
         this.invocationName = invocationName;
+        this.skipExample = skipExample;
 
         this.yardoc = new Yardoc({
             reference: {
@@ -117,28 +122,18 @@ export class Function_ extends AstNode {
         return this.invocationName != null ? this.invocationName : [...this.packagePath, this.name].join(".");
     }
 
-    public generateSnippet(clientName: string, exampleOverride?: unknown): AstNode | string | undefined {
-        return new FunctionInvocation({
-            baseFunction: this,
-            onObject: clientName,
-            arguments_: this.parameters
-                .map((param) => {
-                    // TODO: Get the right type from the parameter based on the shape of the example
-                    let argValue = exampleOverride;
-                    if (param.wireValue != null) {
-                        argValue = (argValue as any)[param.wireValue];
-                    }
-                    const paramSnippet = (argValue as string) ?? param.generateSnippet();
-
-                    return paramSnippet != null
-                        ? new Argument({
-                              isNamed: param.isNamed,
-                              name: param.name,
-                              value: paramSnippet
-                          })
-                        : undefined;
-                })
-                .filter((arg): arg is Argument => arg != null)
-        });
+    public generateSnippet(clientName: string): AstNode | string | undefined {
+        return this.skipExample
+            ? undefined
+            : new FunctionInvocation({
+                  baseFunction: this,
+                  onObject: clientName,
+                  arguments_: this.parameters
+                      .map((param) => {
+                          const parameterValue = param.generateSnippet();
+                          return parameterValue != null ? param.toArgument(parameterValue) : undefined;
+                      })
+                      .filter((arg): arg is Argument => arg != null)
+              });
     }
 }

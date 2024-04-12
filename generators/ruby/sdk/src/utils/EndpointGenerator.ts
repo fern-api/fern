@@ -46,6 +46,8 @@ import { RequestOptions } from "./RequestOptionsClass";
 import { isTypeOptional } from "./TypeUtilities";
 
 export class EndpointGenerator {
+    public endpointHasExamples: boolean;
+
     private endpoint: HttpEndpoint;
     private blockArg: string;
     private requestOptions: RequestOptions;
@@ -71,6 +73,7 @@ export class EndpointGenerator {
     ) {
         this.endpoint = endpoint;
         this.example = endpoint.examples[0];
+        this.endpointHasExamples = this.example !== undefined;
 
         this.blockArg = "req";
         this.requestOptions = requestOptions;
@@ -93,18 +96,17 @@ export class EndpointGenerator {
                 })
         );
 
-        this.queryParametersAsProperties = this.endpoint.queryParameters.map(
-            (qp) =>
-                new Property({
-                    name: qp.name.name.snakeCase.safeName,
-                    wireValue: qp.name.wireValue,
-                    type: crf.fromTypeReference(qp.valueType),
-                    isOptional: isTypeOptional(qp.valueType),
-                    documentation: qp.docs,
-                    shouldCastExample: true,
-                    example: this.example?.queryParameters.find((param) => qp.name === param.name)?.value.jsonExample
-                })
-        );
+        this.queryParametersAsProperties = this.endpoint.queryParameters.map((qp) => {
+            return new Property({
+                name: qp.name.name.snakeCase.safeName,
+                wireValue: qp.name.wireValue,
+                type: crf.fromTypeReference(qp.valueType),
+                isOptional: isTypeOptional(qp.valueType),
+                documentation: qp.docs,
+                shouldCastExample: true,
+                example: this.example?.queryParameters.find((param) => qp.name === param.name)?.value.jsonExample
+            });
+        });
 
         const headerExamples = (this.example?.serviceHeaders ?? []).concat(this.example?.endpointHeaders ?? []);
         this.headersAsProperties = this.endpoint.headers.map(

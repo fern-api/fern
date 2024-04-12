@@ -18,12 +18,6 @@ module SeedAudiencesClient
 
       # @param request_options [SeedAudiencesClient::RequestOptions]
       # @return [SeedAudiencesClient::FolderA::Service::Response]
-      # @example
-      #  require "fern_audiences"
-      #
-      #  audiences = SeedAudiencesClient::Client.new
-      #
-      #  audiences.folder_a.get_direct_thread
       def get_direct_thread(request_options: nil)
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -46,12 +40,6 @@ module SeedAudiencesClient
 
       # @param request_options [SeedAudiencesClient::RequestOptions]
       # @return [SeedAudiencesClient::FolderA::Service::Response]
-      # @example
-      #  require "fern_audiences"
-      #
-      #  audiences = SeedAudiencesClient::Client.new
-      #
-      #  audiences.folder_a.get_direct_thread
       def get_direct_thread(request_options: nil)
         Async do
           response = @request_client.conn.get do |req|

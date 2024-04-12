@@ -674,6 +674,8 @@ export class DateReference extends ClassReference {
 export class ClassReferenceFactory {
     private locationGenerator: LocationGenerator;
     private typeDeclarations: Map<TypeId, TypeDeclaration>;
+    private typeReferenceToClass: Map<TypeReference, ClassReference>;
+
     public generatedReferences: Map<TypeId, ClassReference>;
 
     public resolvedReferences: Map<TypeId, ClassReference[]>;
@@ -683,6 +685,7 @@ export class ClassReferenceFactory {
         this.typeDeclarations = typeDeclarations;
         this.generatedReferences = new Map();
         this.resolvedReferences = new Map();
+        this.typeReferenceToClass = new Map();
         for (const [_, type] of typeDeclarations) {
             this.fromTypeDeclaration(type);
         }
@@ -759,30 +762,38 @@ export class ClassReferenceFactory {
     }
 
     public fromDeclaredTypeName(declaredTypeName: DeclaredTypeName): ClassReference {
-        const cr = this.generatedReferences.get(declaredTypeName.typeId);
+        let cr = this.generatedReferences.get(declaredTypeName.typeId);
         // Likely you care attempting to generate an alias and the aliased class has not yet been created.
         // Create it now!
         if (cr === undefined) {
             const td = this.typeDeclarations.get(declaredTypeName.typeId);
             if (td !== undefined) {
-                return this.fromTypeDeclaration(td);
+                cr = this.fromTypeDeclaration(td);
+                this.generatedReferences.set(declaredTypeName.typeId, cr);
+            } else {
+                throw new Error("ClassReference requested does not exist");
             }
-            throw new Error("ClassReference requested does not exist");
         }
         return cr;
     }
 
     public fromTypeReference(typeReference: TypeReference): ClassReference {
-        return typeReference._visit<ClassReference>({
+        let cr = this.typeReferenceToClass.get(typeReference);
+        if (cr != null) {
+            return cr;
+        }
+        cr = typeReference._visit<ClassReference>({
             container: (ct) => this.forContainerType(ct),
             named: (dtn) => this.fromDeclaredTypeName(dtn),
             primitive: (pt) => this.forPrimitiveType(pt),
             _other: (value: { type: string }) => new ClassReference({ name: value.type }),
             unknown: () => GenericClassReference
         });
+        this.typeReferenceToClass.set(typeReference, cr);
+        return cr;
     }
 
-    public forPrimitiveType(primitive: PrimitiveType): ClassReference {
+    private forPrimitiveType(primitive: PrimitiveType): ClassReference {
         return PrimitiveType._visit<ClassReference>(primitive, {
             integer: () => new ClassReference({ name: RubyClass.INTEGER }),
             double: () => new ClassReference({ name: RubyClass.DOUBLE }),
@@ -799,7 +810,7 @@ export class ClassReferenceFactory {
         });
     }
 
-    public forContainerType(containerType: ContainerType): ClassReference {
+    private forContainerType(containerType: ContainerType): ClassReference {
         return containerType._visit<ClassReference>({
             list: (tr: TypeReference) => new ArrayReference({ innerType: this.fromTypeReference(tr) }),
             map: (mt: MapType) =>

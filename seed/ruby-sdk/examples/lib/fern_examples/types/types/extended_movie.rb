@@ -6,11 +6,11 @@ require "json"
 module SeedExamplesClient
   class Types
     class ExtendedMovie
-      # @return [Array<String>]
+      # @return [Object]
       attr_reader :cast
       # @return [String]
       attr_reader :id
-      # @return [String]
+      # @return [Object]
       attr_reader :prequel
       # @return [String]
       attr_reader :title
@@ -18,13 +18,13 @@ module SeedExamplesClient
       attr_reader :from
       # @return [Float] The rating scale is one to five stars
       attr_reader :rating
-      # @return [String]
+      # @return [Object]
       attr_reader :type
       # @return [String]
       attr_reader :tag
-      # @return [String]
+      # @return [Object]
       attr_reader :book
-      # @return [Hash{String => Object}]
+      # @return [Object]
       attr_reader :metadata
       # @return [OpenStruct] Additional properties unmapped to the current class definition
       attr_reader :additional_properties
@@ -34,16 +34,16 @@ module SeedExamplesClient
 
       OMIT = Object.new
 
-      # @param cast [Array<String>]
+      # @param cast [Object]
       # @param id [String]
-      # @param prequel [String]
+      # @param prequel [Object]
       # @param title [String]
       # @param from [String]
       # @param rating [Float] The rating scale is one to five stars
-      # @param type [String]
+      # @param type [Object]
       # @param tag [String]
-      # @param book [String]
-      # @param metadata [Hash{String => Object}]
+      # @param book [Object]
+      # @param metadata [Object]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedExamplesClient::Types::ExtendedMovie]
       def initialize(cast:, id:, title:, from:, rating:, type:, tag:, metadata:, prequel: OMIT, book: OMIT,
@@ -91,8 +91,19 @@ module SeedExamplesClient
         tag = struct["tag"]
         book = struct["book"]
         metadata = struct["metadata"]
-        new(cast: cast, id: id, prequel: prequel, title: title, from: from, rating: rating, type: type, tag: tag,
-            book: book, metadata: metadata, additional_properties: struct)
+        new(
+          cast: cast,
+          id: id,
+          prequel: prequel,
+          title: title,
+          from: from,
+          rating: rating,
+          type: type,
+          tag: tag,
+          book: book,
+          metadata: metadata,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of ExtendedMovie to a JSON object
@@ -109,16 +120,16 @@ module SeedExamplesClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
-        obj.cast.is_a?(Array) != false || raise("Passed value for field obj.cast is not the expected type, validation failed.")
+        obj.cast.is_a?(Object) != false || raise("Passed value for field obj.cast is not the expected type, validation failed.")
         obj.id.is_a?(String) != false || raise("Passed value for field obj.id is not the expected type, validation failed.")
-        obj.prequel&.is_a?(String) != false || raise("Passed value for field obj.prequel is not the expected type, validation failed.")
+        obj.prequel&.is_a?(Object) != false || raise("Passed value for field obj.prequel is not the expected type, validation failed.")
         obj.title.is_a?(String) != false || raise("Passed value for field obj.title is not the expected type, validation failed.")
         obj.from.is_a?(String) != false || raise("Passed value for field obj.from is not the expected type, validation failed.")
         obj.rating.is_a?(Float) != false || raise("Passed value for field obj.rating is not the expected type, validation failed.")
-        obj.type.is_a?(String) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
+        obj.type.is_a?(Object) != false || raise("Passed value for field obj.type is not the expected type, validation failed.")
         obj.tag.is_a?(String) != false || raise("Passed value for field obj.tag is not the expected type, validation failed.")
-        obj.book&.is_a?(String) != false || raise("Passed value for field obj.book is not the expected type, validation failed.")
-        obj.metadata.is_a?(Hash) != false || raise("Passed value for field obj.metadata is not the expected type, validation failed.")
+        obj.book&.is_a?(Object) != false || raise("Passed value for field obj.book is not the expected type, validation failed.")
+        obj.metadata.is_a?(Object) != false || raise("Passed value for field obj.metadata is not the expected type, validation failed.")
       end
     end
   end

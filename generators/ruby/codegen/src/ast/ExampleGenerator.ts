@@ -1,4 +1,3 @@
-import { ExampleEndpointCall } from "@fern-fern/ir-sdk/api";
 import { Class_ } from "./classes/Class_";
 import { AstNode } from "./core/AstNode";
 import { Expression } from "./expressions/Expression";
@@ -34,10 +33,7 @@ export class ExampleGenerator {
         });
     }
 
-    public generateEndpointSnippet(
-        func: Function_,
-        exampleOverride?: ExampleEndpointCall
-    ): string | AstNode | undefined {
-        return func.generateSnippet(this.apiName, exampleOverride);
+    public generateEndpointSnippet(func: Function_): string | AstNode | undefined {
+        return func.generateSnippet(this.apiName);
     }
 }

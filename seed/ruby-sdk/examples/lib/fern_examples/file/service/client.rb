@@ -21,6 +21,9 @@ module SeedExamplesClient
       # @param filename [String] This is a filename
       # @param request_options [SeedExamplesClient::RequestOptions]
       # @return [SeedExamplesClient::Types::File]
+      # @example
+      #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  examples.file.get_file
       def get_file(filename:, request_options: nil)
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -47,6 +50,9 @@ module SeedExamplesClient
       # @param filename [String] This is a filename
       # @param request_options [SeedExamplesClient::RequestOptions]
       # @return [SeedExamplesClient::Types::File]
+      # @example
+      #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+      #  examples.file.get_file
       def get_file(filename:, request_options: nil)
         Async do
           response = @request_client.conn.get do |req|

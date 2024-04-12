@@ -37,7 +37,11 @@ module SeedExamplesClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         name = struct["name"]
         actor_or_actress_id = struct["actorOrActressId"]
-        new(name: name, actor_or_actress_id: actor_or_actress_id, additional_properties: struct)
+        new(
+          name: name,
+          actor_or_actress_id: actor_or_actress_id,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of StuntDouble to a JSON object
