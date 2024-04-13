@@ -1,5 +1,5 @@
 import { Argument } from "./Argument";
-import { ClassReference, ClassReferenceFactory, NilValue, OmittedValue } from "./classes/ClassReference";
+import { ClassReference, NilValue, OmittedValue } from "./classes/ClassReference";
 import { AstNode } from "./core/AstNode";
 import { Import } from "./Import";
 import { Variable, VariableType } from "./Variable";
@@ -15,8 +15,7 @@ export declare namespace Parameter {
         isNamed?: boolean;
         describeAsHashInYardoc?: boolean;
         isBlock?: boolean;
-        example?: unknown;
-        shouldCastExample?: boolean;
+        example?: string | AstNode;
     }
 }
 
@@ -29,8 +28,7 @@ export class Parameter extends AstNode {
     public isNamed: boolean;
     public isBlock: boolean;
     public describeAsHashInYardoc: boolean;
-    public example: unknown;
-    public shouldCastExample: boolean;
+    public example: string | AstNode | undefined;
 
     constructor({
         name,
@@ -43,7 +41,6 @@ export class Parameter extends AstNode {
         isNamed = true,
         describeAsHashInYardoc = false,
         isBlock = false,
-        shouldCastExample = false,
         ...rest
     }: Parameter.Init) {
         super(rest);
@@ -58,7 +55,6 @@ export class Parameter extends AstNode {
         this.wireValue = wireValue;
 
         this.isBlock = isBlock;
-        this.shouldCastExample = shouldCastExample;
         this.example = example;
     }
 
@@ -93,14 +89,5 @@ export class Parameter extends AstNode {
             documentation: this.documentation,
             variableType: VariableType.LOCAL
         });
-    }
-
-    public generateSnippet(crf: ClassReferenceFactory): string | AstNode | undefined {
-        const typeForSnippet = this.type.find((t) => t.generateSnippet != null);
-        return this.example != null
-            ? this.shouldCastExample && typeForSnippet != null
-                ? typeForSnippet.generateSnippet(this.example, crf)
-                : (this.example as string)
-            : undefined;
     }
 }

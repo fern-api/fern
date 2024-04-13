@@ -10,8 +10,11 @@ module SeedAliasClient
     # @param timeout_in_seconds [Long]
     # @return [SeedAliasClient::Client]
     def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @request_client = SeedAliasClient::RequestClient.new(base_url: base_url, max_retries: max_retries,
-                                                           timeout_in_seconds: timeout_in_seconds)
+      @request_client = SeedAliasClient::RequestClient.new(
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds
+      )
     end
   end
 
@@ -21,8 +24,11 @@ module SeedAliasClient
     # @param timeout_in_seconds [Long]
     # @return [SeedAliasClient::AsyncClient]
     def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @async_request_client = SeedAliasClient::AsyncRequestClient.new(base_url: base_url, max_retries: max_retries,
-                                                                      timeout_in_seconds: timeout_in_seconds)
+      @async_request_client = SeedAliasClient::AsyncRequestClient.new(
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds
+      )
     end
   end
 end

@@ -103,6 +103,7 @@
     }
   },
   "dependencies": {
+    "@fern-fern/generator-exec-sdk": "^0.0.730",
     "terminal-link": "^3.0.0",
     "workspace": "^0.0.1-preview.1"
   }

@@ -16,8 +16,13 @@ module SeedAuthEnvironmentVariablesClient
     # @param x_another_header [String]
     # @return [SeedAuthEnvironmentVariablesClient::Client]
     def initialize(x_another_header:, base_url: nil, max_retries: nil, timeout_in_seconds: nil, api_key: nil)
-      @request_client = SeedAuthEnvironmentVariablesClient::RequestClient.new(base_url: base_url,
-                                                                              max_retries: max_retries, timeout_in_seconds: timeout_in_seconds, api_key: api_key, x_another_header: x_another_header)
+      @request_client = SeedAuthEnvironmentVariablesClient::RequestClient.new(
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds,
+        api_key: api_key,
+        x_another_header: x_another_header
+      )
       @service = SeedAuthEnvironmentVariablesClient::ServiceClient.new(request_client: @request_client)
     end
   end
@@ -33,8 +38,13 @@ module SeedAuthEnvironmentVariablesClient
     # @param x_another_header [String]
     # @return [SeedAuthEnvironmentVariablesClient::AsyncClient]
     def initialize(x_another_header:, base_url: nil, max_retries: nil, timeout_in_seconds: nil, api_key: nil)
-      @async_request_client = SeedAuthEnvironmentVariablesClient::AsyncRequestClient.new(base_url: base_url,
-                                                                                         max_retries: max_retries, timeout_in_seconds: timeout_in_seconds, api_key: api_key, x_another_header: x_another_header)
+      @async_request_client = SeedAuthEnvironmentVariablesClient::AsyncRequestClient.new(
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds,
+        api_key: api_key,
+        x_another_header: x_another_header
+      )
       @service = SeedAuthEnvironmentVariablesClient::AsyncServiceClient.new(request_client: @async_request_client)
     end
   end

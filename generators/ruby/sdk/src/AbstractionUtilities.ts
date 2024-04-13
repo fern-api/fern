@@ -98,6 +98,7 @@ export function generateEndpoints(
                 requestOptionsVariable,
                 endpointRequestOptions,
                 crf,
+                eg,
                 generatedClasses,
                 fileUploadUtility
             );
@@ -118,7 +119,7 @@ export function generateEndpoints(
                 ...(generator.getResponseExpressions(responseVariable) ?? [])
             ];
 
-            return new Function_({
+            const func = new Function_({
                 name: endpoint.name.snakeCase.safeName,
                 parameters: generator.getEndpointParameters(),
                 functionBody: isAsync
@@ -140,6 +141,12 @@ export function generateEndpoints(
                 packagePath,
                 skipExample: !generator.endpointHasExamples
             });
+
+            if (generator.endpointHasExamples) {
+                eg.registerSnippet(func, endpoint);
+            }
+
+            return func;
         })
         .filter((fun) => fun !== undefined) as Function_[];
 }

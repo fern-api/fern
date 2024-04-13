@@ -21,7 +21,7 @@ module SeedExamplesClient
     # @return [SeedExamplesClient::Types::Movie]
     # @example
     #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  examples.get_movie
+    #  examples.get_movie(movie_id: "movie-c06a4ad7")
     def get_movie(movie_id:, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -46,7 +46,7 @@ module SeedExamplesClient
     # @return [String]
     # @example
     #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  examples.create_movie(request: SeedExamplesClient::Types::Movie.new)
+    #  examples.create_movie(request: { id: "movie-c06a4ad7", prequel: "movie-cv9b914f", title: "The Boy and the Heron", from: "Hayao Miyazaki", rating: 8, type: "movie", tag: "tag-wf9as23d", metadata: { "actors": ["Christian Bale","Florence Pugh","Willem Dafoe"], "releaseDate": "2023-12-08", "ratings": {"rottenTomatoes":97,"imdb":7.6} } })
     def create_movie(request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -65,7 +65,11 @@ module SeedExamplesClient
     # @return [SeedExamplesClient::Types::Metadata]
     # @example
     #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  examples.get_metadata
+    #  examples.get_metadata(
+    #    x_api_version: "0.0.1",
+    #    shallow: false,
+    #    tag: "development"
+    #  )
     def get_metadata(x_api_version:, shallow: nil, tag: nil, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -97,7 +101,7 @@ module SeedExamplesClient
     # @return [SeedExamplesClient::Types::Movie]
     # @example
     #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  examples.get_movie
+    #  examples.get_movie(movie_id: "movie-c06a4ad7")
     def get_movie(movie_id:, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
@@ -124,7 +128,7 @@ module SeedExamplesClient
     # @return [String]
     # @example
     #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  examples.create_movie(request: SeedExamplesClient::Types::Movie.new)
+    #  examples.create_movie(request: { id: "movie-c06a4ad7", prequel: "movie-cv9b914f", title: "The Boy and the Heron", from: "Hayao Miyazaki", rating: 8, type: "movie", tag: "tag-wf9as23d", metadata: { "actors": ["Christian Bale","Florence Pugh","Willem Dafoe"], "releaseDate": "2023-12-08", "ratings": {"rottenTomatoes":97,"imdb":7.6} } })
     def create_movie(request:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
@@ -145,7 +149,11 @@ module SeedExamplesClient
     # @return [SeedExamplesClient::Types::Metadata]
     # @example
     #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  examples.get_metadata
+    #  examples.get_metadata(
+    #    x_api_version: "0.0.1",
+    #    shallow: false,
+    #    tag: "development"
+    #  )
     def get_metadata(x_api_version:, shallow: nil, tag: nil, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|

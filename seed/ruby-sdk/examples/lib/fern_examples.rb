@@ -40,7 +40,7 @@ module SeedExamplesClient
     # @return [String]
     # @example
     #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  examples.echo(request: Hello world!\n\nwith\n\tnewlines)
+    #  examples.echo(request: "Hello world!\n\nwith\n\tnewlines")
     def echo(request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -85,7 +85,7 @@ module SeedExamplesClient
     # @return [String]
     # @example
     #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-    #  examples.echo(request: Hello world!\n\nwith\n\tnewlines)
+    #  examples.echo(request: "Hello world!\n\nwith\n\tnewlines")
     def echo(request:, request_options: nil)
       response = @async_request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?

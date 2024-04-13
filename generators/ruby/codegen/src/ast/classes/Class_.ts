@@ -7,7 +7,7 @@ import { Function_ } from "../functions/Function_";
 import { Import } from "../Import";
 import { Property } from "../Property";
 import { Yardoc } from "../Yardoc";
-import { ClassReference, ClassReferenceFactory } from "./ClassReference";
+import { ClassReference } from "./ClassReference";
 
 export declare namespace Class_ {
     export interface Init extends AstNode.Init {
@@ -142,13 +142,13 @@ export class Class_ extends AstNode {
         return new Set([...imports].filter((i) => i !== this.classReference.import_));
     }
 
-    public generateSnippet(crf: ClassReferenceFactory): string | AstNode | undefined {
+    public generateSnippet(): string | AstNode | undefined {
         return new FunctionInvocation({
             baseFunction: this.initializer,
             onObject: this.classReference.qualifiedName,
             arguments_: this.initializer?.parameters
                 .map((param) => {
-                    const parameterValue = param.generateSnippet(crf);
+                    const parameterValue = param.example;
                     return parameterValue != null ? param.toArgument(parameterValue) : undefined;
                 })
                 .filter((arg): arg is Argument => arg != null)

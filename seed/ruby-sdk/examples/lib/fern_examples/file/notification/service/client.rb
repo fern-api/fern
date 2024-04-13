@@ -22,7 +22,7 @@ module SeedExamplesClient
         # @return [SeedExamplesClient::Types::Exception]
         # @example
         #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-        #  examples.notification.get_exception
+        #  examples.notification.get_exception(notification_id: "notification-hsy129x")
         def get_exception(notification_id:, request_options: nil)
           response = @request_client.conn.get do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -49,7 +49,7 @@ module SeedExamplesClient
         # @return [SeedExamplesClient::Types::Exception]
         # @example
         #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
-        #  examples.notification.get_exception
+        #  examples.notification.get_exception(notification_id: "notification-hsy129x")
         def get_exception(notification_id:, request_options: nil)
           Async do
             response = @request_client.conn.get do |req|

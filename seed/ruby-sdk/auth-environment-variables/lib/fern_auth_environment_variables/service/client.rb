@@ -18,12 +18,6 @@ module SeedAuthEnvironmentVariablesClient
     #
     # @param request_options [SeedAuthEnvironmentVariablesClient::RequestOptions]
     # @return [String]
-    # @example
-    #  require "fern_auth_environment_variables"
-    #
-    #  auth_environment_variables = SeedAuthEnvironmentVariablesClient::Client.new
-    #
-    #  auth_environment_variables.get_with_api_key
     def get_with_api_key(request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -40,12 +34,6 @@ module SeedAuthEnvironmentVariablesClient
     # @param x_endpoint_header [String]
     # @param request_options [SeedAuthEnvironmentVariablesClient::RequestOptions]
     # @return [String]
-    # @example
-    #  require "fern_auth_environment_variables"
-    #
-    #  auth_environment_variables = SeedAuthEnvironmentVariablesClient::Client.new
-    #
-    #  auth_environment_variables.get_with_header
     def get_with_header(x_endpoint_header:, request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -76,12 +64,6 @@ module SeedAuthEnvironmentVariablesClient
     #
     # @param request_options [SeedAuthEnvironmentVariablesClient::RequestOptions]
     # @return [String]
-    # @example
-    #  require "fern_auth_environment_variables"
-    #
-    #  auth_environment_variables = SeedAuthEnvironmentVariablesClient::Client.new
-    #
-    #  auth_environment_variables.get_with_api_key
     def get_with_api_key(request_options: nil)
       Async do
         response = @request_client.conn.get do |req|
@@ -103,12 +85,6 @@ module SeedAuthEnvironmentVariablesClient
     # @param x_endpoint_header [String]
     # @param request_options [SeedAuthEnvironmentVariablesClient::RequestOptions]
     # @return [String]
-    # @example
-    #  require "fern_auth_environment_variables"
-    #
-    #  auth_environment_variables = SeedAuthEnvironmentVariablesClient::Client.new
-    #
-    #  auth_environment_variables.get_with_header
     def get_with_header(x_endpoint_header:, request_options: nil)
       Async do
         response = @request_client.conn.get do |req|

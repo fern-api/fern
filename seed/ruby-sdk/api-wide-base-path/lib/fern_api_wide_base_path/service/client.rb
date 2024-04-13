@@ -19,12 +19,6 @@ module SeedApiWideBasePathClient
     # @param endpoint_param [Integer]
     # @param request_options [SeedApiWideBasePathClient::RequestOptions]
     # @return [Void]
-    # @example
-    #  require "fern_api_wide_base_path"
-    #
-    #  api_wide_base_path = SeedApiWideBasePathClient::Client.new
-    #
-    #  api_wide_base_path.post
     def post(path_param:, service_param:, endpoint_param:, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -49,12 +43,6 @@ module SeedApiWideBasePathClient
     # @param endpoint_param [Integer]
     # @param request_options [SeedApiWideBasePathClient::RequestOptions]
     # @return [Void]
-    # @example
-    #  require "fern_api_wide_base_path"
-    #
-    #  api_wide_base_path = SeedApiWideBasePathClient::Client.new
-    #
-    #  api_wide_base_path.post
     def post(path_param:, service_param:, endpoint_param:, request_options: nil)
       Async do
         @request_client.conn.post do |req|

@@ -3,6 +3,7 @@ import {
     ClassReferenceFactory,
     Class_,
     ExampleGenerator,
+    GeneratedFile,
     GeneratedRubyFile,
     LocationGenerator,
     Module_
@@ -119,8 +120,8 @@ export class ClientsGenerator {
         );
     }
 
-    public generateFiles(): GeneratedRubyFile[] {
-        const clientFiles: GeneratedRubyFile[] = [];
+    public generateFiles(): GeneratedFile[] {
+        const clientFiles: GeneratedFile[] = [];
 
         let environmentClass: Class_ | undefined;
         if (this.intermediateRepresentation.environments !== undefined) {
@@ -385,6 +386,10 @@ export class ClientsGenerator {
                 this.services.get(this.intermediateRepresentation.rootPackage.service ?? "")
             )
         );
+
+        if (this.gc.config.output.snippetFilepath !== undefined) {
+            clientFiles.push(eg.generateSnippetsFile(this.gc.config.output.snippetFilepath));
+        }
 
         // TODO: Consider making Class_ + ClassReference and Function_ + Function invocation
         // follow a data model thats: ObjectDefinition, ObjectReference, ObjectInvocation(.withExample)

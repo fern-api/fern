@@ -122,7 +122,7 @@ export class Function_ extends AstNode {
         return this.invocationName != null ? this.invocationName : [...this.packagePath, this.name].join(".");
     }
 
-    public generateSnippet(clientName: string, crf: ClassReferenceFactory): AstNode | string | undefined {
+    public generateSnippet(clientName: string): AstNode | string | undefined {
         return this.skipExample
             ? undefined
             : new FunctionInvocation({
@@ -130,7 +130,7 @@ export class Function_ extends AstNode {
                   onObject: clientName,
                   arguments_: this.parameters
                       .map((param) => {
-                          const parameterValue = param.generateSnippet(crf);
+                          const parameterValue = param.example;
                           return parameterValue != null ? param.toArgument(parameterValue) : undefined;
                       })
                       .filter((arg): arg is Argument => arg != null)

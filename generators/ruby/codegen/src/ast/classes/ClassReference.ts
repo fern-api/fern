@@ -18,7 +18,6 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { format } from "util";
 import { LocationGenerator } from "../../utils/LocationGenerator";
-import { generateEnumNameFromValues } from "../../utils/NamingUtilities";
 import { ConditionalStatement } from "../abstractions/ConditionalStatement";
 import { Argument } from "../Argument";
 import { AstNode } from "../core/AstNode";
@@ -119,10 +118,6 @@ export class ClassReference extends AstNode {
     public getImports(): Set<Import> {
         return new Set(this.import_ ? [this.import_] : []);
     }
-
-    public generateSnippet(example: unknown, crf: ClassReferenceFactory): AstNode | string | undefined {
-        return `"${example as string}"`;
-    }
 }
 
 // Basic or primitve class references for which we don't do much
@@ -208,34 +203,6 @@ export class SerializableObjectReference extends ClassReference {
             properties
         });
     }
-
-    public generateSnippet(example: unknown, crf: ClassReferenceFactory): AstNode | string | undefined {
-        const maybeExample = example as Map<string, unknown>;
-
-        throw new Error(JSON.stringify(maybeExample));
-        // const properties = new Map(
-        //     Array.from(this.properties.entries())
-        //         .map(([key, value]) => {
-        //             const valueClassReference = crf.fromTypeReference(value);
-        //             return valueClassReference != null ? [key, valueClassReference] : undefined;
-        //         })
-        //         .filter((e): e is [string, ClassReference] => e != null)
-        // );
-        // return maybeExample != null
-        //     ? new FunctionInvocation({
-        //           baseFunction: new Function_({ name: "new", functionBody: [] }),
-        //           onObject: this,
-        //           arguments_: Array.from(properties.entries())
-        //               .map(([key, value]) => {
-        //                   const argValue = value.generateSnippet(maybeExample.get(key), crf);
-        //                   return argValue != null
-        //                       ? new Argument({ isNamed: true, name: key, value: argValue })
-        //                       : undefined;
-        //               })
-        //               .filter((arg): arg is Argument => arg != null)
-        //       })
-        //     : maybeExample;
-    }
 }
 
 export declare namespace DiscriminatedUnionClassReference {
@@ -264,12 +231,6 @@ export class DiscriminatedUnionClassReference extends SerializableObjectReferenc
             resolvedTypeId: declaredTypeName.typeId,
             properties
         });
-    }
-
-    public generateSnippet(example: unknown, crf: ClassReferenceFactory): AstNode | string | undefined {
-        // TODO: generate discriminated union snippets
-        // Blocked on generating a more attractive class
-        return undefined;
     }
 }
 
@@ -312,10 +273,6 @@ export class AliasReference extends ClassReference {
             moduleBreadcrumbs,
             resolvedTypeId
         });
-    }
-
-    public generateSnippet(example: unknown, crf: ClassReferenceFactory): AstNode | string | undefined {
-        return this.aliasOf.generateSnippet(example, crf);
     }
 }
 
@@ -365,18 +322,6 @@ export class ArrayReference extends ClassReference {
                   }
               })
             : undefined;
-    }
-
-    public generateSnippet(example: unknown, crf: ClassReferenceFactory): AstNode | string | undefined {
-        return new ArrayInstance({
-            contents: (example as unknown[])
-                .map((element) =>
-                    this.innerType instanceof ClassReference
-                        ? this.innerType.generateSnippet(element, crf)
-                        : (element as string)
-                )
-                .filter((e): e is AstNode | string => e !== undefined)
-        });
     }
 }
 
@@ -447,24 +392,6 @@ export class HashReference extends ClassReference {
                           new Expression({ rightSide: valueFromJsonFunction, isAssignment: false })
                       ]
                   }
-              })
-            : undefined;
-    }
-
-    public generateSnippet(example: unknown, crf: ClassReferenceFactory): AstNode | string | undefined {
-        const hashExample = example as Map<string, unknown>;
-        return hashExample != null
-            ? new HashInstance({
-                  contents: new Map(
-                      Array.from(hashExample.entries())
-                          .map(([key, value]) => [
-                              key,
-                              this.valueType instanceof ClassReference
-                                  ? this.valueType.generateSnippet(value, crf)
-                                  : (value as string)
-                          ])
-                          .filter((e): e is [string, string | AstNode] => e !== undefined)
-                  )
               })
             : undefined;
     }
@@ -550,7 +477,7 @@ export declare namespace EnumReference {
 }
 
 export class EnumReference extends ClassReference {
-    private values: EnumValue[];
+    public values: EnumValue[];
     constructor({ values, ...rest }: EnumReference.Init) {
         super({ ...rest });
         this.values = values;
@@ -573,13 +500,6 @@ export class EnumReference extends ClassReference {
             moduleBreadcrumbs,
             values: enumValues
         });
-    }
-
-    public generateSnippet(example: unknown, crf: ClassReferenceFactory): AstNode | string | undefined {
-        const exampleString = example as string;
-        return exampleString != null
-            ? `${this.qualifiedName}::${generateEnumNameFromValues(exampleString, this.values)}`
-            : undefined;
     }
 }
 
@@ -611,18 +531,6 @@ export class SetReference extends ClassReference {
             baseFunction: new Function_({ name: "new", functionBody: [] }),
             onObject: new ClassReference({ name: "Set", import_: new Import({ from: "set", isExternal: true }) }),
             arguments_: [new Argument({ value: variable, isNamed: false })]
-        });
-    }
-
-    public generateSnippet(example: unknown, crf: ClassReferenceFactory): AstNode | string | undefined {
-        return new SetInstance({
-            contents: (example as unknown[])
-                .map((element) =>
-                    this.innerType instanceof ClassReference
-                        ? this.innerType.generateSnippet(element, crf)
-                        : (element as string)
-                )
-                .filter((e): e is AstNode | string => e !== undefined)
         });
     }
 }
@@ -681,17 +589,6 @@ export class DateReference extends ClassReference {
             },
             else_: [new Expression({ rightSide: "nil", isAssignment: false })]
         });
-    }
-
-    public generateSnippet(example: unknown, crf: ClassReferenceFactory): AstNode | string | undefined {
-        const exampleString = example as string;
-        return exampleString != null
-            ? new FunctionInvocation({
-                  baseFunction: new Function_({ name: "parse", functionBody: [] }),
-                  onObject: this,
-                  arguments_: [new Argument({ value: example as string, isNamed: false })]
-              })
-            : undefined;
     }
 }
 
