@@ -39,7 +39,11 @@ module SeedTraceClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         stringified_type = struct["stringifiedType"]
         stringified_value = struct["stringifiedValue"]
-        new(stringified_type: stringified_type, stringified_value: stringified_value, additional_properties: struct)
+        new(
+          stringified_type: stringified_type,
+          stringified_value: stringified_value,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of GenericValue to a JSON object

@@ -56,7 +56,12 @@ module SeedTraceClient
           exception = SeedTraceClient::Submission::ExceptionInfo.from_json(json_object: exception)
         end
         stdout = struct["stdout"]
-        new(exception_v_2: exception_v_2, exception: exception, stdout: stdout, additional_properties: struct)
+        new(
+          exception_v_2: exception_v_2,
+          exception: exception,
+          stdout: stdout,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of WorkspaceRunDetails to a JSON object

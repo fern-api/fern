@@ -46,8 +46,12 @@ module SeedExamplesClient
         exception_type = struct["exceptionType"]
         exception_message = struct["exceptionMessage"]
         exception_stacktrace = struct["exceptionStacktrace"]
-        new(exception_type: exception_type, exception_message: exception_message,
-            exception_stacktrace: exception_stacktrace, additional_properties: struct)
+        new(
+          exception_type: exception_type,
+          exception_message: exception_message,
+          exception_stacktrace: exception_stacktrace,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of ExceptionInfo to a JSON object

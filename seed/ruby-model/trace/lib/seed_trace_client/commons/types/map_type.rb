@@ -49,7 +49,11 @@ module SeedTraceClient
           value_type = parsed_json["valueType"].to_json
           value_type = SeedTraceClient::Commons::VariableType.from_json(json_object: value_type)
         end
-        new(key_type: key_type, value_type: value_type, additional_properties: struct)
+        new(
+          key_type: key_type,
+          value_type: value_type,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of MapType to a JSON object

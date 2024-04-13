@@ -49,8 +49,13 @@ module SeedTraceClient
             directory = struct["directory"]
             contents = struct["contents"]
             editable = struct["editable"]
-            new(filename: filename, directory: directory, contents: contents, editable: editable,
-                additional_properties: struct)
+            new(
+              filename: filename,
+              directory: directory,
+              contents: contents,
+              editable: editable,
+              additional_properties: struct
+            )
           end
 
           # Serialize an instance of FileInfoV2 to a JSON object

@@ -66,8 +66,13 @@ module SeedTraceClient
           exception = SeedTraceClient::Submission::ExceptionV2.from_json(json_object: exception)
         end
         stdout = struct["stdout"]
-        new(passed: passed, actual_result: actual_result, exception: exception, stdout: stdout,
-            additional_properties: struct)
+        new(
+          passed: passed,
+          actual_result: actual_result,
+          exception: exception,
+          stdout: stdout,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of TestCaseNonHiddenGrade to a JSON object

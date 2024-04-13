@@ -37,7 +37,11 @@ module SeedTraceClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         test_case_id = struct["testCaseId"]
         trace_responses_size = struct["traceResponsesSize"]
-        new(test_case_id: test_case_id, trace_responses_size: trace_responses_size, additional_properties: struct)
+        new(
+          test_case_id: test_case_id,
+          trace_responses_size: trace_responses_size,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of RecordedTestCaseUpdate to a JSON object

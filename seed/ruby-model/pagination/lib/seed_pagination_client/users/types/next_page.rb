@@ -37,7 +37,11 @@ module SeedPaginationClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         page = struct["page"]
         starting_after = struct["starting_after"]
-        new(page: page, starting_after: starting_after, additional_properties: struct)
+        new(
+          page: page,
+          starting_after: starting_after,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of NextPage to a JSON object

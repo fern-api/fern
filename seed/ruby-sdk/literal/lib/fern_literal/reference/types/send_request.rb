@@ -42,7 +42,12 @@ module SeedLiteralClient
         prompt = struct["prompt"]
         query = struct["query"]
         stream = struct["stream"]
-        new(prompt: prompt, query: query, stream: stream, additional_properties: struct)
+        new(
+          prompt: prompt,
+          query: query,
+          stream: stream,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of SendRequest to a JSON object

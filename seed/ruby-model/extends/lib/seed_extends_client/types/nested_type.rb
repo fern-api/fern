@@ -41,7 +41,12 @@ module SeedExtendsClient
       name = struct["name"]
       raw = struct["raw"]
       docs = struct["docs"]
-      new(name: name, raw: raw, docs: docs, additional_properties: struct)
+      new(
+        name: name,
+        raw: raw,
+        docs: docs,
+        additional_properties: struct
+      )
     end
 
     # Serialize an instance of NestedType to a JSON object

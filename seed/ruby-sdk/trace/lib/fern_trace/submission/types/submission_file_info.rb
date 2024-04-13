@@ -42,7 +42,12 @@ module SeedTraceClient
         directory = struct["directory"]
         filename = struct["filename"]
         contents = struct["contents"]
-        new(directory: directory, filename: filename, contents: contents, additional_properties: struct)
+        new(
+          directory: directory,
+          filename: filename,
+          contents: contents,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of SubmissionFileInfo to a JSON object

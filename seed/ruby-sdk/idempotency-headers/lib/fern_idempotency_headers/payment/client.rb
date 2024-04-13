@@ -19,47 +19,6 @@ module SeedIdempotencyHeadersClient
     # @param currency [SeedIdempotencyHeadersClient::Payment::Currency]
     # @param request_options [SeedIdempotencyHeadersClient::IdempotencyRequestOptions]
     # @return [String]
-    # @example
-    #   require "fern_idempotency_headers"
-    #
-    # idempotency_headers = class RequestClient
-    #  # @return [Hash{String => String}]
-    #  attr_reader :headers
-    #  # @return [Faraday]
-    #  attr_reader :conn
-    #  # @return [String]
-    #  attr_reader :base_url
-    #  # @param base_url [String]
-    #  # @param max_retries [Long] The number of times to retry a failed request,
-    #  defaults to 2.
-    #  # @param timeout_in_seconds [Long]
-    #  # @param token [String]
-    #  # @return [SeedIdempotencyHeadersClient::RequestClient]
-    #  def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil,
-    #  token:)
-    #  @base_url = base_url
-    #  @headers = { "X-Fern-Language": 'Ruby', "X-Fern-SDK-Name":
-    #  'fern_idempotency_headers', "X-Fern-SDK-Version": '0.0.1', "Authorization":
-    #  'Bearer #{token}' }
-    #  @conn = Faraday.new(headers: @headers) do | faraday |
-    #  faraday.request :json
-    #  faraday.response :raise_error, include_request: true
-    #  unless max_retries.nil?
-    #  faraday.request :retry ,  { max: max_retries }
-    #  end
-    #  unless timeout_in_seconds.nil?
-    #  faraday.options.timeout = timeout_in_seconds
-    #  end
-    #  end
-    #  end
-    #  # @param request_options [SeedIdempotencyHeadersClient::RequestOptions]
-    #  # @return [String]
-    #  def get_url(request_options: nil)
-    #  request_options&.base_url || @base_url
-    #  end
-    #  end.new
-    #
-    # idempotency_headers.create
     def create(amount:, currency:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -78,47 +37,6 @@ module SeedIdempotencyHeadersClient
     # @param payment_id [String]
     # @param request_options [SeedIdempotencyHeadersClient::RequestOptions]
     # @return [Void]
-    # @example
-    #   require "fern_idempotency_headers"
-    #
-    # idempotency_headers = class RequestClient
-    #  # @return [Hash{String => String}]
-    #  attr_reader :headers
-    #  # @return [Faraday]
-    #  attr_reader :conn
-    #  # @return [String]
-    #  attr_reader :base_url
-    #  # @param base_url [String]
-    #  # @param max_retries [Long] The number of times to retry a failed request,
-    #  defaults to 2.
-    #  # @param timeout_in_seconds [Long]
-    #  # @param token [String]
-    #  # @return [SeedIdempotencyHeadersClient::RequestClient]
-    #  def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil,
-    #  token:)
-    #  @base_url = base_url
-    #  @headers = { "X-Fern-Language": 'Ruby', "X-Fern-SDK-Name":
-    #  'fern_idempotency_headers', "X-Fern-SDK-Version": '0.0.1', "Authorization":
-    #  'Bearer #{token}' }
-    #  @conn = Faraday.new(headers: @headers) do | faraday |
-    #  faraday.request :json
-    #  faraday.response :raise_error, include_request: true
-    #  unless max_retries.nil?
-    #  faraday.request :retry ,  { max: max_retries }
-    #  end
-    #  unless timeout_in_seconds.nil?
-    #  faraday.options.timeout = timeout_in_seconds
-    #  end
-    #  end
-    #  end
-    #  # @param request_options [SeedIdempotencyHeadersClient::RequestOptions]
-    #  # @return [String]
-    #  def get_url(request_options: nil)
-    #  request_options&.base_url || @base_url
-    #  end
-    #  end.new
-    #
-    # idempotency_headers.delete
     def delete(payment_id:, request_options: nil)
       @request_client.conn.delete do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -143,47 +61,6 @@ module SeedIdempotencyHeadersClient
     # @param currency [SeedIdempotencyHeadersClient::Payment::Currency]
     # @param request_options [SeedIdempotencyHeadersClient::IdempotencyRequestOptions]
     # @return [String]
-    # @example
-    #   require "fern_idempotency_headers"
-    #
-    # idempotency_headers = class RequestClient
-    #  # @return [Hash{String => String}]
-    #  attr_reader :headers
-    #  # @return [Faraday]
-    #  attr_reader :conn
-    #  # @return [String]
-    #  attr_reader :base_url
-    #  # @param base_url [String]
-    #  # @param max_retries [Long] The number of times to retry a failed request,
-    #  defaults to 2.
-    #  # @param timeout_in_seconds [Long]
-    #  # @param token [String]
-    #  # @return [SeedIdempotencyHeadersClient::RequestClient]
-    #  def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil,
-    #  token:)
-    #  @base_url = base_url
-    #  @headers = { "X-Fern-Language": 'Ruby', "X-Fern-SDK-Name":
-    #  'fern_idempotency_headers', "X-Fern-SDK-Version": '0.0.1', "Authorization":
-    #  'Bearer #{token}' }
-    #  @conn = Faraday.new(headers: @headers) do | faraday |
-    #  faraday.request :json
-    #  faraday.response :raise_error, include_request: true
-    #  unless max_retries.nil?
-    #  faraday.request :retry ,  { max: max_retries }
-    #  end
-    #  unless timeout_in_seconds.nil?
-    #  faraday.options.timeout = timeout_in_seconds
-    #  end
-    #  end
-    #  end
-    #  # @param request_options [SeedIdempotencyHeadersClient::RequestOptions]
-    #  # @return [String]
-    #  def get_url(request_options: nil)
-    #  request_options&.base_url || @base_url
-    #  end
-    #  end.new
-    #
-    # idempotency_headers.create
     def create(amount:, currency:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
@@ -208,47 +85,6 @@ module SeedIdempotencyHeadersClient
     # @param payment_id [String]
     # @param request_options [SeedIdempotencyHeadersClient::RequestOptions]
     # @return [Void]
-    # @example
-    #   require "fern_idempotency_headers"
-    #
-    # idempotency_headers = class RequestClient
-    #  # @return [Hash{String => String}]
-    #  attr_reader :headers
-    #  # @return [Faraday]
-    #  attr_reader :conn
-    #  # @return [String]
-    #  attr_reader :base_url
-    #  # @param base_url [String]
-    #  # @param max_retries [Long] The number of times to retry a failed request,
-    #  defaults to 2.
-    #  # @param timeout_in_seconds [Long]
-    #  # @param token [String]
-    #  # @return [SeedIdempotencyHeadersClient::RequestClient]
-    #  def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil,
-    #  token:)
-    #  @base_url = base_url
-    #  @headers = { "X-Fern-Language": 'Ruby', "X-Fern-SDK-Name":
-    #  'fern_idempotency_headers', "X-Fern-SDK-Version": '0.0.1', "Authorization":
-    #  'Bearer #{token}' }
-    #  @conn = Faraday.new(headers: @headers) do | faraday |
-    #  faraday.request :json
-    #  faraday.response :raise_error, include_request: true
-    #  unless max_retries.nil?
-    #  faraday.request :retry ,  { max: max_retries }
-    #  end
-    #  unless timeout_in_seconds.nil?
-    #  faraday.options.timeout = timeout_in_seconds
-    #  end
-    #  end
-    #  end
-    #  # @param request_options [SeedIdempotencyHeadersClient::RequestOptions]
-    #  # @return [String]
-    #  def get_url(request_options: nil)
-    #  request_options&.base_url || @base_url
-    #  end
-    #  end.new
-    #
-    # idempotency_headers.delete
     def delete(payment_id:, request_options: nil)
       Async do
         @request_client.conn.delete do |req|

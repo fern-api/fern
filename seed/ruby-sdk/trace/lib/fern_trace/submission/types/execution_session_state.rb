@@ -69,8 +69,15 @@ module SeedTraceClient
         aws_task_id = struct["awsTaskId"]
         language = struct["language"]
         status = struct["status"]
-        new(last_time_contacted: last_time_contacted, session_id: session_id, is_warm_instance: is_warm_instance,
-            aws_task_id: aws_task_id, language: language, status: status, additional_properties: struct)
+        new(
+          last_time_contacted: last_time_contacted,
+          session_id: session_id,
+          is_warm_instance: is_warm_instance,
+          aws_task_id: aws_task_id,
+          language: language,
+          status: status,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of ExecutionSessionState to a JSON object

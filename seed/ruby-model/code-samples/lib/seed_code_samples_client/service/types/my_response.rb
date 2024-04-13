@@ -39,7 +39,11 @@ module SeedCodeSamplesClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         id = struct["id"]
         name = struct["name"]
-        new(id: id, name: name, additional_properties: struct)
+        new(
+          id: id,
+          name: name,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of MyResponse to a JSON object

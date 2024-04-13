@@ -44,7 +44,11 @@ module SeedTraceClient
           run_details = parsed_json["runDetails"].to_json
           run_details = SeedTraceClient::Submission::WorkspaceRunDetails.from_json(json_object: run_details)
         end
-        new(submission_id: submission_id, run_details: run_details, additional_properties: struct)
+        new(
+          submission_id: submission_id,
+          run_details: run_details,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of WorkspaceRanResponse to a JSON object

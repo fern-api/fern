@@ -50,7 +50,12 @@ module SeedObjectsWithImportsClient
         metadata = parsed_json["metadata"].to_json
         metadata = SeedObjectsWithImportsClient::Commons::Metadata::Metadata.from_json(json_object: metadata)
       end
-      new(id: id, label: label, metadata: metadata, additional_properties: struct)
+      new(
+        id: id,
+        label: label,
+        metadata: metadata,
+        additional_properties: struct
+      )
     end
 
     # Serialize an instance of Node to a JSON object

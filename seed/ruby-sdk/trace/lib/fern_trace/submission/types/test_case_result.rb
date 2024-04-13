@@ -54,8 +54,12 @@ module SeedTraceClient
           actual_result = SeedTraceClient::Submission::ActualResult.from_json(json_object: actual_result)
         end
         passed = struct["passed"]
-        new(expected_result: expected_result, actual_result: actual_result, passed: passed,
-            additional_properties: struct)
+        new(
+          expected_result: expected_result,
+          actual_result: actual_result,
+          passed: passed,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of TestCaseResult to a JSON object

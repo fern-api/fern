@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.6.0-rc0] - 2024-04-12
+
+- Feature: Introduce code snippets and examples for Ruby SDKs.
+
 ## [0.5.0-rc0] - 2024-04-09
 
 - Improvement: Consumers of the SDK can now pass in a base URL override into the root client, as well as the request's RequestOptions

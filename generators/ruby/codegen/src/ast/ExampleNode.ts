@@ -4,14 +4,18 @@ import { Import } from "./Import";
 export declare namespace ExampleNode {
     export interface Init extends AstNode.Init {
         children: (AstNode | string)[];
+        arbitraryImports?: Import[];
     }
 }
 
 export class ExampleNode extends AstNode {
     private children: (AstNode | string)[];
-    constructor({ children, ...rest }: ExampleNode.Init) {
+    public arbitraryImports?: Import[];
+
+    constructor({ children, arbitraryImports, ...rest }: ExampleNode.Init) {
         super({ ...rest, writeImports: true });
         this.children = children;
+        this.arbitraryImports = arbitraryImports;
     }
 
     public writeInternal(startingTabSpaces: number): void {
@@ -21,7 +25,7 @@ export class ExampleNode extends AstNode {
     }
 
     public getImports(): Set<Import> {
-        let imports = new Set<Import>();
+        let imports = new Set<Import>(this.arbitraryImports);
         this.children?.forEach((c) => {
             if (c instanceof AstNode) {
                 imports = new Set([...imports, ...c.getImports()]);

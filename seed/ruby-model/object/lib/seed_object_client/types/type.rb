@@ -159,8 +159,28 @@ module SeedObjectClient
         nineteen = parsed_json["nineteen"].to_json
         nineteen = SeedObjectClient::Name.from_json(json_object: nineteen)
       end
-      new(one: one, two: two, three: three, four: four, five: five, six: six, seven: seven, eight: eight, nine: nine,
-          ten: ten, eleven: eleven, twelve: twelve, thirteen: thirteen, fourteen: fourteen, fifteen: fifteen, sixteen: sixteen, seventeen: seventeen, eighteen: eighteen, nineteen: nineteen, additional_properties: struct)
+      new(
+        one: one,
+        two: two,
+        three: three,
+        four: four,
+        five: five,
+        six: six,
+        seven: seven,
+        eight: eight,
+        nine: nine,
+        ten: ten,
+        eleven: eleven,
+        twelve: twelve,
+        thirteen: thirteen,
+        fourteen: fourteen,
+        fifteen: fifteen,
+        sixteen: sixteen,
+        seventeen: seventeen,
+        eighteen: eighteen,
+        nineteen: nineteen,
+        additional_properties: struct
+      )
     end
 
     # Serialize an instance of Type to a JSON object

@@ -27,6 +27,7 @@ import { ExampleNode } from "./ExampleNode";
 import { Expression } from "./expressions/Expression";
 import { FunctionInvocation } from "./functions/FunctionInvocation";
 import { Function_ } from "./functions/Function_";
+import { Import } from "./Import";
 import { Property } from "./Property";
 
 export declare namespace ExampleGenerator {
@@ -94,7 +95,8 @@ export class ExampleGenerator {
         if (funcExample != null) {
             nodes.push(funcExample);
             const exampleNode = new ExampleNode({
-                children: nodes
+                children: nodes,
+                arbitraryImports: [new Import({ from: this.gemName, isExternal: true })]
             });
             this.endpointSnippets.push({
                 id: {

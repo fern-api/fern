@@ -16,52 +16,6 @@ module SeedSingleUrlEnvironmentNoDefaultClient
 
     # @param request_options [SeedSingleUrlEnvironmentNoDefaultClient::RequestOptions]
     # @return [String]
-    # @example
-    #   require "fern_single_url_environment_no_default"
-    #
-    # single_url_environment_no_default = class RequestClient
-    #  # @return [Hash{String => String}]
-    #  attr_reader :headers
-    #  # @return [Faraday]
-    #  attr_reader :conn
-    #  # @return [String]
-    #  attr_reader :base_url
-    #  # @return [String]
-    #  attr_reader :default_environment
-    #  # @param environment [SeedSingleUrlEnvironmentNoDefaultClient::Environment]
-    #  # @param base_url [String]
-    #  # @param max_retries [Long] The number of times to retry a failed request,
-    #  defaults to 2.
-    #  # @param timeout_in_seconds [Long]
-    #  # @param token [String]
-    #  # @return [SeedSingleUrlEnvironmentNoDefaultClient::RequestClient]
-    #  def initialize(environment: nil, base_url: nil, max_retries: nil,
-    #  timeout_in_seconds: nil, token:)
-    #  @default_environment = environment
-    #  @base_url = environment || base_url
-    #  @headers = { "X-Fern-Language": 'Ruby', "X-Fern-SDK-Name":
-    #  'fern_single_url_environment_no_default', "X-Fern-SDK-Version": '0.0.1',
-    #  "Authorization": 'Bearer #{token}' }
-    #  @conn = Faraday.new(headers: @headers) do | faraday |
-    #  faraday.request :json
-    #  faraday.response :raise_error, include_request: true
-    #  unless max_retries.nil?
-    #  faraday.request :retry ,  { max: max_retries }
-    #  end
-    #  unless timeout_in_seconds.nil?
-    #  faraday.options.timeout = timeout_in_seconds
-    #  end
-    #  end
-    #  end
-    #  # @param request_options
-    #  [SeedSingleUrlEnvironmentNoDefaultClient::RequestOptions]
-    #  # @return [String]
-    #  def get_url(request_options: nil)
-    #  request_options&.base_url || @default_environment || @base_url
-    #  end
-    #  end.new
-    #
-    # single_url_environment_no_default.get_dummy
     def get_dummy(request_options: nil)
       response = @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -85,52 +39,6 @@ module SeedSingleUrlEnvironmentNoDefaultClient
 
     # @param request_options [SeedSingleUrlEnvironmentNoDefaultClient::RequestOptions]
     # @return [String]
-    # @example
-    #   require "fern_single_url_environment_no_default"
-    #
-    # single_url_environment_no_default = class RequestClient
-    #  # @return [Hash{String => String}]
-    #  attr_reader :headers
-    #  # @return [Faraday]
-    #  attr_reader :conn
-    #  # @return [String]
-    #  attr_reader :base_url
-    #  # @return [String]
-    #  attr_reader :default_environment
-    #  # @param environment [SeedSingleUrlEnvironmentNoDefaultClient::Environment]
-    #  # @param base_url [String]
-    #  # @param max_retries [Long] The number of times to retry a failed request,
-    #  defaults to 2.
-    #  # @param timeout_in_seconds [Long]
-    #  # @param token [String]
-    #  # @return [SeedSingleUrlEnvironmentNoDefaultClient::RequestClient]
-    #  def initialize(environment: nil, base_url: nil, max_retries: nil,
-    #  timeout_in_seconds: nil, token:)
-    #  @default_environment = environment
-    #  @base_url = environment || base_url
-    #  @headers = { "X-Fern-Language": 'Ruby', "X-Fern-SDK-Name":
-    #  'fern_single_url_environment_no_default', "X-Fern-SDK-Version": '0.0.1',
-    #  "Authorization": 'Bearer #{token}' }
-    #  @conn = Faraday.new(headers: @headers) do | faraday |
-    #  faraday.request :json
-    #  faraday.response :raise_error, include_request: true
-    #  unless max_retries.nil?
-    #  faraday.request :retry ,  { max: max_retries }
-    #  end
-    #  unless timeout_in_seconds.nil?
-    #  faraday.options.timeout = timeout_in_seconds
-    #  end
-    #  end
-    #  end
-    #  # @param request_options
-    #  [SeedSingleUrlEnvironmentNoDefaultClient::RequestOptions]
-    #  # @return [String]
-    #  def get_url(request_options: nil)
-    #  request_options&.base_url || @default_environment || @base_url
-    #  end
-    #  end.new
-    #
-    # single_url_environment_no_default.get_dummy
     def get_dummy(request_options: nil)
       Async do
         response = @request_client.conn.get do |req|

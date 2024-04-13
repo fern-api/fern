@@ -49,7 +49,11 @@ module SeedTraceClient
             v = v.to_json
             SeedTraceClient::Commons::VariableType.from_json(json_object: v)
           end
-          new(file: file, related_types: related_types, additional_properties: struct)
+          new(
+            file: file,
+            related_types: related_types,
+            additional_properties: struct
+          )
         end
 
         # Serialize an instance of DefaultProvidedFile to a JSON object

@@ -42,8 +42,12 @@ module SeedMixedCaseClient
         user_name = struct["userName"]
         metadata_tags = struct["metadata_tags"]
         extra_properties = struct["EXTRA_PROPERTIES"]
-        new(user_name: user_name, metadata_tags: metadata_tags, extra_properties: extra_properties,
-            additional_properties: struct)
+        new(
+          user_name: user_name,
+          metadata_tags: metadata_tags,
+          extra_properties: extra_properties,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of User to a JSON object

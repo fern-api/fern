@@ -14,8 +14,11 @@ module SeedBytesClient
     # @param timeout_in_seconds [Long]
     # @return [SeedBytesClient::Client]
     def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @request_client = SeedBytesClient::RequestClient.new(base_url: base_url, max_retries: max_retries,
-                                                           timeout_in_seconds: timeout_in_seconds)
+      @request_client = SeedBytesClient::RequestClient.new(
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds
+      )
       @service = SeedBytesClient::ServiceClient.new(request_client: @request_client)
     end
   end
@@ -29,8 +32,11 @@ module SeedBytesClient
     # @param timeout_in_seconds [Long]
     # @return [SeedBytesClient::AsyncClient]
     def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @async_request_client = SeedBytesClient::AsyncRequestClient.new(base_url: base_url, max_retries: max_retries,
-                                                                      timeout_in_seconds: timeout_in_seconds)
+      @async_request_client = SeedBytesClient::AsyncRequestClient.new(
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds
+      )
       @service = SeedBytesClient::AsyncServiceClient.new(request_client: @async_request_client)
     end
   end

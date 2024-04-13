@@ -60,8 +60,13 @@ module SeedTraceClient
               description = SeedTraceClient::V2::V3::Problem::TestCaseImplementationDescription.from_json(json_object: description)
             end
             expected_value_parameter_id = struct["expectedValueParameterId"]
-            new(template_id: template_id, name: name, description: description,
-                expected_value_parameter_id: expected_value_parameter_id, additional_properties: struct)
+            new(
+              template_id: template_id,
+              name: name,
+              description: description,
+              expected_value_parameter_id: expected_value_parameter_id,
+              additional_properties: struct
+            )
           end
 
           # Serialize an instance of BasicTestCaseTemplate to a JSON object

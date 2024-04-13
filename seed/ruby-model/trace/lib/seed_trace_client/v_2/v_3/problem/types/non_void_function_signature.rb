@@ -50,7 +50,11 @@ module SeedTraceClient
               return_type = parsed_json["returnType"].to_json
               return_type = SeedTraceClient::Commons::VariableType.from_json(json_object: return_type)
             end
-            new(parameters: parameters, return_type: return_type, additional_properties: struct)
+            new(
+              parameters: parameters,
+              return_type: return_type,
+              additional_properties: struct
+            )
           end
 
           # Serialize an instance of NonVoidFunctionSignature to a JSON object

@@ -28,8 +28,13 @@ module SeedLiteralClient
     # @param audit_logging [Boolean]
     # @return [SeedLiteralClient::Client]
     def initialize(version:, audit_logging:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @request_client = SeedLiteralClient::RequestClient.new(base_url: base_url, max_retries: max_retries,
-                                                             timeout_in_seconds: timeout_in_seconds, version: version, audit_logging: audit_logging)
+      @request_client = SeedLiteralClient::RequestClient.new(
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds,
+        version: version,
+        audit_logging: audit_logging
+      )
       @headers = SeedLiteralClient::HeadersClient.new(request_client: @request_client)
       @inlined = SeedLiteralClient::InlinedClient.new(request_client: @request_client)
       @path = SeedLiteralClient::PathClient.new(request_client: @request_client)
@@ -57,8 +62,13 @@ module SeedLiteralClient
     # @param audit_logging [Boolean]
     # @return [SeedLiteralClient::AsyncClient]
     def initialize(version:, audit_logging:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @async_request_client = SeedLiteralClient::AsyncRequestClient.new(base_url: base_url, max_retries: max_retries,
-                                                                        timeout_in_seconds: timeout_in_seconds, version: version, audit_logging: audit_logging)
+      @async_request_client = SeedLiteralClient::AsyncRequestClient.new(
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds,
+        version: version,
+        audit_logging: audit_logging
+      )
       @headers = SeedLiteralClient::AsyncHeadersClient.new(request_client: @async_request_client)
       @inlined = SeedLiteralClient::AsyncInlinedClient.new(request_client: @async_request_client)
       @path = SeedLiteralClient::AsyncPathClient.new(request_client: @async_request_client)

@@ -15,8 +15,12 @@ module SeedApiClient
     # @param token [String]
     # @return [SeedApiClient::Client]
     def initialize(token:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @request_client = SeedApiClient::RequestClient.new(base_url: base_url, max_retries: max_retries,
-                                                         timeout_in_seconds: timeout_in_seconds, token: token)
+      @request_client = SeedApiClient::RequestClient.new(
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds,
+        token: token
+      )
       @imdb = SeedApiClient::ImdbClient.new(request_client: @request_client)
     end
   end
@@ -31,8 +35,12 @@ module SeedApiClient
     # @param token [String]
     # @return [SeedApiClient::AsyncClient]
     def initialize(token:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @async_request_client = SeedApiClient::AsyncRequestClient.new(base_url: base_url, max_retries: max_retries,
-                                                                    timeout_in_seconds: timeout_in_seconds, token: token)
+      @async_request_client = SeedApiClient::AsyncRequestClient.new(
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds,
+        token: token
+      )
       @imdb = SeedApiClient::AsyncImdbClient.new(request_client: @async_request_client)
     end
   end

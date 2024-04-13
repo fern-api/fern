@@ -43,7 +43,12 @@ module SeedObjectsWithImportsClient
         name = struct["name"]
         contents = struct["contents"]
         info = struct["info"]
-        new(name: name, contents: contents, info: info, additional_properties: struct)
+        new(
+          name: name,
+          contents: contents,
+          info: info,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of File to a JSON object

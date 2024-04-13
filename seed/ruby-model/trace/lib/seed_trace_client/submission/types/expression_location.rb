@@ -37,7 +37,11 @@ module SeedTraceClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         start = struct["start"]
         offset = struct["offset"]
-        new(start: start, offset: offset, additional_properties: struct)
+        new(
+          start: start,
+          offset: offset,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of ExpressionLocation to a JSON object

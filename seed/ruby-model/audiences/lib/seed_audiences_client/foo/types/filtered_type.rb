@@ -39,7 +39,11 @@ module SeedAudiencesClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         public_property = struct["public_property"]
         private_property = struct["private_property"]
-        new(public_property: public_property, private_property: private_property, additional_properties: struct)
+        new(
+          public_property: public_property,
+          private_property: private_property,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of FilteredType to a JSON object

@@ -44,7 +44,11 @@ module SeedQueryParametersClient
           user = parsed_json["user"].to_json
           user = SeedQueryParametersClient::User::User.from_json(json_object: user)
         end
-        new(name: name, user: user, additional_properties: struct)
+        new(
+          name: name,
+          user: user,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of NestedUser to a JSON object

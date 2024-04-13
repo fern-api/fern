@@ -43,7 +43,11 @@ module SeedTraceClient
           result = SeedTraceClient::Submission::TestCaseResultWithStdout.from_json(json_object: result)
         end
         trace_responses_size = struct["traceResponsesSize"]
-        new(result: result, trace_responses_size: trace_responses_size, additional_properties: struct)
+        new(
+          result: result,
+          trace_responses_size: trace_responses_size,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of TracedTestCase to a JSON object

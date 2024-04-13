@@ -48,7 +48,12 @@ module SeedResponsePropertyClient
         end
         metadata = struct["metadata"]
         docs = struct["docs"]
-        new(data: data, metadata: metadata, docs: docs, additional_properties: struct)
+        new(
+          data: data,
+          metadata: metadata,
+          docs: docs,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of Response to a JSON object

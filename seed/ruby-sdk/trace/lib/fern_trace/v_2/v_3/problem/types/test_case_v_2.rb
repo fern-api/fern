@@ -78,8 +78,13 @@ module SeedTraceClient
               expects = parsed_json["expects"].to_json
               expects = SeedTraceClient::V2::V3::Problem::TestCaseExpects.from_json(json_object: expects)
             end
-            new(metadata: metadata, implementation: implementation, arguments: arguments, expects: expects,
-                additional_properties: struct)
+            new(
+              metadata: metadata,
+              implementation: implementation,
+              arguments: arguments,
+              expects: expects,
+              additional_properties: struct
+            )
           end
 
           # Serialize an instance of TestCaseV2 to a JSON object

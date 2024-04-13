@@ -16,8 +16,13 @@ module SeedBasicAuthClient
     # @param password [String]
     # @return [SeedBasicAuthClient::Client]
     def initialize(username:, password:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @request_client = SeedBasicAuthClient::RequestClient.new(base_url: base_url, max_retries: max_retries,
-                                                               timeout_in_seconds: timeout_in_seconds, username: username, password: password)
+      @request_client = SeedBasicAuthClient::RequestClient.new(
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds,
+        username: username,
+        password: password
+      )
       @basic_auth = SeedBasicAuthClient::BasicAuthClient.new(request_client: @request_client)
     end
   end
@@ -33,8 +38,13 @@ module SeedBasicAuthClient
     # @param password [String]
     # @return [SeedBasicAuthClient::AsyncClient]
     def initialize(username:, password:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @async_request_client = SeedBasicAuthClient::AsyncRequestClient.new(base_url: base_url, max_retries: max_retries,
-                                                                          timeout_in_seconds: timeout_in_seconds, username: username, password: password)
+      @async_request_client = SeedBasicAuthClient::AsyncRequestClient.new(
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds,
+        username: username,
+        password: password
+      )
       @basic_auth = SeedBasicAuthClient::AsyncBasicAuthClient.new(request_client: @async_request_client)
     end
   end
