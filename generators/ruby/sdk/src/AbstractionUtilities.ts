@@ -6,6 +6,7 @@ import {
     ClassReferenceFactory,
     Class_,
     ConditionalStatement,
+    ExampleGenerator,
     Expression,
     FunctionInvocation,
     Function_,
@@ -24,7 +25,6 @@ import {
     Variable,
     VariableType
 } from "@fern-api/ruby-codegen";
-import { ExampleGenerator } from "@fern-api/ruby-codegen/src/ast/ExampleGenerator";
 import {
     EnvironmentId,
     EnvironmentsConfig,
