@@ -1,1 +1,45 @@
-{"endpoints":[{"id":{"path":"/resource/{ResourceID}","method":"GET"},"snippet":{"client":"require \"fern_mixed_case\"\n\nmixed_case = SeedMixedCaseClient::Client.new(base_url: \"https://api.example.com\")\nmixed_case.get_resource(resource_id: \"rsc-xyz\")","type":"ruby"}},{"id":{"path":"/resource","method":"GET"},"snippet":{"client":"require \"fern_mixed_case\"\n\nmixed_case = SeedMixedCaseClient::Client.new(base_url: \"https://api.example.com\")\nmixed_case.list_resources(page_limit: 10, before_date: DateTime.parse(2023-01-01))","type":"ruby"}},{"id":{"path":"/resource/{ResourceID}","method":"GET"},"snippet":{"client":"require \"fern_mixed_case\"\n\nmixed_case = SeedMixedCaseClient::Client.new(base_url: \"https://api.example.com\")\nmixed_case.get_resource(resource_id: \"rsc-xyz\")","type":"ruby"}},{"id":{"path":"/resource","method":"GET"},"snippet":{"client":"require \"fern_mixed_case\"\n\nmixed_case = SeedMixedCaseClient::Client.new(base_url: \"https://api.example.com\")\nmixed_case.list_resources(page_limit: 10, before_date: DateTime.parse(2023-01-01))","type":"ruby"}}],"types":{}}
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/resource/{ResourceID}",
+                "method": "GET"
+            },
+            "snippet": {
+                "client": "require \"fern_mixed_case\"\n\nmixed_case = SeedMixedCaseClient::Client.new(base_url: \"https://api.example.com\")\nmixed_case.get_resource(resource_id: \"rsc-xyz\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/resource",
+                "method": "GET"
+            },
+            "snippet": {
+                "client": "require \"fern_mixed_case\"\n\nmixed_case = SeedMixedCaseClient::Client.new(base_url: \"https://api.example.com\")\nmixed_case.list_resources(page_limit: 10, before_date: DateTime.parse(2023-01-01))",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/resource/{ResourceID}",
+                "method": "GET"
+            },
+            "snippet": {
+                "client": "require \"fern_mixed_case\"\n\nmixed_case = SeedMixedCaseClient::Client.new(base_url: \"https://api.example.com\")\nmixed_case.get_resource(resource_id: \"rsc-xyz\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/resource",
+                "method": "GET"
+            },
+            "snippet": {
+                "client": "require \"fern_mixed_case\"\n\nmixed_case = SeedMixedCaseClient::Client.new(base_url: \"https://api.example.com\")\nmixed_case.list_resources(page_limit: 10, before_date: DateTime.parse(2023-01-01))",
+                "type": "ruby"
+            }
+        }
+    ],
+    "types": {}
+}

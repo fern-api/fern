@@ -117,7 +117,7 @@ export class ExampleGenerator {
             endpoints: this.endpointSnippets,
             types: {}
         };
-        return new GeneratedFile(filename, AbsoluteFilePath.of(directory), JSON.stringify(snippets));
+        return new GeneratedFile(filename, AbsoluteFilePath.of(directory), JSON.stringify(snippets, undefined, 4));
     }
 
     public convertExampleTypeReference(example?: ExampleTypeReference): ParsedExample | undefined {
