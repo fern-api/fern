@@ -48906,6 +48906,18 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "bearer",
     },
     "oauth2": {
+      "configuration": {
+        "authorizationCodeEnvVar": null,
+        "authorizationEndpoint": "https://auth.deel.com/authorize",
+        "clientIdEnvVar": null,
+        "clientSecretEnvVar": null,
+        "defaultScopes": null,
+        "redirectUri": null,
+        "refreshEndpoint": null,
+        "tokenEndpoint": "https://auth.deel.com/tokens",
+        "tokenPrefix": null,
+        "type": "authorizationCode",
+      },
       "scopesEnum": {
         "description": null,
         "generatedName": "OauthScope",
