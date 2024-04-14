@@ -120,6 +120,21 @@ function generateOAuth({
     if (rawScheme != null && rawScheme?.type === "authorization-code") {
         return AuthScheme.oauth({
             docs,
+            configuration: OAuthConfiguration.authorizationCode({
+                clientIdEnvVar: rawScheme["client-id-env"],
+                clientSecretEnvVar: rawScheme["client-secret-env"],
+                tokenPrefix: rawScheme["token-prefix"],
+                scopes: rawScheme.scopes,
+                authorizationCodeEnvVar: rawScheme["authorization-code-env"],
+                authorizationEndpoint: rawScheme["authorization-endpoint"],
+                tokenEndpoint: rawScheme["token-endpoint"],
+                refreshEndpoint: rawScheme["refresh-endpoint"],
+                redirectUri: rawScheme["redirect-uri"]
+            })
+        });
+    } else if (rawScheme != null && rawScheme?.type === "client-credentials") {
+        return AuthScheme.oauth({
+            docs,
             configuration: OAuthConfiguration.clientCredentials({
                 clientIdEnvVar: rawScheme["client-id-env"],
                 clientSecretEnvVar: rawScheme["client-secret-env"],
@@ -130,10 +145,24 @@ function generateOAuth({
                 redirectUri: rawScheme["redirect-uri"]
             })
         });
-    } else if (rawScheme != null && rawScheme?.type === "client-credentials") {
+    } else if (rawScheme != null && rawScheme?.type === "implicit") {
         return AuthScheme.oauth({
             docs,
-            configuration: OAuthConfiguration.clientCredentials({
+            configuration: OAuthConfiguration.implicit({
+                clientIdEnvVar: rawScheme["client-id-env"],
+                clientSecretEnvVar: rawScheme["client-secret-env"],
+                tokenPrefix: rawScheme["token-prefix"],
+                scopes: rawScheme.scopes,
+                authorizationCodeEnvVar: rawScheme["authorization-code-env"],
+                authorizationEndpoint: rawScheme["authorization-endpoint"],
+                refreshEndpoint: rawScheme["refresh-endpoint"],
+                redirectUri: rawScheme["redirect-uri"]
+            })
+        });
+    } else if (rawScheme != null && rawScheme?.type === "password") {
+        return AuthScheme.oauth({
+            docs,
+            configuration: OAuthConfiguration.password({
                 clientIdEnvVar: rawScheme["client-id-env"],
                 clientSecretEnvVar: rawScheme["client-secret-env"],
                 tokenPrefix: rawScheme["token-prefix"],

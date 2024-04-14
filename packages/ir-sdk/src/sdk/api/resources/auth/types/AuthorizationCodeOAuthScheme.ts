@@ -12,4 +12,6 @@ export interface AuthorizationCodeOAuthScheme extends FernIr.BaseOAuthScheme {
      * the endpoint ID would be `foo/service.authorize`.
      */
     authorizationEndpoint: string;
+    tokenEndpoint: string;
+    refreshEndpoint: string | undefined;
 }

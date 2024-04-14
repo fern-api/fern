@@ -15,6 +15,8 @@ export const AuthorizationCodeOAuthScheme: core.serialization.ObjectSchema<
             .lazy(async () => (await import("../../..")).EnvironmentVariable)
             .optional(),
         authorizationEndpoint: core.serialization.string(),
+        tokenEndpoint: core.serialization.string(),
+        refreshEndpoint: core.serialization.string().optional(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).BaseOAuthScheme));
 
@@ -22,5 +24,7 @@ export declare namespace AuthorizationCodeOAuthScheme {
     interface Raw extends serializers.BaseOAuthScheme.Raw {
         authorizationCodeEnvVar?: serializers.EnvironmentVariable.Raw | null;
         authorizationEndpoint: string;
+        tokenEndpoint: string;
+        refreshEndpoint?: string | null;
     }
 }

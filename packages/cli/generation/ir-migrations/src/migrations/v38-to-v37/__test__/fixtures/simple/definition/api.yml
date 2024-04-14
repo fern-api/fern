@@ -1,0 +1,12 @@
+name: simple-api
+
+auth: OAuthScheme
+
+auth-schemes:
+  OAuthScheme:
+    scheme: oauth
+    scopes:
+      - user:read
+    type: client-credentials
+    token-endpoint: foo.get_token
+    refresh-endpoint: foo.refresh_token
