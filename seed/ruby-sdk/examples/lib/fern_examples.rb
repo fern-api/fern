@@ -6,6 +6,7 @@ require_relative "requests"
 require_relative "fern_examples/file/client"
 require_relative "fern_examples/health/client"
 require_relative "fern_examples/service/client"
+require "json"
 
 module SeedExamplesClient
   class Client
@@ -49,7 +50,7 @@ module SeedExamplesClient
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/"
       end
-      response.body
+      JSON.parse(response.body)
     end
   end
 
@@ -94,7 +95,7 @@ module SeedExamplesClient
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@async_request_client.get_url(request_options: request_options)}/"
       end
-      response.body
+      JSON.parse(response.body)
     end
   end
 end

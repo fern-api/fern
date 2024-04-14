@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Feature: Introduce code snippets and examples for Ruby SDKs.
 
+## [0.5.0-rc2] - 2024-04-12
+
+- Fix: Call JSON.parse prior to iterating through an iterable response
+
 ## [0.5.0-rc0] - 2024-04-09
 
 - Improvement: Consumers of the SDK can now pass in a base URL override into the root client, as well as the request's RequestOptions

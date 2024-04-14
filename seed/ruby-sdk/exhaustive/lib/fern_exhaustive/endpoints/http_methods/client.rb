@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../../../requests"
+require "json"
 require_relative "../../types/object/types/object_with_required_field"
 require_relative "../../types/object/types/object_with_optional_field"
 require "async"
@@ -27,7 +28,7 @@ module SeedExhaustiveClient
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/http-methods/#{id}"
         end
-        response.body
+        JSON.parse(response.body)
       end
 
       # @param request [Hash] Request of type SeedExhaustiveClient::Types::Object::ObjectWithRequiredField, as a Hash
@@ -98,7 +99,7 @@ module SeedExhaustiveClient
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/http-methods/#{id}"
         end
-        response.body
+        JSON.parse(response.body)
       end
     end
 
@@ -123,7 +124,8 @@ module SeedExhaustiveClient
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/http-methods/#{id}"
           end
-          response.body
+          parsed_json = JSON.parse(response.body)
+          parsed_json
         end
       end
 
@@ -202,7 +204,8 @@ module SeedExhaustiveClient
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/http-methods/#{id}"
           end
-          response.body
+          parsed_json = JSON.parse(response.body)
+          parsed_json
         end
       end
     end

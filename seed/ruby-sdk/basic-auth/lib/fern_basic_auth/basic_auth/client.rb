@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../../requests"
+require "json"
 require "async"
 
 module SeedBasicAuthClient
@@ -26,7 +27,7 @@ module SeedBasicAuthClient
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/basic-auth"
       end
-      response.body
+      JSON.parse(response.body)
     end
 
     # POST request with basic auth scheme
@@ -43,7 +44,7 @@ module SeedBasicAuthClient
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/basic-auth"
       end
-      response.body
+      JSON.parse(response.body)
     end
   end
 
@@ -70,7 +71,8 @@ module SeedBasicAuthClient
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/basic-auth"
         end
-        response.body
+        parsed_json = JSON.parse(response.body)
+        parsed_json
       end
     end
 
@@ -89,7 +91,8 @@ module SeedBasicAuthClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/basic-auth"
         end
-        response.body
+        parsed_json = JSON.parse(response.body)
+        parsed_json
       end
     end
   end

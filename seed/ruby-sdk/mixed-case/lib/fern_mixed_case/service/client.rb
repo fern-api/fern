@@ -3,6 +3,7 @@
 require_relative "../../requests"
 require_relative "types/resource"
 require "date"
+require "json"
 require "async"
 
 module SeedMixedCaseClient
@@ -49,7 +50,8 @@ module SeedMixedCaseClient
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/resource"
       end
-      response.body&.map do |v|
+      parsed_json = JSON.parse(response.body)
+      parsed_json&.map do |v|
         v = v.to_json
         SeedMixedCaseClient::Service::Resource.from_json(json_object: v)
       end
@@ -102,7 +104,8 @@ module SeedMixedCaseClient
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/resource"
         end
-        response.body&.map do |v|
+        parsed_json = JSON.parse(response.body)
+        parsed_json&.map do |v|
           v = v.to_json
           SeedMixedCaseClient::Service::Resource.from_json(json_object: v)
         end

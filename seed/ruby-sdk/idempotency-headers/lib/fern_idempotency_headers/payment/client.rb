@@ -2,6 +2,7 @@
 
 require_relative "../../requests"
 require_relative "types/currency"
+require "json"
 require "async"
 
 module SeedIdempotencyHeadersClient
@@ -31,7 +32,7 @@ module SeedIdempotencyHeadersClient
         req.body = { **(request_options&.additional_body_parameters || {}), amount: amount, currency: currency }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/payment"
       end
-      response.body
+      JSON.parse(response.body)
     end
 
     # @param payment_id [String]
@@ -78,7 +79,8 @@ module SeedIdempotencyHeadersClient
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/payment"
         end
-        response.body
+        parsed_json = JSON.parse(response.body)
+        parsed_json
       end
     end
 

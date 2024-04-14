@@ -2,6 +2,7 @@
 
 require_relative "../../requests"
 require_relative "types/create_movie_request"
+require "json"
 require_relative "types/movie"
 require "async"
 
@@ -31,7 +32,7 @@ module SeedApiClient
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/movies/create-movie"
       end
-      response.body
+      JSON.parse(response.body)
     end
 
     # @param movie_id [String]
@@ -74,7 +75,8 @@ module SeedApiClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/movies/create-movie"
         end
-        response.body
+        parsed_json = JSON.parse(response.body)
+        parsed_json
       end
     end
 
