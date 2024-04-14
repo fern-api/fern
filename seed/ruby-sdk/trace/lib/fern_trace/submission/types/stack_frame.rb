@@ -47,7 +47,12 @@ module SeedTraceClient
           v = v.to_json
           SeedTraceClient::Submission::Scope.from_json(json_object: v)
         end
-        new(method_name: method_name, line_number: line_number, scopes: scopes, additional_properties: struct)
+        new(
+          method_name: method_name,
+          line_number: line_number,
+          scopes: scopes,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of StackFrame to a JSON object

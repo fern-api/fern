@@ -1,5 +1,5 @@
-import { HttpPath, IntermediateRepresentation, PathParameter } from "@fern-fern/ir-sdk/api";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { HttpPath, PathParameter } from "@fern-fern/ir-sdk/api";
 import { format } from "util";
 
 export function getSdkVersion(config: FernGeneratorExec.GeneratorConfig): string | undefined {
@@ -60,11 +60,4 @@ export function generatePathTemplate(
     }
     // Strip leading and trailing slashes
     return pathParametersTemplate.replaceAll(/^\/+|\/+$/g, "");
-}
-export function hasFileUploadEndpoints(ir: IntermediateRepresentation): boolean {
-    return Object.entries(ir.services)
-        .flatMap(([_, service]) => service.endpoints)
-        .some((endpoint) => {
-            return endpoint.requestBody?.type === "fileUpload";
-        });
 }

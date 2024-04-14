@@ -47,7 +47,13 @@ module SeedTraceClient
         owner_id = struct["owner-id"]
         name = struct["name"]
         problems = struct["problems"]
-        new(playlist_id: playlist_id, owner_id: owner_id, name: name, problems: problems, additional_properties: struct)
+        new(
+          playlist_id: playlist_id,
+          owner_id: owner_id,
+          name: name,
+          problems: problems,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of Playlist to a JSON object

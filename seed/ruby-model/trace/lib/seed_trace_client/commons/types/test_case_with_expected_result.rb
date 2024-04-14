@@ -50,7 +50,11 @@ module SeedTraceClient
           expected_result = parsed_json["expectedResult"].to_json
           expected_result = SeedTraceClient::Commons::VariableValue.from_json(json_object: expected_result)
         end
-        new(test_case: test_case, expected_result: expected_result, additional_properties: struct)
+        new(
+          test_case: test_case,
+          expected_result: expected_result,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of TestCaseWithExpectedResult to a JSON object

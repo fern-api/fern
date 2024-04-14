@@ -17,8 +17,11 @@ module SeedApiClient
     # @param timeout_in_seconds [Long]
     # @return [SeedApiClient::Client]
     def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @request_client = SeedApiClient::RequestClient.new(base_url: base_url, max_retries: max_retries,
-                                                         timeout_in_seconds: timeout_in_seconds)
+      @request_client = SeedApiClient::RequestClient.new(
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds
+      )
       @a = SeedApiClient::A::Client.new(request_client: @request_client)
       @folder = SeedApiClient::Folder::FolderClient.new(request_client: @request_client)
     end
@@ -45,8 +48,11 @@ module SeedApiClient
     # @param timeout_in_seconds [Long]
     # @return [SeedApiClient::AsyncClient]
     def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @async_request_client = SeedApiClient::AsyncRequestClient.new(base_url: base_url, max_retries: max_retries,
-                                                                    timeout_in_seconds: timeout_in_seconds)
+      @async_request_client = SeedApiClient::AsyncRequestClient.new(
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds
+      )
       @a = SeedApiClient::A::AsyncClient.new(request_client: @async_request_client)
       @folder = SeedApiClient::Folder::AsyncFolderClient.new(request_client: @async_request_client)
     end

@@ -14,6 +14,7 @@ export * from "./ast/classes/ClassReference";
 export { Class_ } from "./ast/classes/Class_";
 export { AstNode } from "./ast/core/AstNode";
 export { EnvironmentVariable } from "./ast/EnvironmentVariable";
+export { ExampleGenerator } from "./ast/ExampleGenerator";
 export { Expression } from "./ast/expressions/Expression";
 export { RaiseException } from "./ast/expressions/RaiseException";
 export { ExternalDependency } from "./ast/ExternalDependency";

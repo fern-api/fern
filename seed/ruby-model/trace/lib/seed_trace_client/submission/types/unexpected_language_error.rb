@@ -38,7 +38,11 @@ module SeedTraceClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         expected_language = struct["expectedLanguage"]
         actual_language = struct["actualLanguage"]
-        new(expected_language: expected_language, actual_language: actual_language, additional_properties: struct)
+        new(
+          expected_language: expected_language,
+          actual_language: actual_language,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of UnexpectedLanguageError to a JSON object

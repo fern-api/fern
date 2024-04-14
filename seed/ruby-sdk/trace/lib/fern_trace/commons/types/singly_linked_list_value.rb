@@ -43,7 +43,11 @@ module SeedTraceClient
           v = v.to_json
           SeedTraceClient::Commons::SinglyLinkedListNodeValue.from_json(json_object: v)
         end
-        new(head: head, nodes: nodes, additional_properties: struct)
+        new(
+          head: head,
+          nodes: nodes,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of SinglyLinkedListValue to a JSON object

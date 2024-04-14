@@ -51,8 +51,12 @@ module SeedTraceClient
         end
         num_warming_instances = struct["numWarmingInstances"]
         warming_session_ids = struct["warmingSessionIds"]
-        new(states: states, num_warming_instances: num_warming_instances, warming_session_ids: warming_session_ids,
-            additional_properties: struct)
+        new(
+          states: states,
+          num_warming_instances: num_warming_instances,
+          warming_session_ids: warming_session_ids,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of GetExecutionSessionStateResponse to a JSON object

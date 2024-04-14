@@ -3,7 +3,6 @@ import {
     ClassReference,
     GenericClassReference,
     JsonClassReference,
-    OpenStructClassReference,
     StringClassReference,
     VoidClassReference
 } from "../classes/ClassReference";
@@ -43,13 +42,11 @@ export class UndiscriminatedUnion extends Class_ {
                     arguments_: [
                         new Argument({
                             value: jsonObjectParameter.name,
-                            type: GenericClassReference,
                             isNamed: false
                         }),
                         new Argument({
                             name: "object_class",
                             value: "OpenStruct",
-                            type: OpenStructClassReference,
                             isNamed: true
                         })
                     ]

@@ -49,7 +49,13 @@ module SeedTraceClient
         val = struct["val"]
         next_ = struct["next"]
         prev = struct["prev"]
-        new(node_id: node_id, val: val, next_: next_, prev: prev, additional_properties: struct)
+        new(
+          node_id: node_id,
+          val: val,
+          next_: next_,
+          prev: prev,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of DoublyLinkedListNodeValue to a JSON object

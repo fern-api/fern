@@ -15,8 +15,12 @@ module SeedNoEnvironmentClient
     # @param token [String]
     # @return [SeedNoEnvironmentClient::Client]
     def initialize(token:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @request_client = SeedNoEnvironmentClient::RequestClient.new(base_url: base_url, max_retries: max_retries,
-                                                                   timeout_in_seconds: timeout_in_seconds, token: token)
+      @request_client = SeedNoEnvironmentClient::RequestClient.new(
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds,
+        token: token
+      )
       @dummy = SeedNoEnvironmentClient::DummyClient.new(request_client: @request_client)
     end
   end
@@ -31,8 +35,12 @@ module SeedNoEnvironmentClient
     # @param token [String]
     # @return [SeedNoEnvironmentClient::AsyncClient]
     def initialize(token:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @async_request_client = SeedNoEnvironmentClient::AsyncRequestClient.new(base_url: base_url,
-                                                                              max_retries: max_retries, timeout_in_seconds: timeout_in_seconds, token: token)
+      @async_request_client = SeedNoEnvironmentClient::AsyncRequestClient.new(
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds,
+        token: token
+      )
       @dummy = SeedNoEnvironmentClient::AsyncDummyClient.new(request_client: @async_request_client)
     end
   end

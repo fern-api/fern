@@ -38,7 +38,11 @@ module SeedTraceClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         submission_id = struct["submissionId"]
         status = struct["status"]
-        new(submission_id: submission_id, status: status, additional_properties: struct)
+        new(
+          submission_id: submission_id,
+          status: status,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of BuildingExecutorResponse to a JSON object

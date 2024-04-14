@@ -59,7 +59,9 @@ export class HeadersGenerator {
                     name: header.name.name.snakeCase.safeName,
                     type: this.crf.fromTypeReference(header.valueType),
                     isOptional: isTypeOptional(header.valueType),
-                    documentation: header.docs
+                    documentation: header.docs,
+                    // If the header is optional, let's not provide an example
+                    example: isTypeOptional(header.valueType) ? undefined : `"${header.name.name.pascalCase.safeName}"`
                 })
         );
     }
@@ -71,26 +73,30 @@ export class HeadersGenerator {
                     new Parameter({
                         name: bas.token.snakeCase.safeName,
                         type: StringClassReference,
-                        isOptional: bas.tokenEnvVar !== undefined || !this.isAuthRequired
+                        isOptional: bas.tokenEnvVar !== undefined || !this.isAuthRequired,
+                        example: '"YOUR_AUTH_TOKEN"'
                     })
                 ],
                 basic: (bas: BasicAuthScheme) => [
                     new Parameter({
                         name: bas.username.snakeCase.safeName,
                         type: StringClassReference,
-                        isOptional: bas.usernameEnvVar !== undefined || !this.isAuthRequired
+                        isOptional: bas.usernameEnvVar !== undefined || !this.isAuthRequired,
+                        example: '"YOUR_USERNAME"'
                     }),
                     new Parameter({
                         name: bas.password.snakeCase.safeName,
                         type: StringClassReference,
-                        isOptional: bas.passwordEnvVar !== undefined || !this.isAuthRequired
+                        isOptional: bas.passwordEnvVar !== undefined || !this.isAuthRequired,
+                        example: '"YOUR_PASSWORD"'
                     })
                 ],
                 header: (has: HeaderAuthScheme) => [
                     new Parameter({
                         name: has.name.name.snakeCase.safeName,
                         type: StringClassReference,
-                        isOptional: has.headerEnvVar !== undefined || !this.isAuthRequired
+                        isOptional: has.headerEnvVar !== undefined || !this.isAuthRequired,
+                        example: `"YOUR_${has.name.name.screamingSnakeCase.safeName}"`
                     })
                 ],
                 _other: () => {
@@ -200,7 +206,6 @@ export class HeadersGenerator {
             arguments_: [
                 new Argument({
                     isNamed: false,
-                    type: StringClassReference,
                     value: `"#{${userName.write({})}}:#{${password.write({})}}"`
                 })
             ]

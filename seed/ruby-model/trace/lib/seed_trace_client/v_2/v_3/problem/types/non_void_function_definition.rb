@@ -52,7 +52,11 @@ module SeedTraceClient
               code = parsed_json["code"].to_json
               code = SeedTraceClient::V2::V3::Problem::FunctionImplementationForMultipleLanguages.from_json(json_object: code)
             end
-            new(signature: signature, code: code, additional_properties: struct)
+            new(
+              signature: signature,
+              code: code,
+              additional_properties: struct
+            )
           end
 
           # Serialize an instance of NonVoidFunctionDefinition to a JSON object

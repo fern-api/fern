@@ -37,7 +37,11 @@ module SeedTraceClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         name = struct["name"]
         problems = struct["problems"]
-        new(name: name, problems: problems, additional_properties: struct)
+        new(
+          name: name,
+          problems: problems,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of PlaylistCreateRequest to a JSON object

@@ -52,7 +52,12 @@ module SeedExamplesClient
           v = v.to_json
           SeedExamplesClient::Types::Directory.from_json(json_object: v)
         end
-        new(name: name, files: files, directories: directories, additional_properties: struct)
+        new(
+          name: name,
+          files: files,
+          directories: directories,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of Directory to a JSON object

@@ -37,7 +37,11 @@ module SeedTraceClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         filename = struct["filename"]
         directory = struct["directory"]
-        new(filename: filename, directory: directory, additional_properties: struct)
+        new(
+          filename: filename,
+          directory: directory,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of TracedFile to a JSON object

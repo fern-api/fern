@@ -51,7 +51,11 @@ module SeedTraceClient
               actual_result_type = parsed_json["actualResultType"].to_json
               actual_result_type = SeedTraceClient::Commons::VariableType.from_json(json_object: actual_result_type)
             end
-            new(parameters: parameters, actual_result_type: actual_result_type, additional_properties: struct)
+            new(
+              parameters: parameters,
+              actual_result_type: actual_result_type,
+              additional_properties: struct
+            )
           end
 
           # Serialize an instance of VoidFunctionSignatureThatTakesActualResult to a JSON

@@ -85,8 +85,18 @@ module SeedExamplesClient
         tag = struct["tag"]
         book = struct["book"]
         metadata = struct["metadata"]
-        new(id: id, prequel: prequel, title: title, from: from, rating: rating, type: type, tag: tag, book: book,
-            metadata: metadata, additional_properties: struct)
+        new(
+          id: id,
+          prequel: prequel,
+          title: title,
+          from: from,
+          rating: rating,
+          type: type,
+          tag: tag,
+          book: book,
+          metadata: metadata,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of Movie to a JSON object

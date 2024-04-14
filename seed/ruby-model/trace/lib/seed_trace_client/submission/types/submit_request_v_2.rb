@@ -72,8 +72,15 @@ module SeedTraceClient
         problem_id = struct["problemId"]
         problem_version = struct["problemVersion"]
         user_id = struct["userId"]
-        new(submission_id: submission_id, language: language, submission_files: submission_files,
-            problem_id: problem_id, problem_version: problem_version, user_id: user_id, additional_properties: struct)
+        new(
+          submission_id: submission_id,
+          language: language,
+          submission_files: submission_files,
+          problem_id: problem_id,
+          problem_version: problem_version,
+          user_id: user_id,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of SubmitRequestV2 to a JSON object

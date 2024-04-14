@@ -54,7 +54,11 @@ module SeedTraceClient
               test_case = parsed_json["testCase"].to_json
               test_case = SeedTraceClient::V2::V3::Problem::TestCaseV2.from_json(json_object: test_case)
             end
-            new(template: template, test_case: test_case, additional_properties: struct)
+            new(
+              template: template,
+              test_case: test_case,
+              additional_properties: struct
+            )
           end
 
           # Serialize an instance of GetGeneratedTestCaseFileRequest to a JSON object

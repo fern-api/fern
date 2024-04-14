@@ -50,7 +50,12 @@ module SeedPaginationClient
           data = SeedPaginationClient::Users::UserListContainer.from_json(json_object: data)
         end
         next_ = struct["next"]
-        new(total_count: total_count, data: data, next_: next_, additional_properties: struct)
+        new(
+          total_count: total_count,
+          data: data,
+          next_: next_,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of ListUsersExtendedResponse to a JSON object

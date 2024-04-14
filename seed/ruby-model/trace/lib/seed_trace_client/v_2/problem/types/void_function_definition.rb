@@ -49,7 +49,11 @@ module SeedTraceClient
             code = parsed_json["code"].to_json
             code = SeedTraceClient::V2::Problem::FunctionImplementationForMultipleLanguages.from_json(json_object: code)
           end
-          new(parameters: parameters, code: code, additional_properties: struct)
+          new(
+            parameters: parameters,
+            code: code,
+            additional_properties: struct
+          )
         end
 
         # Serialize an instance of VoidFunctionDefinition to a JSON object

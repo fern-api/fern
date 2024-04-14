@@ -32,7 +32,7 @@ module SeedAuthEnvironmentVariablesClient
 
     # GET request with custom api key
     #
-    # @param x_endpoint_header [String] Specifies the endpoint key.
+    # @param x_endpoint_header [String]
     # @param request_options [SeedAuthEnvironmentVariablesClient::RequestOptions]
     # @return [String]
     def get_with_header(x_endpoint_header:, request_options: nil)
@@ -84,7 +84,7 @@ module SeedAuthEnvironmentVariablesClient
 
     # GET request with custom api key
     #
-    # @param x_endpoint_header [String] Specifies the endpoint key.
+    # @param x_endpoint_header [String]
     # @param request_options [SeedAuthEnvironmentVariablesClient::RequestOptions]
     # @return [String]
     def get_with_header(x_endpoint_header:, request_options: nil)

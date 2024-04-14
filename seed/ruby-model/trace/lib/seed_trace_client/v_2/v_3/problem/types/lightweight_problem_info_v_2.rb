@@ -61,8 +61,13 @@ module SeedTraceClient
               variable_types = parsed_json["variableTypes"].to_json
               variable_types = Set.new(variable_types)
             end
-            new(problem_id: problem_id, problem_name: problem_name, problem_version: problem_version,
-                variable_types: variable_types, additional_properties: struct)
+            new(
+              problem_id: problem_id,
+              problem_name: problem_name,
+              problem_version: problem_version,
+              variable_types: variable_types,
+              additional_properties: struct
+            )
           end
 
           # Serialize an instance of LightweightProblemInfoV2 to a JSON object

@@ -123,8 +123,19 @@ module SeedTraceClient
               SeedTraceClient::V2::V3::Problem::TestCaseV2.from_json(json_object: v)
             end
             is_public = struct["isPublic"]
-            new(problem_id: problem_id, problem_description: problem_description, problem_name: problem_name,
-                problem_version: problem_version, supported_languages: supported_languages, custom_files: custom_files, generated_files: generated_files, custom_test_case_templates: custom_test_case_templates, testcases: testcases, is_public: is_public, additional_properties: struct)
+            new(
+              problem_id: problem_id,
+              problem_description: problem_description,
+              problem_name: problem_name,
+              problem_version: problem_version,
+              supported_languages: supported_languages,
+              custom_files: custom_files,
+              generated_files: generated_files,
+              custom_test_case_templates: custom_test_case_templates,
+              testcases: testcases,
+              is_public: is_public,
+              additional_properties: struct
+            )
           end
 
           # Serialize an instance of ProblemInfoV2 to a JSON object

@@ -21,6 +21,18 @@ module SeedLiteralClient
     # @param stream [Boolean]
     # @param request_options [SeedLiteralClient::RequestOptions]
     # @return [SeedLiteralClient::SendResponse]
+    # @example
+    #  literal = SeedLiteralClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    version: "Version",
+    #    audit_logging: "AuditLogging"
+    #  )
+    #  literal.send(
+    #    prompt: "You are a helpful assistant",
+    #    query: "What is the weather today",
+    #    temperature: 10.1,
+    #    stream: false
+    #  )
     def send(prompt:, query:, stream:, temperature: nil, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -59,6 +71,18 @@ module SeedLiteralClient
     # @param stream [Boolean]
     # @param request_options [SeedLiteralClient::RequestOptions]
     # @return [SeedLiteralClient::SendResponse]
+    # @example
+    #  literal = SeedLiteralClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    version: "Version",
+    #    audit_logging: "AuditLogging"
+    #  )
+    #  literal.send(
+    #    prompt: "You are a helpful assistant",
+    #    query: "What is the weather today",
+    #    temperature: 10.1,
+    #    stream: false
+    #  )
     def send(prompt:, query:, stream:, temperature: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|

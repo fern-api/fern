@@ -85,8 +85,15 @@ module SeedTraceClient
           stack = SeedTraceClient::Submission::StackInformation.from_json(json_object: stack)
         end
         stdout = struct["stdout"]
-        new(submission_id: submission_id, line_number: line_number, return_value: return_value,
-            expression_location: expression_location, stack: stack, stdout: stdout, additional_properties: struct)
+        new(
+          submission_id: submission_id,
+          line_number: line_number,
+          return_value: return_value,
+          expression_location: expression_location,
+          stack: stack,
+          stdout: stdout,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of TraceResponse to a JSON object

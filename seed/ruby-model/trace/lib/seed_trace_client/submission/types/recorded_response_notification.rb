@@ -48,8 +48,12 @@ module SeedTraceClient
         submission_id = struct["submissionId"]
         trace_responses_size = struct["traceResponsesSize"]
         test_case_id = struct["testCaseId"]
-        new(submission_id: submission_id, trace_responses_size: trace_responses_size, test_case_id: test_case_id,
-            additional_properties: struct)
+        new(
+          submission_id: submission_id,
+          trace_responses_size: trace_responses_size,
+          test_case_id: test_case_id,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of RecordedResponseNotification to a JSON object

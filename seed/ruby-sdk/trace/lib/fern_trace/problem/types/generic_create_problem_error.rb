@@ -42,7 +42,12 @@ module SeedTraceClient
         message = struct["message"]
         type = struct["type"]
         stacktrace = struct["stacktrace"]
-        new(message: message, type: type, stacktrace: stacktrace, additional_properties: struct)
+        new(
+          message: message,
+          type: type,
+          stacktrace: stacktrace,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of GenericCreateProblemError to a JSON object

@@ -49,7 +49,11 @@ module SeedTraceClient
           value = parsed_json["value"].to_json
           value = SeedTraceClient::Commons::DebugVariableValue.from_json(json_object: value)
         end
-        new(key: key, value: value, additional_properties: struct)
+        new(
+          key: key,
+          value: value,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of DebugKeyValuePairs to a JSON object

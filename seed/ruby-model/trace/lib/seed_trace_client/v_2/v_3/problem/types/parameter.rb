@@ -51,7 +51,12 @@ module SeedTraceClient
               variable_type = parsed_json["variableType"].to_json
               variable_type = SeedTraceClient::Commons::VariableType.from_json(json_object: variable_type)
             end
-            new(parameter_id: parameter_id, name: name, variable_type: variable_type, additional_properties: struct)
+            new(
+              parameter_id: parameter_id,
+              name: name,
+              variable_type: variable_type,
+              additional_properties: struct
+            )
           end
 
           # Serialize an instance of Parameter to a JSON object

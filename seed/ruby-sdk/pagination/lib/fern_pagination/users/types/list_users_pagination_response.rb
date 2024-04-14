@@ -55,7 +55,12 @@ module SeedPaginationClient
           v = v.to_json
           SeedPaginationClient::Users::User.from_json(json_object: v)
         end
-        new(page: page, total_count: total_count, data: data, additional_properties: struct)
+        new(
+          page: page,
+          total_count: total_count,
+          data: data,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of ListUsersPaginationResponse to a JSON object

@@ -98,8 +98,16 @@ module SeedTraceClient
             supported_languages = Set.new(supported_languages)
           end
           is_public = struct["isPublic"]
-          new(problem_name: problem_name, problem_description: problem_description, custom_files: custom_files,
-              custom_test_case_templates: custom_test_case_templates, testcases: testcases, supported_languages: supported_languages, is_public: is_public, additional_properties: struct)
+          new(
+            problem_name: problem_name,
+            problem_description: problem_description,
+            custom_files: custom_files,
+            custom_test_case_templates: custom_test_case_templates,
+            testcases: testcases,
+            supported_languages: supported_languages,
+            is_public: is_public,
+            additional_properties: struct
+          )
         end
 
         # Serialize an instance of CreateProblemRequestV2 to a JSON object

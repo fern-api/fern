@@ -59,8 +59,13 @@ module SeedTraceClient
           SeedTraceClient::Submission::SubmissionFileInfo.from_json(json_object: v)
         end
         user_id = struct["userId"]
-        new(submission_id: submission_id, language: language, submission_files: submission_files, user_id: user_id,
-            additional_properties: struct)
+        new(
+          submission_id: submission_id,
+          language: language,
+          submission_files: submission_files,
+          user_id: user_id,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of WorkspaceSubmitRequest to a JSON object
