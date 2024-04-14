@@ -11,19 +11,28 @@ instances:
 title: Fern | Documentation
 
 tabs:
+  home:
+    display-name: Home
+    slug: home
   overview:
     display-name: Overview
-  sdks:
-    display-name: SDKs
-    slug: sdks
   docs:
     display-name: Docs
     slug: docs
+  sdks:
+    display-name: SDKs
+    slug: sdks
   api:
     display-name: API Reference
     slug: api
 
+css: ./assets/styles.css
+
 navigation:
+  - tab: home
+    layout:
+      - page: Welcome
+        path: pages/welcome.mdx
   - tab: overview
     layout:
       - page: Introduction
@@ -274,9 +283,6 @@ navigation:
   
 
 navbar-links:
-  - type: minimal
-    text: GitHub
-    url: https://github.com/fern-api/fern
   - type: filled
     text: Book a demo
     url: https://buildwithfern.com/contact
@@ -299,6 +305,6 @@ favicon: ./images/favicon.ico
 
 layout:
   page-width: 1504px
-  header-height: 83px
+  header-height: 75px
   searchbar-placement: header
   tabs-placement: header

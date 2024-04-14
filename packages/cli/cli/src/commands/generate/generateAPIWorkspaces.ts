@@ -1,8 +1,10 @@
 import { createOrganizationIfDoesNotExist } from "@fern-api/auth";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
 import { Project } from "@fern-api/project-loader";
 import { convertOpenApiWorkspaceToFernWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { CliContext } from "../../cli-context/CliContext";
+import { PREVIEW_DIRECTORY } from "../../constants";
 import { generateWorkspace } from "./generateAPIWorkspace";
 
 export async function generateAPIWorkspaces({
@@ -12,7 +14,8 @@ export async function generateAPIWorkspaces({
     groupName,
     shouldLogS3Url,
     keepDocker,
-    useLocalDocker
+    useLocalDocker,
+    preview
 }: {
     project: Project;
     cliContext: CliContext;
@@ -21,6 +24,7 @@ export async function generateAPIWorkspaces({
     shouldLogS3Url: boolean;
     useLocalDocker: boolean;
     keepDocker: boolean;
+    preview: boolean;
 }): Promise<void> {
     const token = await cliContext.runTask(async (context) => {
         return askToLogin(context);
@@ -69,6 +73,14 @@ export async function generateAPIWorkspaces({
                         ? workspace
                         : await convertOpenApiWorkspaceToFernWorkspace(workspace, context);
 
+                const absolutePathToPreview = preview
+                    ? join(fernWorkspace.absoluteFilepath, RelativeFilePath.of(PREVIEW_DIRECTORY))
+                    : undefined;
+
+                if (absolutePathToPreview != null) {
+                    context.logger.info(`Writing preview to ${absolutePathToPreview}`);
+                }
+
                 await generateWorkspace({
                     organization: project.config.organization,
                     workspace: fernWorkspace,
@@ -79,7 +91,8 @@ export async function generateAPIWorkspaces({
                     shouldLogS3Url,
                     token,
                     useLocalDocker,
-                    keepDocker
+                    keepDocker,
+                    absolutePathToPreview
                 });
             });
         })
