@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../../../requests"
+require "json"
 require_relative "../../types/object/types/object_with_required_field"
 require "set"
 require "async"
@@ -28,7 +29,7 @@ module SeedExhaustiveClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/container/list-of-primitives"
         end
-        response.body
+        JSON.parse(response.body)
       end
 
       # @param request [Array<Hash>] Request of type Array<SeedExhaustiveClient::Types::Object::ObjectWithRequiredField>, as a Hash
@@ -43,7 +44,8 @@ module SeedExhaustiveClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/container/list-of-objects"
         end
-        response.body&.map do |v|
+        parsed_json = JSON.parse(response.body)
+        parsed_json&.map do |v|
           v = v.to_json
           SeedExhaustiveClient::Types::Object::ObjectWithRequiredField.from_json(json_object: v)
         end
@@ -88,7 +90,7 @@ module SeedExhaustiveClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/container/map-prim-to-prim"
         end
-        response.body
+        JSON.parse(response.body)
       end
 
       # @param request [Hash{String => SeedExhaustiveClient::Types::Object::ObjectWithRequiredField}]
@@ -102,7 +104,8 @@ module SeedExhaustiveClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/container/map-prim-to-object"
         end
-        response.body&.transform_values do |v|
+        parsed_json = JSON.parse(response.body)
+        parsed_json&.transform_values do |v|
           v = v.to_json
           SeedExhaustiveClient::Types::Object::ObjectWithRequiredField.from_json(json_object: v)
         end
@@ -146,7 +149,8 @@ module SeedExhaustiveClient
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/container/list-of-primitives"
           end
-          response.body
+          parsed_json = JSON.parse(response.body)
+          parsed_json
         end
       end
 
@@ -163,7 +167,8 @@ module SeedExhaustiveClient
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/container/list-of-objects"
           end
-          response.body&.map do |v|
+          parsed_json = JSON.parse(response.body)
+          parsed_json&.map do |v|
             v = v.to_json
             SeedExhaustiveClient::Types::Object::ObjectWithRequiredField.from_json(json_object: v)
           end
@@ -214,7 +219,8 @@ module SeedExhaustiveClient
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/container/map-prim-to-prim"
           end
-          response.body
+          parsed_json = JSON.parse(response.body)
+          parsed_json
         end
       end
 
@@ -230,7 +236,8 @@ module SeedExhaustiveClient
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
             req.url "#{@request_client.get_url(request_options: request_options)}/container/map-prim-to-object"
           end
-          response.body&.transform_values do |v|
+          parsed_json = JSON.parse(response.body)
+          parsed_json&.transform_values do |v|
             v = v.to_json
             SeedExhaustiveClient::Types::Object::ObjectWithRequiredField.from_json(json_object: v)
           end
