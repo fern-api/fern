@@ -318,6 +318,29 @@ export const FernOpenAPIExtension = {
     FERN_BASIC_AUTH: "x-fern-basic",
 
     /**
+     * securitySchemes:
+     *   myOAuthSample:
+     *     type: oauth2
+     *     flows:
+     *      authorizationCode:   # <---- OAuth flow(authorizationCode or clientCredentials)
+     *          authorizationUrl: https://api.example.com/oauth2/authorize
+     *          tokenUrl: https://api.example.com/oauth2/authorize
+     *          refreshUrl: https://api.example.com/oauth2/authorize
+     *          scopes:
+     *              read_pets: read your pets
+     *              write_pets: modify pets in your account
+     *     x-fern-oauth:
+     *       defaultScopes:      # <---- defaults to security.myOAuthSample
+     *          - read_pets
+     *       redirectUri: https://api.example.com/authed
+     *       tokenPrefix: Token  # <---- defaults to Bearer
+     *       clientIdEnv: MY_CLIENT_ID
+     *       clientSecretEnv: MY_CLIENT_SECRET
+     *       authorizationCodeEnv: MY_AUTH_CODE
+     */
+    FERN_OAUTH: "x-fern-oauth",
+
+    /**
      * Allows users to specify which headers are global, and an optional alias for them
      * `header` is the name of the header used throughout your spec, while `name` is the
      * alias you'd like it to appear as within your generated SDK to the consumer.

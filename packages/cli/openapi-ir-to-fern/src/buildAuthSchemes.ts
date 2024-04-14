@@ -6,6 +6,7 @@ import { getHeaderName } from "./utils/getHeaderName";
 
 const BASIC_AUTH_SCHEME = "BasicAuthScheme";
 const BEARER_AUTH_SCHEME = "BearerAuthScheme";
+const OAUTH_SCHEME = "OAuthScheme";
 
 export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
     let setAuth = false;
@@ -124,6 +125,8 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                 });
             }
         } else if (securityScheme.type === "oauth") {
+            // TODO: pass through the security config for oauth,
+            // there's some weirdness given the OpenAPI spec gives a url, but fern def gives an endpoint ID
             const bearerAuthScheme: RawSchemas.AuthSchemeDeclarationSchema = {
                 scheme: "bearer"
             };

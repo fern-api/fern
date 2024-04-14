@@ -11,10 +11,12 @@ export const OauthSecurityScheme: core.serialization.ObjectSchema<
     FernOpenapiIr.OauthSecurityScheme
 > = core.serialization.objectWithoutOptionalProperties({
     scopesEnum: core.serialization.lazyObject(async () => (await import("../../..")).EnumSchema).optional(),
+    configuration: core.serialization.lazy(async () => (await import("../../..")).OAuthConfiguration).optional(),
 });
 
 export declare namespace OauthSecurityScheme {
     interface Raw {
         scopesEnum?: serializers.EnumSchema.Raw | null;
+        configuration?: serializers.OAuthConfiguration.Raw | null;
     }
 }

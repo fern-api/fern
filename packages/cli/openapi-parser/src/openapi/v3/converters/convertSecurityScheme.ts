@@ -1,4 +1,4 @@
-import { EnumSchema, SecurityScheme } from "@fern-api/openapi-ir-sdk";
+import { EnumSchema, OAuthConfiguration, SecurityScheme } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../getExtension";
 import { convertEnum } from "../../../schema/convertEnum";
@@ -7,6 +7,7 @@ import { isReferenceObject } from "../../../schema/utils/isReferenceObject";
 import { OpenAPIExtension } from "../extensions/extensions";
 import { FernOpenAPIExtension } from "../extensions/fernExtensions";
 import { getBasicSecuritySchemeNames } from "../extensions/getBasicSecuritySchemeNames";
+import { getOauthSchemeExtensions } from "../extensions/getOauthScheme";
 import {
     getBasicSecuritySchemeNameAndEnvvar,
     HeaderSecuritySchemeNames,
@@ -61,8 +62,70 @@ function convertSecuritySchemeHelper(securityScheme: OpenAPIV3.SecuritySchemeObj
             tokenEnvVar: undefined
         });
     } else if (securityScheme.type === "oauth2") {
+        const oauthSchemeExtensions = getOauthSchemeExtensions(securityScheme);
+        if (securityScheme.flows.clientCredentials != null) {
+            const flowBlock = securityScheme.flows.clientCredentials;
+            return SecurityScheme.oauth({
+                scopesEnum: getScopes(securityScheme),
+                configuration: OAuthConfiguration.clientCredentials({
+                    tokenEndpoint: flowBlock.tokenUrl,
+                    refreshEndpoint: flowBlock.refreshUrl,
+                    clientIdEnvVar: oauthSchemeExtensions?.clientIdEnv,
+                    clientSecretEnvVar: oauthSchemeExtensions?.clientSecretEnv,
+                    defaultScopes: oauthSchemeExtensions?.defaultScopes,
+                    tokenPrefix: oauthSchemeExtensions?.tokenPrefix,
+                    redirectUri: oauthSchemeExtensions?.redirectUri
+                })
+            });
+        } else if (securityScheme.flows.authorizationCode != null) {
+            const flowBlock = securityScheme.flows.authorizationCode;
+            return SecurityScheme.oauth({
+                scopesEnum: getScopes(securityScheme),
+                configuration: OAuthConfiguration.authorizationCode({
+                    tokenEndpoint: flowBlock.tokenUrl,
+                    authorizationEndpoint: flowBlock.authorizationUrl,
+                    refreshEndpoint: flowBlock.refreshUrl,
+                    clientIdEnvVar: oauthSchemeExtensions?.clientIdEnv,
+                    clientSecretEnvVar: oauthSchemeExtensions?.clientSecretEnv,
+                    authorizationCodeEnvVar: oauthSchemeExtensions?.authorizationCodeEnv,
+                    defaultScopes: oauthSchemeExtensions?.defaultScopes,
+                    tokenPrefix: oauthSchemeExtensions?.tokenPrefix,
+                    redirectUri: oauthSchemeExtensions?.redirectUri
+                })
+            });
+        } else if (securityScheme.flows.password != null) {
+            const flowBlock = securityScheme.flows.password;
+            return SecurityScheme.oauth({
+                scopesEnum: getScopes(securityScheme),
+                configuration: OAuthConfiguration.password({
+                    tokenEndpoint: flowBlock.tokenUrl,
+                    refreshEndpoint: flowBlock.refreshUrl,
+                    clientIdEnvVar: oauthSchemeExtensions?.clientIdEnv,
+                    clientSecretEnvVar: oauthSchemeExtensions?.clientSecretEnv,
+                    defaultScopes: oauthSchemeExtensions?.defaultScopes,
+                    tokenPrefix: oauthSchemeExtensions?.tokenPrefix,
+                    redirectUri: oauthSchemeExtensions?.redirectUri
+                })
+            });
+        } else if (securityScheme.flows.implicit != null) {
+            const flowBlock = securityScheme.flows.implicit;
+            return SecurityScheme.oauth({
+                scopesEnum: getScopes(securityScheme),
+                configuration: OAuthConfiguration.implicit({
+                    authorizationEndpoint: flowBlock.authorizationUrl,
+                    refreshEndpoint: flowBlock.refreshUrl,
+                    clientIdEnvVar: oauthSchemeExtensions?.clientIdEnv,
+                    clientSecretEnvVar: oauthSchemeExtensions?.clientSecretEnv,
+                    authorizationCodeEnvVar: oauthSchemeExtensions?.authorizationCodeEnv,
+                    defaultScopes: oauthSchemeExtensions?.defaultScopes,
+                    tokenPrefix: oauthSchemeExtensions?.tokenPrefix,
+                    redirectUri: oauthSchemeExtensions?.redirectUri
+                })
+            });
+        }
         return SecurityScheme.oauth({
-            scopesEnum: getScopes(securityScheme)
+            scopesEnum: getScopes(securityScheme),
+            configuration: undefined
         });
     }
     throw new Error(`Failed to convert security scheme ${JSON.stringify(securityScheme)}`);

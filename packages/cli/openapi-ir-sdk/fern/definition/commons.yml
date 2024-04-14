@@ -71,8 +71,46 @@ types:
       queryParameterName: string
 
   OauthSecurityScheme:
+    docs: Note that for the oauth scheme we are currently assuming the resultant token is leveraged as a bearer token, e.g. "Authorization Bearer
     properties:
       scopesEnum: optional<finalIr.EnumSchema>
+      configuration: optional<OAuthConfiguration>
+  BaseOauthSecurityScheme:
+    properties:
+      defaultScopes: optional<list<string>>
+      tokenPrefix: optional<string>
+      clientIdEnvVar: optional<string>
+      clientSecretEnvVar: optional<string>
+      redirectUri: optional<string>
+  OAuthConfiguration:
+    union:
+      authorizationCode: AuthorizationCodeOAuthScheme
+      clientCredentials: ClientCredentialsOAuthScheme
+      implicit: ImplicitOAuthScheme
+      password: PasswordOAuthScheme
+  AuthorizationCodeOAuthScheme:
+    extends: BaseOauthSecurityScheme
+    properties:
+      authorizationCodeEnvVar: optional<string>
+      tokenEndpoint: string
+      authorizationEndpoint: string
+      refreshEndpoint: optional<string>
+  ClientCredentialsOAuthScheme:
+    extends: BaseOauthSecurityScheme
+    properties:
+      tokenEndpoint: string
+      refreshEndpoint: optional<string>
+  ImplicitOAuthScheme:
+    extends: BaseOauthSecurityScheme
+    properties:
+      authorizationCodeEnvVar: optional<string>
+      authorizationEndpoint: string
+      refreshEndpoint: optional<string>
+  PasswordOAuthScheme:
+    extends: BaseOauthSecurityScheme
+    properties:
+      tokenEndpoint: string
+      refreshEndpoint: optional<string>
 
   StatusCode:
     type: integer

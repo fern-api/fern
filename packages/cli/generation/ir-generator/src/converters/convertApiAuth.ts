@@ -1,4 +1,4 @@
-import { ApiAuth, AuthScheme, AuthSchemesRequirement } from "@fern-api/ir-sdk";
+import { ApiAuth, AuthScheme, AuthSchemesRequirement, OAuthConfiguration } from "@fern-api/ir-sdk";
 import { RawSchemas, visitRawApiAuth, visitRawAuthSchemeDeclaration } from "@fern-api/yaml-schema";
 import { FernFileContext } from "../FernFileContext";
 
@@ -81,6 +81,11 @@ function convertSchemeReference({
                     file,
                     docs,
                     rawScheme
+                }),
+            oauth: (rawScheme) =>
+                generateOAuth({
+                    docs,
+                    rawScheme
                 })
         });
     };
@@ -102,6 +107,44 @@ function convertSchemeReference({
             });
         default:
             return convertNamedAuthSchemeReference(scheme, typeof reference !== "string" ? reference.docs : undefined);
+    }
+}
+
+function generateOAuth({
+    docs,
+    rawScheme
+}: {
+    docs: string | undefined;
+    rawScheme: RawSchemas.OAuthSchemeSchema | undefined;
+}): AuthScheme.Oauth {
+    if (rawScheme != null && rawScheme?.type === "authorization-code") {
+        return AuthScheme.oauth({
+            docs,
+            configuration: OAuthConfiguration.clientCredentials({
+                clientIdEnvVar: rawScheme["client-id-env"],
+                clientSecretEnvVar: rawScheme["client-secret-env"],
+                tokenPrefix: rawScheme["token-prefix"],
+                scopes: rawScheme.scopes,
+                tokenEndpoint: rawScheme["token-endpoint"],
+                refreshEndpoint: rawScheme["refresh-endpoint"],
+                redirectUri: rawScheme["redirect-uri"]
+            })
+        });
+    } else if (rawScheme != null && rawScheme?.type === "client-credentials") {
+        return AuthScheme.oauth({
+            docs,
+            configuration: OAuthConfiguration.clientCredentials({
+                clientIdEnvVar: rawScheme["client-id-env"],
+                clientSecretEnvVar: rawScheme["client-secret-env"],
+                tokenPrefix: rawScheme["token-prefix"],
+                scopes: rawScheme.scopes,
+                tokenEndpoint: rawScheme["token-endpoint"],
+                refreshEndpoint: rawScheme["refresh-endpoint"],
+                redirectUri: rawScheme["redirect-uri"]
+            })
+        });
+    } else {
+        throw new Error("Unknown OAuth definition");
     }
 }
 
