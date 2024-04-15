@@ -439,12 +439,23 @@ types:
       link: string
       href: string
 
+  VersionedSnippetLanguageConfiguration:
+    properties:
+      version: string
+      name: string
+
+  SnippetLanguageConfiguration:
+    discriminated: false
+    union:
+      - string
+      - VersionedSnippetLanguageConfiguration
+
   SnippetsConfiguration:
     properties:
-      python: optional<string>
-      typescript: optional<string>
-      go: optional<string>
-      java: optional<string>
+      python: optional<SnippetLanguageConfiguration>
+      typescript: optional<SnippetLanguageConfiguration>
+      go: optional<SnippetLanguageConfiguration>
+      java: optional<SnippetLanguageConfiguration>
 
   ColorsConfiguration:
     properties:

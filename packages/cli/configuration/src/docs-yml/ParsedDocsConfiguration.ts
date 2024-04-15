@@ -174,11 +174,16 @@ export declare namespace DocsNavigationItem {
         url: string;
     }
 
+    export interface VersionedSnippetConfiguration {
+        name: string;
+        version: string;
+    }
+
     export interface SnippetsConfiguration {
-        python: string | undefined;
-        typescript: string | undefined;
-        go: string | undefined;
-        java: string | undefined;
+        python: string | VersionedSnippetConfiguration | undefined;
+        typescript: string | VersionedSnippetConfiguration | undefined;
+        go: string | VersionedSnippetConfiguration | undefined;
+        java: string | VersionedSnippetConfiguration | undefined;
     }
 }
 
