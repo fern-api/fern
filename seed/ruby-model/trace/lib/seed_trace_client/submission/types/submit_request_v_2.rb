@@ -63,6 +63,7 @@ module SeedTraceClient
       # @return [SeedTraceClient::Submission::SubmitRequestV2]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         submission_id = struct["submissionId"]
         language = struct["language"]
         submission_files = parsed_json["submissionFiles"]&.map do |v|

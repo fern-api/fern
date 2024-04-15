@@ -42,6 +42,7 @@ module SeedPaginationClient
       # @return [SeedPaginationClient::Users::ListUsersExtendedResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         total_count = struct["total_count"]
         if parsed_json["data"].nil?
           data = nil

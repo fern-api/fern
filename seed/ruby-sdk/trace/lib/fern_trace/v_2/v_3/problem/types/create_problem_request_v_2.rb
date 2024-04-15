@@ -71,6 +71,7 @@ module SeedTraceClient
           # @return [SeedTraceClient::V2::V3::Problem::CreateProblemRequestV2]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
+            parsed_json = JSON.parse(json_object)
             problem_name = struct["problemName"]
             if parsed_json["problemDescription"].nil?
               problem_description = nil

@@ -133,7 +133,7 @@ export class SerializableObject extends Class_ {
         properties: Property[] | undefined,
         classReference: ClassReference
     ): Function_ {
-        let usesParsedJson = false;
+        let functionUsesParsedJson = false;
         const functionBody: AstNode[] = [
             new Expression({
                 leftSide: "struct",
@@ -168,10 +168,11 @@ export class SerializableObject extends Class_ {
                     type: prop.type
                 });
 
-                usesParsedJson = parsedJsonVariable.fromJson() !== undefined;
+                const crUsesParsedJson = parsedJsonVariable.fromJson() !== undefined;
+                functionUsesParsedJson = functionUsesParsedJson || crUsesParsedJson;
                 const classReferenceForCast = prop.type[0];
                 const hasFromJson =
-                    usesParsedJson &&
+                    crUsesParsedJson &&
                     !(classReferenceForCast instanceof ArrayReference) &&
                     !(classReferenceForCast instanceof HashReference) &&
                     !(classReferenceForCast instanceof DateReference) &&
@@ -236,7 +237,7 @@ export class SerializableObject extends Class_ {
                 ]
             })
         ];
-        if (usesParsedJson) {
+        if (functionUsesParsedJson) {
             functionBody.push(
                 new Expression({
                     leftSide: "parsed_json",
