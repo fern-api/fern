@@ -10,17 +10,17 @@ export const SnippetsConfiguration: core.serialization.ObjectSchema<
     serializers.SnippetsConfiguration.Raw,
     FernDocsConfig.SnippetsConfiguration
 > = core.serialization.object({
-    python: core.serialization.string().optional(),
-    typescript: core.serialization.string().optional(),
-    go: core.serialization.string().optional(),
-    java: core.serialization.string().optional(),
+    python: core.serialization.lazy(async () => (await import("../../..")).SnippetLanguageConfiguration).optional(),
+    typescript: core.serialization.lazy(async () => (await import("../../..")).SnippetLanguageConfiguration).optional(),
+    go: core.serialization.lazy(async () => (await import("../../..")).SnippetLanguageConfiguration).optional(),
+    java: core.serialization.lazy(async () => (await import("../../..")).SnippetLanguageConfiguration).optional(),
 });
 
 export declare namespace SnippetsConfiguration {
     interface Raw {
-        python?: string | null;
-        typescript?: string | null;
-        go?: string | null;
-        java?: string | null;
+        python?: serializers.SnippetLanguageConfiguration.Raw | null;
+        typescript?: serializers.SnippetLanguageConfiguration.Raw | null;
+        go?: serializers.SnippetLanguageConfiguration.Raw | null;
+        java?: serializers.SnippetLanguageConfiguration.Raw | null;
     }
 }
