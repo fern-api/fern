@@ -11,4 +11,5 @@ export interface ExpressCustomConfig {
     outputEsm: boolean;
     outputSourceFiles: boolean;
     retainOriginalCasing: boolean;
+    allowExtraFields: boolean;
 }

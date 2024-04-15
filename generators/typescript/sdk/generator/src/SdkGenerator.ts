@@ -93,6 +93,7 @@ export declare namespace SdkGenerator {
         includeApiReference: boolean;
         tolerateRepublish: boolean;
         retainOriginalCasing: boolean;
+        allowExtraFields: boolean;
     }
 }
 
@@ -271,7 +272,8 @@ export class SdkGenerator {
             intermediateRepresentation,
             shouldGenerateErrors: config.neverThrowErrors,
             skipResponseValidation: config.skipResponseValidation,
-            includeSerdeLayer: config.includeSerdeLayer
+            includeSerdeLayer: config.includeSerdeLayer,
+            allowExtraFields: config.allowExtraFields
         });
         this.requestWrapperGenerator = new RequestWrapperGenerator();
         this.environmentsGenerator = new EnvironmentsGenerator();
@@ -293,7 +295,8 @@ export class SdkGenerator {
         this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator();
         this.timeoutSdkErrorGenerator = new TimeoutSdkErrorGenerator();
         this.sdkInlinedRequestBodySchemaGenerator = new SdkInlinedRequestBodySchemaGenerator({
-            includeSerdeLayer: config.includeSerdeLayer
+            includeSerdeLayer: config.includeSerdeLayer,
+            allowExtraFields: config.allowExtraFields
         });
         this.jestTestGenerator = new JestTestGenerator(
             intermediateRepresentation,
