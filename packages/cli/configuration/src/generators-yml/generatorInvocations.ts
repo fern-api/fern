@@ -35,7 +35,7 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         version: "0.7.2"
     },
     [GeneratorName.TYPESCRIPT_NODE_SDK]: {
-        version: "0.9.5",
+        version: "0.13.0",
         output: {
             location: "local-file-system",
             path: "../sdks/typescript"
