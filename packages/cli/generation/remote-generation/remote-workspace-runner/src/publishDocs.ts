@@ -988,7 +988,7 @@ function convertDocsSnippetsConfigurationToFdr({
                       package:
                           typeof snippetsConfiguration.python === "string"
                               ? snippetsConfiguration.python
-                              : snippetsConfiguration.python.name,
+                              : snippetsConfiguration.python.package,
                       version:
                           typeof snippetsConfiguration.python === "string"
                               ? undefined
@@ -1001,7 +1001,7 @@ function convertDocsSnippetsConfigurationToFdr({
                       package:
                           typeof snippetsConfiguration.typescript === "string"
                               ? snippetsConfiguration.typescript
-                              : snippetsConfiguration.typescript.name,
+                              : snippetsConfiguration.typescript.package,
                       version:
                           typeof snippetsConfiguration.typescript === "string"
                               ? undefined
@@ -1014,7 +1014,7 @@ function convertDocsSnippetsConfigurationToFdr({
                       githubRepo:
                           typeof snippetsConfiguration.go === "string"
                               ? snippetsConfiguration.go
-                              : snippetsConfiguration.go.name,
+                              : snippetsConfiguration.go.package,
                       version:
                           typeof snippetsConfiguration.go === "string" ? undefined : snippetsConfiguration.go.version
                   }
@@ -1025,7 +1025,7 @@ function convertDocsSnippetsConfigurationToFdr({
                       coordinate:
                           typeof snippetsConfiguration.java === "string"
                               ? snippetsConfiguration.java
-                              : snippetsConfiguration.java.name,
+                              : snippetsConfiguration.java.package,
                       version:
                           typeof snippetsConfiguration.java === "string"
                               ? undefined

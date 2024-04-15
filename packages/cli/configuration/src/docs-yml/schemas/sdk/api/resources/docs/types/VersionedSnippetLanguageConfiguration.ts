@@ -4,5 +4,5 @@
 
 export interface VersionedSnippetLanguageConfiguration {
     version: string;
-    name: string;
+    package: string;
 }
