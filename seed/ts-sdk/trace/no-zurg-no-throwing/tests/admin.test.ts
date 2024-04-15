@@ -16,7 +16,11 @@ describe("Admin", () => {
         const response = await client.admin.updateTestSubmissionStatus("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
             type: "stopped",
         });
-        expect(response).toEqual(undefined);
+        if (response.ok) {
+            expect(response.body).toEqual(undefined);
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("sendTestSubmissionUpdate", async () => {
@@ -27,14 +31,22 @@ describe("Admin", () => {
                 value: SeedTrace.RunningSubmissionState.QueueingSubmission,
             },
         });
-        expect(response).toEqual(undefined);
+        if (response.ok) {
+            expect(response.body).toEqual(undefined);
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("updateWorkspaceSubmissionStatus", async () => {
         const response = await client.admin.updateWorkspaceSubmissionStatus("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
             type: "stopped",
         });
-        expect(response).toEqual(undefined);
+        if (response.ok) {
+            expect(response.body).toEqual(undefined);
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("sendWorkspaceSubmissionUpdate", async () => {
@@ -45,13 +57,30 @@ describe("Admin", () => {
                 value: SeedTrace.RunningSubmissionState.QueueingSubmission,
             },
         });
-        expect(response).toEqual(undefined);
+        if (response.ok) {
+            expect(response.body).toEqual(undefined);
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("storeTracedTestCase", async () => {
         const response = await client.admin.storeTracedTestCase("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "string", {
             result: {
-                result: {},
+                result: {
+                    expectedResult: {
+                        type: "integerValue",
+                        value: 1,
+                    },
+                    actualResult: {
+                        type: "value",
+                        value: {
+                            type: "integerValue",
+                            value: 1,
+                        },
+                    },
+                    passed: true,
+                },
                 stdout: "string",
             },
             traceResponses: [
@@ -62,13 +91,36 @@ describe("Admin", () => {
                         type: "integerValue",
                         value: 1,
                     },
-                    expressionLocation: {},
-                    stack: {},
+                    expressionLocation: {
+                        start: 1,
+                        offset: 1,
+                    },
+                    stack: {
+                        numStackFrames: 1,
+                        topStackFrame: {
+                            methodName: "string",
+                            lineNumber: 1,
+                            scopes: [
+                                {
+                                    variables: {
+                                        string: {
+                                            type: "integerValue",
+                                            value: 1,
+                                        },
+                                    },
+                                },
+                            ],
+                        },
+                    },
                     stdout: "string",
                 },
             ],
         });
-        expect(response).toEqual(undefined);
+        if (response.ok) {
+            expect(response.body).toEqual(undefined);
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("storeTracedTestCaseV2", async () => {
@@ -76,17 +128,43 @@ describe("Admin", () => {
             {
                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 lineNumber: 1,
-                file: {},
+                file: {
+                    filename: "string",
+                    directory: "string",
+                },
                 returnValue: {
                     type: "integerValue",
                     value: 1,
                 },
-                expressionLocation: {},
-                stack: {},
+                expressionLocation: {
+                    start: 1,
+                    offset: 1,
+                },
+                stack: {
+                    numStackFrames: 1,
+                    topStackFrame: {
+                        methodName: "string",
+                        lineNumber: 1,
+                        scopes: [
+                            {
+                                variables: {
+                                    string: {
+                                        type: "integerValue",
+                                        value: 1,
+                                    },
+                                },
+                            },
+                        ],
+                    },
+                },
                 stdout: "string",
             },
         ]);
-        expect(response).toEqual(undefined);
+        if (response.ok) {
+            expect(response.body).toEqual(undefined);
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("storeTracedWorkspace", async () => {
@@ -95,7 +173,11 @@ describe("Admin", () => {
                 exceptionV2: {
                     type: "generic",
                 },
-                exception: {},
+                exception: {
+                    exceptionType: "string",
+                    exceptionMessage: "string",
+                    exceptionStacktrace: "string",
+                },
                 stdout: "string",
             },
             traceResponses: [
@@ -106,13 +188,36 @@ describe("Admin", () => {
                         type: "integerValue",
                         value: 1,
                     },
-                    expressionLocation: {},
-                    stack: {},
+                    expressionLocation: {
+                        start: 1,
+                        offset: 1,
+                    },
+                    stack: {
+                        numStackFrames: 1,
+                        topStackFrame: {
+                            methodName: "string",
+                            lineNumber: 1,
+                            scopes: [
+                                {
+                                    variables: {
+                                        string: {
+                                            type: "integerValue",
+                                            value: 1,
+                                        },
+                                    },
+                                },
+                            ],
+                        },
+                    },
                     stdout: "string",
                 },
             ],
         });
-        expect(response).toEqual(undefined);
+        if (response.ok) {
+            expect(response.body).toEqual(undefined);
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("storeTracedWorkspaceV2", async () => {
@@ -120,16 +225,42 @@ describe("Admin", () => {
             {
                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 lineNumber: 1,
-                file: {},
+                file: {
+                    filename: "string",
+                    directory: "string",
+                },
                 returnValue: {
                     type: "integerValue",
                     value: 1,
                 },
-                expressionLocation: {},
-                stack: {},
+                expressionLocation: {
+                    start: 1,
+                    offset: 1,
+                },
+                stack: {
+                    numStackFrames: 1,
+                    topStackFrame: {
+                        methodName: "string",
+                        lineNumber: 1,
+                        scopes: [
+                            {
+                                variables: {
+                                    string: {
+                                        type: "integerValue",
+                                        value: 1,
+                                    },
+                                },
+                            },
+                        ],
+                    },
+                },
                 stdout: "string",
             },
         ]);
-        expect(response).toEqual(undefined);
+        if (response.ok) {
+            expect(response.body).toEqual(undefined);
+        } else {
+            fail("Response was not ok");
+        }
     });
 });

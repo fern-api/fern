@@ -14,6 +14,10 @@ describe("NoAuth", () => {
         const response = await client.noAuth.postWithNoAuth({
             key: "value",
         });
-        expect(response).toEqual(true);
+        if (response.ok) {
+            expect(response.body).toEqual(true);
+        } else {
+            fail("Response was not ok");
+        }
     });
 });

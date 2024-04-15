@@ -42,7 +42,7 @@ describe("InlinedRequests", () => {
             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             base64: "SGVsbG8gd29ybGQh",
             list: ["string"],
-            set: ["string"],
+            set: new Set(["string"]),
             map: { "1": "string" },
         });
     });

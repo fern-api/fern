@@ -18,7 +18,11 @@ describe("Users", () => {
             order: SeedPagination.Order.Asc,
             startingAfter: "string",
         });
-        expect(response).toEqual({ page: {}, totalCount: 1, data: [{}] });
+        expect(response).toEqual({
+            page: { page: 1, next: { page: 1, startingAfter: "string" }, perPage: 1, totalPage: 1 },
+            totalCount: 1,
+            data: [{ name: "string", id: 1 }],
+        });
     });
 
     test("listWithOffsetPagination", async () => {
@@ -28,7 +32,11 @@ describe("Users", () => {
             order: SeedPagination.Order.Asc,
             startingAfter: "string",
         });
-        expect(response).toEqual({ page: {}, totalCount: 1, data: [{}] });
+        expect(response).toEqual({
+            page: { page: 1, next: { page: 1, startingAfter: "string" }, perPage: 1, totalPage: 1 },
+            totalCount: 1,
+            data: [{ name: "string", id: 1 }],
+        });
     });
 
     test("listWithExtendedResults", async () => {
@@ -37,7 +45,7 @@ describe("Users", () => {
         });
         expect(response).toEqual({
             totalCount: 1,
-            data: { users: [{}] },
+            data: { users: [{ name: "string", id: 1 }] },
             next: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         });
     });
@@ -46,7 +54,7 @@ describe("Users", () => {
         const response = await client.users.listUsernames({
             startingAfter: "string",
         });
-        expect(response).toEqual({ cursor: {} });
+        expect(response).toEqual({ cursor: { after: "string", data: ["string"] } });
     });
 
     test("listWithGlobalConfig", async () => {

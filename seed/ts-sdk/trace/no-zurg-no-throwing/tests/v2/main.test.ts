@@ -13,6 +13,10 @@ const client = new SeedTraceClient({
 describe("V2", () => {
     test("test", async () => {
         const response = await client.v2.test();
-        expect(response).toEqual(undefined);
+        if (response.ok) {
+            expect(response.body).toEqual(undefined);
+        } else {
+            fail("Response was not ok");
+        }
     });
 });

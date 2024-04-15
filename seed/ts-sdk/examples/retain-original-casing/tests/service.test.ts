@@ -9,6 +9,10 @@ const client = new SeedExamplesClient({
     token: process.env.TESTS_AUTH || "test",
 });
 
+function adaptResponse(response: unknown) {
+    return JSON.parse(JSON.stringify(response, (_key, value) => (value instanceof Set ? [...value] : value)));
+}
+
 describe("Service", () => {
     test("getMovie", async () => {
         const response = await client.service.getMovie("movie-c06a4ad7");
@@ -55,7 +59,7 @@ describe("Service", () => {
             shallow: false,
             tag: "development",
         });
-        expect(response).toEqual({
+        expect(adaptResponse(response)).toEqual({
             type: "html",
             extra: { version: "0.0.1", tenancy: "test" },
             tags: ["development", "public"],

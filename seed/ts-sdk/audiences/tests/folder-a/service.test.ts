@@ -9,6 +9,6 @@ const client = new SeedAudiencesClient({ environment: process.env.TESTS_BASE_URL
 describe("Service", () => {
     test("getDirectThread", async () => {
         const response = await client.folderA.service.getDirectThread();
-        expect(response).toEqual({ foo: {} });
+        expect(response).toEqual({ foo: { foo: { barProperty: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32" } } });
     });
 });

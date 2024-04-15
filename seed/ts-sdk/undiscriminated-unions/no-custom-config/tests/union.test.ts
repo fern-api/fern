@@ -6,9 +6,13 @@ import { SeedUndiscriminatedUnionsClient } from "../src/Client";
 
 const client = new SeedUndiscriminatedUnionsClient({ environment: process.env.TESTS_BASE_URL || "test" });
 
+function adaptResponse(response: unknown) {
+    return JSON.parse(JSON.stringify(response, (_key, value) => (value instanceof Set ? [...value] : value)));
+}
+
 describe("Union", () => {
     test("get", async () => {
         const response = await client.union.get("string");
-        expect(response).toEqual("string");
+        expect(adaptResponse(response)).toEqual("string");
     });
 });

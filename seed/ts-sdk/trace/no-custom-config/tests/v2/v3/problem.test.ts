@@ -10,17 +10,26 @@ const client = new SeedTraceClient({
     xRandomHeader: process.env.TESTS_HEADER || "test",
 });
 
+function adaptResponse(response: unknown) {
+    return JSON.parse(JSON.stringify(response, (_key, value) => (value instanceof Set ? [...value] : value)));
+}
+
 describe("Problem", () => {
     test("getLightweightProblems", async () => {
         const response = await client.v2.v3.problem.getLightweightProblems();
-        expect(response).toEqual([
-            { problemId: "string", problemName: "string", problemVersion: 1, variableTypes: [{ type: "integerType" }] },
+        expect(adaptResponse(response)).toEqual([
+            {
+                problemId: "string",
+                problemName: "string",
+                problemVersion: 1,
+                variableTypes: new Set([{ type: "integerType" }]),
+            },
         ]);
     });
 
     test("getProblems", async () => {
         const response = await client.v2.v3.problem.getProblems();
-        expect(response).toEqual([
+        expect(adaptResponse(response)).toEqual([
             {
                 problemId: "string",
                 problemDescription: {
@@ -28,11 +37,53 @@ describe("Problem", () => {
                 },
                 problemName: "string",
                 problemVersion: 1,
-                supportedLanguages: ["JAVA"],
+                supportedLanguages: new Set(["JAVA"]),
                 customFiles: { type: "basic" },
-                generatedFiles: {},
-                customTestCaseTemplates: [{}],
-                testcases: [{}],
+                generatedFiles: {
+                    generatedTestCaseFiles: {
+                        JAVA: {
+                            files: [{ filename: "string", directory: "string", contents: "string", editable: true }],
+                        },
+                    },
+                    generatedTemplateFiles: {
+                        JAVA: {
+                            files: [{ filename: "string", directory: "string", contents: "string", editable: true }],
+                        },
+                    },
+                    other: {
+                        JAVA: {
+                            files: [{ filename: "string", directory: "string", contents: "string", editable: true }],
+                        },
+                    },
+                },
+                customTestCaseTemplates: [
+                    {
+                        templateId: "string",
+                        name: "string",
+                        implementation: {
+                            description: {
+                                boards: [{ "0": "s", "1": "t", "2": "r", "3": "i", "4": "n", "5": "g", type: "html" }],
+                            },
+                            function: { type: "withActualResult" },
+                        },
+                    },
+                ],
+                testcases: [
+                    {
+                        metadata: { id: "string", name: "string", hidden: true },
+                        implementation: {
+                            "0": "s",
+                            "1": "t",
+                            "2": "r",
+                            "3": "i",
+                            "4": "n",
+                            "5": "g",
+                            type: "templateId",
+                        },
+                        arguments: { string: { type: "integerValue" } },
+                        expects: { expectedStdout: "string" },
+                    },
+                ],
                 isPublic: true,
             },
         ]);
@@ -40,36 +91,92 @@ describe("Problem", () => {
 
     test("getLatestProblem", async () => {
         const response = await client.v2.v3.problem.getLatestProblem("string");
-        expect(response).toEqual({
+        expect(adaptResponse(response)).toEqual({
             problemId: "string",
             problemDescription: {
                 boards: [{ "0": "s", "1": "t", "2": "r", "3": "i", "4": "n", "5": "g", type: "html" }],
             },
             problemName: "string",
             problemVersion: 1,
-            supportedLanguages: ["JAVA"],
+            supportedLanguages: new Set(["JAVA"]),
             customFiles: { type: "basic" },
-            generatedFiles: {},
-            customTestCaseTemplates: [{}],
-            testcases: [{}],
+            generatedFiles: {
+                generatedTestCaseFiles: {
+                    JAVA: { files: [{ filename: "string", directory: "string", contents: "string", editable: true }] },
+                },
+                generatedTemplateFiles: {
+                    JAVA: { files: [{ filename: "string", directory: "string", contents: "string", editable: true }] },
+                },
+                other: {
+                    JAVA: { files: [{ filename: "string", directory: "string", contents: "string", editable: true }] },
+                },
+            },
+            customTestCaseTemplates: [
+                {
+                    templateId: "string",
+                    name: "string",
+                    implementation: {
+                        description: {
+                            boards: [{ "0": "s", "1": "t", "2": "r", "3": "i", "4": "n", "5": "g", type: "html" }],
+                        },
+                        function: { type: "withActualResult" },
+                    },
+                },
+            ],
+            testcases: [
+                {
+                    metadata: { id: "string", name: "string", hidden: true },
+                    implementation: { "0": "s", "1": "t", "2": "r", "3": "i", "4": "n", "5": "g", type: "templateId" },
+                    arguments: { string: { type: "integerValue" } },
+                    expects: { expectedStdout: "string" },
+                },
+            ],
             isPublic: true,
         });
     });
 
     test("getProblemVersion", async () => {
         const response = await client.v2.v3.problem.getProblemVersion("string", 1);
-        expect(response).toEqual({
+        expect(adaptResponse(response)).toEqual({
             problemId: "string",
             problemDescription: {
                 boards: [{ "0": "s", "1": "t", "2": "r", "3": "i", "4": "n", "5": "g", type: "html" }],
             },
             problemName: "string",
             problemVersion: 1,
-            supportedLanguages: ["JAVA"],
+            supportedLanguages: new Set(["JAVA"]),
             customFiles: { type: "basic" },
-            generatedFiles: {},
-            customTestCaseTemplates: [{}],
-            testcases: [{}],
+            generatedFiles: {
+                generatedTestCaseFiles: {
+                    JAVA: { files: [{ filename: "string", directory: "string", contents: "string", editable: true }] },
+                },
+                generatedTemplateFiles: {
+                    JAVA: { files: [{ filename: "string", directory: "string", contents: "string", editable: true }] },
+                },
+                other: {
+                    JAVA: { files: [{ filename: "string", directory: "string", contents: "string", editable: true }] },
+                },
+            },
+            customTestCaseTemplates: [
+                {
+                    templateId: "string",
+                    name: "string",
+                    implementation: {
+                        description: {
+                            boards: [{ "0": "s", "1": "t", "2": "r", "3": "i", "4": "n", "5": "g", type: "html" }],
+                        },
+                        function: { type: "withActualResult" },
+                    },
+                },
+            ],
+            testcases: [
+                {
+                    metadata: { id: "string", name: "string", hidden: true },
+                    implementation: { "0": "s", "1": "t", "2": "r", "3": "i", "4": "n", "5": "g", type: "templateId" },
+                    arguments: { string: { type: "integerValue" } },
+                    expects: { expectedStdout: "string" },
+                },
+            ],
             isPublic: true,
         });
     });

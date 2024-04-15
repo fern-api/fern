@@ -15,6 +15,10 @@ describe("Migration", () => {
         const response = await client.migration.getAttemptedMigrations({
             "admin-key-header": "string",
         });
-        expect(response).toEqual([{ name: "string", status: "RUNNING" }]);
+        if (response.ok) {
+            expect(response.body).toEqual([{ name: "string", status: "RUNNING" }]);
+        } else {
+            fail("Response was not ok");
+        }
     });
 });

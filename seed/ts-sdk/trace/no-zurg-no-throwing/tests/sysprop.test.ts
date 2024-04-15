@@ -14,11 +14,19 @@ const client = new SeedTraceClient({
 describe("Sysprop", () => {
     test("setNumWarmInstances", async () => {
         const response = await client.sysprop.setNumWarmInstances(SeedTrace.Language.Java, 1);
-        expect(response).toEqual(undefined);
+        if (response.ok) {
+            expect(response.body).toEqual(undefined);
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("getNumWarmInstances", async () => {
         const response = await client.sysprop.getNumWarmInstances();
-        expect(response).toEqual({ JAVA: 1 });
+        if (response.ok) {
+            expect(response.body).toEqual({ JAVA: 1 });
+        } else {
+            fail("Response was not ok");
+        }
     });
 });

@@ -1,0 +1,4 @@
+# We use pnpm as the workspace/package manager for this seed
+# instead of yarn, so it doesn't conflict with the yarn workspaces of this repo.
+packages:
+  - "**"

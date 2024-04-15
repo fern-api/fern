@@ -1,3 +1,4 @@
+import { join } from "path";
 import { IrVersions } from "../../ir-versions";
 import { convertDeclaredTypeName } from "./convertDeclaredTypeName";
 import { convertExampleTypeReference } from "./convertExampleTypeReference";
@@ -44,7 +45,7 @@ function convertDeclaredServiceName(
 
 function convertBasePathToString(basePath: IrVersions.V5.http.HttpPath): string {
     return basePath.parts.reduce(
-        (stringifiedBasePath, part) => stringifiedBasePath + `{${part.pathParameter}}` + part.tail,
+        (stringifiedBasePath, part) => join(stringifiedBasePath, `{${part.pathParameter}}`,  part.tail),
         basePath.head
     );
 }

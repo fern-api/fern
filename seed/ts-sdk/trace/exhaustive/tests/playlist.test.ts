@@ -21,7 +21,16 @@ describe("Playlist", () => {
                 problems: [SeedTrace.ProblemId("string")],
             },
         });
-        expect(response).toEqual({ playlistId: "string", ownerId: "string", name: "string", problems: ["string"] });
+        if (response.ok) {
+            expect(response.body).toEqual({
+                playlistId: "string",
+                ownerId: "string",
+                name: "string",
+                problems: ["string"],
+            });
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("getPlaylists", async () => {
@@ -32,12 +41,27 @@ describe("Playlist", () => {
             optionalMultipleField: "string",
             multipleField: "string",
         });
-        expect(response).toEqual([{ playlistId: "string", ownerId: "string", name: "string", problems: ["string"] }]);
+        if (response.ok) {
+            expect(response.body).toEqual([
+                { playlistId: "string", ownerId: "string", name: "string", problems: ["string"] },
+            ]);
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("getPlaylist", async () => {
         const response = await client.playlist.getPlaylist(1, SeedTrace.PlaylistId("string"));
-        expect(response).toEqual({ playlistId: "string", ownerId: "string", name: "string", problems: ["string"] });
+        if (response.ok) {
+            expect(response.body).toEqual({
+                playlistId: "string",
+                ownerId: "string",
+                name: "string",
+                problems: ["string"],
+            });
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("updatePlaylist", async () => {
@@ -45,11 +69,24 @@ describe("Playlist", () => {
             name: "string",
             problems: [SeedTrace.ProblemId("string")],
         });
-        expect(response).toEqual({ playlistId: "string", ownerId: "string", name: "string", problems: ["string"] });
+        if (response.ok) {
+            expect(response.body).toEqual({
+                playlistId: "string",
+                ownerId: "string",
+                name: "string",
+                problems: ["string"],
+            });
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("deletePlaylist", async () => {
         const response = await client.playlist.deletePlaylist(1, SeedTrace.PlaylistId("string"));
-        expect(response).toEqual(undefined);
+        if (response.ok) {
+            expect(response.body).toEqual(undefined);
+        } else {
+            fail("Response was not ok");
+        }
     });
 });

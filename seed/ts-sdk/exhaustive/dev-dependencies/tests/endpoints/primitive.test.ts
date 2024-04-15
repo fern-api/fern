@@ -12,46 +12,82 @@ const client = new FiddleClient({
 describe("Primitive", () => {
     test("getAndReturnString", async () => {
         const response = await client.endpoints.primitive.getAndReturnString("string");
-        expect(response).toEqual("string");
+        if (response.ok) {
+            expect(response.body).toEqual("string");
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("getAndReturnInt", async () => {
         const response = await client.endpoints.primitive.getAndReturnInt(1);
-        expect(response).toEqual(1);
+        if (response.ok) {
+            expect(response.body).toEqual(1);
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("getAndReturnLong", async () => {
         const response = await client.endpoints.primitive.getAndReturnLong(1000000);
-        expect(response).toEqual(1000000);
+        if (response.ok) {
+            expect(response.body).toEqual(1000000);
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("getAndReturnDouble", async () => {
         const response = await client.endpoints.primitive.getAndReturnDouble(1.1);
-        expect(response).toEqual(1.1);
+        if (response.ok) {
+            expect(response.body).toEqual(1.1);
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("getAndReturnBool", async () => {
         const response = await client.endpoints.primitive.getAndReturnBool(true);
-        expect(response).toEqual(true);
+        if (response.ok) {
+            expect(response.body).toEqual(true);
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("getAndReturnDatetime", async () => {
         const response = await client.endpoints.primitive.getAndReturnDatetime(new Date("2024-01-15T09:30:00.000Z"));
-        expect(response).toEqual(new Date("2024-01-15T09:30:00.000Z"));
+        if (response.ok) {
+            expect(response.body).toEqual(new Date("2024-01-15T09:30:00.000Z"));
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("getAndReturnDate", async () => {
         const response = await client.endpoints.primitive.getAndReturnDate("2023-01-15");
-        expect(response).toEqual("2023-01-15");
+        if (response.ok) {
+            expect(response.body).toEqual("2023-01-15");
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("getAndReturnUuid", async () => {
         const response = await client.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
-        expect(response).toEqual("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
+        if (response.ok) {
+            expect(response.body).toEqual("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("getAndReturnBase64", async () => {
         const response = await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh");
-        expect(response).toEqual("SGVsbG8gd29ybGQh");
+        if (response.ok) {
+            expect(response.body).toEqual("SGVsbG8gd29ybGQh");
+        } else {
+            fail("Response was not ok");
+        }
     });
 });

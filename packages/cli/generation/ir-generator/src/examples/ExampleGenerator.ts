@@ -184,7 +184,7 @@ export class ExampleGenerator {
         const examples = endpoint.examples;
         return {
             url: endpoint.path.head,
-            rootPathParameters: rootPathParameters.map((p) =>
+            rootPathParameters: withoutLiteralProperties(rootPathParameters).map((p) =>
                 this.generatePathParameterExample({
                     pathParameter: p,
                     maybePathParameterExample: examples
@@ -192,7 +192,7 @@ export class ExampleGenerator {
                         .find((rp) => rp.name === p.name)
                 })
             ),
-            servicePathParameters: servicePathParameters.map((p) =>
+            servicePathParameters: withoutLiteralProperties(servicePathParameters).map((p) =>
                 this.generatePathParameterExample({
                     pathParameter: p,
                     maybePathParameterExample: examples
@@ -200,7 +200,7 @@ export class ExampleGenerator {
                         .find((sp) => sp.name === p.name)
                 })
             ),
-            endpointPathParameters: endpoint.pathParameters.map((p) =>
+            endpointPathParameters: withoutLiteralProperties(endpoint.pathParameters).map((p) =>
                 this.generatePathParameterExample({
                     pathParameter: p,
                     maybePathParameterExample: examples
@@ -208,7 +208,7 @@ export class ExampleGenerator {
                         .find((sp) => sp.name === p.name)
                 })
             ),
-            serviceHeaders: serviceHeaders.map((h) =>
+            serviceHeaders: withoutLiteralProperties(serviceHeaders).map((h) =>
                 this.generateHttpParameterExample({
                     parameter: h,
                     maybeParameterExample: examples
@@ -216,7 +216,7 @@ export class ExampleGenerator {
                         .find((sh) => sh.name === h.name)
                 })
             ),
-            endpointHeaders: endpoint.headers.map((h) =>
+            endpointHeaders: withoutLiteralProperties(endpoint.headers).map((h) =>
                 this.generateHttpParameterExample({
                     parameter: h,
                     maybeParameterExample: examples
@@ -224,7 +224,7 @@ export class ExampleGenerator {
                         .find((sh) => sh.name === h.name)
                 })
             ),
-            queryParameters: endpoint.queryParameters.map((q) =>
+            queryParameters: withoutLiteralProperties(endpoint.queryParameters).map((q) =>
                 this.generateHttpParameterExample({
                     parameter: q,
                     maybeParameterExample: examples
@@ -311,9 +311,10 @@ export class ExampleGenerator {
     }
 
     private generateInlinedRequestBodyExample(requestBody: InlinedRequestBody): ExampleRequestBody {
+        const nonLiteralProperties = withoutLiteralProperties(requestBody.properties);
         const exampleProperties = [
             ...new Set([
-                ...requestBody.properties.map((prop) => ({
+                ...nonLiteralProperties.map((prop) => ({
                     name: prop.name,
                     value: this.generateExampleTypeReference(prop.valueType, 0),
                     originalTypeDeclaration: undefined
@@ -445,7 +446,36 @@ export class ExampleGenerator {
 
     private generateExampleTypeForObject(declaredTypeName: DeclaredTypeName): ExampleType | null {
         const providedExample = this.typeExamples.get(declaredTypeName.typeId);
-        const exampleProperties = this.flattenedProperties.get(declaredTypeName.typeId);
+        let exampleProperties = this.flattenedProperties.get(declaredTypeName.typeId)
+
+        if (!exampleProperties) {
+            exampleProperties = this.types.get(declaredTypeName.typeId)?.shape._visit<ExampleObjectProperty[]>({
+                alias: (atd: AliasTypeDeclaration) => {
+                    return atd.aliasOf._visit<ExampleObjectProperty[]>({
+                        container: () => [],
+                        named: (dtn: DeclaredTypeName) => this.getFlattenedProperties(dtn.typeId),
+                        primitive: () => [],
+                        unknown: () => [],
+                        _other: () => []
+                    });
+                },
+                enum: () => [],
+                object: (otd: ObjectTypeDeclaration) => {
+                    return [
+                        ...withoutLiteralProperties(otd.properties).map((prop) => this.convertPropertyToExampleProperty(declaredTypeName, prop)),
+                        ...otd.extends.flatMap((eo) => this.getFlattenedProperties(eo.typeId))
+                    ];
+                },
+                union: (utd: UnionTypeDeclaration) => {
+                    return [
+                        ...withoutLiteralProperties(utd.baseProperties).map((prop) => this.convertPropertyToExampleProperty(declaredTypeName, prop)),
+                        ...utd.extends.flatMap((eo) => this.getFlattenedProperties(eo.typeId))
+                    ];
+                },
+                undiscriminatedUnion: (uutd: UndiscriminatedUnionTypeDeclaration) => [],
+                _other: () => []
+            });
+        }
 
         const jsonExample: Record<string, unknown> = {};
         exampleProperties?.forEach((prop) => (jsonExample[prop.name.wireValue] = prop.value.jsonExample));
@@ -784,3 +814,9 @@ export class ExampleGenerator {
         return depth > this.MAX_EXAMPLE_DEPTH;
     }
 }
+
+const withoutLiteralProperties = <T extends { valueType: TypeReference }>(props: T[]): T[] => {
+    return props.filter(
+        (prop) => !(prop.valueType.type === "container" && prop.valueType.container.type === "literal")
+    );
+};

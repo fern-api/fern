@@ -8,7 +8,20 @@ import * as SeedTrace from "../../../..";
  * @example
  *     {
  *         result: {
- *             result: {},
+ *             result: {
+ *                 expectedResult: {
+ *                     type: "integerValue",
+ *                     value: 1
+ *                 },
+ *                 actualResult: {
+ *                     type: "value",
+ *                     value: {
+ *                         type: "integerValue",
+ *                         value: 1
+ *                     }
+ *                 },
+ *                 passed: true
+ *             },
  *             stdout: "string"
  *         },
  *         traceResponses: [{
@@ -18,8 +31,25 @@ import * as SeedTrace from "../../../..";
  *                     type: "integerValue",
  *                     value: 1
  *                 },
- *                 expressionLocation: {},
- *                 stack: {},
+ *                 expressionLocation: {
+ *                     start: 1,
+ *                     offset: 1
+ *                 },
+ *                 stack: {
+ *                     numStackFrames: 1,
+ *                     topStackFrame: {
+ *                         methodName: "string",
+ *                         lineNumber: 1,
+ *                         scopes: [{
+ *                                 variables: {
+ *                                     "string": {
+ *                                         type: "integerValue",
+ *                                         value: 1
+ *                                     }
+ *                                 }
+ *                             }]
+ *                     }
+ *                 },
  *                 stdout: "string"
  *             }]
  *     }

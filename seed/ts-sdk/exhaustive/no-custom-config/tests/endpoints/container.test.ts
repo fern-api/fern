@@ -26,7 +26,7 @@ describe("Container", () => {
 
     test("getAndReturnSetOfPrimitives", async () => {
         const response = await client.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"]));
-        expect(response).toEqual(["string"]);
+        expect(response).toEqual(new Set(["string"]));
     });
 
     test("getAndReturnSetOfObjects", async () => {
@@ -37,7 +37,7 @@ describe("Container", () => {
                 },
             ])
         );
-        expect(response).toEqual([{ string: "string" }]);
+        expect(response).toEqual(new Set([{ string: "string" }]));
     });
 
     test("getAndReturnMapPrimToPrim", async () => {

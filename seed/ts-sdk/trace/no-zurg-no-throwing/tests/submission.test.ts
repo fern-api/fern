@@ -14,44 +14,60 @@ const client = new SeedTraceClient({
 describe("Submission", () => {
     test("createExecutionSession", async () => {
         const response = await client.submission.createExecutionSession(SeedTrace.Language.Java);
-        expect(response).toEqual({
-            sessionId: "string",
-            executionSessionUrl: "string",
-            language: "JAVA",
-            status: "CREATING_CONTAINER",
-        });
+        if (response.ok) {
+            expect(response.body).toEqual({
+                sessionId: "string",
+                executionSessionUrl: "string",
+                language: "JAVA",
+                status: "CREATING_CONTAINER",
+            });
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("getExecutionSession", async () => {
         const response = await client.submission.getExecutionSession("string");
-        expect(response).toEqual({
-            sessionId: "string",
-            executionSessionUrl: "string",
-            language: "JAVA",
-            status: "CREATING_CONTAINER",
-        });
+        if (response.ok) {
+            expect(response.body).toEqual({
+                sessionId: "string",
+                executionSessionUrl: "string",
+                language: "JAVA",
+                status: "CREATING_CONTAINER",
+            });
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("stopExecutionSession", async () => {
         const response = await client.submission.stopExecutionSession("string");
-        expect(response).toEqual(undefined);
+        if (response.ok) {
+            expect(response.body).toEqual(undefined);
+        } else {
+            fail("Response was not ok");
+        }
     });
 
     test("getExecutionSessionsState", async () => {
         const response = await client.submission.getExecutionSessionsState();
-        expect(response).toEqual({
-            states: {
-                string: {
-                    lastTimeContacted: "string",
-                    sessionId: "string",
-                    isWarmInstance: true,
-                    awsTaskId: "string",
-                    language: "JAVA",
-                    status: "CREATING_CONTAINER",
+        if (response.ok) {
+            expect(response.body).toEqual({
+                states: {
+                    string: {
+                        lastTimeContacted: "string",
+                        sessionId: "string",
+                        isWarmInstance: true,
+                        awsTaskId: "string",
+                        language: "JAVA",
+                        status: "CREATING_CONTAINER",
+                    },
                 },
-            },
-            numWarmingInstances: 1,
-            warmingSessionIds: ["string"],
-        });
+                numWarmingInstances: 1,
+                warmingSessionIds: ["string"],
+            });
+        } else {
+            fail("Response was not ok");
+        }
     });
 });

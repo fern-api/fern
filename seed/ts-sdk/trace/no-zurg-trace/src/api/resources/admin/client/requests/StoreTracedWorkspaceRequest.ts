@@ -11,7 +11,11 @@ import * as SeedTrace from "../../../..";
  *             exceptionV2: {
  *                 type: "generic"
  *             },
- *             exception: {},
+ *             exception: {
+ *                 exceptionType: "string",
+ *                 exceptionMessage: "string",
+ *                 exceptionStacktrace: "string"
+ *             },
  *             stdout: "string"
  *         },
  *         traceResponses: [{
@@ -21,8 +25,25 @@ import * as SeedTrace from "../../../..";
  *                     type: "integerValue",
  *                     value: 1
  *                 },
- *                 expressionLocation: {},
- *                 stack: {},
+ *                 expressionLocation: {
+ *                     start: 1,
+ *                     offset: 1
+ *                 },
+ *                 stack: {
+ *                     numStackFrames: 1,
+ *                     topStackFrame: {
+ *                         methodName: "string",
+ *                         lineNumber: 1,
+ *                         scopes: [{
+ *                                 variables: {
+ *                                     "string": {
+ *                                         type: "integerValue",
+ *                                         value: 1
+ *                                     }
+ *                                 }
+ *                             }]
+ *                     }
+ *                 },
  *                 stdout: "string"
  *             }]
  *     }
