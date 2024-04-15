@@ -1,0 +1,59 @@
+---
+title: Auto Pagination
+excerpt: Paginate through API responses easily
+---
+
+<Warning title='Pro Feature'>
+  This feature is only available on paid plans. Please schedule a [demo](https://buildwithfern.com/contact) 
+  or [email us](mailto:support@buildwithfern.com) to get started. 
+</Warning>
+
+Instead of forcing SDK users to learn the intricacies of your 
+pagination system, Fern SDKs will return an iterator so that user's can 
+simply loop through all the results.
+
+<Tabs>
+<Tab title="TypeScript">
+
+  When pagination for an endpoint is configured, the TypeScript SDK method 
+  will return a `Page<T>` where `T` is the underlying data type. The `Page<T>`
+  will implement the `AsyncIterable` interface, allowing you to use it in a
+  `for await` loop.
+
+  Below is an example method signature for a list endpoint: 
+  ```typescript UsersClient.ts {10-13}
+  import core from "../core";
+
+  export interface UsersClient {
+
+    /**
+     * List all users
+     * @param props 
+     * @returns A page of users
+     */
+    list(
+      request: ListUsersRequest = {}, 
+      requestOptions: core.RequestOptions = {}
+    ): core.Page<User>;
+  }
+  ```
+
+  And here is an example of how a user would use the `list` method:
+  ```typescript
+  const response = await client.users.list();
+  for await (const user of response) {
+    console.log(user);
+  }
+  ```
+</Tab>
+</Tabs>
+
+### Supported Pagination Types
+
+Fern supports the following pagination schemes:
+
+| Pagination Scheme | Supported                                        |
+|-------------------|--------------------------------------------------|
+| Offset-based      | <Icon icon="check" color="#84B060" />            |
+| Cursor-based      | <Icon icon="check" color="#84B060" />            |
+| Link-based        |                                                  |

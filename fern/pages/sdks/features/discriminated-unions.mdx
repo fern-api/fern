@@ -1,0 +1,33 @@
+  ### Discriminated Unions
+  The SDKs natively support discriminated unions. 
+
+  ```ts maxLines=0 {1}
+  export type Shape = Triangle | Square; 
+
+  export interface Triangle {
+    type: "triangle";
+    a: number;
+    b: number;
+    c: number;
+  }
+
+  export interface Square {
+    type: "square";
+    /* length of a single side */
+    side: number;
+  }
+  ```
+
+  Consumers can easily write branching logic by checking the discriminant. 
+
+  ```ts {4, 6}
+  import { Shape } from "sdk";
+
+  export function computeArea(shape: Shape): number {
+    if (shape.type === "triangle") {
+      // compute triangle area
+    } else if (shape.type === "square") {
+      // compute square area
+    }
+  }
+  ```
