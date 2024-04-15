@@ -50,7 +50,6 @@ class ObjectWithOptionalFieldError extends errors.SeedExhaustiveError {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
-                skipValidation: true,
             }));
         });
     }

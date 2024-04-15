@@ -1,6 +1,6 @@
 import { HttpEndpoint, InlinedRequestBody, InlinedRequestBodyProperty } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
-import { getTextOfTsNode, PackageId, Reference, Zurg } from "@fern-typescript/commons";
+import { getSchemaOptions, getTextOfTsNode, PackageId, Reference, Zurg } from "@fern-typescript/commons";
 import { GeneratedSdkInlinedRequestBodySchema, SdkContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 
@@ -48,21 +48,10 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
         if (!this.includeSerdeLayer) {
             return referenceToParsedRequest;
         }
-        if (this.allowExtraFields) {
-            return this.getReferenceToZurgSchema(context).jsonOrThrow(referenceToParsedRequest, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedEnumValues: true,
-                allowUnrecognizedUnionMembers: true,
-                skipValidation: true,
-                breadcrumbsPrefix: []
-            });
-        }
         return this.getReferenceToZurgSchema(context).jsonOrThrow(referenceToParsedRequest, {
-            unrecognizedObjectKeys: "strip",
-            allowUnrecognizedEnumValues: false,
-            allowUnrecognizedUnionMembers: false,
-            skipValidation: false,
-            breadcrumbsPrefix: []
+            ...getSchemaOptions({
+                allowExtraFields: this.allowExtraFields
+            })
         });
     }
 

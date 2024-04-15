@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { ErrorDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
-import { getTextOfTsNode, Reference, Zurg } from "@fern-typescript/commons";
+import { getSchemaOptions, getTextOfTsNode, Reference, Zurg } from "@fern-typescript/commons";
 import { ExpressContext, GeneratedExpressErrorSchema } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 
@@ -68,45 +68,21 @@ export class GeneratedExpressErrorSchemaImpl
 
         switch (this.type.type) {
             case "named":
-                if (this.allowExtraFields) {
-                    return context.typeSchema
-                        .getSchemaOfNamedType(this.type, { isGeneratingSchema: false })
-                        .jsonOrThrow(referenceToBody, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedEnumValues: true,
-                            allowUnrecognizedUnionMembers: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: []
-                        });
-                }
                 return context.typeSchema
                     .getSchemaOfNamedType(this.type, { isGeneratingSchema: false })
                     .jsonOrThrow(referenceToBody, {
-                        unrecognizedObjectKeys: "strip",
-                        allowUnrecognizedEnumValues: false,
-                        allowUnrecognizedUnionMembers: false,
-                        skipValidation: false,
-                        breadcrumbsPrefix: []
+                        ...getSchemaOptions({
+                            allowExtraFields: this.allowExtraFields
+                        })
                     });
             case "unknown":
                 return referenceToBody;
             case "primitive":
             case "container":
-                if (this.allowExtraFields) {
-                    return this.getReferenceToZurgSchema(context).jsonOrThrow(referenceToBody, {
-                        unrecognizedObjectKeys: "passthrough",
-                        allowUnrecognizedEnumValues: true,
-                        allowUnrecognizedUnionMembers: true,
-                        skipValidation: true,
-                        breadcrumbsPrefix: []
-                    });
-                }
                 return this.getReferenceToZurgSchema(context).jsonOrThrow(referenceToBody, {
-                    unrecognizedObjectKeys: "strip",
-                    allowUnrecognizedEnumValues: false,
-                    allowUnrecognizedUnionMembers: false,
-                    skipValidation: false,
-                    breadcrumbsPrefix: []
+                    ...getSchemaOptions({
+                        allowExtraFields: this.allowExtraFields
+                    })
                 });
             default:
                 assertNever(this.type);

@@ -62,7 +62,6 @@ class NoReqBodyService {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
                         }));
                     }),
                     cookie: res.cookie.bind(res),
@@ -92,7 +91,6 @@ class NoReqBodyService {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
                         }));
                     }),
                     cookie: res.cookie.bind(res),

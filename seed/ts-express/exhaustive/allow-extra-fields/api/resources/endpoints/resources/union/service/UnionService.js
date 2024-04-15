@@ -65,7 +65,6 @@ class UnionService {
                                 unrecognizedObjectKeys: "passthrough",
                                 allowUnrecognizedUnionMembers: true,
                                 allowUnrecognizedEnumValues: true,
-                                skipValidation: true,
                             }));
                         }),
                         cookie: res.cookie.bind(res),

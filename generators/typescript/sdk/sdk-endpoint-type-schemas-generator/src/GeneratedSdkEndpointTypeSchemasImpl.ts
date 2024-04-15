@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { ErrorDiscriminationStrategy, HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
-import { PackageId } from "@fern-typescript/commons";
+import { getSchemaOptions, PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
@@ -212,50 +212,24 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             case "unknown":
                 return referenceToParsedRequest;
             case "named":
-                if (this.allowExtraFields) {
-                    return context.typeSchema
-                        .getSchemaOfNamedType(this.endpoint.requestBody.requestBodyType, { isGeneratingSchema: false })
-                        .jsonOrThrow(referenceToParsedRequest, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedEnumValues: true,
-                            allowUnrecognizedUnionMembers: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: []
-                        });
-                }
                 return context.typeSchema
                     .getSchemaOfNamedType(this.endpoint.requestBody.requestBodyType, { isGeneratingSchema: false })
                     .jsonOrThrow(referenceToParsedRequest, {
-                        unrecognizedObjectKeys: "strip",
-                        allowUnrecognizedEnumValues: false,
-                        allowUnrecognizedUnionMembers: false,
-                        skipValidation: false,
-                        breadcrumbsPrefix: []
+                        ...getSchemaOptions({
+                            allowExtraFields: this.allowExtraFields
+                        })
                     });
             case "primitive":
             case "container":
                 if (this.generatedRequestSchema == null) {
                     throw new Error("No request schema was generated");
                 }
-                if (this.allowExtraFields) {
-                    return this.generatedRequestSchema
-                        .getReferenceToZurgSchema(context)
-                        .jsonOrThrow(referenceToParsedRequest, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedEnumValues: true,
-                            allowUnrecognizedUnionMembers: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: []
-                        });
-                }
                 return this.generatedRequestSchema
                     .getReferenceToZurgSchema(context)
                     .jsonOrThrow(referenceToParsedRequest, {
-                        unrecognizedObjectKeys: "strip",
-                        allowUnrecognizedEnumValues: false,
-                        allowUnrecognizedUnionMembers: false,
-                        skipValidation: false,
-                        breadcrumbsPrefix: []
+                        ...getSchemaOptions({
+                            allowExtraFields: this.allowExtraFields
+                        })
                     });
             default:
                 assertNever(this.endpoint.requestBody.requestBodyType);
