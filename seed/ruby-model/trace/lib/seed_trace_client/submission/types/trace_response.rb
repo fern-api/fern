@@ -64,6 +64,7 @@ module SeedTraceClient
       # @return [SeedTraceClient::Submission::TraceResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         submission_id = struct["submissionId"]
         line_number = struct["lineNumber"]
         if parsed_json["returnValue"].nil?

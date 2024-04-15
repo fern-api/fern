@@ -52,6 +52,7 @@ module SeedTraceClient
       # @return [SeedTraceClient::Submission::TestCaseNonHiddenGrade]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         passed = struct["passed"]
         if parsed_json["actualResult"].nil?
           actual_result = nil
