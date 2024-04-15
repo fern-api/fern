@@ -58,6 +58,9 @@ navigation:
             path: ./pages/sdks/features/multipart-form-data.mdx
           - page: Forward compatibility
             path: ./pages/sdks/features/forward-compatibility.mdx
+          - page: Registry publishing
+            path: ./pages/sdks/features/publish-to-registries.mdx
+            icon: pro
           - page: Auto-Pagination
             path: ./pages/sdks/features/auto-pagination.mdx
             icon: pro
