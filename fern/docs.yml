@@ -8,7 +8,7 @@ instances:
         branch: main
   # - url: fern-beta.docs.buildwithfern.com/learn
   #   custom-domain: staging.buildwithfern.com/learn
-title: Fern | Documentation
+title: Fern
 
 tabs:
   home:
@@ -42,6 +42,10 @@ navigation:
         contents: 
           - page: Overview
             path: ./pages/sdks/introduction/overview.mdx
+      - section: Getting Started
+        contents: 
+          - page: Generate your first SDK
+            path: ./pages/sdks/getting-started/generate-your-first-sdk.mdx
       - section: Features
         contents:
           - page: Strongly typed
@@ -55,47 +59,47 @@ navigation:
           - page: Forward compatibility
             path: ./pages/sdks/features/forward-compatibility.mdx
           - page: Auto-Pagination
-            path: ./pages/sdks/features/dummy.mdx
+            path: ./pages/sdks/features/auto-pagination.mdx
             icon: pro
           - page: Retries with backoff
-            path: ./pages/sdks/features/dummy.mdx
+            path: ./pages/sdks/features/retries-with-backoff.mdx
             icon: pro
           - page: Webhook signature verification
-            path: ./pages/sdks/features/dummy.mdx
+            path: ./pages/sdks/features/webhook-signature-verification.mdx
             icon: pro
           - page: Idempotency headers
-            path: ./pages/sdks/features/dummy.mdx
+            path: ./pages/sdks/features/idempotency-headers.mdx
             icon: pro
           - page: Server-Sent events
-            path: ./pages/sdks/features/dummy.mdx
+            path: ./pages/sdks/features/server-sent-events.mdx
             icon: pro
           - page: Integration tests
-            path: ./pages/sdks/features/dummy.mdx
+            path: ./pages/sdks/features/integration-tests.mdx
             icon: pro
           - page: Code Snippets
-            path: ./pages/sdks/features/dummy.mdx
+            path: ./pages/sdks/features/code-snippets.mdx
             icon: pro
           - page: Augment with custom code
-            path: ./pages/sdks/features/dummy.mdx
+            path: ./pages/sdks/features/augment-with-custom-code.mdx
             icon: pro
           - page: Merging multiple APIs
-            path: ./pages/sdks/features/dummy.mdx
+            path: ./pages/sdks/features/merging-multiple-apis.mdx
             icon: pro
           - page: WebSockets
-            path: ./pages/sdks/features/dummy.mdx
+            path: ./pages/sdks/features/websockets.mdx
             icon: pro
-          - page: OAuth token refresh
-            path: ./pages/sdks/features/dummy.mdx
-            icon: pro
-          - page: Object oriented SDKs
-            path: ./pages/sdks/features/dummy.mdx
-            icon: pro
-          - page: Polling
-            path: ./pages/sdks/features/dummy.mdx
-            icon: pro
-          - page: GitHub integration
-            path: ./pages/sdks/features/dummy.mdx
-            icon: pro
+          # - page: OAuth token refresh
+          #   path: ./pages/sdks/features/dummy.mdx
+          #   icon: pro
+          # - page: Object oriented SDKs
+          #   path: ./pages/sdks/features/dummy.mdx
+          #   icon: pro
+          # - page: Polling
+          #   path: ./pages/sdks/features/dummy.mdx
+          #   icon: pro
+          # - page: GitHub integration
+          #   path: ./pages/sdks/features/dummy.mdx
+          #   icon: pro
 
       # - section: Other generators
       #   contents:
@@ -225,14 +229,6 @@ navigation:
           - page: OpenAPI Extensions
             path: ./pages/overview/define-your-api/openapi/extensions.mdx
             slug: extensions
-      - section: OpenAPI
-        slug: openapi
-        contents:
-          - page: Overview
-            path: ./pages/overview/define-your-api/openapi/openapi-overview.mdx
-          - page: OpenAPI Extensions
-            path: ./pages/overview/define-your-api/openapi/extensions.mdx
-            slug: extensions
           - page: OpenAPI Examples
             path: ./pages/overview/define-your-api/openapi/examples.mdx
             slug: examples
@@ -310,7 +306,7 @@ logo:
 colors:
   accentPrimary:
     dark: "#ADFF8C"
-    light: "#418326"
+    light: "#209d63"
   background:
     dark: "#000000"
     light: "#FFFFFF"

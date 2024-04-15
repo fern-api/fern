@@ -1,20 +1,18 @@
 ---
 title: Forward compatibility 
-excerpt: Prevent breaking your users as the API evolves 
+excerpt: SDKs that are fault-tolerant as your API evolves
 ---
 
-Fern SDKs are designed so that you can evolve your API without 
-breaking users on legacy SDKs. In particular, as you add additional properties, 
-new enum values, and new union members the legacy SDKs will continue to work. 
+Fern SDKs are designed so that you can evolve your API without breaking users on 
+legacy SDKs. You can safely add additional response properties, enum values, and union variants. 
+The legacy SDKs will safely handle deserializing extra information. 
 
 <Tabs>
 <Tab title="TypeScript">
   ### Additional Response Properties
-  As you make new response properties available on your server, 
-  the legacy SDKs will continue to work. 
-
-  For example, let's say you generated an SDK that had the following
-  `Movie` object: 
+  As you make new response properties available, 
+  the legacy SDKs will continue to work. For example, let's say you 
+  generated an SDK that had the following `Movie` object: 
   ```ts
   export interface Movie {
     name: string;
@@ -22,8 +20,8 @@ new enum values, and new union members the legacy SDKs will continue to work.
   }
   ```
 
-  If you decided to add a new `genre` property on your server, then 
-  legacy SDKs would not break. Users would also be able to access
+  If you decided to add a new `genre` property on your server, the SDK will 
+  simply pass the extra property back. Users would also be able to access
   the property by doing
 
   ```ts
@@ -32,10 +30,8 @@ new enum values, and new union members the legacy SDKs will continue to work.
 
   ### Additional Enum values
   As you add additional enum properties on your server, the 
-  legacy SDks will continue to work. 
-
-  For example, let's say your generated SDK that had the following 
-  `Genre` type: 
+  legacy SDks will continue to work. For example, let's say your generated SDK 
+  had the following `Genre` type: 
 
   ```ts
   export type Genre =
@@ -45,9 +41,9 @@ new enum values, and new union members the legacy SDKs will continue to work.
     | "drama";
   ```
 
-  If your server responded added a new enum value `comedy` then the 
-  SDK would not fail to deserialize. Instead the user would simply receive
-  a string called `comedy`. 
+  If you decided to add a new enum value `comedy`, the SDK will simply pass 
+  the string value back to the user. The consumer can then handle this case
+  in the default case of a switch statement.
 
   ```ts {6-7}
   switch(genre) {
@@ -56,15 +52,14 @@ new enum values, and new union members the legacy SDKs will continue to work.
     case "thriller": 
     case "drama": 
     default: 
-      // handle unknown case here
+      console.log(genre); // prints out comedy
   }
   ```
 
   ### Additional Union variants
   Similar to additional enum properties, if you add additional union types 
-  on your server, the legacy SDKs will continue to work. 
-
-  For example, let's say your generated SDK had the following `Shape` type: 
+  on your server, the legacy SDKs will continue to work. For example, let's say your 
+  generated SDK had the following `Shape` type: 
 
   ```ts
   export type Shape = Square | Circle;
@@ -83,17 +78,17 @@ new enum values, and new union members the legacy SDKs will continue to work.
   If you decided to add an additional union type called `Triangle` 
 
   ```ts
-  export type Shape = Square | Circle | Triangle;
+  + export type Shape = Square | Circle | Triangle;
 
-  export interface Triangle {
-    type: "triangle",
-    a: number
-    b: number
-    c: number
-  }
+  + export interface Triangle {
+  +   type: "triangle",
+  +   a: number
+  +   b: number
+  +   c: number
+  + }
   ```
+  
   then the user could simply handle the unknown case in their legacy SDK. 
-
   ```ts {6-7}
   switch (type) {
     case "circle": 
@@ -101,7 +96,7 @@ new enum values, and new union members the legacy SDKs will continue to work.
     case "square": 
       ...
     default: 
-      // handle unknown case
+      console.log(type); // prints out triangle
   }
   ```
 </Tab>
