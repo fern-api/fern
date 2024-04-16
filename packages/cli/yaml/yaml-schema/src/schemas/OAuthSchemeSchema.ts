@@ -18,7 +18,7 @@ const BaseOAuthSchema = z.strictObject({
 
 const OAuthAccessTokenFields = z.strictObject({
     "access-token": z.string(),
-    "expires-in": z.optional(z.number()),
+    "expires-in": z.optional(z.string()),
     "refresh-token": z.optional(z.string())
 });
 

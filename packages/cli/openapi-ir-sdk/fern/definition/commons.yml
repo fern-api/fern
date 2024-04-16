@@ -93,7 +93,7 @@ types:
   OAuthAccessTokenFields:
     properties:
       accessToken: string
-      expiresIn: optional<long>
+      expiresIn: optional<string>
       refreshToken: optional<string>
   OAuthTokenEndpoint:
     properties:

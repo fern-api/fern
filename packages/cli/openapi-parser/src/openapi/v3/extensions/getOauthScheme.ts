@@ -6,7 +6,7 @@ import { FernOpenAPIExtension } from "./fernExtensions";
 export interface OAuthAccessTokenFields {
     accessToken: string;
     refreshToken?: string;
-    expiresIn?: number;
+    expiresIn?: string;
 }
 
 export interface OAuthRefreshTokenFields {

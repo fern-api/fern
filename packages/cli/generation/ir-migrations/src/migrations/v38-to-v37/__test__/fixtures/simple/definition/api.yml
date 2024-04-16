@@ -4,18 +4,22 @@ auth: OAuthScheme
 
 auth-schemes:
   OAuthScheme:
+    type: client-credentials
     scheme: oauth
     scopes:
       - user:read
-    type: client-credentials
     token-endpoint:
-      endpoint: foo.get_token
+      endpoint:
+        path: /token/
+        method: POST
       response-fields:
         access-token: $response.access_token
         expires-in: $response.expires_in
         refresh-token: $response.refresh_token
     refresh-endpoint:
-      endpoint: foo.refresh_token
+      endpoint:
+        path: /token/
+        method: POST
       request-fields:
         refresh-token: $response.refresh_token
       response-fields:

@@ -11,14 +11,14 @@ export const OAuthAccessTokenFields: core.serialization.ObjectSchema<
     FernOpenapiIr.OAuthAccessTokenFields
 > = core.serialization.objectWithoutOptionalProperties({
     accessToken: core.serialization.string(),
-    expiresIn: core.serialization.number().optional(),
+    expiresIn: core.serialization.string().optional(),
     refreshToken: core.serialization.string().optional(),
 });
 
 export declare namespace OAuthAccessTokenFields {
     interface Raw {
         accessToken: string;
-        expiresIn?: number | null;
+        expiresIn?: string | null;
         refreshToken?: string | null;
     }
 }

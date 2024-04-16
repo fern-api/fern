@@ -45,7 +45,7 @@ types:
     docs: The fields to map to the corresponding OAuth token primitive.
     properties:
       accessToken: string
-      expiresIn: optional<long>
+      expiresIn: optional<string>
       refreshToken: optional<string>
   OauthRefreshTokenFields:
     docs: The fields to map to the corresponding OAuth token primitive.
@@ -54,7 +54,7 @@ types:
   EndpointReference:
     properties:
       method: http.HttpMethod
-      path: http.HttpPath
+      path: string
   OauthTokenEndpoint:
     properties:
       endpointReference:

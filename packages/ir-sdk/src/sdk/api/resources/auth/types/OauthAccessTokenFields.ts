@@ -7,6 +7,6 @@
  */
 export interface OauthAccessTokenFields {
     accessToken: string;
-    expiresIn: number | undefined;
+    expiresIn: string | undefined;
     refreshToken: string | undefined;
 }

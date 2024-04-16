@@ -6,5 +6,5 @@ import * as FernIr from "../../..";
 
 export interface EndpointReference {
     method: FernIr.HttpMethod;
-    path: FernIr.HttpPath;
+    path: string;
 }

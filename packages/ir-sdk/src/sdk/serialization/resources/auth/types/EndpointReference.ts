@@ -11,12 +11,12 @@ export const EndpointReference: core.serialization.ObjectSchema<
     FernIr.EndpointReference
 > = core.serialization.objectWithoutOptionalProperties({
     method: core.serialization.lazy(async () => (await import("../../..")).HttpMethod),
-    path: core.serialization.lazyObject(async () => (await import("../../..")).HttpPath),
+    path: core.serialization.string(),
 });
 
 export declare namespace EndpointReference {
     interface Raw {
         method: serializers.HttpMethod.Raw;
-        path: serializers.HttpPath.Raw;
+        path: string;
     }
 }

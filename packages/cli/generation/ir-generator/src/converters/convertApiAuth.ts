@@ -1,4 +1,4 @@
-import { ApiAuth, AuthScheme, AuthSchemesRequirement, OAuthConfiguration } from "@fern-api/ir-sdk";
+import { ApiAuth, AuthScheme, AuthSchemesRequirement, HttpMethod, OAuthConfiguration } from "@fern-api/ir-sdk";
 import { RawSchemas, visitRawApiAuth, visitRawAuthSchemeDeclaration } from "@fern-api/yaml-schema";
 import { FernFileContext } from "../FernFileContext";
 
@@ -142,7 +142,10 @@ function generateOAuth({
                     )
                 },
                 tokenEndpoint: {
-                    endpointReference: rawScheme["token-endpoint"].endpoint,
+                    endpointReference: {
+                        path: rawScheme["token-endpoint"].endpoint.path,
+                        method: rawScheme["token-endpoint"].endpoint.method as HttpMethod
+                    },
                     responseFields: {
                         accessToken: rawScheme["token-endpoint"]["response-fields"]["access-token"],
                         expiresIn: rawScheme["token-endpoint"]["response-fields"]["expires-in"],
@@ -152,7 +155,10 @@ function generateOAuth({
                 refreshEndpoint:
                     rawScheme["refresh-endpoint"] != null
                         ? {
-                              endpointReference: rawScheme["refresh-endpoint"].endpoint,
+                              endpointReference: {
+                                  path: rawScheme["refresh-endpoint"].endpoint.path,
+                                  method: rawScheme["refresh-endpoint"].endpoint.method as HttpMethod
+                              },
                               requestFields: {
                                   refreshToken: rawScheme["refresh-endpoint"]["request-fields"]["refresh-token"]
                               },
@@ -175,7 +181,10 @@ function generateOAuth({
                 tokenPrefix: rawScheme["token-prefix"],
                 scopes: rawScheme.scopes,
                 tokenEndpoint: {
-                    endpointReference: rawScheme["token-endpoint"].endpoint,
+                    endpointReference: {
+                        path: rawScheme["token-endpoint"].endpoint.path,
+                        method: rawScheme["token-endpoint"].endpoint.method as HttpMethod
+                    },
                     responseFields: {
                         accessToken: rawScheme["token-endpoint"]["response-fields"]["access-token"],
                         expiresIn: rawScheme["token-endpoint"]["response-fields"]["expires-in"],
@@ -185,7 +194,10 @@ function generateOAuth({
                 refreshEndpoint:
                     rawScheme["refresh-endpoint"] != null
                         ? {
-                              endpointReference: rawScheme["refresh-endpoint"].endpoint,
+                              endpointReference: {
+                                  path: rawScheme["refresh-endpoint"].endpoint.path,
+                                  method: rawScheme["refresh-endpoint"].endpoint.method as HttpMethod
+                              },
                               requestFields: {
                                   refreshToken: rawScheme["refresh-endpoint"]["request-fields"]["refresh-token"]
                               },
