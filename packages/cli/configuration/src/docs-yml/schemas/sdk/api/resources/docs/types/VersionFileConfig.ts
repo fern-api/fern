@@ -5,5 +5,6 @@
 import * as FernDocsConfig from "../../..";
 
 export interface VersionFileConfig {
+    tabs?: Record<FernDocsConfig.TabId, FernDocsConfig.TabConfig>;
     navigation: FernDocsConfig.NavigationConfig;
 }
