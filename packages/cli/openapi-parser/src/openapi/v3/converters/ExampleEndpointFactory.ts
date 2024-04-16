@@ -324,95 +324,25 @@ function consolidateRequestResponseExamples(
     const pairs: RequestResponsePair[] = [];
     if (requestExamples.length <= 1) {
         const [requestId, requestExample] = requestExamples[0] ?? [];
-        for (const [responseId, responseExample] of responseExamples) {
-            pairs.push({
-                id: responseId ?? requestId,
-                request: requestExample,
-                response: responseExample
-            });
-        }
-        return pairs;
-    }
 
-    if (responseExamples.length <= 1) {
-        const [responseId, responseExample] = responseExamples[0] ?? [];
-        for (const [requestId, requestExample] of requestExamples) {
-            pairs.push({
-                id: requestId ?? responseId,
-                request: requestExample,
-                response: responseExample
-            });
-        }
-        return pairs;
-    }
-
-    const visitedResponseIdx = new Set<number>();
-    for (const [requestId, requestExample] of requestExamples) {
-        // If the request has no id, or response cannot be paired, pair the request with the first response example that has no id, falling back to the first response example
-        const fallbackResponseExample =
-            responseExamples.find(([responseId]) => responseId == null)?.[1] ?? responseExamples[0]?.[1];
-
-        if (requestId == null) {
-            if (fallbackResponseExample == null) {
-                continue;
-            }
-            pairs.push({
-                id: undefined,
-                request: requestExample,
-                response: fallbackResponseExample
-            });
-            continue;
-        }
-
-        let paired = false;
-        for (let idx = 0; idx < responseExamples.length; idx++) {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            const [responseId, responseExample] = responseExamples[idx]!;
-            if (responseId != null || visitedResponseIdx.has(idx)) {
-                continue;
-            }
-            if (requestId === responseId) {
-                pairs.push({
-                    id: requestId,
-                    request: requestExample,
-                    response: responseExample
-                });
-                if (responseId != null) {
-                    visitedResponseIdx.add(idx);
-                }
-                paired = true;
-            }
-        }
-
-        if (!paired && fallbackResponseExample != null) {
+        if (responseExamples.length === 0) {
             pairs.push({
                 id: requestId,
                 request: requestExample,
-                response: fallbackResponseExample
+                response: undefined
             });
+            return pairs;
+        } else {
+            for (const [responseId, responseExample] of responseExamples) {
+                pairs.push({
+                    id: responseId ?? requestId,
+                    request: requestExample,
+                    response: responseExample
+                });
+            }
         }
+        return pairs;
     }
-
-    for (let idx = 0; idx < responseExamples.length; idx++) {
-        if (visitedResponseIdx.has(idx)) {
-            continue;
-        }
-
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const [responseId, responseExample] = responseExamples[idx]!;
-
-        const requestExample = requestExamples.find(([requestId]) => requestId == null)?.[1] ?? requestExamples[0]?.[1];
-
-        if (requestExample != null) {
-            pairs.push({
-                id: responseId,
-                request: requestExample,
-                response: responseExample
-            });
-        }
-    }
-
-    return pairs;
 }
 
 type SchemaIdResponse =
