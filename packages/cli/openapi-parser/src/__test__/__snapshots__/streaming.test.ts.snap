@@ -136,7 +136,15 @@ exports[`open api parser streaming parse open api 1`] = `
             "type": "object",
           },
           "response": {
-            "properties": {},
+            "properties": {
+              "id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
             "type": "object",
           },
           "type": "full",
@@ -358,7 +366,29 @@ exports[`open api parser streaming parse open api 1`] = `
             "type": "object",
           },
           "response": {
-            "properties": {},
+            "properties": {
+              "id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+              "name": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "name",
+                },
+              },
+              "streamed": {
+                "type": "literal",
+                "value": {
+                  "type": "boolean",
+                  "value": false,
+                },
+              },
+            },
             "type": "object",
           },
           "type": "full",
@@ -654,7 +684,22 @@ exports[`open api parser streaming parse open api 1`] = `
             "type": "object",
           },
           "response": {
-            "properties": {},
+            "properties": {
+              "id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+              "inline": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+            },
             "type": "object",
           },
           "type": "full",

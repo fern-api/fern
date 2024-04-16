@@ -25,6 +25,13 @@ exports[`examples examples parse open api 1`] = `
             "value": [
               {
                 "properties": {
+                  "building_name": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "The Main Building",
+                    },
+                  },
                   "building_name_alias": {
                     "type": "array",
                     "value": [
@@ -49,6 +56,34 @@ exports[`examples examples parse open api 1`] = `
                     "value": {
                       "type": "string",
                       "value": "123",
+                    },
+                  },
+                  "lat": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 37.789,
+                    },
+                  },
+                  "lon": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": -122.395,
+                    },
+                  },
+                  "number_units": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 100,
+                    },
+                  },
+                  "score": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
                     },
                   },
                   "state": {
@@ -76,6 +111,13 @@ exports[`examples examples parse open api 1`] = `
                         },
                       },
                     ],
+                  },
+                  "year_built": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 2010,
+                    },
                   },
                   "zip_code": {
                     "type": "primitive",

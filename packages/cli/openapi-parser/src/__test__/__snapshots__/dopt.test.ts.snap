@@ -59,6 +59,13 @@ exports[`open api parser dopt parse open api 1`] = `
           "request": null,
           "response": {
             "properties": {
+              "containerUid": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "containerUid",
+                },
+              },
               "fields": {
                 "type": "array",
                 "value": [
@@ -907,6 +914,126 @@ exports[`open api parser dopt parse open api 1`] = `
           "request": null,
           "response": {
             "properties": {
+              "blocks": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "containerUid": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "containerUid",
+                        },
+                      },
+                      "fields": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "oneOf",
+                            "value": {
+                              "type": "discriminated",
+                              "value": {
+                                "sid": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "fields",
+                                  },
+                                },
+                                "type": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "string",
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
+                      "kind": {
+                        "type": "literal",
+                        "value": {
+                          "type": "string",
+                          "value": "block",
+                        },
+                      },
+                      "sid": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "sid",
+                        },
+                      },
+                      "state": {
+                        "properties": {
+                          "active": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "value": true,
+                            },
+                          },
+                          "entered": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "value": true,
+                            },
+                          },
+                          "exited": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "value": true,
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "transitioned": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "transitioned",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "boolean",
+                                "value": true,
+                              },
+                            },
+                          },
+                        ],
+                      },
+                      "type": {
+                        "type": "enum",
+                        "value": "custom",
+                      },
+                      "uid": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "uid",
+                        },
+                      },
+                      "version": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 1.1,
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
               "kind": {
                 "type": "literal",
                 "value": {

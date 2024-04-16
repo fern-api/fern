@@ -21,7 +21,37 @@ exports[`examples enum-casing parse open api 1`] = `
           "queryParameters": [],
           "request": null,
           "response": {
-            "properties": {},
+            "properties": {
+              "custom_fields": {
+                "type": "map",
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "custom_fields",
+                    },
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "value": "custom_fields",
+                      },
+                    },
+                  },
+                ],
+              },
+              "message": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "message",
+                },
+              },
+              "status": {
+                "type": "enum",
+                "value": "success",
+              },
+            },
             "type": "object",
           },
           "type": "full",

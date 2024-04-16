@@ -24,7 +24,10 @@ exports[`x-fern-global-headers x-fern-global-headers simple 1`] = `
                   "stream": false,
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "id": "id",
+                    "streamed": false,
+                  },
                 },
               },
             ],

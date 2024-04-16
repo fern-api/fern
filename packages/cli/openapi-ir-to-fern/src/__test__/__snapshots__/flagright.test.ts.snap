@@ -42,431 +42,11 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
               },
               "response": {
                 "body": {
+                  "acquisitionChannel": "ORGANIC",
+                  "allowedPaymentMethods": [
+                    "ACH",
+                  ],
                   "createdTimestamp": 1641654664000,
-                  "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
-                },
-              },
-            },
-          ],
-          "method": "GET",
-          "path": "/business/users/{userId}",
-          "path-parameters": {
-            "userId": {
-              "docs": "",
-              "type": "string",
-            },
-          },
-          "response": {
-            "docs": "OK",
-            "type": "Business",
-          },
-        },
-        "get-consumer-transaction": {
-          "auth": true,
-          "display-name": "Retrieve a Transaction",
-          "docs": "### GET Transactions
-
-\`/transactions\` endpoint allows you to operate on the [Transaction entity](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#transaction).
-
-Calling \`GET /transactions/{transactionId}\` will return the entire transaction payload and rule execution results for the transaction with the corresponding \`transactionId\`",
-          "errors": [
-            "UnauthorizedError",
-            "TooManyRequestsError",
-          ],
-          "examples": [
-            {
-              "name": "example-1",
-              "path-parameters": {
-                "transactionId": "transactionId",
-              },
-              "response": {
-                "body": {
-                  "executedRules": [
-                    {
-                      "ruleAction": "BLOCK",
-                      "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
-                      "ruleHit": true,
-                      "ruleId": "R-1a",
-                      "ruleInstanceId": "ruleInstanceId",
-                      "ruleName": "Proof of funds for high value transactions",
-                    },
-                  ],
-                  "hitRules": [
-                    {
-                      "ruleAction": "BLOCK",
-                      "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
-                      "ruleId": "R-1a",
-                      "ruleInstanceId": "ruleInstanceId",
-                      "ruleName": "Proof of funds for high value transactions",
-                    },
-                  ],
-                  "timestamp": 1641654664000,
-                  "transactionId": "7b80a539eea6e78acbd6d458e5971482",
-                },
-              },
-            },
-          ],
-          "method": "GET",
-          "path": "/transactions/{transactionId}",
-          "path-parameters": {
-            "transactionId": {
-              "docs": "Unique Transaction Identifier",
-              "type": "string",
-            },
-          },
-          "response": {
-            "docs": "OK",
-            "type": "TransactionWithRulesResult",
-          },
-        },
-        "get-consumer-user": {
-          "auth": true,
-          "display-name": "Retrieve a Consumer User",
-          "docs": "### GET Consumer User
-
-\`/consumer/user\` endpoint allows you to operate on the [Consumer User entity](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#user).
-
-Calling \`GET /consumer/user/{userId}\` will return the entire user payload and rule execution results for the user with the corresponding \`userId\`",
-          "errors": [
-            "UnauthorizedError",
-            "TooManyRequestsError",
-          ],
-          "examples": [
-            {
-              "name": "example-1",
-              "path-parameters": {
-                "userId": "userId",
-              },
-              "response": {
-                "body": {
-                  "createdTimestamp": 1641654664000,
-                  "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
-                },
-              },
-            },
-          ],
-          "method": "GET",
-          "path": "/consumer/users/{userId}",
-          "path-parameters": {
-            "userId": {
-              "docs": "",
-              "type": "string",
-            },
-          },
-          "response": {
-            "docs": "OK",
-            "type": "User",
-          },
-        },
-        "post-business-user": {
-          "auth": true,
-          "display-name": "Create a Business User",
-          "docs": "## POST Business User
-
-\`/business/user\` endpoint allows you to operate on the [Business user entity.](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#user)
-
-In order to pass the payload of a User to Flagright and verify the User, you will need to call this endpoint with the User payload. Not all fields are mandatory, you will only need to pass in the fields that you have and are relevant for your compliance setup.
-
-### Payload
-
-
-Each consumer Business entity needs three mandatory fields:
-
-* \`userId\` - Unique identifier for the user
-* \`legalEntity\` - Details of the business legal entity (CompanyGeneralDetails, FinancialDetails etc) - only \`legalName\`in \`CompanyGeneralDetails\` is mandatory
-* \`createdTimestamp\` - UNIX timestamp in *milliseconds* for when the User is created in your system",
-          "errors": [
-            "BadRequestError",
-            "UnauthorizedError",
-            "TooManyRequestsError",
-          ],
-          "examples": [
-            {
-              "name": "example-1",
-              "request": {
-                "createdTimestamp": 1.1,
-                "directors": [
-                  {
-                    "contactDetails": {
-                      "addresses": [
-                        {
-                          "addressLines": [
-                            "Klara-Franke Str 20",
-                          ],
-                          "city": "Berlin",
-                          "country": "Germany",
-                          "postcode": "10557",
-                          "state": "Berlin",
-                          "tags": [
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                          ],
-                        },
-                      ],
-                      "contactNumbers": [
-                        "+371 123132",
-                      ],
-                      "emailIds": [
-                        "baran@flagright.com",
-                      ],
-                      "websites": [
-                        "flagright.com",
-                      ],
-                    },
-                    "generalDetails": {
-                      "countryOfNationality": "DE",
-                      "countryOfResidence": "US",
-                      "dateOfBirth": "1991-01-01",
-                      "name": {
-                        "firstName": "Baran",
-                        "lastName": "Ozkan",
-                        "middleName": "Realblood",
-                      },
-                    },
-                    "legalDocuments": [
-                      {
-                        "documentExpirationDate": 1839939034000,
-                        "documentIssuedCountry": "DE",
-                        "documentIssuedDate": 1639939034000,
-                        "documentNumber": "Z9431P",
-                        "documentType": "passport",
-                        "nameOnDocument": {
-                          "firstName": "Baran",
-                          "lastName": "Ozkan",
-                          "middleName": "Realblood",
-                        },
-                        "tags": [
-                          {
-                            "key": "customerType",
-                            "value": "wallet",
-                          },
-                        ],
-                      },
-                    ],
-                    "tags": [
-                      {
-                        "key": "customKey",
-                        "value": "customValue",
-                      },
-                    ],
-                  },
-                ],
-                "legalEntity": {
-                  "companyFinancialDetails": {
-                    "expectedTransactionAmountPerMonth": {
-                      "amountCurrency": "GBP",
-                      "amountValue": 800,
-                    },
-                    "expectedTurnoverPerMonth": {
-                      "amountCurrency": "USD",
-                      "amountValue": 8000,
-                    },
-                    "tags": [
-                      {
-                        "key": "customKey",
-                        "value": "customValue",
-                      },
-                    ],
-                  },
-                  "companyGeneralDetails": {
-                    "businessIndustry": [
-                      "Farming",
-                    ],
-                    "legalName": "Ozkan Hazelnut Export JSC",
-                    "mainProductsServicesSold": [
-                      "Hazelnut",
-                    ],
-                    "tags": [
-                      {
-                        "key": "customKey",
-                        "value": "customValue",
-                      },
-                    ],
-                  },
-                  "companyRegistrationDetails": {
-                    "registrationCountry": "DE",
-                    "registrationIdentifier": "PSJ554342",
-                    "tags": [
-                      {
-                        "key": "customKey",
-                        "value": "customValue",
-                      },
-                    ],
-                  },
-                },
-                "shareHolders": [
-                  {
-                    "contactDetails": {
-                      "addresses": [
-                        {
-                          "addressLines": [
-                            "Klara-Franke Str 20",
-                          ],
-                          "city": "Berlin",
-                          "country": "Germany",
-                          "postcode": "10557",
-                          "state": "Berlin",
-                          "tags": [
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                          ],
-                        },
-                      ],
-                      "contactNumbers": [
-                        "+371 123132",
-                      ],
-                      "emailIds": [
-                        "baran@flagright.com",
-                      ],
-                      "websites": [
-                        "flagright.com",
-                      ],
-                    },
-                    "generalDetails": {
-                      "countryOfNationality": "DE",
-                      "countryOfResidence": "US",
-                      "dateOfBirth": "1991-01-01",
-                      "name": {
-                        "firstName": "Baran",
-                        "lastName": "Ozkan",
-                        "middleName": "Realblood",
-                      },
-                    },
-                    "legalDocuments": [
-                      {
-                        "documentExpirationDate": 1839939034000,
-                        "documentIssuedCountry": "DE",
-                        "documentIssuedDate": 1639939034000,
-                        "documentNumber": "Z9431P",
-                        "documentType": "passport",
-                        "nameOnDocument": {
-                          "firstName": "Baran",
-                          "lastName": "Ozkan",
-                          "middleName": "Realblood",
-                        },
-                        "tags": [
-                          {
-                            "key": "customerType",
-                            "value": "wallet",
-                          },
-                        ],
-                      },
-                    ],
-                    "tags": [
-                      {
-                        "key": "customKey",
-                        "value": "customValue",
-                      },
-                    ],
-                  },
-                ],
-                "tags": [
-                  {
-                    "key": "customKey",
-                    "value": "customValue",
-                  },
-                ],
-                "transactionLimits": {
-                  "maximumDailyTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "maximumMonthlyTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "maximumQuarterlyTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "maximumTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "maximumWeeklyTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "maximumYearlyTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                },
-                "userId": "userId",
-              },
-              "response": {
-                "body": {
-                  "executedRules": [
-                    {
-                      "ruleAction": "BLOCK",
-                      "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
-                      "ruleHit": true,
-                      "ruleId": "R-1a",
-                      "ruleInstanceId": "ruleInstanceId",
-                      "ruleName": "Proof of funds for high value transactions",
-                    },
-                  ],
-                  "hitRules": [
-                    {
-                      "ruleAction": "BLOCK",
-                      "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
-                      "ruleId": "R-1a",
-                      "ruleInstanceId": "ruleInstanceId",
-                      "ruleName": "Proof of funds for high value transactions",
-                    },
-                  ],
-                  "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
-                },
-              },
-            },
-          ],
-          "method": "POST",
-          "path": "/business/users",
-          "request": {
-            "body": "Business",
-          },
-          "response": {
-            "docs": "Created",
-            "type": "PostBusinessUserResponse",
-          },
-        },
-        "post-business-user-event": {
-          "auth": true,
-          "display-name": "Create a Business User Event",
-          "docs": "## POST Business User Events
-
-\`/events/business/user\` endpoint allows you to operate on the Business User Events entity.
-
-User events are created after the initial \`POST /business/users\` call (which creates a user) and are used to:
-
-* Update the STATE and KYC Status of the user, using the \`userStateDetails\` or \`kycStatusDetails\` field
-* Update the user details, using the \`updatedBusinessUserAttributes\` field.
-
-> If you have neither of the above two use cases, you do not need to use user events. 
-
-### Payload
-
-Each user event needs three mandatory fields:
-
-* \`timestamp\`- the timestamp of when the event was created or occured in your system
-* \`userId\` - The ID of the transaction for which this event is generated. 
-
-In order to make individual events retrievable, you also need to pass in a unique \`eventId\` to the request body.
-",
-          "errors": [
-            "BadRequestError",
-            "UnauthorizedError",
-            "TooManyRequestsError",
-          ],
-          "examples": [
-            {
-              "request": {
-                "timestamp": 1.1,
-                "updatedBusinessUserAttributes": {
                   "directors": [
                     {
                       "contactDetails": {
@@ -527,6 +107,11 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                           ],
                         },
                       ],
+                      "pepStatus": [
+                        {
+                          "isPepHit": true,
+                        },
+                      ],
                       "tags": [
                         {
                           "key": "customKey",
@@ -535,6 +120,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       ],
                     },
                   ],
+                  "kycStatusDetails": {
+                    "reason": "reason",
+                    "status": "SUCCESSFUL",
+                  },
                   "legalEntity": {
                     "companyFinancialDetails": {
                       "expectedTransactionAmountPerMonth": {
@@ -566,8 +155,12 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                           "value": "customValue",
                         },
                       ],
+                      "userRegistrationStatus": "REGISTERED",
+                      "userSegment": "SOLE_PROPRIETORSHIP",
                     },
                     "companyRegistrationDetails": {
+                      "dateOfRegistration": "dateOfRegistration",
+                      "legalEntityType": "legalEntityType",
                       "registrationCountry": "DE",
                       "registrationIdentifier": "PSJ554342",
                       "tags": [
@@ -576,6 +169,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                           "value": "customValue",
                         },
                       ],
+                      "taxIdentifier": "taxIdentifier",
                     },
                     "contactDetails": {
                       "addresses": [
@@ -595,11 +189,34 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                           ],
                         },
                       ],
+                      "contactNumbers": [
+                        "contactNumbers",
+                      ],
+                      "emailIds": [
+                        "emailIds",
+                      ],
+                      "faxNumbers": [
+                        "faxNumbers",
+                      ],
+                      "websites": [
+                        "websites",
+                      ],
                     },
                     "reasonForAccountOpening": [
                       "string",
                     ],
                   },
+                  "linkedEntities": {
+                    "childUserIds": [
+                      "childUserIds",
+                    ],
+                    "parentUserId": "parentUserId",
+                  },
+                  "mccDetails": {
+                    "code": 1.1,
+                    "description": "description",
+                  },
+                  "riskLevel": "VERY_HIGH",
                   "shareHolders": [
                     {
                       "contactDetails": {
@@ -660,6 +277,11 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                           ],
                         },
                       ],
+                      "pepStatus": [
+                        {
+                          "isPepHit": true,
+                        },
+                      ],
                       "tags": [
                         {
                           "key": "customKey",
@@ -700,13 +322,711 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "amountValue": 800,
                     },
                   },
+                  "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
+                  "userStateDetails": {
+                    "reason": "reason",
+                    "state": "UNACCEPTABLE",
+                    "userId": "userId",
+                  },
                 },
+              },
+            },
+          ],
+          "method": "GET",
+          "path": "/business/users/{userId}",
+          "path-parameters": {
+            "userId": {
+              "docs": "",
+              "type": "string",
+            },
+          },
+          "response": {
+            "docs": "OK",
+            "type": "Business",
+          },
+        },
+        "get-consumer-transaction": {
+          "auth": true,
+          "display-name": "Retrieve a Transaction",
+          "docs": "### GET Transactions
+
+\`/transactions\` endpoint allows you to operate on the [Transaction entity](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#transaction).
+
+Calling \`GET /transactions/{transactionId}\` will return the entire transaction payload and rule execution results for the transaction with the corresponding \`transactionId\`",
+          "errors": [
+            "UnauthorizedError",
+            "TooManyRequestsError",
+          ],
+          "examples": [
+            {
+              "name": "example-1",
+              "path-parameters": {
+                "transactionId": "transactionId",
+              },
+              "response": {
+                "body": {
+                  "destinationAmountDetails": {
+                    "country": "IN",
+                    "transactionAmount": 68351.34,
+                    "transactionCurrency": "INR",
+                  },
+                  "destinationUserId": "9350a2611e0771cba03310f74bf6",
+                  "deviceData": {
+                    "appVersion": "1.1.0",
+                    "batteryLevel": 95,
+                    "deviceIdentifier": "3c49f915d04485e34caba",
+                    "deviceLatitude": 13.0033,
+                    "deviceLongitude": 76.1004,
+                    "deviceMaker": "ASUS",
+                    "deviceModel": "Zenphone M2 Pro Max",
+                    "deviceYear": "2018",
+                    "ipAddress": "10.23.191.2",
+                    "operatingSystem": "Android 11.2",
+                    "vpnUsed": false,
+                  },
+                  "executedRules": [
+                    {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
+                      "ruleAction": "BLOCK",
+                      "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                      "ruleHit": true,
+                      "ruleId": "R-1a",
+                      "ruleInstanceId": "ruleInstanceId",
+                      "ruleName": "Proof of funds for high value transactions",
+                    },
+                  ],
+                  "hitRules": [
+                    {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
+                      "ruleAction": "BLOCK",
+                      "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                      "ruleId": "R-1a",
+                      "ruleInstanceId": "ruleInstanceId",
+                      "ruleName": "Proof of funds for high value transactions",
+                    },
+                  ],
+                  "originAmountDetails": {
+                    "country": "DE",
+                    "transactionAmount": 800,
+                    "transactionCurrency": "EUR",
+                  },
+                  "originUserId": "8650a2611d0771cba03310f74bf6",
+                  "productType": "productType",
+                  "promotionCodeUsed": true,
+                  "reference": "loan repayment",
+                  "relatedTransactionIds": [
+                    "relatedTransactionIds",
+                  ],
+                  "tags": [
+                    {
+                      "key": "customKey",
+                      "value": "customValue",
+                    },
+                  ],
+                  "timestamp": 1641654664000,
+                  "transactionId": "7b80a539eea6e78acbd6d458e5971482",
+                  "transactionState": "CREATED",
+                  "type": "DEPOSIT",
+                },
+              },
+            },
+          ],
+          "method": "GET",
+          "path": "/transactions/{transactionId}",
+          "path-parameters": {
+            "transactionId": {
+              "docs": "Unique Transaction Identifier",
+              "type": "string",
+            },
+          },
+          "response": {
+            "docs": "OK",
+            "type": "TransactionWithRulesResult",
+          },
+        },
+        "get-consumer-user": {
+          "auth": true,
+          "display-name": "Retrieve a Consumer User",
+          "docs": "### GET Consumer User
+
+\`/consumer/user\` endpoint allows you to operate on the [Consumer User entity](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#user).
+
+Calling \`GET /consumer/user/{userId}\` will return the entire user payload and rule execution results for the user with the corresponding \`userId\`",
+          "errors": [
+            "UnauthorizedError",
+            "TooManyRequestsError",
+          ],
+          "examples": [
+            {
+              "name": "example-1",
+              "path-parameters": {
                 "userId": "userId",
               },
               "response": {
                 "body": {
+                  "acquisitionChannel": "ORGANIC",
+                  "contactDetails": {
+                    "addresses": [
+                      {
+                        "addressLines": [
+                          "Klara-Franke Str 20",
+                        ],
+                        "city": "Berlin",
+                        "country": "Germany",
+                        "postcode": "10557",
+                        "state": "Berlin",
+                        "tags": [
+                          {
+                            "key": "customKey",
+                            "value": "customValue",
+                          },
+                        ],
+                      },
+                    ],
+                    "contactNumbers": [
+                      "+37112345432",
+                    ],
+                    "emailIds": [
+                      "baran@flagright.com",
+                    ],
+                    "faxNumbers": [
+                      "faxNumbers",
+                    ],
+                    "websites": [
+                      "flagright.com",
+                    ],
+                  },
+                  "createdTimestamp": 1641654664000,
+                  "kycStatusDetails": {
+                    "reason": "reason",
+                    "status": "SUCCESSFUL",
+                  },
+                  "legalDocuments": [
+                    {
+                      "documentExpirationDate": 1839939034000,
+                      "documentIssuedCountry": "DE",
+                      "documentIssuedDate": 1639939034000,
+                      "documentNumber": "Z9431P",
+                      "documentType": "passport",
+                      "nameOnDocument": {
+                        "firstName": "Baran",
+                        "lastName": "Ozkan",
+                        "middleName": "Realblood",
+                      },
+                      "tags": [
+                        {
+                          "key": "customerType",
+                          "value": "wallet",
+                        },
+                      ],
+                    },
+                  ],
+                  "pepStatus": [
+                    {
+                      "isPepHit": true,
+                      "pepCountry": "pepCountry",
+                    },
+                  ],
+                  "reasonForAccountOpening": [
+                    "reasonForAccountOpening",
+                  ],
+                  "riskLevel": "VERY_HIGH",
+                  "tags": [
+                    {
+                      "key": "customKey",
+                      "value": "customValue",
+                    },
+                  ],
+                  "transactionLimits": {
+                    "maximumDailyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "maximumMonthlyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "maximumQuarterlyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "maximumTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "maximumWeeklyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "maximumYearlyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                  },
+                  "userDetails": {
+                    "countryOfNationality": "DE",
+                    "countryOfResidence": "US",
+                    "dateOfBirth": "1991-01-01",
+                    "gender": "M",
+                    "name": {
+                      "firstName": "Baran",
+                      "lastName": "Ozkan",
+                      "middleName": "Realblood",
+                    },
+                  },
+                  "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
+                  "userSegment": "RETAIL",
+                  "userStateDetails": {
+                    "reason": "reason",
+                    "state": "UNACCEPTABLE",
+                    "userId": "userId",
+                  },
+                },
+              },
+            },
+          ],
+          "method": "GET",
+          "path": "/consumer/users/{userId}",
+          "path-parameters": {
+            "userId": {
+              "docs": "",
+              "type": "string",
+            },
+          },
+          "response": {
+            "docs": "OK",
+            "type": "User",
+          },
+        },
+        "post-business-user": {
+          "auth": true,
+          "display-name": "Create a Business User",
+          "docs": "## POST Business User
+
+\`/business/user\` endpoint allows you to operate on the [Business user entity.](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#user)
+
+In order to pass the payload of a User to Flagright and verify the User, you will need to call this endpoint with the User payload. Not all fields are mandatory, you will only need to pass in the fields that you have and are relevant for your compliance setup.
+
+### Payload
+
+
+Each consumer Business entity needs three mandatory fields:
+
+* \`userId\` - Unique identifier for the user
+* \`legalEntity\` - Details of the business legal entity (CompanyGeneralDetails, FinancialDetails etc) - only \`legalName\`in \`CompanyGeneralDetails\` is mandatory
+* \`createdTimestamp\` - UNIX timestamp in *milliseconds* for when the User is created in your system",
+          "errors": [
+            "BadRequestError",
+            "UnauthorizedError",
+            "TooManyRequestsError",
+          ],
+          "examples": [
+            {
+              "name": "example-1",
+              "request": {
+                "createdTimestamp": 1.1,
+                "userId": "userId",
+              },
+              "response": {
+                "body": {
+                  "executedRules": [
+                    {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
+                      "ruleAction": "BLOCK",
+                      "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                      "ruleHit": true,
+                      "ruleId": "R-1a",
+                      "ruleInstanceId": "ruleInstanceId",
+                      "ruleName": "Proof of funds for high value transactions",
+                    },
+                  ],
+                  "hitRules": [
+                    {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "FRAUD",
+                      "ruleAction": "BLOCK",
+                      "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                      "ruleId": "R-1a",
+                      "ruleInstanceId": "ruleInstanceId",
+                      "ruleName": "Proof of funds for high value transactions",
+                    },
+                  ],
+                  "message": "message",
+                  "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
+                },
+              },
+            },
+          ],
+          "method": "POST",
+          "path": "/business/users",
+          "request": {
+            "body": "Business",
+          },
+          "response": {
+            "docs": "Created",
+            "type": "PostBusinessUserResponse",
+          },
+        },
+        "post-business-user-event": {
+          "auth": true,
+          "display-name": "Create a Business User Event",
+          "docs": "## POST Business User Events
+
+\`/events/business/user\` endpoint allows you to operate on the Business User Events entity.
+
+User events are created after the initial \`POST /business/users\` call (which creates a user) and are used to:
+
+* Update the STATE and KYC Status of the user, using the \`userStateDetails\` or \`kycStatusDetails\` field
+* Update the user details, using the \`updatedBusinessUserAttributes\` field.
+
+> If you have neither of the above two use cases, you do not need to use user events. 
+
+### Payload
+
+Each user event needs three mandatory fields:
+
+* \`timestamp\`- the timestamp of when the event was created or occured in your system
+* \`userId\` - The ID of the transaction for which this event is generated. 
+
+In order to make individual events retrievable, you also need to pass in a unique \`eventId\` to the request body.
+",
+          "errors": [
+            "BadRequestError",
+            "UnauthorizedError",
+            "TooManyRequestsError",
+          ],
+          "examples": [
+            {
+              "request": {
+                "timestamp": 1.1,
+                "userId": "userId",
+              },
+              "response": {
+                "body": {
+                  "acquisitionChannel": "ORGANIC",
+                  "allowedPaymentMethods": [
+                    "ACH",
+                  ],
                   "createdTimestamp": 1.1,
+                  "directors": [
+                    {
+                      "contactDetails": {
+                        "addresses": [
+                          {
+                            "addressLines": [
+                              "Klara-Franke Str 20",
+                            ],
+                            "city": "Berlin",
+                            "country": "Germany",
+                            "postcode": "10557",
+                            "state": "Berlin",
+                            "tags": [
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                            ],
+                          },
+                        ],
+                        "contactNumbers": [
+                          "+371 123132",
+                        ],
+                        "emailIds": [
+                          "baran@flagright.com",
+                        ],
+                        "websites": [
+                          "flagright.com",
+                        ],
+                      },
+                      "generalDetails": {
+                        "countryOfNationality": "DE",
+                        "countryOfResidence": "US",
+                        "dateOfBirth": "1991-01-01",
+                        "name": {
+                          "firstName": "Baran",
+                          "lastName": "Ozkan",
+                          "middleName": "Realblood",
+                        },
+                      },
+                      "legalDocuments": [
+                        {
+                          "documentExpirationDate": 1839939034000,
+                          "documentIssuedCountry": "DE",
+                          "documentIssuedDate": 1639939034000,
+                          "documentNumber": "Z9431P",
+                          "documentType": "passport",
+                          "nameOnDocument": {
+                            "firstName": "Baran",
+                            "lastName": "Ozkan",
+                            "middleName": "Realblood",
+                          },
+                          "tags": [
+                            {
+                              "key": "customerType",
+                              "value": "wallet",
+                            },
+                          ],
+                        },
+                      ],
+                      "pepStatus": [
+                        {
+                          "isPepHit": true,
+                        },
+                      ],
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                    },
+                  ],
+                  "executedRules": [
+                    {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
+                      "ruleAction": "BLOCK",
+                      "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                      "ruleHit": true,
+                      "ruleId": "R-1a",
+                      "ruleInstanceId": "ruleInstanceId",
+                      "ruleName": "Proof of funds for high value transactions",
+                    },
+                  ],
+                  "hitRules": [
+                    {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "FRAUD",
+                      "ruleAction": "BLOCK",
+                      "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                      "ruleId": "R-1a",
+                      "ruleInstanceId": "ruleInstanceId",
+                      "ruleName": "Proof of funds for high value transactions",
+                    },
+                  ],
+                  "kycStatusDetails": {
+                    "reason": "reason",
+                    "status": "SUCCESSFUL",
+                  },
+                  "legalEntity": {
+                    "companyFinancialDetails": {
+                      "expectedTransactionAmountPerMonth": {
+                        "amountCurrency": "GBP",
+                        "amountValue": 800,
+                      },
+                      "expectedTurnoverPerMonth": {
+                        "amountCurrency": "USD",
+                        "amountValue": 8000,
+                      },
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                    },
+                    "companyGeneralDetails": {
+                      "businessIndustry": [
+                        "Farming",
+                      ],
+                      "legalName": "Ozkan Hazelnut Export JSC",
+                      "mainProductsServicesSold": [
+                        "Hazelnut",
+                      ],
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                      "userRegistrationStatus": "REGISTERED",
+                      "userSegment": "SOLE_PROPRIETORSHIP",
+                    },
+                    "companyRegistrationDetails": {
+                      "dateOfRegistration": "dateOfRegistration",
+                      "legalEntityType": "legalEntityType",
+                      "registrationCountry": "DE",
+                      "registrationIdentifier": "PSJ554342",
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                      "taxIdentifier": "taxIdentifier",
+                    },
+                    "contactDetails": {
+                      "addresses": [
+                        {
+                          "addressLines": [
+                            "Klara-Franke Str 20",
+                          ],
+                          "city": "Berlin",
+                          "country": "Germany",
+                          "postcode": "10557",
+                          "state": "Berlin",
+                          "tags": [
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                      ],
+                      "contactNumbers": [
+                        "contactNumbers",
+                      ],
+                      "emailIds": [
+                        "emailIds",
+                      ],
+                      "faxNumbers": [
+                        "faxNumbers",
+                      ],
+                      "websites": [
+                        "websites",
+                      ],
+                    },
+                    "reasonForAccountOpening": [
+                      "reasonForAccountOpening",
+                    ],
+                  },
+                  "linkedEntities": {
+                    "childUserIds": [
+                      "childUserIds",
+                    ],
+                    "parentUserId": "parentUserId",
+                  },
+                  "mccDetails": {
+                    "code": 1.1,
+                    "description": "description",
+                  },
+                  "riskLevel": "VERY_HIGH",
+                  "shareHolders": [
+                    {
+                      "contactDetails": {
+                        "addresses": [
+                          {
+                            "addressLines": [
+                              "Klara-Franke Str 20",
+                            ],
+                            "city": "Berlin",
+                            "country": "Germany",
+                            "postcode": "10557",
+                            "state": "Berlin",
+                            "tags": [
+                              {
+                                "key": "customKey",
+                                "value": "customValue",
+                              },
+                            ],
+                          },
+                        ],
+                        "contactNumbers": [
+                          "+371 123132",
+                        ],
+                        "emailIds": [
+                          "baran@flagright.com",
+                        ],
+                        "websites": [
+                          "flagright.com",
+                        ],
+                      },
+                      "generalDetails": {
+                        "countryOfNationality": "DE",
+                        "countryOfResidence": "US",
+                        "dateOfBirth": "1991-01-01",
+                        "name": {
+                          "firstName": "Baran",
+                          "lastName": "Ozkan",
+                          "middleName": "Realblood",
+                        },
+                      },
+                      "legalDocuments": [
+                        {
+                          "documentExpirationDate": 1839939034000,
+                          "documentIssuedCountry": "DE",
+                          "documentIssuedDate": 1639939034000,
+                          "documentNumber": "Z9431P",
+                          "documentType": "passport",
+                          "nameOnDocument": {
+                            "firstName": "Baran",
+                            "lastName": "Ozkan",
+                            "middleName": "Realblood",
+                          },
+                          "tags": [
+                            {
+                              "key": "customerType",
+                              "value": "wallet",
+                            },
+                          ],
+                        },
+                      ],
+                      "pepStatus": [
+                        {
+                          "isPepHit": true,
+                        },
+                      ],
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                    },
+                  ],
+                  "tags": [
+                    {
+                      "key": "customKey",
+                      "value": "customValue",
+                    },
+                  ],
+                  "transactionLimits": {
+                    "maximumDailyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "maximumMonthlyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "maximumQuarterlyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "maximumTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "maximumWeeklyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                    "maximumYearlyTransactionLimit": {
+                      "amountCurrency": "GBP",
+                      "amountValue": 800,
+                    },
+                  },
                   "userId": "userId",
+                  "userStateDetails": {
+                    "reason": "reason",
+                    "state": "UNACCEPTABLE",
+                    "userId": "userId",
+                  },
                 },
               },
             },
@@ -781,39 +1101,6 @@ Here are some of the most used payload fields explained (you can find the full p
             {
               "name": "example-1",
               "request": {
-                "destinationAmountDetails": {
-                  "country": "IN",
-                  "transactionAmount": 68351.34,
-                  "transactionCurrency": "INR",
-                },
-                "destinationUserId": "9350a2611e0771cba03310f74bf6",
-                "deviceData": {
-                  "appVersion": "1.1.0",
-                  "batteryLevel": 95,
-                  "deviceIdentifier": "3c49f915d04485e34caba",
-                  "deviceLatitude": 13.0033,
-                  "deviceLongitude": 76.1004,
-                  "deviceMaker": "ASUS",
-                  "deviceModel": "Zenphone M2 Pro Max",
-                  "deviceYear": "2018",
-                  "ipAddress": "10.23.191.2",
-                  "operatingSystem": "Android 11.2",
-                  "vpnUsed": false,
-                },
-                "originAmountDetails": {
-                  "country": "DE",
-                  "transactionAmount": 800,
-                  "transactionCurrency": "EUR",
-                },
-                "originUserId": "8650a2611d0771cba03310f74bf6",
-                "promotionCodeUsed": true,
-                "reference": "loan repayment",
-                "tags": [
-                  {
-                    "key": "customKey",
-                    "value": "customValue",
-                  },
-                ],
                 "timestamp": 1641654664000,
                 "transactionId": "7b80a539eea6e78acbd6d458e5971482",
               },
@@ -821,6 +1108,10 @@ Here are some of the most used payload fields explained (you can find the full p
                 "body": {
                   "executedRules": [
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
@@ -831,6 +1122,10 @@ Here are some of the most used payload fields explained (you can find the full p
                   ],
                   "hitRules": [
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleId": "R-1a",
@@ -838,6 +1133,7 @@ Here are some of the most used payload fields explained (you can find the full p
                       "ruleName": "Proof of funds for high value transactions",
                     },
                   ],
+                  "message": "message",
                   "transactionId": "7b80a539eea6e78acbd6d458e5971482",
                 },
               },
@@ -889,103 +1185,17 @@ Each consumer User entity needs three mandatory fields:
             {
               "name": "example-1",
               "request": {
-                "contactDetails": {
-                  "addresses": [
-                    {
-                      "addressLines": [
-                        "Klara-Franke Str 20",
-                      ],
-                      "city": "Berlin",
-                      "country": "Germany",
-                      "postcode": "10557",
-                      "state": "Berlin",
-                      "tags": [
-                        {
-                          "key": "customKey",
-                          "value": "customValue",
-                        },
-                      ],
-                    },
-                  ],
-                  "contactNumbers": [
-                    "+37112345432",
-                  ],
-                  "emailIds": [
-                    "baran@flagright.com",
-                  ],
-                  "websites": [
-                    "flagright.com",
-                  ],
-                },
                 "createdTimestamp": 1641654664000,
-                "legalDocuments": [
-                  {
-                    "documentExpirationDate": 1839939034000,
-                    "documentIssuedCountry": "DE",
-                    "documentIssuedDate": 1639939034000,
-                    "documentNumber": "Z9431P",
-                    "documentType": "passport",
-                    "nameOnDocument": {
-                      "firstName": "Baran",
-                      "lastName": "Ozkan",
-                      "middleName": "Realblood",
-                    },
-                    "tags": [
-                      {
-                        "key": "customerType",
-                        "value": "wallet",
-                      },
-                    ],
-                  },
-                ],
-                "tags": [
-                  {
-                    "key": "customKey",
-                    "value": "customValue",
-                  },
-                ],
-                "transactionLimits": {
-                  "maximumDailyTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "maximumMonthlyTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "maximumQuarterlyTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "maximumTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "maximumWeeklyTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "maximumYearlyTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                },
-                "userDetails": {
-                  "countryOfNationality": "DE",
-                  "countryOfResidence": "US",
-                  "dateOfBirth": "1991-01-01",
-                  "name": {
-                    "firstName": "Baran",
-                    "lastName": "Ozkan",
-                    "middleName": "Realblood",
-                  },
-                },
                 "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
               },
               "response": {
                 "body": {
                   "executedRules": [
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
@@ -996,6 +1206,10 @@ Each consumer User entity needs three mandatory fields:
                   ],
                   "hitRules": [
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "FRAUD",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleId": "R-1a",
@@ -1003,6 +1217,7 @@ Each consumer User entity needs three mandatory fields:
                       "ruleName": "Proof of funds for high value transactions",
                     },
                   ],
+                  "message": "message",
                   "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
                 },
               },
@@ -1051,57 +1266,19 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             {
               "name": "example-1",
               "request": {
-                "eventDescription": "Transaction created",
-                "eventId": "aaeeb166147a406b957dd9147a406b957",
-                "metaData": {
-                  "batteryLevel": 76.3,
-                  "deviceLatitude": 13.009711,
-                  "deviceLongitude": 76.102898,
-                  "ipAddress": "79.144.2.20",
-                  "vpnUsed": true,
-                },
                 "timestamp": 1431231244001,
                 "transactionId": "443dea26147a406b957d9ee3a1247b11",
                 "transactionState": "SUCCESSFUL",
-                "updatedTransactionAttributes": {
-                  "destinationAmountDetails": {
-                    "country": "IN",
-                    "transactionAmount": 68351.34,
-                    "transactionCurrency": "INR",
-                  },
-                  "deviceData": {
-                    "appVersion": "1.1.0",
-                    "batteryLevel": 95,
-                    "deviceIdentifier": "3c49f915d04485e34caba",
-                    "deviceLatitude": 13.0033,
-                    "deviceLongitude": 76.1004,
-                    "deviceMaker": "ASUS",
-                    "deviceModel": "Zenphone M2 Pro Max",
-                    "deviceYear": "2018",
-                    "ipAddress": "10.23.191.2",
-                    "operatingSystem": "Android 11.2",
-                    "vpnUsed": false,
-                  },
-                  "originAmountDetails": {
-                    "country": "DE",
-                    "transactionAmount": 800,
-                    "transactionCurrency": "EUR",
-                  },
-                  "promotionCodeUsed": true,
-                  "reference": "loan repayment",
-                  "tags": [
-                    {
-                      "key": "customKey",
-                      "value": "customValue",
-                    },
-                  ],
-                },
               },
               "response": {
                 "body": {
                   "eventId": "7b80a539eea6e78acbd6d458e5971482",
                   "executedRules": [
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
@@ -1112,6 +1289,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   ],
                   "hitRules": [
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleId": "R-1a",
@@ -1120,8 +1301,47 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     },
                   ],
                   "transaction": {
+                    "destinationAmountDetails": {
+                      "country": "IN",
+                      "transactionAmount": 68351.34,
+                      "transactionCurrency": "INR",
+                    },
+                    "destinationUserId": "9350a2611e0771cba03310f74bf6",
+                    "deviceData": {
+                      "appVersion": "1.1.0",
+                      "batteryLevel": 95,
+                      "deviceIdentifier": "3c49f915d04485e34caba",
+                      "deviceLatitude": 13.0033,
+                      "deviceLongitude": 76.1004,
+                      "deviceMaker": "ASUS",
+                      "deviceModel": "Zenphone M2 Pro Max",
+                      "deviceYear": "2018",
+                      "ipAddress": "10.23.191.2",
+                      "operatingSystem": "Android 11.2",
+                      "vpnUsed": false,
+                    },
+                    "originAmountDetails": {
+                      "country": "DE",
+                      "transactionAmount": 800,
+                      "transactionCurrency": "EUR",
+                    },
+                    "originUserId": "8650a2611d0771cba03310f74bf6",
+                    "productType": "productType",
+                    "promotionCodeUsed": true,
+                    "reference": "loan repayment",
+                    "relatedTransactionIds": [
+                      "relatedTransactionIds",
+                    ],
+                    "tags": [
+                      {
+                        "key": "customKey",
+                        "value": "customValue",
+                      },
+                    ],
                     "timestamp": 1641654664000,
                     "transactionId": "7b80a539eea6e78acbd6d458e5971482",
+                    "transactionState": "CREATED",
+                    "type": "DEPOSIT",
                   },
                 },
               },
@@ -1198,7 +1418,11 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             {
               "request": {
                 "timestamp": 1.1,
-                "updatedConsumerUserAttributes": {
+                "userId": "userId",
+              },
+              "response": {
+                "body": {
+                  "acquisitionChannel": "ORGANIC",
                   "contactDetails": {
                     "addresses": [
                       {
@@ -1218,14 +1442,49 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       },
                     ],
                     "contactNumbers": [
-                      "+37112345432",
+                      "contactNumbers",
                     ],
                     "emailIds": [
-                      "baran@flagright.com",
+                      "emailIds",
+                    ],
+                    "faxNumbers": [
+                      "faxNumbers",
                     ],
                     "websites": [
-                      "flagright.com",
+                      "websites",
                     ],
+                  },
+                  "createdTimestamp": 1.1,
+                  "executedRules": [
+                    {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
+                      "ruleAction": "BLOCK",
+                      "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                      "ruleHit": true,
+                      "ruleId": "R-1a",
+                      "ruleInstanceId": "ruleInstanceId",
+                      "ruleName": "Proof of funds for high value transactions",
+                    },
+                  ],
+                  "hitRules": [
+                    {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "FRAUD",
+                      "ruleAction": "BLOCK",
+                      "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                      "ruleId": "R-1a",
+                      "ruleInstanceId": "ruleInstanceId",
+                      "ruleName": "Proof of funds for high value transactions",
+                    },
+                  ],
+                  "kycStatusDetails": {
+                    "reason": "reason",
+                    "status": "SUCCESSFUL",
                   },
                   "legalDocuments": [
                     {
@@ -1247,6 +1506,16 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       ],
                     },
                   ],
+                  "pepStatus": [
+                    {
+                      "isPepHit": true,
+                      "pepCountry": "pepCountry",
+                    },
+                  ],
+                  "reasonForAccountOpening": [
+                    "reasonForAccountOpening",
+                  ],
+                  "riskLevel": "VERY_HIGH",
                   "tags": [
                     {
                       "key": "customKey",
@@ -1279,13 +1548,24 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "amountValue": 800,
                     },
                   },
-                },
-                "userId": "userId",
-              },
-              "response": {
-                "body": {
-                  "createdTimestamp": 1.1,
+                  "userDetails": {
+                    "countryOfNationality": "DE",
+                    "countryOfResidence": "US",
+                    "dateOfBirth": "1991-01-01",
+                    "gender": "M",
+                    "name": {
+                      "firstName": "Baran",
+                      "lastName": "Ozkan",
+                      "middleName": "Realblood",
+                    },
+                  },
                   "userId": "userId",
+                  "userSegment": "RETAIL",
+                  "userStateDetails": {
+                    "reason": "reason",
+                    "state": "UNACCEPTABLE",
+                    "userId": "userId",
+                  },
                 },
               },
             },

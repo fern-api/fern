@@ -364,6 +364,13 @@ The parameter should map to a JSON encoded list of strings.
                       "value": 1,
                     },
                   },
+                  "next_url": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "next_url",
+                    },
+                  },
                   "prev_url": {
                     "type": "primitive",
                     "value": {
@@ -391,6 +398,13 @@ The parameter should map to a JSON encoded list of strings.
                         "value": {
                           "type": "string",
                           "value": "audio_url",
+                        },
+                      },
+                      "completed": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "datetime",
+                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "created": {
@@ -735,11 +749,39 @@ The parameter should map to a JSON encoded list of strings.
                   "value": "acoustic_model",
                 },
               },
+              "audio_duration": {
+                "type": "primitive",
+                "value": {
+                  "type": "float",
+                  "value": 1.1,
+                },
+              },
+              "audio_end_at": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1,
+                },
+              },
+              "audio_start_from": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1,
+                },
+              },
               "audio_url": {
                 "type": "primitive",
                 "value": {
                   "type": "string",
                   "value": "audio_url",
+                },
+              },
+              "auto_chapters": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
                 },
               },
               "auto_highlights": {
@@ -749,11 +791,457 @@ The parameter should map to a JSON encoded list of strings.
                   "value": true,
                 },
               },
+              "auto_highlights_result": {
+                "properties": {
+                  "results": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "count": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "int",
+                              "value": 1,
+                            },
+                          },
+                          "rank": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "float",
+                              "value": 1.1,
+                            },
+                          },
+                          "text": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "text",
+                            },
+                          },
+                          "timestamps": {
+                            "type": "array",
+                            "value": [
+                              {
+                                "properties": {
+                                  "end": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "int",
+                                      "value": 1,
+                                    },
+                                  },
+                                  "start": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "int",
+                                      "value": 1,
+                                    },
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                  },
+                },
+                "type": "object",
+              },
+              "boost_param": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "boost_param",
+                },
+              },
+              "chapters": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "end": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "gist": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "gist",
+                        },
+                      },
+                      "headline": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "headline",
+                        },
+                      },
+                      "start": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "summary": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "summary",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "confidence": {
+                "type": "primitive",
+                "value": {
+                  "type": "double",
+                  "value": 1.1,
+                },
+              },
+              "content_safety": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "content_safety_labels": {
+                "properties": {
+                  "results": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "labels": {
+                            "type": "array",
+                            "value": [
+                              {
+                                "properties": {
+                                  "confidence": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "double",
+                                      "value": 1.1,
+                                    },
+                                  },
+                                  "label": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "label",
+                                    },
+                                  },
+                                  "severity": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "double",
+                                      "value": 1.1,
+                                    },
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                          },
+                          "sentences_idx_end": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "int",
+                              "value": 1,
+                            },
+                          },
+                          "sentences_idx_start": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "int",
+                              "value": 1,
+                            },
+                          },
+                          "severity_score_summary": {
+                            "type": "map",
+                            "value": [
+                              {
+                                "key": {
+                                  "type": "string",
+                                  "value": "severity_score_summary",
+                                },
+                                "value": {
+                                  "properties": {
+                                    "high": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "double",
+                                        "value": 1.1,
+                                      },
+                                    },
+                                    "low": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "double",
+                                        "value": 1.1,
+                                      },
+                                    },
+                                    "medium": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "double",
+                                        "value": 1.1,
+                                      },
+                                    },
+                                  },
+                                  "type": "object",
+                                },
+                              },
+                            ],
+                          },
+                          "summary": {
+                            "type": "map",
+                            "value": [
+                              {
+                                "key": {
+                                  "type": "string",
+                                  "value": "summary",
+                                },
+                                "value": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "double",
+                                    "value": 1.1,
+                                  },
+                                },
+                              },
+                            ],
+                          },
+                          "text": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "text",
+                            },
+                          },
+                          "timestamp": {
+                            "properties": {
+                              "end": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "int",
+                                  "value": 1,
+                                },
+                              },
+                              "start": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "int",
+                                  "value": 1,
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                  },
+                  "status": {
+                    "type": "enum",
+                    "value": "success",
+                  },
+                },
+                "type": "object",
+              },
+              "custom_spelling": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "from": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "from",
+                            },
+                          },
+                        ],
+                      },
+                      "to": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "to",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "custom_topics": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "disfluencies": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "dual_channel": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "entities": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "end": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "entity_type": {
+                        "type": "enum",
+                        "value": "banking_information",
+                      },
+                      "start": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "text": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "text",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "entity_detection": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "error": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "error",
+                },
+              },
+              "filter_profanity": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "format_text": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "iab_categories": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "iab_categories_result": {
+                "properties": {
+                  "results": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "text": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "text",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                  },
+                  "status": {
+                    "type": "enum",
+                    "value": "success",
+                  },
+                  "summary": {
+                    "type": "map",
+                    "value": [
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "summary",
+                        },
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "double",
+                            "value": 1.1,
+                          },
+                        },
+                      },
+                    ],
+                  },
+                },
+                "type": "object",
+              },
               "id": {
                 "type": "primitive",
                 "value": {
                   "type": "string",
                   "value": "id",
+                },
+              },
+              "language_code": {
+                "type": "enum",
+                "value": "en",
+              },
+              "language_detection": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
                 },
               },
               "language_model": {
@@ -763,7 +1251,125 @@ The parameter should map to a JSON encoded list of strings.
                   "value": "language_model",
                 },
               },
+              "punctuate": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
               "redact_pii": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "redact_pii_audio": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "redact_pii_audio_quality": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "redact_pii_audio_quality",
+                },
+              },
+              "redact_pii_policies": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "enum",
+                    "value": "medical_process",
+                  },
+                ],
+              },
+              "redact_pii_sub": {
+                "type": "enum",
+                "value": "entity_type",
+              },
+              "sentiment_analysis": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "sentiment_analysis_results": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "confidence": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 1.1,
+                        },
+                      },
+                      "end": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "sentiment": {
+                        "type": "enum",
+                        "value": "POSITIVE",
+                      },
+                      "speaker": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "speaker",
+                        },
+                      },
+                      "start": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "text": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "text",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "speaker_labels": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "speakers_expected": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1,
+                },
+              },
+              "speech_threshold": {
+                "type": "primitive",
+                "value": {
+                  "type": "float",
+                  "value": 1.1,
+                },
+              },
+              "speed_boost": {
                 "type": "primitive",
                 "value": {
                   "type": "boolean",
@@ -781,12 +1387,220 @@ The parameter should map to a JSON encoded list of strings.
                   "value": true,
                 },
               },
+              "summary": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "summary",
+                },
+              },
+              "summary_model": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "summary_model",
+                },
+              },
+              "summary_type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "summary_type",
+                },
+              },
+              "text": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "text",
+                },
+              },
+              "throttled": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "topics": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "topics",
+                    },
+                  },
+                ],
+              },
+              "utterances": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "channel": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "channel",
+                        },
+                      },
+                      "confidence": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 1.1,
+                        },
+                      },
+                      "end": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "start": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "text": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "text",
+                        },
+                      },
+                      "words": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "confidence": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "double",
+                                  "value": 1.1,
+                                },
+                              },
+                              "end": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "int",
+                                  "value": 1,
+                                },
+                              },
+                              "start": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "int",
+                                  "value": 1,
+                                },
+                              },
+                              "text": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "text",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
               "webhook_auth": {
                 "type": "primitive",
                 "value": {
                   "type": "boolean",
                   "value": true,
                 },
+              },
+              "webhook_auth_header_name": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "webhook_auth_header_name",
+                },
+              },
+              "webhook_status_code": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1,
+                },
+              },
+              "webhook_url": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "webhook_url",
+                },
+              },
+              "word_boost": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "word_boost",
+                    },
+                  },
+                ],
+              },
+              "words": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "confidence": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 1.1,
+                        },
+                      },
+                      "end": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "speaker": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "speaker",
+                        },
+                      },
+                      "start": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "text": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "text",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
               },
             },
             "type": "object",
@@ -884,11 +1698,39 @@ The parameter should map to a JSON encoded list of strings.
                   "value": "acoustic_model",
                 },
               },
+              "audio_duration": {
+                "type": "primitive",
+                "value": {
+                  "type": "float",
+                  "value": 1.1,
+                },
+              },
+              "audio_end_at": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1,
+                },
+              },
+              "audio_start_from": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1,
+                },
+              },
               "audio_url": {
                 "type": "primitive",
                 "value": {
                   "type": "string",
                   "value": "audio_url",
+                },
+              },
+              "auto_chapters": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
                 },
               },
               "auto_highlights": {
@@ -898,11 +1740,457 @@ The parameter should map to a JSON encoded list of strings.
                   "value": true,
                 },
               },
+              "auto_highlights_result": {
+                "properties": {
+                  "results": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "count": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "int",
+                              "value": 1,
+                            },
+                          },
+                          "rank": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "float",
+                              "value": 1.1,
+                            },
+                          },
+                          "text": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "text",
+                            },
+                          },
+                          "timestamps": {
+                            "type": "array",
+                            "value": [
+                              {
+                                "properties": {
+                                  "end": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "int",
+                                      "value": 1,
+                                    },
+                                  },
+                                  "start": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "int",
+                                      "value": 1,
+                                    },
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                  },
+                },
+                "type": "object",
+              },
+              "boost_param": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "boost_param",
+                },
+              },
+              "chapters": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "end": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "gist": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "gist",
+                        },
+                      },
+                      "headline": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "headline",
+                        },
+                      },
+                      "start": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "summary": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "summary",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "confidence": {
+                "type": "primitive",
+                "value": {
+                  "type": "double",
+                  "value": 1.1,
+                },
+              },
+              "content_safety": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "content_safety_labels": {
+                "properties": {
+                  "results": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "labels": {
+                            "type": "array",
+                            "value": [
+                              {
+                                "properties": {
+                                  "confidence": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "double",
+                                      "value": 1.1,
+                                    },
+                                  },
+                                  "label": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "label",
+                                    },
+                                  },
+                                  "severity": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "double",
+                                      "value": 1.1,
+                                    },
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                          },
+                          "sentences_idx_end": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "int",
+                              "value": 1,
+                            },
+                          },
+                          "sentences_idx_start": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "int",
+                              "value": 1,
+                            },
+                          },
+                          "severity_score_summary": {
+                            "type": "map",
+                            "value": [
+                              {
+                                "key": {
+                                  "type": "string",
+                                  "value": "severity_score_summary",
+                                },
+                                "value": {
+                                  "properties": {
+                                    "high": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "double",
+                                        "value": 1.1,
+                                      },
+                                    },
+                                    "low": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "double",
+                                        "value": 1.1,
+                                      },
+                                    },
+                                    "medium": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "double",
+                                        "value": 1.1,
+                                      },
+                                    },
+                                  },
+                                  "type": "object",
+                                },
+                              },
+                            ],
+                          },
+                          "summary": {
+                            "type": "map",
+                            "value": [
+                              {
+                                "key": {
+                                  "type": "string",
+                                  "value": "summary",
+                                },
+                                "value": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "double",
+                                    "value": 1.1,
+                                  },
+                                },
+                              },
+                            ],
+                          },
+                          "text": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "text",
+                            },
+                          },
+                          "timestamp": {
+                            "properties": {
+                              "end": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "int",
+                                  "value": 1,
+                                },
+                              },
+                              "start": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "int",
+                                  "value": 1,
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                  },
+                  "status": {
+                    "type": "enum",
+                    "value": "success",
+                  },
+                },
+                "type": "object",
+              },
+              "custom_spelling": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "from": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "from",
+                            },
+                          },
+                        ],
+                      },
+                      "to": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "to",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "custom_topics": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "disfluencies": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "dual_channel": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "entities": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "end": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "entity_type": {
+                        "type": "enum",
+                        "value": "banking_information",
+                      },
+                      "start": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "text": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "text",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "entity_detection": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "error": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "error",
+                },
+              },
+              "filter_profanity": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "format_text": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "iab_categories": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "iab_categories_result": {
+                "properties": {
+                  "results": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "text": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "text",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                  },
+                  "status": {
+                    "type": "enum",
+                    "value": "success",
+                  },
+                  "summary": {
+                    "type": "map",
+                    "value": [
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "summary",
+                        },
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "double",
+                            "value": 1.1,
+                          },
+                        },
+                      },
+                    ],
+                  },
+                },
+                "type": "object",
+              },
               "id": {
                 "type": "primitive",
                 "value": {
                   "type": "string",
                   "value": "id",
+                },
+              },
+              "language_code": {
+                "type": "enum",
+                "value": "en",
+              },
+              "language_detection": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
                 },
               },
               "language_model": {
@@ -912,7 +2200,125 @@ The parameter should map to a JSON encoded list of strings.
                   "value": "language_model",
                 },
               },
+              "punctuate": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
               "redact_pii": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "redact_pii_audio": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "redact_pii_audio_quality": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "redact_pii_audio_quality",
+                },
+              },
+              "redact_pii_policies": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "enum",
+                    "value": "medical_process",
+                  },
+                ],
+              },
+              "redact_pii_sub": {
+                "type": "enum",
+                "value": "entity_type",
+              },
+              "sentiment_analysis": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "sentiment_analysis_results": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "confidence": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 1.1,
+                        },
+                      },
+                      "end": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "sentiment": {
+                        "type": "enum",
+                        "value": "POSITIVE",
+                      },
+                      "speaker": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "speaker",
+                        },
+                      },
+                      "start": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "text": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "text",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "speaker_labels": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "speakers_expected": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1,
+                },
+              },
+              "speech_threshold": {
+                "type": "primitive",
+                "value": {
+                  "type": "float",
+                  "value": 1.1,
+                },
+              },
+              "speed_boost": {
                 "type": "primitive",
                 "value": {
                   "type": "boolean",
@@ -930,12 +2336,220 @@ The parameter should map to a JSON encoded list of strings.
                   "value": true,
                 },
               },
+              "summary": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "summary",
+                },
+              },
+              "summary_model": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "summary_model",
+                },
+              },
+              "summary_type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "summary_type",
+                },
+              },
+              "text": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "text",
+                },
+              },
+              "throttled": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "topics": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "topics",
+                    },
+                  },
+                ],
+              },
+              "utterances": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "channel": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "channel",
+                        },
+                      },
+                      "confidence": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 1.1,
+                        },
+                      },
+                      "end": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "start": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "text": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "text",
+                        },
+                      },
+                      "words": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "confidence": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "double",
+                                  "value": 1.1,
+                                },
+                              },
+                              "end": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "int",
+                                  "value": 1,
+                                },
+                              },
+                              "start": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "int",
+                                  "value": 1,
+                                },
+                              },
+                              "text": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "text",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
               "webhook_auth": {
                 "type": "primitive",
                 "value": {
                   "type": "boolean",
                   "value": true,
                 },
+              },
+              "webhook_auth_header_name": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "webhook_auth_header_name",
+                },
+              },
+              "webhook_status_code": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1,
+                },
+              },
+              "webhook_url": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "webhook_url",
+                },
+              },
+              "word_boost": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "word_boost",
+                    },
+                  },
+                ],
+              },
+              "words": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "confidence": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 1.1,
+                        },
+                      },
+                      "end": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "speaker": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "speaker",
+                        },
+                      },
+                      "start": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "text": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "text",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
               },
             },
             "type": "object",
@@ -1039,11 +2653,39 @@ The parameter should map to a JSON encoded list of strings.
                   "value": "acoustic_model",
                 },
               },
+              "audio_duration": {
+                "type": "primitive",
+                "value": {
+                  "type": "float",
+                  "value": 1.1,
+                },
+              },
+              "audio_end_at": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1,
+                },
+              },
+              "audio_start_from": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1,
+                },
+              },
               "audio_url": {
                 "type": "primitive",
                 "value": {
                   "type": "string",
                   "value": "audio_url",
+                },
+              },
+              "auto_chapters": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
                 },
               },
               "auto_highlights": {
@@ -1053,11 +2695,457 @@ The parameter should map to a JSON encoded list of strings.
                   "value": true,
                 },
               },
+              "auto_highlights_result": {
+                "properties": {
+                  "results": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "count": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "int",
+                              "value": 1,
+                            },
+                          },
+                          "rank": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "float",
+                              "value": 1.1,
+                            },
+                          },
+                          "text": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "text",
+                            },
+                          },
+                          "timestamps": {
+                            "type": "array",
+                            "value": [
+                              {
+                                "properties": {
+                                  "end": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "int",
+                                      "value": 1,
+                                    },
+                                  },
+                                  "start": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "int",
+                                      "value": 1,
+                                    },
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                  },
+                },
+                "type": "object",
+              },
+              "boost_param": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "boost_param",
+                },
+              },
+              "chapters": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "end": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "gist": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "gist",
+                        },
+                      },
+                      "headline": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "headline",
+                        },
+                      },
+                      "start": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "summary": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "summary",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "confidence": {
+                "type": "primitive",
+                "value": {
+                  "type": "double",
+                  "value": 1.1,
+                },
+              },
+              "content_safety": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "content_safety_labels": {
+                "properties": {
+                  "results": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "labels": {
+                            "type": "array",
+                            "value": [
+                              {
+                                "properties": {
+                                  "confidence": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "double",
+                                      "value": 1.1,
+                                    },
+                                  },
+                                  "label": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "label",
+                                    },
+                                  },
+                                  "severity": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "double",
+                                      "value": 1.1,
+                                    },
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                          },
+                          "sentences_idx_end": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "int",
+                              "value": 1,
+                            },
+                          },
+                          "sentences_idx_start": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "int",
+                              "value": 1,
+                            },
+                          },
+                          "severity_score_summary": {
+                            "type": "map",
+                            "value": [
+                              {
+                                "key": {
+                                  "type": "string",
+                                  "value": "severity_score_summary",
+                                },
+                                "value": {
+                                  "properties": {
+                                    "high": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "double",
+                                        "value": 1.1,
+                                      },
+                                    },
+                                    "low": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "double",
+                                        "value": 1.1,
+                                      },
+                                    },
+                                    "medium": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "double",
+                                        "value": 1.1,
+                                      },
+                                    },
+                                  },
+                                  "type": "object",
+                                },
+                              },
+                            ],
+                          },
+                          "summary": {
+                            "type": "map",
+                            "value": [
+                              {
+                                "key": {
+                                  "type": "string",
+                                  "value": "summary",
+                                },
+                                "value": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "double",
+                                    "value": 1.1,
+                                  },
+                                },
+                              },
+                            ],
+                          },
+                          "text": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "text",
+                            },
+                          },
+                          "timestamp": {
+                            "properties": {
+                              "end": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "int",
+                                  "value": 1,
+                                },
+                              },
+                              "start": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "int",
+                                  "value": 1,
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                  },
+                  "status": {
+                    "type": "enum",
+                    "value": "success",
+                  },
+                },
+                "type": "object",
+              },
+              "custom_spelling": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "from": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "from",
+                            },
+                          },
+                        ],
+                      },
+                      "to": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "to",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "custom_topics": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "disfluencies": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "dual_channel": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "entities": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "end": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "entity_type": {
+                        "type": "enum",
+                        "value": "banking_information",
+                      },
+                      "start": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "text": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "text",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "entity_detection": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "error": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "error",
+                },
+              },
+              "filter_profanity": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "format_text": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "iab_categories": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "iab_categories_result": {
+                "properties": {
+                  "results": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "text": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "text",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                  },
+                  "status": {
+                    "type": "enum",
+                    "value": "success",
+                  },
+                  "summary": {
+                    "type": "map",
+                    "value": [
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "summary",
+                        },
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "double",
+                            "value": 1.1,
+                          },
+                        },
+                      },
+                    ],
+                  },
+                },
+                "type": "object",
+              },
               "id": {
                 "type": "primitive",
                 "value": {
                   "type": "string",
                   "value": "id",
+                },
+              },
+              "language_code": {
+                "type": "enum",
+                "value": "en",
+              },
+              "language_detection": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
                 },
               },
               "language_model": {
@@ -1067,7 +3155,125 @@ The parameter should map to a JSON encoded list of strings.
                   "value": "language_model",
                 },
               },
+              "punctuate": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
               "redact_pii": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "redact_pii_audio": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "redact_pii_audio_quality": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "redact_pii_audio_quality",
+                },
+              },
+              "redact_pii_policies": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "enum",
+                    "value": "medical_process",
+                  },
+                ],
+              },
+              "redact_pii_sub": {
+                "type": "enum",
+                "value": "entity_type",
+              },
+              "sentiment_analysis": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "sentiment_analysis_results": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "confidence": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 1.1,
+                        },
+                      },
+                      "end": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "sentiment": {
+                        "type": "enum",
+                        "value": "POSITIVE",
+                      },
+                      "speaker": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "speaker",
+                        },
+                      },
+                      "start": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "text": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "text",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "speaker_labels": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "speakers_expected": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1,
+                },
+              },
+              "speech_threshold": {
+                "type": "primitive",
+                "value": {
+                  "type": "float",
+                  "value": 1.1,
+                },
+              },
+              "speed_boost": {
                 "type": "primitive",
                 "value": {
                   "type": "boolean",
@@ -1085,12 +3291,220 @@ The parameter should map to a JSON encoded list of strings.
                   "value": true,
                 },
               },
+              "summary": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "summary",
+                },
+              },
+              "summary_model": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "summary_model",
+                },
+              },
+              "summary_type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "summary_type",
+                },
+              },
+              "text": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "text",
+                },
+              },
+              "throttled": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "topics": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "topics",
+                    },
+                  },
+                ],
+              },
+              "utterances": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "channel": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "channel",
+                        },
+                      },
+                      "confidence": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 1.1,
+                        },
+                      },
+                      "end": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "start": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "text": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "text",
+                        },
+                      },
+                      "words": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "confidence": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "double",
+                                  "value": 1.1,
+                                },
+                              },
+                              "end": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "int",
+                                  "value": 1,
+                                },
+                              },
+                              "start": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "int",
+                                  "value": 1,
+                                },
+                              },
+                              "text": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "text",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
               "webhook_auth": {
                 "type": "primitive",
                 "value": {
                   "type": "boolean",
                   "value": true,
                 },
+              },
+              "webhook_auth_header_name": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "webhook_auth_header_name",
+                },
+              },
+              "webhook_status_code": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1,
+                },
+              },
+              "webhook_url": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "webhook_url",
+                },
+              },
+              "word_boost": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "word_boost",
+                    },
+                  },
+                ],
+              },
+              "words": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "confidence": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 1.1,
+                        },
+                      },
+                      "end": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "speaker": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "speaker",
+                        },
+                      },
+                      "start": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1,
+                        },
+                      },
+                      "text": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "text",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
               },
             },
             "type": "object",
