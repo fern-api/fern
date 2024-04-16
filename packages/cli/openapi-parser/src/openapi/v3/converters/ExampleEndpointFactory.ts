@@ -343,6 +343,28 @@ function consolidateRequestResponseExamples(
         }
         return pairs;
     }
+
+    if (responseExamples.length <= 1) {
+        const [responseId, responseExample] = responseExamples[0] ?? [];
+
+        if (responseExamples.length === 0) {
+            pairs.push({
+                id: responseId,
+                request: undefined,
+                response: responseExample
+            });
+            return pairs;
+        } else {
+            for (const [requestId, requestExample] of requestExamples) {
+                pairs.push({
+                    id: requestId ?? responseId,
+                    request: requestExample,
+                    response: responseExample
+                });
+            }
+        }
+        return pairs;
+    }
 }
 
 type SchemaIdResponse =
