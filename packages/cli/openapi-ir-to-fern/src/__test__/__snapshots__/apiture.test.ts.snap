@@ -98,7 +98,6 @@ exports[`open api parser apiture simple 1`] = `
                     "label": "Checking *1008",
                     "location": "internal",
                     "maskedNumber": "maskedNumber",
-                    "nickname": "Payroll Checking",
                     "product": {
                       "code": "180D_CDA",
                       "description": "Certificate of Deposit with a 180 day term",
@@ -141,20 +140,12 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                   "body": {
                     "items": [
                       {
-                        "available": "3208.20",
-                        "current": "3448.72",
-                        "currentWithPending": "3448.72",
                         "id": "05d00d7d-d630",
                         "incomplete": false,
-                        "updatedAt": "2022-05-02T06:51:19Z",
                       },
                       {
-                        "available": "1750.80",
-                        "current": "1956.19",
-                        "currentWithPending": "1956.19",
                         "id": "cb5d67ea-a5c3",
                         "incomplete": false,
-                        "updatedAt": "2022-05-02T06:51:19Z",
                       },
                     ],
                   },
@@ -196,7 +187,6 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
               {
                 "response": {
                   "body": {
-                    "count": 1,
                     "items": [
                       {
                         "allows": {
@@ -212,7 +202,6 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                         "label": "Checking *1008",
                         "location": "internal",
                         "maskedNumber": "maskedNumber",
-                        "nickname": "Payroll Checking",
                         "product": {
                           "code": "180D_CDA",
                           "description": "Certificate of Deposit with a 180 day term",
@@ -222,9 +211,6 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                       },
                     ],
                     "limit": 1,
-                    "nextPage_url": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
-                    "primaryAccountId": "primaryAccountId",
-                    "start": "start",
                   },
                 },
               },
@@ -424,107 +410,7 @@ This information provides hints to clients, allowing bank customers to select tr
                   "startsOn": "2022-07-04",
                 },
                 "response": {
-                  "body": {
-                    "accuracyEndsOn": "2026-12-31T00:00:00.000Z",
-                    "restrictedDates": [
-                      {
-                        "creditOn": "2022-07-05",
-                        "debitOn": "2022-07-05",
-                        "occursOn": "2022-10-01",
-                        "reason": "pastDate",
-                      },
-                      {
-                        "creditOn": "2022-07-05",
-                        "debitOn": "2022-07-05",
-                        "occursOn": "2022-10-02",
-                        "reason": "pastDate",
-                      },
-                      {
-                        "creditOn": "2022-07-05",
-                        "debitOn": "2022-07-05",
-                        "occursOn": "2022-10-03",
-                        "reason": "pastDate",
-                      },
-                      {
-                        "creditOn": "2022-07-05",
-                        "debitOn": "2022-07-05",
-                        "occursOn": "2022-10-04",
-                        "reason": "pastDate",
-                      },
-                      {
-                        "creditOn": "2022-07-05",
-                        "debitOn": "2022-07-05",
-                        "occursOn": "2022-10-05",
-                        "reason": "pastCutoffTime",
-                      },
-                      {
-                        "creditOn": "2022-07-05",
-                        "debitOn": "2022-07-05",
-                        "occursOn": "2022-10-06",
-                        "reason": "riskRestricted",
-                      },
-                      {
-                        "creditOn": "2022-07-05",
-                        "debitOn": "2022-07-05",
-                        "occursOn": "2022-10-07",
-                        "reason": "riskRestricted",
-                      },
-                      {
-                        "creditOn": "2022-07-05",
-                        "debitOn": "2022-07-05",
-                        "occursOn": "2022-10-08",
-                        "reason": "closure",
-                      },
-                      {
-                        "creditOn": "2022-07-05",
-                        "debitOn": "2022-07-05",
-                        "occursOn": "2022-10-09",
-                        "reason": "closure",
-                      },
-                      {
-                        "creditOn": "2022-07-05",
-                        "debitOn": "2022-07-05",
-                        "occursOn": "2022-10-10",
-                        "reason": "holiday",
-                      },
-                      {
-                        "creditOn": "2022-07-05",
-                        "debitOn": "2022-07-05",
-                        "occursOn": "2022-10-15",
-                        "reason": "closure",
-                      },
-                      {
-                        "creditOn": "2022-07-05",
-                        "debitOn": "2022-07-05",
-                        "occursOn": "2022-10-16",
-                        "reason": "closure",
-                      },
-                      {
-                        "creditOn": "2022-07-05",
-                        "debitOn": "2022-07-05",
-                        "occursOn": "2022-10-22",
-                        "reason": "closure",
-                      },
-                      {
-                        "creditOn": "2022-07-05",
-                        "debitOn": "2022-07-05",
-                        "occursOn": "2022-10-23",
-                        "reason": "closure",
-                      },
-                      {
-                        "creditOn": "2022-07-05",
-                        "debitOn": "2022-07-05",
-                        "occursOn": "2022-10-29",
-                        "reason": "closure",
-                      },
-                      {
-                        "creditOn": "2022-07-05",
-                        "debitOn": "2022-07-05",
-                        "occursOn": "2022-10-30",
-                        "reason": "closure",
-                      },
-                    ],
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -674,35 +560,6 @@ This information provides hints to clients, allowing bank customers to select tr
                 "response": {
                   "body": {
                     "found": true,
-                    "institution": {
-                      "address": {
-                        "address1": "239 West Princess Ave.",
-                        "address2": "Building 14, Suite 1500",
-                        "countryCode": "US",
-                        "locality": "Andalasia",
-                        "postalCode": "28407",
-                        "regionCode": "NC",
-                        "regionName": "regionName",
-                      },
-                      "locator": "503000196",
-                      "locatorType": "abaRoutingNumber",
-                      "name": "First Bank of Andalasia",
-                    },
-                    "intermediaryInstitutions": [
-                      {
-                        "address": {
-                          "address1": "239 West Princess Ave.",
-                          "address2": "Building 14, Suite 1500",
-                          "countryCode": "US",
-                          "locality": "Andalasia",
-                          "postalCode": "28407",
-                          "regionCode": "NC",
-                        },
-                        "locator": "503000196",
-                        "locatorType": "abaRoutingNumber",
-                        "name": "First Bank of Andalasia",
-                      },
-                    ],
                   },
                 },
               },
@@ -765,6 +622,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                   "accountId": "accountId",
                 },
                 "request": {
+                  "disallowDebitCardAccess": false,
                   "emailAddress": "Mary.Jones@example.com",
                   "firstName": "Mary",
                   "lastName": "Jones",
@@ -772,13 +630,11 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                 },
                 "response": {
                   "body": {
-                    "disallowDebitCardAccess": false,
                     "emailAddress": "Mary.Jones@example.com",
                     "firstName": "Mary",
                     "id": "db4f580290d3e07bf55d",
                     "lastName": "Jones",
                     "sharedSecret": "obsolete obese octopus",
-                    "taxId": "taxId",
                   },
                 },
               },
@@ -837,9 +693,6 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                 },
                 "response": {
                   "body": {
-                    "accounts": {
-                      "key": "value",
-                    },
                     "maximumOverdraftAccounts": 1,
                   },
                 },
@@ -894,8 +747,6 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
                     },
                     "limit": 100,
                     "maximumOverdraftAccounts": 1,
-                    "nextPage_url": "https://production.api.apiture.com/banking/accounts/f204d292df9fb/eligibleOverdraftAccounts?start=641f62296ecbf1882c84?limit=100",
-                    "start": "start",
                   },
                 },
               },
@@ -947,9 +798,6 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
                 "request": {},
                 "response": {
                   "body": {
-                    "accounts": {
-                      "key": "value",
-                    },
                     "maximumOverdraftAccounts": 1,
                   },
                 },
@@ -1073,59 +921,7 @@ The default response lists only recent transactions. Normally, this is transacti
                 },
                 "response": {
                   "body": {
-                    "count": 2381,
-                    "items": [
-                      {
-                        "amount": "0.00",
-                        "balance": "8509.38",
-                        "category": {
-                          "id": "id",
-                          "label": "label",
-                        },
-                        "check": {
-                          "number": 1,
-                        },
-                        "createdOn": "2023-05-18",
-                        "description": "description",
-                        "id": "d62c0701-0d74",
-                        "memo": "memo",
-                        "occurredOn": "2023-06-18",
-                        "posted": true,
-                        "postedOn": "2023-05-18",
-                        "subtype": "check",
-                        "type": "balance",
-                      },
-                      {
-                        "amount": "1276.21",
-                        "balance": "8509.38",
-                        "category": {
-                          "id": "127",
-                          "label": "Utilities",
-                        },
-                        "check": {
-                          "imageBack_url": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/back/content",
-                          "imageFront_url": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/front/content",
-                          "number": 8412,
-                        },
-                        "createdOn": "2023-05-18",
-                        "description": "description",
-                        "id": "88f5bf17-ecc4",
-                        "memo": "Paid electric bill",
-                        "merchant": {
-                          "logo_url": "https://BillTedsExcellentElectricCompany.example.com/img/logos/medium.png",
-                          "name": "B&T's Excellent Electric Co.",
-                          "website_url": "https://BillTedsExcellentElectricCompany.example.com/",
-                        },
-                        "occurredOn": "2023-06-18",
-                        "posted": true,
-                        "postedOn": "2023-05-18",
-                        "subtype": "check",
-                        "type": "debit",
-                      },
-                    ],
                     "limit": 10,
-                    "nextPage_url": "https://production.api.apiture.com/banking/accounts/c9fc25b47d52916fc9ad/transactions?start=6117a4dcefb841cab7316cef1ac8b58c&limit=10",
-                    "start": "d1b48af913464aa49fcb07065dcc0616",
                   },
                 },
               },
@@ -1226,39 +1022,32 @@ Note: This operation requires an identity challenge if the financial institution
             ],
             "examples": [
               {
-                "request": {},
+                "request": {
+                  "amount": "275.00",
+                  "memo": "Cover check for car repair",
+                  "schedule": {
+                    "amountLimit": "3456.78",
+                    "frequency": "once",
+                    "scheduledOn": "2022-06-28",
+                  },
+                  "sourceAccount": {
+                    "id": "bd9b7af2-6f9b",
+                    "label": "Checking *1008",
+                    "location": "internal",
+                  },
+                  "targetAccount": {
+                    "id": "88b1ca3e-d0f3",
+                    "label": "Checking *1008",
+                    "location": "internal",
+                  },
+                },
                 "response": {
                   "body": {
-                    "amount": "275.00",
-                    "createdAt": "2022-04-18T07:21:35Z",
                     "id": "0399abed-fd3d",
-                    "memo": "Cover check for car repair",
-                    "processedAt": "2024-01-15T09:30:00Z",
                     "schedule": {
-                      "amountLimit": "3456.78",
-                      "count": 1,
-                      "creditsOn": "2026-06-26",
-                      "debitsOn": "2026-06-24",
-                      "endsOn": "endsOn",
                       "frequency": "once",
-                      "recurrenceType": "fixed",
-                      "scheduledOn": "2026-06-28",
-                    },
-                    "sourceAccount": {
-                      "id": "bd9b7af2-6f9b",
-                      "label": "Premiere Checking *6789",
-                      "location": "internal",
-                      "type": "checking",
                     },
                     "state": "unscheduled",
-                    "targetAccount": {
-                      "id": "88b1ca3e-d0f3",
-                      "label": "Personal Savings *4567",
-                      "location": "internal",
-                      "type": "savings",
-                    },
-                    "updatedAt": "2022-04-18T07:21:35Z",
-                    "updatedBy": "updatedBy",
                   },
                 },
               },
@@ -1335,36 +1124,11 @@ Note: This operation requires an identity challenge if the financial institution
                 },
                 "response": {
                   "body": {
-                    "amount": "275.00",
-                    "createdAt": "2022-04-18T07:21:35Z",
                     "id": "0399abed-fd3d",
-                    "memo": "Cover check for car repair",
-                    "processedAt": "2024-01-15T09:30:00Z",
                     "schedule": {
-                      "amountLimit": "3456.78",
-                      "count": 1,
-                      "creditsOn": "2026-06-26",
-                      "debitsOn": "2026-06-24",
-                      "endsOn": "endsOn",
                       "frequency": "once",
-                      "recurrenceType": "fixed",
-                      "scheduledOn": "2026-06-28",
-                    },
-                    "sourceAccount": {
-                      "id": "bd9b7af2-6f9b",
-                      "label": "Premiere Checking *6789",
-                      "location": "internal",
-                      "type": "checking",
                     },
                     "state": "unscheduled",
-                    "targetAccount": {
-                      "id": "88b1ca3e-d0f3",
-                      "label": "Personal Savings *4567",
-                      "location": "internal",
-                      "type": "savings",
-                    },
-                    "updatedAt": "2022-04-18T07:21:35Z",
-                    "updatedBy": "updatedBy",
                   },
                 },
               },
@@ -1396,71 +1160,23 @@ Note: This operation requires an identity challenge if the financial institution
               {
                 "response": {
                   "body": {
-                    "count": 1,
                     "items": [
                       {
-                        "amount": "275.00",
-                        "createdAt": "2022-04-18T07:21:35Z",
                         "id": "0399abed-fd3d",
-                        "memo": "Cover check for car repair",
-                        "processedAt": "2024-01-15T09:30:00Z",
                         "schedule": {
-                          "amountLimit": "3456.78",
-                          "creditsOn": "2026-06-26",
-                          "debitsOn": "2026-06-24",
                           "frequency": "once",
-                          "scheduledOn": "2026-06-28",
-                        },
-                        "sourceAccount": {
-                          "id": "bd9b7af2-6f9b",
-                          "label": "Premiere Checking *6789",
-                          "location": "internal",
-                          "type": "checking",
                         },
                         "state": "processed",
-                        "targetAccount": {
-                          "id": "88b1ca3e-d0f3",
-                          "label": "Personal Savings *4567",
-                          "location": "internal",
-                          "type": "savings",
-                        },
-                        "updatedAt": "2022-04-18T07:21:35Z",
-                        "updatedBy": "updatedBy",
                       },
                       {
-                        "amount": "100.00",
-                        "createdAt": "2022-04-18T07:21:35Z",
                         "id": "d62c0701-0d74",
-                        "memo": "school expenses",
-                        "processedAt": "2024-01-15T09:30:00Z",
                         "schedule": {
-                          "amountLimit": "3456.78",
-                          "count": 9,
-                          "creditsOn": "2023-08-01",
-                          "debitsOn": "2026-08-01",
                           "frequency": "monthly",
-                          "scheduledOn": "2023-08-01",
-                        },
-                        "sourceAccount": {
-                          "id": "bd9b7af2-6f9b",
-                          "label": "Checking *6789",
-                          "location": "internal",
-                          "type": "checking",
                         },
                         "state": "scheduled",
-                        "targetAccount": {
-                          "id": "c8396f59-624b",
-                          "label": "Checking *3456",
-                          "location": "internal",
-                          "type": "checking",
-                        },
-                        "updatedAt": "2022-04-18T07:21:35Z",
-                        "updatedBy": "updatedBy",
                       },
                     ],
                     "limit": 10,
-                    "nextPage_url": "https://production.api.apiture.com/transfers/transfers?start=6117a4dcefb841cab7316cef1ac8b58c&limit=10",
-                    "start": "d1b48af913464aa49fcb07065dcc0616",
                   },
                 },
               },
@@ -1519,39 +1235,31 @@ Note: This operation requires an identity challenge if the financial institution
                 "path-parameters": {
                   "transferId": "transferId",
                 },
-                "request": {},
+                "request": {
+                  "amount": "275.00",
+                  "schedule": {
+                    "amountLimit": "3456.78",
+                    "frequency": "once",
+                    "scheduledOn": "2022-06-28",
+                  },
+                  "sourceAccount": {
+                    "id": "e821ce54-c715",
+                    "label": "Premiere Checking *6789",
+                    "location": "internal",
+                    "type": "checking",
+                  },
+                  "targetAccount": {
+                    "id": "88b1ca3e-d0f3",
+                    "label": "Checking *1008",
+                  },
+                },
                 "response": {
                   "body": {
-                    "amount": "275.00",
-                    "createdAt": "2022-04-18T07:21:35Z",
                     "id": "0399abed-fd3d",
-                    "memo": "Cover check for car repair",
-                    "processedAt": "2024-01-15T09:30:00Z",
                     "schedule": {
-                      "amountLimit": "3456.78",
-                      "count": 1,
-                      "creditsOn": "2026-06-26",
-                      "debitsOn": "2026-06-24",
-                      "endsOn": "endsOn",
                       "frequency": "once",
-                      "recurrenceType": "fixed",
-                      "scheduledOn": "2026-06-28",
-                    },
-                    "sourceAccount": {
-                      "id": "bd9b7af2-6f9b",
-                      "label": "Premiere Checking *6789",
-                      "location": "internal",
-                      "type": "checking",
                     },
                     "state": "unscheduled",
-                    "targetAccount": {
-                      "id": "88b1ca3e-d0f3",
-                      "label": "Personal Savings *4567",
-                      "location": "internal",
-                      "type": "savings",
-                    },
-                    "updatedAt": "2022-04-18T07:21:35Z",
-                    "updatedBy": "updatedBy",
                   },
                 },
               },

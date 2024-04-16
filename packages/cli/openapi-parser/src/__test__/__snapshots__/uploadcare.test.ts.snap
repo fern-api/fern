@@ -179,19 +179,32 @@ Log.d("TAG", file.toString())
                   "value": "caa9d29da887ee88ffe6",
                 },
               },
+              "expire": {
+                "type": "primitive",
+                "value": {
+                  "type": "double",
+                  "value": 1454902434,
+                },
+              },
+              "metadata[{key}]": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "#/components/examples/metadataValue/value",
+                },
+              },
+              "signature": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "04b29480233f4def5c875875b6bdc3b1",
+                },
+              },
             },
             "type": "object",
           },
           "response": {
-            "properties": {
-              "filename": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "filename",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -533,11 +546,32 @@ Log.d("TAG", file.toString())
                   "value": "content_type",
                 },
               },
+              "expire": {
+                "type": "primitive",
+                "value": {
+                  "type": "double",
+                  "value": 1454902434,
+                },
+              },
               "filename": {
                 "type": "primitive",
                 "value": {
                   "type": "string",
                   "value": "filename",
+                },
+              },
+              "metadata[{key}]": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "#/components/examples/metadataValue/value",
+                },
+              },
+              "signature": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "04b29480233f4def5c875875b6bdc3b1",
                 },
               },
               "size": {
@@ -1187,235 +1221,6 @@ Log.d("TAG", file.toString())
           },
           "response": {
             "properties": {
-              "content_info": {
-                "properties": {
-                  "image": {
-                    "properties": {
-                      "color_mode": {
-                        "type": "enum",
-                        "value": "RGB",
-                      },
-                      "datetime_original": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2018-08-20T08:59:50",
-                        },
-                      },
-                      "dpi": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 72,
-                            },
-                          },
-                          {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 72,
-                            },
-                          },
-                        ],
-                      },
-                      "format": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "JPEG",
-                        },
-                      },
-                      "geo_location": {
-                        "properties": {
-                          "latitude": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 55.62013611111111,
-                            },
-                          },
-                          "longitude": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 37.66299166666666,
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "height": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 4032,
-                        },
-                      },
-                      "orientation": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 6,
-                        },
-                      },
-                      "sequence": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": false,
-                        },
-                      },
-                      "width": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 3024,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "mime": {
-                    "properties": {
-                      "mime": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "image/jpeg",
-                        },
-                      },
-                      "subtype": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "jpeg",
-                        },
-                      },
-                      "type": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "image",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "video": {
-                    "properties": {
-                      "audio": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "bitrate": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 78,
-                                },
-                              },
-                              "channels": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 2,
-                                },
-                              },
-                              "codec": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "aac",
-                                },
-                              },
-                              "sample_rate": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 44100,
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "bitrate": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 393,
-                        },
-                      },
-                      "duration": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 261827,
-                        },
-                      },
-                      "format": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "mp4",
-                        },
-                      },
-                      "video": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "bitrate": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 315,
-                                },
-                              },
-                              "codec": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "h264",
-                                },
-                              },
-                              "frame_rate": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "double",
-                                  "value": 30,
-                                },
-                              },
-                              "height": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 360,
-                                },
-                              },
-                              "width": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 640,
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                    },
-                    "type": "object",
-                  },
-                },
-                "type": "object",
-              },
               "done": {
                 "type": "primitive",
                 "value": {
@@ -1436,95 +1241,6 @@ Log.d("TAG", file.toString())
                   "type": "string",
                   "value": "IMG0412_123.JPG",
                 },
-              },
-              "image_info": {
-                "properties": {
-                  "color_mode": {
-                    "type": "enum",
-                    "value": "RGB",
-                  },
-                  "datetime_original": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "datetime",
-                      "value": "2018-08-20T08:59:50",
-                    },
-                  },
-                  "dpi": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 72,
-                        },
-                      },
-                      {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 72,
-                        },
-                      },
-                    ],
-                  },
-                  "format": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "JPEG",
-                    },
-                  },
-                  "geo_location": {
-                    "properties": {
-                      "latitude": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 55.62013611111111,
-                        },
-                      },
-                      "longitude": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 37.66299166666666,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "height": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "int",
-                      "value": 4032,
-                    },
-                  },
-                  "orientation": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "int",
-                      "value": 6,
-                    },
-                  },
-                  "sequence": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": false,
-                    },
-                  },
-                  "width": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "int",
-                      "value": 3024,
-                    },
-                  },
-                },
-                "type": "object",
               },
               "is_image": {
                 "type": "primitive",
@@ -1547,43 +1263,6 @@ Log.d("TAG", file.toString())
                   "value": true,
                 },
               },
-              "metadata": {
-                "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "subsystem",
-                    },
-                    "value": {
-                      "type": "unknown",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "uploader",
-                        },
-                      },
-                    },
-                  },
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "pet",
-                    },
-                    "value": {
-                      "type": "unknown",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "cat",
-                        },
-                      },
-                    },
-                  },
-                ],
-              },
               "mime_type": {
                 "type": "primitive",
                 "value": {
@@ -1596,13 +1275,6 @@ Log.d("TAG", file.toString())
                 "value": {
                   "type": "string",
                   "value": "IMG-0412_123.JPG",
-                },
-              },
-              "s3_bucket": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "custom-s3-bucket-name",
                 },
               },
               "size": {
@@ -1625,105 +1297,6 @@ Log.d("TAG", file.toString())
                   "type": "string",
                   "value": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
                 },
-              },
-              "video_info": {
-                "properties": {
-                  "audio": {
-                    "properties": {
-                      "bitrate": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 78,
-                        },
-                      },
-                      "channels": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2",
-                        },
-                      },
-                      "codec": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "aac",
-                        },
-                      },
-                      "sample_rate": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 44100,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "bitrate": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 393,
-                    },
-                  },
-                  "duration": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 261827,
-                    },
-                  },
-                  "format": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "mp4",
-                    },
-                  },
-                  "video": {
-                    "properties": {
-                      "bitrate": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 315,
-                        },
-                      },
-                      "codec": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "h264",
-                        },
-                      },
-                      "frame_rate": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 30,
-                        },
-                      },
-                      "height": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 360,
-                        },
-                      },
-                      "width": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 640,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                },
-                "type": "object",
               },
             },
             "type": "object",
@@ -1945,11 +1518,32 @@ Log.d("TAG", file.toString())
           "queryParameters": [],
           "request": {
             "properties": {
+              "expire": {
+                "type": "primitive",
+                "value": {
+                  "type": "double",
+                  "value": 1454902434,
+                },
+              },
+              "metadata[{key}]": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "#/components/examples/metadataValue/value",
+                },
+              },
               "pub_key": {
                 "type": "primitive",
                 "value": {
                   "type": "string",
                   "value": "caa9d29da887ee88ffe6",
+                },
+              },
+              "signature": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "04b29480233f4def5c875875b6bdc3b1",
                 },
               },
               "source_url": {
@@ -1963,22 +1557,7 @@ Log.d("TAG", file.toString())
             "type": "object",
           },
           "response": {
-            "properties": {
-              "token": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "945ebb27-1fd6-46c6-a859-b9893712d650",
-                },
-              },
-              "type": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "token",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -2099,11 +1678,32 @@ Log.d("TAG", file.toString())
           "queryParameters": [],
           "request": {
             "properties": {
+              "expire": {
+                "type": "primitive",
+                "value": {
+                  "type": "double",
+                  "value": 1454902434,
+                },
+              },
+              "metadata[{key}]": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "#/components/examples/metadataValue/value",
+                },
+              },
               "pub_key": {
                 "type": "primitive",
                 "value": {
                   "type": "string",
                   "value": "caa9d29da887ee88ffe6",
+                },
+              },
+              "signature": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "04b29480233f4def5c875875b6bdc3b1",
                 },
               },
               "source_url": {
@@ -2117,22 +1717,7 @@ Log.d("TAG", file.toString())
             "type": "object",
           },
           "response": {
-            "properties": {
-              "token": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "945ebb27-1fd6-46c6-a859-b9893712d650",
-                },
-              },
-              "type": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "token",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -2585,15 +2170,7 @@ Log.d("TAG", status.toString())
           ],
           "request": null,
           "response": {
-            "properties": {
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "waiting",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -2704,15 +2281,7 @@ Log.d("TAG", status.toString())
           ],
           "request": null,
           "response": {
-            "properties": {
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "waiting",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -2823,15 +2392,7 @@ Log.d("TAG", status.toString())
           ],
           "request": null,
           "response": {
-            "properties": {
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "waiting",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -2942,15 +2503,7 @@ Log.d("TAG", status.toString())
           ],
           "request": null,
           "response": {
-            "properties": {
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "waiting",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -3061,15 +2614,7 @@ Log.d("TAG", status.toString())
           ],
           "request": null,
           "response": {
-            "properties": {
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "waiting",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -3297,235 +2842,6 @@ Log.d("TAG", file.toString())
           "request": null,
           "response": {
             "properties": {
-              "content_info": {
-                "properties": {
-                  "image": {
-                    "properties": {
-                      "color_mode": {
-                        "type": "enum",
-                        "value": "RGB",
-                      },
-                      "datetime_original": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2018-08-20T08:59:50",
-                        },
-                      },
-                      "dpi": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 72,
-                            },
-                          },
-                          {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 72,
-                            },
-                          },
-                        ],
-                      },
-                      "format": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "JPEG",
-                        },
-                      },
-                      "geo_location": {
-                        "properties": {
-                          "latitude": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 55.62013611111111,
-                            },
-                          },
-                          "longitude": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 37.66299166666666,
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "height": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 4032,
-                        },
-                      },
-                      "orientation": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 6,
-                        },
-                      },
-                      "sequence": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": false,
-                        },
-                      },
-                      "width": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 3024,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "mime": {
-                    "properties": {
-                      "mime": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "image/jpeg",
-                        },
-                      },
-                      "subtype": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "jpeg",
-                        },
-                      },
-                      "type": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "image",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "video": {
-                    "properties": {
-                      "audio": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "bitrate": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 78,
-                                },
-                              },
-                              "channels": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 2,
-                                },
-                              },
-                              "codec": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "aac",
-                                },
-                              },
-                              "sample_rate": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 44100,
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "bitrate": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 393,
-                        },
-                      },
-                      "duration": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 261827,
-                        },
-                      },
-                      "format": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "mp4",
-                        },
-                      },
-                      "video": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "bitrate": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 315,
-                                },
-                              },
-                              "codec": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "h264",
-                                },
-                              },
-                              "frame_rate": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "double",
-                                  "value": 30,
-                                },
-                              },
-                              "height": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 360,
-                                },
-                              },
-                              "width": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 640,
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                    },
-                    "type": "object",
-                  },
-                },
-                "type": "object",
-              },
               "done": {
                 "type": "primitive",
                 "value": {
@@ -3546,95 +2862,6 @@ Log.d("TAG", file.toString())
                   "type": "string",
                   "value": "IMG0412_123.JPG",
                 },
-              },
-              "image_info": {
-                "properties": {
-                  "color_mode": {
-                    "type": "enum",
-                    "value": "RGB",
-                  },
-                  "datetime_original": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "datetime",
-                      "value": "2018-08-20T08:59:50",
-                    },
-                  },
-                  "dpi": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 72,
-                        },
-                      },
-                      {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 72,
-                        },
-                      },
-                    ],
-                  },
-                  "format": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "JPEG",
-                    },
-                  },
-                  "geo_location": {
-                    "properties": {
-                      "latitude": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 55.62013611111111,
-                        },
-                      },
-                      "longitude": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 37.66299166666666,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "height": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "int",
-                      "value": 4032,
-                    },
-                  },
-                  "orientation": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "int",
-                      "value": 6,
-                    },
-                  },
-                  "sequence": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": false,
-                    },
-                  },
-                  "width": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "int",
-                      "value": 3024,
-                    },
-                  },
-                },
-                "type": "object",
               },
               "is_image": {
                 "type": "primitive",
@@ -3657,43 +2884,6 @@ Log.d("TAG", file.toString())
                   "value": true,
                 },
               },
-              "metadata": {
-                "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "subsystem",
-                    },
-                    "value": {
-                      "type": "unknown",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "uploader",
-                        },
-                      },
-                    },
-                  },
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "pet",
-                    },
-                    "value": {
-                      "type": "unknown",
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "cat",
-                        },
-                      },
-                    },
-                  },
-                ],
-              },
               "mime_type": {
                 "type": "primitive",
                 "value": {
@@ -3706,13 +2896,6 @@ Log.d("TAG", file.toString())
                 "value": {
                   "type": "string",
                   "value": "IMG-0412_123.JPG",
-                },
-              },
-              "s3_bucket": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "custom-s3-bucket-name",
                 },
               },
               "size": {
@@ -3735,105 +2918,6 @@ Log.d("TAG", file.toString())
                   "type": "string",
                   "value": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
                 },
-              },
-              "video_info": {
-                "properties": {
-                  "audio": {
-                    "properties": {
-                      "bitrate": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 78,
-                        },
-                      },
-                      "channels": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2",
-                        },
-                      },
-                      "codec": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "aac",
-                        },
-                      },
-                      "sample_rate": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 44100,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "bitrate": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 393,
-                    },
-                  },
-                  "duration": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 261827,
-                    },
-                  },
-                  "format": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "mp4",
-                    },
-                  },
-                  "video": {
-                    "properties": {
-                      "bitrate": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 315,
-                        },
-                      },
-                      "codec": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "h264",
-                        },
-                      },
-                      "frame_rate": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 30,
-                        },
-                      },
-                      "height": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 360,
-                        },
-                      },
-                      "width": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 640,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                },
-                "type": "object",
               },
             },
             "type": "object",
@@ -4027,6 +3111,13 @@ Log.d("TAG", group.toString())
           "queryParameters": [],
           "request": {
             "properties": {
+              "expire": {
+                "type": "primitive",
+                "value": {
+                  "type": "double",
+                  "value": 1454902434,
+                },
+              },
               "files[]": {
                 "type": "array",
                 "value": [
@@ -4046,673 +3137,18 @@ Log.d("TAG", group.toString())
                   "value": "caa9d29da887ee88ffe6",
                 },
               },
+              "signature": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "04b29480233f4def5c875875b6bdc3b1",
+                },
+              },
             },
             "type": "object",
           },
           "response": {
-            "properties": {
-              "cdn_url": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
-                },
-              },
-              "datetime_created": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2018-09-12T10:03:38.686710Z",
-                },
-              },
-              "datetime_stored": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2015-09-21T12:39:13.953757Z",
-                },
-              },
-              "files": {
-                "type": "array",
-                "value": [
-                  {
-                    "type": "unknown",
-                    "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "default_effects",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "resize/x800/",
-                            },
-                          },
-                        },
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "uuid",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
-                            },
-                          },
-                        },
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "file_id",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
-                            },
-                          },
-                        },
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "size",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "int",
-                              "value": 2667636,
-                            },
-                          },
-                        },
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "total",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "int",
-                              "value": 2667636,
-                            },
-                          },
-                        },
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "done",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "int",
-                              "value": 2667636,
-                            },
-                          },
-                        },
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "original_filename",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "IMG-0412_123.JPG",
-                            },
-                          },
-                        },
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "filename",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "IMG0412_123.JPG",
-                            },
-                          },
-                        },
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "mime_type",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "image/jpeg",
-                            },
-                          },
-                        },
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "image_info",
-                          },
-                          "value": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "color_mode",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "RGB",
-                                  },
-                                },
-                              },
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "orientation",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "int",
-                                    "value": 6,
-                                  },
-                                },
-                              },
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "format",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "JPEG",
-                                  },
-                                },
-                              },
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "height",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "int",
-                                    "value": 4032,
-                                  },
-                                },
-                              },
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "width",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "int",
-                                    "value": 3024,
-                                  },
-                                },
-                              },
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "sequence",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "boolean",
-                                    "value": false,
-                                  },
-                                },
-                              },
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "geo_location",
-                                },
-                                "value": {
-                                  "type": "map",
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "latitude",
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "double",
-                                          "value": 55.62013611111111,
-                                        },
-                                      },
-                                    },
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "longitude",
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "double",
-                                          "value": 37.66299166666666,
-                                        },
-                                      },
-                                    },
-                                  ],
-                                },
-                              },
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "datetime_original",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "2018-08-20T08:59:50",
-                                  },
-                                },
-                              },
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "dpi",
-                                },
-                                "value": {
-                                  "type": "map",
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "0",
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "int",
-                                          "value": 72,
-                                        },
-                                      },
-                                    },
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "1",
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "int",
-                                          "value": 72,
-                                        },
-                                      },
-                                    },
-                                  ],
-                                },
-                              },
-                            ],
-                          },
-                        },
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "content_info",
-                          },
-                          "value": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "mime",
-                                },
-                                "value": {
-                                  "type": "map",
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "mime",
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "image/jpeg",
-                                        },
-                                      },
-                                    },
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "type",
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "image",
-                                        },
-                                      },
-                                    },
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "subtype",
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "jpeg",
-                                        },
-                                      },
-                                    },
-                                  ],
-                                },
-                              },
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "image",
-                                },
-                                "value": {
-                                  "type": "map",
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "color_mode",
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "RGB",
-                                        },
-                                      },
-                                    },
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "orientation",
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "int",
-                                          "value": 6,
-                                        },
-                                      },
-                                    },
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "format",
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "JPEG",
-                                        },
-                                      },
-                                    },
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "height",
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "int",
-                                          "value": 4032,
-                                        },
-                                      },
-                                    },
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "width",
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "int",
-                                          "value": 3024,
-                                        },
-                                      },
-                                    },
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "sequence",
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "boolean",
-                                          "value": false,
-                                        },
-                                      },
-                                    },
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "geo_location",
-                                      },
-                                      "value": {
-                                        "type": "map",
-                                        "value": [
-                                          {
-                                            "key": {
-                                              "type": "string",
-                                              "value": "latitude",
-                                            },
-                                            "value": {
-                                              "type": "primitive",
-                                              "value": {
-                                                "type": "double",
-                                                "value": 55.62013611111111,
-                                              },
-                                            },
-                                          },
-                                          {
-                                            "key": {
-                                              "type": "string",
-                                              "value": "longitude",
-                                            },
-                                            "value": {
-                                              "type": "primitive",
-                                              "value": {
-                                                "type": "double",
-                                                "value": 37.66299166666666,
-                                              },
-                                            },
-                                          },
-                                        ],
-                                      },
-                                    },
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "datetime_original",
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "2018-08-20T08:59:50",
-                                        },
-                                      },
-                                    },
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "dpi",
-                                      },
-                                      "value": {
-                                        "type": "map",
-                                        "value": [
-                                          {
-                                            "key": {
-                                              "type": "string",
-                                              "value": "0",
-                                            },
-                                            "value": {
-                                              "type": "primitive",
-                                              "value": {
-                                                "type": "int",
-                                                "value": 72,
-                                              },
-                                            },
-                                          },
-                                          {
-                                            "key": {
-                                              "type": "string",
-                                              "value": "1",
-                                            },
-                                            "value": {
-                                              "type": "primitive",
-                                              "value": {
-                                                "type": "int",
-                                                "value": 72,
-                                              },
-                                            },
-                                          },
-                                        ],
-                                      },
-                                    },
-                                  ],
-                                },
-                              },
-                            ],
-                          },
-                        },
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "metadata",
-                          },
-                          "value": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "subsystem",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "uploader",
-                                  },
-                                },
-                              },
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "pet",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "cat",
-                                  },
-                                },
-                              },
-                            ],
-                          },
-                        },
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "is_image",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "boolean",
-                              "value": true,
-                            },
-                          },
-                        },
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "is_stored",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "boolean",
-                              "value": true,
-                            },
-                          },
-                        },
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "is_ready",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "boolean",
-                              "value": true,
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ],
-              },
-              "files_count": {
-                "type": "primitive",
-                "value": {
-                  "type": "double",
-                  "value": 1,
-                },
-              },
-              "id": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "0d712319-b970-4602-850c-bae1ced521a6~1",
-                },
-              },
-              "url": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "https://api.uploadcare.com/groups/0d712319-b970-4602-850c-bae1ced521a6~1/",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -4972,669 +3408,7 @@ Log.d("TAG", group.toString())
           ],
           "request": null,
           "response": {
-            "properties": {
-              "cdn_url": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "https://ucarecdn.com/0d712319-b970-4602-850c-bae1ced521a6~1/",
-                },
-              },
-              "datetime_created": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2018-09-12T10:03:38.686710Z",
-                },
-              },
-              "datetime_stored": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2015-09-21T12:39:13.953757Z",
-                },
-              },
-              "files": {
-                "type": "array",
-                "value": [
-                  {
-                    "type": "unknown",
-                    "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "default_effects",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "resize/x800/",
-                            },
-                          },
-                        },
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "uuid",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
-                            },
-                          },
-                        },
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "file_id",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
-                            },
-                          },
-                        },
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "size",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "int",
-                              "value": 2667636,
-                            },
-                          },
-                        },
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "total",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "int",
-                              "value": 2667636,
-                            },
-                          },
-                        },
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "done",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "int",
-                              "value": 2667636,
-                            },
-                          },
-                        },
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "original_filename",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "IMG-0412_123.JPG",
-                            },
-                          },
-                        },
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "filename",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "IMG0412_123.JPG",
-                            },
-                          },
-                        },
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "mime_type",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "image/jpeg",
-                            },
-                          },
-                        },
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "image_info",
-                          },
-                          "value": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "color_mode",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "RGB",
-                                  },
-                                },
-                              },
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "orientation",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "int",
-                                    "value": 6,
-                                  },
-                                },
-                              },
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "format",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "JPEG",
-                                  },
-                                },
-                              },
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "height",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "int",
-                                    "value": 4032,
-                                  },
-                                },
-                              },
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "width",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "int",
-                                    "value": 3024,
-                                  },
-                                },
-                              },
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "sequence",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "boolean",
-                                    "value": false,
-                                  },
-                                },
-                              },
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "geo_location",
-                                },
-                                "value": {
-                                  "type": "map",
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "latitude",
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "double",
-                                          "value": 55.62013611111111,
-                                        },
-                                      },
-                                    },
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "longitude",
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "double",
-                                          "value": 37.66299166666666,
-                                        },
-                                      },
-                                    },
-                                  ],
-                                },
-                              },
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "datetime_original",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "2018-08-20T08:59:50",
-                                  },
-                                },
-                              },
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "dpi",
-                                },
-                                "value": {
-                                  "type": "map",
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "0",
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "int",
-                                          "value": 72,
-                                        },
-                                      },
-                                    },
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "1",
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "int",
-                                          "value": 72,
-                                        },
-                                      },
-                                    },
-                                  ],
-                                },
-                              },
-                            ],
-                          },
-                        },
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "content_info",
-                          },
-                          "value": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "mime",
-                                },
-                                "value": {
-                                  "type": "map",
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "mime",
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "image/jpeg",
-                                        },
-                                      },
-                                    },
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "type",
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "image",
-                                        },
-                                      },
-                                    },
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "subtype",
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "jpeg",
-                                        },
-                                      },
-                                    },
-                                  ],
-                                },
-                              },
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "image",
-                                },
-                                "value": {
-                                  "type": "map",
-                                  "value": [
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "color_mode",
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "RGB",
-                                        },
-                                      },
-                                    },
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "orientation",
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "int",
-                                          "value": 6,
-                                        },
-                                      },
-                                    },
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "format",
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "JPEG",
-                                        },
-                                      },
-                                    },
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "height",
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "int",
-                                          "value": 4032,
-                                        },
-                                      },
-                                    },
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "width",
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "int",
-                                          "value": 3024,
-                                        },
-                                      },
-                                    },
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "sequence",
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "boolean",
-                                          "value": false,
-                                        },
-                                      },
-                                    },
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "geo_location",
-                                      },
-                                      "value": {
-                                        "type": "map",
-                                        "value": [
-                                          {
-                                            "key": {
-                                              "type": "string",
-                                              "value": "latitude",
-                                            },
-                                            "value": {
-                                              "type": "primitive",
-                                              "value": {
-                                                "type": "double",
-                                                "value": 55.62013611111111,
-                                              },
-                                            },
-                                          },
-                                          {
-                                            "key": {
-                                              "type": "string",
-                                              "value": "longitude",
-                                            },
-                                            "value": {
-                                              "type": "primitive",
-                                              "value": {
-                                                "type": "double",
-                                                "value": 37.66299166666666,
-                                              },
-                                            },
-                                          },
-                                        ],
-                                      },
-                                    },
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "datetime_original",
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "2018-08-20T08:59:50",
-                                        },
-                                      },
-                                    },
-                                    {
-                                      "key": {
-                                        "type": "string",
-                                        "value": "dpi",
-                                      },
-                                      "value": {
-                                        "type": "map",
-                                        "value": [
-                                          {
-                                            "key": {
-                                              "type": "string",
-                                              "value": "0",
-                                            },
-                                            "value": {
-                                              "type": "primitive",
-                                              "value": {
-                                                "type": "int",
-                                                "value": 72,
-                                              },
-                                            },
-                                          },
-                                          {
-                                            "key": {
-                                              "type": "string",
-                                              "value": "1",
-                                            },
-                                            "value": {
-                                              "type": "primitive",
-                                              "value": {
-                                                "type": "int",
-                                                "value": 72,
-                                              },
-                                            },
-                                          },
-                                        ],
-                                      },
-                                    },
-                                  ],
-                                },
-                              },
-                            ],
-                          },
-                        },
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "metadata",
-                          },
-                          "value": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "subsystem",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "uploader",
-                                  },
-                                },
-                              },
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "pet",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "cat",
-                                  },
-                                },
-                              },
-                            ],
-                          },
-                        },
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "is_image",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "boolean",
-                              "value": true,
-                            },
-                          },
-                        },
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "is_stored",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "boolean",
-                              "value": true,
-                            },
-                          },
-                        },
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "is_ready",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "boolean",
-                              "value": true,
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ],
-              },
-              "files_count": {
-                "type": "primitive",
-                "value": {
-                  "type": "double",
-                  "value": 1,
-                },
-              },
-              "id": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "0d712319-b970-4602-850c-bae1ced521a6~1",
-                },
-              },
-              "url": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "https://api.uploadcare.com/groups/0d712319-b970-4602-850c-bae1ced521a6~1/",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",

@@ -46,13 +46,6 @@ exports[`open api parser vocode parse open api 1`] = `
                 "value": [
                   {
                     "properties": {
-                      "active": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
                       "id": {
                         "type": "primitive",
                         "value": {
@@ -65,13 +58,6 @@ exports[`open api parser vocode parse open api 1`] = `
                         "value": {
                           "type": "string",
                           "value": "inbound_agent",
-                        },
-                      },
-                      "label": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "label",
                         },
                       },
                       "number": {
@@ -453,20 +439,6 @@ exports[`open api parser vocode parse open api 1`] = `
                           "value": "agent_phone_number",
                         },
                       },
-                      "end_time": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2024-01-15T09:30:00Z",
-                        },
-                      },
-                      "error_message": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "error_message",
-                        },
-                      },
                       "from_number": {
                         "type": "primitive",
                         "value": {
@@ -481,36 +453,11 @@ exports[`open api parser vocode parse open api 1`] = `
                           "value": "id",
                         },
                       },
-                      "recording_available": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "start_time": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2024-01-15T09:30:00Z",
-                        },
-                      },
-                      "status": {
-                        "type": "enum",
-                        "value": "not_started",
-                      },
                       "to_number": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
                           "value": "to_number",
-                        },
-                      },
-                      "transcript": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "transcript",
                         },
                       },
                       "user_id": {
@@ -1456,21 +1403,6 @@ exports[`open api parser vocode parse open api 1`] = `
                           "value": "id",
                         },
                       },
-                      "initial_message": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "initial_message",
-                        },
-                      },
-                      "interrupt_sensitivity": {
-                        "type": "enum",
-                        "value": "low",
-                      },
-                      "language": {
-                        "type": "enum",
-                        "value": "en",
-                      },
                       "prompt": {
                         "type": "primitive",
                         "value": {
@@ -1485,25 +1417,11 @@ exports[`open api parser vocode parse open api 1`] = `
                           "value": "user_id",
                         },
                       },
-                      "vector_database": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "vector_database",
-                        },
-                      },
                       "voice": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
                           "value": "voice",
-                        },
-                      },
-                      "webhook": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "webhook",
                         },
                       },
                     },
@@ -2179,10 +2097,6 @@ exports[`open api parser vocode parse open api 1`] = `
                   "value": "id",
                 },
               },
-              "method": {
-                "type": "enum",
-                "value": "GET",
-              },
               "subscriptions": {
                 "type": "array",
                 "value": [
@@ -2297,10 +2211,6 @@ exports[`open api parser vocode parse open api 1`] = `
                           "type": "string",
                           "value": "id",
                         },
-                      },
-                      "method": {
-                        "type": "enum",
-                        "value": "GET",
                       },
                       "subscriptions": {
                         "type": "array",
@@ -2471,10 +2381,6 @@ exports[`open api parser vocode parse open api 1`] = `
                   "value": "id",
                 },
               },
-              "method": {
-                "type": "enum",
-                "value": "GET",
-              },
               "subscriptions": {
                 "type": "array",
                 "value": [
@@ -2585,10 +2491,6 @@ exports[`open api parser vocode parse open api 1`] = `
                   "type": "string",
                   "value": "id",
                 },
-              },
-              "method": {
-                "type": "enum",
-                "value": "GET",
               },
               "subscriptions": {
                 "type": "array",

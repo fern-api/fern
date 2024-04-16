@@ -21,9 +21,7 @@ exports[`x-fern-streaming-with-reference x-fern-streaming-with-reference simple 
                   "stream": false,
                 },
                 "response": {
-                  "body": {
-                    "text": "text",
-                  },
+                  "body": {},
                 },
               },
             ],

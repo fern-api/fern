@@ -81,13 +81,6 @@ Transfers support recurring schedules, such as repeating every week or every mon
           "request": null,
           "response": {
             "properties": {
-              "count": {
-                "type": "primitive",
-                "value": {
-                  "type": "int",
-                  "value": 1,
-                },
-              },
               "items": {
                 "type": "array",
                 "value": [
@@ -172,13 +165,6 @@ Transfers support recurring schedules, such as repeating every week or every mon
                           "value": "maskedNumber",
                         },
                       },
-                      "nickname": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Payroll Checking",
-                        },
-                      },
                       "product": {
                         "properties": {
                           "code": {
@@ -219,27 +205,6 @@ Transfers support recurring schedules, such as repeating every week or every mon
                 "value": {
                   "type": "int",
                   "value": 1,
-                },
-              },
-              "nextPage_url": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
-                },
-              },
-              "primaryAccountId": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "primaryAccountId",
-                },
-              },
-              "start": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "start",
                 },
               },
             },
@@ -561,13 +526,6 @@ Transfers support recurring schedules, such as repeating every week or every mon
                   "value": "maskedNumber",
                 },
               },
-              "nickname": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "Payroll Checking",
-                },
-              },
               "product": {
                 "properties": {
                   "code": {
@@ -683,27 +641,6 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                 "value": [
                   {
                     "properties": {
-                      "available": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "3208.20",
-                        },
-                      },
-                      "current": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "3448.72",
-                        },
-                      },
-                      "currentWithPending": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "3448.72",
-                        },
-                      },
                       "id": {
                         "type": "primitive",
                         "value": {
@@ -718,39 +655,11 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                           "value": false,
                         },
                       },
-                      "updatedAt": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-05-02T06:51:19.375Z",
-                        },
-                      },
                     },
                     "type": "object",
                   },
                   {
                     "properties": {
-                      "available": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "1750.80",
-                        },
-                      },
-                      "current": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "1956.19",
-                        },
-                      },
-                      "currentWithPending": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "1956.19",
-                        },
-                      },
                       "id": {
                         "type": "primitive",
                         "value": {
@@ -763,13 +672,6 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                         "value": {
                           "type": "boolean",
                           "value": false,
-                        },
-                      },
-                      "updatedAt": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-05-02T06:51:19.375Z",
                         },
                       },
                     },
@@ -1282,20 +1184,6 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
                   "value": 1,
                 },
               },
-              "nextPage_url": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "https://production.api.apiture.com/banking/accounts/f204d292df9fb/eligibleOverdraftAccounts?start=641f62296ecbf1882c84?limit=100",
-                },
-              },
-              "start": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "start",
-                },
-              },
             },
             "type": "object",
           },
@@ -1430,24 +1318,6 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
           "request": null,
           "response": {
             "properties": {
-              "accounts": {
-                "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "key",
-                    },
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "value",
-                      },
-                    },
-                  },
-                ],
-              },
               "maximumOverdraftAccounts": {
                 "type": "primitive",
                 "value": {
@@ -1549,24 +1419,6 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
           },
           "response": {
             "properties": {
-              "accounts": {
-                "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "key",
-                    },
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "value",
-                      },
-                    },
-                  },
-                ],
-              },
               "maximumOverdraftAccounts": {
                 "type": "primitive",
                 "value": {
@@ -1676,6 +1528,13 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
           "queryParameters": [],
           "request": {
             "properties": {
+              "disallowDebitCardAccess": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": false,
+                },
+              },
               "emailAddress": {
                 "type": "primitive",
                 "value": {
@@ -1709,13 +1568,6 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
           },
           "response": {
             "properties": {
-              "disallowDebitCardAccess": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean",
-                  "value": false,
-                },
-              },
               "emailAddress": {
                 "type": "primitive",
                 "value": {
@@ -1749,13 +1601,6 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                 "value": {
                   "type": "string",
                   "value": "obsolete obese octopus",
-                },
-              },
-              "taxId": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "taxId",
                 },
               },
             },
@@ -1881,158 +1726,6 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                   "type": "boolean",
                   "value": true,
                 },
-              },
-              "institution": {
-                "properties": {
-                  "address": {
-                    "properties": {
-                      "address1": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "239 West Princess Ave.",
-                        },
-                      },
-                      "address2": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Building 14, Suite 1500",
-                        },
-                      },
-                      "countryCode": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "US",
-                        },
-                      },
-                      "locality": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Andalasia",
-                        },
-                      },
-                      "postalCode": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "28407",
-                        },
-                      },
-                      "regionCode": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "NC",
-                        },
-                      },
-                      "regionName": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "regionName",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "locator": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "503000196",
-                    },
-                  },
-                  "locatorType": {
-                    "type": "enum",
-                    "value": "abaRoutingNumber",
-                  },
-                  "name": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "First Bank of Andalasia",
-                    },
-                  },
-                },
-                "type": "object",
-              },
-              "intermediaryInstitutions": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "address": {
-                        "properties": {
-                          "address1": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "239 West Princess Ave.",
-                            },
-                          },
-                          "address2": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Building 14, Suite 1500",
-                            },
-                          },
-                          "countryCode": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "US",
-                            },
-                          },
-                          "locality": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Andalasia",
-                            },
-                          },
-                          "postalCode": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "28407",
-                            },
-                          },
-                          "regionCode": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "NC",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "locator": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "503000196",
-                        },
-                      },
-                      "locatorType": {
-                        "type": "enum",
-                        "value": "abaRoutingNumber",
-                      },
-                      "name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "First Bank of Andalasia",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
               },
             },
             "type": "object",
@@ -2749,500 +2442,7 @@ This information provides hints to clients, allowing bank customers to select tr
           ],
           "request": null,
           "response": {
-            "properties": {
-              "accuracyEndsOn": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "2026-12-31T00:00:00.000Z",
-                },
-              },
-              "restrictedDates": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "creditOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "debitOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "occursOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-10-01",
-                        },
-                      },
-                      "reason": {
-                        "type": "enum",
-                        "value": "pastDate",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  {
-                    "properties": {
-                      "creditOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "debitOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "occursOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-10-02",
-                        },
-                      },
-                      "reason": {
-                        "type": "enum",
-                        "value": "pastDate",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  {
-                    "properties": {
-                      "creditOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "debitOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "occursOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-10-03",
-                        },
-                      },
-                      "reason": {
-                        "type": "enum",
-                        "value": "pastDate",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  {
-                    "properties": {
-                      "creditOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "debitOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "occursOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-10-04",
-                        },
-                      },
-                      "reason": {
-                        "type": "enum",
-                        "value": "pastDate",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  {
-                    "properties": {
-                      "creditOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "debitOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "occursOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-10-05",
-                        },
-                      },
-                      "reason": {
-                        "type": "enum",
-                        "value": "pastCutoffTime",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  {
-                    "properties": {
-                      "creditOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "debitOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "occursOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-10-06",
-                        },
-                      },
-                      "reason": {
-                        "type": "enum",
-                        "value": "riskRestricted",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  {
-                    "properties": {
-                      "creditOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "debitOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "occursOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-10-07",
-                        },
-                      },
-                      "reason": {
-                        "type": "enum",
-                        "value": "riskRestricted",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  {
-                    "properties": {
-                      "creditOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "debitOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "occursOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-10-08",
-                        },
-                      },
-                      "reason": {
-                        "type": "enum",
-                        "value": "closure",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  {
-                    "properties": {
-                      "creditOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "debitOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "occursOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-10-09",
-                        },
-                      },
-                      "reason": {
-                        "type": "enum",
-                        "value": "closure",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  {
-                    "properties": {
-                      "creditOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "debitOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "occursOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-10-10",
-                        },
-                      },
-                      "reason": {
-                        "type": "enum",
-                        "value": "holiday",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  {
-                    "properties": {
-                      "creditOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "debitOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "occursOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-10-15",
-                        },
-                      },
-                      "reason": {
-                        "type": "enum",
-                        "value": "closure",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  {
-                    "properties": {
-                      "creditOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "debitOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "occursOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-10-16",
-                        },
-                      },
-                      "reason": {
-                        "type": "enum",
-                        "value": "closure",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  {
-                    "properties": {
-                      "creditOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "debitOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "occursOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-10-22",
-                        },
-                      },
-                      "reason": {
-                        "type": "enum",
-                        "value": "closure",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  {
-                    "properties": {
-                      "creditOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "debitOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "occursOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-10-23",
-                        },
-                      },
-                      "reason": {
-                        "type": "enum",
-                        "value": "closure",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  {
-                    "properties": {
-                      "creditOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "debitOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "occursOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-10-29",
-                        },
-                      },
-                      "reason": {
-                        "type": "enum",
-                        "value": "closure",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  {
-                    "properties": {
-                      "creditOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "debitOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-07-05",
-                        },
-                      },
-                      "occursOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2022-10-30",
-                        },
-                      },
-                      "reason": {
-                        "type": "enum",
-                        "value": "closure",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -3426,291 +2626,11 @@ The default response lists only recent transactions. Normally, this is transacti
           "request": null,
           "response": {
             "properties": {
-              "count": {
-                "type": "primitive",
-                "value": {
-                  "type": "int",
-                  "value": 2381,
-                },
-              },
-              "items": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "amount": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "0.00",
-                        },
-                      },
-                      "balance": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "8509.38",
-                        },
-                      },
-                      "category": {
-                        "properties": {
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "id",
-                            },
-                          },
-                          "label": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "label",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "check": {
-                        "properties": {
-                          "number": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "int",
-                              "value": 1,
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "createdOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2023-05-18",
-                        },
-                      },
-                      "description": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "description",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "d62c0701-0d74",
-                        },
-                      },
-                      "memo": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "memo",
-                        },
-                      },
-                      "occurredOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2023-06-18",
-                        },
-                      },
-                      "posted": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "postedOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2023-05-18",
-                        },
-                      },
-                      "subtype": {
-                        "type": "enum",
-                        "value": "check",
-                      },
-                      "type": {
-                        "type": "enum",
-                        "value": "balance",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  {
-                    "properties": {
-                      "amount": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "1276.21",
-                        },
-                      },
-                      "balance": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "8509.38",
-                        },
-                      },
-                      "category": {
-                        "properties": {
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "127",
-                            },
-                          },
-                          "label": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Utilities",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "check": {
-                        "properties": {
-                          "imageBack_url": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/back/content",
-                            },
-                          },
-                          "imageFront_url": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/front/content",
-                            },
-                          },
-                          "number": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "int",
-                              "value": 8412,
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "createdOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2023-05-18",
-                        },
-                      },
-                      "description": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "description",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "88f5bf17-ecc4",
-                        },
-                      },
-                      "memo": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Paid electric bill",
-                        },
-                      },
-                      "merchant": {
-                        "properties": {
-                          "logo_url": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "https://BillTedsExcellentElectricCompany.example.com/img/logos/medium.png",
-                            },
-                          },
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "B&T's Excellent Electric Co.",
-                            },
-                          },
-                          "website_url": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "https://BillTedsExcellentElectricCompany.example.com/",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "occurredOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2023-06-18",
-                        },
-                      },
-                      "posted": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "postedOn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2023-05-18",
-                        },
-                      },
-                      "subtype": {
-                        "type": "enum",
-                        "value": "check",
-                      },
-                      "type": {
-                        "type": "enum",
-                        "value": "debit",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
               "limit": {
                 "type": "primitive",
                 "value": {
                   "type": "int",
                   "value": 10,
-                },
-              },
-              "nextPage_url": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "https://production.api.apiture.com/banking/accounts/c9fc25b47d52916fc9ad/transactions?start=6117a4dcefb841cab7316cef1ac8b58c&limit=10",
-                },
-              },
-              "start": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "d1b48af913464aa49fcb07065dcc0616",
                 },
               },
             },
@@ -4185,32 +3105,11 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
           "request": null,
           "response": {
             "properties": {
-              "count": {
-                "type": "primitive",
-                "value": {
-                  "type": "int",
-                  "value": 1,
-                },
-              },
               "items": {
                 "type": "array",
                 "value": [
                   {
                     "properties": {
-                      "amount": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "275.00",
-                        },
-                      },
-                      "createdAt": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-04-18T07:21:35.375Z",
-                        },
-                      },
                       "id": {
                         "type": "primitive",
                         "value": {
@@ -4218,80 +3117,11 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                           "value": "0399abed-fd3d",
                         },
                       },
-                      "memo": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Cover check for car repair",
-                        },
-                      },
-                      "processedAt": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-06-28T021:00:00.000Z",
-                        },
-                      },
                       "schedule": {
                         "properties": {
-                          "amountLimit": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "3456.78",
-                            },
-                          },
-                          "creditsOn": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2026-06-26",
-                            },
-                          },
-                          "debitsOn": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2026-06-24",
-                            },
-                          },
                           "frequency": {
                             "type": "enum",
                             "value": "once",
-                          },
-                          "scheduledOn": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2026-06-28",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "sourceAccount": {
-                        "properties": {
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "bd9b7af2-6f9b",
-                            },
-                          },
-                          "label": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Premiere Checking *6789",
-                            },
-                          },
-                          "location": {
-                            "type": "enum",
-                            "value": "internal",
-                          },
-                          "type": {
-                            "type": "enum",
-                            "value": "checking",
                           },
                         },
                         "type": "object",
@@ -4300,66 +3130,11 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                         "type": "enum",
                         "value": "processed",
                       },
-                      "targetAccount": {
-                        "properties": {
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "88b1ca3e-d0f3",
-                            },
-                          },
-                          "label": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Personal Savings *4567",
-                            },
-                          },
-                          "location": {
-                            "type": "enum",
-                            "value": "internal",
-                          },
-                          "type": {
-                            "type": "enum",
-                            "value": "savings",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "updatedAt": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-04-18T07:21:35.375Z",
-                        },
-                      },
-                      "updatedBy": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "updatedBy",
-                        },
-                      },
                     },
                     "type": "object",
                   },
                   {
                     "properties": {
-                      "amount": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "100.00",
-                        },
-                      },
-                      "createdAt": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-04-18T07:21:35.375Z",
-                        },
-                      },
                       "id": {
                         "type": "primitive",
                         "value": {
@@ -4367,87 +3142,11 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                           "value": "d62c0701-0d74",
                         },
                       },
-                      "memo": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "school expenses",
-                        },
-                      },
-                      "processedAt": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2024-01-15T09:30:00Z",
-                        },
-                      },
                       "schedule": {
                         "properties": {
-                          "amountLimit": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "3456.78",
-                            },
-                          },
-                          "count": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "int",
-                              "value": 9,
-                            },
-                          },
-                          "creditsOn": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2023-08-01",
-                            },
-                          },
-                          "debitsOn": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2026-08-01",
-                            },
-                          },
                           "frequency": {
                             "type": "enum",
                             "value": "monthly",
-                          },
-                          "scheduledOn": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2023-08-01",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "sourceAccount": {
-                        "properties": {
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "bd9b7af2-6f9b",
-                            },
-                          },
-                          "label": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Checking *6789",
-                            },
-                          },
-                          "location": {
-                            "type": "enum",
-                            "value": "internal",
-                          },
-                          "type": {
-                            "type": "enum",
-                            "value": "checking",
                           },
                         },
                         "type": "object",
@@ -4455,47 +3154,6 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                       "state": {
                         "type": "enum",
                         "value": "scheduled",
-                      },
-                      "targetAccount": {
-                        "properties": {
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "c8396f59-624b",
-                            },
-                          },
-                          "label": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Checking *3456",
-                            },
-                          },
-                          "location": {
-                            "type": "enum",
-                            "value": "internal",
-                          },
-                          "type": {
-                            "type": "enum",
-                            "value": "checking",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "updatedAt": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-04-18T07:21:35.375Z",
-                        },
-                      },
-                      "updatedBy": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "updatedBy",
-                        },
                       },
                     },
                     "type": "object",
@@ -4507,20 +3165,6 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                 "value": {
                   "type": "int",
                   "value": 10,
-                },
-              },
-              "nextPage_url": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "https://production.api.apiture.com/transfers/transfers?start=6117a4dcefb841cab7316cef1ac8b58c&limit=10",
-                },
-              },
-              "start": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "d1b48af913464aa49fcb07065dcc0616",
                 },
               },
             },
@@ -4715,10 +3359,6 @@ Note: This operation requires an identity challenge if the financial institution
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": {
             "properties": {
               "amount": {
                 "type": "primitive",
@@ -4727,32 +3367,11 @@ Note: This operation requires an identity challenge if the financial institution
                   "value": "275.00",
                 },
               },
-              "createdAt": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2022-04-18T07:21:35.375Z",
-                },
-              },
-              "id": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "0399abed-fd3d",
-                },
-              },
               "memo": {
                 "type": "primitive",
                 "value": {
                   "type": "string",
                   "value": "Cover check for car repair",
-                },
-              },
-              "processedAt": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "schedule": {
@@ -4764,47 +3383,15 @@ Note: This operation requires an identity challenge if the financial institution
                       "value": "3456.78",
                     },
                   },
-                  "count": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "int",
-                      "value": 1,
-                    },
-                  },
-                  "creditsOn": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "2026-06-26",
-                    },
-                  },
-                  "debitsOn": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "2026-06-24",
-                    },
-                  },
-                  "endsOn": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "endsOn",
-                    },
-                  },
                   "frequency": {
                     "type": "enum",
                     "value": "once",
-                  },
-                  "recurrenceType": {
-                    "type": "enum",
-                    "value": "fixed",
                   },
                   "scheduledOn": {
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "2026-06-28",
+                      "value": "2022-06-28",
                     },
                   },
                 },
@@ -4823,23 +3410,15 @@ Note: This operation requires an identity challenge if the financial institution
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "Premiere Checking *6789",
+                      "value": "Checking *1008",
                     },
                   },
                   "location": {
                     "type": "enum",
                     "value": "internal",
                   },
-                  "type": {
-                    "type": "enum",
-                    "value": "checking",
-                  },
                 },
                 "type": "object",
-              },
-              "state": {
-                "type": "enum",
-                "value": "unscheduled",
               },
               "targetAccount": {
                 "properties": {
@@ -4854,33 +3433,40 @@ Note: This operation requires an identity challenge if the financial institution
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "Personal Savings *4567",
+                      "value": "Checking *1008",
                     },
                   },
                   "location": {
                     "type": "enum",
                     "value": "internal",
                   },
-                  "type": {
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "0399abed-fd3d",
+                },
+              },
+              "schedule": {
+                "properties": {
+                  "frequency": {
                     "type": "enum",
-                    "value": "savings",
+                    "value": "once",
                   },
                 },
                 "type": "object",
               },
-              "updatedAt": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2022-04-18T07:21:35.375Z",
-                },
-              },
-              "updatedBy": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "updatedBy",
-                },
+              "state": {
+                "type": "enum",
+                "value": "unscheduled",
               },
             },
             "type": "object",
@@ -4989,20 +3575,6 @@ Note: This operation requires an identity challenge if the financial institution
           "request": null,
           "response": {
             "properties": {
-              "amount": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "275.00",
-                },
-              },
-              "createdAt": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2022-04-18T07:21:35.375Z",
-                },
-              },
               "id": {
                 "type": "primitive",
                 "value": {
@@ -5010,98 +3582,11 @@ Note: This operation requires an identity challenge if the financial institution
                   "value": "0399abed-fd3d",
                 },
               },
-              "memo": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "Cover check for car repair",
-                },
-              },
-              "processedAt": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2024-01-15T09:30:00Z",
-                },
-              },
               "schedule": {
                 "properties": {
-                  "amountLimit": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "3456.78",
-                    },
-                  },
-                  "count": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "int",
-                      "value": 1,
-                    },
-                  },
-                  "creditsOn": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "2026-06-26",
-                    },
-                  },
-                  "debitsOn": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "2026-06-24",
-                    },
-                  },
-                  "endsOn": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "endsOn",
-                    },
-                  },
                   "frequency": {
                     "type": "enum",
                     "value": "once",
-                  },
-                  "recurrenceType": {
-                    "type": "enum",
-                    "value": "fixed",
-                  },
-                  "scheduledOn": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "2026-06-28",
-                    },
-                  },
-                },
-                "type": "object",
-              },
-              "sourceAccount": {
-                "properties": {
-                  "id": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "bd9b7af2-6f9b",
-                    },
-                  },
-                  "label": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "Premiere Checking *6789",
-                    },
-                  },
-                  "location": {
-                    "type": "enum",
-                    "value": "internal",
-                  },
-                  "type": {
-                    "type": "enum",
-                    "value": "checking",
                   },
                 },
                 "type": "object",
@@ -5109,47 +3594,6 @@ Note: This operation requires an identity challenge if the financial institution
               "state": {
                 "type": "enum",
                 "value": "unscheduled",
-              },
-              "targetAccount": {
-                "properties": {
-                  "id": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "88b1ca3e-d0f3",
-                    },
-                  },
-                  "label": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "Personal Savings *4567",
-                    },
-                  },
-                  "location": {
-                    "type": "enum",
-                    "value": "internal",
-                  },
-                  "type": {
-                    "type": "enum",
-                    "value": "savings",
-                  },
-                },
-                "type": "object",
-              },
-              "updatedAt": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2022-04-18T07:21:35.375Z",
-                },
-              },
-              "updatedBy": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "updatedBy",
-                },
               },
             },
             "type": "object",
@@ -5312,44 +3756,12 @@ Note: This operation requires an identity challenge if the financial institution
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": {
             "properties": {
               "amount": {
                 "type": "primitive",
                 "value": {
                   "type": "string",
                   "value": "275.00",
-                },
-              },
-              "createdAt": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2022-04-18T07:21:35.375Z",
-                },
-              },
-              "id": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "0399abed-fd3d",
-                },
-              },
-              "memo": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "Cover check for car repair",
-                },
-              },
-              "processedAt": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2024-01-15T09:30:00Z",
                 },
               },
               "schedule": {
@@ -5361,47 +3773,15 @@ Note: This operation requires an identity challenge if the financial institution
                       "value": "3456.78",
                     },
                   },
-                  "count": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "int",
-                      "value": 1,
-                    },
-                  },
-                  "creditsOn": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "2026-06-26",
-                    },
-                  },
-                  "debitsOn": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "2026-06-24",
-                    },
-                  },
-                  "endsOn": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "endsOn",
-                    },
-                  },
                   "frequency": {
                     "type": "enum",
                     "value": "once",
-                  },
-                  "recurrenceType": {
-                    "type": "enum",
-                    "value": "fixed",
                   },
                   "scheduledOn": {
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "2026-06-28",
+                      "value": "2022-06-28",
                     },
                   },
                 },
@@ -5413,7 +3793,7 @@ Note: This operation requires an identity challenge if the financial institution
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "bd9b7af2-6f9b",
+                      "value": "e821ce54-c715",
                     },
                   },
                   "label": {
@@ -5434,10 +3814,6 @@ Note: This operation requires an identity challenge if the financial institution
                 },
                 "type": "object",
               },
-              "state": {
-                "type": "enum",
-                "value": "unscheduled",
-              },
               "targetAccount": {
                 "properties": {
                   "id": {
@@ -5451,33 +3827,36 @@ Note: This operation requires an identity challenge if the financial institution
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "Personal Savings *4567",
+                      "value": "Checking *1008",
                     },
-                  },
-                  "location": {
-                    "type": "enum",
-                    "value": "internal",
-                  },
-                  "type": {
-                    "type": "enum",
-                    "value": "savings",
                   },
                 },
                 "type": "object",
               },
-              "updatedAt": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2022-04-18T07:21:35.375Z",
-                },
-              },
-              "updatedBy": {
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "id": {
                 "type": "primitive",
                 "value": {
                   "type": "string",
-                  "value": "updatedBy",
+                  "value": "0399abed-fd3d",
                 },
+              },
+              "schedule": {
+                "properties": {
+                  "frequency": {
+                    "type": "enum",
+                    "value": "once",
+                  },
+                },
+                "type": "object",
+              },
+              "state": {
+                "type": "enum",
+                "value": "unscheduled",
               },
             },
             "type": "object",

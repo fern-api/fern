@@ -381,7 +381,7 @@ export class ExampleTypeFactory {
                         result[property] = propertyExample;
                     } else if (required) {
                         return undefined;
-                    } else if (!options.ignoreOptionals && propertyExample != null) {
+                    } else if (options.ignoreOptionals && propertyExample != null) {
                         result[property] = propertyExample;
                     }
                 }

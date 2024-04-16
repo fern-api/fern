@@ -23,10 +23,7 @@ exports[`x-fern-sdk-group-name-with-streaming x-fern-sdk-group-name-with-streami
                   "stream": false,
                 },
                 "response": {
-                  "body": {
-                    "id": "id",
-                    "streamed": false,
-                  },
+                  "body": {},
                 },
               },
             ],
