@@ -339,6 +339,7 @@ async function getNavigationConfiguration({
                 context
             });
             versionedNavbars.push({
+                tabs: result.tabs,
                 version: version.displayName,
                 navigation,
                 availability: version.availability,

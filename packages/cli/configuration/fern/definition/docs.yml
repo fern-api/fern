@@ -119,6 +119,7 @@ types:
 
   VersionFileConfig:
     properties:
+      tabs: optional<map<TabId, TabConfig>>
       navigation: NavigationConfig
 
   NavigationConfig:

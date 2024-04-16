@@ -112,6 +112,7 @@ export interface VersionedDocsNavigation {
 }
 
 export interface VersionInfo {
+    tabs?: Record<RelativeFilePath, TabConfig>;
     navigation: UntabbedDocsNavigation | TabbedDocsNavigation;
     version: string;
     availability: VersionAvailability | undefined;

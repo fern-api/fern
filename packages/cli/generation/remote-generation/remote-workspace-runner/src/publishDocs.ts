@@ -448,6 +448,7 @@ async function convertNavigationConfig({
                         async (version): Promise<DocsV1Write.VersionedNavigationConfigData> => {
                             const convertedNavigation = await convertUnversionedNavigationConfig({
                                 navigationConfig: version.navigation,
+                                tabs: version.tabs,
                                 parsedDocsConfig,
                                 organization,
                                 fernWorkspaces,

@@ -10,11 +10,18 @@ export const VersionFileConfig: core.serialization.ObjectSchema<
     serializers.VersionFileConfig.Raw,
     FernDocsConfig.VersionFileConfig
 > = core.serialization.object({
-    navigation: core.serialization.lazy(async () => (await import("../../..")).NavigationConfig),
+    tabs: core.serialization
+        .record(
+            core.serialization.lazy(async () => (await import("../../..")).TabId),
+            core.serialization.lazyObject(async () => (await import("../../..")).TabConfig)
+        )
+        .optional(),
+    navigation: core.serialization.lazy(async () => (await import("../../..")).NavigationConfig)
 });
 
 export declare namespace VersionFileConfig {
     interface Raw {
+        tabs?: Record<serializers.TabId.Raw, serializers.TabConfig.Raw> | null;
         navigation: serializers.NavigationConfig.Raw;
     }
 }
