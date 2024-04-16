@@ -5,7 +5,8 @@ service:
     serviceParam: string
   endpoints:
     post:
-      path: "/{endpointParam}"
+      path: "/{endpointParam}/{resourceParam}"
       path-parameters:
+        resourceParam: string
         endpointParam: integer
       method: POST

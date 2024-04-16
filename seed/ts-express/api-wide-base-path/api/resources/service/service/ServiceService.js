@@ -53,7 +53,7 @@ class ServiceService {
         return this;
     }
     toRouter() {
-        this.router.post("/:endpointParam", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.router.post("/:endpointParam/:resourceParam", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.methods.post(req, {
                     send: () => __awaiter(this, void 0, void 0, function* () {

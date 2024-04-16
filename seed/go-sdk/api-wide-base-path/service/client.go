@@ -34,6 +34,7 @@ func (c *Client) Post(
 	ctx context.Context,
 	pathParam string,
 	serviceParam string,
+	resourceParam string,
 	endpointParam int,
 	opts ...option.RequestOption,
 ) error {
@@ -46,7 +47,7 @@ func (c *Client) Post(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"test/%v/%v/%v", pathParam, serviceParam, endpointParam)
+	endpointURL := fmt.Sprintf(baseURL+"/"+"test/%v/%v/%v/%v", pathParam, serviceParam, endpointParam, resourceParam)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
