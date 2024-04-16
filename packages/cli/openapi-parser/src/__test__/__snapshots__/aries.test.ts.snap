@@ -297,7 +297,33 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "name": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Query",
+                },
+              },
+              "params": {
+                "type": "map",
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "key",
+                    },
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      },
+                    },
+                  },
+                ],
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -1370,7 +1396,67 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "mediation_id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                },
+              },
+              "my_label": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Bob",
+                },
+              },
+              "recipient_keys": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                    },
+                  },
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                    },
+                  },
+                ],
+              },
+              "routing_keys": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                    },
+                  },
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                    },
+                  },
+                ],
+              },
+              "service_endpoint": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "http://192.168.56.102:8020",
+                },
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -1628,7 +1714,64 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "alias": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "alias",
+                },
+              },
+              "my_did": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "WgWxqztrNooG92RXvxSTWv",
+                },
+              },
+              "my_seed": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "my_seed",
+                },
+              },
+              "their_did": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "WgWxqztrNooG92RXvxSTWv",
+                },
+              },
+              "their_endpoint": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "https://myhost:8021",
+                },
+              },
+              "their_label": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "their_label",
+                },
+              },
+              "their_seed": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "their_seed",
+                },
+              },
+              "their_verkey": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "their_verkey",
+                },
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -1861,7 +2004,88 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "@id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                },
+              },
+              "@type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "https://didcomm.org/my-family/1.0/my-message-type",
+                },
+              },
+              "did": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "WgWxqztrNooG92RXvxSTWv",
+                },
+              },
+              "imageUrl": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "http://192.168.56.101/img/logo.jpg",
+                },
+              },
+              "label": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Bob",
+                },
+              },
+              "recipientKeys": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                    },
+                  },
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                    },
+                  },
+                ],
+              },
+              "routingKeys": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                    },
+                  },
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                    },
+                  },
+                ],
+              },
+              "serviceEndpoint": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "http://192.168.56.101:8020",
+                },
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -3397,7 +3621,15 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "content": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Hello",
+                },
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -3518,7 +3750,15 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "comment": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "comment",
+                },
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -3770,7 +4010,36 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "revocation_registry_size": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1000,
+                },
+              },
+              "schema_id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
+                },
+              },
+              "support_revocation": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "tag": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "default",
+                },
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -5864,7 +6133,142 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "contexts": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "https://myhost:8021",
+                    },
+                  },
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "https://myhost:8021",
+                    },
+                  },
+                ],
+              },
+              "given_id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "given_id",
+                },
+              },
+              "issuer_id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "issuer_id",
+                },
+              },
+              "max_results": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 0,
+                },
+              },
+              "proof_types": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "Ed25519Signature2018",
+                    },
+                  },
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "Ed25519Signature2018",
+                    },
+                  },
+                ],
+              },
+              "schema_ids": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "https://myhost:8021",
+                    },
+                  },
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "https://myhost:8021",
+                    },
+                  },
+                ],
+              },
+              "subject_ids": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "subject_ids",
+                    },
+                  },
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "subject_ids",
+                    },
+                  },
+                ],
+              },
+              "tag_query": {
+                "type": "map",
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "key",
+                    },
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "value": "tag_query",
+                      },
+                    },
+                  },
+                ],
+              },
+              "types": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "https://myhost:8021",
+                    },
+                  },
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "https://myhost:8021",
+                    },
+                  },
+                ],
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -6614,6 +7018,112 @@ exports[`open api parser aries parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
+              "@id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                },
+              },
+              "@type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "https://didcomm.org/my-family/1.0/my-message-type",
+                },
+              },
+              "did": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "WgWxqztrNooG92RXvxSTWv",
+                },
+              },
+              "did_doc~attach": {
+                "properties": {
+                  "@id": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    },
+                  },
+                  "byte_count": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "int",
+                      "value": 1234,
+                    },
+                  },
+                  "data": {
+                    "properties": {
+                      "base64": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "ey4uLn0=",
+                        },
+                      },
+                      "links": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "https://link.to/data",
+                            },
+                          },
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "https://link.to/data",
+                            },
+                          },
+                        ],
+                      },
+                      "sha256": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "description": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "view from doorway, facing east, with lights off",
+                    },
+                  },
+                  "filename": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "IMG1092348.png",
+                    },
+                  },
+                  "lastmod_time": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "2021-12-31 23:59:59+00:00",
+                    },
+                  },
+                  "mime-type": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "image/png",
+                    },
+                  },
+                },
+                "type": "object",
+              },
               "label": {
                 "type": "primitive",
                 "value": {
@@ -8514,9 +9024,99 @@ exports[`open api parser aries parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
+              "auto_remove": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "comment": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "comment",
+                },
+              },
+              "credential_preview": {
+                "properties": {
+                  "@type": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "issue-credential/2.0/credential-preview",
+                    },
+                  },
+                  "attributes": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "mime-type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "image/jpeg",
+                            },
+                          },
+                          "name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "favourite_drink",
+                            },
+                          },
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "martini",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      {
+                        "properties": {
+                          "mime-type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "image/jpeg",
+                            },
+                          },
+                          "name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "favourite_drink",
+                            },
+                          },
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "martini",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                  },
+                },
+                "type": "object",
+              },
               "filter": {
                 "properties": {},
                 "type": "object",
+              },
+              "trace": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
               },
             },
             "type": "object",
@@ -9457,9 +10057,106 @@ exports[`open api parser aries parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
+              "auto_issue": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "auto_remove": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "comment": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "comment",
+                },
+              },
+              "credential_preview": {
+                "properties": {
+                  "@type": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "issue-credential/2.0/credential-preview",
+                    },
+                  },
+                  "attributes": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "mime-type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "image/jpeg",
+                            },
+                          },
+                          "name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "favourite_drink",
+                            },
+                          },
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "martini",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      {
+                        "properties": {
+                          "mime-type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "image/jpeg",
+                            },
+                          },
+                          "name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "favourite_drink",
+                            },
+                          },
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "martini",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                  },
+                },
+                "type": "object",
+              },
               "filter": {
                 "properties": {},
                 "type": "object",
+              },
+              "trace": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
               },
             },
             "type": "object",
@@ -13806,7 +14503,15 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "comment": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "comment",
+                },
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -15015,7 +15720,77 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "counter_preview": {
+                "properties": {
+                  "@type": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "issue-credential/2.0/credential-preview",
+                    },
+                  },
+                  "attributes": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "mime-type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "image/jpeg",
+                            },
+                          },
+                          "name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "favourite_drink",
+                            },
+                          },
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "martini",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      {
+                        "properties": {
+                          "mime-type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "image/jpeg",
+                            },
+                          },
+                          "name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "favourite_drink",
+                            },
+                          },
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "martini",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -15982,7 +16757,15 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "holder_did": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "did:key:ahsdkjahsdkjhaskjdhakjshdkajhsdkjahs",
+                },
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -16949,7 +17732,15 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "credential_id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "credential_id",
+                },
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -18019,6 +18810,20 @@ exports[`open api parser aries parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
+              "auto_remove": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "comment": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "comment",
+                },
+              },
               "connection_id": {
                 "type": "primitive",
                 "value": {
@@ -18026,9 +18831,92 @@ exports[`open api parser aries parse open api 1`] = `
                   "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 },
               },
+              "credential_preview": {
+                "properties": {
+                  "@type": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "issue-credential/2.0/credential-preview",
+                    },
+                  },
+                  "attributes": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "mime-type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "image/jpeg",
+                            },
+                          },
+                          "name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "favourite_drink",
+                            },
+                          },
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "martini",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      {
+                        "properties": {
+                          "mime-type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "image/jpeg",
+                            },
+                          },
+                          "name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "favourite_drink",
+                            },
+                          },
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "martini",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                  },
+                },
+                "type": "object",
+              },
               "filter": {
                 "properties": {},
                 "type": "object",
+              },
+              "trace": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "verification_method": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "verification_method",
+                },
               },
             },
             "type": "object",
@@ -18969,6 +19857,27 @@ exports[`open api parser aries parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
+              "auto_issue": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "auto_remove": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "comment": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "comment",
+                },
+              },
               "connection_id": {
                 "type": "primitive",
                 "value": {
@@ -18976,9 +19885,85 @@ exports[`open api parser aries parse open api 1`] = `
                   "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 },
               },
+              "credential_preview": {
+                "properties": {
+                  "@type": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "issue-credential/2.0/credential-preview",
+                    },
+                  },
+                  "attributes": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "mime-type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "image/jpeg",
+                            },
+                          },
+                          "name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "favourite_drink",
+                            },
+                          },
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "martini",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      {
+                        "properties": {
+                          "mime-type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "image/jpeg",
+                            },
+                          },
+                          "name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "favourite_drink",
+                            },
+                          },
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "martini",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                  },
+                },
+                "type": "object",
+              },
               "filter": {
                 "properties": {},
                 "type": "object",
+              },
+              "trace": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
               },
             },
             "type": "object",
@@ -19919,6 +20904,20 @@ exports[`open api parser aries parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
+              "auto_remove": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "comment": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "comment",
+                },
+              },
               "connection_id": {
                 "type": "primitive",
                 "value": {
@@ -19926,9 +20925,92 @@ exports[`open api parser aries parse open api 1`] = `
                   "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 },
               },
+              "credential_preview": {
+                "properties": {
+                  "@type": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "issue-credential/2.0/credential-preview",
+                    },
+                  },
+                  "attributes": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "mime-type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "image/jpeg",
+                            },
+                          },
+                          "name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "favourite_drink",
+                            },
+                          },
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "martini",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      {
+                        "properties": {
+                          "mime-type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "image/jpeg",
+                            },
+                          },
+                          "name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "favourite_drink",
+                            },
+                          },
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "martini",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                  },
+                },
+                "type": "object",
+              },
               "filter": {
                 "properties": {},
                 "type": "object",
+              },
+              "trace": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "verification_method": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "verification_method",
+                },
               },
             },
             "type": "object",
@@ -20869,6 +21951,20 @@ exports[`open api parser aries parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
+              "auto_remove": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "comment": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "comment",
+                },
+              },
               "connection_id": {
                 "type": "primitive",
                 "value": {
@@ -20938,6 +22034,20 @@ exports[`open api parser aries parse open api 1`] = `
                   },
                 },
                 "type": "object",
+              },
+              "holder_did": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "did:key:ahsdkjahsdkjhaskjdhakjshdkajhsdkjahs",
+                },
+              },
+              "trace": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": false,
+                },
               },
             },
             "type": "object",
@@ -21878,13 +22988,48 @@ exports[`open api parser aries parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
+              "auto_remove": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "comment": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "comment",
+                },
+              },
+              "cred_def_id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                },
+              },
               "credential_proposal": {
                 "properties": {
+                  "@type": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "issue-credential/1.0/credential-preview",
+                    },
+                  },
                   "attributes": {
                     "type": "array",
                     "value": [
                       {
                         "properties": {
+                          "mime-type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "image/jpeg",
+                            },
+                          },
                           "name": {
                             "type": "primitive",
                             "value": {
@@ -21904,6 +23049,13 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                       {
                         "properties": {
+                          "mime-type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "image/jpeg",
+                            },
+                          },
                           "name": {
                             "type": "primitive",
                             "value": {
@@ -21925,6 +23077,48 @@ exports[`open api parser aries parse open api 1`] = `
                   },
                 },
                 "type": "object",
+              },
+              "issuer_did": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "WgWxqztrNooG92RXvxSTWv",
+                },
+              },
+              "schema_id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
+                },
+              },
+              "schema_issuer_did": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "WgWxqztrNooG92RXvxSTWv",
+                },
+              },
+              "schema_name": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "preferences",
+                },
+              },
+              "schema_version": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "1.0",
+                },
+              },
+              "trace": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
               },
             },
             "type": "object",
@@ -22662,6 +23856,27 @@ exports[`open api parser aries parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
+              "auto_issue": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "auto_remove": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "comment": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "comment",
+                },
+              },
               "cred_def_id": {
                 "type": "primitive",
                 "value": {
@@ -22671,11 +23886,25 @@ exports[`open api parser aries parse open api 1`] = `
               },
               "credential_preview": {
                 "properties": {
+                  "@type": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "issue-credential/1.0/credential-preview",
+                    },
+                  },
                   "attributes": {
                     "type": "array",
                     "value": [
                       {
                         "properties": {
+                          "mime-type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "image/jpeg",
+                            },
+                          },
                           "name": {
                             "type": "primitive",
                             "value": {
@@ -22695,6 +23924,13 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                       {
                         "properties": {
+                          "mime-type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "image/jpeg",
+                            },
+                          },
                           "name": {
                             "type": "primitive",
                             "value": {
@@ -22716,6 +23952,13 @@ exports[`open api parser aries parse open api 1`] = `
                   },
                 },
                 "type": "object",
+              },
+              "trace": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
               },
             },
             "type": "object",
@@ -25911,7 +27154,15 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "comment": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "comment",
+                },
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -28317,7 +29568,15 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "credential_id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "credential_id",
+                },
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -29071,6 +30330,20 @@ exports[`open api parser aries parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
+              "auto_remove": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "comment": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "comment",
+                },
+              },
               "connection_id": {
                 "type": "primitive",
                 "value": {
@@ -29078,13 +30351,34 @@ exports[`open api parser aries parse open api 1`] = `
                   "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 },
               },
+              "cred_def_id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                },
+              },
               "credential_proposal": {
                 "properties": {
+                  "@type": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "issue-credential/1.0/credential-preview",
+                    },
+                  },
                   "attributes": {
                     "type": "array",
                     "value": [
                       {
                         "properties": {
+                          "mime-type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "image/jpeg",
+                            },
+                          },
                           "name": {
                             "type": "primitive",
                             "value": {
@@ -29104,6 +30398,13 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                       {
                         "properties": {
+                          "mime-type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "image/jpeg",
+                            },
+                          },
                           "name": {
                             "type": "primitive",
                             "value": {
@@ -29125,6 +30426,48 @@ exports[`open api parser aries parse open api 1`] = `
                   },
                 },
                 "type": "object",
+              },
+              "issuer_did": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "WgWxqztrNooG92RXvxSTWv",
+                },
+              },
+              "schema_id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
+                },
+              },
+              "schema_issuer_did": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "WgWxqztrNooG92RXvxSTWv",
+                },
+              },
+              "schema_name": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "preferences",
+                },
+              },
+              "schema_version": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "1.0",
+                },
+              },
+              "trace": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
               },
             },
             "type": "object",
@@ -29862,6 +31205,27 @@ exports[`open api parser aries parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
+              "auto_issue": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "auto_remove": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "comment": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "comment",
+                },
+              },
               "connection_id": {
                 "type": "primitive",
                 "value": {
@@ -29878,11 +31242,25 @@ exports[`open api parser aries parse open api 1`] = `
               },
               "credential_preview": {
                 "properties": {
+                  "@type": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "issue-credential/1.0/credential-preview",
+                    },
+                  },
                   "attributes": {
                     "type": "array",
                     "value": [
                       {
                         "properties": {
+                          "mime-type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "image/jpeg",
+                            },
+                          },
                           "name": {
                             "type": "primitive",
                             "value": {
@@ -29902,6 +31280,13 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                       {
                         "properties": {
+                          "mime-type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "image/jpeg",
+                            },
+                          },
                           "name": {
                             "type": "primitive",
                             "value": {
@@ -29923,6 +31308,13 @@ exports[`open api parser aries parse open api 1`] = `
                   },
                 },
                 "type": "object",
+              },
+              "trace": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
               },
             },
             "type": "object",
@@ -30660,11 +32052,143 @@ exports[`open api parser aries parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
+              "auto_remove": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "comment": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "comment",
+                },
+              },
               "connection_id": {
                 "type": "primitive",
                 "value": {
                   "type": "string",
                   "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                },
+              },
+              "cred_def_id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                },
+              },
+              "credential_proposal": {
+                "properties": {
+                  "@type": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "issue-credential/1.0/credential-preview",
+                    },
+                  },
+                  "attributes": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "mime-type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "image/jpeg",
+                            },
+                          },
+                          "name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "favourite_drink",
+                            },
+                          },
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "martini",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      {
+                        "properties": {
+                          "mime-type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "image/jpeg",
+                            },
+                          },
+                          "name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "favourite_drink",
+                            },
+                          },
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "martini",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                  },
+                },
+                "type": "object",
+              },
+              "issuer_did": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "WgWxqztrNooG92RXvxSTWv",
+                },
+              },
+              "schema_id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
+                },
+              },
+              "schema_issuer_did": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "WgWxqztrNooG92RXvxSTWv",
+                },
+              },
+              "schema_name": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "preferences",
+                },
+              },
+              "schema_version": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "1.0",
+                },
+              },
+              "trace": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
                 },
               },
             },
@@ -31537,6 +33061,13 @@ exports[`open api parser aries parse open api 1`] = `
                   },
                 },
                 "type": "object",
+              },
+              "verkey": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "verkey",
+                },
               },
             },
             "type": "object",
@@ -32804,7 +34335,29 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "mechanism": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "mechanism",
+                },
+              },
+              "text": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "text",
+                },
+              },
+              "version": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "version",
+                },
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -33650,7 +35203,45 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "updates": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "action": {
+                        "type": "enum",
+                        "value": "add",
+                      },
+                      "recipient_key": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                  {
+                    "properties": {
+                      "action": {
+                        "type": "enum",
+                        "value": "add",
+                      },
+                      "recipient_key": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -33798,7 +35389,46 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "mediator_terms": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "mediator_terms",
+                    },
+                  },
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "mediator_terms",
+                    },
+                  },
+                ],
+              },
+              "recipient_terms": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "recipient_terms",
+                    },
+                  },
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "recipient_terms",
+                    },
+                  },
+                ],
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -34801,7 +36431,46 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "mediator_terms": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "mediator_terms",
+                    },
+                  },
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "mediator_terms",
+                    },
+                  },
+                ],
+              },
+              "recipient_terms": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "recipient_terms",
+                    },
+                  },
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "recipient_terms",
+                    },
+                  },
+                ],
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -35072,7 +36741,15 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "mediation_id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                },
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -35397,7 +37074,74 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "image_url": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "https://aries.ca/images/sample.png",
+                },
+              },
+              "key_management_mode": {
+                "type": "literal",
+                "value": {
+                  "type": "string",
+                  "value": "managed",
+                },
+              },
+              "label": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Alice",
+                },
+              },
+              "wallet_dispatch_type": {
+                "type": "enum",
+                "value": "default",
+              },
+              "wallet_key": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "MySecretKey123",
+                },
+              },
+              "wallet_key_derivation": {
+                "type": "enum",
+                "value": "RAW",
+              },
+              "wallet_name": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "MyNewWallet",
+                },
+              },
+              "wallet_type": {
+                "type": "enum",
+                "value": "indy",
+              },
+              "wallet_webhook_urls": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "http://localhost:8022/webhooks",
+                    },
+                  },
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "http://localhost:8022/webhooks",
+                    },
+                  },
+                ],
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -35629,7 +37373,45 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "image_url": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "https://aries.ca/images/sample.png",
+                },
+              },
+              "label": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Alice",
+                },
+              },
+              "wallet_dispatch_type": {
+                "type": "enum",
+                "value": "default",
+              },
+              "wallet_webhook_urls": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "http://localhost:8022/webhooks",
+                    },
+                  },
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "http://localhost:8022/webhooks",
+                    },
+                  },
+                ],
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -35758,7 +37540,15 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "wallet_key": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "MySecretKey123",
+                },
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -35879,7 +37669,15 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "wallet_key": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "MySecretKey123",
+                },
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -36129,7 +37927,118 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "accept": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "didcomm/aip1",
+                    },
+                  },
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "didcomm/aip2;env=rfc19",
+                    },
+                  },
+                ],
+              },
+              "alias": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Barry",
+                },
+              },
+              "attachments": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "id": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "attachment-0",
+                        },
+                      },
+                      "type": {
+                        "type": "enum",
+                        "value": "present-proof",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  {
+                    "properties": {
+                      "id": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "attachment-0",
+                        },
+                      },
+                      "type": {
+                        "type": "enum",
+                        "value": "present-proof",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "handshake_protocols": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/didexchange/1.0",
+                    },
+                  },
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/didexchange/1.0",
+                    },
+                  },
+                ],
+              },
+              "mediation_id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                },
+              },
+              "my_label": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Invitation to Barry",
+                },
+              },
+              "protocol_version": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "1.1",
+                },
+              },
+              "use_public_did": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": false,
+                },
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -36676,7 +38585,381 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "@id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                },
+              },
+              "@type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "https://didcomm.org/my-family/1.0/my-message-type",
+                },
+              },
+              "accept": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "didcomm/aip1",
+                    },
+                  },
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "didcomm/aip2;env=rfc19",
+                    },
+                  },
+                ],
+              },
+              "handshake_protocols": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/didexchange/1.0",
+                    },
+                  },
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/didexchange/1.0",
+                    },
+                  },
+                ],
+              },
+              "imageUrl": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "http://192.168.56.101/img/logo.jpg",
+                },
+              },
+              "label": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Bob",
+                },
+              },
+              "requests~attach": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "@id": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        },
+                      },
+                      "byte_count": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1234,
+                        },
+                      },
+                      "data": {
+                        "properties": {
+                          "base64": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "ey4uLn0=",
+                            },
+                          },
+                          "links": {
+                            "type": "array",
+                            "value": [
+                              {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "https://link.to/data",
+                                },
+                              },
+                              {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "https://link.to/data",
+                                },
+                              },
+                            ],
+                          },
+                          "sha256": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "description": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "view from doorway, facing east, with lights off",
+                        },
+                      },
+                      "filename": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "IMG1092348.png",
+                        },
+                      },
+                      "lastmod_time": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "2021-12-31 23:59:59+00:00",
+                        },
+                      },
+                      "mime-type": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "image/png",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                  {
+                    "properties": {
+                      "@id": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        },
+                      },
+                      "byte_count": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 1234,
+                        },
+                      },
+                      "data": {
+                        "properties": {
+                          "base64": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "ey4uLn0=",
+                            },
+                          },
+                          "links": {
+                            "type": "array",
+                            "value": [
+                              {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "https://link.to/data",
+                                },
+                              },
+                              {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "https://link.to/data",
+                                },
+                              },
+                            ],
+                          },
+                          "sha256": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "description": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "view from doorway, facing east, with lights off",
+                        },
+                      },
+                      "filename": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "IMG1092348.png",
+                        },
+                      },
+                      "lastmod_time": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "2021-12-31 23:59:59+00:00",
+                        },
+                      },
+                      "mime-type": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "image/png",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "services": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "map",
+                    "value": [
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "did",
+                        },
+                        "value": {
+                          "type": "unknown",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "WgWxqztrNooG92RXvxSTWv",
+                            },
+                          },
+                        },
+                      },
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "id",
+                        },
+                        "value": {
+                          "type": "unknown",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "string",
+                            },
+                          },
+                        },
+                      },
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "recipientKeys",
+                        },
+                        "value": {
+                          "type": "unknown",
+                          "value": {
+                            "type": "map",
+                            "value": [
+                              {
+                                "key": {
+                                  "type": "string",
+                                  "value": "0",
+                                },
+                                "value": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+                                  },
+                                },
+                              },
+                            ],
+                          },
+                        },
+                      },
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "routingKeys",
+                        },
+                        "value": {
+                          "type": "unknown",
+                          "value": {
+                            "type": "map",
+                            "value": [
+                              {
+                                "key": {
+                                  "type": "string",
+                                  "value": "0",
+                                },
+                                "value": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
+                                  },
+                                },
+                              },
+                            ],
+                          },
+                        },
+                      },
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "serviceEndpoint",
+                        },
+                        "value": {
+                          "type": "unknown",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "http://192.168.56.101:8020",
+                            },
+                          },
+                        },
+                      },
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "type",
+                        },
+                        "value": {
+                          "type": "unknown",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "string",
+                            },
+                          },
+                        },
+                      },
+                    ],
+                  },
+                  {
+                    "type": "map",
+                    "value": [],
+                  },
+                ],
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -37402,9 +39685,215 @@ exports[`open api parser aries parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
+              "auto_verify": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": false,
+                },
+              },
+              "comment": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "comment",
+                },
+              },
               "presentation_request": {
-                "properties": {},
+                "properties": {
+                  "indy": {
+                    "properties": {
+                      "name": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "Proof request",
+                        },
+                      },
+                      "nonce": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "1",
+                        },
+                      },
+                      "requested_attributes": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "key",
+                            },
+                            "value": {
+                              "properties": {
+                                "name": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "favouriteDrink",
+                                  },
+                                },
+                                "names": {
+                                  "type": "array",
+                                  "value": [
+                                    {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "age",
+                                      },
+                                    },
+                                    {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "age",
+                                      },
+                                    },
+                                  ],
+                                },
+                                "restrictions": {
+                                  "type": "array",
+                                  "value": [
+                                    {
+                                      "type": "map",
+                                      "value": [
+                                        {
+                                          "key": {
+                                            "type": "string",
+                                            "value": "key",
+                                          },
+                                          "value": {
+                                            "type": "primitive",
+                                            "value": {
+                                              "type": "string",
+                                              "value": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                            },
+                                          },
+                                        },
+                                      ],
+                                    },
+                                    {
+                                      "type": "map",
+                                      "value": [
+                                        {
+                                          "key": {
+                                            "type": "string",
+                                            "value": "key",
+                                          },
+                                          "value": {
+                                            "type": "primitive",
+                                            "value": {
+                                              "type": "string",
+                                              "value": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                            },
+                                          },
+                                        },
+                                      ],
+                                    },
+                                  ],
+                                },
+                              },
+                              "type": "object",
+                            },
+                          },
+                        ],
+                      },
+                      "requested_predicates": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "key",
+                            },
+                            "value": {
+                              "properties": {
+                                "name": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "index",
+                                  },
+                                },
+                                "p_type": {
+                                  "type": "enum",
+                                  "value": ">=",
+                                },
+                                "p_value": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "int",
+                                    "value": 0,
+                                  },
+                                },
+                                "restrictions": {
+                                  "type": "array",
+                                  "value": [
+                                    {
+                                      "type": "map",
+                                      "value": [
+                                        {
+                                          "key": {
+                                            "type": "string",
+                                            "value": "key",
+                                          },
+                                          "value": {
+                                            "type": "primitive",
+                                            "value": {
+                                              "type": "string",
+                                              "value": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                            },
+                                          },
+                                        },
+                                      ],
+                                    },
+                                    {
+                                      "type": "map",
+                                      "value": [
+                                        {
+                                          "key": {
+                                            "type": "string",
+                                            "value": "key",
+                                          },
+                                          "value": {
+                                            "type": "primitive",
+                                            "value": {
+                                              "type": "string",
+                                              "value": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                            },
+                                          },
+                                        },
+                                      ],
+                                    },
+                                  ],
+                                },
+                              },
+                              "type": "object",
+                            },
+                          },
+                        ],
+                      },
+                      "version": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "1.0",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
                 "type": "object",
+              },
+              "trace": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": false,
+                },
               },
             },
             "type": "object",
@@ -40412,7 +42901,105 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "indy": {
+                "properties": {
+                  "requested_attributes": {
+                    "type": "map",
+                    "value": [
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "key",
+                        },
+                        "value": {
+                          "properties": {
+                            "cred_id": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              },
+                            },
+                            "revealed": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "boolean",
+                                "value": true,
+                              },
+                            },
+                          },
+                          "type": "object",
+                        },
+                      },
+                    ],
+                  },
+                  "requested_predicates": {
+                    "type": "map",
+                    "value": [
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "key",
+                        },
+                        "value": {
+                          "properties": {
+                            "cred_id": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              },
+                            },
+                            "timestamp": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "int",
+                                "value": 1640995199,
+                              },
+                            },
+                          },
+                          "type": "object",
+                        },
+                      },
+                    ],
+                  },
+                  "self_attested_attributes": {
+                    "type": "map",
+                    "value": [
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "key",
+                        },
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "self_attested_value",
+                          },
+                        },
+                      },
+                    ],
+                  },
+                  "trace": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean",
+                      "value": false,
+                    },
+                  },
+                },
+                "type": "object",
+              },
+              "trace": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -41034,7 +43621,22 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "auto_verify": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": false,
+                },
+              },
+              "trace": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": false,
+                },
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -42253,6 +44855,20 @@ exports[`open api parser aries parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
+              "auto_present": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "comment": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "comment",
+                },
+              },
               "connection_id": {
                 "type": "primitive",
                 "value": {
@@ -42261,8 +44877,200 @@ exports[`open api parser aries parse open api 1`] = `
                 },
               },
               "presentation_proposal": {
-                "properties": {},
+                "properties": {
+                  "indy": {
+                    "properties": {
+                      "name": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "Proof request",
+                        },
+                      },
+                      "nonce": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "1",
+                        },
+                      },
+                      "requested_attributes": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "key",
+                            },
+                            "value": {
+                              "properties": {
+                                "name": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "favouriteDrink",
+                                  },
+                                },
+                                "names": {
+                                  "type": "array",
+                                  "value": [
+                                    {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "age",
+                                      },
+                                    },
+                                    {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "age",
+                                      },
+                                    },
+                                  ],
+                                },
+                                "restrictions": {
+                                  "type": "array",
+                                  "value": [
+                                    {
+                                      "type": "map",
+                                      "value": [
+                                        {
+                                          "key": {
+                                            "type": "string",
+                                            "value": "key",
+                                          },
+                                          "value": {
+                                            "type": "primitive",
+                                            "value": {
+                                              "type": "string",
+                                              "value": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                            },
+                                          },
+                                        },
+                                      ],
+                                    },
+                                    {
+                                      "type": "map",
+                                      "value": [
+                                        {
+                                          "key": {
+                                            "type": "string",
+                                            "value": "key",
+                                          },
+                                          "value": {
+                                            "type": "primitive",
+                                            "value": {
+                                              "type": "string",
+                                              "value": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                            },
+                                          },
+                                        },
+                                      ],
+                                    },
+                                  ],
+                                },
+                              },
+                              "type": "object",
+                            },
+                          },
+                        ],
+                      },
+                      "requested_predicates": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "key",
+                            },
+                            "value": {
+                              "properties": {
+                                "name": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "index",
+                                  },
+                                },
+                                "p_type": {
+                                  "type": "enum",
+                                  "value": ">=",
+                                },
+                                "p_value": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "int",
+                                    "value": 0,
+                                  },
+                                },
+                                "restrictions": {
+                                  "type": "array",
+                                  "value": [
+                                    {
+                                      "type": "map",
+                                      "value": [
+                                        {
+                                          "key": {
+                                            "type": "string",
+                                            "value": "key",
+                                          },
+                                          "value": {
+                                            "type": "primitive",
+                                            "value": {
+                                              "type": "string",
+                                              "value": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                            },
+                                          },
+                                        },
+                                      ],
+                                    },
+                                    {
+                                      "type": "map",
+                                      "value": [
+                                        {
+                                          "key": {
+                                            "type": "string",
+                                            "value": "key",
+                                          },
+                                          "value": {
+                                            "type": "primitive",
+                                            "value": {
+                                              "type": "string",
+                                              "value": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                            },
+                                          },
+                                        },
+                                      ],
+                                    },
+                                  ],
+                                },
+                              },
+                              "type": "object",
+                            },
+                          },
+                        ],
+                      },
+                      "version": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "1.0",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
                 "type": "object",
+              },
+              "trace": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": false,
+                },
               },
             },
             "type": "object",
@@ -42858,6 +45666,20 @@ exports[`open api parser aries parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
+              "auto_verify": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": false,
+                },
+              },
+              "comment": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "comment",
+                },
+              },
               "connection_id": {
                 "type": "primitive",
                 "value": {
@@ -42866,8 +45688,200 @@ exports[`open api parser aries parse open api 1`] = `
                 },
               },
               "presentation_request": {
-                "properties": {},
+                "properties": {
+                  "indy": {
+                    "properties": {
+                      "name": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "Proof request",
+                        },
+                      },
+                      "nonce": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "1",
+                        },
+                      },
+                      "requested_attributes": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "key",
+                            },
+                            "value": {
+                              "properties": {
+                                "name": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "favouriteDrink",
+                                  },
+                                },
+                                "names": {
+                                  "type": "array",
+                                  "value": [
+                                    {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "age",
+                                      },
+                                    },
+                                    {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "age",
+                                      },
+                                    },
+                                  ],
+                                },
+                                "restrictions": {
+                                  "type": "array",
+                                  "value": [
+                                    {
+                                      "type": "map",
+                                      "value": [
+                                        {
+                                          "key": {
+                                            "type": "string",
+                                            "value": "key",
+                                          },
+                                          "value": {
+                                            "type": "primitive",
+                                            "value": {
+                                              "type": "string",
+                                              "value": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                            },
+                                          },
+                                        },
+                                      ],
+                                    },
+                                    {
+                                      "type": "map",
+                                      "value": [
+                                        {
+                                          "key": {
+                                            "type": "string",
+                                            "value": "key",
+                                          },
+                                          "value": {
+                                            "type": "primitive",
+                                            "value": {
+                                              "type": "string",
+                                              "value": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                            },
+                                          },
+                                        },
+                                      ],
+                                    },
+                                  ],
+                                },
+                              },
+                              "type": "object",
+                            },
+                          },
+                        ],
+                      },
+                      "requested_predicates": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "key",
+                            },
+                            "value": {
+                              "properties": {
+                                "name": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "index",
+                                  },
+                                },
+                                "p_type": {
+                                  "type": "enum",
+                                  "value": ">=",
+                                },
+                                "p_value": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "int",
+                                    "value": 0,
+                                  },
+                                },
+                                "restrictions": {
+                                  "type": "array",
+                                  "value": [
+                                    {
+                                      "type": "map",
+                                      "value": [
+                                        {
+                                          "key": {
+                                            "type": "string",
+                                            "value": "key",
+                                          },
+                                          "value": {
+                                            "type": "primitive",
+                                            "value": {
+                                              "type": "string",
+                                              "value": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                            },
+                                          },
+                                        },
+                                      ],
+                                    },
+                                    {
+                                      "type": "map",
+                                      "value": [
+                                        {
+                                          "key": {
+                                            "type": "string",
+                                            "value": "key",
+                                          },
+                                          "value": {
+                                            "type": "primitive",
+                                            "value": {
+                                              "type": "string",
+                                              "value": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                            },
+                                          },
+                                        },
+                                      ],
+                                    },
+                                  ],
+                                },
+                              },
+                              "type": "object",
+                            },
+                          },
+                        ],
+                      },
+                      "version": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "1.0",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
                 "type": "object",
+              },
+              "trace": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": false,
+                },
               },
             },
             "type": "object",
@@ -43463,8 +46477,36 @@ exports[`open api parser aries parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
+              "auto_verify": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": false,
+                },
+              },
+              "comment": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "comment",
+                },
+              },
               "proof_request": {
                 "properties": {
+                  "name": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "Proof request",
+                    },
+                  },
+                  "nonce": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "1",
+                    },
+                  },
                   "requested_attributes": {
                     "type": "map",
                     "value": [
@@ -43474,7 +46516,75 @@ exports[`open api parser aries parse open api 1`] = `
                           "value": "key",
                         },
                         "value": {
-                          "properties": {},
+                          "properties": {
+                            "name": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "favouriteDrink",
+                              },
+                            },
+                            "names": {
+                              "type": "array",
+                              "value": [
+                                {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "age",
+                                  },
+                                },
+                                {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "age",
+                                  },
+                                },
+                              ],
+                            },
+                            "restrictions": {
+                              "type": "array",
+                              "value": [
+                                {
+                                  "type": "map",
+                                  "value": [
+                                    {
+                                      "key": {
+                                        "type": "string",
+                                        "value": "key",
+                                      },
+                                      "value": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                        },
+                                      },
+                                    },
+                                  ],
+                                },
+                                {
+                                  "type": "map",
+                                  "value": [
+                                    {
+                                      "key": {
+                                        "type": "string",
+                                        "value": "key",
+                                      },
+                                      "value": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                        },
+                                      },
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          },
                           "type": "object",
                         },
                       },
@@ -43508,14 +46618,69 @@ exports[`open api parser aries parse open api 1`] = `
                                 "value": 0,
                               },
                             },
+                            "restrictions": {
+                              "type": "array",
+                              "value": [
+                                {
+                                  "type": "map",
+                                  "value": [
+                                    {
+                                      "key": {
+                                        "type": "string",
+                                        "value": "key",
+                                      },
+                                      "value": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                        },
+                                      },
+                                    },
+                                  ],
+                                },
+                                {
+                                  "type": "map",
+                                  "value": [
+                                    {
+                                      "key": {
+                                        "type": "string",
+                                        "value": "key",
+                                      },
+                                      "value": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                        },
+                                      },
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
                           },
                           "type": "object",
                         },
                       },
                     ],
                   },
+                  "version": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "1.0",
+                    },
+                  },
                 },
                 "type": "object",
+              },
+              "trace": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": false,
+                },
               },
             },
             "type": "object",
@@ -47001,6 +50166,13 @@ exports[`open api parser aries parse open api 1`] = `
                             "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                           },
                         },
+                        "revealed": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "boolean",
+                            "value": true,
+                          },
+                        },
                       },
                       "type": "object",
                     },
@@ -47022,6 +50194,13 @@ exports[`open api parser aries parse open api 1`] = `
                           "value": {
                             "type": "string",
                             "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          },
+                        },
+                        "timestamp": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 1640995199,
                           },
                         },
                       },
@@ -47047,6 +50226,13 @@ exports[`open api parser aries parse open api 1`] = `
                     },
                   },
                 ],
+              },
+              "trace": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": false,
+                },
               },
             },
             "type": "object",
@@ -47816,7 +51002,22 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "auto_verify": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": false,
+                },
+              },
+              "trace": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": false,
+                },
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -49327,6 +52528,20 @@ exports[`open api parser aries parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
+              "auto_present": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "comment": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "comment",
+                },
+              },
               "connection_id": {
                 "type": "primitive",
                 "value": {
@@ -49336,11 +52551,32 @@ exports[`open api parser aries parse open api 1`] = `
               },
               "presentation_proposal": {
                 "properties": {
+                  "@type": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/present-proof/1.0/presentation-preview",
+                    },
+                  },
                   "attributes": {
                     "type": "array",
                     "value": [
                       {
                         "properties": {
+                          "cred_def_id": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                            },
+                          },
+                          "mime-type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "image/jpeg",
+                            },
+                          },
                           "name": {
                             "type": "primitive",
                             "value": {
@@ -49348,16 +52584,58 @@ exports[`open api parser aries parse open api 1`] = `
                               "value": "favourite_drink",
                             },
                           },
+                          "referent": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "0",
+                            },
+                          },
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "martini",
+                            },
+                          },
                         },
                         "type": "object",
                       },
                       {
                         "properties": {
+                          "cred_def_id": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                            },
+                          },
+                          "mime-type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "image/jpeg",
+                            },
+                          },
                           "name": {
                             "type": "primitive",
                             "value": {
                               "type": "string",
                               "value": "favourite_drink",
+                            },
+                          },
+                          "referent": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "0",
+                            },
+                          },
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "martini",
                             },
                           },
                         },
@@ -49370,6 +52648,13 @@ exports[`open api parser aries parse open api 1`] = `
                     "value": [
                       {
                         "properties": {
+                          "cred_def_id": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                            },
+                          },
                           "name": {
                             "type": "primitive",
                             "value": {
@@ -49393,6 +52678,13 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                       {
                         "properties": {
+                          "cred_def_id": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                            },
+                          },
                           "name": {
                             "type": "primitive",
                             "value": {
@@ -49418,6 +52710,13 @@ exports[`open api parser aries parse open api 1`] = `
                   },
                 },
                 "type": "object",
+              },
+              "trace": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": false,
+                },
               },
             },
             "type": "object",
@@ -50159,6 +53458,20 @@ exports[`open api parser aries parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
+              "auto_verify": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": false,
+                },
+              },
+              "comment": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "comment",
+                },
+              },
               "connection_id": {
                 "type": "primitive",
                 "value": {
@@ -50168,6 +53481,20 @@ exports[`open api parser aries parse open api 1`] = `
               },
               "proof_request": {
                 "properties": {
+                  "name": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "Proof request",
+                    },
+                  },
+                  "nonce": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "1",
+                    },
+                  },
                   "requested_attributes": {
                     "type": "map",
                     "value": [
@@ -50177,7 +53504,75 @@ exports[`open api parser aries parse open api 1`] = `
                           "value": "key",
                         },
                         "value": {
-                          "properties": {},
+                          "properties": {
+                            "name": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "favouriteDrink",
+                              },
+                            },
+                            "names": {
+                              "type": "array",
+                              "value": [
+                                {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "age",
+                                  },
+                                },
+                                {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "age",
+                                  },
+                                },
+                              ],
+                            },
+                            "restrictions": {
+                              "type": "array",
+                              "value": [
+                                {
+                                  "type": "map",
+                                  "value": [
+                                    {
+                                      "key": {
+                                        "type": "string",
+                                        "value": "key",
+                                      },
+                                      "value": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                        },
+                                      },
+                                    },
+                                  ],
+                                },
+                                {
+                                  "type": "map",
+                                  "value": [
+                                    {
+                                      "key": {
+                                        "type": "string",
+                                        "value": "key",
+                                      },
+                                      "value": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                        },
+                                      },
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          },
                           "type": "object",
                         },
                       },
@@ -50211,14 +53606,69 @@ exports[`open api parser aries parse open api 1`] = `
                                 "value": 0,
                               },
                             },
+                            "restrictions": {
+                              "type": "array",
+                              "value": [
+                                {
+                                  "type": "map",
+                                  "value": [
+                                    {
+                                      "key": {
+                                        "type": "string",
+                                        "value": "key",
+                                      },
+                                      "value": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                        },
+                                      },
+                                    },
+                                  ],
+                                },
+                                {
+                                  "type": "map",
+                                  "value": [
+                                    {
+                                      "key": {
+                                        "type": "string",
+                                        "value": "key",
+                                      },
+                                      "value": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                        },
+                                      },
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
                           },
                           "type": "object",
                         },
                       },
                     ],
                   },
+                  "version": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "1.0",
+                    },
+                  },
                 },
                 "type": "object",
+              },
+              "trace": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": false,
+                },
               },
             },
             "type": "object",
@@ -51343,7 +54793,38 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "purge": {
+                "type": "map",
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "key",
+                    },
+                    "value": {
+                      "type": "array",
+                      "value": [
+                        {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "12345",
+                          },
+                        },
+                        {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "12345",
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -51441,7 +54922,22 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "credential_definition_id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                },
+              },
+              "max_cred_num": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1000,
+                },
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -51915,7 +55411,38 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "rrid2crid": {
+                "type": "map",
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "key",
+                    },
+                    "value": {
+                      "type": "array",
+                      "value": [
+                        {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "12345",
+                          },
+                        },
+                        {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "12345",
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -54929,7 +58456,68 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "comment": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "comment",
+                },
+              },
+              "connection_id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                },
+              },
+              "cred_ex_id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                },
+              },
+              "cred_rev_id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "12345",
+                },
+              },
+              "notify": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "notify_version": {
+                "type": "enum",
+                "value": "v1_0",
+              },
+              "publish": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "rev_reg_id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
+                },
+              },
+              "thread_id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "thread_id",
+                },
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -59111,7 +62699,22 @@ exports[`open api parser aries parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "method": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "sov",
+                },
+              },
+              "seed": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "000000000000000000000000Trustee1",
+                },
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -59695,6 +63298,17 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "string",
                   "value": "WgWxqztrNooG92RXvxSTWv",
                 },
+              },
+              "endpoint": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "https://myhost:8021",
+                },
+              },
+              "endpoint_type": {
+                "type": "enum",
+                "value": "Endpoint",
               },
             },
             "type": "object",

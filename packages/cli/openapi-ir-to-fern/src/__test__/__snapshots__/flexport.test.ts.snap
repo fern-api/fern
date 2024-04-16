@@ -349,13 +349,84 @@ exports[`open api parser flexport simple 1`] = `
               {
                 "name": "Success",
                 "request": {
-                  "cargo": {},
+                  "cargo": {
+                    "contains_hazmat": true,
+                    "contains_li_ion": true,
+                    "contains_magnets": true,
+                    "contains_non_li_ion_battery": true,
+                    "contains_other_dangerous_goods": true,
+                    "lithium_batteries_packing_types": [
+                      "packed_loose",
+                    ],
+                    "marks_and_numbers": "Fragile",
+                    "shipping_units": [
+                      {
+                        "atomic_count": 9,
+                        "count": 9,
+                        "height": {
+                          "unit": "cm",
+                          "value": 472.62,
+                        },
+                        "length": {
+                          "unit": "cm",
+                          "value": 472.62,
+                        },
+                        "name": "Watches",
+                        "unit_type": "carton",
+                        "volume": {
+                          "unit": "cbm",
+                          "value": 472.62,
+                        },
+                        "weight": {
+                          "unit": "kg",
+                          "value": 2300.4,
+                        },
+                        "width": {
+                          "unit": "cm",
+                          "value": 472.62,
+                        },
+                      },
+                    ],
+                    "volume": {
+                      "unit": "cbm",
+                      "value": 472.62,
+                    },
+                    "weight": {
+                      "unit": "kg",
+                      "value": 2300.4,
+                    },
+                  },
                   "cargo_ready_date": "2019-06-30",
                   "consignee_entity_ref": "zoomit_ref",
+                  "delivery_date": "2019-07-31",
                   "destination_address_ref": "my-albany-ref",
+                  "metadata": [
+                    {},
+                  ],
                   "name": "PO 123",
+                  "ocean_booking": {
+                    "container_counts": {
+                      "forty_five_ft_hc": 5,
+                      "forty_ft": 3,
+                      "forty_ft_hc": 4,
+                      "twenty_ft": 2,
+                    },
+                    "incoterm": "FOB",
+                    "is_lcl": false,
+                    "product_descriptions": [
+                      {
+                        "description": "Watches",
+                        "description_for_export_customs": "手表",
+                        "description_for_export_customs_locale": "zh_CN",
+                        "hs_code": "9101.00",
+                      },
+                    ],
+                    "wants_delivery_service": false,
+                    "wants_pickup_service": false,
+                  },
                   "origin_address_ref": "id-274346",
                   "shipper_entity_ref": "zoomit-us",
+                  "special_instructions": "Handle carefully",
                   "wants_export_customs_service": true,
                 },
                 "response": {
@@ -1114,7 +1185,70 @@ exports[`open api parser flexport simple 1`] = `
               {
                 "name": "Success",
                 "request": {
+                  "amendment_note": "This is an amendment note with useful context to changes made to the booking.",
                   "booking_id": 12345,
+                  "new_cargo": {
+                    "contains_hazmat": true,
+                    "contains_li_ion": true,
+                    "contains_magnets": true,
+                    "contains_non_li_ion_battery": true,
+                    "contains_other_dangerous_goods": true,
+                    "lithium_batteries_packing_types": [
+                      "packed_loose",
+                    ],
+                    "marks_and_numbers": "Fragile",
+                    "shipping_units": [
+                      {
+                        "atomic_count": 9,
+                        "count": 9,
+                        "height": {
+                          "unit": "cm",
+                          "value": 472.62,
+                        },
+                        "length": {
+                          "unit": "cm",
+                          "value": 472.62,
+                        },
+                        "name": "Watches",
+                        "unit_type": "carton",
+                        "volume": {
+                          "unit": "cbm",
+                          "value": 472.62,
+                        },
+                        "weight": {
+                          "unit": "kg",
+                          "value": 2300.4,
+                        },
+                        "width": {
+                          "unit": "cm",
+                          "value": 472.62,
+                        },
+                      },
+                    ],
+                    "volume": {
+                      "unit": "cbm",
+                      "value": 472.62,
+                    },
+                    "weight": {
+                      "unit": "kg",
+                      "value": 2300.4,
+                    },
+                  },
+                  "new_cargo_ready_date": "2019-06-30",
+                  "new_container_counts": {
+                    "forty_five_ft_hc": 5,
+                    "forty_ft": 3,
+                    "forty_ft_hc": 4,
+                    "twenty_ft": 2,
+                  },
+                  "new_metadata": [
+                    {},
+                  ],
+                  "new_name": "Valentine's Day - 2020",
+                  "new_origin_address_ref": "warehouse_cn",
+                  "new_origin_port_loc_code": "CNSZP",
+                  "new_wants_import_customs_service": false,
+                  "new_wants_pickup_service": false,
                 },
                 "response": {
                   "body": {
@@ -1621,7 +1755,16 @@ exports[`open api parser flexport simple 1`] = `
               {
                 "name": "response",
                 "request": {
+                  "destination_port": "JFK",
+                  "origin_coordinates": {
+                    "latitude": "37.78",
+                    "longitude": "-12.41",
+                  },
                   "transportation_mode": "air",
+                  "weight": {
+                    "unit": "kg",
+                    "value": 40,
+                  },
                 },
                 "response": {
                   "body": {
@@ -6499,26 +6642,123 @@ Other details about this invoice",
               {
                 "name": "Success",
                 "request": {
+                  "cargo_ready_date": "2019-06-30",
+                  "currency_code": "USD",
+                  "destination_location_refs": [
+                    "id-654321",
+                    "id-654322",
+                  ],
+                  "destination_port": {
+                    "code": "USFBN",
+                    "code_type": "unlocode",
+                  },
+                  "freight_payment_terms": "freight_collect",
+                  "incoterm": "FOB",
+                  "issue_date": "2019-06-30",
                   "line_items": [
                     {
+                      "assigned_party_ref": "id-12355",
+                      "cargo_ready_date": "2019-06-30",
+                      "destination_locations": [
+                        {
+                          "location_ref": "id-654321",
+                          "units": 1,
+                        },
+                      ],
+                      "destination_port": {
+                        "code": "USFBN",
+                        "code_type": "unlocode",
+                      },
+                      "hs_codes": [
+                        {
+                          "code": "6204.62.80.11",
+                          "country_code": "US",
+                        },
+                      ],
+                      "incoterm": "FOB",
                       "item_key": "item_key_1",
+                      "line_item_number": 1,
+                      "measurements": [
+                        {
+                          "measure_type": "length",
+                          "unit_of_measure": "EA",
+                          "value": "1.0",
+                        },
+                      ],
+                      "metadata": [
+                        {},
+                      ],
+                      "must_arrive_date": "2019-07-31",
+                      "origin_location_ref": "id-123456",
+                      "origin_port": {
+                        "code": "USFBN",
+                        "code_type": "unlocode",
+                      },
                       "product": {
+                        "color": "red",
+                        "country_of_origin": "US",
+                        "dangerous": true,
+                        "ean_ucc_13": "1234567890123",
+                        "ean_ucc_8": "12345678",
+                        "lot_number": "123456789",
                         "name": "AC Adapter 12",
+                        "product_category": "furniture",
+                        "size": "m",
+                        "sku": "SKU-123",
+                        "style": "classic",
+                        "upc": "123456789",
+                      },
+                      "transportation_mode": "ocean",
+                      "unit_cost": {
+                        "amount": "100.01",
+                        "currency_code": "USD",
                       },
                       "units": 10,
                     },
                   ],
+                  "memo": "memo",
+                  "must_arrive_date": "2019-07-31",
                   "name": "PO 123",
+                  "order_class": "purchase_order",
+                  "order_type": "Apparel",
+                  "origin_location_ref": "id-123456",
+                  "origin_port": {
+                    "code": "USFBN",
+                    "code_type": "unlocode",
+                  },
                   "parties": [
                     {
+                      "contacts": [
+                        {
+                          "department": "a department",
+                          "email": "abc@173.com",
+                          "fax": "123456789",
+                          "name": "abc",
+                          "phone": "123456789",
+                        },
+                      ],
                       "external_ref": "id-1232",
+                      "location_ref": "id-1232",
                       "role": "buyer",
                     },
                     {
+                      "contacts": [
+                        {
+                          "department": "a department",
+                          "email": "abc@173.com",
+                          "fax": "123456789",
+                          "name": "cds",
+                          "phone": "123456789",
+                        },
+                      ],
                       "external_ref": "id-321",
+                      "location_ref": "id-432",
                       "role": "seller",
                     },
                   ],
+                  "priority": "standard",
+                  "status": "open",
+                  "transportation_mode": "ocean",
                 },
                 "response": {
                   "body": {
@@ -7146,6 +7386,19 @@ Other details about this invoice",
                   "id": 1,
                 },
                 "request": {
+                  "cargo_ready_date": "2019-06-30",
+                  "currency_code": "USD",
+                  "destination_location_refs": [
+                    "id-654321",
+                    "id-654322",
+                  ],
+                  "destination_port": {
+                    "code": "CNSHA",
+                    "code_type": "unlocode",
+                  },
+                  "freight_payment_terms": "freight_collect",
+                  "incoterm": "FOB",
+                  "issue_date": "2019-06-30",
                   "line_items": [
                     {
                       "item_key": "item_key_1",
@@ -7155,17 +7408,31 @@ Other details about this invoice",
                       "units": 100,
                     },
                   ],
+                  "memo": "memo",
+                  "must_arrive_date": "2019-07-31",
                   "name": "PO 123",
+                  "order_class": "purchase_order",
+                  "order_type": "Apparel",
+                  "origin_location_ref": "id-123456",
+                  "origin_port": {
+                    "code": "USLA",
+                    "code_type": "unlocode",
+                  },
                   "parties": [
                     {
                       "external_ref": "id-1232",
+                      "location_ref": "id-1232",
                       "role": "buyer",
                     },
                     {
                       "external_ref": "id-321",
+                      "location_ref": "id-432",
                       "role": "seller",
                     },
                   ],
+                  "priority": "standard",
+                  "status": "open",
+                  "transportation_mode": "ocean",
                 },
                 "response": {
                   "body": {
@@ -8245,7 +8512,12 @@ Other details about this invoice",
             "examples": [
               {
                 "name": "Success",
-                "request": {},
+                "request": {
+                  "shipment_ids": [
+                    123,
+                    456,
+                  ],
+                },
                 "response": {
                   "body": {
                     "_object": "/api/response",

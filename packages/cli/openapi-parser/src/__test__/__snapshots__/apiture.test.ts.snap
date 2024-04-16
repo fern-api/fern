@@ -1676,6 +1676,13 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
           "queryParameters": [],
           "request": {
             "properties": {
+              "disallowDebitCardAccess": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": false,
+                },
+              },
               "emailAddress": {
                 "type": "primitive",
                 "value": {
@@ -4715,7 +4722,70 @@ Note: This operation requires an identity challenge if the financial institution
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "amount": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "275.00",
+                },
+              },
+              "memo": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Cover check for car repair",
+                },
+              },
+              "schedule": {
+                "properties": {
+                  "frequency": {
+                    "type": "enum",
+                    "value": "once",
+                  },
+                  "scheduledOn": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "2022-06-28",
+                    },
+                  },
+                },
+                "type": "object",
+              },
+              "sourceAccount": {
+                "properties": {
+                  "id": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "bd9b7af2-6f9b",
+                    },
+                  },
+                  "location": {
+                    "type": "enum",
+                    "value": "internal",
+                  },
+                },
+                "type": "object",
+              },
+              "targetAccount": {
+                "properties": {
+                  "id": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "88b1ca3e-d0f3",
+                    },
+                  },
+                  "location": {
+                    "type": "enum",
+                    "value": "internal",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -5312,7 +5382,43 @@ Note: This operation requires an identity challenge if the financial institution
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "amount": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "275.00",
+                },
+              },
+              "schedule": {
+                "properties": {
+                  "frequency": {
+                    "type": "enum",
+                    "value": "once",
+                  },
+                  "scheduledOn": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "2022-06-28",
+                    },
+                  },
+                },
+                "type": "object",
+              },
+              "targetAccount": {
+                "properties": {
+                  "id": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "88b1ca3e-d0f3",
+                    },
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {

@@ -2976,8 +2976,16 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     },
                     "type": "BUSINESS",
                   },
+                  "metadata": {
+                    "internal_reference_id": "GGq73487w2",
+                  },
                   "number": "12343453245633",
-                  "providers": {},
+                  "providers": {
+                    "payments_way": {
+                      "form_id": 321,
+                      "terminal_id": 123,
+                    },
+                  },
                 },
                 "response": {
                   "body": {
@@ -3708,12 +3716,14 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               {
                 "name": "PSE Individual",
                 "request": {
+                  "address": "Calle Carlos Vives 432, 80300 Bogota",
                   "country": "COL",
                   "customer_type": "INDIVIDUAL",
                   "email": "carlos.vives@musicacolombia.co",
                   "identifier": "1018760936",
                   "identifier_type": "CC",
                   "name": "Carlos Vives",
+                  "phone": "3210-9876",
                 },
                 "response": {
                   "body": {

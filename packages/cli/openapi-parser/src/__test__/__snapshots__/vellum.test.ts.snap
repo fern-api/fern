@@ -2204,6 +2204,17 @@ or overwritten with default values.",
                           "value": "var_1",
                         },
                       },
+                      "type": {
+                        "type": "enum",
+                        "value": "TEXT",
+                      },
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "Hello, world!",
+                        },
+                      },
                     },
                     "type": "object",
                   },
@@ -2216,10 +2227,28 @@ or overwritten with default values.",
                           "value": "var_2",
                         },
                       },
+                      "type": {
+                        "type": "enum",
+                        "value": "TEXT",
+                      },
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "Why hello, there!",
+                        },
+                      },
                     },
                     "type": "object",
                   },
                 ],
+              },
+              "label": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Scenario 1",
+                },
               },
             },
             "type": "object",
@@ -2336,6 +2365,43 @@ or overwritten with default values.",
                 "value": [
                   {
                     "properties": {
+                      "chat_history": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "role": {
+                                "type": "enum",
+                                "value": "USER",
+                              },
+                              "text": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "What's your favorite color?",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                          {
+                            "properties": {
+                              "role": {
+                                "type": "enum",
+                                "value": "ASSISTANT",
+                              },
+                              "text": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "AI's don't have a favorite color.... Yet.",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
                       "key": {
                         "type": "primitive",
                         "value": {
@@ -2343,10 +2409,21 @@ or overwritten with default values.",
                           "value": "$chat_history",
                         },
                       },
+                      "type": {
+                        "type": "enum",
+                        "value": "CHAT_HISTORY",
+                      },
                     },
                     "type": "object",
                   },
                 ],
+              },
+              "label": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Scenario 2",
+                },
               },
             },
             "type": "object",

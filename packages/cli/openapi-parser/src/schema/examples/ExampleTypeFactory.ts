@@ -368,7 +368,7 @@ export class ExampleTypeFactory {
                 const requiredProperties = this.getAllRequiredProperties(schema);
                 for (const [property, schema] of Object.entries(allProperties)) {
                     const required = property in requiredProperties;
-                    const inExample = property in Object.keys(fullExample);
+                    const inExample = Object.keys(fullExample).includes(property);
                     const propertyExample = this.buildExampleHelper({
                         schema,
                         exampleId,

@@ -700,11 +700,16 @@ or overwritten with default values.",
                   "inputs": [
                     {
                       "key": "var_1",
+                      "type": "TEXT",
+                      "value": "Hello, world!",
                     },
                     {
                       "key": "var_2",
+                      "type": "TEXT",
+                      "value": "Why hello, there!",
                     },
                   ],
+                  "label": "Scenario 1",
                 },
                 "response": {
                   "body": {
@@ -739,9 +744,21 @@ or overwritten with default values.",
                 "request": {
                   "inputs": [
                     {
+                      "chat_history": [
+                        {
+                          "role": "USER",
+                          "text": "What's your favorite color?",
+                        },
+                        {
+                          "role": "ASSISTANT",
+                          "text": "AI's don't have a favorite color.... Yet.",
+                        },
+                      ],
                       "key": "chat_history",
+                      "type": "CHAT_HISTORY",
                     },
                   ],
+                  "label": "Scenario 2",
                 },
                 "response": {
                   "body": {

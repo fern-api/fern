@@ -765,6 +765,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                   "accountId": "accountId",
                 },
                 "request": {
+                  "disallowDebitCardAccess": false,
                   "emailAddress": "Mary.Jones@example.com",
                   "firstName": "Mary",
                   "lastName": "Jones",
@@ -1226,7 +1227,22 @@ Note: This operation requires an identity challenge if the financial institution
             ],
             "examples": [
               {
-                "request": {},
+                "request": {
+                  "amount": "275.00",
+                  "memo": "Cover check for car repair",
+                  "schedule": {
+                    "frequency": "once",
+                    "scheduledOn": "2022-06-28",
+                  },
+                  "sourceAccount": {
+                    "id": "bd9b7af2-6f9b",
+                    "location": "internal",
+                  },
+                  "targetAccount": {
+                    "id": "88b1ca3e-d0f3",
+                    "location": "internal",
+                  },
+                },
                 "response": {
                   "body": {
                     "amount": "275.00",
@@ -1519,7 +1535,16 @@ Note: This operation requires an identity challenge if the financial institution
                 "path-parameters": {
                   "transferId": "transferId",
                 },
-                "request": {},
+                "request": {
+                  "amount": "275.00",
+                  "schedule": {
+                    "frequency": "once",
+                    "scheduledOn": "2022-06-28",
+                  },
+                  "targetAccount": {
+                    "id": "88b1ca3e-d0f3",
+                  },
+                },
                 "response": {
                   "body": {
                     "amount": "275.00",
