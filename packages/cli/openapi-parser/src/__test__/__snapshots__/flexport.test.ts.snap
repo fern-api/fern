@@ -2868,32 +2868,8 @@ we still recommend setting the Content-Type header to the value \`application/js
                                       {
                                         "properties": {
                                           "_object": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "/trucking/port",
-                                            },
-                                          },
-                                          "country_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "US",
-                                            },
-                                          },
-                                          "iata_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "LAX",
-                                            },
-                                          },
-                                          "icao_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "KLAX",
-                                            },
+                                            "type": "enum",
+                                            "value": "/trucking/port",
                                           },
                                           "port_code": {
                                             "type": "primitive",
@@ -2908,32 +2884,8 @@ we still recommend setting the Content-Type header to the value \`application/js
                                       {
                                         "properties": {
                                           "_object": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "/ocean/port",
-                                            },
-                                          },
-                                          "country_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "US",
-                                            },
-                                          },
-                                          "iata_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "LAX",
-                                            },
-                                          },
-                                          "icao_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "KLAX",
-                                            },
+                                            "type": "enum",
+                                            "value": "/ocean/port",
                                           },
                                           "port_code": {
                                             "type": "primitive",
@@ -3044,32 +2996,8 @@ we still recommend setting the Content-Type header to the value \`application/js
                                       {
                                         "properties": {
                                           "_object": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "/trucking/port",
-                                            },
-                                          },
-                                          "country_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "US",
-                                            },
-                                          },
-                                          "iata_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "LAX",
-                                            },
-                                          },
-                                          "icao_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "KLAX",
-                                            },
+                                            "type": "enum",
+                                            "value": "/trucking/port",
                                           },
                                           "port_code": {
                                             "type": "primitive",
@@ -3084,32 +3012,8 @@ we still recommend setting the Content-Type header to the value \`application/js
                                       {
                                         "properties": {
                                           "_object": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "/ocean/port",
-                                            },
-                                          },
-                                          "country_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "US",
-                                            },
-                                          },
-                                          "iata_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "LAX",
-                                            },
-                                          },
-                                          "icao_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "KLAX",
-                                            },
+                                            "type": "enum",
+                                            "value": "/ocean/port",
                                           },
                                           "port_code": {
                                             "type": "primitive",
@@ -5160,32 +5064,8 @@ we still recommend setting the Content-Type header to the value \`application/js
                               {
                                 "properties": {
                                   "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/trucking/port",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "US",
-                                    },
-                                  },
-                                  "iata_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "LAX",
-                                    },
-                                  },
-                                  "icao_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "KLAX",
-                                    },
+                                    "type": "enum",
+                                    "value": "/trucking/port",
                                   },
                                   "port_code": {
                                     "type": "primitive",
@@ -5200,32 +5080,8 @@ we still recommend setting the Content-Type header to the value \`application/js
                               {
                                 "properties": {
                                   "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/ocean/port",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "US",
-                                    },
-                                  },
-                                  "iata_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "LAX",
-                                    },
-                                  },
-                                  "icao_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "KLAX",
-                                    },
+                                    "type": "enum",
+                                    "value": "/ocean/port",
                                   },
                                   "port_code": {
                                     "type": "primitive",
@@ -5336,32 +5192,8 @@ we still recommend setting the Content-Type header to the value \`application/js
                               {
                                 "properties": {
                                   "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/trucking/port",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "US",
-                                    },
-                                  },
-                                  "iata_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "LAX",
-                                    },
-                                  },
-                                  "icao_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "KLAX",
-                                    },
+                                    "type": "enum",
+                                    "value": "/trucking/port",
                                   },
                                   "port_code": {
                                     "type": "primitive",
@@ -5376,32 +5208,8 @@ we still recommend setting the Content-Type header to the value \`application/js
                               {
                                 "properties": {
                                   "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/ocean/port",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "US",
-                                    },
-                                  },
-                                  "iata_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "LAX",
-                                    },
-                                  },
-                                  "icao_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "KLAX",
-                                    },
+                                    "type": "enum",
+                                    "value": "/ocean/port",
                                   },
                                   "port_code": {
                                     "type": "primitive",
@@ -6901,32 +6709,8 @@ we still recommend setting the Content-Type header to the value \`application/js
                               {
                                 "properties": {
                                   "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/trucking/port",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "US",
-                                    },
-                                  },
-                                  "iata_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "LAX",
-                                    },
-                                  },
-                                  "icao_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "KLAX",
-                                    },
+                                    "type": "enum",
+                                    "value": "/trucking/port",
                                   },
                                   "port_code": {
                                     "type": "primitive",
@@ -6941,32 +6725,8 @@ we still recommend setting the Content-Type header to the value \`application/js
                               {
                                 "properties": {
                                   "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/ocean/port",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "US",
-                                    },
-                                  },
-                                  "iata_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "LAX",
-                                    },
-                                  },
-                                  "icao_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "KLAX",
-                                    },
+                                    "type": "enum",
+                                    "value": "/ocean/port",
                                   },
                                   "port_code": {
                                     "type": "primitive",
@@ -7077,32 +6837,8 @@ we still recommend setting the Content-Type header to the value \`application/js
                               {
                                 "properties": {
                                   "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/trucking/port",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "US",
-                                    },
-                                  },
-                                  "iata_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "LAX",
-                                    },
-                                  },
-                                  "icao_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "KLAX",
-                                    },
+                                    "type": "enum",
+                                    "value": "/trucking/port",
                                   },
                                   "port_code": {
                                     "type": "primitive",
@@ -7117,32 +6853,8 @@ we still recommend setting the Content-Type header to the value \`application/js
                               {
                                 "properties": {
                                   "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/ocean/port",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "US",
-                                    },
-                                  },
-                                  "iata_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "LAX",
-                                    },
-                                  },
-                                  "icao_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "KLAX",
-                                    },
+                                    "type": "enum",
+                                    "value": "/ocean/port",
                                   },
                                   "port_code": {
                                     "type": "primitive",
@@ -27852,32 +27564,8 @@ Other details about this invoice",
                               {
                                 "properties": {
                                   "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/trucking/port",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "US",
-                                    },
-                                  },
-                                  "iata_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "LAX",
-                                    },
-                                  },
-                                  "icao_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "KLAX",
-                                    },
+                                    "type": "enum",
+                                    "value": "/trucking/port",
                                   },
                                   "port_code": {
                                     "type": "primitive",
@@ -27991,32 +27679,8 @@ Other details about this invoice",
                               {
                                 "properties": {
                                   "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/trucking/port",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "US",
-                                    },
-                                  },
-                                  "iata_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "LAX",
-                                    },
-                                  },
-                                  "icao_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "KLAX",
-                                    },
+                                    "type": "enum",
+                                    "value": "/trucking/port",
                                   },
                                   "port_code": {
                                     "type": "primitive",
@@ -28031,32 +27695,8 @@ Other details about this invoice",
                               {
                                 "properties": {
                                   "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/ocean/railport",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "US",
-                                    },
-                                  },
-                                  "iata_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "LAX",
-                                    },
-                                  },
-                                  "icao_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "KLAX",
-                                    },
+                                    "type": "enum",
+                                    "value": "/ocean/railport",
                                   },
                                   "port_code": {
                                     "type": "primitive",
@@ -28071,32 +27711,8 @@ Other details about this invoice",
                               {
                                 "properties": {
                                   "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/ocean/port",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "US",
-                                    },
-                                  },
-                                  "iata_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "LAX",
-                                    },
-                                  },
-                                  "icao_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "KLAX",
-                                    },
+                                    "type": "enum",
+                                    "value": "/ocean/port",
                                   },
                                   "port_code": {
                                     "type": "primitive",
@@ -32688,32 +32304,8 @@ Other details about this invoice",
                                   {
                                     "properties": {
                                       "_object": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "/ocean/railport",
-                                        },
-                                      },
-                                      "country_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "US",
-                                        },
-                                      },
-                                      "iata_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "LAX",
-                                        },
-                                      },
-                                      "icao_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "KLAX",
-                                        },
+                                        "type": "enum",
+                                        "value": "/ocean/railport",
                                       },
                                       "port_code": {
                                         "type": "primitive",
@@ -32728,32 +32320,8 @@ Other details about this invoice",
                                   {
                                     "properties": {
                                       "_object": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "/trucking/port",
-                                        },
-                                      },
-                                      "country_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "US",
-                                        },
-                                      },
-                                      "iata_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "LAX",
-                                        },
-                                      },
-                                      "icao_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "KLAX",
-                                        },
+                                        "type": "enum",
+                                        "value": "/trucking/port",
                                       },
                                       "port_code": {
                                         "type": "primitive",
@@ -32768,32 +32336,8 @@ Other details about this invoice",
                                   {
                                     "properties": {
                                       "_object": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "/ocean/port",
-                                        },
-                                      },
-                                      "country_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "US",
-                                        },
-                                      },
-                                      "iata_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "LAX",
-                                        },
-                                      },
-                                      "icao_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "KLAX",
-                                        },
+                                        "type": "enum",
+                                        "value": "/ocean/port",
                                       },
                                       "port_code": {
                                         "type": "primitive",
@@ -33065,32 +32609,8 @@ Other details about this invoice",
                                   {
                                     "properties": {
                                       "_object": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "/ocean/railport",
-                                        },
-                                      },
-                                      "country_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "US",
-                                        },
-                                      },
-                                      "iata_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "LAX",
-                                        },
-                                      },
-                                      "icao_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "KLAX",
-                                        },
+                                        "type": "enum",
+                                        "value": "/ocean/railport",
                                       },
                                       "port_code": {
                                         "type": "primitive",
@@ -33105,32 +32625,8 @@ Other details about this invoice",
                                   {
                                     "properties": {
                                       "_object": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "/trucking/port",
-                                        },
-                                      },
-                                      "country_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "US",
-                                        },
-                                      },
-                                      "iata_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "LAX",
-                                        },
-                                      },
-                                      "icao_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "KLAX",
-                                        },
+                                        "type": "enum",
+                                        "value": "/trucking/port",
                                       },
                                       "port_code": {
                                         "type": "primitive",
@@ -33145,32 +32641,8 @@ Other details about this invoice",
                                   {
                                     "properties": {
                                       "_object": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "/ocean/port",
-                                        },
-                                      },
-                                      "country_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "US",
-                                        },
-                                      },
-                                      "iata_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "LAX",
-                                        },
-                                      },
-                                      "icao_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "KLAX",
-                                        },
+                                        "type": "enum",
+                                        "value": "/ocean/port",
                                       },
                                       "port_code": {
                                         "type": "primitive",
@@ -37438,32 +36910,8 @@ Other details about this invoice",
                                       {
                                         "properties": {
                                           "_object": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "/trucking/port",
-                                            },
-                                          },
-                                          "country_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "US",
-                                            },
-                                          },
-                                          "iata_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "LAX",
-                                            },
-                                          },
-                                          "icao_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "KLAX",
-                                            },
+                                            "type": "enum",
+                                            "value": "/trucking/port",
                                           },
                                           "port_code": {
                                             "type": "primitive",
@@ -37735,32 +37183,8 @@ Other details about this invoice",
                                       {
                                         "properties": {
                                           "_object": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "/trucking/port",
-                                            },
-                                          },
-                                          "country_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "US",
-                                            },
-                                          },
-                                          "iata_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "LAX",
-                                            },
-                                          },
-                                          "icao_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "KLAX",
-                                            },
+                                            "type": "enum",
+                                            "value": "/trucking/port",
                                           },
                                           "port_code": {
                                             "type": "primitive",
@@ -38651,32 +38075,8 @@ Other details about this invoice",
                               {
                                 "properties": {
                                   "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/trucking/port",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "US",
-                                    },
-                                  },
-                                  "iata_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "LAX",
-                                    },
-                                  },
-                                  "icao_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "KLAX",
-                                    },
+                                    "type": "enum",
+                                    "value": "/trucking/port",
                                   },
                                   "port_code": {
                                     "type": "primitive",
@@ -38974,32 +38374,8 @@ Other details about this invoice",
                               {
                                 "properties": {
                                   "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/trucking/port",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "US",
-                                    },
-                                  },
-                                  "iata_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "LAX",
-                                    },
-                                  },
-                                  "icao_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "KLAX",
-                                    },
+                                    "type": "enum",
+                                    "value": "/trucking/port",
                                   },
                                   "port_code": {
                                     "type": "primitive",
@@ -39618,8 +38994,8 @@ Other details about this invoice",
                               "id": {
                                 "type": "primitive",
                                 "value": {
-                                  "type": "string",
-                                  "value": "id",
+                                  "type": "int",
+                                  "value": 12345,
                                 },
                               },
                               "link": {
@@ -42218,8 +41594,8 @@ Other details about this invoice",
                       "id": {
                         "type": "primitive",
                         "value": {
-                          "type": "string",
-                          "value": "id",
+                          "type": "int",
+                          "value": 12345,
                         },
                       },
                       "link": {
@@ -44020,8 +43396,8 @@ Other details about this invoice",
                       "id": {
                         "type": "primitive",
                         "value": {
-                          "type": "string",
-                          "value": "id",
+                          "type": "int",
+                          "value": 12345,
                         },
                       },
                       "link": {

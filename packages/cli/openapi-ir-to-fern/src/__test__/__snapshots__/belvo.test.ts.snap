@@ -2930,10 +2930,8 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                 "name": "Organization (PIX Key)",
                 "request": {
                   "details": {
-                    "account_type": "CHECKINGS",
-                    "agency": "0444",
                     "country": "BRA",
-                    "number": "45722-0",
+                    "pix_key": "RANDOM://6c1c236c-a035-4b80-ab12-e38f88ce82ab",
                   },
                   "holder": {
                     "information": {
@@ -2972,21 +2970,14 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               {
                 "name": "Organization (PSE)",
                 "request": {
-                  "details": {
-                    "account_type": "CHECKINGS",
-                    "agency": "0444",
-                    "country": "BRA",
-                    "number": "45722-0",
-                  },
                   "holder": {
                     "information": {
-                      "identifier": "231.002.999-00",
-                      "identifier_type": "CPF",
                       "name": "Trusty documentation services",
                     },
                     "type": "BUSINESS",
                   },
-                  "institution": "f512d996-583a-4a91-8b5b-eba2e103b068",
+                  "number": "12343453245633",
+                  "providers": {},
                 },
                 "response": {
                   "body": {
@@ -3080,10 +3071,8 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
                     "customer": "customer",
                     "details": {
-                      "account_type": "CHECKINGS",
-                      "agency": "0444",
                       "country": "BRA",
-                      "number": "45722-0",
+                      "pix_key": "RANDOM://6c1c236c-a035-4b80-ab12-e38f88ce82ab",
                     },
                     "holder": {
                       "information": {
@@ -3123,21 +3112,22 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
                     "customer": "customer",
                     "details": {
-                      "account_type": "CHECKINGS",
-                      "agency": "0444",
-                      "country": "BRA",
-                      "number": "45722-0",
+                      "details": {
+                        "key": "value",
+                      },
                     },
                     "holder": {
-                      "information": {
-                        "identifier": "231.002.999-00",
-                        "identifier_type": "CPF",
+                      "Information": {
                         "name": "Tr******es",
                       },
                       "type": "BUSINESS",
                     },
                     "id": "7c2be016-37e3-44e2-8643-db2eb1129a3f",
                     "institution": "institution",
+                    "metadata": {
+                      "internal_reference_id": "GGq73487w2",
+                    },
+                    "number": "******5633",
                   },
                 },
               },
@@ -3201,10 +3191,8 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
                     "customer": "customer",
                     "details": {
-                      "account_type": "CHECKINGS",
-                      "agency": "0444",
                       "country": "BRA",
-                      "number": "45722-0",
+                      "pix_key": "RANDOM://6c1c236c-a035-4b80-ab12-e38f88ce82ab",
                     },
                     "holder": {
                       "information": {
@@ -3230,21 +3218,22 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
                     "customer": "customer",
                     "details": {
-                      "account_type": "CHECKINGS",
-                      "agency": "0444",
-                      "country": "BRA",
-                      "number": "45722-0",
+                      "details": {
+                        "key": "value",
+                      },
                     },
                     "holder": {
-                      "information": {
-                        "identifier": "231.002.999-00",
-                        "identifier_type": "CPF",
+                      "Information": {
                         "name": "Tr******es",
                       },
                       "type": "BUSINESS",
                     },
                     "id": "7c2be016-37e3-44e2-8643-db2eb1129a3f",
                     "institution": "institution",
+                    "metadata": {
+                      "internal_reference_id": "GGq73487w2",
+                    },
+                    "number": "******5633",
                   },
                 },
               },
@@ -3350,10 +3339,8 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                         "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
                         "customer": "customer",
                         "details": {
-                          "account_type": "CHECKINGS",
-                          "agency": "0444",
                           "country": "BRA",
-                          "number": "45722-0",
+                          "pix_key": "RANDOM://6c1c236c-a035-4b80-ab12-e38f88ce82ab",
                         },
                         "holder": {
                           "information": {
@@ -3399,22 +3386,19 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                         "created_at": "2023-02-15T07:52:31Z",
                         "created_by": "417514fe-50f6-42e9-a3eb-c71da00f014c",
                         "customer": "customer",
-                        "details": {
-                          "account_type": "CHECKINGS",
-                          "agency": "0444",
-                          "country": "BRA",
-                          "number": "45722-0",
-                        },
+                        "details": {},
                         "holder": {
-                          "information": {
-                            "identifier": "231.002.999-00",
-                            "identifier_type": "CPF",
+                          "Information": {
                             "name": "Tr******es",
                           },
                           "type": "BUSINESS",
                         },
                         "id": "7c2be016-37e3-44e2-8643-db2eb1129a3f",
                         "institution": "institution",
+                        "metadata": {
+                          "internal_reference_id": "GGq73487w2",
+                        },
+                        "number": "******5633",
                       },
                     ],
                   },
@@ -3728,7 +3712,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   "customer_type": "INDIVIDUAL",
                   "email": "carlos.vives@musicacolombia.co",
                   "identifier": "1018760936",
-                  "identifier_type": "CPF",
+                  "identifier_type": "CC",
                   "name": "Carlos Vives",
                 },
                 "response": {
@@ -3819,7 +3803,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     "email": "carlos.vives@musicacolombia.co",
                     "id": "0110c70a-5faf-4d72-94b6-307473e86af7",
                     "identifier": "1018760936",
-                    "identifier_type": "CPF",
+                    "identifier_type": "CC",
                     "name": "Carlos Vives",
                     "phone": "3210-9876",
                   },
@@ -3902,7 +3886,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                     "email": "carlos.vives@musicacolombia.co",
                     "id": "0110c70a-5faf-4d72-94b6-307473e86af7",
                     "identifier": "1018760936",
-                    "identifier_type": "CPF",
+                    "identifier_type": "CC",
                     "name": "Carlos Vives",
                     "phone": "3210-9876",
                   },
@@ -4059,7 +4043,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                         "email": "carlos.vives@musicacolombia.co",
                         "id": "7c2be016-37e3-44e2-8643-db2eb1129a3f",
                         "identifier": "1018760936",
-                        "identifier_type": "CPF",
+                        "identifier_type": "CC",
                         "name": "Carlos Vives",
                         "phone": "3210-9876",
                       },
@@ -4072,7 +4056,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                         "email": "carlos.vives@musicacolombia.co",
                         "id": "7c2be016-37e3-44e2-8643-db2eb1129a3f",
                         "identifier": "1018760936",
-                        "identifier_type": "CPF",
+                        "identifier_type": "CC",
                         "name": "Carlos Vives",
                         "phone": "3210-9876",
                       },
@@ -14274,26 +14258,6 @@ client.tax_returns.list(params: {
                   "body": {
                     "collected_at": "2022-02-09T08:45:50Z",
                     "created_at": "2022-02-09T08:46:20Z",
-                    "datos_informativos": {
-                      "datos_informativos": {
-                        "key": "value",
-                      },
-                    },
-                    "deducciones_personales": {
-                      "deducciones_personales": {
-                        "key": "value",
-                      },
-                    },
-                    "determinacion_impuesto": {
-                      "determinacion_impuesto": {
-                        "key": "value",
-                      },
-                    },
-                    "dividendos": {
-                      "dividendos": {
-                        "key": "value",
-                      },
-                    },
                     "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
                     "informacion_general": {
                       "ejercicio": {
@@ -14318,24 +14282,51 @@ client.tax_returns.list(params: {
                         "key": "value",
                       },
                     },
-                    "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                    "isr": {
+                      "detalle_del_pago": {
+                        "a_cargo": 0,
+                        "cantidad_a_cargo": 0,
+                        "cantidad_a_pagar": 0,
+                        "parte_actualizada": 0,
+                        "recargos": 0,
+                        "total_aplicaciones": 0,
+                        "total_contribuciones": 0,
+                      },
+                      "determinacion": {
+                        "base_gravable_pago_provisional": 0,
+                        "compra_gastos_periodo": 399,
+                        "compras_gastos_periodos_anteriores": 1596,
+                        "impuesto_retenido": 0,
+                        "ingresos_periodo": 0,
+                        "ingresos_periodos_anteriores": 0,
+                        "isr_cargo": 0,
+                        "isr_causado": 0,
+                        "isr_retenido_periodos_anteriores": 0,
+                        "pagos_provisionales_efectuados_anterioridad": 0,
+                        "total_compras_gastos": 1995,
+                        "total_ingresos": 0,
+                      },
+                      "tipo": "PFAE",
+                    },
+                    "iva": {
+                      "detalle_del_pago": {
+                        "cantidad_a_cargo": 0,
+                        "cantidad_a_pagar": 0,
+                        "total_aplicaciones": 0,
+                        "total_contribuciones": 0,
+                      },
+                      "determinacion": {
+                        "actividades_exentas": 0,
+                        "actividades_gravadas_tasa_0": 0,
+                        "actividades_gravadas_tasa_16": 0,
+                        "iva_acreditable_periodo": 0,
+                        "iva_cobrado_periodo_tasa_16": 0,
+                        "iva_retenido": 0,
+                      },
+                    },
                     "pdf": "===PDF_BINARY====",
                     "receipt_pdf": "===PDF_BINARY====",
-                    "retenciones": {
-                      "retenciones": {
-                        "key": "value",
-                      },
-                    },
-                    "servicios_profesionales": {
-                      "servicios_profesionales": {
-                        "key": "value",
-                      },
-                    },
-                    "sueldos_salarios": {
-                      "sueldos_salarios": {
-                        "key": "value",
-                      },
-                    },
+                    "type": "monthly",
                   },
                 },
               },
@@ -14352,26 +14343,6 @@ client.tax_returns.list(params: {
                   "body": {
                     "collected_at": "2022-02-09T08:45:50Z",
                     "created_at": "2022-02-09T08:46:20Z",
-                    "datos_informativos": {
-                      "datos_informativos": {
-                        "key": "value",
-                      },
-                    },
-                    "deducciones_personales": {
-                      "deducciones_personales": {
-                        "key": "value",
-                      },
-                    },
-                    "determinacion_impuesto": {
-                      "determinacion_impuesto": {
-                        "key": "value",
-                      },
-                    },
-                    "dividendos": {
-                      "dividendos": {
-                        "key": "value",
-                      },
-                    },
                     "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
                     "informacion_general": {
                       "ejercicio": {
@@ -14396,24 +14367,59 @@ client.tax_returns.list(params: {
                         "key": "value",
                       },
                     },
-                    "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                    "isr": {
+                      "detalle_del_pago": {
+                        "a_cargo": 0,
+                        "cantidad_a_cargo": 0,
+                        "cantidad_a_pagar": 0,
+                        "parte_actualizada": 0,
+                        "recargos": 0,
+                        "total_aplicaciones": 0,
+                        "total_contribuciones": 0,
+                      },
+                      "determinacion": {
+                        "base_gravable_pago_provisional": 0,
+                        "compra_gastos_periodo": 399,
+                        "compras_gastos_periodos_anteriores": 1596,
+                        "deduccíon_opcional": 700,
+                        "impuesto_predial": 0,
+                        "impuesto_retenido": 0,
+                        "ingresos_periodo": 0,
+                        "ingresos_periodos_anteriores": 0,
+                        "isr_cargo": 0,
+                        "isr_causado": 0,
+                        "isr_retenido_periodos_anteriores": 0,
+                        "optas_por_el_cálculo_acumulado": "NO",
+                        "pagos_provisionales_efectuados_anterioridad": 0,
+                        "tienes_facilidades_administrativas_o_estímulos_deducibles": "NO",
+                        "tipo_de_deduccíon": "dedduccíon opicional",
+                        "total_compras_gastos": 1995,
+                        "total_deducciones_autorizadas": 700,
+                        "total_ingresos": 0,
+                      },
+                      "tipo": "PFAE",
+                    },
+                    "iva": {
+                      "detalle_del_pago": {
+                        "cantidad_a_cargo": 0,
+                        "cantidad_a_pagar": 0,
+                        "total_aplicaciones": 0,
+                        "total_contribuciones": 0,
+                      },
+                      "determinacion": {
+                        "actividades_exentas": 0,
+                        "actividades_gravadas_tasa_0": 0,
+                        "actividades_gravadas_tasa_16": 0,
+                        "cantidad_a_cargo": 54,
+                        "impuesto_a_cargo": 54,
+                        "iva_acreditable_periodo": 0,
+                        "iva_cobrado_periodo_tasa_16": 0,
+                        "iva_retenido": 0,
+                      },
+                    },
                     "pdf": "===PDF_BINARY====",
                     "receipt_pdf": "===PDF_BINARY====",
-                    "retenciones": {
-                      "retenciones": {
-                        "key": "value",
-                      },
-                    },
-                    "servicios_profesionales": {
-                      "servicios_profesionales": {
-                        "key": "value",
-                      },
-                    },
-                    "sueldos_salarios": {
-                      "sueldos_salarios": {
-                        "key": "value",
-                      },
-                    },
+                    "type": "monthly",
                   },
                 },
               },
@@ -14428,26 +14434,443 @@ client.tax_returns.list(params: {
                 },
                 "response": {
                   "body": {
+                    "cifras_cierre_ejercicio": {
+                      "coeficiente_de_utilidad_por_aplicar_en_ejercicio_siguiente": 0.4567,
+                      "isr_causado_en_exceso_del_impac_en_los_3_ejercicios_anteriores_pendientes_aplicar": {
+                        "key": "value",
+                      },
+                      "perdidas_fiscales_de_ejercicios_anteriores_pendientes_de_amortizar_actualiazadas": {
+                        "key": "value",
+                      },
+                      "porcentaje_de_participacion_consolidable": {
+                        "key": "value",
+                      },
+                      "saldo_actualizado_de_cuenta_de_capital_de_aportacion": {
+                        "key": "value",
+                      },
+                      "saldo_actualizado_de_cuenta_de_utilidad_fiscal_neta_2013_y_anteriores": {
+                        "key": "value",
+                      },
+                      "saldo_actualizado_de_cuenta_de_utilidad_fiscal_neta_a_partir_2014_y_anteriores": {
+                        "key": "value",
+                      },
+                      "saldo_actualizado_de_cuenta_de_utilidad_fiscal_reinvertida": {
+                        "key": "value",
+                      },
+                      "saldo_de_cuenta_de_utilidad_fiscal_neta_por_inversion_en_renovables": {
+                        "key": "value",
+                      },
+                      "saldo_promedio_anual_de_creditos": 142795,
+                      "saldo_promedio_anual_de_deudas": 144765,
+                    },
                     "collected_at": "2022-02-09T08:45:50Z",
+                    "conciliacion_entre_resultado_contable_fiscal": {
+                      "ajuste_anual_inflacion_acumulable": 95,
+                      "ajuste_anual_inflacion_deducible": {
+                        "key": "value",
+                      },
+                      "anticipos_de_clientes": {
+                        "key": "value",
+                      },
+                      "anticipos_de_clientes_ejercicios_anteriores": {
+                        "key": "value",
+                      },
+                      "costo_de_ventas_contable": {
+                        "key": "value",
+                      },
+                      "costo_vendido_fiscal": {
+                        "key": "value",
+                      },
+                      "deduccion_impuesto_sobre_renta_retenido_personas_discapacidad_yo_mayores": 0,
+                      "deduccion_inversiones": {
+                        "key": "value",
+                      },
+                      "deducciones_contables_no_fiscales": 117415,
+                      "deducciones_fiscales_no_contables": 0,
+                      "depreciacion_y_amortizacion_contable": 106,
+                      "donacion_bienes_basicos_subsistencia_humana": 0,
+                      "efectos_reexpresion": {
+                        "key": "value",
+                      },
+                      "estimulo_fiscal_contratacion_personas_discapacidad_yo_mayores": 0,
+                      "estimulo_fiscal_por_deduccion_inmediata_inversiones": {
+                        "key": "value",
+                      },
+                      "ganancia_en_enajenacion_acciones_por_reembolso_capital": {
+                        "key": "value",
+                      },
+                      "ganancia_en_enajenacion_de_terrenos_y_activo_fijo": {
+                        "key": "value",
+                      },
+                      "gastos_que_no_reunen_requisitos_fiscales": 4307,
+                      "ingresos_contables_no_fiscales": {
+                        "key": "value",
+                      },
+                      "ingresos_fiscales_no_contables": 95,
+                      "intereses_devengados_que_exceden_valor_mercado_y_moratorios_pagados_o_no": 0,
+                      "intereses_moratorios_devengados_a_favor_cobrados_o_no": {
+                        "key": "value",
+                      },
+                      "intereses_moratorios_efectivamente_cobrados": {
+                        "key": "value",
+                      },
+                      "intereses_moratorios_efectivamente_pagados": {
+                        "key": "value",
+                      },
+                      "inventario_acumulable_del_ejercicio": {
+                        "key": "value",
+                      },
+                      "isr_ietu_impac_ptu": 113002,
+                      "otras_deducciones_contables_no_fiscales": 0,
+                      "otras_deducciones_fiscales_no_contables": {
+                        "key": "value",
+                      },
+                      "otros_ingresos_contables_no_fiscales": {
+                        "key": "value",
+                      },
+                      "otros_ingresos_fiscales_no_contables": {
+                        "key": "value",
+                      },
+                      "perdida_contable_enajenacion_de_acciones": {
+                        "key": "value",
+                      },
+                      "perdida_contable_enajenacion_de_activo_fijo": {
+                        "key": "value",
+                      },
+                      "perdida_en_participacion_subsidiaria": {
+                        "key": "value",
+                      },
+                      "perdida_fiscal_en_enajenacion_acciones": {
+                        "key": "value",
+                      },
+                      "perdida_fiscal_en_enajenacion_de_terrenos_y_activo_fijo": {
+                        "key": "value",
+                      },
+                      "resultado_posicion_monetaria": {
+                        "key": "value",
+                      },
+                      "saldos_a_favor_impuestos_y_su_actualizacion": {
+                        "key": "value",
+                      },
+                      "utilidad_contable_enajenacion_de_acciones": {
+                        "key": "value",
+                      },
+                      "utilidad_contable_enajenacion_de_activo_fijo": {
+                        "key": "value",
+                      },
+                      "utilidad_en_participacion_subsidiaria": {
+                        "key": "value",
+                      },
+                      "utilidad_o_perdida_fiscal_antes_de_ptu": 416133,
+                      "utilidad_o_perdida_neta": 298623,
+                      "utilidad_o_perdida_neta_historica": 298623,
+                    },
                     "created_at": "2022-02-09T08:46:20Z",
-                    "datos_informativos": {
-                      "datos_informativos": {
+                    "datos_adicionales": {
+                      "estas_obligado_a_presentar_la_informacion_sobre_tu_situacion_fiscal": "NO",
+                      "estas_obligado_unicamente_por_supuesto_distinto_al_de_haber_realizado_operaciones_con_residentes_extranjero": "SIN SELECCIÓN",
+                      "estas_obligado_unicamente_por_supuesto_distinto_al_de_haber_realizado_operaciones_con_residentes_extranjero_inferiores_100mdp": "SIN SELECCIÓN",
+                      "indica_si_optas_por_dictaminar_tus_estados_financieros": "NO",
+                      "indica_si_te_dedicas_exclisivamente_a_generacion_energia_fuentes_renovables_o_cogeneracion_electricidad_eficiente": "NO",
+                      "optas_por_presentar_informacion_sobre_tu_situacion_fiscal": "SIN SELECCIÓN",
+                    },
+                    "deducciones_autorizadas": {
+                      "aportaciones_para_fondos_de_pensiones_y_jubilaciones": {
+                        "key": "value",
+                      },
+                      "aportaciones_sar_infonavit_y_jubilaciones_vejez": {
+                        "key": "value",
+                      },
+                      "combustible_y_lubricantes": {
+                        "key": "value",
+                      },
+                      "consumos_en_restaurantes": 11254,
+                      "contribuciones_pagadas_excepto_isr_ietu_impac_iva_ieps": {
+                        "key": "value",
+                      },
+                      "credito_al_salario_no_disminuido_de_contribuciones": {
+                        "key": "value",
+                      },
+                      "cuotas_imss": {
+                        "key": "value",
+                      },
+                      "deduccion_por_concepto_de_ayuda_alimentaria_para_trabajadores": {
+                        "key": "value",
+                      },
+                      "donativos_otorgados": {
+                        "key": "value",
+                      },
+                      "fletes_y_acarreos_pagados_a_parsonas_fisicas": {
+                        "key": "value",
+                      },
+                      "honorarios_pagados_a_personas_fisicas": {
+                        "key": "value",
+                      },
+                      "monto_deducible_al_47_pagos_son_ingresos_exentos_para_trabajador": {
+                        "key": "value",
+                      },
+                      "monto_deducible_al_53_pagos_son_ingresos_exentos_para_trabajador": {
+                        "key": "value",
+                      },
+                      "monto_total_pagos_que_sean_ingresos_exentos_para_trabajador": {
+                        "key": "value",
+                      },
+                      "otras_deducciones_autorizadas": 424346,
+                      "perdida_por_creditos_incobrables": {
+                        "key": "value",
+                      },
+                      "perdida_por_operaciones_financieras_derivadas": {
+                        "key": "value",
+                      },
+                      "regalias_y_asistencia_tecnica": {
+                        "key": "value",
+                      },
+                      "seguros_fianzas": {
+                        "key": "value",
+                      },
+                      "sueldos_salarios": {
+                        "key": "value",
+                      },
+                      "total_deducciones_autorizadas": 495127,
+                      "uso_o_goce_temporal_de_automoviles_baterias_electricas_o_electricos_con_motor_combustion_o_hidrogeno": {
+                        "key": "value",
+                      },
+                      "uso_o_goce_temporal_de_bienes_pagados_a_personas_fisicas": {
+                        "key": "value",
+                      },
+                      "viaticos_y_gastos_viaje": 59527,
+                    },
+                    "detalle_pago_r1_isr_personas_morales": {
+                      "a_cargo": 113002,
+                      "cantidad_a_cargo": 113002,
+                      "cantidad_a_favor": {
+                        "key": "value",
+                      },
+                      "cantidad_a_pagar": 113002,
+                      "desea_aplicar_alguna_compensacion_o_estimulo": "NO",
+                      "importe_de_primera_parcialidad": {
+                        "key": "value",
+                      },
+                      "importe_sin_primera_parcialidad": {
+                        "key": "value",
+                      },
+                      "multa_por_correccion": {
+                        "key": "value",
+                      },
+                      "opta_por_pagar_parcialidades": "SIN SELECCIÓN",
+                      "parte_actualizada": {
+                        "key": "value",
+                      },
+                      "recargos": {
+                        "key": "value",
+                      },
+                      "total_contribuciones": 113002,
+                    },
+                    "determinacion_del_impuesto_sobre_la_renta": {
+                      "datos_informativos_ejercicio": {
+                        "credito_fiscal_autorizado_en_ejercicio_a_produccion_distribucion_cinematografica_nacional_pendiente_aplicar": 0,
+                        "credito_fiscal_autorizado_en_ejercicio_por_inversion_en_proyectos_programas_para_deporte_de_alto_rendimiento_pendiente_aplicar": 0,
+                        "credito_fiscal_autorizado_en_ejercicio_por_proyectos_de_inversion_en_artes_pendiente_aplicar": 0,
+                        "credito_fiscal_autorizado_en_ejercicio_por_proyectos_en_investigacion_desarrollo_tecnologico_pendiente_aplicar": 0,
+                        "gastos_realidados_en_ejercicio_por_proyectos_en_investigacion_desarrollo_tecnologico": 0,
+                        "impac_recuperado_en_ejercicio_derivado_de_deconsolidacion": 0,
+                        "ingresos_obtenidos_por_apoyos_gubernamentales": 0,
+                        "monto_aplicado_del_estimulo_fiscal_de_chatarrizacion": 0,
+                        "monto_deducible_de_pagos_efectuados_por_uso_o_goce_temporal_automoviles": 0,
+                        "saldo_pendiente_aplicar_por_inversion_en_equipos_de_alimentacion_vehiculos_electricos": 0,
+                      },
+                      "datos_informativos_ejercicios_anteriores_aplicados_en_ejercicio": {
+                        "saldo_credito_fiscal_autorizado_ejercicios_anteriores_a_produccion_distribucion_nacional_pendiente_aplicar": 0,
+                        "saldo_credito_fiscal_autorizado_ejercicios_anteriores_por_inversion_en_proyectos_programas_para_deporte_alto_rendimiento_pendiente_aplicar": 0,
+                        "saldo_credito_fiscal_autorizado_ejercicios_anteriores_por_proyectos_inversion_artes_pendiente_aplicar": 0,
+                        "saldo_credito_fiscal_autorizado_ejercicios_anteriores_por_proyectos_investigacion_desarrollo_tecnologico_pendiente_aplicar": 0,
+                      },
+                      "determinacion_del_impuesto_sobre_la_renta": {
+                        "diferencia_a_cargo": 113002,
+                        "impuesto_causado_en_ejercicio": 113002,
+                        "impuesto_sobre_la_renta_del_ejercicio": 113002,
+                        "isr_a_cargo_del_ejercicio": 113002,
+                        "perdidas_fiscales_de_ejercicios_anteriores_que_se_aplican_en_ejercicio": 39462,
+                        "resultado_fiscal": 376672,
+                        "tienes_estimulos_fiscales_a_acreditar": "SIN SELECCIÓN",
+                        "total_deducciones_autorizadas_y_deduccion_inmediata_inversiones": 495126,
+                        "total_ingresos_acumulables": 911260,
+                        "utilidad_fiscal_del_ejercicio": 416134,
+                        "utilidad_o_perdida_fiscal_antes_de_ptu": 416134,
+                      },
+                      "impuesto_sobre_ingresos_sujetos_a_regimenes_fiscales_preferentes": {
                         "key": "value",
                       },
                     },
-                    "deducciones_personales": {
-                      "deducciones_personales": {
+                    "dividendos_o_utilidades_distribuidos": {
+                      "monto_del_impuesto_pagado_de_utilidades_provenientes_de_cufinre": {
+                        "key": "value",
+                      },
+                      "monto_del_impuesto_pagado_no_proveniente_de_cufin_ni_cufinre": {
+                        "key": "value",
+                      },
+                      "no_provenientes_de_cufin_ni_cufinre_en_acciones": {
+                        "key": "value",
+                      },
+                      "no_provenientes_de_cufin_ni_cufinre_en_efectivo": {
+                        "key": "value",
+                      },
+                      "provenientes_de_cuenta_de_utilidad_fiscal_neta_por_inversion_en_energia_de_fuentes_renovables_o_sistemas_cogeneracion_electricidad_eficiente": {
+                        "key": "value",
+                      },
+                      "provenientes_de_cuenta_de_utilidad_fisica_neta_cufin_generada_a_partir_de_2014": {
+                        "key": "value",
+                      },
+                      "provenientes_de_cuenta_de_utilidad_fisica_neta_cufin_generada_en_2013_y_anteriores": {
+                        "key": "value",
+                      },
+                      "provenientes_de_cuenta_de_utilidad_fisica_neta_reinvertida_cufinre": {
                         "key": "value",
                       },
                     },
-                    "determinacion_impuesto": {
-                      "determinacion_impuesto": {
-                        "key": "value",
+                    "estado_posicion_financiera_balance": {
+                      "activo": {
+                        "cargos_y_gastos_diferidos": 9319,
+                        "cuentas_documentos_por_cobrar_extranjero": {},
+                        "cuentas_documentos_por_cobrar_nacionales": {},
+                        "depreciacion_acumulada": -106,
+                        "efectivo_caja_depositos_instituciones_credito_nacionales": 726644,
+                        "otros_activos_circulantes": 13277,
+                        "otros_activos_fijos": 12756,
+                        "suma_activo": 761890,
+                      },
+                      "capital_contable": {
+                        "capital_social_proveniente_aportaciones": 10000,
+                        "perdidas_acumuladas": -38450,
+                        "suma_capital_contable": 270173,
+                        "suma_pasivo_mas_capital_contable": 761890,
+                        "utilidad_del_ejercicio": 298623,
+                      },
+                      "pasivo": {
+                        "anticipos_de_clientes": {},
+                        "contribuciones_por_pagar": 223490,
+                        "cuentas_documentos_por_pagar_extranjero": {},
+                        "cuentas_documentos_por_pagar_nacionales": {
+                          "partes_no_relacionadas": 268227,
+                          "total": 268227,
+                        },
+                        "suma_pasivo": 491717,
                       },
                     },
-                    "dividendos": {
-                      "dividendos": {
+                    "estado_resultados": {
+                      "compras_netas_importacion": {},
+                      "compras_netas_nacionales": {},
+                      "costo_mercancias": {
                         "key": "value",
+                      },
+                      "costo_ventas_servicios": {
+                        "key": "value",
+                      },
+                      "devoluciones_descuentos_bonificaciones_ventas_extranjero": {},
+                      "devoluciones_descuentos_bonificaciones_ventas_nacionales": {},
+                      "efectos_reexpresion_desfavorables_excepto_resultado_posicion_monetaria": {
+                        "key": "value",
+                      },
+                      "efectos_reexpresion_favorables_excepto_resultado_posicion_monetaria": {
+                        "key": "value",
+                      },
+                      "ganancia_cambiaria": {},
+                      "gastos_indirectos_fabricacion": {},
+                      "gastos_operacion": {
+                        "partes_no_relacionadas": 499540,
+                        "total": 499540,
+                      },
+                      "gastos_partidas_discontinuas_extraordinarias": {
+                        "key": "value",
+                      },
+                      "ietu": {
+                        "key": "value",
+                      },
+                      "impac": {
+                        "key": "value",
+                      },
+                      "ingresos_netos": {
+                        "partes_no_relacionadas": 911165,
+                        "total": 911165,
+                      },
+                      "ingresos_partidas_discontinuas_extraordinarias": {
+                        "key": "value",
+                      },
+                      "intereses_devengados_a_cargo_extranjero": {},
+                      "intereses_devengados_a_cargo_nacionales": {},
+                      "intereses_devengados_a_favor_extranjero": {},
+                      "intereses_devengados_a_favor_nacionales": {},
+                      "intereses_moratorios_a_cargo_extranjero": {},
+                      "intereses_moratorios_a_cargo_nacionales": {},
+                      "intereses_moratorios_a_favor_extranjero": {},
+                      "intereses_moratorios_a_favor_nacionales": {},
+                      "inventario_final": {
+                        "key": "value",
+                      },
+                      "inventario_inicial": {
+                        "key": "value",
+                      },
+                      "isr": 113002,
+                      "mano_de_obra": {},
+                      "maquilas": {},
+                      "otras_operaciones_financieras": {
+                        "key": "value",
+                      },
+                      "otras_operaciones_financieras_extranjero": {},
+                      "otras_operaciones_financieras_nacionales": {},
+                      "otros_gastos": {
+                        "key": "value",
+                      },
+                      "otros_gastos_extranjero": {
+                        "key": "value",
+                      },
+                      "otros_gastos_nacionales": {
+                        "key": "value",
+                      },
+                      "otros_productos": {
+                        "key": "value",
+                      },
+                      "otros_productos_extranjero": {
+                        "key": "value",
+                      },
+                      "otros_productos_nacionales": {
+                        "key": "value",
+                      },
+                      "perdida_antes_impuesto": {
+                        "key": "value",
+                      },
+                      "perdida_bruta": {
+                        "key": "value",
+                      },
+                      "perdida_cambiaria": {},
+                      "perdida_neta": {
+                        "key": "value",
+                      },
+                      "perdida_operacion": {
+                        "key": "value",
+                      },
+                      "perdida_participacion_subsidiaria": {
+                        "key": "value",
+                      },
+                      "ptu": {
+                        "key": "value",
+                      },
+                      "resultado_integral_financiamiento": {
+                        "key": "value",
+                      },
+                      "resultado_posicion_monetaria_desfavorable": {},
+                      "resultado_posicion_monetaria_favorable": {},
+                      "utilidad_antes_impuesto": 411625,
+                      "utilidad_bruta": 911165,
+                      "utilidad_neta": 298623,
+                      "utilidad_operacion": 411625,
+                      "utilidad_participacion_subsidiaria": {
+                        "key": "value",
+                      },
+                      "ventas_servicios_extranjero": {},
+                      "ventas_servicios_nacionales": {
+                        "partes_no_relacionadas": 911165,
+                        "total": 911165,
                       },
                     },
                     "id": "02589c41-ba22-4d44-8558-8111cc751318",
@@ -14463,24 +14886,8 @@ client.tax_returns.list(params: {
                       },
                       "tipo_declaracion": "Normal",
                     },
-                    "link": "19697249-01b8-443e-a451-76bfc5fbeebf",
                     "pdf": "=PDF-STRING=",
                     "receipt_pdf": "=PDF-STRING=",
-                    "retenciones": {
-                      "retenciones": {
-                        "key": "value",
-                      },
-                    },
-                    "servicios_profesionales": {
-                      "servicios_profesionales": {
-                        "key": "value",
-                      },
-                    },
-                    "sueldos_salarios": {
-                      "sueldos_salarios": {
-                        "key": "value",
-                      },
-                    },
                   },
                 },
               },
@@ -14497,24 +14904,121 @@ client.tax_returns.list(params: {
                   "body": {
                     "collected_at": "2022-02-09T08:45:50Z",
                     "created_at": "2022-02-09T08:46:20Z",
-                    "datos_informativos": {
-                      "datos_informativos": {
-                        "key": "value",
+                    "detalle_pago_isr": {
+                      "r12_isr_retenciones_por_salarios": {
+                        "a_cargo": 415945,
+                        "aplica_primera_parcialidad": "NO",
+                        "cantidad_a_cargo": 415566,
+                        "cantidad_a_pagar": 415566,
+                        "parte_actualizada": 0,
+                        "recargos": 0,
+                        "subsidio_empleo": 379,
+                        "total_aplicaciones": 379,
+                        "total_de_contribuciones": 415945,
+                      },
+                      "r13_isr_retenciones_por_asimilados_a_salarios": {
+                        "a_cargo": 254588,
+                        "aplica_primera_parcialidad": "NO",
+                        "cantidad_a_cargo": 254588,
+                        "cantidad_a_pagar": 254588,
+                        "parte_actualizada": 0,
+                        "recargos": 0,
+                        "total_aplicaciones": 0,
+                        "total_de_contribuciones": 254588,
+                      },
+                      "r14_isr_retenciones_por_servicios_profesionales": {
+                        "a_cargo": 104482,
+                        "aplica_primera_parcialidad": "NO",
+                        "cantidad_a_cargo": 104482,
+                        "cantidad_a_pagar": 104482,
+                        "parte_actualizada": 0,
+                        "recargos": 0,
+                        "total_aplicaciones": 0,
+                        "total_de_contribuciones": 104482,
+                      },
+                      "r1_isr_personas_morales": {
+                        "a_cargo": 0,
+                        "aplica_primera_parcialidad": "NO",
+                        "cantidad_a_cargo": 0,
+                        "cantidad_a_pagar": 0,
+                        "total_aplicaciones": 0,
+                        "total_de_contribuciones": 0,
                       },
                     },
-                    "deducciones_personales": {
-                      "deducciones_personales": {
-                        "key": "value",
+                    "detalle_pago_iva": {
+                      "r21_iva": {
+                        "a_cargo": 312421,
+                        "aplica_primera_parcialidad": "NO",
+                        "cantidad_a_cargo": 312421,
+                        "cantidad_a_pagar": 312421,
+                        "parte_actualizada": 0,
+                        "recargos": 0,
+                        "total_aplicaciones": 0,
+                        "total_de_contribuciones": 312421,
+                      },
+                      "r21_iva_retenciones": {
+                        "a_cargo": 111448,
+                        "aplica_primera_parcialidad": "NO",
+                        "cantidad_a_cargo": 111448,
+                        "cantidad_a_pagar": 111448,
+                        "parte_actualizada": 0,
+                        "recargos": 0,
+                        "total_aplicaciones": 0,
+                        "total_de_contribuciones": 111448,
                       },
                     },
-                    "determinacion_impuesto": {
-                      "determinacion_impuesto": {
-                        "key": "value",
+                    "determinacion_isr": {
+                      "personas_morales_regimen_general": {
+                        "anticipos_rendimientos_distribuidos_periodo": 16746509,
+                        "base_gravable_pago_provisional": 946992,
+                        "coeficiente_utilidad": 0.2318,
+                        "diferencia_a_cargo": 0,
+                        "impuesto_a_cargo": 0,
+                        "impuesto_retenido": 29925,
+                        "impuestos_del_periodo": 284098,
+                        "ingresos_nominales_mes_que_declara": 6482479,
+                        "isr_causado": 284098,
+                        "pagos_provisionales_efectuados_anterioridad": 303039,
+                        "suma_ingresos_nominales_meses_anteriores_ejercicio": 69848414,
+                        "total_ingresos_nominales": 76330893,
+                        "utilidad_fiscal_pago_provisional": 17693501,
                       },
                     },
-                    "dividendos": {
-                      "dividendos": {
-                        "key": "value",
+                    "determinacion_iva": {
+                      "detalle_total_actos_actividades_pagados_tasa_16": {
+                        "otros_actos_pagados_tasa_16": 2094706,
+                        "total_actos_pagados_tasa_16": 2094706,
+                      },
+                      "detalle_valor_actos_actividades_gravados_tasa_16": {
+                        "otros_actos_actividades_gravados_tasa_16": 6457950,
+                        "total_actos_actividades_gravados_tasa_16": 6457950,
+                      },
+                      "determinacion_iva": {
+                        "cantidad_a_cargo": 312421,
+                        "diferencia_a_cargo": 312421,
+                        "impuesto_a_cargo": 312421,
+                        "impuesto_causado": 1033272,
+                        "iva_retenido_al_contribuyente": 385698,
+                        "saldo_a_favor_periodo": 0,
+                        "suma_actos_actividades_gravados": 6457950,
+                        "total_iva_acreditable": 335153,
+                        "valor_actos_actividades_gravados_tasa_16": 6457950,
+                      },
+                      "determinacion_iva_acreditable": {
+                        "iva_acreditable": 335153,
+                        "iva_bienes_utilizados_indistintamente_actos_gravados_o_actos_no_obligados_pago_impuesto": 0,
+                        "iva_trasladado_adquisicion_bienes_distintos_inversiones_actos_gravados": 335153,
+                        "total_actos_actividades_pagados_importacion_bienes_tasa_16": 0,
+                        "total_iva_acreditable_periodo": 335153,
+                        "total_iva_actos_actividades_gravados": 335153,
+                        "total_iva_actos_actividades_pagados_tasa_16": 335153,
+                        "total_iva_trasladado_contribuyente": 335153,
+                      },
+                      "montos_actos_actividades_pagados": {
+                        "total_actos_actividades_pagados_no_paga_iva": 0,
+                        "total_actos_actividades_pagados_tasa_0": 0,
+                        "total_actos_actividades_pagados_tasa_16": 2094706,
+                        "total_actos_actividades_sujetos_estimulo_rfn": 0,
                       },
                     },
                     "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
@@ -14530,24 +15034,9 @@ client.tax_returns.list(params: {
                       },
                       "tipo_declaracion": "Normal",
                     },
-                    "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                     "pdf": "===PDF_BINARY====",
                     "receipt_pdf": "===PDF_BINARY====",
-                    "retenciones": {
-                      "retenciones": {
-                        "key": "value",
-                      },
-                    },
-                    "servicios_profesionales": {
-                      "servicios_profesionales": {
-                        "key": "value",
-                      },
-                    },
-                    "sueldos_salarios": {
-                      "sueldos_salarios": {
-                        "key": "value",
-                      },
-                    },
+                    "type": "monthly",
                   },
                 },
               },
@@ -14853,9 +15342,51 @@ client.tax_returns.list(params: {
                         "collected_at": "2022-02-09T08:45:50Z",
                         "created_at": "2022-02-09T08:46:20Z",
                         "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
-                        "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                        "isr": {
+                          "detalle_del_pago": {
+                            "a_cargo": 0,
+                            "cantidad_a_cargo": 0,
+                            "cantidad_a_pagar": 0,
+                            "parte_actualizada": 0,
+                            "recargos": 0,
+                            "total_aplicaciones": 0,
+                            "total_contribuciones": 0,
+                          },
+                          "determinacion": {
+                            "base_gravable_pago_provisional": 0,
+                            "compra_gastos_periodo": 399,
+                            "compras_gastos_periodos_anteriores": 1596,
+                            "impuesto_retenido": 0,
+                            "ingresos_periodo": 0,
+                            "ingresos_periodos_anteriores": 0,
+                            "isr_cargo": 0,
+                            "isr_causado": 0,
+                            "isr_retenido_periodos_anteriores": 0,
+                            "pagos_provisionales_efectuados_anterioridad": 0,
+                            "total_compras_gastos": 1995,
+                            "total_ingresos": 0,
+                          },
+                          "tipo": "PFAE",
+                        },
+                        "iva": {
+                          "detalle_del_pago": {
+                            "cantidad_a_cargo": 0,
+                            "cantidad_a_pagar": 0,
+                            "total_aplicaciones": 0,
+                            "total_contribuciones": 0,
+                          },
+                          "determinacion": {
+                            "actividades_exentas": 0,
+                            "actividades_gravadas_tasa_0": 0,
+                            "actividades_gravadas_tasa_16": 0,
+                            "iva_acreditable_periodo": 0,
+                            "iva_cobrado_periodo_tasa_16": 0,
+                            "iva_retenido": 0,
+                          },
+                        },
                         "pdf": "===PDF_BINARY====",
                         "receipt_pdf": "===PDF_BINARY====",
+                        "type": "monthly",
                       },
                     ],
                   },
@@ -14896,9 +15427,59 @@ client.tax_returns.list(params: {
                         "collected_at": "2022-02-09T08:45:50Z",
                         "created_at": "2022-02-09T08:46:20Z",
                         "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
-                        "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                        "isr": {
+                          "detalle_del_pago": {
+                            "a_cargo": 0,
+                            "cantidad_a_cargo": 0,
+                            "cantidad_a_pagar": 0,
+                            "parte_actualizada": 0,
+                            "recargos": 0,
+                            "total_aplicaciones": 0,
+                            "total_contribuciones": 0,
+                          },
+                          "determinacion": {
+                            "base_gravable_pago_provisional": 0,
+                            "compra_gastos_periodo": 399,
+                            "compras_gastos_periodos_anteriores": 1596,
+                            "deduccíon_opcional": 700,
+                            "impuesto_predial": 0,
+                            "impuesto_retenido": 0,
+                            "ingresos_periodo": 0,
+                            "ingresos_periodos_anteriores": 0,
+                            "isr_cargo": 0,
+                            "isr_causado": 0,
+                            "isr_retenido_periodos_anteriores": 0,
+                            "optas_por_el_cálculo_acumulado": "NO",
+                            "pagos_provisionales_efectuados_anterioridad": 0,
+                            "tienes_facilidades_administrativas_o_estímulos_deducibles": "NO",
+                            "tipo_de_deduccíon": "dedduccíon opicional",
+                            "total_compras_gastos": 1995,
+                            "total_deducciones_autorizadas": 700,
+                            "total_ingresos": 0,
+                          },
+                          "tipo": "PFAE",
+                        },
+                        "iva": {
+                          "detalle_del_pago": {
+                            "cantidad_a_cargo": 0,
+                            "cantidad_a_pagar": 0,
+                            "total_aplicaciones": 0,
+                            "total_contribuciones": 0,
+                          },
+                          "determinacion": {
+                            "actividades_exentas": 0,
+                            "actividades_gravadas_tasa_0": 0,
+                            "actividades_gravadas_tasa_16": 0,
+                            "cantidad_a_cargo": 54,
+                            "impuesto_a_cargo": 54,
+                            "iva_acreditable_periodo": 0,
+                            "iva_cobrado_periodo_tasa_16": 0,
+                            "iva_retenido": 0,
+                          },
+                        },
                         "pdf": "===PDF_BINARY====",
                         "receipt_pdf": "===PDF_BINARY====",
+                        "type": "monthly",
                       },
                     ],
                   },
@@ -14936,8 +15517,155 @@ client.tax_returns.list(params: {
                     "previous": "previous",
                     "results": [
                       {
+                        "cifras_cierre_ejercicio": {
+                          "coeficiente_de_utilidad_por_aplicar_en_ejercicio_siguiente": 0.4567,
+                          "saldo_promedio_anual_de_creditos": 142795,
+                          "saldo_promedio_anual_de_deudas": 144765,
+                        },
                         "collected_at": "2022-02-09T08:45:50Z",
+                        "conciliacion_entre_resultado_contable_fiscal": {
+                          "ajuste_anual_inflacion_acumulable": 95,
+                          "deduccion_impuesto_sobre_renta_retenido_personas_discapacidad_yo_mayores": 0,
+                          "deducciones_contables_no_fiscales": 117415,
+                          "deducciones_fiscales_no_contables": 0,
+                          "depreciacion_y_amortizacion_contable": 106,
+                          "donacion_bienes_basicos_subsistencia_humana": 0,
+                          "estimulo_fiscal_contratacion_personas_discapacidad_yo_mayores": 0,
+                          "gastos_que_no_reunen_requisitos_fiscales": 4307,
+                          "ingresos_fiscales_no_contables": 95,
+                          "intereses_devengados_que_exceden_valor_mercado_y_moratorios_pagados_o_no": 0,
+                          "isr_ietu_impac_ptu": 113002,
+                          "otras_deducciones_contables_no_fiscales": 0,
+                          "utilidad_o_perdida_fiscal_antes_de_ptu": 416133,
+                          "utilidad_o_perdida_neta": 298623,
+                          "utilidad_o_perdida_neta_historica": 298623,
+                        },
                         "created_at": "2022-02-09T08:46:20Z",
+                        "datos_adicionales": {
+                          "estas_obligado_a_presentar_la_informacion_sobre_tu_situacion_fiscal": "NO",
+                          "estas_obligado_unicamente_por_supuesto_distinto_al_de_haber_realizado_operaciones_con_residentes_extranjero": "SIN SELECCIÓN",
+                          "estas_obligado_unicamente_por_supuesto_distinto_al_de_haber_realizado_operaciones_con_residentes_extranjero_inferiores_100mdp": "SIN SELECCIÓN",
+                          "indica_si_optas_por_dictaminar_tus_estados_financieros": "NO",
+                          "indica_si_te_dedicas_exclisivamente_a_generacion_energia_fuentes_renovables_o_cogeneracion_electricidad_eficiente": "NO",
+                          "optas_por_presentar_informacion_sobre_tu_situacion_fiscal": "SIN SELECCIÓN",
+                        },
+                        "deducciones_autorizadas": {
+                          "consumos_en_restaurantes": 11254,
+                          "otras_deducciones_autorizadas": 424346,
+                          "total_deducciones_autorizadas": 495127,
+                          "viaticos_y_gastos_viaje": 59527,
+                        },
+                        "detalle_pago_r1_isr_personas_morales": {
+                          "a_cargo": 113002,
+                          "cantidad_a_cargo": 113002,
+                          "cantidad_a_pagar": 113002,
+                          "desea_aplicar_alguna_compensacion_o_estimulo": "NO",
+                          "opta_por_pagar_parcialidades": "SIN SELECCIÓN",
+                          "total_contribuciones": 113002,
+                        },
+                        "determinacion_del_impuesto_sobre_la_renta": {
+                          "datos_informativos_ejercicio": {
+                            "credito_fiscal_autorizado_en_ejercicio_a_produccion_distribucion_cinematografica_nacional_pendiente_aplicar": 0,
+                            "credito_fiscal_autorizado_en_ejercicio_por_inversion_en_proyectos_programas_para_deporte_de_alto_rendimiento_pendiente_aplicar": 0,
+                            "credito_fiscal_autorizado_en_ejercicio_por_proyectos_de_inversion_en_artes_pendiente_aplicar": 0,
+                            "credito_fiscal_autorizado_en_ejercicio_por_proyectos_en_investigacion_desarrollo_tecnologico_pendiente_aplicar": 0,
+                            "gastos_realidados_en_ejercicio_por_proyectos_en_investigacion_desarrollo_tecnologico": 0,
+                            "impac_recuperado_en_ejercicio_derivado_de_deconsolidacion": 0,
+                            "ingresos_obtenidos_por_apoyos_gubernamentales": 0,
+                            "monto_aplicado_del_estimulo_fiscal_de_chatarrizacion": 0,
+                            "monto_deducible_de_pagos_efectuados_por_uso_o_goce_temporal_automoviles": 0,
+                            "saldo_pendiente_aplicar_por_inversion_en_equipos_de_alimentacion_vehiculos_electricos": 0,
+                          },
+                          "datos_informativos_ejercicios_anteriores_aplicados_en_ejercicio": {
+                            "saldo_credito_fiscal_autorizado_ejercicios_anteriores_a_produccion_distribucion_nacional_pendiente_aplicar": 0,
+                            "saldo_credito_fiscal_autorizado_ejercicios_anteriores_por_inversion_en_proyectos_programas_para_deporte_alto_rendimiento_pendiente_aplicar": 0,
+                            "saldo_credito_fiscal_autorizado_ejercicios_anteriores_por_proyectos_inversion_artes_pendiente_aplicar": 0,
+                            "saldo_credito_fiscal_autorizado_ejercicios_anteriores_por_proyectos_investigacion_desarrollo_tecnologico_pendiente_aplicar": 0,
+                          },
+                          "determinacion_del_impuesto_sobre_la_renta": {
+                            "diferencia_a_cargo": 113002,
+                            "impuesto_causado_en_ejercicio": 113002,
+                            "impuesto_sobre_la_renta_del_ejercicio": 113002,
+                            "isr_a_cargo_del_ejercicio": 113002,
+                            "perdidas_fiscales_de_ejercicios_anteriores_que_se_aplican_en_ejercicio": 39462,
+                            "resultado_fiscal": 376672,
+                            "tienes_estimulos_fiscales_a_acreditar": "SIN SELECCIÓN",
+                            "total_deducciones_autorizadas_y_deduccion_inmediata_inversiones": 495126,
+                            "total_ingresos_acumulables": 911260,
+                            "utilidad_fiscal_del_ejercicio": 416134,
+                            "utilidad_o_perdida_fiscal_antes_de_ptu": 416134,
+                          },
+                        },
+                        "estado_posicion_financiera_balance": {
+                          "activo": {
+                            "cargos_y_gastos_diferidos": 9319,
+                            "cuentas_documentos_por_cobrar_extranjero": {},
+                            "cuentas_documentos_por_cobrar_nacionales": {},
+                            "depreciacion_acumulada": -106,
+                            "efectivo_caja_depositos_instituciones_credito_nacionales": 726644,
+                            "otros_activos_circulantes": 13277,
+                            "otros_activos_fijos": 12756,
+                            "suma_activo": 761890,
+                          },
+                          "capital_contable": {
+                            "capital_social_proveniente_aportaciones": 10000,
+                            "perdidas_acumuladas": -38450,
+                            "suma_capital_contable": 270173,
+                            "suma_pasivo_mas_capital_contable": 761890,
+                            "utilidad_del_ejercicio": 298623,
+                          },
+                          "pasivo": {
+                            "anticipos_de_clientes": {},
+                            "contribuciones_por_pagar": 223490,
+                            "cuentas_documentos_por_pagar_extranjero": {},
+                            "cuentas_documentos_por_pagar_nacionales": {
+                              "partes_no_relacionadas": 268227,
+                              "total": 268227,
+                            },
+                            "suma_pasivo": 491717,
+                          },
+                        },
+                        "estado_resultados": {
+                          "compras_netas_importacion": {},
+                          "compras_netas_nacionales": {},
+                          "devoluciones_descuentos_bonificaciones_ventas_extranjero": {},
+                          "devoluciones_descuentos_bonificaciones_ventas_nacionales": {},
+                          "ganancia_cambiaria": {},
+                          "gastos_indirectos_fabricacion": {},
+                          "gastos_operacion": {
+                            "partes_no_relacionadas": 499540,
+                            "total": 499540,
+                          },
+                          "ingresos_netos": {
+                            "partes_no_relacionadas": 911165,
+                            "total": 911165,
+                          },
+                          "intereses_devengados_a_cargo_extranjero": {},
+                          "intereses_devengados_a_cargo_nacionales": {},
+                          "intereses_devengados_a_favor_extranjero": {},
+                          "intereses_devengados_a_favor_nacionales": {},
+                          "intereses_moratorios_a_cargo_extranjero": {},
+                          "intereses_moratorios_a_cargo_nacionales": {},
+                          "intereses_moratorios_a_favor_extranjero": {},
+                          "intereses_moratorios_a_favor_nacionales": {},
+                          "isr": 113002,
+                          "mano_de_obra": {},
+                          "maquilas": {},
+                          "otras_operaciones_financieras_extranjero": {},
+                          "otras_operaciones_financieras_nacionales": {},
+                          "perdida_cambiaria": {},
+                          "resultado_posicion_monetaria_desfavorable": {},
+                          "resultado_posicion_monetaria_favorable": {},
+                          "utilidad_antes_impuesto": 411625,
+                          "utilidad_bruta": 911165,
+                          "utilidad_neta": 298623,
+                          "utilidad_operacion": 411625,
+                          "ventas_servicios_extranjero": {},
+                          "ventas_servicios_nacionales": {
+                            "partes_no_relacionadas": 911165,
+                            "total": 911165,
+                          },
+                        },
                         "id": "02589c41-ba22-4d44-8558-8111cc751318",
                         "informacion_general": {
                           "denominacion_razon_social": "ACME CORP",
@@ -14948,7 +15676,6 @@ client.tax_returns.list(params: {
                           "rfc": "ABC1111111A1",
                           "tipo_declaracion": "Normal",
                         },
-                        "link": "19697249-01b8-443e-a451-76bfc5fbeebf",
                         "pdf": "=PDF-STRING=",
                         "receipt_pdf": "=PDF-STRING=",
                       },
@@ -14990,6 +15717,123 @@ client.tax_returns.list(params: {
                       {
                         "collected_at": "2022-02-09T08:45:50Z",
                         "created_at": "2022-02-09T08:46:20Z",
+                        "detalle_pago_isr": {
+                          "r12_isr_retenciones_por_salarios": {
+                            "a_cargo": 415945,
+                            "aplica_primera_parcialidad": "NO",
+                            "cantidad_a_cargo": 415566,
+                            "cantidad_a_pagar": 415566,
+                            "parte_actualizada": 0,
+                            "recargos": 0,
+                            "subsidio_empleo": 379,
+                            "total_aplicaciones": 379,
+                            "total_de_contribuciones": 415945,
+                          },
+                          "r13_isr_retenciones_por_asimilados_a_salarios": {
+                            "a_cargo": 254588,
+                            "aplica_primera_parcialidad": "NO",
+                            "cantidad_a_cargo": 254588,
+                            "cantidad_a_pagar": 254588,
+                            "parte_actualizada": 0,
+                            "recargos": 0,
+                            "total_aplicaciones": 0,
+                            "total_de_contribuciones": 254588,
+                          },
+                          "r14_isr_retenciones_por_servicios_profesionales": {
+                            "a_cargo": 104482,
+                            "aplica_primera_parcialidad": "NO",
+                            "cantidad_a_cargo": 104482,
+                            "cantidad_a_pagar": 104482,
+                            "parte_actualizada": 0,
+                            "recargos": 0,
+                            "total_aplicaciones": 0,
+                            "total_de_contribuciones": 104482,
+                          },
+                          "r1_isr_personas_morales": {
+                            "a_cargo": 0,
+                            "aplica_primera_parcialidad": "NO",
+                            "cantidad_a_cargo": 0,
+                            "cantidad_a_pagar": 0,
+                            "total_aplicaciones": 0,
+                            "total_de_contribuciones": 0,
+                          },
+                        },
+                        "detalle_pago_iva": {
+                          "r21_iva": {
+                            "a_cargo": 312421,
+                            "aplica_primera_parcialidad": "NO",
+                            "cantidad_a_cargo": 312421,
+                            "cantidad_a_pagar": 312421,
+                            "parte_actualizada": 0,
+                            "recargos": 0,
+                            "total_aplicaciones": 0,
+                            "total_de_contribuciones": 312421,
+                          },
+                          "r21_iva_retenciones": {
+                            "a_cargo": 111448,
+                            "aplica_primera_parcialidad": "NO",
+                            "cantidad_a_cargo": 111448,
+                            "cantidad_a_pagar": 111448,
+                            "parte_actualizada": 0,
+                            "recargos": 0,
+                            "total_aplicaciones": 0,
+                            "total_de_contribuciones": 111448,
+                          },
+                        },
+                        "determinacion_isr": {
+                          "personas_morales_regimen_general": {
+                            "anticipos_rendimientos_distribuidos_periodo": 16746509,
+                            "base_gravable_pago_provisional": 946992,
+                            "coeficiente_utilidad": 0.2318,
+                            "diferencia_a_cargo": 0,
+                            "impuesto_a_cargo": 0,
+                            "impuesto_retenido": 29925,
+                            "impuestos_del_periodo": 284098,
+                            "ingresos_nominales_mes_que_declara": 6482479,
+                            "isr_causado": 284098,
+                            "pagos_provisionales_efectuados_anterioridad": 303039,
+                            "suma_ingresos_nominales_meses_anteriores_ejercicio": 69848414,
+                            "total_ingresos_nominales": 76330893,
+                            "utilidad_fiscal_pago_provisional": 17693501,
+                          },
+                        },
+                        "determinacion_iva": {
+                          "detalle_total_actos_actividades_pagados_tasa_16": {
+                            "otros_actos_pagados_tasa_16": 2094706,
+                            "total_actos_pagados_tasa_16": 2094706,
+                          },
+                          "detalle_valor_actos_actividades_gravados_tasa_16": {
+                            "otros_actos_actividades_gravados_tasa_16": 6457950,
+                            "total_actos_actividades_gravados_tasa_16": 6457950,
+                          },
+                          "determinacion_iva": {
+                            "cantidad_a_cargo": 312421,
+                            "diferencia_a_cargo": 312421,
+                            "impuesto_a_cargo": 312421,
+                            "impuesto_causado": 1033272,
+                            "iva_retenido_al_contribuyente": 385698,
+                            "saldo_a_favor_periodo": 0,
+                            "suma_actos_actividades_gravados": 6457950,
+                            "total_iva_acreditable": 335153,
+                            "valor_actos_actividades_gravados_tasa_16": 6457950,
+                          },
+                          "determinacion_iva_acreditable": {
+                            "iva_acreditable": 335153,
+                            "iva_bienes_utilizados_indistintamente_actos_gravados_o_actos_no_obligados_pago_impuesto": 0,
+                            "iva_trasladado_adquisicion_bienes_distintos_inversiones_actos_gravados": 335153,
+                            "total_actos_actividades_pagados_importacion_bienes_tasa_16": 0,
+                            "total_iva_acreditable_periodo": 335153,
+                            "total_iva_actos_actividades_gravados": 335153,
+                            "total_iva_actos_actividades_pagados_tasa_16": 335153,
+                            "total_iva_trasladado_contribuyente": 335153,
+                          },
+                          "montos_actos_actividades_pagados": {
+                            "total_actos_actividades_pagados_no_paga_iva": 0,
+                            "total_actos_actividades_pagados_tasa_0": 0,
+                            "total_actos_actividades_pagados_tasa_16": 2094706,
+                            "total_actos_actividades_sujetos_estimulo_rfn": 0,
+                          },
+                        },
                         "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
                         "informacion_general": {
                           "denominacion_razon_social": "Aloha Mahalo SC",
@@ -15000,9 +15844,9 @@ client.tax_returns.list(params: {
                           "rfc": "DPA950805RR2",
                           "tipo_declaracion": "Normal",
                         },
-                        "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                         "pdf": "===PDF_BINARY====",
                         "receipt_pdf": "===PDF_BINARY====",
+                        "type": "monthly",
                       },
                     ],
                   },
@@ -15361,26 +16205,6 @@ client.tax_returns.list(params: {
                     {
                       "collected_at": "2022-02-09T08:45:50Z",
                       "created_at": "2022-02-09T08:46:20Z",
-                      "datos_informativos": {
-                        "datos_informativos": {
-                          "key": "value",
-                        },
-                      },
-                      "deducciones_personales": {
-                        "deducciones_personales": {
-                          "key": "value",
-                        },
-                      },
-                      "determinacion_impuesto": {
-                        "determinacion_impuesto": {
-                          "key": "value",
-                        },
-                      },
-                      "dividendos": {
-                        "dividendos": {
-                          "key": "value",
-                        },
-                      },
                       "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
                       "informacion_general": {
                         "ejercicio": {
@@ -15405,24 +16229,51 @@ client.tax_returns.list(params: {
                           "key": "value",
                         },
                       },
-                      "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                      "isr": {
+                        "detalle_del_pago": {
+                          "a_cargo": 0,
+                          "cantidad_a_cargo": 0,
+                          "cantidad_a_pagar": 0,
+                          "parte_actualizada": 0,
+                          "recargos": 0,
+                          "total_aplicaciones": 0,
+                          "total_contribuciones": 0,
+                        },
+                        "determinacion": {
+                          "base_gravable_pago_provisional": 0,
+                          "compra_gastos_periodo": 399,
+                          "compras_gastos_periodos_anteriores": 1596,
+                          "impuesto_retenido": 0,
+                          "ingresos_periodo": 0,
+                          "ingresos_periodos_anteriores": 0,
+                          "isr_cargo": 0,
+                          "isr_causado": 0,
+                          "isr_retenido_periodos_anteriores": 0,
+                          "pagos_provisionales_efectuados_anterioridad": 0,
+                          "total_compras_gastos": 1995,
+                          "total_ingresos": 0,
+                        },
+                        "tipo": "PFAE",
+                      },
+                      "iva": {
+                        "detalle_del_pago": {
+                          "cantidad_a_cargo": 0,
+                          "cantidad_a_pagar": 0,
+                          "total_aplicaciones": 0,
+                          "total_contribuciones": 0,
+                        },
+                        "determinacion": {
+                          "actividades_exentas": 0,
+                          "actividades_gravadas_tasa_0": 0,
+                          "actividades_gravadas_tasa_16": 0,
+                          "iva_acreditable_periodo": 0,
+                          "iva_cobrado_periodo_tasa_16": 0,
+                          "iva_retenido": 0,
+                        },
+                      },
                       "pdf": "===PDF_BINARY====",
                       "receipt_pdf": "===PDF_BINARY====",
-                      "retenciones": {
-                        "retenciones": {
-                          "key": "value",
-                        },
-                      },
-                      "servicios_profesionales": {
-                        "servicios_profesionales": {
-                          "key": "value",
-                        },
-                      },
-                      "sueldos_salarios": {
-                        "sueldos_salarios": {
-                          "key": "value",
-                        },
-                      },
+                      "type": "monthly",
                     },
                   ],
                 },
@@ -15444,26 +16295,6 @@ client.tax_returns.list(params: {
                     {
                       "collected_at": "2022-02-09T08:45:50Z",
                       "created_at": "2022-02-09T08:46:20Z",
-                      "datos_informativos": {
-                        "datos_informativos": {
-                          "key": "value",
-                        },
-                      },
-                      "deducciones_personales": {
-                        "deducciones_personales": {
-                          "key": "value",
-                        },
-                      },
-                      "determinacion_impuesto": {
-                        "determinacion_impuesto": {
-                          "key": "value",
-                        },
-                      },
-                      "dividendos": {
-                        "dividendos": {
-                          "key": "value",
-                        },
-                      },
                       "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
                       "informacion_general": {
                         "ejercicio": {
@@ -15488,24 +16319,59 @@ client.tax_returns.list(params: {
                           "key": "value",
                         },
                       },
-                      "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                      "isr": {
+                        "detalle_del_pago": {
+                          "a_cargo": 0,
+                          "cantidad_a_cargo": 0,
+                          "cantidad_a_pagar": 0,
+                          "parte_actualizada": 0,
+                          "recargos": 0,
+                          "total_aplicaciones": 0,
+                          "total_contribuciones": 0,
+                        },
+                        "determinacion": {
+                          "base_gravable_pago_provisional": 0,
+                          "compra_gastos_periodo": 399,
+                          "compras_gastos_periodos_anteriores": 1596,
+                          "deduccíon_opcional": 700,
+                          "impuesto_predial": 0,
+                          "impuesto_retenido": 0,
+                          "ingresos_periodo": 0,
+                          "ingresos_periodos_anteriores": 0,
+                          "isr_cargo": 0,
+                          "isr_causado": 0,
+                          "isr_retenido_periodos_anteriores": 0,
+                          "optas_por_el_cálculo_acumulado": "NO",
+                          "pagos_provisionales_efectuados_anterioridad": 0,
+                          "tienes_facilidades_administrativas_o_estímulos_deducibles": "NO",
+                          "tipo_de_deduccíon": "dedduccíon opicional",
+                          "total_compras_gastos": 1995,
+                          "total_deducciones_autorizadas": 700,
+                          "total_ingresos": 0,
+                        },
+                        "tipo": "PFAE",
+                      },
+                      "iva": {
+                        "detalle_del_pago": {
+                          "cantidad_a_cargo": 0,
+                          "cantidad_a_pagar": 0,
+                          "total_aplicaciones": 0,
+                          "total_contribuciones": 0,
+                        },
+                        "determinacion": {
+                          "actividades_exentas": 0,
+                          "actividades_gravadas_tasa_0": 0,
+                          "actividades_gravadas_tasa_16": 0,
+                          "cantidad_a_cargo": 54,
+                          "impuesto_a_cargo": 54,
+                          "iva_acreditable_periodo": 0,
+                          "iva_cobrado_periodo_tasa_16": 0,
+                          "iva_retenido": 0,
+                        },
+                      },
                       "pdf": "===PDF_BINARY====",
                       "receipt_pdf": "===PDF_BINARY====",
-                      "retenciones": {
-                        "retenciones": {
-                          "key": "value",
-                        },
-                      },
-                      "servicios_profesionales": {
-                        "servicios_profesionales": {
-                          "key": "value",
-                        },
-                      },
-                      "sueldos_salarios": {
-                        "sueldos_salarios": {
-                          "key": "value",
-                        },
-                      },
+                      "type": "monthly",
                     },
                   ],
                 },
@@ -15525,26 +16391,443 @@ client.tax_returns.list(params: {
                 "response": {
                   "body": [
                     {
+                      "cifras_cierre_ejercicio": {
+                        "coeficiente_de_utilidad_por_aplicar_en_ejercicio_siguiente": 0.4567,
+                        "isr_causado_en_exceso_del_impac_en_los_3_ejercicios_anteriores_pendientes_aplicar": {
+                          "key": "value",
+                        },
+                        "perdidas_fiscales_de_ejercicios_anteriores_pendientes_de_amortizar_actualiazadas": {
+                          "key": "value",
+                        },
+                        "porcentaje_de_participacion_consolidable": {
+                          "key": "value",
+                        },
+                        "saldo_actualizado_de_cuenta_de_capital_de_aportacion": {
+                          "key": "value",
+                        },
+                        "saldo_actualizado_de_cuenta_de_utilidad_fiscal_neta_2013_y_anteriores": {
+                          "key": "value",
+                        },
+                        "saldo_actualizado_de_cuenta_de_utilidad_fiscal_neta_a_partir_2014_y_anteriores": {
+                          "key": "value",
+                        },
+                        "saldo_actualizado_de_cuenta_de_utilidad_fiscal_reinvertida": {
+                          "key": "value",
+                        },
+                        "saldo_de_cuenta_de_utilidad_fiscal_neta_por_inversion_en_renovables": {
+                          "key": "value",
+                        },
+                        "saldo_promedio_anual_de_creditos": 142795,
+                        "saldo_promedio_anual_de_deudas": 144765,
+                      },
                       "collected_at": "2022-02-09T08:45:50Z",
+                      "conciliacion_entre_resultado_contable_fiscal": {
+                        "ajuste_anual_inflacion_acumulable": 95,
+                        "ajuste_anual_inflacion_deducible": {
+                          "key": "value",
+                        },
+                        "anticipos_de_clientes": {
+                          "key": "value",
+                        },
+                        "anticipos_de_clientes_ejercicios_anteriores": {
+                          "key": "value",
+                        },
+                        "costo_de_ventas_contable": {
+                          "key": "value",
+                        },
+                        "costo_vendido_fiscal": {
+                          "key": "value",
+                        },
+                        "deduccion_impuesto_sobre_renta_retenido_personas_discapacidad_yo_mayores": 0,
+                        "deduccion_inversiones": {
+                          "key": "value",
+                        },
+                        "deducciones_contables_no_fiscales": 117415,
+                        "deducciones_fiscales_no_contables": 0,
+                        "depreciacion_y_amortizacion_contable": 106,
+                        "donacion_bienes_basicos_subsistencia_humana": 0,
+                        "efectos_reexpresion": {
+                          "key": "value",
+                        },
+                        "estimulo_fiscal_contratacion_personas_discapacidad_yo_mayores": 0,
+                        "estimulo_fiscal_por_deduccion_inmediata_inversiones": {
+                          "key": "value",
+                        },
+                        "ganancia_en_enajenacion_acciones_por_reembolso_capital": {
+                          "key": "value",
+                        },
+                        "ganancia_en_enajenacion_de_terrenos_y_activo_fijo": {
+                          "key": "value",
+                        },
+                        "gastos_que_no_reunen_requisitos_fiscales": 4307,
+                        "ingresos_contables_no_fiscales": {
+                          "key": "value",
+                        },
+                        "ingresos_fiscales_no_contables": 95,
+                        "intereses_devengados_que_exceden_valor_mercado_y_moratorios_pagados_o_no": 0,
+                        "intereses_moratorios_devengados_a_favor_cobrados_o_no": {
+                          "key": "value",
+                        },
+                        "intereses_moratorios_efectivamente_cobrados": {
+                          "key": "value",
+                        },
+                        "intereses_moratorios_efectivamente_pagados": {
+                          "key": "value",
+                        },
+                        "inventario_acumulable_del_ejercicio": {
+                          "key": "value",
+                        },
+                        "isr_ietu_impac_ptu": 113002,
+                        "otras_deducciones_contables_no_fiscales": 0,
+                        "otras_deducciones_fiscales_no_contables": {
+                          "key": "value",
+                        },
+                        "otros_ingresos_contables_no_fiscales": {
+                          "key": "value",
+                        },
+                        "otros_ingresos_fiscales_no_contables": {
+                          "key": "value",
+                        },
+                        "perdida_contable_enajenacion_de_acciones": {
+                          "key": "value",
+                        },
+                        "perdida_contable_enajenacion_de_activo_fijo": {
+                          "key": "value",
+                        },
+                        "perdida_en_participacion_subsidiaria": {
+                          "key": "value",
+                        },
+                        "perdida_fiscal_en_enajenacion_acciones": {
+                          "key": "value",
+                        },
+                        "perdida_fiscal_en_enajenacion_de_terrenos_y_activo_fijo": {
+                          "key": "value",
+                        },
+                        "resultado_posicion_monetaria": {
+                          "key": "value",
+                        },
+                        "saldos_a_favor_impuestos_y_su_actualizacion": {
+                          "key": "value",
+                        },
+                        "utilidad_contable_enajenacion_de_acciones": {
+                          "key": "value",
+                        },
+                        "utilidad_contable_enajenacion_de_activo_fijo": {
+                          "key": "value",
+                        },
+                        "utilidad_en_participacion_subsidiaria": {
+                          "key": "value",
+                        },
+                        "utilidad_o_perdida_fiscal_antes_de_ptu": 416133,
+                        "utilidad_o_perdida_neta": 298623,
+                        "utilidad_o_perdida_neta_historica": 298623,
+                      },
                       "created_at": "2022-02-09T08:46:20Z",
-                      "datos_informativos": {
-                        "datos_informativos": {
+                      "datos_adicionales": {
+                        "estas_obligado_a_presentar_la_informacion_sobre_tu_situacion_fiscal": "NO",
+                        "estas_obligado_unicamente_por_supuesto_distinto_al_de_haber_realizado_operaciones_con_residentes_extranjero": "SIN SELECCIÓN",
+                        "estas_obligado_unicamente_por_supuesto_distinto_al_de_haber_realizado_operaciones_con_residentes_extranjero_inferiores_100mdp": "SIN SELECCIÓN",
+                        "indica_si_optas_por_dictaminar_tus_estados_financieros": "NO",
+                        "indica_si_te_dedicas_exclisivamente_a_generacion_energia_fuentes_renovables_o_cogeneracion_electricidad_eficiente": "NO",
+                        "optas_por_presentar_informacion_sobre_tu_situacion_fiscal": "SIN SELECCIÓN",
+                      },
+                      "deducciones_autorizadas": {
+                        "aportaciones_para_fondos_de_pensiones_y_jubilaciones": {
+                          "key": "value",
+                        },
+                        "aportaciones_sar_infonavit_y_jubilaciones_vejez": {
+                          "key": "value",
+                        },
+                        "combustible_y_lubricantes": {
+                          "key": "value",
+                        },
+                        "consumos_en_restaurantes": 11254,
+                        "contribuciones_pagadas_excepto_isr_ietu_impac_iva_ieps": {
+                          "key": "value",
+                        },
+                        "credito_al_salario_no_disminuido_de_contribuciones": {
+                          "key": "value",
+                        },
+                        "cuotas_imss": {
+                          "key": "value",
+                        },
+                        "deduccion_por_concepto_de_ayuda_alimentaria_para_trabajadores": {
+                          "key": "value",
+                        },
+                        "donativos_otorgados": {
+                          "key": "value",
+                        },
+                        "fletes_y_acarreos_pagados_a_parsonas_fisicas": {
+                          "key": "value",
+                        },
+                        "honorarios_pagados_a_personas_fisicas": {
+                          "key": "value",
+                        },
+                        "monto_deducible_al_47_pagos_son_ingresos_exentos_para_trabajador": {
+                          "key": "value",
+                        },
+                        "monto_deducible_al_53_pagos_son_ingresos_exentos_para_trabajador": {
+                          "key": "value",
+                        },
+                        "monto_total_pagos_que_sean_ingresos_exentos_para_trabajador": {
+                          "key": "value",
+                        },
+                        "otras_deducciones_autorizadas": 424346,
+                        "perdida_por_creditos_incobrables": {
+                          "key": "value",
+                        },
+                        "perdida_por_operaciones_financieras_derivadas": {
+                          "key": "value",
+                        },
+                        "regalias_y_asistencia_tecnica": {
+                          "key": "value",
+                        },
+                        "seguros_fianzas": {
+                          "key": "value",
+                        },
+                        "sueldos_salarios": {
+                          "key": "value",
+                        },
+                        "total_deducciones_autorizadas": 495127,
+                        "uso_o_goce_temporal_de_automoviles_baterias_electricas_o_electricos_con_motor_combustion_o_hidrogeno": {
+                          "key": "value",
+                        },
+                        "uso_o_goce_temporal_de_bienes_pagados_a_personas_fisicas": {
+                          "key": "value",
+                        },
+                        "viaticos_y_gastos_viaje": 59527,
+                      },
+                      "detalle_pago_r1_isr_personas_morales": {
+                        "a_cargo": 113002,
+                        "cantidad_a_cargo": 113002,
+                        "cantidad_a_favor": {
+                          "key": "value",
+                        },
+                        "cantidad_a_pagar": 113002,
+                        "desea_aplicar_alguna_compensacion_o_estimulo": "NO",
+                        "importe_de_primera_parcialidad": {
+                          "key": "value",
+                        },
+                        "importe_sin_primera_parcialidad": {
+                          "key": "value",
+                        },
+                        "multa_por_correccion": {
+                          "key": "value",
+                        },
+                        "opta_por_pagar_parcialidades": "SIN SELECCIÓN",
+                        "parte_actualizada": {
+                          "key": "value",
+                        },
+                        "recargos": {
+                          "key": "value",
+                        },
+                        "total_contribuciones": 113002,
+                      },
+                      "determinacion_del_impuesto_sobre_la_renta": {
+                        "datos_informativos_ejercicio": {
+                          "credito_fiscal_autorizado_en_ejercicio_a_produccion_distribucion_cinematografica_nacional_pendiente_aplicar": 0,
+                          "credito_fiscal_autorizado_en_ejercicio_por_inversion_en_proyectos_programas_para_deporte_de_alto_rendimiento_pendiente_aplicar": 0,
+                          "credito_fiscal_autorizado_en_ejercicio_por_proyectos_de_inversion_en_artes_pendiente_aplicar": 0,
+                          "credito_fiscal_autorizado_en_ejercicio_por_proyectos_en_investigacion_desarrollo_tecnologico_pendiente_aplicar": 0,
+                          "gastos_realidados_en_ejercicio_por_proyectos_en_investigacion_desarrollo_tecnologico": 0,
+                          "impac_recuperado_en_ejercicio_derivado_de_deconsolidacion": 0,
+                          "ingresos_obtenidos_por_apoyos_gubernamentales": 0,
+                          "monto_aplicado_del_estimulo_fiscal_de_chatarrizacion": 0,
+                          "monto_deducible_de_pagos_efectuados_por_uso_o_goce_temporal_automoviles": 0,
+                          "saldo_pendiente_aplicar_por_inversion_en_equipos_de_alimentacion_vehiculos_electricos": 0,
+                        },
+                        "datos_informativos_ejercicios_anteriores_aplicados_en_ejercicio": {
+                          "saldo_credito_fiscal_autorizado_ejercicios_anteriores_a_produccion_distribucion_nacional_pendiente_aplicar": 0,
+                          "saldo_credito_fiscal_autorizado_ejercicios_anteriores_por_inversion_en_proyectos_programas_para_deporte_alto_rendimiento_pendiente_aplicar": 0,
+                          "saldo_credito_fiscal_autorizado_ejercicios_anteriores_por_proyectos_inversion_artes_pendiente_aplicar": 0,
+                          "saldo_credito_fiscal_autorizado_ejercicios_anteriores_por_proyectos_investigacion_desarrollo_tecnologico_pendiente_aplicar": 0,
+                        },
+                        "determinacion_del_impuesto_sobre_la_renta": {
+                          "diferencia_a_cargo": 113002,
+                          "impuesto_causado_en_ejercicio": 113002,
+                          "impuesto_sobre_la_renta_del_ejercicio": 113002,
+                          "isr_a_cargo_del_ejercicio": 113002,
+                          "perdidas_fiscales_de_ejercicios_anteriores_que_se_aplican_en_ejercicio": 39462,
+                          "resultado_fiscal": 376672,
+                          "tienes_estimulos_fiscales_a_acreditar": "SIN SELECCIÓN",
+                          "total_deducciones_autorizadas_y_deduccion_inmediata_inversiones": 495126,
+                          "total_ingresos_acumulables": 911260,
+                          "utilidad_fiscal_del_ejercicio": 416134,
+                          "utilidad_o_perdida_fiscal_antes_de_ptu": 416134,
+                        },
+                        "impuesto_sobre_ingresos_sujetos_a_regimenes_fiscales_preferentes": {
                           "key": "value",
                         },
                       },
-                      "deducciones_personales": {
-                        "deducciones_personales": {
+                      "dividendos_o_utilidades_distribuidos": {
+                        "monto_del_impuesto_pagado_de_utilidades_provenientes_de_cufinre": {
+                          "key": "value",
+                        },
+                        "monto_del_impuesto_pagado_no_proveniente_de_cufin_ni_cufinre": {
+                          "key": "value",
+                        },
+                        "no_provenientes_de_cufin_ni_cufinre_en_acciones": {
+                          "key": "value",
+                        },
+                        "no_provenientes_de_cufin_ni_cufinre_en_efectivo": {
+                          "key": "value",
+                        },
+                        "provenientes_de_cuenta_de_utilidad_fiscal_neta_por_inversion_en_energia_de_fuentes_renovables_o_sistemas_cogeneracion_electricidad_eficiente": {
+                          "key": "value",
+                        },
+                        "provenientes_de_cuenta_de_utilidad_fisica_neta_cufin_generada_a_partir_de_2014": {
+                          "key": "value",
+                        },
+                        "provenientes_de_cuenta_de_utilidad_fisica_neta_cufin_generada_en_2013_y_anteriores": {
+                          "key": "value",
+                        },
+                        "provenientes_de_cuenta_de_utilidad_fisica_neta_reinvertida_cufinre": {
                           "key": "value",
                         },
                       },
-                      "determinacion_impuesto": {
-                        "determinacion_impuesto": {
-                          "key": "value",
+                      "estado_posicion_financiera_balance": {
+                        "activo": {
+                          "cargos_y_gastos_diferidos": 9319,
+                          "cuentas_documentos_por_cobrar_extranjero": {},
+                          "cuentas_documentos_por_cobrar_nacionales": {},
+                          "depreciacion_acumulada": -106,
+                          "efectivo_caja_depositos_instituciones_credito_nacionales": 726644,
+                          "otros_activos_circulantes": 13277,
+                          "otros_activos_fijos": 12756,
+                          "suma_activo": 761890,
+                        },
+                        "capital_contable": {
+                          "capital_social_proveniente_aportaciones": 10000,
+                          "perdidas_acumuladas": -38450,
+                          "suma_capital_contable": 270173,
+                          "suma_pasivo_mas_capital_contable": 761890,
+                          "utilidad_del_ejercicio": 298623,
+                        },
+                        "pasivo": {
+                          "anticipos_de_clientes": {},
+                          "contribuciones_por_pagar": 223490,
+                          "cuentas_documentos_por_pagar_extranjero": {},
+                          "cuentas_documentos_por_pagar_nacionales": {
+                            "partes_no_relacionadas": 268227,
+                            "total": 268227,
+                          },
+                          "suma_pasivo": 491717,
                         },
                       },
-                      "dividendos": {
-                        "dividendos": {
+                      "estado_resultados": {
+                        "compras_netas_importacion": {},
+                        "compras_netas_nacionales": {},
+                        "costo_mercancias": {
                           "key": "value",
+                        },
+                        "costo_ventas_servicios": {
+                          "key": "value",
+                        },
+                        "devoluciones_descuentos_bonificaciones_ventas_extranjero": {},
+                        "devoluciones_descuentos_bonificaciones_ventas_nacionales": {},
+                        "efectos_reexpresion_desfavorables_excepto_resultado_posicion_monetaria": {
+                          "key": "value",
+                        },
+                        "efectos_reexpresion_favorables_excepto_resultado_posicion_monetaria": {
+                          "key": "value",
+                        },
+                        "ganancia_cambiaria": {},
+                        "gastos_indirectos_fabricacion": {},
+                        "gastos_operacion": {
+                          "partes_no_relacionadas": 499540,
+                          "total": 499540,
+                        },
+                        "gastos_partidas_discontinuas_extraordinarias": {
+                          "key": "value",
+                        },
+                        "ietu": {
+                          "key": "value",
+                        },
+                        "impac": {
+                          "key": "value",
+                        },
+                        "ingresos_netos": {
+                          "partes_no_relacionadas": 911165,
+                          "total": 911165,
+                        },
+                        "ingresos_partidas_discontinuas_extraordinarias": {
+                          "key": "value",
+                        },
+                        "intereses_devengados_a_cargo_extranjero": {},
+                        "intereses_devengados_a_cargo_nacionales": {},
+                        "intereses_devengados_a_favor_extranjero": {},
+                        "intereses_devengados_a_favor_nacionales": {},
+                        "intereses_moratorios_a_cargo_extranjero": {},
+                        "intereses_moratorios_a_cargo_nacionales": {},
+                        "intereses_moratorios_a_favor_extranjero": {},
+                        "intereses_moratorios_a_favor_nacionales": {},
+                        "inventario_final": {
+                          "key": "value",
+                        },
+                        "inventario_inicial": {
+                          "key": "value",
+                        },
+                        "isr": 113002,
+                        "mano_de_obra": {},
+                        "maquilas": {},
+                        "otras_operaciones_financieras": {
+                          "key": "value",
+                        },
+                        "otras_operaciones_financieras_extranjero": {},
+                        "otras_operaciones_financieras_nacionales": {},
+                        "otros_gastos": {
+                          "key": "value",
+                        },
+                        "otros_gastos_extranjero": {
+                          "key": "value",
+                        },
+                        "otros_gastos_nacionales": {
+                          "key": "value",
+                        },
+                        "otros_productos": {
+                          "key": "value",
+                        },
+                        "otros_productos_extranjero": {
+                          "key": "value",
+                        },
+                        "otros_productos_nacionales": {
+                          "key": "value",
+                        },
+                        "perdida_antes_impuesto": {
+                          "key": "value",
+                        },
+                        "perdida_bruta": {
+                          "key": "value",
+                        },
+                        "perdida_cambiaria": {},
+                        "perdida_neta": {
+                          "key": "value",
+                        },
+                        "perdida_operacion": {
+                          "key": "value",
+                        },
+                        "perdida_participacion_subsidiaria": {
+                          "key": "value",
+                        },
+                        "ptu": {
+                          "key": "value",
+                        },
+                        "resultado_integral_financiamiento": {
+                          "key": "value",
+                        },
+                        "resultado_posicion_monetaria_desfavorable": {},
+                        "resultado_posicion_monetaria_favorable": {},
+                        "utilidad_antes_impuesto": 411625,
+                        "utilidad_bruta": 911165,
+                        "utilidad_neta": 298623,
+                        "utilidad_operacion": 411625,
+                        "utilidad_participacion_subsidiaria": {
+                          "key": "value",
+                        },
+                        "ventas_servicios_extranjero": {},
+                        "ventas_servicios_nacionales": {
+                          "partes_no_relacionadas": 911165,
+                          "total": 911165,
                         },
                       },
                       "id": "02589c41-ba22-4d44-8558-8111cc751318",
@@ -15560,24 +16843,8 @@ client.tax_returns.list(params: {
                         },
                         "tipo_declaracion": "Normal",
                       },
-                      "link": "19697249-01b8-443e-a451-76bfc5fbeebf",
                       "pdf": "=PDF-STRING=",
                       "receipt_pdf": "=PDF-STRING=",
-                      "retenciones": {
-                        "retenciones": {
-                          "key": "value",
-                        },
-                      },
-                      "servicios_profesionales": {
-                        "servicios_profesionales": {
-                          "key": "value",
-                        },
-                      },
-                      "sueldos_salarios": {
-                        "sueldos_salarios": {
-                          "key": "value",
-                        },
-                      },
                     },
                   ],
                 },
@@ -15599,24 +16866,121 @@ client.tax_returns.list(params: {
                     {
                       "collected_at": "2022-02-09T08:45:50Z",
                       "created_at": "2022-02-09T08:46:20Z",
-                      "datos_informativos": {
-                        "datos_informativos": {
-                          "key": "value",
+                      "detalle_pago_isr": {
+                        "r12_isr_retenciones_por_salarios": {
+                          "a_cargo": 415945,
+                          "aplica_primera_parcialidad": "NO",
+                          "cantidad_a_cargo": 415566,
+                          "cantidad_a_pagar": 415566,
+                          "parte_actualizada": 0,
+                          "recargos": 0,
+                          "subsidio_empleo": 379,
+                          "total_aplicaciones": 379,
+                          "total_de_contribuciones": 415945,
+                        },
+                        "r13_isr_retenciones_por_asimilados_a_salarios": {
+                          "a_cargo": 254588,
+                          "aplica_primera_parcialidad": "NO",
+                          "cantidad_a_cargo": 254588,
+                          "cantidad_a_pagar": 254588,
+                          "parte_actualizada": 0,
+                          "recargos": 0,
+                          "total_aplicaciones": 0,
+                          "total_de_contribuciones": 254588,
+                        },
+                        "r14_isr_retenciones_por_servicios_profesionales": {
+                          "a_cargo": 104482,
+                          "aplica_primera_parcialidad": "NO",
+                          "cantidad_a_cargo": 104482,
+                          "cantidad_a_pagar": 104482,
+                          "parte_actualizada": 0,
+                          "recargos": 0,
+                          "total_aplicaciones": 0,
+                          "total_de_contribuciones": 104482,
+                        },
+                        "r1_isr_personas_morales": {
+                          "a_cargo": 0,
+                          "aplica_primera_parcialidad": "NO",
+                          "cantidad_a_cargo": 0,
+                          "cantidad_a_pagar": 0,
+                          "total_aplicaciones": 0,
+                          "total_de_contribuciones": 0,
                         },
                       },
-                      "deducciones_personales": {
-                        "deducciones_personales": {
-                          "key": "value",
+                      "detalle_pago_iva": {
+                        "r21_iva": {
+                          "a_cargo": 312421,
+                          "aplica_primera_parcialidad": "NO",
+                          "cantidad_a_cargo": 312421,
+                          "cantidad_a_pagar": 312421,
+                          "parte_actualizada": 0,
+                          "recargos": 0,
+                          "total_aplicaciones": 0,
+                          "total_de_contribuciones": 312421,
+                        },
+                        "r21_iva_retenciones": {
+                          "a_cargo": 111448,
+                          "aplica_primera_parcialidad": "NO",
+                          "cantidad_a_cargo": 111448,
+                          "cantidad_a_pagar": 111448,
+                          "parte_actualizada": 0,
+                          "recargos": 0,
+                          "total_aplicaciones": 0,
+                          "total_de_contribuciones": 111448,
                         },
                       },
-                      "determinacion_impuesto": {
-                        "determinacion_impuesto": {
-                          "key": "value",
+                      "determinacion_isr": {
+                        "personas_morales_regimen_general": {
+                          "anticipos_rendimientos_distribuidos_periodo": 16746509,
+                          "base_gravable_pago_provisional": 946992,
+                          "coeficiente_utilidad": 0.2318,
+                          "diferencia_a_cargo": 0,
+                          "impuesto_a_cargo": 0,
+                          "impuesto_retenido": 29925,
+                          "impuestos_del_periodo": 284098,
+                          "ingresos_nominales_mes_que_declara": 6482479,
+                          "isr_causado": 284098,
+                          "pagos_provisionales_efectuados_anterioridad": 303039,
+                          "suma_ingresos_nominales_meses_anteriores_ejercicio": 69848414,
+                          "total_ingresos_nominales": 76330893,
+                          "utilidad_fiscal_pago_provisional": 17693501,
                         },
                       },
-                      "dividendos": {
-                        "dividendos": {
-                          "key": "value",
+                      "determinacion_iva": {
+                        "detalle_total_actos_actividades_pagados_tasa_16": {
+                          "otros_actos_pagados_tasa_16": 2094706,
+                          "total_actos_pagados_tasa_16": 2094706,
+                        },
+                        "detalle_valor_actos_actividades_gravados_tasa_16": {
+                          "otros_actos_actividades_gravados_tasa_16": 6457950,
+                          "total_actos_actividades_gravados_tasa_16": 6457950,
+                        },
+                        "determinacion_iva": {
+                          "cantidad_a_cargo": 312421,
+                          "diferencia_a_cargo": 312421,
+                          "impuesto_a_cargo": 312421,
+                          "impuesto_causado": 1033272,
+                          "iva_retenido_al_contribuyente": 385698,
+                          "saldo_a_favor_periodo": 0,
+                          "suma_actos_actividades_gravados": 6457950,
+                          "total_iva_acreditable": 335153,
+                          "valor_actos_actividades_gravados_tasa_16": 6457950,
+                        },
+                        "determinacion_iva_acreditable": {
+                          "iva_acreditable": 335153,
+                          "iva_bienes_utilizados_indistintamente_actos_gravados_o_actos_no_obligados_pago_impuesto": 0,
+                          "iva_trasladado_adquisicion_bienes_distintos_inversiones_actos_gravados": 335153,
+                          "total_actos_actividades_pagados_importacion_bienes_tasa_16": 0,
+                          "total_iva_acreditable_periodo": 335153,
+                          "total_iva_actos_actividades_gravados": 335153,
+                          "total_iva_actos_actividades_pagados_tasa_16": 335153,
+                          "total_iva_trasladado_contribuyente": 335153,
+                        },
+                        "montos_actos_actividades_pagados": {
+                          "total_actos_actividades_pagados_no_paga_iva": 0,
+                          "total_actos_actividades_pagados_tasa_0": 0,
+                          "total_actos_actividades_pagados_tasa_16": 2094706,
+                          "total_actos_actividades_sujetos_estimulo_rfn": 0,
                         },
                       },
                       "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
@@ -15632,24 +16996,9 @@ client.tax_returns.list(params: {
                         },
                         "tipo_declaracion": "Normal",
                       },
-                      "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                       "pdf": "===PDF_BINARY====",
                       "receipt_pdf": "===PDF_BINARY====",
-                      "retenciones": {
-                        "retenciones": {
-                          "key": "value",
-                        },
-                      },
-                      "servicios_profesionales": {
-                        "servicios_profesionales": {
-                          "key": "value",
-                        },
-                      },
-                      "sueldos_salarios": {
-                        "sueldos_salarios": {
-                          "key": "value",
-                        },
-                      },
+                      "type": "monthly",
                     },
                   ],
                 },
