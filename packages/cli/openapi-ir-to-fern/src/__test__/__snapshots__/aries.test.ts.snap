@@ -96,12 +96,7 @@ exports[`open api parser aries simple 1`] = `
                 "path-parameters": {
                   "conn_id": "conn_id",
                 },
-                "request": {
-                  "name": "Query",
-                  "params": {
-                    "key": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  },
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "string": {
@@ -183,17 +178,12 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "request": {
                   "menu": {
-                    "description": "User preferences for window settings",
-                    "errormsg": "Error: item not present",
                     "options": [
                       {
-                        "description": "Window display preferences",
-                        "disabled": false,
                         "name": "window_prefs",
                         "title": "Window Preferences",
                       },
                     ],
-                    "title": "My Menu",
                   },
                 },
                 "response": {
@@ -250,9 +240,7 @@ exports[`open api parser aries simple 1`] = `
                 "path-parameters": {
                   "conn_id": "conn_id",
                 },
-                "request": {
-                  "content": "Hello",
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "string": {
@@ -429,19 +417,7 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "request": {
-                  "mediation_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "my_label": "Bob",
-                  "recipient_keys": [
-                    "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                    "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                  ],
-                  "routing_keys": [
-                    "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                    "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                  ],
-                  "service_endpoint": "http://192.168.56.102:8020",
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -529,16 +505,7 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "request": {
-                  "alias": "alias",
-                  "my_did": "WgWxqztrNooG92RXvxSTWv",
-                  "my_seed": "my_seed",
-                  "their_did": "WgWxqztrNooG92RXvxSTWv",
-                  "their_endpoint": "https://myhost:8021",
-                  "their_label": "their_label",
-                  "their_seed": "their_seed",
-                  "their_verkey": "their_verkey",
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "my_did": "WgWxqztrNooG92RXvxSTWv",
@@ -877,22 +844,7 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "request": {
-                  "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                  "did": "WgWxqztrNooG92RXvxSTWv",
-                  "imageUrl": "http://192.168.56.101/img/logo.jpg",
-                  "label": "Bob",
-                  "recipientKeys": [
-                    "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                    "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                  ],
-                  "routingKeys": [
-                    "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                    "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                  ],
-                  "serviceEndpoint": "http://192.168.56.101:8020",
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "accept": "auto",
@@ -1233,12 +1185,7 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "request": {
-                  "revocation_registry_size": 1000,
-                  "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                  "support_revocation": true,
-                  "tag": "default",
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "sent": {
@@ -1684,34 +1631,7 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "request": {
-                  "contexts": [
-                    "https://myhost:8021",
-                    "https://myhost:8021",
-                  ],
-                  "given_id": "given_id",
-                  "issuer_id": "issuer_id",
-                  "max_results": 0,
-                  "proof_types": [
-                    "Ed25519Signature2018",
-                    "Ed25519Signature2018",
-                  ],
-                  "schema_ids": [
-                    "https://myhost:8021",
-                    "https://myhost:8021",
-                  ],
-                  "subject_ids": [
-                    "subject_ids",
-                    "subject_ids",
-                  ],
-                  "tag_query": {
-                    "key": "tag_query",
-                  },
-                  "types": [
-                    "https://myhost:8021",
-                    "https://myhost:8021",
-                  ],
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "results": [
@@ -2045,25 +1965,6 @@ exports[`open api parser aries simple 1`] = `
             "examples": [
               {
                 "request": {
-                  "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                  "did": "WgWxqztrNooG92RXvxSTWv",
-                  "did_doc~attach": {
-                    "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "byte_count": 1234,
-                    "data": {
-                      "base64": "ey4uLn0=",
-                      "links": [
-                        "https://link.to/data",
-                        "https://link.to/data",
-                      ],
-                      "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
-                    },
-                    "description": "view from doorway, facing east, with lights off",
-                    "filename": "IMG1092348.png",
-                    "lastmod_time": "2021-12-31 23:59:59+00:00",
-                    "mime-type": "image/png",
-                  },
                   "label": "Request to connect with Bob",
                 },
                 "response": {
@@ -3081,30 +2982,18 @@ exports[`open api parser aries simple 1`] = `
             "examples": [
               {
                 "request": {
-                  "auto_remove": true,
-                  "comment": "comment",
-                  "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                   "credential_proposal": {
-                    "@type": "issue-credential/1.0/credential-preview",
                     "attributes": [
                       {
-                        "mime-type": "image/jpeg",
                         "name": "favourite_drink",
                         "value": "martini",
                       },
                       {
-                        "mime-type": "image/jpeg",
                         "name": "favourite_drink",
                         "value": "martini",
                       },
                     ],
                   },
-                  "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                  "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                  "schema_issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                  "schema_name": "preferences",
-                  "schema_version": "1.0",
-                  "trace": true,
                 },
                 "response": {
                   "body": {
@@ -3299,26 +3188,19 @@ exports[`open api parser aries simple 1`] = `
             "examples": [
               {
                 "request": {
-                  "auto_issue": true,
-                  "auto_remove": true,
-                  "comment": "comment",
                   "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                   "credential_preview": {
-                    "@type": "issue-credential/1.0/credential-preview",
                     "attributes": [
                       {
-                        "mime-type": "image/jpeg",
                         "name": "favourite_drink",
                         "value": "martini",
                       },
                       {
-                        "mime-type": "image/jpeg",
                         "name": "favourite_drink",
                         "value": "martini",
                       },
                     ],
                   },
-                  "trace": true,
                 },
                 "response": {
                   "body": {
@@ -3977,9 +3859,7 @@ exports[`open api parser aries simple 1`] = `
                 "path-parameters": {
                   "cred_ex_id": "cred_ex_id",
                 },
-                "request": {
-                  "comment": "comment",
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "auto_issue": false,
@@ -4511,31 +4391,19 @@ exports[`open api parser aries simple 1`] = `
             "examples": [
               {
                 "request": {
-                  "auto_remove": true,
-                  "comment": "comment",
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                   "credential_proposal": {
-                    "@type": "issue-credential/1.0/credential-preview",
                     "attributes": [
                       {
-                        "mime-type": "image/jpeg",
                         "name": "favourite_drink",
                         "value": "martini",
                       },
                       {
-                        "mime-type": "image/jpeg",
                         "name": "favourite_drink",
                         "value": "martini",
                       },
                     ],
                   },
-                  "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                  "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                  "schema_issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                  "schema_name": "preferences",
-                  "schema_version": "1.0",
-                  "trace": true,
                 },
                 "response": {
                   "body": {
@@ -4734,27 +4602,20 @@ exports[`open api parser aries simple 1`] = `
             "examples": [
               {
                 "request": {
-                  "auto_issue": true,
-                  "auto_remove": true,
-                  "comment": "comment",
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                   "credential_preview": {
-                    "@type": "issue-credential/1.0/credential-preview",
                     "attributes": [
                       {
-                        "mime-type": "image/jpeg",
                         "name": "favourite_drink",
                         "value": "martini",
                       },
                       {
-                        "mime-type": "image/jpeg",
                         "name": "favourite_drink",
                         "value": "martini",
                       },
                     ],
                   },
-                  "trace": true,
                 },
                 "response": {
                   "body": {
@@ -4937,31 +4798,7 @@ exports[`open api parser aries simple 1`] = `
             "examples": [
               {
                 "request": {
-                  "auto_remove": true,
-                  "comment": "comment",
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                  "credential_proposal": {
-                    "@type": "issue-credential/1.0/credential-preview",
-                    "attributes": [
-                      {
-                        "mime-type": "image/jpeg",
-                        "name": "favourite_drink",
-                        "value": "martini",
-                      },
-                      {
-                        "mime-type": "image/jpeg",
-                        "name": "favourite_drink",
-                        "value": "martini",
-                      },
-                    ],
-                  },
-                  "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                  "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                  "schema_issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                  "schema_name": "preferences",
-                  "schema_version": "1.0",
-                  "trace": true,
                 },
                 "response": {
                   "body": {
@@ -5162,9 +4999,7 @@ exports[`open api parser aries simple 1`] = `
                 "path-parameters": {
                   "cred_ex_id": "cred_ex_id",
                 },
-                "request": {
-                  "credential_id": "credential_id",
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "auto_issue": false,
@@ -5364,62 +5199,7 @@ exports[`open api parser aries simple 1`] = `
             "examples": [
               {
                 "request": {
-                  "auto_remove": true,
-                  "comment": "comment",
-                  "credential_preview": {
-                    "@type": "issue-credential/2.0/credential-preview",
-                    "attributes": [
-                      {
-                        "mime-type": "image/jpeg",
-                        "name": "favourite_drink",
-                        "value": "martini",
-                      },
-                      {
-                        "mime-type": "image/jpeg",
-                        "name": "favourite_drink",
-                        "value": "martini",
-                      },
-                    ],
-                  },
-                  "filter": {
-                    "ld_proof": {
-                      "credential": {
-                        "@context": [
-                          {},
-                        ],
-                        "credentialSubject": {},
-                        "expirationDate": "2010-01-01 19:23:24+00:00",
-                        "id": "http://example.edu/credentials/1872",
-                        "issuanceDate": "2010-01-01 19:23:24+00:00",
-                        "issuer": {},
-                        "proof": {
-                          "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "created": "2021-12-31 23:59:59+00:00",
-                          "domain": "example.com",
-                          "jws": "eyJhbGciOiAiRWREUc2UsICJjcml0IjogWyJiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQ1Ch6YBKY7UBAjg6iBX5qBQ",
-                          "nonce": "CF69iO3nfvqRsRBNElE8b4wO39SyJHPM7Gg1nExltW5vSfQA1lvDCR/zXX1To0/4NLo==",
-                          "proofPurpose": "assertionMethod",
-                          "proofValue": "sy1AahqbzJQ63n9RtekmwzqZeVj494VppdAVJBnMYrTwft6cLJJGeTSSxCCJ6HKnRtwE7jjDh6sB2z2AAiZY9BBnCD8wUVgwqH3qchGRCuC2RugA4eQ9fUrR4Yuycac3caiaaay",
-                          "type": "Ed25519Signature2018",
-                          "verificationMethod": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL",
-                        },
-                        "type": [
-                          "type",
-                        ],
-                      },
-                      "options": {
-                        "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "created": "2021-12-31 23:59:59+00:00",
-                        "credentialStatus": {
-                          "type": "CredentialStatusList2017",
-                        },
-                        "domain": "example.com",
-                        "proofPurpose": "assertionMethod",
-                        "proofType": "Ed25519Signature2018",
-                      },
-                    },
-                  },
-                  "trace": true,
+                  "filter": {},
                 },
                 "response": {
                   "body": {
@@ -5641,63 +5421,7 @@ exports[`open api parser aries simple 1`] = `
             "examples": [
               {
                 "request": {
-                  "auto_issue": true,
-                  "auto_remove": true,
-                  "comment": "comment",
-                  "credential_preview": {
-                    "@type": "issue-credential/2.0/credential-preview",
-                    "attributes": [
-                      {
-                        "mime-type": "image/jpeg",
-                        "name": "favourite_drink",
-                        "value": "martini",
-                      },
-                      {
-                        "mime-type": "image/jpeg",
-                        "name": "favourite_drink",
-                        "value": "martini",
-                      },
-                    ],
-                  },
-                  "filter": {
-                    "ld_proof": {
-                      "credential": {
-                        "@context": [
-                          {},
-                        ],
-                        "credentialSubject": {},
-                        "expirationDate": "2010-01-01 19:23:24+00:00",
-                        "id": "http://example.edu/credentials/1872",
-                        "issuanceDate": "2010-01-01 19:23:24+00:00",
-                        "issuer": {},
-                        "proof": {
-                          "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "created": "2021-12-31 23:59:59+00:00",
-                          "domain": "example.com",
-                          "jws": "eyJhbGciOiAiRWREUc2UsICJjcml0IjogWyJiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQ1Ch6YBKY7UBAjg6iBX5qBQ",
-                          "nonce": "CF69iO3nfvqRsRBNElE8b4wO39SyJHPM7Gg1nExltW5vSfQA1lvDCR/zXX1To0/4NLo==",
-                          "proofPurpose": "assertionMethod",
-                          "proofValue": "sy1AahqbzJQ63n9RtekmwzqZeVj494VppdAVJBnMYrTwft6cLJJGeTSSxCCJ6HKnRtwE7jjDh6sB2z2AAiZY9BBnCD8wUVgwqH3qchGRCuC2RugA4eQ9fUrR4Yuycac3caiaaay",
-                          "type": "Ed25519Signature2018",
-                          "verificationMethod": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL",
-                        },
-                        "type": [
-                          "type",
-                        ],
-                      },
-                      "options": {
-                        "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "created": "2021-12-31 23:59:59+00:00",
-                        "credentialStatus": {
-                          "type": "CredentialStatusList2017",
-                        },
-                        "domain": "example.com",
-                        "proofPurpose": "assertionMethod",
-                        "proofType": "Ed25519Signature2018",
-                      },
-                    },
-                  },
-                  "trace": true,
+                  "filter": {},
                 },
                 "response": {
                   "body": {
@@ -6613,9 +6337,7 @@ exports[`open api parser aries simple 1`] = `
                 "path-parameters": {
                   "cred_ex_id": "cred_ex_id",
                 },
-                "request": {
-                  "comment": "comment",
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "cred_ex_record": {
@@ -6898,23 +6620,7 @@ exports[`open api parser aries simple 1`] = `
                 "path-parameters": {
                   "cred_ex_id": "cred_ex_id",
                 },
-                "request": {
-                  "counter_preview": {
-                    "@type": "issue-credential/2.0/credential-preview",
-                    "attributes": [
-                      {
-                        "mime-type": "image/jpeg",
-                        "name": "favourite_drink",
-                        "value": "martini",
-                      },
-                      {
-                        "mime-type": "image/jpeg",
-                        "name": "favourite_drink",
-                        "value": "martini",
-                      },
-                    ],
-                  },
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "auto_issue": false,
@@ -7131,9 +6837,7 @@ exports[`open api parser aries simple 1`] = `
                 "path-parameters": {
                   "cred_ex_id": "cred_ex_id",
                 },
-                "request": {
-                  "holder_did": "did:key:ahsdkjahsdkjhaskjdhakjshdkajhsdkjahs",
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "auto_issue": false,
@@ -7350,64 +7054,8 @@ exports[`open api parser aries simple 1`] = `
             "examples": [
               {
                 "request": {
-                  "auto_remove": true,
-                  "comment": "comment",
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "credential_preview": {
-                    "@type": "issue-credential/2.0/credential-preview",
-                    "attributes": [
-                      {
-                        "mime-type": "image/jpeg",
-                        "name": "favourite_drink",
-                        "value": "martini",
-                      },
-                      {
-                        "mime-type": "image/jpeg",
-                        "name": "favourite_drink",
-                        "value": "martini",
-                      },
-                    ],
-                  },
-                  "filter": {
-                    "ld_proof": {
-                      "credential": {
-                        "@context": [
-                          {},
-                        ],
-                        "credentialSubject": {},
-                        "expirationDate": "2010-01-01 19:23:24+00:00",
-                        "id": "http://example.edu/credentials/1872",
-                        "issuanceDate": "2010-01-01 19:23:24+00:00",
-                        "issuer": {},
-                        "proof": {
-                          "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "created": "2021-12-31 23:59:59+00:00",
-                          "domain": "example.com",
-                          "jws": "eyJhbGciOiAiRWREUc2UsICJjcml0IjogWyJiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQ1Ch6YBKY7UBAjg6iBX5qBQ",
-                          "nonce": "CF69iO3nfvqRsRBNElE8b4wO39SyJHPM7Gg1nExltW5vSfQA1lvDCR/zXX1To0/4NLo==",
-                          "proofPurpose": "assertionMethod",
-                          "proofValue": "sy1AahqbzJQ63n9RtekmwzqZeVj494VppdAVJBnMYrTwft6cLJJGeTSSxCCJ6HKnRtwE7jjDh6sB2z2AAiZY9BBnCD8wUVgwqH3qchGRCuC2RugA4eQ9fUrR4Yuycac3caiaaay",
-                          "type": "Ed25519Signature2018",
-                          "verificationMethod": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL",
-                        },
-                        "type": [
-                          "type",
-                        ],
-                      },
-                      "options": {
-                        "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "created": "2021-12-31 23:59:59+00:00",
-                        "credentialStatus": {
-                          "type": "CredentialStatusList2017",
-                        },
-                        "domain": "example.com",
-                        "proofPurpose": "assertionMethod",
-                        "proofType": "Ed25519Signature2018",
-                      },
-                    },
-                  },
-                  "trace": true,
-                  "verification_method": "verification_method",
+                  "filter": {},
                 },
                 "response": {
                   "body": {
@@ -7609,64 +7257,8 @@ exports[`open api parser aries simple 1`] = `
             "examples": [
               {
                 "request": {
-                  "auto_issue": true,
-                  "auto_remove": true,
-                  "comment": "comment",
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "credential_preview": {
-                    "@type": "issue-credential/2.0/credential-preview",
-                    "attributes": [
-                      {
-                        "mime-type": "image/jpeg",
-                        "name": "favourite_drink",
-                        "value": "martini",
-                      },
-                      {
-                        "mime-type": "image/jpeg",
-                        "name": "favourite_drink",
-                        "value": "martini",
-                      },
-                    ],
-                  },
-                  "filter": {
-                    "ld_proof": {
-                      "credential": {
-                        "@context": [
-                          {},
-                        ],
-                        "credentialSubject": {},
-                        "expirationDate": "2010-01-01 19:23:24+00:00",
-                        "id": "http://example.edu/credentials/1872",
-                        "issuanceDate": "2010-01-01 19:23:24+00:00",
-                        "issuer": {},
-                        "proof": {
-                          "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "created": "2021-12-31 23:59:59+00:00",
-                          "domain": "example.com",
-                          "jws": "eyJhbGciOiAiRWREUc2UsICJjcml0IjogWyJiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQ1Ch6YBKY7UBAjg6iBX5qBQ",
-                          "nonce": "CF69iO3nfvqRsRBNElE8b4wO39SyJHPM7Gg1nExltW5vSfQA1lvDCR/zXX1To0/4NLo==",
-                          "proofPurpose": "assertionMethod",
-                          "proofValue": "sy1AahqbzJQ63n9RtekmwzqZeVj494VppdAVJBnMYrTwft6cLJJGeTSSxCCJ6HKnRtwE7jjDh6sB2z2AAiZY9BBnCD8wUVgwqH3qchGRCuC2RugA4eQ9fUrR4Yuycac3caiaaay",
-                          "type": "Ed25519Signature2018",
-                          "verificationMethod": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL",
-                        },
-                        "type": [
-                          "type",
-                        ],
-                      },
-                      "options": {
-                        "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "created": "2021-12-31 23:59:59+00:00",
-                        "credentialStatus": {
-                          "type": "CredentialStatusList2017",
-                        },
-                        "domain": "example.com",
-                        "proofPurpose": "assertionMethod",
-                        "proofType": "Ed25519Signature2018",
-                      },
-                    },
-                  },
-                  "trace": true,
+                  "filter": {},
                 },
                 "response": {
                   "body": {
@@ -7896,64 +7488,8 @@ exports[`open api parser aries simple 1`] = `
             "examples": [
               {
                 "request": {
-                  "auto_remove": true,
-                  "comment": "comment",
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "credential_preview": {
-                    "@type": "issue-credential/2.0/credential-preview",
-                    "attributes": [
-                      {
-                        "mime-type": "image/jpeg",
-                        "name": "favourite_drink",
-                        "value": "martini",
-                      },
-                      {
-                        "mime-type": "image/jpeg",
-                        "name": "favourite_drink",
-                        "value": "martini",
-                      },
-                    ],
-                  },
-                  "filter": {
-                    "ld_proof": {
-                      "credential": {
-                        "@context": [
-                          {},
-                        ],
-                        "credentialSubject": {},
-                        "expirationDate": "2010-01-01 19:23:24+00:00",
-                        "id": "http://example.edu/credentials/1872",
-                        "issuanceDate": "2010-01-01 19:23:24+00:00",
-                        "issuer": {},
-                        "proof": {
-                          "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "created": "2021-12-31 23:59:59+00:00",
-                          "domain": "example.com",
-                          "jws": "eyJhbGciOiAiRWREUc2UsICJjcml0IjogWyJiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQ1Ch6YBKY7UBAjg6iBX5qBQ",
-                          "nonce": "CF69iO3nfvqRsRBNElE8b4wO39SyJHPM7Gg1nExltW5vSfQA1lvDCR/zXX1To0/4NLo==",
-                          "proofPurpose": "assertionMethod",
-                          "proofValue": "sy1AahqbzJQ63n9RtekmwzqZeVj494VppdAVJBnMYrTwft6cLJJGeTSSxCCJ6HKnRtwE7jjDh6sB2z2AAiZY9BBnCD8wUVgwqH3qchGRCuC2RugA4eQ9fUrR4Yuycac3caiaaay",
-                          "type": "Ed25519Signature2018",
-                          "verificationMethod": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL",
-                        },
-                        "type": [
-                          "type",
-                        ],
-                      },
-                      "options": {
-                        "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "created": "2021-12-31 23:59:59+00:00",
-                        "credentialStatus": {
-                          "type": "CredentialStatusList2017",
-                        },
-                        "domain": "example.com",
-                        "proofPurpose": "assertionMethod",
-                        "proofType": "Ed25519Signature2018",
-                      },
-                    },
-                  },
-                  "trace": true,
-                  "verification_method": "verification_method",
+                  "filter": {},
                 },
                 "response": {
                   "body": {
@@ -8155,8 +7691,6 @@ exports[`open api parser aries simple 1`] = `
             "examples": [
               {
                 "request": {
-                  "auto_remove": true,
-                  "comment": "comment",
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "filter": {
                     "ld_proof": {
@@ -8165,39 +7699,17 @@ exports[`open api parser aries simple 1`] = `
                           {},
                         ],
                         "credentialSubject": {},
-                        "expirationDate": "2010-01-01 19:23:24+00:00",
-                        "id": "http://example.edu/credentials/1872",
                         "issuanceDate": "2010-01-01 19:23:24+00:00",
                         "issuer": {},
-                        "proof": {
-                          "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "created": "2021-12-31 23:59:59+00:00",
-                          "domain": "example.com",
-                          "jws": "eyJhbGciOiAiRWREUc2UsICJjcml0IjogWyJiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQ1Ch6YBKY7UBAjg6iBX5qBQ",
-                          "nonce": "CF69iO3nfvqRsRBNElE8b4wO39SyJHPM7Gg1nExltW5vSfQA1lvDCR/zXX1To0/4NLo==",
-                          "proofPurpose": "assertionMethod",
-                          "proofValue": "sy1AahqbzJQ63n9RtekmwzqZeVj494VppdAVJBnMYrTwft6cLJJGeTSSxCCJ6HKnRtwE7jjDh6sB2z2AAiZY9BBnCD8wUVgwqH3qchGRCuC2RugA4eQ9fUrR4Yuycac3caiaaay",
-                          "type": "Ed25519Signature2018",
-                          "verificationMethod": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL",
-                        },
                         "type": [
                           "type",
                         ],
                       },
                       "options": {
-                        "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "created": "2021-12-31 23:59:59+00:00",
-                        "credentialStatus": {
-                          "type": "CredentialStatusList2017",
-                        },
-                        "domain": "example.com",
-                        "proofPurpose": "assertionMethod",
                         "proofType": "Ed25519Signature2018",
                       },
                     },
                   },
-                  "holder_did": "did:key:ahsdkjahsdkjhaskjdhakjshdkajhsdkjahs",
-                  "trace": false,
                 },
                 "response": {
                   "body": {
@@ -8428,9 +7940,7 @@ exports[`open api parser aries simple 1`] = `
                 "path-parameters": {
                   "cred_ex_id": "cred_ex_id",
                 },
-                "request": {
-                  "credential_id": "credential_id",
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "cred_ex_record": {
@@ -8777,7 +8287,6 @@ exports[`open api parser aries simple 1`] = `
                       "verificationMethod": "verificationMethod",
                     },
                   },
-                  "verkey": "verkey",
                 },
                 "response": {
                   "body": {
@@ -8827,11 +8336,7 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "request": {
-                  "mechanism": "mechanism",
-                  "text": "text",
-                  "version": "version",
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "string": {
@@ -9286,16 +8791,7 @@ exports[`open api parser aries simple 1`] = `
                 "path-parameters": {
                   "mediation_id": "mediation_id",
                 },
-                "request": {
-                  "mediator_terms": [
-                    "mediator_terms",
-                    "mediator_terms",
-                  ],
-                  "recipient_terms": [
-                    "recipient_terms",
-                    "recipient_terms",
-                  ],
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -9611,16 +9107,7 @@ exports[`open api parser aries simple 1`] = `
                 "path-parameters": {
                   "conn_id": "conn_id",
                 },
-                "request": {
-                  "mediator_terms": [
-                    "mediator_terms",
-                    "mediator_terms",
-                  ],
-                  "recipient_terms": [
-                    "recipient_terms",
-                    "recipient_terms",
-                  ],
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "connection_id": "connection_id",
@@ -9742,18 +9229,7 @@ exports[`open api parser aries simple 1`] = `
                 "path-parameters": {
                   "mediation_id": "mediation_id",
                 },
-                "request": {
-                  "updates": [
-                    {
-                      "action": "add",
-                      "recipient_key": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
-                    },
-                    {
-                      "action": "add",
-                      "recipient_key": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
-                    },
-                  ],
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -9851,9 +9327,7 @@ exports[`open api parser aries simple 1`] = `
                 "path-parameters": {
                   "conn_id": "conn_id",
                 },
-                "request": {
-                  "mediation_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -9936,20 +9410,7 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "request": {
-                  "image_url": "https://aries.ca/images/sample.png",
-                  "key_management_mode": "managed",
-                  "label": "Alice",
-                  "wallet_dispatch_type": "default",
-                  "wallet_key": "MySecretKey123",
-                  "wallet_key_derivation": "RAW",
-                  "wallet_name": "MyNewWallet",
-                  "wallet_type": "indy",
-                  "wallet_webhook_urls": [
-                    "http://localhost:8022/webhooks",
-                    "http://localhost:8022/webhooks",
-                  ],
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "created_at": "2021-12-31 23:59:59+00:00",
@@ -10020,9 +9481,7 @@ exports[`open api parser aries simple 1`] = `
                 "path-parameters": {
                   "wallet_id": "wallet_id",
                 },
-                "request": {
-                  "wallet_key": "MySecretKey123",
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "string": {
@@ -10067,9 +9526,7 @@ exports[`open api parser aries simple 1`] = `
                 "path-parameters": {
                   "wallet_id": "wallet_id",
                 },
-                "request": {
-                  "wallet_key": "MySecretKey123",
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "token": "eyJhbGciOiJFZERTQSJ9.eyJhIjogIjAifQ.dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk",
@@ -10186,15 +9643,7 @@ exports[`open api parser aries simple 1`] = `
                 "path-parameters": {
                   "wallet_id": "wallet_id",
                 },
-                "request": {
-                  "image_url": "https://aries.ca/images/sample.png",
-                  "label": "Alice",
-                  "wallet_dispatch_type": "default",
-                  "wallet_webhook_urls": [
-                    "http://localhost:8022/webhooks",
-                    "http://localhost:8022/webhooks",
-                  ],
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "created_at": "2021-12-31 23:59:59+00:00",
@@ -10297,31 +9746,7 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "request": {
-                  "accept": [
-                    "didcomm/aip1",
-                    "didcomm/aip2;env=rfc19",
-                  ],
-                  "alias": "Barry",
-                  "attachments": [
-                    {
-                      "id": "attachment-0",
-                      "type": "present-proof",
-                    },
-                    {
-                      "id": "attachment-0",
-                      "type": "present-proof",
-                    },
-                  ],
-                  "handshake_protocols": [
-                    "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/didexchange/1.0",
-                    "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/didexchange/1.0",
-                  ],
-                  "mediation_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "my_label": "Invitation to Barry",
-                  "protocol_version": "1.1",
-                  "use_public_did": false,
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "created_at": "2021-12-31 23:59:59+00:00",
@@ -10463,69 +9888,7 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "request": {
-                  "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                  "accept": [
-                    "didcomm/aip1",
-                    "didcomm/aip2;env=rfc19",
-                  ],
-                  "handshake_protocols": [
-                    "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/didexchange/1.0",
-                    "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/didexchange/1.0",
-                  ],
-                  "imageUrl": "http://192.168.56.101/img/logo.jpg",
-                  "label": "Bob",
-                  "requests~attach": [
-                    {
-                      "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "byte_count": 1234,
-                      "data": {
-                        "base64": "ey4uLn0=",
-                        "links": [
-                          "https://link.to/data",
-                          "https://link.to/data",
-                        ],
-                        "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
-                      },
-                      "description": "view from doorway, facing east, with lights off",
-                      "filename": "IMG1092348.png",
-                      "lastmod_time": "2021-12-31 23:59:59+00:00",
-                      "mime-type": "image/png",
-                    },
-                    {
-                      "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "byte_count": 1234,
-                      "data": {
-                        "base64": "ey4uLn0=",
-                        "links": [
-                          "https://link.to/data",
-                          "https://link.to/data",
-                        ],
-                        "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
-                      },
-                      "description": "view from doorway, facing east, with lights off",
-                      "filename": "IMG1092348.png",
-                      "lastmod_time": "2021-12-31 23:59:59+00:00",
-                      "mime-type": "image/png",
-                    },
-                  ],
-                  "services": [
-                    {
-                      "did": "WgWxqztrNooG92RXvxSTWv",
-                      "id": "string",
-                      "recipientKeys": {
-                        "0": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
-                      },
-                      "routingKeys": {
-                        "0": "did:key:z6MkpTHR8VNsBxYAAWHut2Geadd9jSwuBV8xRoAnwWsdvktH",
-                      },
-                      "serviceEndpoint": "http://192.168.56.101:8020",
-                      "type": "string",
-                    },
-                    {},
-                  ],
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "attach_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -10671,46 +10034,18 @@ exports[`open api parser aries simple 1`] = `
             "examples": [
               {
                 "request": {
-                  "auto_verify": false,
-                  "comment": "comment",
                   "proof_request": {
-                    "name": "Proof request",
-                    "nonce": "1",
                     "requested_attributes": {
-                      "key": {
-                        "name": "favouriteDrink",
-                        "names": [
-                          "age",
-                          "age",
-                        ],
-                        "restrictions": [
-                          {
-                            "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                          },
-                          {
-                            "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                          },
-                        ],
-                      },
+                      "key": {},
                     },
                     "requested_predicates": {
                       "key": {
                         "name": "index",
                         "p_type": ">=",
                         "p_value": 0,
-                        "restrictions": [
-                          {
-                            "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                          },
-                          {
-                            "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                          },
-                        ],
                       },
                     },
-                    "version": "1.0",
                   },
-                  "trace": false,
                 },
                 "response": {
                   "body": {
@@ -11469,47 +10804,19 @@ exports[`open api parser aries simple 1`] = `
             "examples": [
               {
                 "request": {
-                  "auto_verify": false,
-                  "comment": "comment",
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "proof_request": {
-                    "name": "Proof request",
-                    "nonce": "1",
                     "requested_attributes": {
-                      "key": {
-                        "name": "favouriteDrink",
-                        "names": [
-                          "age",
-                          "age",
-                        ],
-                        "restrictions": [
-                          {
-                            "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                          },
-                          {
-                            "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                          },
-                        ],
-                      },
+                      "key": {},
                     },
                     "requested_predicates": {
                       "key": {
                         "name": "index",
                         "p_type": ">=",
                         "p_value": 0,
-                        "restrictions": [
-                          {
-                            "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                          },
-                          {
-                            "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                          },
-                        ],
                       },
                     },
-                    "version": "1.0",
                   },
-                  "trace": false,
                 },
                 "response": {
                   "body": {
@@ -11691,43 +10998,29 @@ exports[`open api parser aries simple 1`] = `
             "examples": [
               {
                 "request": {
-                  "auto_present": true,
-                  "comment": "comment",
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "presentation_proposal": {
-                    "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/present-proof/1.0/presentation-preview",
                     "attributes": [
                       {
-                        "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                        "mime-type": "image/jpeg",
                         "name": "favourite_drink",
-                        "referent": "0",
-                        "value": "martini",
                       },
                       {
-                        "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                        "mime-type": "image/jpeg",
                         "name": "favourite_drink",
-                        "referent": "0",
-                        "value": "martini",
                       },
                     ],
                     "predicates": [
                       {
-                        "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                         "name": "high_score",
                         "predicate": ">=",
                         "threshold": 0,
                       },
                       {
-                        "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                         "name": "high_score",
                         "predicate": ">=",
                         "threshold": 0,
                       },
                     ],
                   },
-                  "trace": false,
                 },
                 "response": {
                   "body": {
@@ -11918,19 +11211,16 @@ exports[`open api parser aries simple 1`] = `
                   "requested_attributes": {
                     "key": {
                       "cred_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "revealed": true,
                     },
                   },
                   "requested_predicates": {
                     "key": {
                       "cred_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "timestamp": 1640995199,
                     },
                   },
                   "self_attested_attributes": {
                     "key": "self_attested_value",
                   },
-                  "trace": false,
                 },
                 "response": {
                   "body": {
@@ -12100,10 +11390,7 @@ exports[`open api parser aries simple 1`] = `
                 "path-parameters": {
                   "pres_ex_id": "pres_ex_id",
                 },
-                "request": {
-                  "auto_verify": false,
-                  "trace": false,
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "auto_present": false,
@@ -12483,48 +11770,7 @@ exports[`open api parser aries simple 1`] = `
             "examples": [
               {
                 "request": {
-                  "auto_verify": false,
-                  "comment": "comment",
-                  "presentation_request": {
-                    "indy": {
-                      "name": "Proof request",
-                      "nonce": "1",
-                      "requested_attributes": {
-                        "key": {
-                          "name": "favouriteDrink",
-                          "names": [
-                            "age",
-                            "age",
-                          ],
-                          "restrictions": [
-                            {
-                              "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                            },
-                            {
-                              "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                            },
-                          ],
-                        },
-                      },
-                      "requested_predicates": {
-                        "key": {
-                          "name": "index",
-                          "p_type": ">=",
-                          "p_value": 0,
-                          "restrictions": [
-                            {
-                              "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                            },
-                            {
-                              "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                            },
-                          ],
-                        },
-                      },
-                      "version": "1.0",
-                    },
-                  },
-                  "trace": false,
+                  "presentation_request": {},
                 },
                 "response": {
                   "body": {
@@ -13195,49 +12441,8 @@ exports[`open api parser aries simple 1`] = `
             "examples": [
               {
                 "request": {
-                  "auto_verify": false,
-                  "comment": "comment",
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "presentation_request": {
-                    "indy": {
-                      "name": "Proof request",
-                      "nonce": "1",
-                      "requested_attributes": {
-                        "key": {
-                          "name": "favouriteDrink",
-                          "names": [
-                            "age",
-                            "age",
-                          ],
-                          "restrictions": [
-                            {
-                              "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                            },
-                            {
-                              "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                            },
-                          ],
-                        },
-                      },
-                      "requested_predicates": {
-                        "key": {
-                          "name": "index",
-                          "p_type": ">=",
-                          "p_value": 0,
-                          "restrictions": [
-                            {
-                              "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                            },
-                            {
-                              "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                            },
-                          ],
-                        },
-                      },
-                      "version": "1.0",
-                    },
-                  },
-                  "trace": false,
+                  "presentation_request": {},
                 },
                 "response": {
                   "body": {
@@ -13387,49 +12592,8 @@ exports[`open api parser aries simple 1`] = `
             "examples": [
               {
                 "request": {
-                  "auto_present": true,
-                  "comment": "comment",
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "presentation_proposal": {
-                    "indy": {
-                      "name": "Proof request",
-                      "nonce": "1",
-                      "requested_attributes": {
-                        "key": {
-                          "name": "favouriteDrink",
-                          "names": [
-                            "age",
-                            "age",
-                          ],
-                          "restrictions": [
-                            {
-                              "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                            },
-                            {
-                              "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                            },
-                          ],
-                        },
-                      },
-                      "requested_predicates": {
-                        "key": {
-                          "name": "index",
-                          "p_type": ">=",
-                          "p_value": 0,
-                          "restrictions": [
-                            {
-                              "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                            },
-                            {
-                              "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                            },
-                          ],
-                        },
-                      },
-                      "version": "1.0",
-                    },
-                  },
-                  "trace": false,
+                  "presentation_proposal": {},
                 },
                 "response": {
                   "body": {
@@ -13584,27 +12748,7 @@ exports[`open api parser aries simple 1`] = `
                 "path-parameters": {
                   "pres_ex_id": "pres_ex_id",
                 },
-                "request": {
-                  "indy": {
-                    "requested_attributes": {
-                      "key": {
-                        "cred_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "revealed": true,
-                      },
-                    },
-                    "requested_predicates": {
-                      "key": {
-                        "cred_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "timestamp": 1640995199,
-                      },
-                    },
-                    "self_attested_attributes": {
-                      "key": "self_attested_value",
-                    },
-                    "trace": false,
-                  },
-                  "trace": true,
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "auto_present": false,
@@ -13753,10 +12897,7 @@ exports[`open api parser aries simple 1`] = `
                 "path-parameters": {
                   "pres_ex_id": "pres_ex_id",
                 },
-                "request": {
-                  "auto_verify": false,
-                  "trace": false,
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "auto_present": false,
@@ -14131,14 +13272,7 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "request": {
-                  "purge": {
-                    "key": [
-                      "12345",
-                      "12345",
-                    ],
-                  },
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "rrid2crid": {
@@ -14177,10 +13311,7 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "request": {
-                  "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                  "max_cred_num": 1000,
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "result": {
@@ -14818,14 +13949,7 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "request": {
-                  "rrid2crid": {
-                    "key": [
-                      "12345",
-                      "12345",
-                    ],
-                  },
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "sent": {
@@ -14889,17 +14013,7 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "request": {
-                  "comment": "comment",
-                  "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "cred_rev_id": "12345",
-                  "notify": true,
-                  "notify_version": "v1_0",
-                  "publish": true,
-                  "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                  "thread_id": "thread_id",
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "string": {
@@ -15636,9 +14750,7 @@ exports[`open api parser aries simple 1`] = `
                 "path-parameters": {
                   "conn_id": "conn_id",
                 },
-                "request": {
-                  "comment": "comment",
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "thread_id": "thread_id",
@@ -15691,10 +14803,7 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "request": {
-                  "method": "sov",
-                  "seed": "000000000000000000000000Trustee1",
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "result": {
@@ -15894,8 +15003,6 @@ exports[`open api parser aries simple 1`] = `
               {
                 "request": {
                   "did": "WgWxqztrNooG92RXvxSTWv",
-                  "endpoint": "https://myhost:8021",
-                  "endpoint_type": "Endpoint",
                 },
                 "response": {
                   "body": {

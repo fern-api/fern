@@ -1024,9 +1024,7 @@ client.accounts.list(params: {
                 },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -1124,9 +1122,7 @@ client.accounts.list(params: {
                 },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -1224,9 +1220,7 @@ client.accounts.list(params: {
                 },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -1325,9 +1319,7 @@ client.accounts.list(params: {
                 },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -1456,9 +1448,7 @@ client.accounts.list(params: {
                 },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -1604,7 +1594,6 @@ client.accounts.list(params: {
                 },
                 "request": {
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -1702,7 +1691,6 @@ client.accounts.list(params: {
                 },
                 "request": {
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -1800,7 +1788,6 @@ client.accounts.list(params: {
                 },
                 "request": {
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -1899,7 +1886,6 @@ client.accounts.list(params: {
                 },
                 "request": {
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -2028,7 +2014,6 @@ client.accounts.list(params: {
                 },
                 "request": {
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -2638,9 +2623,7 @@ client.balances.list(params: {
                 },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -2748,11 +2731,9 @@ client.balances.list(params: {
                   "omit": "link,balance",
                 },
                 "request": {
-                  "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
                   "date_from": "2021-01-18",
                   "date_to": "2021-02-15",
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -3743,14 +3724,12 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               {
                 "name": "PSE Individual",
                 "request": {
-                  "address": "Calle Carlos Vives 432, 80300 Bogota",
                   "country": "COL",
                   "customer_type": "INDIVIDUAL",
                   "email": "carlos.vives@musicacolombia.co",
                   "identifier": "1018760936",
                   "identifier_type": "CPF",
                   "name": "Carlos Vives",
-                  "phone": "3210-9876",
                 },
                 "response": {
                   "body": {
@@ -4568,8 +4547,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               {
                 "name": "Income Verfification",
                 "request": {
-                  "date_from": "2022-08-01",
-                  "date_to": "2022-12-30",
                   "language": "pt",
                   "transactions": [
                     {
@@ -4985,9 +4962,7 @@ client.incomes.list(params: {
                 },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -5056,10 +5031,7 @@ client.incomes.list(params: {
                   "omit": "link,balance",
                 },
                 "request": {
-                  "date_from": "2020-08-01",
-                  "date_to": "2020-12-30",
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": {
@@ -5719,7 +5691,6 @@ client. investments_portfolio.list(params: {
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": {
@@ -5814,7 +5785,6 @@ client. investments_portfolio.list(params: {
                 },
                 "request": {
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": {
@@ -7482,9 +7452,7 @@ client.invoices.list(params: {
                 },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -7627,8 +7595,6 @@ client.invoices.list(params: {
                   "date_from": "2020-01-01",
                   "date_to": "2020-02-01",
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "save_data": true,
-                  "type": "INFLOW",
                 },
                 "response": {
                   "body": [
@@ -7744,8 +7710,6 @@ client.invoices.list(params: {
                   "date_from": "2020-01-01",
                   "date_to": "2020-02-01",
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "save_data": true,
-                  "type": "INFLOW",
                 },
                 "response": {
                   "body": [
@@ -7862,8 +7826,6 @@ client.invoices.list(params: {
                   "date_from": "2020-01-01",
                   "date_to": "2020-02-01",
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "save_data": true,
-                  "type": "INFLOW",
                 },
                 "response": {
                   "body": [
@@ -7979,8 +7941,6 @@ client.invoices.list(params: {
                   "date_from": "2020-01-01",
                   "date_to": "2020-02-01",
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "save_data": true,
-                  "type": "INFLOW",
                 },
                 "response": {
                   "body": [
@@ -8096,8 +8056,6 @@ client.invoices.list(params: {
                   "date_from": "2020-01-01",
                   "date_to": "2020-02-01",
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "save_data": true,
-                  "type": "INFLOW",
                 },
                 "response": {
                   "body": [
@@ -8672,7 +8630,6 @@ To delete links in bulk, we recommend looping through the list of links you want
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": {
@@ -8733,19 +8690,8 @@ To delete links in bulk, we recommend looping through the list of links you want
                   "omit": "link,balance",
                 },
                 "request": {
-                  "certificate": "1234567890abcd=",
-                  "credentials_storage": "store",
-                  "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
-                  "fetch_historical": true,
                   "institution": "erebor_mx_retail",
-                  "password": "password",
-                  "password2": "pin",
-                  "private_key": "1234567890abcd=",
-                  "token": "1234ab",
                   "username": "username",
-                  "username2": "secondusername",
-                  "username3": "thirdusername",
-                  "username_type": "001",
                 },
                 "response": {
                   "body": {
@@ -8935,12 +8881,7 @@ For a list of standards codes, see the table below.
                   "omit": "link,balance",
                 },
                 "request": {
-                  "certificate": "1234567890abcd=",
                   "password": "password",
-                  "password2": "pin",
-                  "private_key": "1234567890abcd=",
-                  "token": "1234ab",
-                  "username_type": "001",
                 },
                 "response": {
                   "body": {
@@ -9365,9 +9306,7 @@ Cancun, COL 10447",
                 },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -9435,7 +9374,6 @@ Cancun, COL 10447",
                 },
                 "request": {
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -9970,11 +9908,9 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   "amount": "1234.12",
                   "customer": "06dc2f14-1217-4480-9b36-550a944a39d1",
                   "description": "Shoe payment",
-                  "expires_in": "7d",
                   "payment_method_details": {
                     "open_finance": {
                       "beneficiary_bank_account": "a80d5a9d-20ae-479a-8dd7-ff3443bcbbfc",
-                      "callback_url": "https://www.acmecorp.com/checkout/3487321",
                     },
                   },
                   "provider": "belvo",
@@ -10570,8 +10506,6 @@ You can use the Payment Transactions resource in order to get useful information
             "examples": [
               {
                 "request": {
-                  "auth_header": "Authorization",
-                  "auth_token": "Bearer hv7alD71j0dzXf09iKfg7u",
                   "name": "Your webhook name",
                   "url": "https://mycompany.com/security/webhook",
                 },
@@ -10933,7 +10867,6 @@ You can use the Payment Transactions resource in order to get useful information
                   "date_from": "2020-08-05",
                   "date_to": "2020-10-05",
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": {
@@ -11365,9 +11298,7 @@ client. recurring_expenses.list(params: {
                 },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -11481,10 +11412,7 @@ client. recurring_expenses.list(params: {
                   "omit": "link,balance",
                 },
                 "request": {
-                  "date_from": "2022-08-01",
-                  "date_to": "2022-12-30",
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -12308,9 +12236,7 @@ client.connect()
                 },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -12519,7 +12445,6 @@ client.connect()
                 },
                 "request": {
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -13015,7 +12940,6 @@ client.tax_compliance_status.list(params: {
                 },
                 "request": {
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "save_data": true,
                 },
                 "response": {
                   "body": {
@@ -13458,9 +13382,7 @@ At the moment, the Tax Declaration resource is available for:
                   "omit": "link,balance",
                 },
                 "request": {
-                  "attach_pdf": false,
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "save_data": true,
                   "year_from": "2018",
                   "year_to": "2019",
                 },
@@ -15207,11 +15129,9 @@ client.tax_returns.list(params: {
                   "omit": "link,balance",
                 },
                 "request": {
-                  "attach_pdf": false,
                   "date_from": "2018-01-01",
                   "date_to": "2019-01-01",
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "save_data": true,
                   "type": "type",
                 },
                 "response": {
@@ -15431,11 +15351,9 @@ client.tax_returns.list(params: {
                   "omit": "link,balance",
                 },
                 "request": {
-                  "attach_pdf": false,
                   "date_from": "2018-01-01",
                   "date_to": "2019-01-01",
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "save_data": true,
                   "type": "type",
                 },
                 "response": {
@@ -15516,11 +15434,9 @@ client.tax_returns.list(params: {
                   "omit": "link,balance",
                 },
                 "request": {
-                  "attach_pdf": false,
                   "date_from": "2018-01-01",
                   "date_to": "2019-01-01",
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "save_data": true,
                   "type": "type",
                 },
                 "response": {
@@ -15601,11 +15517,9 @@ client.tax_returns.list(params: {
                   "omit": "link,balance",
                 },
                 "request": {
-                  "attach_pdf": false,
                   "date_from": "2018-01-01",
                   "date_to": "2019-01-01",
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "save_data": true,
                   "type": "type",
                 },
                 "response": {
@@ -15675,11 +15589,9 @@ client.tax_returns.list(params: {
                   "omit": "link,balance",
                 },
                 "request": {
-                  "attach_pdf": false,
                   "date_from": "2018-01-01",
                   "date_to": "2019-01-01",
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "save_data": true,
                   "type": "type",
                 },
                 "response": {
@@ -16368,7 +16280,6 @@ client.tax_status.list(params: {
                 },
                 "request": {
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "save_data": true,
                 },
                 "response": {
                   "body": {
@@ -16454,7 +16365,6 @@ client.tax_status.list(params: {
                 },
                 "request": {
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "save_data": true,
                 },
                 "response": {
                   "body": {
@@ -17781,9 +17691,7 @@ client.transactions.list(params: {
                 },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -17880,9 +17788,7 @@ client.transactions.list(params: {
                 },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -17979,9 +17885,7 @@ client.transactions.list(params: {
                 },
                 "request": {
                   "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
-                  "save_data": true,
                   "session": "6e7b283c6efa449c9c028a16b5c249fa",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -18114,11 +18018,9 @@ If you try to access older information than what we can access, we will return a
                   "omit": "link,balance",
                 },
                 "request": {
-                  "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
                   "date_from": "2020-08-05",
                   "date_to": "2020-10-05",
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -18214,11 +18116,9 @@ If you try to access older information than what we can access, we will return a
                   "omit": "link,balance",
                 },
                 "request": {
-                  "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
                   "date_from": "2020-08-05",
                   "date_to": "2020-10-05",
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -18314,11 +18214,9 @@ If you try to access older information than what we can access, we will return a
                   "omit": "link,balance",
                 },
                 "request": {
-                  "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
                   "date_from": "2020-08-05",
                   "date_to": "2020-10-05",
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": [
@@ -18453,11 +18351,9 @@ If you try to access older information than what we can access, we will return a
                   "omit": "link,balance",
                 },
                 "request": {
-                  "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
                   "date_from": "2020-08-05",
                   "date_to": "2020-10-05",
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
                 },
                 "response": {
                   "body": {

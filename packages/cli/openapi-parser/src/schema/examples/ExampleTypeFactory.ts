@@ -377,24 +377,12 @@ export class ExampleTypeFactory {
                             name: property
                         }
                     });
-                    if (propertyExample != null) {
+                    if (required && propertyExample != null) {
                         result[property] = propertyExample;
                     } else if (required) {
-                        const generatedExample = this.buildExampleHelper({
-                            schema,
-                            exampleId,
-                            example: fullExample[property],
-                            visitedSchemaIds,
-                            depth: depth + 1,
-                            options: {
-                                ...options,
-                                name: property
-                            }
-                        });
-                        if (generatedExample == null) {
-                            return undefined;
-                        }
-                        result[property] = generatedExample;
+                        return undefined;
+                    } else if (!options.ignoreOptionals && propertyExample != null) {
+                        result[property] = propertyExample;
                     }
                 }
                 return FullExample.object({

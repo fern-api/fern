@@ -765,7 +765,6 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                   "accountId": "accountId",
                 },
                 "request": {
-                  "disallowDebitCardAccess": false,
                   "emailAddress": "Mary.Jones@example.com",
                   "firstName": "Mary",
                   "lastName": "Jones",
@@ -1227,25 +1226,7 @@ Note: This operation requires an identity challenge if the financial institution
             ],
             "examples": [
               {
-                "request": {
-                  "amount": "275.00",
-                  "memo": "Cover check for car repair",
-                  "schedule": {
-                    "amountLimit": "3456.78",
-                    "frequency": "once",
-                    "scheduledOn": "2022-06-28",
-                  },
-                  "sourceAccount": {
-                    "id": "bd9b7af2-6f9b",
-                    "label": "Checking *1008",
-                    "location": "internal",
-                  },
-                  "targetAccount": {
-                    "id": "88b1ca3e-d0f3",
-                    "label": "Checking *1008",
-                    "location": "internal",
-                  },
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "amount": "275.00",
@@ -1538,24 +1519,7 @@ Note: This operation requires an identity challenge if the financial institution
                 "path-parameters": {
                   "transferId": "transferId",
                 },
-                "request": {
-                  "amount": "275.00",
-                  "schedule": {
-                    "amountLimit": "3456.78",
-                    "frequency": "once",
-                    "scheduledOn": "2022-06-28",
-                  },
-                  "sourceAccount": {
-                    "id": "e821ce54-c715",
-                    "label": "Premiere Checking *6789",
-                    "location": "internal",
-                    "type": "checking",
-                  },
-                  "targetAccount": {
-                    "id": "88b1ca3e-d0f3",
-                    "label": "Checking *1008",
-                  },
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "amount": "275.00",

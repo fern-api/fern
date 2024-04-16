@@ -179,27 +179,6 @@ Log.d("TAG", file.toString())
                   "value": "caa9d29da887ee88ffe6",
                 },
               },
-              "expire": {
-                "type": "primitive",
-                "value": {
-                  "type": "double",
-                  "value": 1454902434,
-                },
-              },
-              "metadata[{key}]": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "#/components/examples/metadataValue/value",
-                },
-              },
-              "signature": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "04b29480233f4def5c875875b6bdc3b1",
-                },
-              },
             },
             "type": "object",
           },
@@ -554,32 +533,11 @@ Log.d("TAG", file.toString())
                   "value": "content_type",
                 },
               },
-              "expire": {
-                "type": "primitive",
-                "value": {
-                  "type": "double",
-                  "value": 1454902434,
-                },
-              },
               "filename": {
                 "type": "primitive",
                 "value": {
                   "type": "string",
                   "value": "filename",
-                },
-              },
-              "metadata[{key}]": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "#/components/examples/metadataValue/value",
-                },
-              },
-              "signature": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "04b29480233f4def5c875875b6bdc3b1",
                 },
               },
               "size": {
@@ -1987,32 +1945,11 @@ Log.d("TAG", file.toString())
           "queryParameters": [],
           "request": {
             "properties": {
-              "expire": {
-                "type": "primitive",
-                "value": {
-                  "type": "double",
-                  "value": 1454902434,
-                },
-              },
-              "metadata[{key}]": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "#/components/examples/metadataValue/value",
-                },
-              },
               "pub_key": {
                 "type": "primitive",
                 "value": {
                   "type": "string",
                   "value": "caa9d29da887ee88ffe6",
-                },
-              },
-              "signature": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "04b29480233f4def5c875875b6bdc3b1",
                 },
               },
               "source_url": {
@@ -2162,32 +2099,11 @@ Log.d("TAG", file.toString())
           "queryParameters": [],
           "request": {
             "properties": {
-              "expire": {
-                "type": "primitive",
-                "value": {
-                  "type": "double",
-                  "value": 1454902434,
-                },
-              },
-              "metadata[{key}]": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "#/components/examples/metadataValue/value",
-                },
-              },
               "pub_key": {
                 "type": "primitive",
                 "value": {
                   "type": "string",
                   "value": "caa9d29da887ee88ffe6",
-                },
-              },
-              "signature": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "04b29480233f4def5c875875b6bdc3b1",
                 },
               },
               "source_url": {
@@ -4111,13 +4027,6 @@ Log.d("TAG", group.toString())
           "queryParameters": [],
           "request": {
             "properties": {
-              "expire": {
-                "type": "primitive",
-                "value": {
-                  "type": "double",
-                  "value": 1454902434,
-                },
-              },
               "files[]": {
                 "type": "array",
                 "value": [
@@ -4135,13 +4044,6 @@ Log.d("TAG", group.toString())
                 "value": {
                   "type": "string",
                   "value": "caa9d29da887ee88ffe6",
-                },
-              },
-              "signature": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "04b29480233f4def5c875875b6bdc3b1",
                 },
               },
             },
