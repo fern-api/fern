@@ -290,6 +290,10 @@
                         "parts": [
                             {
                                 "pathParameter": "endpointParam",
+                                "tail": "/"
+                            },
+                            {
+                                "pathParameter": "resourceParam",
                                 "tail": ""
                             }
                         ]
@@ -307,11 +311,43 @@
                             },
                             {
                                 "pathParameter": "endpointParam",
+                                "tail": "/"
+                            },
+                            {
+                                "pathParameter": "resourceParam",
                                 "tail": ""
                             }
                         ]
                     },
                     "pathParameters": [
+                        {
+                            "name": {
+                                "originalName": "resourceParam",
+                                "camelCase": {
+                                    "unsafeName": "resourceParam",
+                                    "safeName": "resourceParam"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "resource_param",
+                                    "safeName": "resource_param"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "RESOURCE_PARAM",
+                                    "safeName": "RESOURCE_PARAM"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ResourceParam",
+                                    "safeName": "ResourceParam"
+                                }
+                            },
+                            "valueType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "location": "ENDPOINT",
+                            "variable": null,
+                            "docs": null
+                        },
                         {
                             "name": {
                                 "originalName": "endpointParam",
@@ -395,6 +431,34 @@
                                 "primitive": "STRING"
                             },
                             "location": "SERVICE",
+                            "variable": null,
+                            "docs": null
+                        },
+                        {
+                            "name": {
+                                "originalName": "resourceParam",
+                                "camelCase": {
+                                    "unsafeName": "resourceParam",
+                                    "safeName": "resourceParam"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "resource_param",
+                                    "safeName": "resource_param"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "RESOURCE_PARAM",
+                                    "safeName": "RESOURCE_PARAM"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ResourceParam",
+                                    "safeName": "ResourceParam"
+                                }
+                            },
+                            "valueType": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "location": "ENDPOINT",
                             "variable": null,
                             "docs": null
                         },

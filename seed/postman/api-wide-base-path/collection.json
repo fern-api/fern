@@ -24,18 +24,24 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/:serviceParam/:endpointParam",
+              "raw": "{{baseUrl}}/:serviceParam/:endpointParam/:resourceParam",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
                 ":serviceParam",
-                ":endpointParam"
+                ":endpointParam",
+                ":resourceParam"
               ],
               "query": [],
               "variable": [
                 {
                   "key": "serviceParam",
+                  "value": "",
+                  "description": null
+                },
+                {
+                  "key": "resourceParam",
                   "value": "",
                   "description": null
                 },

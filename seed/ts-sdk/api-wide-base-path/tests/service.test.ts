@@ -11,7 +11,7 @@ const client = new SeedApiWideBasePathClient({
 
 describe("Service", () => {
     test("post", async () => {
-        const response = await client.service.post("string", 1);
+        const response = await client.service.post("string", "string", 1);
         expect(response).toEqual(undefined);
     });
 });

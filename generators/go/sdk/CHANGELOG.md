@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## Unreleased -->
 
+## [0.18.3 - 2024-04-15]
+
+- Fix: Path parameters are now applied in the correct order. This is relevant for endpoints
+  that specify more than one path parameter  (e.g. `/organizations/{orgId}/users/{userId}`).
+  Function signatures remain unchanged, such that they preserve the path parameter order
+  specified by the API definition like so:
+
+  ```go
+  func (c *Client) Get(
+    ctx context.Context,
+    userID string,
+    orgID string,
+    opts ...option.RequestOption,
+  ) (*acme.User, error) {
+    ...
+    endpointURL := fmt.Sprintf(baseURL+"/"+"organizations/%v/users/%v", orgID, userID)
+    ...
+  }
+  ```
+
 ## [0.18.2 - 2024-04-02]
 
 - Fix: Custom authorization header schemes had their values overridden by request options,

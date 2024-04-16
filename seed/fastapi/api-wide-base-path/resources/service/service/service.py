@@ -24,7 +24,7 @@ class AbstractServiceService(AbstractFernService):
     """
 
     @abc.abstractmethod
-    def post(self, *, service_param: str, endpoint_param: int) -> None:
+    def post(self, *, service_param: str, resource_param: str, endpoint_param: int) -> None:
         ...
 
     """
@@ -44,6 +44,8 @@ class AbstractServiceService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "service_param":
+                new_parameters.append(parameter.replace(default=fastapi.Path(...)))
+            elif parameter_name == "resource_param":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
             elif parameter_name == "endpoint_param":
                 new_parameters.append(parameter.replace(default=fastapi.Path(...)))
@@ -68,7 +70,7 @@ class AbstractServiceService(AbstractFernService):
         wrapper.__globals__.update(cls.post.__globals__)
 
         router.post(
-            path="/test/{path_param}/{service_param}/{endpoint_param}",
+            path="/test/{path_param}/{service_param}/{resource_param}/{endpoint_param}",
             response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractServiceService.post.__doc__,

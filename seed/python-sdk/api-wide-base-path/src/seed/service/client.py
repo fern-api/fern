@@ -19,6 +19,7 @@ class ServiceClient:
         self,
         path_param: str,
         service_param: str,
+        resource_param: str,
         endpoint_param: int,
         *,
         request_options: typing.Optional[RequestOptions] = None,
@@ -28,6 +29,8 @@ class ServiceClient:
             - path_param: str.
 
             - service_param: str.
+
+            - resource_param: str.
 
             - endpoint_param: int.
 
@@ -41,6 +44,7 @@ class ServiceClient:
         client.service.post(
             path_param="string",
             service_param="string",
+            resource_param="string",
             endpoint_param=1,
         )
         """
@@ -48,7 +52,7 @@ class ServiceClient:
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
-                f"test/{jsonable_encoder(path_param)}/{jsonable_encoder(service_param)}/{jsonable_encoder(endpoint_param)}",
+                f"test/{jsonable_encoder(path_param)}/{jsonable_encoder(service_param)}/{jsonable_encoder(endpoint_param)}/{jsonable_encoder(resource_param)}",
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
@@ -87,6 +91,7 @@ class AsyncServiceClient:
         self,
         path_param: str,
         service_param: str,
+        resource_param: str,
         endpoint_param: int,
         *,
         request_options: typing.Optional[RequestOptions] = None,
@@ -96,6 +101,8 @@ class AsyncServiceClient:
             - path_param: str.
 
             - service_param: str.
+
+            - resource_param: str.
 
             - endpoint_param: int.
 
@@ -109,6 +116,7 @@ class AsyncServiceClient:
         await client.service.post(
             path_param="string",
             service_param="string",
+            resource_param="string",
             endpoint_param=1,
         )
         """
@@ -116,7 +124,7 @@ class AsyncServiceClient:
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
-                f"test/{jsonable_encoder(path_param)}/{jsonable_encoder(service_param)}/{jsonable_encoder(endpoint_param)}",
+                f"test/{jsonable_encoder(path_param)}/{jsonable_encoder(service_param)}/{jsonable_encoder(endpoint_param)}/{jsonable_encoder(resource_param)}",
             ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None

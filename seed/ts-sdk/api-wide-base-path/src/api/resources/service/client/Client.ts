@@ -23,13 +23,14 @@ export class Service {
 
     public async post(
         serviceParam: string,
+        resourceParam: string,
         endpointParam: number,
         requestOptions?: Service.RequestOptions
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/test/${this._options.pathParam}/${serviceParam}/${endpointParam}`
+                `/test/${this._options.pathParam}/${serviceParam}/${endpointParam}/${resourceParam}`
             ),
             method: "POST",
             headers: {

@@ -5,6 +5,7 @@ import express from "express";
 export interface ServiceServiceMethods {
     post(req: express.Request<{
         serviceParam: string;
+        resourceParam: string;
         endpointParam: number;
     }, never, never, never>, res: {
         send: () => Promise<void>;

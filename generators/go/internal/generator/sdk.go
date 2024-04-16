@@ -1609,10 +1609,33 @@ func (f *fileWriter) endpointFromIR(
 	scope := f.scope.Child()
 
 	// Add path parameters and request body, if any.
-	signatureParameters := []*signatureParameter{{parameter: "ctx context.Context"}}
-	var pathParameterNames []string
+	pathParameterToScopedName := make(map[string]string, len(irEndpoint.AllPathParameters))
+	pathParamters := make(map[string]*ir.PathParameter, len(irEndpoint.AllPathParameters))
 	for _, pathParameter := range irEndpoint.AllPathParameters {
+		pathParamters[pathParameter.Name.OriginalName] = pathParameter
+	}
+
+	var pathParameterNames []string
+	for _, part := range irEndpoint.FullPath.Parts {
+		if part.PathParameter == "" {
+			continue
+		}
+		pathParameter, ok := pathParamters[part.PathParameter]
+		if !ok {
+			return nil, fmt.Errorf("internal error: path parameter %s not found in endpoint %s", part.PathParameter, irEndpoint.Name.OriginalName)
+		}
 		pathParameterName := scope.Add(pathParameter.Name.CamelCase.SafeName)
+		pathParameterNames = append(pathParameterNames, pathParameterName)
+		pathParameterToScopedName[part.PathParameter] = pathParameterName
+	}
+
+	// Preserve the order of path parameters specified in the API in the function signature.
+	signatureParameters := []*signatureParameter{{parameter: "ctx context.Context"}}
+	for _, pathParameter := range irEndpoint.AllPathParameters {
+		pathParameterName, ok := pathParameterToScopedName[pathParameter.Name.OriginalName]
+		if !ok {
+			return nil, fmt.Errorf("internal error: path parameter %s not found in endpoint %s", pathParameter.Name.OriginalName, irEndpoint.Name.OriginalName)
+		}
 		parameterType := typeReferenceToGoType(pathParameter.ValueType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
 		signatureParameters = append(
 			signatureParameters,
@@ -1621,7 +1644,6 @@ func (f *fileWriter) endpointFromIR(
 				parameter: fmt.Sprintf("%s %s", pathParameterName, parameterType),
 			},
 		)
-		pathParameterNames = append(pathParameterNames, pathParameterName)
 	}
 
 	// Add the file parameter(s) after the path parameters, if any.
