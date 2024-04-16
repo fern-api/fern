@@ -118,10 +118,7 @@ function convertResolvedResponse({
         }
     }
 
-    const jsonMediaObject = getApplicationJsonSchemaMediaObject(
-        resolvedResponse.content ?? {},
-        context.document.components
-    );
+    const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedResponse.content ?? {}, context);
     if (jsonMediaObject != null) {
         if (isStreaming) {
             return ResponseWithExample.streamingJson({
@@ -188,10 +185,7 @@ function markErrorSchemas({
         }
         errorStatusCodes.push(parsedStatusCode);
         const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
-        const jsonMediaObject = getApplicationJsonSchemaMediaObject(
-            resolvedResponse.content ?? {},
-            context.document.components
-        );
+        const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedResponse.content ?? {}, context);
         context.markSchemaForStatusCode(parsedStatusCode, jsonMediaObject?.schema ?? {}); // defaults to unknown schema
     }
     return errorStatusCodes;

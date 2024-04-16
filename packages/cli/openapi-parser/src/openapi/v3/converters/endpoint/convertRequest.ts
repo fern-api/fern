@@ -61,7 +61,7 @@ export function convertRequest({
         : requestBody;
 
     const multipartSchema = getMultipartFormDataRequest(resolvedRequestBody);
-    const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedRequestBody.content, document.components);
+    const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedRequestBody.content, context);
 
     // convert as application/octet-stream
     if (isOctetStreamRequest(resolvedRequestBody)) {
