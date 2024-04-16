@@ -368,6 +368,7 @@ export class ExampleTypeFactory {
                 const requiredProperties = this.getAllRequiredProperties(schema);
                 for (const [property, schema] of Object.entries(allProperties)) {
                     const required = property in requiredProperties;
+                    const inExample = property in Object.keys(fullExample);
                     const propertyExample = this.buildExampleHelper({
                         schema,
                         exampleId,
@@ -383,6 +384,8 @@ export class ExampleTypeFactory {
                         result[property] = propertyExample;
                     } else if (required) {
                         return undefined;
+                    } else if (inExample && propertyExample != null) {
+                        result[property] = propertyExample;
                     } else if (!options.ignoreOptionals && propertyExample != null) {
                         result[property] = propertyExample;
                     }
