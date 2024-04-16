@@ -124,7 +124,19 @@ export function generateIr({
             })
             .filter((entry) => entry.length > 0)
     );
-    const exampleEndpointFactory = new ExampleEndpointFactory(schemasWithExample, context.logger);
+
+    const schemasWithoutDiscriminants = maybeRemoveDiscriminantsFromSchemas(schemasWithExample, context);
+    const schemas: Record<string, Schema> = {};
+    for (const [key, schemaWithExample] of Object.entries(schemasWithoutDiscriminants)) {
+        const schema = convertSchemaWithExampleToSchema(schemaWithExample);
+        if (context.isSchemaExcluded(key)) {
+            continue;
+        }
+        schemas[key] = schema;
+        taskContext.logger.debug(`Converted schema ${key}`);
+    }
+
+    const exampleEndpointFactory = new ExampleEndpointFactory(schemasWithoutDiscriminants, context.logger);
     const endpoints = endpointsWithExample.map((endpointWithExample): Endpoint => {
         // if x-fern-examples is not present, generate an example
         const extensionExamples = endpointWithExample.examples;
@@ -188,16 +200,6 @@ export function generateIr({
         };
     });
 
-    const schemas: Record<string, Schema> = {};
-    for (const [key, schemaWithExample] of Object.entries(schemasWithExample)) {
-        const schema = convertSchemaWithExampleToSchema(schemaWithExample);
-        if (context.isSchemaExcluded(key)) {
-            continue;
-        }
-        schemas[key] = schema;
-        taskContext.logger.debug(`Converted schema ${key}`);
-    }
-
     const groupInfo = getFernGroups({ document: openApi, context });
 
     const ir: OpenApiIntermediateRepresentation = {
@@ -220,7 +222,7 @@ export function generateIr({
         endpoints,
         webhooks,
         channel: [],
-        schemas: maybeRemoveDiscriminantsFromSchemas(schemas, context),
+        schemas,
         securitySchemes,
         hasEndpointsMarkedInternal: endpoints.some((endpoint) => endpoint.internal),
         errors: context.getErrors(),
@@ -233,10 +235,10 @@ export function generateIr({
 }
 
 function maybeRemoveDiscriminantsFromSchemas(
-    schemas: Record<string, Schema>,
+    schemas: Record<string, SchemaWithExample>,
     context: AbstractOpenAPIV3ParserContext
-): Record<string, Schema> {
-    const result: Record<string, Schema> = {};
+): Record<string, SchemaWithExample> {
+    const result: Record<string, SchemaWithExample> = {};
     for (const [schemaId, schema] of Object.entries(schemas)) {
         if (schema.type !== "object") {
             result[schemaId] = schema;
@@ -251,7 +253,7 @@ function maybeRemoveDiscriminantsFromSchemas(
             continue;
         }
 
-        const schemaWithoutDiscriminants: Schema.Object_ = {
+        const schemaWithoutDiscriminants: SchemaWithExample.Object_ = {
             ...schema,
             type: "object",
             properties: schema.properties.filter((objectProperty) => {
