@@ -13417,13 +13417,6 @@ exports[`open api parser aries simple 1`] = `
             "auth": true,
             "display-name": "Download tails file",
             "docs": undefined,
-            "examples": [
-              {
-                "path-parameters": {
-                  "rev_reg_id": "rev_reg_id",
-                },
-              },
-            ],
             "method": "GET",
             "path": "/revocation/registry/{rev_reg_id}/tails-file",
             "path-parameters": {

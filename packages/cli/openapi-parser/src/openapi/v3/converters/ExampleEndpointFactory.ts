@@ -40,6 +40,10 @@ export class ExampleEndpointFactory {
         const requestSchemaIdResponse = getRequestSchema(endpoint.request);
         const responseSchemaIdResponse = getResponseSchema(endpoint.response);
 
+        if (requestSchemaIdResponse?.type === "unsupported" || responseSchemaIdResponse?.type === "unsupported") {
+            return [];
+        }
+
         // build the request examples. if there are no examples, build an example from the schema.
         // if all the built examples are null, skip building, warn, and return undefined.
         const requestExamples: [id: string | undefined, example: FernOpenapiIr.FullExample][] = [];

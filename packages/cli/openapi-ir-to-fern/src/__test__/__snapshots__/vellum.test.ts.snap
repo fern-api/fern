@@ -951,9 +951,6 @@ or overwritten with default values.",
           "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Executes a deployed Workflow and streams back its results.",
-          "examples": [
-            {},
-          ],
           "method": "POST",
           "path": "/v1/execute-workflow-stream",
           "request": {
@@ -1077,9 +1074,6 @@ Generate a stream of completions using a previously defined deployment.
             "ForbiddenError",
             "NotFoundError",
             "InternalServerError",
-          ],
-          "examples": [
-            {},
           ],
           "method": "POST",
           "path": "/v1/generate-stream",

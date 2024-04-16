@@ -4387,13 +4387,6 @@ exports[`open api parser flexport simple 1`] = `
             "auth": false,
             "display-name": "Download a document",
             "docs": "Retrieves the contents of a specified file. Returns the file as a stream of bytes.",
-            "examples": [
-              {
-                "path-parameters": {
-                  "id": "id",
-                },
-              },
-            ],
             "method": "GET",
             "path": "/documents/{id}/download",
             "path-parameters": {

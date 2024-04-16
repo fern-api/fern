@@ -13105,30 +13105,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "availability": null,
       "description": "Retrieves the contents of a specified file. Returns the file as a stream of bytes.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [
-            {
-              "name": "id",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "id",
-                },
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": null,
-          "response": null,
-          "type": "full",
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DocumentsDownloadRequest",
       "headers": [],
       "internal": null,

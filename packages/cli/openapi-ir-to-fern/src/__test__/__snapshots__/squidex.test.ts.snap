@@ -742,13 +742,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "auth": true,
             "display-name": "Get the app image.",
             "docs": undefined,
-            "examples": [
-              {
-                "path-parameters": {
-                  "app": "app",
-                },
-              },
-            ],
             "method": "GET",
             "path": "/api/apps/{app}/image",
             "path-parameters": {
@@ -2517,13 +2510,6 @@ The client secret is auto generated on the server and returned. The client does 
             "availability": "deprecated",
             "display-name": "Get the asset content.",
             "docs": undefined,
-            "examples": [
-              {
-                "path-parameters": {
-                  "id": "id",
-                },
-              },
-            ],
             "method": "GET",
             "path": "/api/assets/{id}",
             "path-parameters": {
@@ -2602,14 +2588,6 @@ The client secret is auto generated on the server and returned. The client does 
             "auth": true,
             "display-name": "Get the asset content.",
             "docs": undefined,
-            "examples": [
-              {
-                "path-parameters": {
-                  "app": "app",
-                  "idOrSlug": "idOrSlug",
-                },
-              },
-            ],
             "method": "GET",
             "path": "/api/assets/{app}/{idOrSlug}/{more}",
             "path-parameters": {
@@ -3777,14 +3755,6 @@ The client secret is auto generated on the server and returned. The client does 
             "auth": true,
             "display-name": "Get the backup content.",
             "docs": undefined,
-            "examples": [
-              {
-                "path-parameters": {
-                  "app": "app",
-                  "id": "id",
-                },
-              },
-            ],
             "method": "GET",
             "path": "/api/apps/{app}/backups/{id}",
             "path-parameters": {
@@ -3806,13 +3776,6 @@ The client secret is auto generated on the server and returned. The client does 
             "auth": true,
             "display-name": "Get the backup content.",
             "docs": undefined,
-            "examples": [
-              {
-                "path-parameters": {
-                  "id": "id",
-                },
-              },
-            ],
             "method": "GET",
             "path": "/api/apps/backups/{id}",
             "path-parameters": {
@@ -4786,16 +4749,6 @@ The client secret is auto generated on the server and returned. The client does 
             "availability": "deprecated",
             "display-name": "Get a content by version.",
             "docs": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
-            "examples": [
-              {
-                "path-parameters": {
-                  "app": "app",
-                  "id": "id",
-                  "schema": "schema",
-                  "version": 1,
-                },
-              },
-            ],
             "method": "GET",
             "path": "/api/content/{app}/{schema}/{id}/{version}",
             "path-parameters": {
@@ -11605,13 +11558,6 @@ You will be assigned as owner of the new team automatically.",
             "auth": true,
             "display-name": "Get user picture by id.",
             "docs": undefined,
-            "examples": [
-              {
-                "path-parameters": {
-                  "id": "id",
-                },
-              },
-            ],
             "method": "GET",
             "path": "/api/users/{id}/picture",
             "path-parameters": {
