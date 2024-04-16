@@ -131,7 +131,7 @@ export function generateIr({
         let examples: EndpointExample[] = extensionExamples;
         if (!disableExamples && (extensionExamples.length === 0 || extensionExamples.every(hasIncompleteExample))) {
             const endpointExample = exampleEndpointFactory.buildEndpointExample(endpointWithExample);
-            if (endpointExample != null) {
+            if (endpointExample.length > 0) {
                 examples = [
                     ...endpointExample,
                     // Remove incomplete examples (codesamples are included in generated examples)
