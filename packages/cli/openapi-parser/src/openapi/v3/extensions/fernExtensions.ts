@@ -318,6 +318,24 @@ export const FernOpenAPIExtension = {
     FERN_BASIC_AUTH: "x-fern-basic",
 
     /**
+     * If you are leveraging client credential grants, you must map out how
+     * the response and request objects are mapped to general Oauth concepts (access_token, refresh_token, etc.)
+     *
+     * paths:
+     *     /oauth/token:
+     *       x-fern-oauth:
+     *         access_token: $response.token
+     *         refresh_token: $response.refresh_token
+     *         expires_in: $response.expires_in
+     *     /oauth/refresh:
+     *       x-fern-oauth:
+     *         input_refresh_token: $request.refresh_token
+     *         access_token: $response.token
+     *         refresh_token: $response.refresh_token
+     *         expires_in: $response.expires_in
+     *
+     * ...
+     *
      * securitySchemes:
      *   myOAuthSample:
      *     type: oauth2
@@ -337,6 +355,15 @@ export const FernOpenAPIExtension = {
      *       clientIdEnv: MY_CLIENT_ID
      *       clientSecretEnv: MY_CLIENT_SECRET
      *       authorizationCodeEnv: MY_AUTH_CODE
+     *
+     *       # Optional configuration for authorization code flow
+     *       authorizationPath: /my/auth/path   # <---- The path to append to the base URL to get the authorization endpoint a user is meant to visit within the browser.
+     *       authorizationQueryParams:
+     *        - name: state
+     *          value: string
+     *        - name: grant_type
+     *          value: "code"
+     *
      */
     FERN_OAUTH: "x-fern-oauth",
 
