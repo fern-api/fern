@@ -1,11 +1,6 @@
 import { TypesGenerator } from "@fern-api/fern-ruby-model";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import {
-    AbstractGeneratorContext,
-    getPackageName,
-    getSdkVersion,
-    hasFileUploadEndpoints
-} from "@fern-api/generator-commons";
+import { AbstractGeneratorContext, getPackageName, getSdkVersion } from "@fern-api/generator-commons";
 import {
     Class_,
     generateBasicRakefile,
@@ -57,6 +52,14 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
         }
     }
 
+    private hasFileUploadEndpoints(ir: IntermediateRepresentation): boolean {
+        return Object.entries(ir.services)
+            .flatMap(([_, service]) => service.endpoints)
+            .some((endpoint) => {
+                return endpoint.requestBody?.type === "fileUpload";
+            });
+    }
+
     private generateRubyBoilerPlate(
         gemName: string,
         clientName: string,
@@ -76,7 +79,7 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
                 [],
                 sdkVersion,
                 config.license,
-                hasFileUploadEndpoints(intermediateRepresentation) ||
+                this.hasFileUploadEndpoints(intermediateRepresentation) ||
                     intermediateRepresentation.sdkConfig.hasFileDownloadEndpoints,
                 true
             )
@@ -117,7 +120,7 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
             sdkVersion,
             this.generatedClasses,
             this.flattenedProperties,
-            hasFileUploadEndpoints(intermediateRepresentation) ||
+            this.hasFileUploadEndpoints(intermediateRepresentation) ||
                 intermediateRepresentation.sdkConfig.hasFileDownloadEndpoints
         ).generateFiles();
         this.generatedFiles.push(...Array.from(generatedClientFiles.values()));

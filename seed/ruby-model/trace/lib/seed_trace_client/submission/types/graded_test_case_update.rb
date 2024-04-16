@@ -44,7 +44,11 @@ module SeedTraceClient
           grade = parsed_json["grade"].to_json
           grade = SeedTraceClient::Submission::TestCaseGrade.from_json(json_object: grade)
         end
-        new(test_case_id: test_case_id, grade: grade, additional_properties: struct)
+        new(
+          test_case_id: test_case_id,
+          grade: grade,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of GradedTestCaseUpdate to a JSON object

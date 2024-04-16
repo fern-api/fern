@@ -8,7 +8,7 @@ instances:
         branch: main
   # - url: fern-beta.docs.buildwithfern.com/learn
   #   custom-domain: staging.buildwithfern.com/learn
-title: Fern | Documentation
+title: Fern
 
 tabs:
   home:
@@ -25,6 +25,9 @@ tabs:
   api:
     display-name: API Reference
     slug: api
+  configure:
+    display-name: Configuration
+    slug: configure
 
 css: ./assets/styles.css
 
@@ -33,165 +36,104 @@ navigation:
     layout:
       - page: Welcome
         path: pages/welcome.mdx
-  - tab: overview
-    layout:
-      - page: Introduction
-        path: ./pages/overview/introduction.mdx
-      - page: Why Fern?
-        path: ./pages/overview/why-fern.mdx
-      - page: Get started
-        path: ./pages/overview/get-started.mdx
-      - section: Define your API
-        contents:
-          # TBD
-          # - page: Overview
-          #   path: ./pages/overview/define-your-api/api-overview.mdx
-          - section: OpenAPI
-            slug: openapi
-            contents:
-              - page: Overview
-                path: ./pages/overview/define-your-api/openapi/openapi-overview.mdx
-              - page: OpenAPI Extensions
-                path: ./pages/overview/define-your-api/openapi/extensions.mdx
-                slug: extensions
-              - page: OpenAPI Examples
-                path: ./pages/overview/define-your-api/openapi/examples.mdx
-                slug: examples
-          - section: Fern Definition
-            slug: ferndef
-            contents:
-              - page: Overview
-                path: ./pages/overview/define-your-api/ferndef/ferndef-overview.mdx
-              - page: Export to OpenAPI
-                slug: export-openapi
-                path: ./pages/overview/define-your-api/ferndef/export-openapi.mdx
-              - page: Types
-                path: ./pages/overview/define-your-api/ferndef/types.mdx
-              - page: Endpoints
-                path: ./pages/overview/define-your-api/ferndef/endpoints.mdx
-              - page: Errors
-                path: ./pages/overview/define-your-api/ferndef/errors.mdx
-              - page: Imports
-                path: ./pages/overview/define-your-api/ferndef/imports.mdx
-              - page: Examples
-                path: ./pages/overview/define-your-api/ferndef/examples.mdx
-              - page: Audiences
-                path: ./pages/overview/define-your-api/ferndef/audiences.mdx
-              - page: Availability
-                path: ./pages/overview/define-your-api/ferndef/availability.mdx
-              - page: api.yml reference
-                path: ./pages/overview/define-your-api/ferndef/api-yml.mdx
-              - page: Packages
-                path: ./pages/overview/define-your-api/ferndef/packages.mdx
-              - page: Comparison with OpenAPI
-                path: ./pages/overview/define-your-api/ferndef/comparison.mdx
-      - section: Fern CLI tool
-        slug: cli
-        contents:
-          - page: Overview
-            path: ./pages/overview/cli/cli-overview.mdx
-          - section: CLI commands
-            slug: commands
-            contents:
-              - page: fern generate
-                path: ./pages/overview/cli/cli-commands/fern-generate.mdx
-              - page: fern check
-                path: ./pages/overview/cli/cli-commands/fern-check.mdx
-              - page: fern add
-                path: ./pages/overview/cli/cli-commands/fern-add.mdx
-              - page: fern init
-                path: ./pages/overview/cli/cli-commands/fern-init.mdx
-              - page: fern write-definition
-                path: ./pages/overview/cli/cli-commands/fern-write-definition.mdx
-              - page: fern upgrade
-                path: ./pages/overview/cli/cli-commands/fern-upgrade.mdx
-              - page: fern token
-                path: ./pages/overview/cli/cli-commands/fern-token.mdx
-              - page: fern login
-                path: ./pages/overview/cli/cli-commands/fern-login.mdx
-              - page: fern format
-                path: ./pages/overview/cli/cli-commands/fern-format.mdx
-              - page: fern help
-                path: ./pages/overview/cli/cli-commands/fern-help.mdx
-              - page: fern version
-                path: ./pages/overview/cli/cli-commands/fern-version.mdx
-      - section: Changelog
-        contents:
-          - page: December 2023
-            path: ./pages/overview/changelog/december-2023.mdx
-          - page: February 2024
-            path: ./pages/overview/changelog/february-2024.mdx
   - tab: sdks
     layout:
-      - page: Overview
-        path: ./pages/fern-sdks/sdks-overview.mdx
-      - section: Fern SDKs Quickstarts
-        slug: quickstarts
+      - section: Introduction
+        contents: 
+          - page: Overview
+            path: ./pages/sdks/introduction/overview.mdx
+      - section: Getting Started
+        contents: 
+          - page: Generate your first SDK
+            path: ./pages/sdks/getting-started/generate-your-first-sdk.mdx
+      - section: Features
         contents:
-          - page: Fern SDKs Quickstart with OpenAPI
-            slug: openapi
-            path: ./pages/fern-sdks/sdks-quickstarts/sdks-quickstart-openapi.mdx
-          - page: Fern SDKs Quickstart with Fern Def
-            slug: ferndef
-            path: ./pages/fern-sdks/sdks-quickstarts/sdks-quickstart-ferndef.mdx
-      - section: SDK generators
-        contents:
-          - page: TypeScript SDK
-            path: ./pages/fern-sdks/sdk-generators/typescript-sdk.mdx
-            slug: typescript
-          - page: Python SDK
-            path: ./pages/fern-sdks/sdk-generators/python-sdk.mdx
-            slug: python
-          - page: Java SDK
-            path: ./pages/fern-sdks/sdk-generators/java-sdk.mdx
-            slug: java
-          - page: Go SDK
-            path: ./pages/fern-sdks/sdk-generators/go-sdk.mdx
-            slug: go
-          - page: Ruby SDK
-            path: ./pages/fern-sdks/sdk-generators/ruby-sdk.mdx
-            slug: ruby
-          - page: C# SDK
-            path: ./pages/fern-sdks/sdk-generators/csharp-sdk.mdx
-            slug: csharp
-          - page: PHP SDK
-            path: ./pages/fern-sdks/sdk-generators/php-sdk.mdx
-            slug: php
-          - page: Swift SDK
-            path: ./pages/fern-sdks/sdk-generators/swift-sdk.mdx
-            slug: swift
-          - page: Rust SDK
-            path: ./pages/fern-sdks/sdk-generators/rust-sdk.mdx
-            slug: rust
-      - section: Other generators
-        contents:
-          - section: Server-side
-            contents:
-              - page: Express.js
-                path: ./pages/fern-sdks/other-generators/server-side/express.mdx
-                slug: express
-              - page: FastAPI
-                path: ./pages/fern-sdks/other-generators/server-side/fastapi.mdx
-                slug: fastapi
-              - page: Spring
-                path: ./pages/fern-sdks/other-generators/server-side/spring.mdx
-          - section: Specification
-            slug: spec
-            contents:
-              - page: OpenAPI generator
-                slug: openapi
-                path: ./pages/fern-sdks/other-generators/spec/openapi-generator.mdx
-              - page: Postman Collection generator
-                slug: postman
-                path: ./pages/fern-sdks/other-generators/spec/postman-collection.mdx
-      - section: Guides
-        contents:
-          - page: Publish to Maven Central
-            path: ./pages/fern-sdks/guides/publish-to-maven-central.mdx
-            slug: publish-maven
-          - page: Update SDKs with Fern's GitHub Bot
-            path: ./pages/fern-sdks/guides/github-bot.mdx
-            slug: github-bot
+          - page: Strongly typed
+            path: ./pages/sdks/features/strongly-typed.mdx
+          - page: Idiomatic method names
+            path: ./pages/sdks/features/idiomatic-method-names.mdx
+          - page: Schema validation
+            path: ./pages/sdks/features/schema-validation.mdx
+          - page: Multipart form data
+            path: ./pages/sdks/features/multipart-form-data.mdx
+          - page: Forward compatibility
+            path: ./pages/sdks/features/forward-compatibility.mdx
+          - page: Registry publishing
+            path: ./pages/sdks/features/publish-to-registries.mdx
+            icon: pro
+          - page: Auto-Pagination
+            path: ./pages/sdks/features/auto-pagination.mdx
+            icon: pro
+          - page: Retries with backoff
+            path: ./pages/sdks/features/retries-with-backoff.mdx
+            icon: pro
+          - page: Webhook signature verification
+            path: ./pages/sdks/features/webhook-signature-verification.mdx
+            icon: pro
+          - page: Idempotency headers
+            path: ./pages/sdks/features/idempotency-headers.mdx
+            icon: pro
+          - page: Server-Sent events
+            path: ./pages/sdks/features/server-sent-events.mdx
+            icon: pro
+          - page: Integration tests
+            path: ./pages/sdks/features/integration-tests.mdx
+            icon: pro
+          - page: Code Snippets
+            path: ./pages/sdks/features/code-snippets.mdx
+            icon: pro
+          - page: Augment with custom code
+            path: ./pages/sdks/features/augment-with-custom-code.mdx
+            icon: pro
+          - page: Merging multiple APIs
+            path: ./pages/sdks/features/merging-multiple-apis.mdx
+            icon: pro
+          - page: WebSockets
+            path: ./pages/sdks/features/websockets.mdx
+            icon: pro
+          # - page: OAuth token refresh
+          #   path: ./pages/sdks/features/dummy.mdx
+          #   icon: pro
+          # - page: Object oriented SDKs
+          #   path: ./pages/sdks/features/dummy.mdx
+          #   icon: pro
+          # - page: Polling
+          #   path: ./pages/sdks/features/dummy.mdx
+          #   icon: pro
+          # - page: GitHub integration
+          #   path: ./pages/sdks/features/dummy.mdx
+          #   icon: pro
+
+      # - section: Other generators
+      #   contents:
+      #     - section: Server-side
+      #       contents:
+      #         - page: Express.js
+      #           path: ./pages/fern-sdks/other-generators/server-side/express.mdx
+      #           slug: express
+      #         - page: FastAPI
+      #           path: ./pages/fern-sdks/other-generators/server-side/fastapi.mdx
+      #           slug: fastapi
+      #         - page: Spring
+      #           path: ./pages/fern-sdks/other-generators/server-side/spring.mdx
+      #     - section: Specification
+      #       slug: spec
+      #       contents:
+      #         - page: OpenAPI generator
+      #           slug: openapi
+      #           path: ./pages/fern-sdks/other-generators/spec/openapi-generator.mdx
+      #         - page: Postman Collection generator
+      #           slug: postman
+      #           path: ./pages/fern-sdks/other-generators/spec/postman-collection.mdx
+      # - section: Guides
+      #   contents:
+      #     - page: Publish to Maven Central
+      #       path: ./pages/fern-sdks/guides/publish-to-maven-central.mdx
+      #       slug: publish-maven
+      #     - page: Update SDKs with Fern's GitHub Bot
+      #       path: ./pages/fern-sdks/guides/github-bot.mdx
+      #       slug: github-bot
+      #       icon: 
   - tab: docs
     layout:
       - page: Overview
@@ -280,7 +222,77 @@ navigation:
         snippets:
           python: fern-api
           typescript: "@fern-api/node-sdk"
-  
+  - tab: configure
+    layout:
+      - section: OpenAPI
+        slug: openapi
+        contents:
+          - page: Overview
+            path: ./pages/overview/define-your-api/openapi/openapi-overview.mdx
+          - page: OpenAPI Extensions
+            path: ./pages/overview/define-your-api/openapi/extensions.mdx
+            slug: extensions
+          - page: OpenAPI Examples
+            path: ./pages/overview/define-your-api/openapi/examples.mdx
+            slug: examples
+      - section: Fern Definition
+        slug: ferndef
+        contents:
+          - page: Overview
+            path: ./pages/overview/define-your-api/ferndef/ferndef-overview.mdx
+          - page: Export to OpenAPI
+            slug: export-openapi
+            path: ./pages/overview/define-your-api/ferndef/export-openapi.mdx
+          - page: Types
+            path: ./pages/overview/define-your-api/ferndef/types.mdx
+          - page: Endpoints
+            path: ./pages/overview/define-your-api/ferndef/endpoints.mdx
+          - page: Errors
+            path: ./pages/overview/define-your-api/ferndef/errors.mdx
+          - page: Imports
+            path: ./pages/overview/define-your-api/ferndef/imports.mdx
+          - page: Examples
+            path: ./pages/overview/define-your-api/ferndef/examples.mdx
+          - page: Audiences
+            path: ./pages/overview/define-your-api/ferndef/audiences.mdx
+          - page: Availability
+            path: ./pages/overview/define-your-api/ferndef/availability.mdx
+          - page: api.yml reference
+            path: ./pages/overview/define-your-api/ferndef/api-yml.mdx
+          - page: Packages
+            path: ./pages/overview/define-your-api/ferndef/packages.mdx
+          - page: Comparison with OpenAPI
+            path: ./pages/overview/define-your-api/ferndef/comparison.mdx
+      - section: Fern CLI tool
+        slug: cli
+        contents:
+          - page: Overview
+            path: ./pages/overview/cli/cli-overview.mdx
+          - section: CLI commands
+            slug: commands
+            contents:
+              - page: fern generate
+                path: ./pages/overview/cli/cli-commands/fern-generate.mdx
+              - page: fern check
+                path: ./pages/overview/cli/cli-commands/fern-check.mdx
+              - page: fern add
+                path: ./pages/overview/cli/cli-commands/fern-add.mdx
+              - page: fern init
+                path: ./pages/overview/cli/cli-commands/fern-init.mdx
+              - page: fern write-definition
+                path: ./pages/overview/cli/cli-commands/fern-write-definition.mdx
+              - page: fern upgrade
+                path: ./pages/overview/cli/cli-commands/fern-upgrade.mdx
+              - page: fern token
+                path: ./pages/overview/cli/cli-commands/fern-token.mdx
+              - page: fern login
+                path: ./pages/overview/cli/cli-commands/fern-login.mdx
+              - page: fern format
+                path: ./pages/overview/cli/cli-commands/fern-format.mdx
+              - page: fern help
+                path: ./pages/overview/cli/cli-commands/fern-help.mdx
+              - page: fern version
+                path: ./pages/overview/cli/cli-commands/fern-version.mdx
 
 navbar-links:
   - type: filled
@@ -297,7 +309,7 @@ logo:
 colors:
   accentPrimary:
     dark: "#ADFF8C"
-    light: "#418326"
+    light: "#209d63"
   background:
     dark: "#000000"
     light: "#FFFFFF"

@@ -50,7 +50,12 @@ module SeedTraceClient
             implementation = parsed_json["implementation"].to_json
             implementation = SeedTraceClient::V2::Problem::TestCaseImplementation.from_json(json_object: implementation)
           end
-          new(template_id: template_id, name: name, implementation: implementation, additional_properties: struct)
+          new(
+            template_id: template_id,
+            name: name,
+            implementation: implementation,
+            additional_properties: struct
+          )
         end
 
         # Serialize an instance of TestCaseTemplate to a JSON object

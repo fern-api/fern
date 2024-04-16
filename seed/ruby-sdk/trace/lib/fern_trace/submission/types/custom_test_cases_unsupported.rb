@@ -37,7 +37,11 @@ module SeedTraceClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         problem_id = struct["problemId"]
         submission_id = struct["submissionId"]
-        new(problem_id: problem_id, submission_id: submission_id, additional_properties: struct)
+        new(
+          problem_id: problem_id,
+          submission_id: submission_id,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of CustomTestCasesUnsupported to a JSON object

@@ -44,7 +44,11 @@ module SeedMixedCaseClient
           nested_user = parsed_json["NestedUser"].to_json
           nested_user = SeedMixedCaseClient::Service::User.from_json(json_object: nested_user)
         end
-        new(name: name, nested_user: nested_user, additional_properties: struct)
+        new(
+          name: name,
+          nested_user: nested_user,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of NestedUser to a JSON object

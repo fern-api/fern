@@ -38,6 +38,7 @@ module SeedPaginationClient
       # @return [SeedPaginationClient::Users::UserPage]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         if parsed_json["data"].nil?
           data = nil
         else
@@ -45,7 +46,11 @@ module SeedPaginationClient
           data = SeedPaginationClient::Users::UserListContainer.from_json(json_object: data)
         end
         next_ = struct["next"]
-        new(data: data, next_: next_, additional_properties: struct)
+        new(
+          data: data,
+          next_: next_,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of UserPage to a JSON object

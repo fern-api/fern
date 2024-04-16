@@ -37,7 +37,11 @@ module SeedExamplesClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         name = struct["name"]
         contents = struct["contents"]
-        new(name: name, contents: contents, additional_properties: struct)
+        new(
+          name: name,
+          contents: contents,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of File to a JSON object

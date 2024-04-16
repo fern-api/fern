@@ -1,7 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { ErrorDeclaration, TypeReference } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
-import { getTextOfTsNode, Reference, Zurg } from "@fern-typescript/commons";
+import { getSchemaOptions, getTextOfTsNode, Reference, Zurg } from "@fern-typescript/commons";
 import { ExpressContext, GeneratedExpressErrorSchema } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 
@@ -11,6 +11,7 @@ export declare namespace GeneratedExpressErrorSchemaImpl {
         errorDeclaration: ErrorDeclaration;
         type: TypeReference;
         includeSerdeLayer: boolean;
+        allowExtraFields: boolean;
     }
 }
 
@@ -21,12 +22,20 @@ export class GeneratedExpressErrorSchemaImpl
     private errorDeclaration: ErrorDeclaration;
     private type: TypeReference;
     private includeSerdeLayer: boolean;
+    private allowExtraFields: boolean;
 
-    constructor({ errorName, errorDeclaration, type, includeSerdeLayer }: GeneratedExpressErrorSchemaImpl.Init) {
+    constructor({
+        errorName,
+        errorDeclaration,
+        type,
+        includeSerdeLayer,
+        allowExtraFields
+    }: GeneratedExpressErrorSchemaImpl.Init) {
         super({ typeName: errorName });
         this.errorDeclaration = errorDeclaration;
         this.type = type;
         this.includeSerdeLayer = includeSerdeLayer;
+        this.allowExtraFields = allowExtraFields;
     }
 
     public writeToFile(context: ExpressContext): void {
@@ -62,22 +71,18 @@ export class GeneratedExpressErrorSchemaImpl
                 return context.typeSchema
                     .getSchemaOfNamedType(this.type, { isGeneratingSchema: false })
                     .jsonOrThrow(referenceToBody, {
-                        allowUnrecognizedEnumValues: false,
-                        allowUnrecognizedUnionMembers: false,
-                        unrecognizedObjectKeys: "strip",
-                        skipValidation: false,
-                        breadcrumbsPrefix: []
+                        ...getSchemaOptions({
+                            allowExtraFields: this.allowExtraFields
+                        })
                     });
             case "unknown":
                 return referenceToBody;
             case "primitive":
             case "container":
                 return this.getReferenceToZurgSchema(context).jsonOrThrow(referenceToBody, {
-                    allowUnrecognizedEnumValues: false,
-                    allowUnrecognizedUnionMembers: false,
-                    unrecognizedObjectKeys: "strip",
-                    skipValidation: false,
-                    breadcrumbsPrefix: []
+                    ...getSchemaOptions({
+                        allowExtraFields: this.allowExtraFields
+                    })
                 });
             default:
                 assertNever(this.type);

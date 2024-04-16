@@ -45,7 +45,12 @@ module SeedExamplesClient
           id = struct["id"]
           data = struct["data"]
           json_string = struct["jsonString"]
-          new(id: id, data: data, json_string: json_string, additional_properties: struct)
+          new(
+            id: id,
+            data: data,
+            json_string: json_string,
+            additional_properties: struct
+          )
         end
 
         # Serialize an instance of Metadata to a JSON object

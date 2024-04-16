@@ -60,6 +60,7 @@ export declare namespace ExpressGenerator {
         includeSerdeLayer: boolean;
         outputEsm: boolean;
         retainOriginalCasing: boolean;
+        allowExtraFields: boolean;
     }
 }
 
@@ -194,7 +195,8 @@ export class ExpressGenerator {
             includeSerdeLayer: config.includeSerdeLayer
         });
         this.expressEndpointTypeSchemasGenerator = new ExpressEndpointTypeSchemasGenerator({
-            includeSerdeLayer: config.includeSerdeLayer
+            includeSerdeLayer: config.includeSerdeLayer,
+            allowExtraFields: config.allowExtraFields
         });
         this.expressServiceGenerator = new ExpressServiceGenerator({
             packageResolver: this.packageResolver,
@@ -210,7 +212,8 @@ export class ExpressGenerator {
         this.genericApiExpressErrorGenerator = new GenericAPIExpressErrorGenerator();
         this.expressErrorGenerator = new ExpressErrorGenerator();
         this.expressErrorSchemaGenerator = new ExpressErrorSchemaGenerator({
-            includeSerdeLayer: config.includeSerdeLayer
+            includeSerdeLayer: config.includeSerdeLayer,
+            allowExtraFields: config.allowExtraFields
         });
     }
 

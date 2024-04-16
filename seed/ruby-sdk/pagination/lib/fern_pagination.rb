@@ -15,8 +15,12 @@ module SeedPaginationClient
     # @param token [String]
     # @return [SeedPaginationClient::Client]
     def initialize(token:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @request_client = SeedPaginationClient::RequestClient.new(base_url: base_url, max_retries: max_retries,
-                                                                timeout_in_seconds: timeout_in_seconds, token: token)
+      @request_client = SeedPaginationClient::RequestClient.new(
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds,
+        token: token
+      )
       @users = SeedPaginationClient::UsersClient.new(request_client: @request_client)
     end
   end
@@ -31,8 +35,12 @@ module SeedPaginationClient
     # @param token [String]
     # @return [SeedPaginationClient::AsyncClient]
     def initialize(token:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @async_request_client = SeedPaginationClient::AsyncRequestClient.new(base_url: base_url,
-                                                                           max_retries: max_retries, timeout_in_seconds: timeout_in_seconds, token: token)
+      @async_request_client = SeedPaginationClient::AsyncRequestClient.new(
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds,
+        token: token
+      )
       @users = SeedPaginationClient::AsyncUsersClient.new(request_client: @async_request_client)
     end
   end

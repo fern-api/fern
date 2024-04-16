@@ -37,7 +37,11 @@ module SeedTraceClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         submission_id = struct["submissionId"]
         stderr = struct["stderr"]
-        new(submission_id: submission_id, stderr: stderr, additional_properties: struct)
+        new(
+          submission_id: submission_id,
+          stderr: stderr,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of StderrResponse to a JSON object

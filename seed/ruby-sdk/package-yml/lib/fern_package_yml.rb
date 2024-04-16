@@ -15,8 +15,11 @@ module SeedPackageYmlClient
     # @param timeout_in_seconds [Long]
     # @return [SeedPackageYmlClient::Client]
     def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @request_client = SeedPackageYmlClient::RequestClient.new(base_url: base_url, max_retries: max_retries,
-                                                                timeout_in_seconds: timeout_in_seconds)
+      @request_client = SeedPackageYmlClient::RequestClient.new(
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds
+      )
       @service = SeedPackageYmlClient::ServiceClient.new(request_client: @request_client)
     end
 
@@ -24,6 +27,9 @@ module SeedPackageYmlClient
     # @param request [String]
     # @param request_options [SeedPackageYmlClient::RequestOptions]
     # @return [String]
+    # @example
+    #  package_yml = SeedPackageYmlClient::Client.new(base_url: "https://api.example.com")
+    #  package_yml.echo(id: "id-ksfd9c1", request: "Hello world!")
     def echo(id:, request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -44,8 +50,11 @@ module SeedPackageYmlClient
     # @param timeout_in_seconds [Long]
     # @return [SeedPackageYmlClient::AsyncClient]
     def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @async_request_client = SeedPackageYmlClient::AsyncRequestClient.new(base_url: base_url,
-                                                                           max_retries: max_retries, timeout_in_seconds: timeout_in_seconds)
+      @async_request_client = SeedPackageYmlClient::AsyncRequestClient.new(
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds
+      )
       @service = SeedPackageYmlClient::AsyncServiceClient.new(request_client: @async_request_client)
     end
 
@@ -53,6 +62,9 @@ module SeedPackageYmlClient
     # @param request [String]
     # @param request_options [SeedPackageYmlClient::RequestOptions]
     # @return [String]
+    # @example
+    #  package_yml = SeedPackageYmlClient::Client.new(base_url: "https://api.example.com")
+    #  package_yml.echo(id: "id-ksfd9c1", request: "Hello world!")
     def echo(id:, request:, request_options: nil)
       response = @async_request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?

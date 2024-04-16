@@ -47,7 +47,11 @@ module SeedTraceClient
           v = v.to_json
           SeedTraceClient::Commons::FileInfo.from_json(json_object: v)
         end
-        new(main_file: main_file, read_only_files: read_only_files, additional_properties: struct)
+        new(
+          main_file: main_file,
+          read_only_files: read_only_files,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of WorkspaceFiles to a JSON object

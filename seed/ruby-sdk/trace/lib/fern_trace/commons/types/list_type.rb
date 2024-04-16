@@ -40,6 +40,7 @@ module SeedTraceClient
       # @return [SeedTraceClient::Commons::ListType]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         if parsed_json["valueType"].nil?
           value_type = nil
         else
@@ -47,7 +48,11 @@ module SeedTraceClient
           value_type = SeedTraceClient::Commons::VariableType.from_json(json_object: value_type)
         end
         is_fixed_length = struct["isFixedLength"]
-        new(value_type: value_type, is_fixed_length: is_fixed_length, additional_properties: struct)
+        new(
+          value_type: value_type,
+          is_fixed_length: is_fixed_length,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of ListType to a JSON object

@@ -36,7 +36,11 @@ module SeedObjectClient
       struct = JSON.parse(json_object, object_class: OpenStruct)
       id = struct["id"]
       value = struct["value"]
-      new(id: id, value: value, additional_properties: struct)
+      new(
+        id: id,
+        value: value,
+        additional_properties: struct
+      )
     end
 
     # Serialize an instance of Name to a JSON object

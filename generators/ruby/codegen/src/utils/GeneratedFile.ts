@@ -1,19 +1,23 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { mkdir, writeFile } from "fs/promises";
+import path from "path";
 
 export class GeneratedFile {
     public filename: string;
-    public directory: RelativeFilePath;
+    public directory: RelativeFilePath | AbsoluteFilePath;
     public fileContents: string;
 
-    constructor(filename: string, directory: RelativeFilePath, fileContents: string) {
+    constructor(filename: string, directory: RelativeFilePath | AbsoluteFilePath, fileContents: string) {
         this.filename = filename;
         this.directory = directory;
         this.fileContents = fileContents;
     }
 
     public async write(directoryPrefix: AbsoluteFilePath): Promise<void> {
-        const outputDirectory = join(directoryPrefix, this.directory);
+        const outputDirectory = path.isAbsolute(this.directory)
+            ? this.directory
+            : // Reinforce that this is a relative file path since we just checked that is wasn't absolute
+              join(directoryPrefix, RelativeFilePath.of(this.directory));
         await mkdir(outputDirectory, { recursive: true });
         await writeFile(`${outputDirectory}/${this.filename}`, this.fileContents);
     }

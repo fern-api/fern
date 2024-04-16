@@ -1673,30 +1673,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "availability": null,
       "description": null,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [
-            {
-              "name": "id",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "id",
-                },
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": null,
-          "response": null,
-          "type": "full",
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "UsersGetUserPictureRequest",
       "headers": [],
       "internal": null,
@@ -25747,60 +25724,7 @@ You will be assigned as owner of the new team automatically.",
       "availability": "Deprecated",
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [
-            {
-              "name": "app",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "app",
-                },
-              },
-            },
-            {
-              "name": "schema",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "schema",
-                },
-              },
-            },
-            {
-              "name": "id",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "id",
-                },
-              },
-            },
-            {
-              "name": "version",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "int",
-                  "value": 1,
-                },
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": null,
-          "response": null,
-          "type": "full",
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ContentsGetContentVersionRequest",
       "headers": [],
       "internal": null,
@@ -29275,40 +29199,7 @@ You will be assigned as owner of the new team automatically.",
       "availability": null,
       "description": null,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [
-            {
-              "name": "app",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "app",
-                },
-              },
-            },
-            {
-              "name": "id",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "id",
-                },
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": null,
-          "response": null,
-          "type": "full",
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "BackupsGetBackupContentRequest",
       "headers": [],
       "internal": null,
@@ -29478,30 +29369,7 @@ You will be assigned as owner of the new team automatically.",
       "availability": null,
       "description": null,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [
-            {
-              "name": "id",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "id",
-                },
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": null,
-          "response": null,
-          "type": "full",
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "BackupsGetBackupContentV2Request",
       "headers": [],
       "internal": null,
@@ -30047,40 +29915,7 @@ You will be assigned as owner of the new team automatically.",
       "availability": null,
       "description": null,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [
-            {
-              "name": "app",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "app",
-                },
-              },
-            },
-            {
-              "name": "idOrSlug",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "idOrSlug",
-                },
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": null,
-          "response": null,
-          "type": "full",
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AssetsGetAssetContentBySlugRequest",
       "headers": [],
       "internal": null,
@@ -30479,30 +30314,7 @@ You will be assigned as owner of the new team automatically.",
       "availability": "Deprecated",
       "description": null,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [
-            {
-              "name": "id",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "id",
-                },
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": null,
-          "response": null,
-          "type": "full",
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AssetsGetAssetContentRequest",
       "headers": [],
       "internal": null,
@@ -37908,30 +37720,7 @@ The client secret is auto generated on the server and returned. The client does 
       "availability": null,
       "description": null,
       "errorStatusCode": [],
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [
-            {
-              "name": "app",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "app",
-                },
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": null,
-          "response": null,
-          "type": "full",
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AppsGetImageRequest",
       "headers": [],
       "internal": null,

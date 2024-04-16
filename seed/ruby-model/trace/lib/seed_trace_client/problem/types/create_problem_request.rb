@@ -68,6 +68,7 @@ module SeedTraceClient
       # @return [SeedTraceClient::Problem::CreateProblemRequest]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         problem_name = struct["problemName"]
         if parsed_json["problemDescription"].nil?
           problem_description = nil
@@ -94,8 +95,16 @@ module SeedTraceClient
           SeedTraceClient::Commons::TestCaseWithExpectedResult.from_json(json_object: v)
         end
         method_name = struct["methodName"]
-        new(problem_name: problem_name, problem_description: problem_description, files: files,
-            input_params: input_params, output_type: output_type, testcases: testcases, method_name: method_name, additional_properties: struct)
+        new(
+          problem_name: problem_name,
+          problem_description: problem_description,
+          files: files,
+          input_params: input_params,
+          output_type: output_type,
+          testcases: testcases,
+          method_name: method_name,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of CreateProblemRequest to a JSON object

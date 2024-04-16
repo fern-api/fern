@@ -23,7 +23,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -288,26 +288,14 @@ we still recommend setting the Content-Type header to the value \`application/js
                 },
                 "type": "object",
               },
-              "new_destination_address_ref": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "id-123456",
-                },
-              },
-              "new_destination_port_loc_code": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "CNYTN",
-                },
-              },
-              "new_destination_port_us_cbp_port_code": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "57078",
-                },
+              "new_metadata": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {},
+                    "type": "object",
+                  },
+                ],
               },
               "new_name": {
                 "type": "primitive",
@@ -328,58 +316,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                 "value": {
                   "type": "string",
                   "value": "CNSZP",
-                },
-              },
-              "new_origin_port_us_cbp_port_code": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "57078",
-                },
-              },
-              "new_product_descriptions": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "description": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Wristwatches",
-                        },
-                      },
-                      "description_for_export_customs": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "手表",
-                        },
-                      },
-                      "hs_code": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "9101.01",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "new_wants_bco": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean",
-                  "value": true,
-                },
-              },
-              "new_wants_flexport_freight": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean",
-                  "value": true,
                 },
               },
               "new_wants_import_customs_service": {
@@ -1300,7 +1236,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -1923,7 +1859,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -2225,7 +2161,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -2517,7 +2453,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -3229,32 +3165,8 @@ we still recommend setting the Content-Type header to the value \`application/js
                                       {
                                         "properties": {
                                           "_object": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "/trucking/port",
-                                            },
-                                          },
-                                          "country_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "US",
-                                            },
-                                          },
-                                          "iata_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "LAX",
-                                            },
-                                          },
-                                          "icao_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "KLAX",
-                                            },
+                                            "type": "enum",
+                                            "value": "/trucking/port",
                                           },
                                           "port_code": {
                                             "type": "primitive",
@@ -3269,32 +3181,8 @@ we still recommend setting the Content-Type header to the value \`application/js
                                       {
                                         "properties": {
                                           "_object": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "/ocean/port",
-                                            },
-                                          },
-                                          "country_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "US",
-                                            },
-                                          },
-                                          "iata_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "LAX",
-                                            },
-                                          },
-                                          "icao_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "KLAX",
-                                            },
+                                            "type": "enum",
+                                            "value": "/ocean/port",
                                           },
                                           "port_code": {
                                             "type": "primitive",
@@ -3405,32 +3293,8 @@ we still recommend setting the Content-Type header to the value \`application/js
                                       {
                                         "properties": {
                                           "_object": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "/trucking/port",
-                                            },
-                                          },
-                                          "country_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "US",
-                                            },
-                                          },
-                                          "iata_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "LAX",
-                                            },
-                                          },
-                                          "icao_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "KLAX",
-                                            },
+                                            "type": "enum",
+                                            "value": "/trucking/port",
                                           },
                                           "port_code": {
                                             "type": "primitive",
@@ -3445,32 +3309,8 @@ we still recommend setting the Content-Type header to the value \`application/js
                                       {
                                         "properties": {
                                           "_object": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "/ocean/port",
-                                            },
-                                          },
-                                          "country_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "US",
-                                            },
-                                          },
-                                          "iata_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "LAX",
-                                            },
-                                          },
-                                          "icao_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "KLAX",
-                                            },
+                                            "type": "enum",
+                                            "value": "/ocean/port",
                                           },
                                           "port_code": {
                                             "type": "primitive",
@@ -4587,93 +4427,11 @@ we still recommend setting the Content-Type header to the value \`application/js
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
             "properties": {
-              "air_booking": {
-                "properties": {
-                  "incoterm": {
-                    "type": "enum",
-                    "value": "EXW",
-                  },
-                  "origin_port_iata_code": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "HKG",
-                    },
-                  },
-                  "origin_port_icao_code": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "VHHH",
-                    },
-                  },
-                  "origin_port_loc_code": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "HKHKG",
-                    },
-                  },
-                  "product_descriptions": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "description": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Wristwatches",
-                            },
-                          },
-                          "description_for_export_customs": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "手表",
-                            },
-                          },
-                          "description_for_export_customs_locale": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "zh_CN",
-                            },
-                          },
-                          "hs_code": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "9101.01",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                  },
-                  "wants_delivery_service": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": true,
-                    },
-                  },
-                  "wants_pickup_service": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": true,
-                    },
-                  },
-                },
-                "type": "object",
-              },
               "cargo": {
                 "properties": {
                   "contains_hazmat": {
@@ -4908,19 +4666,14 @@ we still recommend setting the Content-Type header to the value \`application/js
                   "value": "my-albany-ref",
                 },
               },
-              "eccn_codes": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "3A001, 5A002",
-                },
-              },
-              "flow_direct": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean",
-                  "value": true,
-                },
+              "metadata": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {},
+                    "type": "object",
+                  },
+                ],
               },
               "name": {
                 "type": "primitive",
@@ -4964,20 +4717,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                     },
                     "type": "object",
                   },
-                  "destination_port_loc_code": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "USLAX",
-                    },
-                  },
-                  "destination_port_us_cbp_port_code": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "2704",
-                    },
-                  },
                   "incoterm": {
                     "type": "enum",
                     "value": "FOB",
@@ -4987,20 +4726,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                     "value": {
                       "type": "boolean",
                       "value": false,
-                    },
-                  },
-                  "origin_port_loc_code": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "CNYTN",
-                    },
-                  },
-                  "origin_port_us_cbp_port_code": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "57078",
                     },
                   },
                   "product_descriptions": {
@@ -5079,55 +4804,11 @@ we still recommend setting the Content-Type header to the value \`application/js
                   "value": "Handle carefully",
                 },
               },
-              "trucking_booking": {
-                "properties": {
-                  "description_of_products": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "watches",
-                    },
-                  },
-                  "is_ltl": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": true,
-                    },
-                  },
-                  "payment_terms": {
-                    "type": "enum",
-                    "value": "collect",
-                  },
-                },
-                "type": "object",
-              },
-              "wants_bco": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean",
-                  "value": false,
-                },
-              },
               "wants_export_customs_service": {
                 "type": "primitive",
                 "value": {
                   "type": "boolean",
                   "value": true,
-                },
-              },
-              "wants_flexport_freight": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean",
-                  "value": false,
-                },
-              },
-              "wants_import_customs_service": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean",
-                  "value": false,
                 },
               },
             },
@@ -6006,32 +5687,8 @@ we still recommend setting the Content-Type header to the value \`application/js
                               {
                                 "properties": {
                                   "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/trucking/port",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "US",
-                                    },
-                                  },
-                                  "iata_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "LAX",
-                                    },
-                                  },
-                                  "icao_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "KLAX",
-                                    },
+                                    "type": "enum",
+                                    "value": "/trucking/port",
                                   },
                                   "port_code": {
                                     "type": "primitive",
@@ -6046,32 +5703,8 @@ we still recommend setting the Content-Type header to the value \`application/js
                               {
                                 "properties": {
                                   "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/ocean/port",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "US",
-                                    },
-                                  },
-                                  "iata_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "LAX",
-                                    },
-                                  },
-                                  "icao_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "KLAX",
-                                    },
+                                    "type": "enum",
+                                    "value": "/ocean/port",
                                   },
                                   "port_code": {
                                     "type": "primitive",
@@ -6182,32 +5815,8 @@ we still recommend setting the Content-Type header to the value \`application/js
                               {
                                 "properties": {
                                   "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/trucking/port",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "US",
-                                    },
-                                  },
-                                  "iata_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "LAX",
-                                    },
-                                  },
-                                  "icao_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "KLAX",
-                                    },
+                                    "type": "enum",
+                                    "value": "/trucking/port",
                                   },
                                   "port_code": {
                                     "type": "primitive",
@@ -6222,32 +5831,8 @@ we still recommend setting the Content-Type header to the value \`application/js
                               {
                                 "properties": {
                                   "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/ocean/port",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "US",
-                                    },
-                                  },
-                                  "iata_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "LAX",
-                                    },
-                                  },
-                                  "icao_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "KLAX",
-                                    },
+                                    "type": "enum",
+                                    "value": "/ocean/port",
                                   },
                                   "port_code": {
                                     "type": "primitive",
@@ -6859,7 +6444,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -7747,32 +7332,8 @@ we still recommend setting the Content-Type header to the value \`application/js
                               {
                                 "properties": {
                                   "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/trucking/port",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "US",
-                                    },
-                                  },
-                                  "iata_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "LAX",
-                                    },
-                                  },
-                                  "icao_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "KLAX",
-                                    },
+                                    "type": "enum",
+                                    "value": "/trucking/port",
                                   },
                                   "port_code": {
                                     "type": "primitive",
@@ -7787,32 +7348,8 @@ we still recommend setting the Content-Type header to the value \`application/js
                               {
                                 "properties": {
                                   "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/ocean/port",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "US",
-                                    },
-                                  },
-                                  "iata_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "LAX",
-                                    },
-                                  },
-                                  "icao_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "KLAX",
-                                    },
+                                    "type": "enum",
+                                    "value": "/ocean/port",
                                   },
                                   "port_code": {
                                     "type": "primitive",
@@ -7923,32 +7460,8 @@ we still recommend setting the Content-Type header to the value \`application/js
                               {
                                 "properties": {
                                   "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/trucking/port",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "US",
-                                    },
-                                  },
-                                  "iata_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "LAX",
-                                    },
-                                  },
-                                  "icao_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "KLAX",
-                                    },
+                                    "type": "enum",
+                                    "value": "/trucking/port",
                                   },
                                   "port_code": {
                                     "type": "primitive",
@@ -7963,32 +7476,8 @@ we still recommend setting the Content-Type header to the value \`application/js
                               {
                                 "properties": {
                                   "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/ocean/port",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "US",
-                                    },
-                                  },
-                                  "iata_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "LAX",
-                                    },
-                                  },
-                                  "icao_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "KLAX",
-                                    },
+                                    "type": "enum",
+                                    "value": "/ocean/port",
                                   },
                                   "port_code": {
                                     "type": "primitive",
@@ -8570,7 +8059,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "response",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -8600,13 +8089,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                   },
                 },
                 "type": "object",
-              },
-              "teus": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "2",
-                },
               },
               "transportation_mode": {
                 "type": "enum",
@@ -8845,7 +8327,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -9776,7 +9258,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -9795,56 +9277,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                   "value": "INVOICE-04-05-2020",
                 },
               },
-              "is_related_parties": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean",
-                  "value": false,
-                },
-              },
               "line_items": {
                 "type": "array",
                 "value": [
                   {
                     "properties": {
-                      "container_number": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "522932-1",
-                        },
-                      },
-                      "country_of_origin": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "CN",
-                        },
-                      },
-                      "document_line_number": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 4,
-                        },
-                      },
                       "price_per_unit": {
-                        "properties": {
-                          "amount": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "12.34",
-                            },
-                          },
-                          "currency_code": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "USD",
-                            },
-                          },
-                        },
+                        "properties": {},
                         "type": "object",
                       },
                       "product_sku": {
@@ -9852,13 +9291,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                         "value": {
                           "type": "string",
                           "value": "PRODUCT-123",
-                        },
-                      },
-                      "purchase_order_number": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "9876-ABC",
                         },
                       },
                       "quantity": {
@@ -9878,22 +9310,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                         "type": "object",
                       },
                       "value": {
-                        "properties": {
-                          "amount": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "12.34",
-                            },
-                          },
-                          "currency_code": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "USD",
-                            },
-                          },
-                        },
+                        "properties": {},
                         "type": "object",
                       },
                     },
@@ -9902,37 +9319,8 @@ we still recommend setting the Content-Type header to the value \`application/js
                 ],
               },
               "proration_amount": {
-                "properties": {
-                  "amount": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "12.34",
-                    },
-                  },
-                  "currency_code": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "USD",
-                    },
-                  },
-                },
+                "properties": {},
                 "type": "object",
-              },
-              "shipment_id": {
-                "type": "primitive",
-                "value": {
-                  "type": "int",
-                  "value": 79683,
-                },
-              },
-              "shipment_ref": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "PO-123",
-                },
               },
             },
             "type": "object",
@@ -10637,132 +10025,11 @@ we still recommend setting the Content-Type header to the value \`application/js
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "currency_code": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "USD",
-                },
-              },
-              "invoice_number": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "INVOICE-04-05-2020",
-                },
-              },
-              "is_related_parties": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean",
-                  "value": false,
-                },
-              },
-              "line_items": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "container_number": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "522932-1",
-                        },
-                      },
-                      "country_of_origin": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "CN",
-                        },
-                      },
-                      "document_line_number": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 4,
-                        },
-                      },
-                      "price_per_unit": {
-                        "properties": {
-                          "amount": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "12.34",
-                            },
-                          },
-                          "currency_code": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "USD",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "product_sku": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "PRODUCT-123",
-                        },
-                      },
-                      "purchase_order_number": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "9876-ABC",
-                        },
-                      },
-                      "quantity": {
-                        "properties": {
-                          "unit": {
-                            "type": "enum",
-                            "value": "pcs",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 1.1,
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "value": {
-                        "properties": {
-                          "amount": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "12.34",
-                            },
-                          },
-                          "currency_code": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "USD",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
@@ -11465,7 +10732,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -12186,7 +11453,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -12670,7 +11937,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -12942,7 +12209,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -13629,7 +12896,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -13667,13 +12934,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                 "value": {
                   "type": "int",
                   "value": 1234567,
-                },
-              },
-              "user_email": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "johndoe@flexport.com",
                 },
               },
             },
@@ -13914,7 +13174,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -14222,30 +13482,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "availability": null,
       "description": "Retrieves the contents of a specified file. Returns the file as a stream of bytes.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [
-            {
-              "name": "id",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "id",
-                },
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": null,
-          "response": null,
-          "type": "full",
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DocumentsDownloadRequest",
       "headers": [],
       "internal": null,
@@ -15410,7 +14647,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -17426,7 +16663,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -18761,7 +17998,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -19472,7 +18709,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "response",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -19482,13 +18719,6 @@ Other details about this invoice",
                 "value": {
                   "type": "string",
                   "value": "Zoomit",
-                },
-              },
-              "ref": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "zoomit-ref",
                 },
               },
             },
@@ -19945,7 +19175,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -20419,7 +19649,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "response",
           "pathParameters": [
             {
               "name": "id",
@@ -20434,22 +19664,7 @@ Other details about this invoice",
           ],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "name": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "Updated Zoomit",
-                },
-              },
-              "ref": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "zoomit_ref",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
@@ -20923,7 +20138,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -21561,77 +20776,13 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "response",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
             "properties": {
-              "company_id": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "2UXaj4xcHoW8nwh9UVOMpw",
-                },
-              },
-              "company_ref": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "Zoomit",
-                },
-              },
               "mailing_address": {
-                "properties": {
-                  "city": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "Albany",
-                    },
-                  },
-                  "country_code": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "US",
-                    },
-                  },
-                  "state": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "MN",
-                    },
-                  },
-                  "street_address": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "1641 Settlers Lane",
-                    },
-                  },
-                  "street_address2": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "STE 2918",
-                    },
-                  },
-                  "unlocode": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "USAL2",
-                    },
-                  },
-                  "zip": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "56307",
-                    },
-                  },
-                },
+                "properties": {},
                 "type": "object",
               },
               "name": {
@@ -21640,37 +20791,6 @@ Other details about this invoice",
                   "type": "string",
                   "value": "Zoomit",
                 },
-              },
-              "ref": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "my-zoomit-ref",
-                },
-              },
-              "vat_numbers": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "country_code": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "GB",
-                        },
-                      },
-                      "number": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "GB 123456789",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
               },
             },
             "type": "object",
@@ -22002,7 +21122,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "response",
           "pathParameters": [
             {
               "name": "id",
@@ -22350,7 +21470,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "response",
           "pathParameters": [
             {
               "name": "id",
@@ -22365,46 +21485,7 @@ Other details about this invoice",
           ],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "name": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "Zoomit V2",
-                },
-              },
-              "ref": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "zoomit-us",
-                },
-              },
-              "vat_numbers": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "country_code": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "GB",
-                        },
-                      },
-                      "number": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "GB 123456789",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
@@ -22752,7 +21833,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -23343,18 +22424,11 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "response",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
             "properties": {
-              "company_id": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "2UXaj4xcHoW8nwh9UVOMpw",
-                },
-              },
               "email": {
                 "type": "primitive",
                 "value": {
@@ -23659,7 +22733,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -23960,7 +23034,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "response",
           "pathParameters": [
             {
               "name": "id",
@@ -23975,29 +23049,7 @@ Other details about this invoice",
           ],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "email": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "john_new_email@example.com",
-                },
-              },
-              "name": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "John Smith",
-                },
-              },
-              "phone_number": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "861-555-7777",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
@@ -24298,7 +23350,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -25012,63 +24064,13 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "response",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
             "properties": {
               "address": {
-                "properties": {
-                  "city": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "Albany",
-                    },
-                  },
-                  "country_code": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "US",
-                    },
-                  },
-                  "state": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "MN",
-                    },
-                  },
-                  "street_address": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "1641 Settlers Lane",
-                    },
-                  },
-                  "street_address2": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "STE 2918",
-                    },
-                  },
-                  "unlocode": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "USAL2",
-                    },
-                  },
-                  "zip": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "56307",
-                    },
-                  },
-                },
+                "properties": {},
                 "type": "object",
               },
               "company_id": {
@@ -25083,13 +24085,6 @@ Other details about this invoice",
                 "value": {
                   "type": "string",
                   "value": "Zoomit",
-                },
-              },
-              "ref": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "zoomit-management-co",
                 },
               },
             },
@@ -25493,7 +24488,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "response",
           "pathParameters": [
             {
               "name": "id",
@@ -25912,7 +24907,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "response",
           "pathParameters": [
             {
               "name": "id",
@@ -25927,22 +24922,7 @@ Other details about this invoice",
           ],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "name": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "Zoomit V2",
-                },
-              },
-              "ref": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "zoomit-management-co",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
@@ -26361,7 +25341,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [],
           "request": null,
@@ -26806,7 +25786,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -27368,7 +26348,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -27672,7 +26652,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -28475,7 +27455,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -29056,7 +28036,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -29249,32 +28229,8 @@ Other details about this invoice",
                               {
                                 "properties": {
                                   "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/trucking/port",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "US",
-                                    },
-                                  },
-                                  "iata_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "LAX",
-                                    },
-                                  },
-                                  "icao_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "KLAX",
-                                    },
+                                    "type": "enum",
+                                    "value": "/trucking/port",
                                   },
                                   "port_code": {
                                     "type": "primitive",
@@ -29388,32 +28344,8 @@ Other details about this invoice",
                               {
                                 "properties": {
                                   "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/trucking/port",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "US",
-                                    },
-                                  },
-                                  "iata_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "LAX",
-                                    },
-                                  },
-                                  "icao_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "KLAX",
-                                    },
+                                    "type": "enum",
+                                    "value": "/trucking/port",
                                   },
                                   "port_code": {
                                     "type": "primitive",
@@ -29428,32 +28360,8 @@ Other details about this invoice",
                               {
                                 "properties": {
                                   "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/ocean/railport",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "US",
-                                    },
-                                  },
-                                  "iata_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "LAX",
-                                    },
-                                  },
-                                  "icao_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "KLAX",
-                                    },
+                                    "type": "enum",
+                                    "value": "/ocean/railport",
                                   },
                                   "port_code": {
                                     "type": "primitive",
@@ -29468,32 +28376,8 @@ Other details about this invoice",
                               {
                                 "properties": {
                                   "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/ocean/port",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "US",
-                                    },
-                                  },
-                                  "iata_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "LAX",
-                                    },
-                                  },
-                                  "icao_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "KLAX",
-                                    },
+                                    "type": "enum",
+                                    "value": "/ocean/port",
                                   },
                                   "port_code": {
                                     "type": "primitive",
@@ -29984,7 +28868,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [],
           "request": null,
@@ -30545,59 +29429,16 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
             "properties": {
-              "classifications": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "codes": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "codes",
-                            },
-                          },
-                        ],
-                      },
-                      "region": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "US",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "client_verified": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean",
-                  "value": true,
-                },
-              },
               "country_of_origin": {
                 "type": "primitive",
                 "value": {
                   "type": "string",
                   "value": "China",
-                },
-              },
-              "description": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "The best 12V AC Adapter on the market",
                 },
               },
               "name": {
@@ -30614,67 +29455,12 @@ Other details about this invoice",
                   "value": "Cosmetics",
                 },
               },
-              "product_properties": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "type": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "color",
-                        },
-                      },
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "blue",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
               "sku": {
                 "type": "primitive",
                 "value": {
                   "type": "string",
                   "value": "WDVCDFD-RM00472",
                 },
-              },
-              "suppliers": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "country_of_origin": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "CN",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 12345,
-                        },
-                      },
-                      "ref": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "FACTORY-123",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
               },
             },
             "type": "object",
@@ -31026,7 +29812,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -31394,7 +30180,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -31409,134 +30195,7 @@ Other details about this invoice",
           ],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "classifications": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "codes": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "codes",
-                            },
-                          },
-                        ],
-                      },
-                      "region": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "US",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "client_verified": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean",
-                  "value": true,
-                },
-              },
-              "country_of_origin": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "China",
-                },
-              },
-              "description": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "The best 12V AC Adapter on the market",
-                },
-              },
-              "name": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "AC Adapter 12V",
-                },
-              },
-              "product_category": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "Cosmetics",
-                },
-              },
-              "product_properties": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "type": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "color",
-                        },
-                      },
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "blue",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "sku": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "WDVCDFD-RM00472",
-                },
-              },
-              "suppliers": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "country_of_origin": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "CN",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 12345,
-                        },
-                      },
-                      "ref": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "FACTORY-123",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
@@ -31904,7 +30563,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -32989,7 +31648,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -34005,7 +32664,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -34310,32 +32969,8 @@ Other details about this invoice",
                                   {
                                     "properties": {
                                       "_object": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "/ocean/railport",
-                                        },
-                                      },
-                                      "country_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "US",
-                                        },
-                                      },
-                                      "iata_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "LAX",
-                                        },
-                                      },
-                                      "icao_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "KLAX",
-                                        },
+                                        "type": "enum",
+                                        "value": "/ocean/railport",
                                       },
                                       "port_code": {
                                         "type": "primitive",
@@ -34350,32 +32985,8 @@ Other details about this invoice",
                                   {
                                     "properties": {
                                       "_object": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "/trucking/port",
-                                        },
-                                      },
-                                      "country_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "US",
-                                        },
-                                      },
-                                      "iata_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "LAX",
-                                        },
-                                      },
-                                      "icao_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "KLAX",
-                                        },
+                                        "type": "enum",
+                                        "value": "/trucking/port",
                                       },
                                       "port_code": {
                                         "type": "primitive",
@@ -34390,32 +33001,8 @@ Other details about this invoice",
                                   {
                                     "properties": {
                                       "_object": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "/ocean/port",
-                                        },
-                                      },
-                                      "country_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "US",
-                                        },
-                                      },
-                                      "iata_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "LAX",
-                                        },
-                                      },
-                                      "icao_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "KLAX",
-                                        },
+                                        "type": "enum",
+                                        "value": "/ocean/port",
                                       },
                                       "port_code": {
                                         "type": "primitive",
@@ -34687,32 +33274,8 @@ Other details about this invoice",
                                   {
                                     "properties": {
                                       "_object": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "/ocean/railport",
-                                        },
-                                      },
-                                      "country_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "US",
-                                        },
-                                      },
-                                      "iata_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "LAX",
-                                        },
-                                      },
-                                      "icao_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "KLAX",
-                                        },
+                                        "type": "enum",
+                                        "value": "/ocean/railport",
                                       },
                                       "port_code": {
                                         "type": "primitive",
@@ -34727,32 +33290,8 @@ Other details about this invoice",
                                   {
                                     "properties": {
                                       "_object": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "/trucking/port",
-                                        },
-                                      },
-                                      "country_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "US",
-                                        },
-                                      },
-                                      "iata_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "LAX",
-                                        },
-                                      },
-                                      "icao_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "KLAX",
-                                        },
+                                        "type": "enum",
+                                        "value": "/trucking/port",
                                       },
                                       "port_code": {
                                         "type": "primitive",
@@ -34767,32 +33306,8 @@ Other details about this invoice",
                                   {
                                     "properties": {
                                       "_object": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "/ocean/port",
-                                        },
-                                      },
-                                      "country_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "US",
-                                        },
-                                      },
-                                      "iata_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "LAX",
-                                        },
-                                      },
-                                      "icao_code": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "KLAX",
-                                        },
+                                        "type": "enum",
+                                        "value": "/ocean/port",
                                       },
                                       "port_code": {
                                         "type": "primitive",
@@ -36158,7 +34673,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -36352,6 +34867,15 @@ Other details about this invoice",
                                 },
                               },
                             },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "metadata": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {},
                             "type": "object",
                           },
                         ],
@@ -37548,7 +36072,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -38318,7 +36842,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -38403,84 +36927,6 @@ Other details about this invoice",
                 "value": [
                   {
                     "properties": {
-                      "assigned_party_ref": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "id-12321",
-                        },
-                      },
-                      "cargo_ready_date": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2019-06-30",
-                        },
-                      },
-                      "destination_locations": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "location_ref": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "id-1234",
-                                },
-                              },
-                              "units": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "int",
-                                  "value": 1,
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "destination_port": {
-                        "properties": {
-                          "code": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "USFBN",
-                            },
-                          },
-                          "code_type": {
-                            "type": "enum",
-                            "value": "unlocode",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "hs_codes": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "code": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "7608.20.00.00",
-                                },
-                              },
-                              "country_code": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "CA",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
                       "item_key": {
                         "type": "primitive",
                         "value": {
@@ -38488,155 +36934,13 @@ Other details about this invoice",
                           "value": "item_key_1",
                         },
                       },
-                      "line_item_number": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "measurements": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "measure_type": {
-                                "type": "enum",
-                                "value": "length",
-                              },
-                              "unit_of_measure": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "EA",
-                                },
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "1.0",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "must_arrive_date": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2019-09-30",
-                        },
-                      },
-                      "origin_location_ref": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "id-123456",
-                        },
-                      },
-                      "origin_port": {
-                        "properties": {
-                          "code": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "USFBN",
-                            },
-                          },
-                          "code_type": {
-                            "type": "enum",
-                            "value": "unlocode",
-                          },
-                        },
-                        "type": "object",
-                      },
                       "product": {
                         "properties": {
-                          "color": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "red",
-                            },
-                          },
-                          "country_of_origin": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "US",
-                            },
-                          },
-                          "dangerous": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "boolean",
-                              "value": false,
-                            },
-                          },
-                          "ean_ucc_13": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "0123456789012",
-                            },
-                          },
-                          "ean_ucc_8": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "01234567",
-                            },
-                          },
-                          "lot_number": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "123-456",
-                            },
-                          },
                           "name": {
                             "type": "primitive",
                             "value": {
                               "type": "string",
                               "value": "AC Adapter 12",
-                            },
-                          },
-                          "product_category": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Cosmetics",
-                            },
-                          },
-                          "size": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "M",
-                            },
-                          },
-                          "sku": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "SKU-123",
-                            },
-                          },
-                          "style": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "classical",
-                            },
-                          },
-                          "upc": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "012345678912",
                             },
                           },
                         },
@@ -39617,7 +37921,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -39893,32 +38197,8 @@ Other details about this invoice",
                                       {
                                         "properties": {
                                           "_object": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "/trucking/port",
-                                            },
-                                          },
-                                          "country_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "US",
-                                            },
-                                          },
-                                          "iata_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "LAX",
-                                            },
-                                          },
-                                          "icao_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "KLAX",
-                                            },
+                                            "type": "enum",
+                                            "value": "/trucking/port",
                                           },
                                           "port_code": {
                                             "type": "primitive",
@@ -40190,32 +38470,8 @@ Other details about this invoice",
                                       {
                                         "properties": {
                                           "_object": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "/trucking/port",
-                                            },
-                                          },
-                                          "country_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "US",
-                                            },
-                                          },
-                                          "iata_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "LAX",
-                                            },
-                                          },
-                                          "icao_code": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "KLAX",
-                                            },
+                                            "type": "enum",
+                                            "value": "/trucking/port",
                                           },
                                           "port_code": {
                                             "type": "primitive",
@@ -40805,7 +39061,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -41106,32 +39362,8 @@ Other details about this invoice",
                               {
                                 "properties": {
                                   "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/trucking/port",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "US",
-                                    },
-                                  },
-                                  "iata_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "LAX",
-                                    },
-                                  },
-                                  "icao_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "KLAX",
-                                    },
+                                    "type": "enum",
+                                    "value": "/trucking/port",
                                   },
                                   "port_code": {
                                     "type": "primitive",
@@ -41429,32 +39661,8 @@ Other details about this invoice",
                               {
                                 "properties": {
                                   "_object": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "/trucking/port",
-                                    },
-                                  },
-                                  "country_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "US",
-                                    },
-                                  },
-                                  "iata_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "LAX",
-                                    },
-                                  },
-                                  "icao_code": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "KLAX",
-                                    },
+                                    "type": "enum",
+                                    "value": "/trucking/port",
                                   },
                                   "port_code": {
                                     "type": "primitive",
@@ -41934,7 +40142,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -42073,8 +40281,8 @@ Other details about this invoice",
                               "id": {
                                 "type": "primitive",
                                 "value": {
-                                  "type": "string",
-                                  "value": "id",
+                                  "type": "int",
+                                  "value": 12345,
                                 },
                               },
                               "link": {
@@ -44522,7 +42730,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [
             {
               "name": "id",
@@ -44673,8 +42881,8 @@ Other details about this invoice",
                       "id": {
                         "type": "primitive",
                         "value": {
-                          "type": "string",
-                          "value": "id",
+                          "type": "int",
+                          "value": 12345,
                         },
                       },
                       "link": {
@@ -46321,7 +44529,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "response",
           "pathParameters": [
             {
               "name": "id",
@@ -46475,8 +44683,8 @@ Other details about this invoice",
                       "id": {
                         "type": "primitive",
                         "value": {
-                          "type": "string",
-                          "value": "id",
+                          "type": "int",
+                          "value": 12345,
                         },
                       },
                       "link": {
@@ -48136,7 +46344,7 @@ Other details about this invoice",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Success",
           "pathParameters": [],
           "queryParameters": [],
           "request": {

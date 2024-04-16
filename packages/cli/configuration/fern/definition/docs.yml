@@ -119,6 +119,7 @@ types:
 
   VersionFileConfig:
     properties:
+      tabs: optional<map<TabId, TabConfig>>
       navigation: NavigationConfig
 
   NavigationConfig:
@@ -439,12 +440,26 @@ types:
       link: string
       href: string
 
+  VersionedSnippetLanguageConfiguration:
+    properties:
+      version: string
+      package: string
+
+  SnippetLanguageConfiguration:
+    discriminated: false
+    docs: |
+      This snippets config object is meant to allow users to specify a specific package for the snippets,
+      and optionally a version for that package. If you pass in a string, that should be the name of the package.
+    union:
+      - string
+      - VersionedSnippetLanguageConfiguration
+
   SnippetsConfiguration:
     properties:
-      python: optional<string>
-      typescript: optional<string>
-      go: optional<string>
-      java: optional<string>
+      python: optional<SnippetLanguageConfiguration>
+      typescript: optional<SnippetLanguageConfiguration>
+      go: optional<SnippetLanguageConfiguration>
+      java: optional<SnippetLanguageConfiguration>
 
   ColorsConfiguration:
     properties:

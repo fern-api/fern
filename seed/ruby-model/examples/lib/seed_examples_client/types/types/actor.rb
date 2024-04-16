@@ -37,7 +37,11 @@ module SeedExamplesClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         name = struct["name"]
         id = struct["id"]
-        new(name: name, id: id, additional_properties: struct)
+        new(
+          name: name,
+          id: id,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of Actor to a JSON object

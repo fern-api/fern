@@ -34,6 +34,9 @@ fixtures:
         retainOriginalCasing: true
       outputFolder: retain-original-casing
     - customConfig:
+        allowExtraFields: true
+      outputFolder: allow-extra-fields
+    - customConfig:
         useBrandedStringAliases: true
         neverThrowErrors: true
         namespaceExport: "Fiddle"

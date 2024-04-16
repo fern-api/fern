@@ -15,8 +15,12 @@ module SeedCustomAuthClient
     # @param custom_auth_scheme [String]
     # @return [SeedCustomAuthClient::Client]
     def initialize(custom_auth_scheme:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @request_client = SeedCustomAuthClient::RequestClient.new(base_url: base_url, max_retries: max_retries,
-                                                                timeout_in_seconds: timeout_in_seconds, custom_auth_scheme: custom_auth_scheme)
+      @request_client = SeedCustomAuthClient::RequestClient.new(
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds,
+        custom_auth_scheme: custom_auth_scheme
+      )
       @custom_auth = SeedCustomAuthClient::CustomAuthClient.new(request_client: @request_client)
     end
   end
@@ -31,8 +35,12 @@ module SeedCustomAuthClient
     # @param custom_auth_scheme [String]
     # @return [SeedCustomAuthClient::AsyncClient]
     def initialize(custom_auth_scheme:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @async_request_client = SeedCustomAuthClient::AsyncRequestClient.new(base_url: base_url,
-                                                                           max_retries: max_retries, timeout_in_seconds: timeout_in_seconds, custom_auth_scheme: custom_auth_scheme)
+      @async_request_client = SeedCustomAuthClient::AsyncRequestClient.new(
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds,
+        custom_auth_scheme: custom_auth_scheme
+      )
       @custom_auth = SeedCustomAuthClient::AsyncCustomAuthClient.new(request_client: @async_request_client)
     end
   end

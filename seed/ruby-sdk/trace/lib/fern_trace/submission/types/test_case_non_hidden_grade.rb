@@ -52,6 +52,7 @@ module SeedTraceClient
       # @return [SeedTraceClient::Submission::TestCaseNonHiddenGrade]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         passed = struct["passed"]
         if parsed_json["actualResult"].nil?
           actual_result = nil
@@ -66,8 +67,13 @@ module SeedTraceClient
           exception = SeedTraceClient::Submission::ExceptionV2.from_json(json_object: exception)
         end
         stdout = struct["stdout"]
-        new(passed: passed, actual_result: actual_result, exception: exception, stdout: stdout,
-            additional_properties: struct)
+        new(
+          passed: passed,
+          actual_result: actual_result,
+          exception: exception,
+          stdout: stdout,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of TestCaseNonHiddenGrade to a JSON object

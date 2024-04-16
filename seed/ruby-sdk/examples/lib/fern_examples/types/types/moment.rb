@@ -44,7 +44,12 @@ module SeedExamplesClient
         id = struct["id"]
         date = (Date.parse(parsed_json["date"]) unless parsed_json["date"].nil?)
         datetime = (DateTime.parse(parsed_json["datetime"]) unless parsed_json["datetime"].nil?)
-        new(id: id, date: date, datetime: datetime, additional_properties: struct)
+        new(
+          id: id,
+          date: date,
+          datetime: datetime,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of Moment to a JSON object

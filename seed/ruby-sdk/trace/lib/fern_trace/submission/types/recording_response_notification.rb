@@ -74,8 +74,14 @@ module SeedTraceClient
           traced_file = parsed_json["tracedFile"].to_json
           traced_file = SeedTraceClient::Submission::TracedFile.from_json(json_object: traced_file)
         end
-        new(submission_id: submission_id, test_case_id: test_case_id, line_number: line_number,
-            lightweight_stack_info: lightweight_stack_info, traced_file: traced_file, additional_properties: struct)
+        new(
+          submission_id: submission_id,
+          test_case_id: test_case_id,
+          line_number: line_number,
+          lightweight_stack_info: lightweight_stack_info,
+          traced_file: traced_file,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of RecordingResponseNotification to a JSON object

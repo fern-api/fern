@@ -5,6 +5,7 @@ import { GeneratedExpressErrorSchemaImpl } from "./GeneratedExpressErrorSchemaIm
 export declare namespace ExpressErrorSchemaGenerator {
     export interface Init {
         includeSerdeLayer: boolean;
+        allowExtraFields: boolean;
     }
 
     export namespace generateError {
@@ -17,9 +18,11 @@ export declare namespace ExpressErrorSchemaGenerator {
 
 export class ExpressErrorSchemaGenerator {
     private includeSerdeLayer: boolean;
+    private allowExtraFields: boolean;
 
-    constructor({ includeSerdeLayer }: ExpressErrorSchemaGenerator.Init) {
+    constructor({ includeSerdeLayer, allowExtraFields }: ExpressErrorSchemaGenerator.Init) {
         this.includeSerdeLayer = includeSerdeLayer;
+        this.allowExtraFields = allowExtraFields;
     }
 
     public generateExpressErrorSchema({
@@ -33,7 +36,8 @@ export class ExpressErrorSchemaGenerator {
             errorDeclaration,
             type: errorDeclaration.type,
             errorName,
-            includeSerdeLayer: this.includeSerdeLayer
+            includeSerdeLayer: this.includeSerdeLayer,
+            allowExtraFields: this.allowExtraFields
         });
     }
 }

@@ -24,8 +24,13 @@ module SeedExamplesClient
     # @param token [String]
     # @return [SeedExamplesClient::Client]
     def initialize(token:, environment: nil, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @request_client = SeedExamplesClient::RequestClient.new(environment: environment, base_url: base_url,
-                                                              max_retries: max_retries, timeout_in_seconds: timeout_in_seconds, token: token)
+      @request_client = SeedExamplesClient::RequestClient.new(
+        environment: environment,
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds,
+        token: token
+      )
       @file = SeedExamplesClient::File::Client.new(request_client: @request_client)
       @health = SeedExamplesClient::Health::Client.new(request_client: @request_client)
       @service = SeedExamplesClient::ServiceClient.new(request_client: @request_client)
@@ -34,6 +39,9 @@ module SeedExamplesClient
     # @param request [String]
     # @param request_options [SeedExamplesClient::RequestOptions]
     # @return [String]
+    # @example
+    #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+    #  examples.echo(request: "Hello world!\n\nwith\n\tnewlines")
     def echo(request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
@@ -61,8 +69,13 @@ module SeedExamplesClient
     # @param token [String]
     # @return [SeedExamplesClient::AsyncClient]
     def initialize(token:, environment: nil, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @async_request_client = SeedExamplesClient::AsyncRequestClient.new(environment: environment, base_url: base_url,
-                                                                         max_retries: max_retries, timeout_in_seconds: timeout_in_seconds, token: token)
+      @async_request_client = SeedExamplesClient::AsyncRequestClient.new(
+        environment: environment,
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds,
+        token: token
+      )
       @file = SeedExamplesClient::File::AsyncClient.new(request_client: @async_request_client)
       @health = SeedExamplesClient::Health::AsyncClient.new(request_client: @async_request_client)
       @service = SeedExamplesClient::AsyncServiceClient.new(request_client: @async_request_client)
@@ -71,6 +84,9 @@ module SeedExamplesClient
     # @param request [String]
     # @param request_options [SeedExamplesClient::RequestOptions]
     # @return [String]
+    # @example
+    #  examples = SeedExamplesClient::Client.new(base_url: "https://api.example.com", token: "YOUR_AUTH_TOKEN")
+    #  examples.echo(request: "Hello world!\n\nwith\n\tnewlines")
     def echo(request:, request_options: nil)
       response = @async_request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?

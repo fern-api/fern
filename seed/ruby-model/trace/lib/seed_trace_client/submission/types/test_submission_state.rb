@@ -66,8 +66,13 @@ module SeedTraceClient
           status = parsed_json["status"].to_json
           status = SeedTraceClient::Submission::TestSubmissionStatus.from_json(json_object: status)
         end
-        new(problem_id: problem_id, default_test_cases: default_test_cases, custom_test_cases: custom_test_cases,
-            status: status, additional_properties: struct)
+        new(
+          problem_id: problem_id,
+          default_test_cases: default_test_cases,
+          custom_test_cases: custom_test_cases,
+          status: status,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of TestSubmissionState to a JSON object

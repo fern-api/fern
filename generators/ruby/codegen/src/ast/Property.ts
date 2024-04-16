@@ -1,3 +1,4 @@
+import { Name } from "@fern-fern/ir-sdk/api";
 import { Argument } from "./Argument";
 import { ClassReference } from "./classes/ClassReference";
 import { AstNode } from "./core/AstNode";
@@ -11,6 +12,7 @@ export declare namespace Property {
         type: ClassReference | ClassReference[];
         wireValue?: string;
         isOptional?: boolean;
+        example?: string | AstNode | undefined;
     }
 }
 export class Property extends AstNode {
@@ -19,18 +21,22 @@ export class Property extends AstNode {
     public wireValue: string | undefined;
     public isOptional: boolean;
 
-    constructor({ name, type, wireValue, isOptional = false, ...rest }: Property.Init) {
+    // Really just a convenience property to pass through to the Parameter
+    public example: string | AstNode | undefined;
+
+    constructor({ name, type, wireValue, example, isOptional = false, ...rest }: Property.Init) {
         super(rest);
         this.name = name;
         this.type = type instanceof ClassReference ? [type] : type;
         this.wireValue = wireValue;
         this.isOptional = isOptional;
+
+        this.example = example;
     }
 
     public toArgument(value: Variable | string, isNamed: boolean): Argument {
         return new Argument({
             name: this.name,
-            type: this.type,
             value,
             isNamed
         });
@@ -52,7 +58,8 @@ export class Property extends AstNode {
             documentation: this.documentation,
             defaultValue,
             describeAsHashInYardoc,
-            shouldOmitOptional
+            shouldOmitOptional,
+            example: this.example
         });
     }
 
@@ -73,5 +80,9 @@ export class Property extends AstNode {
         let imports = new Set<Import>();
         this.type.forEach((cr) => (imports = new Set([...imports, ...cr.getImports()])));
         return imports;
+    }
+
+    public static getNameFromIr(name: Name): string {
+        return name.snakeCase.safeName;
     }
 }

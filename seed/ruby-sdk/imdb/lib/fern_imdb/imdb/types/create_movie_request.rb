@@ -37,7 +37,11 @@ module SeedApiClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         title = struct["title"]
         rating = struct["rating"]
-        new(title: title, rating: rating, additional_properties: struct)
+        new(
+          title: title,
+          rating: rating,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of CreateMovieRequest to a JSON object

@@ -71,8 +71,13 @@ module SeedTraceClient
               basic_test_case_template = parsed_json["basicTestCaseTemplate"].to_json
               basic_test_case_template = SeedTraceClient::V2::V3::Problem::BasicTestCaseTemplate.from_json(json_object: basic_test_case_template)
             end
-            new(method_name: method_name, signature: signature, additional_files: additional_files,
-                basic_test_case_template: basic_test_case_template, additional_properties: struct)
+            new(
+              method_name: method_name,
+              signature: signature,
+              additional_files: additional_files,
+              basic_test_case_template: basic_test_case_template,
+              additional_properties: struct
+            )
           end
 
           # Serialize an instance of BasicCustomFiles to a JSON object

@@ -38,7 +38,11 @@ module SeedTraceClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         name = struct["name"]
         status = struct["status"]
-        new(name: name, status: status, additional_properties: struct)
+        new(
+          name: name,
+          status: status,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of Migration to a JSON object

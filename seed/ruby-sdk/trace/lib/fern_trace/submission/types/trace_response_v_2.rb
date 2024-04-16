@@ -70,6 +70,7 @@ module SeedTraceClient
       # @return [SeedTraceClient::Submission::TraceResponseV2]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         submission_id = struct["submissionId"]
         line_number = struct["lineNumber"]
         if parsed_json["file"].nil?
@@ -97,8 +98,16 @@ module SeedTraceClient
           stack = SeedTraceClient::Submission::StackInformation.from_json(json_object: stack)
         end
         stdout = struct["stdout"]
-        new(submission_id: submission_id, line_number: line_number, file: file, return_value: return_value,
-            expression_location: expression_location, stack: stack, stdout: stdout, additional_properties: struct)
+        new(
+          submission_id: submission_id,
+          line_number: line_number,
+          file: file,
+          return_value: return_value,
+          expression_location: expression_location,
+          stack: stack,
+          stdout: stdout,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of TraceResponseV2 to a JSON object

@@ -41,7 +41,12 @@ module SeedLiteralClient
       message = struct["message"]
       status = struct["status"]
       success = struct["success"]
-      new(message: message, status: status, success: success, additional_properties: struct)
+      new(
+        message: message,
+        status: status,
+        success: success,
+        additional_properties: struct
+      )
     end
 
     # Serialize an instance of SendResponse to a JSON object

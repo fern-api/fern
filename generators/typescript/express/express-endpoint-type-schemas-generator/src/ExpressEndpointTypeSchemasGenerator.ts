@@ -6,6 +6,7 @@ import { GeneratedExpressEndpointTypeSchemasImpl } from "./GeneratedExpressEndpo
 export declare namespace ExpressEndpointTypeSchemasGenerator {
     export interface Init {
         includeSerdeLayer: boolean;
+        allowExtraFields: boolean;
     }
 
     export namespace generateEndpointTypeSchemas {
@@ -19,9 +20,11 @@ export declare namespace ExpressEndpointTypeSchemasGenerator {
 
 export class ExpressEndpointTypeSchemasGenerator {
     private includeSerdeLayer: boolean;
+    private allowExtraFields: boolean;
 
-    constructor({ includeSerdeLayer }: ExpressEndpointTypeSchemasGenerator.Init) {
+    constructor({ includeSerdeLayer, allowExtraFields }: ExpressEndpointTypeSchemasGenerator.Init) {
         this.includeSerdeLayer = includeSerdeLayer;
+        this.allowExtraFields = allowExtraFields;
     }
 
     public generateEndpointTypeSchemas({
@@ -33,7 +36,8 @@ export class ExpressEndpointTypeSchemasGenerator {
             packageId,
             service,
             endpoint,
-            includeSerdeLayer: this.includeSerdeLayer
+            includeSerdeLayer: this.includeSerdeLayer,
+            allowExtraFields: this.allowExtraFields
         });
     }
 }

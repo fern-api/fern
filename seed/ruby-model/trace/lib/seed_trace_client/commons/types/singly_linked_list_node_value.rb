@@ -44,7 +44,12 @@ module SeedTraceClient
         node_id = struct["nodeId"]
         val = struct["val"]
         next_ = struct["next"]
-        new(node_id: node_id, val: val, next_: next_, additional_properties: struct)
+        new(
+          node_id: node_id,
+          val: val,
+          next_: next_,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of SinglyLinkedListNodeValue to a JSON object

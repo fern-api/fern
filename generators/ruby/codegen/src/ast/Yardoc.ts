@@ -6,12 +6,15 @@ import {
     DiscriminatedUnionClassReference
 } from "./classes/ClassReference";
 import { AstNode } from "./core/AstNode";
+import { ExampleGenerator } from "./ExampleGenerator";
+import { Function_ } from "./functions/Function_";
 import { Parameter } from "./Parameter";
 import { Property } from "./Property";
 
 export interface YardocDocString {
     readonly name: "docString";
 
+    baseFunction?: Function_;
     documentation?: string[];
     parameters: Parameter[];
     returnValue?: ClassReference[];
@@ -30,6 +33,7 @@ export declare namespace Yardoc {
         reference?: YardocDocString | YardocTypeReference | YardocDocUniversal;
         flattenedProperties?: Map<TypeId, ObjectProperty[]>;
         crf?: ClassReferenceFactory;
+        eg?: ExampleGenerator;
     }
 }
 
@@ -39,12 +43,14 @@ export class Yardoc extends AstNode {
     // TODO: we should likely make a yardoc generator so we're not passing in this map and the CRF into each instance
     private flattenedProperties: Map<TypeId, ObjectProperty[]> | undefined;
     private crf: ClassReferenceFactory | undefined;
+    private eg: ExampleGenerator | undefined;
 
-    constructor({ reference, flattenedProperties, crf, ...rest }: Yardoc.Init) {
+    constructor({ reference, flattenedProperties, crf, eg, ...rest }: Yardoc.Init) {
         super(rest);
         this.reference = reference;
         this.flattenedProperties = flattenedProperties;
         this.crf = crf;
+        this.eg = eg;
     }
 
     private writeHashContents(
@@ -80,15 +86,22 @@ export class Yardoc extends AstNode {
         }
     }
 
-    private writeMultilineYardocComment(documentation?: string[], defaultComment?: string, beginsLine?: boolean): void {
+    private writeMultilineYardocComment(
+        documentation?: string[],
+        defaultComment?: string,
+        templateString?: string,
+        shouldSplitOnLength = true
+    ): void {
         // Attempt to apply a max line length for comments at 80 characters since Rubocop does not format comments.
-        const splitDocs = documentation?.flatMap((doc) => doc.match(/.{1,80}(?:\s|$)/g) ?? "");
+        const splitDocs = shouldSplitOnLength
+            ? documentation?.flatMap((doc) => doc.match(/.{1,80}(?:\s|$)/g) ?? "")
+            : documentation;
         splitDocs?.forEach((doc, index) => {
-            const trimmedDoc = doc.trim();
+            const trimmedDoc = shouldSplitOnLength ? doc.trim() : doc;
             this.addText({
                 stringContent: trimmedDoc.length > 0 ? trimmedDoc : undefined,
-                templateString: index > 0 ? "#  %s" : beginsLine === true ? "# %s" : undefined,
-                appendToLastString: index === 0 && beginsLine !== true
+                templateString: index > 0 ? "#  %s" : templateString,
+                appendToLastString: index === 0 && templateString == null
             });
         }) ?? this.addText({ stringContent: defaultComment, appendToLastString: true });
     }
@@ -171,7 +184,7 @@ export class Yardoc extends AstNode {
     public writeInternal(startingTabSpaces: number): void {
         if (this.reference !== undefined) {
             if (this.reference.name === "universal") {
-                this.writeMultilineYardocComment(this.reference.documentation, undefined, true);
+                this.writeMultilineYardocComment(this.reference.documentation, undefined, "# %s");
             } else if (this.reference.name === "typeReference") {
                 const typeName =
                     this.reference.type instanceof Property
@@ -184,7 +197,7 @@ export class Yardoc extends AstNode {
                     this.reference.type instanceof Property ? this.reference.type.documentation : []
                 );
             } else {
-                this.writeMultilineYardocComment(this.reference.documentation, undefined, true);
+                this.writeMultilineYardocComment(this.reference.documentation, undefined, "# %s");
                 if (this.reference.documentation !== undefined && this.reference.documentation.length > 0) {
                     this.addText({
                         stringContent: "#",
@@ -204,6 +217,26 @@ export class Yardoc extends AstNode {
                         templateString: "# @return [%s]",
                         startingTabSpaces
                     });
+                }
+
+                if (this.eg != null && this.reference.baseFunction != null) {
+                    const snippet = this.eg.generateEndpointSnippet(this.reference.baseFunction);
+                    if (snippet == null) {
+                        return;
+                    }
+
+                    // TODO: add the example's docs, they'd go on this line, ex: `# @example This is an example with a file object`
+                    this.addText({ stringContent: "# @example", startingTabSpaces });
+                    const rootClientSnippet = this.eg.generateClientSnippet();
+                    this.writeMultilineYardocComment(
+                        rootClientSnippet.write({}).split("\n"),
+                        undefined,
+                        "#  %s",
+                        false
+                    );
+
+                    const snippetString = snippet instanceof AstNode ? snippet.write({}) : snippet;
+                    this.writeMultilineYardocComment(snippetString.split("\n"), undefined, "#  %s", false);
                 }
             }
         }

@@ -40,7 +40,11 @@ module SeedObjectsWithImportsClient
           struct = JSON.parse(json_object, object_class: OpenStruct)
           id = struct["id"]
           data = struct["data"]
-          new(id: id, data: data, additional_properties: struct)
+          new(
+            id: id,
+            data: data,
+            additional_properties: struct
+          )
         end
 
         # Serialize an instance of Metadata to a JSON object

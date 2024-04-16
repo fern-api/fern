@@ -46,7 +46,11 @@ module SeedTraceClient
           v = v.to_json
           SeedTraceClient::Submission::TraceResponseV2.from_json(json_object: v)
         end
-        new(offset: offset, trace_responses: trace_responses, additional_properties: struct)
+        new(
+          offset: offset,
+          trace_responses: trace_responses,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of TraceResponsesPageV2 to a JSON object

@@ -54,6 +54,7 @@ export const Mocks = {
             includeApiReference: false,
             tolerateRepublish: false,
             retainOriginalCasing: false,
+            allowExtraFields: false,
             ...partialConfig
         };
     }

@@ -52,7 +52,11 @@ module SeedTraceClient
               function = parsed_json["function"].to_json
               function = SeedTraceClient::V2::V3::Problem::TestCaseFunction.from_json(json_object: function)
             end
-            new(description: description, function: function, additional_properties: struct)
+            new(
+              description: description,
+              function: function,
+              additional_properties: struct
+            )
           end
 
           # Serialize an instance of TestCaseImplementation to a JSON object

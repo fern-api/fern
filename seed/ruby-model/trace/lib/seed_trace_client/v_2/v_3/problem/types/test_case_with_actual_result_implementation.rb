@@ -53,8 +53,11 @@ module SeedTraceClient
               assert_correctness_check = parsed_json["assertCorrectnessCheck"].to_json
               assert_correctness_check = SeedTraceClient::V2::V3::Problem::AssertCorrectnessCheck.from_json(json_object: assert_correctness_check)
             end
-            new(get_actual_result: get_actual_result, assert_correctness_check: assert_correctness_check,
-                additional_properties: struct)
+            new(
+              get_actual_result: get_actual_result,
+              assert_correctness_check: assert_correctness_check,
+              additional_properties: struct
+            )
           end
 
           # Serialize an instance of TestCaseWithActualResultImplementation to a JSON object

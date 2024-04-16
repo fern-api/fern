@@ -32,6 +32,8 @@ export * from "./ApiSectionConfiguration";
 export * from "./ApiNavigationItem";
 export * from "./ApiNavigationItems";
 export * from "./LinkConfiguration";
+export * from "./VersionedSnippetLanguageConfiguration";
+export * from "./SnippetLanguageConfiguration";
 export * from "./SnippetsConfiguration";
 export * from "./ColorsConfiguration";
 export * from "./ColorConfig";

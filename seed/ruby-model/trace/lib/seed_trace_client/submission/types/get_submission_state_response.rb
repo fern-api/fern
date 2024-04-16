@@ -63,8 +63,13 @@ module SeedTraceClient
           submission_type_state = parsed_json["submissionTypeState"].to_json
           submission_type_state = SeedTraceClient::Submission::SubmissionTypeState.from_json(json_object: submission_type_state)
         end
-        new(time_submitted: time_submitted, submission: submission, language: language,
-            submission_type_state: submission_type_state, additional_properties: struct)
+        new(
+          time_submitted: time_submitted,
+          submission: submission,
+          language: language,
+          submission_type_state: submission_type_state,
+          additional_properties: struct
+        )
       end
 
       # Serialize an instance of GetSubmissionStateResponse to a JSON object

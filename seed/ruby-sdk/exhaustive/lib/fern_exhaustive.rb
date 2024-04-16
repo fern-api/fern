@@ -27,8 +27,12 @@ module SeedExhaustiveClient
     # @param token [String]
     # @return [SeedExhaustiveClient::Client]
     def initialize(token:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @request_client = SeedExhaustiveClient::RequestClient.new(base_url: base_url, max_retries: max_retries,
-                                                                timeout_in_seconds: timeout_in_seconds, token: token)
+      @request_client = SeedExhaustiveClient::RequestClient.new(
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds,
+        token: token
+      )
       @endpoints = SeedExhaustiveClient::Endpoints::Client.new(request_client: @request_client)
       @inlined_requests = SeedExhaustiveClient::InlinedRequestsClient.new(request_client: @request_client)
       @no_auth = SeedExhaustiveClient::NoAuthClient.new(request_client: @request_client)
@@ -55,8 +59,12 @@ module SeedExhaustiveClient
     # @param token [String]
     # @return [SeedExhaustiveClient::AsyncClient]
     def initialize(token:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @async_request_client = SeedExhaustiveClient::AsyncRequestClient.new(base_url: base_url,
-                                                                           max_retries: max_retries, timeout_in_seconds: timeout_in_seconds, token: token)
+      @async_request_client = SeedExhaustiveClient::AsyncRequestClient.new(
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds,
+        token: token
+      )
       @endpoints = SeedExhaustiveClient::Endpoints::AsyncClient.new(request_client: @async_request_client)
       @inlined_requests = SeedExhaustiveClient::AsyncInlinedRequestsClient.new(request_client: @async_request_client)
       @no_auth = SeedExhaustiveClient::AsyncNoAuthClient.new(request_client: @async_request_client)

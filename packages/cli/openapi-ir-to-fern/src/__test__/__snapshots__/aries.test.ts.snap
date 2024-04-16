@@ -183,17 +183,12 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "request": {
                   "menu": {
-                    "description": "User preferences for window settings",
-                    "errormsg": "Error: item not present",
                     "options": [
                       {
-                        "description": "Window display preferences",
-                        "disabled": false,
                         "name": "window_prefs",
                         "title": "Window Preferences",
                       },
                     ],
-                    "title": "My Menu",
                   },
                 },
                 "response": {
@@ -5381,44 +5376,7 @@ exports[`open api parser aries simple 1`] = `
                       },
                     ],
                   },
-                  "filter": {
-                    "ld_proof": {
-                      "credential": {
-                        "@context": [
-                          {},
-                        ],
-                        "credentialSubject": {},
-                        "expirationDate": "2010-01-01 19:23:24+00:00",
-                        "id": "http://example.edu/credentials/1872",
-                        "issuanceDate": "2010-01-01 19:23:24+00:00",
-                        "issuer": {},
-                        "proof": {
-                          "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "created": "2021-12-31 23:59:59+00:00",
-                          "domain": "example.com",
-                          "jws": "eyJhbGciOiAiRWREUc2UsICJjcml0IjogWyJiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQ1Ch6YBKY7UBAjg6iBX5qBQ",
-                          "nonce": "CF69iO3nfvqRsRBNElE8b4wO39SyJHPM7Gg1nExltW5vSfQA1lvDCR/zXX1To0/4NLo==",
-                          "proofPurpose": "assertionMethod",
-                          "proofValue": "sy1AahqbzJQ63n9RtekmwzqZeVj494VppdAVJBnMYrTwft6cLJJGeTSSxCCJ6HKnRtwE7jjDh6sB2z2AAiZY9BBnCD8wUVgwqH3qchGRCuC2RugA4eQ9fUrR4Yuycac3caiaaay",
-                          "type": "Ed25519Signature2018",
-                          "verificationMethod": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL",
-                        },
-                        "type": [
-                          "type",
-                        ],
-                      },
-                      "options": {
-                        "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "created": "2021-12-31 23:59:59+00:00",
-                        "credentialStatus": {
-                          "type": "CredentialStatusList2017",
-                        },
-                        "domain": "example.com",
-                        "proofPurpose": "assertionMethod",
-                        "proofType": "Ed25519Signature2018",
-                      },
-                    },
-                  },
+                  "filter": {},
                   "trace": true,
                 },
                 "response": {
@@ -5659,44 +5617,7 @@ exports[`open api parser aries simple 1`] = `
                       },
                     ],
                   },
-                  "filter": {
-                    "ld_proof": {
-                      "credential": {
-                        "@context": [
-                          {},
-                        ],
-                        "credentialSubject": {},
-                        "expirationDate": "2010-01-01 19:23:24+00:00",
-                        "id": "http://example.edu/credentials/1872",
-                        "issuanceDate": "2010-01-01 19:23:24+00:00",
-                        "issuer": {},
-                        "proof": {
-                          "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "created": "2021-12-31 23:59:59+00:00",
-                          "domain": "example.com",
-                          "jws": "eyJhbGciOiAiRWREUc2UsICJjcml0IjogWyJiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQ1Ch6YBKY7UBAjg6iBX5qBQ",
-                          "nonce": "CF69iO3nfvqRsRBNElE8b4wO39SyJHPM7Gg1nExltW5vSfQA1lvDCR/zXX1To0/4NLo==",
-                          "proofPurpose": "assertionMethod",
-                          "proofValue": "sy1AahqbzJQ63n9RtekmwzqZeVj494VppdAVJBnMYrTwft6cLJJGeTSSxCCJ6HKnRtwE7jjDh6sB2z2AAiZY9BBnCD8wUVgwqH3qchGRCuC2RugA4eQ9fUrR4Yuycac3caiaaay",
-                          "type": "Ed25519Signature2018",
-                          "verificationMethod": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL",
-                        },
-                        "type": [
-                          "type",
-                        ],
-                      },
-                      "options": {
-                        "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "created": "2021-12-31 23:59:59+00:00",
-                        "credentialStatus": {
-                          "type": "CredentialStatusList2017",
-                        },
-                        "domain": "example.com",
-                        "proofPurpose": "assertionMethod",
-                        "proofType": "Ed25519Signature2018",
-                      },
-                    },
-                  },
+                  "filter": {},
                   "trace": true,
                 },
                 "response": {
@@ -7368,44 +7289,7 @@ exports[`open api parser aries simple 1`] = `
                       },
                     ],
                   },
-                  "filter": {
-                    "ld_proof": {
-                      "credential": {
-                        "@context": [
-                          {},
-                        ],
-                        "credentialSubject": {},
-                        "expirationDate": "2010-01-01 19:23:24+00:00",
-                        "id": "http://example.edu/credentials/1872",
-                        "issuanceDate": "2010-01-01 19:23:24+00:00",
-                        "issuer": {},
-                        "proof": {
-                          "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "created": "2021-12-31 23:59:59+00:00",
-                          "domain": "example.com",
-                          "jws": "eyJhbGciOiAiRWREUc2UsICJjcml0IjogWyJiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQ1Ch6YBKY7UBAjg6iBX5qBQ",
-                          "nonce": "CF69iO3nfvqRsRBNElE8b4wO39SyJHPM7Gg1nExltW5vSfQA1lvDCR/zXX1To0/4NLo==",
-                          "proofPurpose": "assertionMethod",
-                          "proofValue": "sy1AahqbzJQ63n9RtekmwzqZeVj494VppdAVJBnMYrTwft6cLJJGeTSSxCCJ6HKnRtwE7jjDh6sB2z2AAiZY9BBnCD8wUVgwqH3qchGRCuC2RugA4eQ9fUrR4Yuycac3caiaaay",
-                          "type": "Ed25519Signature2018",
-                          "verificationMethod": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL",
-                        },
-                        "type": [
-                          "type",
-                        ],
-                      },
-                      "options": {
-                        "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "created": "2021-12-31 23:59:59+00:00",
-                        "credentialStatus": {
-                          "type": "CredentialStatusList2017",
-                        },
-                        "domain": "example.com",
-                        "proofPurpose": "assertionMethod",
-                        "proofType": "Ed25519Signature2018",
-                      },
-                    },
-                  },
+                  "filter": {},
                   "trace": true,
                   "verification_method": "verification_method",
                 },
@@ -7628,44 +7512,7 @@ exports[`open api parser aries simple 1`] = `
                       },
                     ],
                   },
-                  "filter": {
-                    "ld_proof": {
-                      "credential": {
-                        "@context": [
-                          {},
-                        ],
-                        "credentialSubject": {},
-                        "expirationDate": "2010-01-01 19:23:24+00:00",
-                        "id": "http://example.edu/credentials/1872",
-                        "issuanceDate": "2010-01-01 19:23:24+00:00",
-                        "issuer": {},
-                        "proof": {
-                          "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "created": "2021-12-31 23:59:59+00:00",
-                          "domain": "example.com",
-                          "jws": "eyJhbGciOiAiRWREUc2UsICJjcml0IjogWyJiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQ1Ch6YBKY7UBAjg6iBX5qBQ",
-                          "nonce": "CF69iO3nfvqRsRBNElE8b4wO39SyJHPM7Gg1nExltW5vSfQA1lvDCR/zXX1To0/4NLo==",
-                          "proofPurpose": "assertionMethod",
-                          "proofValue": "sy1AahqbzJQ63n9RtekmwzqZeVj494VppdAVJBnMYrTwft6cLJJGeTSSxCCJ6HKnRtwE7jjDh6sB2z2AAiZY9BBnCD8wUVgwqH3qchGRCuC2RugA4eQ9fUrR4Yuycac3caiaaay",
-                          "type": "Ed25519Signature2018",
-                          "verificationMethod": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL",
-                        },
-                        "type": [
-                          "type",
-                        ],
-                      },
-                      "options": {
-                        "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "created": "2021-12-31 23:59:59+00:00",
-                        "credentialStatus": {
-                          "type": "CredentialStatusList2017",
-                        },
-                        "domain": "example.com",
-                        "proofPurpose": "assertionMethod",
-                        "proofType": "Ed25519Signature2018",
-                      },
-                    },
-                  },
+                  "filter": {},
                   "trace": true,
                 },
                 "response": {
@@ -7914,44 +7761,7 @@ exports[`open api parser aries simple 1`] = `
                       },
                     ],
                   },
-                  "filter": {
-                    "ld_proof": {
-                      "credential": {
-                        "@context": [
-                          {},
-                        ],
-                        "credentialSubject": {},
-                        "expirationDate": "2010-01-01 19:23:24+00:00",
-                        "id": "http://example.edu/credentials/1872",
-                        "issuanceDate": "2010-01-01 19:23:24+00:00",
-                        "issuer": {},
-                        "proof": {
-                          "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "created": "2021-12-31 23:59:59+00:00",
-                          "domain": "example.com",
-                          "jws": "eyJhbGciOiAiRWREUc2UsICJjcml0IjogWyJiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQ1Ch6YBKY7UBAjg6iBX5qBQ",
-                          "nonce": "CF69iO3nfvqRsRBNElE8b4wO39SyJHPM7Gg1nExltW5vSfQA1lvDCR/zXX1To0/4NLo==",
-                          "proofPurpose": "assertionMethod",
-                          "proofValue": "sy1AahqbzJQ63n9RtekmwzqZeVj494VppdAVJBnMYrTwft6cLJJGeTSSxCCJ6HKnRtwE7jjDh6sB2z2AAiZY9BBnCD8wUVgwqH3qchGRCuC2RugA4eQ9fUrR4Yuycac3caiaaay",
-                          "type": "Ed25519Signature2018",
-                          "verificationMethod": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL",
-                        },
-                        "type": [
-                          "type",
-                        ],
-                      },
-                      "options": {
-                        "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "created": "2021-12-31 23:59:59+00:00",
-                        "credentialStatus": {
-                          "type": "CredentialStatusList2017",
-                        },
-                        "domain": "example.com",
-                        "proofPurpose": "assertionMethod",
-                        "proofType": "Ed25519Signature2018",
-                      },
-                    },
-                  },
+                  "filter": {},
                   "trace": true,
                   "verification_method": "verification_method",
                 },
@@ -8165,33 +7975,13 @@ exports[`open api parser aries simple 1`] = `
                           {},
                         ],
                         "credentialSubject": {},
-                        "expirationDate": "2010-01-01 19:23:24+00:00",
-                        "id": "http://example.edu/credentials/1872",
                         "issuanceDate": "2010-01-01 19:23:24+00:00",
                         "issuer": {},
-                        "proof": {
-                          "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "created": "2021-12-31 23:59:59+00:00",
-                          "domain": "example.com",
-                          "jws": "eyJhbGciOiAiRWREUc2UsICJjcml0IjogWyJiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQ1Ch6YBKY7UBAjg6iBX5qBQ",
-                          "nonce": "CF69iO3nfvqRsRBNElE8b4wO39SyJHPM7Gg1nExltW5vSfQA1lvDCR/zXX1To0/4NLo==",
-                          "proofPurpose": "assertionMethod",
-                          "proofValue": "sy1AahqbzJQ63n9RtekmwzqZeVj494VppdAVJBnMYrTwft6cLJJGeTSSxCCJ6HKnRtwE7jjDh6sB2z2AAiZY9BBnCD8wUVgwqH3qchGRCuC2RugA4eQ9fUrR4Yuycac3caiaaay",
-                          "type": "Ed25519Signature2018",
-                          "verificationMethod": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL",
-                        },
                         "type": [
                           "type",
                         ],
                       },
                       "options": {
-                        "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "created": "2021-12-31 23:59:59+00:00",
-                        "credentialStatus": {
-                          "type": "CredentialStatusList2017",
-                        },
-                        "domain": "example.com",
-                        "proofPurpose": "assertionMethod",
                         "proofType": "Ed25519Signature2018",
                       },
                     },
@@ -14286,13 +14076,6 @@ exports[`open api parser aries simple 1`] = `
             "auth": true,
             "display-name": "Download tails file",
             "docs": undefined,
-            "examples": [
-              {
-                "path-parameters": {
-                  "rev_reg_id": "rev_reg_id",
-                },
-              },
-            ],
             "method": "GET",
             "path": "/revocation/registry/{rev_reg_id}/tails-file",
             "path-parameters": {

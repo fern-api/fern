@@ -17,8 +17,11 @@ module SeedAudiencesClient
     # @param timeout_in_seconds [Long]
     # @return [SeedAudiencesClient::Client]
     def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @request_client = SeedAudiencesClient::RequestClient.new(base_url: base_url, max_retries: max_retries,
-                                                               timeout_in_seconds: timeout_in_seconds)
+      @request_client = SeedAudiencesClient::RequestClient.new(
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds
+      )
       @folder_a = SeedAudiencesClient::FolderA::Client.new(request_client: @request_client)
       @foo = SeedAudiencesClient::FooClient.new(request_client: @request_client)
     end
@@ -35,8 +38,11 @@ module SeedAudiencesClient
     # @param timeout_in_seconds [Long]
     # @return [SeedAudiencesClient::AsyncClient]
     def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil)
-      @async_request_client = SeedAudiencesClient::AsyncRequestClient.new(base_url: base_url, max_retries: max_retries,
-                                                                          timeout_in_seconds: timeout_in_seconds)
+      @async_request_client = SeedAudiencesClient::AsyncRequestClient.new(
+        base_url: base_url,
+        max_retries: max_retries,
+        timeout_in_seconds: timeout_in_seconds
+      )
       @folder_a = SeedAudiencesClient::FolderA::AsyncClient.new(request_client: @async_request_client)
       @foo = SeedAudiencesClient::AsyncFooClient.new(request_client: @async_request_client)
     end

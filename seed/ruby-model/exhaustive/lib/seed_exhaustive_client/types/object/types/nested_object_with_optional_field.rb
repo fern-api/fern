@@ -47,7 +47,11 @@ module SeedExhaustiveClient
             nested_object = parsed_json["NestedObject"].to_json
             nested_object = SeedExhaustiveClient::Types::Object::ObjectWithOptionalField.from_json(json_object: nested_object)
           end
-          new(string: string, nested_object: nested_object, additional_properties: struct)
+          new(
+            string: string,
+            nested_object: nested_object,
+            additional_properties: struct
+          )
         end
 
         # Serialize an instance of NestedObjectWithOptionalField to a JSON object

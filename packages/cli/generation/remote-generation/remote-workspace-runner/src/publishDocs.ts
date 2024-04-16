@@ -448,6 +448,7 @@ async function convertNavigationConfig({
                         async (version): Promise<DocsV1Write.VersionedNavigationConfigData> => {
                             const convertedNavigation = await convertUnversionedNavigationConfig({
                                 navigationConfig: version.navigation,
+                                tabs: version.tabs,
                                 parsedDocsConfig,
                                 organization,
                                 fernWorkspaces,
@@ -985,25 +986,51 @@ function convertDocsSnippetsConfigurationToFdr({
         pythonSdk:
             snippetsConfiguration.python != null
                 ? {
-                      package: snippetsConfiguration.python
+                      package:
+                          typeof snippetsConfiguration.python === "string"
+                              ? snippetsConfiguration.python
+                              : snippetsConfiguration.python.package,
+                      version:
+                          typeof snippetsConfiguration.python === "string"
+                              ? undefined
+                              : snippetsConfiguration.python.version
                   }
                 : undefined,
         typescriptSdk:
             snippetsConfiguration.typescript != null
                 ? {
-                      package: snippetsConfiguration.typescript
+                      package:
+                          typeof snippetsConfiguration.typescript === "string"
+                              ? snippetsConfiguration.typescript
+                              : snippetsConfiguration.typescript.package,
+                      version:
+                          typeof snippetsConfiguration.typescript === "string"
+                              ? undefined
+                              : snippetsConfiguration.typescript.version
                   }
                 : undefined,
         goSdk:
             snippetsConfiguration.go != null
                 ? {
-                      githubRepo: snippetsConfiguration.go
+                      githubRepo:
+                          typeof snippetsConfiguration.go === "string"
+                              ? snippetsConfiguration.go
+                              : snippetsConfiguration.go.package,
+                      version:
+                          typeof snippetsConfiguration.go === "string" ? undefined : snippetsConfiguration.go.version
                   }
                 : undefined,
         javaSdk:
             snippetsConfiguration.java != null
                 ? {
-                      coordinate: snippetsConfiguration.java
+                      coordinate:
+                          typeof snippetsConfiguration.java === "string"
+                              ? snippetsConfiguration.java
+                              : snippetsConfiguration.java.package,
+                      version:
+                          typeof snippetsConfiguration.java === "string"
+                              ? undefined
+                              : snippetsConfiguration.java.version
                   }
                 : undefined
     };

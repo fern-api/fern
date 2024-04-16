@@ -48,7 +48,7 @@ export class FileUploadUtility extends Class_ {
                         rightSide: new FunctionInvocation({
                             onObject: fileVariable,
                             baseFunction: new Function_({ name: "is_a?", functionBody: [] }),
-                            arguments_: [new Argument({ value: "String", type: GenericClassReference, isNamed: false })]
+                            arguments_: [new Argument({ value: "String", isNamed: false })]
                         }),
                         operation: "!",
                         expressions: [
@@ -76,7 +76,7 @@ export class FileUploadUtility extends Class_ {
                             import_: new Import({ from: "mini_mime", isExternal: true })
                         }),
                         baseFunction: new Function_({ name: "lookup_by_filename", functionBody: [] }),
-                        arguments_: [new Argument({ value: pathVariable, type: StringClassReference, isNamed: false })]
+                        arguments_: [new Argument({ value: pathVariable, isNamed: false })]
                     }),
                     isAssignment: true
                 }),
@@ -110,12 +110,10 @@ export class FileUploadUtility extends Class_ {
                     arguments_: [
                         new Argument({
                             value: fileVariable,
-                            type: FileClassReference,
                             isNamed: false
                         }),
                         new Argument({
                             value: mimeTypeVariable,
-                            type: StringClassReference,
                             isNamed: false
                         })
                     ]

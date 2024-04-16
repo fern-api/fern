@@ -16,7 +16,7 @@ exports[`examples examples parse open api 1`] = `
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Example 1",
           "pathParameters": [],
           "queryParameters": [],
           "request": null,
