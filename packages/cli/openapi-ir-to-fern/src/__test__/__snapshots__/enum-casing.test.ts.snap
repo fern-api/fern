@@ -15,7 +15,13 @@ exports[`open api parser enum-casing simple 1`] = `
           "examples": [
             {
               "response": {
-                "body": {},
+                "body": {
+                  "custom_fields": {
+                    "custom_fields": "custom_fields",
+                  },
+                  "message": "message",
+                  "status": "success",
+                },
               },
             },
           ],

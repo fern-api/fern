@@ -135,7 +135,22 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
             "type": "object",
           },
           "response": {
-            "properties": {},
+            "properties": {
+              "id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+              "streamed": {
+                "type": "literal",
+                "value": {
+                  "type": "boolean",
+                  "value": false,
+                },
+              },
+            },
             "type": "object",
           },
           "type": "full",

@@ -14,7 +14,10 @@ exports[`application-json application-json simple 1`] = `
           "examples": [
             {
               "response": {
-                "body": {},
+                "body": {
+                  "bar": "bar",
+                  "foo": "foo",
+                },
               },
             },
           ],
@@ -31,7 +34,10 @@ exports[`application-json application-json simple 1`] = `
           "examples": [
             {
               "response": {
-                "body": {},
+                "body": {
+                  "bar": "bar",
+                  "foo": "foo",
+                },
               },
             },
           ],

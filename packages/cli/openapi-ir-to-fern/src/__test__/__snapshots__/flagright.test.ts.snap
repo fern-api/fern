@@ -42,6 +42,10 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
               },
               "response": {
                 "body": {
+                  "acquisitionChannel": "ORGANIC",
+                  "allowedPaymentMethods": [
+                    "ACH",
+                  ],
                   "createdTimestamp": 1641654664000,
                   "directors": [
                     {
@@ -103,6 +107,11 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                           ],
                         },
                       ],
+                      "pepStatus": [
+                        {
+                          "isPepHit": true,
+                        },
+                      ],
                       "tags": [
                         {
                           "key": "customKey",
@@ -111,6 +120,10 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                       ],
                     },
                   ],
+                  "kycStatusDetails": {
+                    "reason": "reason",
+                    "status": "SUCCESSFUL",
+                  },
                   "legalEntity": {
                     "companyFinancialDetails": {
                       "expectedTransactionAmountPerMonth": {
@@ -142,8 +155,12 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                           "value": "customValue",
                         },
                       ],
+                      "userRegistrationStatus": "REGISTERED",
+                      "userSegment": "SOLE_PROPRIETORSHIP",
                     },
                     "companyRegistrationDetails": {
+                      "dateOfRegistration": "dateOfRegistration",
+                      "legalEntityType": "legalEntityType",
                       "registrationCountry": "DE",
                       "registrationIdentifier": "PSJ554342",
                       "tags": [
@@ -152,6 +169,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                           "value": "customValue",
                         },
                       ],
+                      "taxIdentifier": "taxIdentifier",
                     },
                     "contactDetails": {
                       "addresses": [
@@ -171,11 +189,34 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                           ],
                         },
                       ],
+                      "contactNumbers": [
+                        "contactNumbers",
+                      ],
+                      "emailIds": [
+                        "emailIds",
+                      ],
+                      "faxNumbers": [
+                        "faxNumbers",
+                      ],
+                      "websites": [
+                        "websites",
+                      ],
                     },
                     "reasonForAccountOpening": [
                       "string",
                     ],
                   },
+                  "linkedEntities": {
+                    "childUserIds": [
+                      "childUserIds",
+                    ],
+                    "parentUserId": "parentUserId",
+                  },
+                  "mccDetails": {
+                    "code": 1.1,
+                    "description": "description",
+                  },
+                  "riskLevel": "VERY_HIGH",
                   "shareHolders": [
                     {
                       "contactDetails": {
@@ -236,6 +277,11 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                           ],
                         },
                       ],
+                      "pepStatus": [
+                        {
+                          "isPepHit": true,
+                        },
+                      ],
                       "tags": [
                         {
                           "key": "customKey",
@@ -277,6 +323,11 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                     },
                   },
                   "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
+                  "userStateDetails": {
+                    "reason": "reason",
+                    "state": "UNACCEPTABLE",
+                    "userId": "userId",
+                  },
                 },
               },
             },
@@ -335,6 +386,10 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                   },
                   "executedRules": [
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
@@ -345,6 +400,10 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                   ],
                   "hitRules": [
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleId": "R-1a",
@@ -358,8 +417,12 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                     "transactionCurrency": "EUR",
                   },
                   "originUserId": "8650a2611d0771cba03310f74bf6",
+                  "productType": "productType",
                   "promotionCodeUsed": true,
                   "reference": "loan repayment",
+                  "relatedTransactionIds": [
+                    "relatedTransactionIds",
+                  ],
                   "tags": [
                     {
                       "key": "customKey",
@@ -368,6 +431,8 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                   ],
                   "timestamp": 1641654664000,
                   "transactionId": "7b80a539eea6e78acbd6d458e5971482",
+                  "transactionState": "CREATED",
+                  "type": "DEPOSIT",
                 },
               },
             },
@@ -405,6 +470,7 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
               },
               "response": {
                 "body": {
+                  "acquisitionChannel": "ORGANIC",
                   "contactDetails": {
                     "addresses": [
                       {
@@ -429,11 +495,18 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                     "emailIds": [
                       "baran@flagright.com",
                     ],
+                    "faxNumbers": [
+                      "faxNumbers",
+                    ],
                     "websites": [
                       "flagright.com",
                     ],
                   },
                   "createdTimestamp": 1641654664000,
+                  "kycStatusDetails": {
+                    "reason": "reason",
+                    "status": "SUCCESSFUL",
+                  },
                   "legalDocuments": [
                     {
                       "documentExpirationDate": 1839939034000,
@@ -454,6 +527,16 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                       ],
                     },
                   ],
+                  "pepStatus": [
+                    {
+                      "isPepHit": true,
+                      "pepCountry": "pepCountry",
+                    },
+                  ],
+                  "reasonForAccountOpening": [
+                    "reasonForAccountOpening",
+                  ],
+                  "riskLevel": "VERY_HIGH",
                   "tags": [
                     {
                       "key": "customKey",
@@ -490,6 +573,7 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                     "countryOfNationality": "DE",
                     "countryOfResidence": "US",
                     "dateOfBirth": "1991-01-01",
+                    "gender": "M",
                     "name": {
                       "firstName": "Baran",
                       "lastName": "Ozkan",
@@ -497,6 +581,12 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                     },
                   },
                   "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
+                  "userSegment": "RETAIL",
+                  "userStateDetails": {
+                    "reason": "reason",
+                    "state": "UNACCEPTABLE",
+                    "userId": "userId",
+                  },
                 },
               },
             },
@@ -758,6 +848,10 @@ Each consumer Business entity needs three mandatory fields:
                 "body": {
                   "executedRules": [
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
@@ -768,6 +862,9 @@ Each consumer Business entity needs three mandatory fields:
                   ],
                   "hitRules": [
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
                       "nature": "FRAUD",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
@@ -776,6 +873,7 @@ Each consumer Business entity needs three mandatory fields:
                       "ruleName": "Proof of funds for high value transactions",
                     },
                   ],
+                  "message": "message",
                   "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
                 },
               },
@@ -1062,6 +1160,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               },
               "response": {
                 "body": {
+                  "acquisitionChannel": "ORGANIC",
+                  "allowedPaymentMethods": [
+                    "ACH",
+                  ],
                   "createdTimestamp": 1.1,
                   "directors": [
                     {
@@ -1123,6 +1225,11 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                           ],
                         },
                       ],
+                      "pepStatus": [
+                        {
+                          "isPepHit": true,
+                        },
+                      ],
                       "tags": [
                         {
                           "key": "customKey",
@@ -1133,6 +1240,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   ],
                   "executedRules": [
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
@@ -1143,6 +1254,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   ],
                   "hitRules": [
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
                       "nature": "FRAUD",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
@@ -1151,6 +1265,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "ruleName": "Proof of funds for high value transactions",
                     },
                   ],
+                  "kycStatusDetails": {
+                    "reason": "reason",
+                    "status": "SUCCESSFUL",
+                  },
                   "legalEntity": {
                     "companyFinancialDetails": {
                       "expectedTransactionAmountPerMonth": {
@@ -1182,8 +1300,12 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                           "value": "customValue",
                         },
                       ],
+                      "userRegistrationStatus": "REGISTERED",
+                      "userSegment": "SOLE_PROPRIETORSHIP",
                     },
                     "companyRegistrationDetails": {
+                      "dateOfRegistration": "dateOfRegistration",
+                      "legalEntityType": "legalEntityType",
                       "registrationCountry": "DE",
                       "registrationIdentifier": "PSJ554342",
                       "tags": [
@@ -1192,8 +1314,54 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                           "value": "customValue",
                         },
                       ],
+                      "taxIdentifier": "taxIdentifier",
                     },
+                    "contactDetails": {
+                      "addresses": [
+                        {
+                          "addressLines": [
+                            "Klara-Franke Str 20",
+                          ],
+                          "city": "Berlin",
+                          "country": "Germany",
+                          "postcode": "10557",
+                          "state": "Berlin",
+                          "tags": [
+                            {
+                              "key": "customKey",
+                              "value": "customValue",
+                            },
+                          ],
+                        },
+                      ],
+                      "contactNumbers": [
+                        "contactNumbers",
+                      ],
+                      "emailIds": [
+                        "emailIds",
+                      ],
+                      "faxNumbers": [
+                        "faxNumbers",
+                      ],
+                      "websites": [
+                        "websites",
+                      ],
+                    },
+                    "reasonForAccountOpening": [
+                      "reasonForAccountOpening",
+                    ],
                   },
+                  "linkedEntities": {
+                    "childUserIds": [
+                      "childUserIds",
+                    ],
+                    "parentUserId": "parentUserId",
+                  },
+                  "mccDetails": {
+                    "code": 1.1,
+                    "description": "description",
+                  },
+                  "riskLevel": "VERY_HIGH",
                   "shareHolders": [
                     {
                       "contactDetails": {
@@ -1254,6 +1422,11 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                           ],
                         },
                       ],
+                      "pepStatus": [
+                        {
+                          "isPepHit": true,
+                        },
+                      ],
                       "tags": [
                         {
                           "key": "customKey",
@@ -1295,6 +1468,11 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     },
                   },
                   "userId": "userId",
+                  "userStateDetails": {
+                    "reason": "reason",
+                    "state": "UNACCEPTABLE",
+                    "userId": "userId",
+                  },
                 },
               },
             },
@@ -1409,6 +1587,10 @@ Here are some of the most used payload fields explained (you can find the full p
                 "body": {
                   "executedRules": [
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
@@ -1419,6 +1601,10 @@ Here are some of the most used payload fields explained (you can find the full p
                   ],
                   "hitRules": [
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleId": "R-1a",
@@ -1426,6 +1612,7 @@ Here are some of the most used payload fields explained (you can find the full p
                       "ruleName": "Proof of funds for high value transactions",
                     },
                   ],
+                  "message": "message",
                   "transactionId": "7b80a539eea6e78acbd6d458e5971482",
                 },
               },
@@ -1574,6 +1761,10 @@ Each consumer User entity needs three mandatory fields:
                 "body": {
                   "executedRules": [
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
@@ -1584,6 +1775,9 @@ Each consumer User entity needs three mandatory fields:
                   ],
                   "hitRules": [
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
                       "nature": "FRAUD",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
@@ -1592,6 +1786,7 @@ Each consumer User entity needs three mandatory fields:
                       "ruleName": "Proof of funds for high value transactions",
                     },
                   ],
+                  "message": "message",
                   "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
                 },
               },
@@ -1691,6 +1886,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "eventId": "7b80a539eea6e78acbd6d458e5971482",
                   "executedRules": [
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
@@ -1701,6 +1900,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   ],
                   "hitRules": [
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleId": "R-1a",
@@ -1734,8 +1937,12 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "transactionCurrency": "EUR",
                     },
                     "originUserId": "8650a2611d0771cba03310f74bf6",
+                    "productType": "productType",
                     "promotionCodeUsed": true,
                     "reference": "loan repayment",
+                    "relatedTransactionIds": [
+                      "relatedTransactionIds",
+                    ],
                     "tags": [
                       {
                         "key": "customKey",
@@ -1744,6 +1951,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     ],
                     "timestamp": 1641654664000,
                     "transactionId": "7b80a539eea6e78acbd6d458e5971482",
+                    "transactionState": "CREATED",
+                    "type": "DEPOSIT",
                   },
                 },
               },
@@ -1906,9 +2115,45 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               },
               "response": {
                 "body": {
+                  "acquisitionChannel": "ORGANIC",
+                  "contactDetails": {
+                    "addresses": [
+                      {
+                        "addressLines": [
+                          "Klara-Franke Str 20",
+                        ],
+                        "city": "Berlin",
+                        "country": "Germany",
+                        "postcode": "10557",
+                        "state": "Berlin",
+                        "tags": [
+                          {
+                            "key": "customKey",
+                            "value": "customValue",
+                          },
+                        ],
+                      },
+                    ],
+                    "contactNumbers": [
+                      "contactNumbers",
+                    ],
+                    "emailIds": [
+                      "emailIds",
+                    ],
+                    "faxNumbers": [
+                      "faxNumbers",
+                    ],
+                    "websites": [
+                      "websites",
+                    ],
+                  },
                   "createdTimestamp": 1.1,
                   "executedRules": [
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
+                      "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
@@ -1919,6 +2164,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   ],
                   "hitRules": [
                     {
+                      "labels": [
+                        "UNEXPECTED_BEHAVIOR",
+                      ],
                       "nature": "FRAUD",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
@@ -1927,6 +2175,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "ruleName": "Proof of funds for high value transactions",
                     },
                   ],
+                  "kycStatusDetails": {
+                    "reason": "reason",
+                    "status": "SUCCESSFUL",
+                  },
                   "legalDocuments": [
                     {
                       "documentExpirationDate": 1839939034000,
@@ -1947,6 +2199,16 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       ],
                     },
                   ],
+                  "pepStatus": [
+                    {
+                      "isPepHit": true,
+                      "pepCountry": "pepCountry",
+                    },
+                  ],
+                  "reasonForAccountOpening": [
+                    "reasonForAccountOpening",
+                  ],
+                  "riskLevel": "VERY_HIGH",
                   "tags": [
                     {
                       "key": "customKey",
@@ -1983,6 +2245,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "countryOfNationality": "DE",
                     "countryOfResidence": "US",
                     "dateOfBirth": "1991-01-01",
+                    "gender": "M",
                     "name": {
                       "firstName": "Baran",
                       "lastName": "Ozkan",
@@ -1990,6 +2253,12 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     },
                   },
                   "userId": "userId",
+                  "userSegment": "RETAIL",
+                  "userStateDetails": {
+                    "reason": "reason",
+                    "state": "UNACCEPTABLE",
+                    "userId": "userId",
+                  },
                 },
               },
             },

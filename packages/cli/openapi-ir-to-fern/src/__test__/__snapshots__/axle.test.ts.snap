@@ -26,15 +26,18 @@ exports[`open api parser axle simple 1`] = `
                     "data": {
                       "carrier": "carrier",
                       "createdAt": "createdAt",
+                      "email": "email",
                       "firstName": "firstName",
                       "id": "id",
                       "lastName": "lastName",
                       "modifiedAt": "modifiedAt",
+                      "phone": "phone",
                       "policies": [
                         "policies",
                       ],
                       "refreshedAt": "refreshedAt",
                     },
+                    "success": true,
                   },
                 },
               },
@@ -148,13 +151,22 @@ exports[`open api parser axle simple 1`] = `
                 "response": {
                   "body": {
                     "data": {
-                      "address": {},
+                      "address": {
+                        "addressLine1": "addressLine1",
+                        "addressLine2": "addressLine2",
+                        "city": "city",
+                        "country": "country",
+                        "postalCode": "postalCode",
+                        "state": "state",
+                      },
                       "domain": "domain",
                       "id": "id",
+                      "logoUrl": "logoUrl",
                       "modifiedAt": "modifiedAt",
                       "name": "name",
                       "phone": "phone",
                     },
+                    "success": true,
                   },
                 },
               },
@@ -186,11 +198,13 @@ exports[`open api parser axle simple 1`] = `
                         "address": {},
                         "domain": "domain",
                         "id": "id",
+                        "logoUrl": "logoUrl",
                         "modifiedAt": "modifiedAt",
                         "name": "name",
                         "phone": "phone",
                       },
                     ],
+                    "success": true,
                   },
                 },
               },
@@ -331,7 +345,14 @@ exports[`open api parser axle simple 1`] = `
                   "body": {
                     "data": {
                       "account": "account",
-                      "address": {},
+                      "address": {
+                        "addressLine1": "addressLine1",
+                        "addressLine2": "addressLine2",
+                        "city": "city",
+                        "country": "country",
+                        "postalCode": "postalCode",
+                        "state": "state",
+                      },
                       "carrier": "carrier",
                       "coverages": [
                         {
@@ -387,6 +408,7 @@ exports[`open api parser axle simple 1`] = `
                       ],
                       "type": "auto",
                     },
+                    "success": true,
                   },
                 },
               },
@@ -450,7 +472,11 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
                     "data": {
                       "accessToken": "accessToken",
                       "account": "account",
-                      "policies": [],
+                      "policies": [
+                        {
+                          "key": "value",
+                        },
+                      ],
                     },
                     "success": true,
                   },

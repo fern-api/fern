@@ -94,8 +94,9 @@ export class ExampleEndpointFactory {
                     exampleId: undefined,
                     example: undefined,
                     options: {
+                        maxDepth: 3,
                         isParameter: false,
-                        ignoreOptionals: true
+                        ignoreOptionals: false
                     }
                 });
                 if (example != null) {
@@ -108,8 +109,9 @@ export class ExampleEndpointFactory {
                         exampleId,
                         example: rawExample,
                         options: {
+                            maxDepth: 3,
                             isParameter: false,
-                            ignoreOptionals: true
+                            ignoreOptionals: false
                         }
                     });
                     if (example != null) {

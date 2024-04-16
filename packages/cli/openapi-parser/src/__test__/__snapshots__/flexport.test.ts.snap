@@ -857,11 +857,25 @@ we still recommend setting the Content-Type header to the value \`application/js
                           "value": "my-shanghai-address-ref",
                         },
                       },
+                      "state": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "MN",
+                        },
+                      },
                       "street_address": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
                           "value": "123 Queen St",
+                        },
+                      },
+                      "street_address2": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "STE 2918",
                         },
                       },
                       "timezone": {
@@ -876,6 +890,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                         "value": {
                           "type": "string",
                           "value": "CNSHA",
+                        },
+                      },
+                      "zip": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "56307",
                         },
                       },
                     },
@@ -918,11 +939,25 @@ we still recommend setting the Content-Type header to the value \`application/js
                           "value": "my-shanghai-address-ref",
                         },
                       },
+                      "state": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "MN",
+                        },
+                      },
                       "street_address": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
                           "value": "123 Queen St",
+                        },
+                      },
+                      "street_address2": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "STE 2918",
                         },
                       },
                       "timezone": {
@@ -937,6 +972,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                         "value": {
                           "type": "string",
                           "value": "CNSHA",
+                        },
+                      },
+                      "zip": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "56307",
                         },
                       },
                     },
@@ -1023,6 +1065,37 @@ we still recommend setting the Content-Type header to the value \`application/js
                       },
                     },
                     "type": "object",
+                  },
+                  "new_product_descriptions": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/booking_amendment_product_description",
+                            },
+                          },
+                          "description": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "Wristwatches",
+                            },
+                          },
+                          "description_for_export_customs": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "手表",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                   },
                   "new_wants_bco": {
                     "type": "primitive",
@@ -1396,6 +1469,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                         "type": "object",
                       },
                     ],
+                  },
+                  "next": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "https://api.flexport.com/booking_line_items?page=3&per=10",
+                    },
                   },
                   "prev": {
                     "type": "primitive",
@@ -3671,6 +3751,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                       },
                     ],
                   },
+                  "next": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "https://api.flexport.com/bookings?page=3&per=10",
+                    },
+                  },
                   "prev": {
                     "type": "primitive",
                     "value": {
@@ -5064,6 +5151,138 @@ we still recommend setting the Content-Type header to the value \`application/js
                       "value": "/booking",
                     },
                   },
+                  "air_booking": {
+                    "properties": {
+                      "_object": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/air/booking",
+                        },
+                      },
+                      "destination_port": {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/place",
+                            },
+                          },
+                          "name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "ORD - Chicago - IL",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "incoterm": {
+                        "type": "enum",
+                        "value": "EXW",
+                      },
+                      "origin_port": {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/place",
+                            },
+                          },
+                          "name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "ORD - Chicago - IL",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "product_descriptions": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "_object": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "/bookings/product_descriptions",
+                                },
+                              },
+                              "description": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Wristwatches",
+                                },
+                              },
+                              "description_for_export_customs": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "手表",
+                                },
+                              },
+                              "description_for_export_customs_locale": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "zh_CN",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "wants_delivery_service": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean",
+                          "value": false,
+                        },
+                      },
+                      "wants_pickup_service": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean",
+                          "value": true,
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "booking_line_items": {
+                    "properties": {
+                      "_object": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/api/refs/collection",
+                        },
+                      },
+                      "link": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "https://api.flexport.com/booking_line_items?f.booking.id=123",
+                        },
+                      },
+                      "ref_type": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/purchase_orders/booking_line_item",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
                   "cargo": {
                     "properties": {
                       "_object": {
@@ -5655,6 +5874,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                       "value": "PO 123",
                     },
                   },
+                  "notify_party": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "John Doe | john@example.com | 905-555-1234",
+                    },
+                  },
                   "ocean_booking": {
                     "properties": {
                       "_object": {
@@ -6215,6 +6441,43 @@ we still recommend setting the Content-Type header to the value \`application/js
                     },
                     "type": "object",
                   },
+                  "quote_status": {
+                    "type": "enum",
+                    "value": "pending_quote",
+                  },
+                  "shipment": {
+                    "properties": {
+                      "_object": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/api/refs/object",
+                        },
+                      },
+                      "id": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 123,
+                        },
+                      },
+                      "link": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "https://api.flexport.com/shipments/123",
+                        },
+                      },
+                      "ref_type": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/shipment",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
                   "shipper_entity": {
                     "properties": {
                       "_object": {
@@ -6368,9 +6631,43 @@ we still recommend setting the Content-Type header to the value \`application/js
                       "value": "Handle carefully",
                     },
                   },
+                  "status": {
+                    "type": "enum",
+                    "value": "archived",
+                  },
                   "transportation_mode": {
                     "type": "enum",
                     "value": "ocean",
+                  },
+                  "trucking_booking": {
+                    "properties": {
+                      "_object": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/trucking/booking",
+                        },
+                      },
+                      "description_of_products": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "Wristwatches",
+                        },
+                      },
+                      "is_ftl": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean",
+                          "value": false,
+                        },
+                      },
+                      "payment_terms": {
+                        "type": "enum",
+                        "value": "collect",
+                      },
+                    },
+                    "type": "object",
                   },
                   "wants_export_customs_service": {
                     "type": "primitive",
@@ -6594,6 +6891,138 @@ we still recommend setting the Content-Type header to the value \`application/js
                       "type": "string",
                       "value": "/booking",
                     },
+                  },
+                  "air_booking": {
+                    "properties": {
+                      "_object": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/air/booking",
+                        },
+                      },
+                      "destination_port": {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/place",
+                            },
+                          },
+                          "name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "ORD - Chicago - IL",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "incoterm": {
+                        "type": "enum",
+                        "value": "EXW",
+                      },
+                      "origin_port": {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/place",
+                            },
+                          },
+                          "name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "ORD - Chicago - IL",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "product_descriptions": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "_object": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "/bookings/product_descriptions",
+                                },
+                              },
+                              "description": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Wristwatches",
+                                },
+                              },
+                              "description_for_export_customs": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "手表",
+                                },
+                              },
+                              "description_for_export_customs_locale": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "zh_CN",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "wants_delivery_service": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean",
+                          "value": false,
+                        },
+                      },
+                      "wants_pickup_service": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean",
+                          "value": true,
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "booking_line_items": {
+                    "properties": {
+                      "_object": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/api/refs/collection",
+                        },
+                      },
+                      "link": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "https://api.flexport.com/booking_line_items?f.booking.id=123",
+                        },
+                      },
+                      "ref_type": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/purchase_orders/booking_line_item",
+                        },
+                      },
+                    },
+                    "type": "object",
                   },
                   "cargo": {
                     "properties": {
@@ -7583,6 +8012,44 @@ we still recommend setting the Content-Type header to the value \`application/js
                         },
                         "type": "object",
                       },
+                      "product_descriptions": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "_object": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "/bookings/product_descriptions",
+                                },
+                              },
+                              "description": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Wristwatches",
+                                },
+                              },
+                              "description_for_export_customs": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "手表",
+                                },
+                              },
+                              "description_for_export_customs_locale": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "zh_CN",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
                       "wants_delivery_service": {
                         "type": "primitive",
                         "value": {
@@ -7685,6 +8152,39 @@ we still recommend setting the Content-Type header to the value \`application/js
                   "quote_status": {
                     "type": "enum",
                     "value": "accepted_quote",
+                  },
+                  "shipment": {
+                    "properties": {
+                      "_object": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/api/refs/object",
+                        },
+                      },
+                      "id": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 123,
+                        },
+                      },
+                      "link": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "https://api.flexport.com/shipments/123",
+                        },
+                      },
+                      "ref_type": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/shipment",
+                        },
+                      },
+                    },
+                    "type": "object",
                   },
                   "shipper_entity": {
                     "properties": {
@@ -7839,9 +8339,43 @@ we still recommend setting the Content-Type header to the value \`application/js
                       "value": "",
                     },
                   },
+                  "status": {
+                    "type": "enum",
+                    "value": "archived",
+                  },
                   "transportation_mode": {
                     "type": "enum",
                     "value": "ocean",
+                  },
+                  "trucking_booking": {
+                    "properties": {
+                      "_object": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/trucking/booking",
+                        },
+                      },
+                      "description_of_products": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "Wristwatches",
+                        },
+                      },
+                      "is_ftl": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean",
+                          "value": false,
+                        },
+                      },
+                      "payment_terms": {
+                        "type": "enum",
+                        "value": "collect",
+                      },
+                    },
+                    "type": "object",
                   },
                   "wants_export_customs_service": {
                     "type": "primitive",
@@ -8804,6 +9338,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                       },
                     ],
                   },
+                  "next": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "https://api.flexport.com/commercial_invoices?page=3&per=10",
+                    },
+                  },
                   "prev": {
                     "type": "primitive",
                     "value": {
@@ -9432,12 +9973,50 @@ we still recommend setting the Content-Type header to the value \`application/js
                       "value": "abcxyz-23456-def",
                     },
                   },
+                  "invoice_date": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "invoice_date",
+                    },
+                  },
                   "invoice_number": {
                     "type": "primitive",
                     "value": {
                       "type": "string",
                       "value": "ABCDEFGHIJKLMNOP",
                     },
+                  },
+                  "involved_parties": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/customs/involved_party",
+                            },
+                          },
+                          "name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "The West Coast Company",
+                            },
+                          },
+                          "type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "consignee",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                   },
                   "is_related_parties": {
                     "type": "primitive",
@@ -9741,6 +10320,42 @@ we still recommend setting the Content-Type header to the value \`application/js
                         "type": "object",
                       },
                     ],
+                  },
+                  "metadata": {
+                    "type": "map",
+                    "value": [
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "metadata",
+                        },
+                        "value": {
+                          "type": "map",
+                          "value": [
+                            {
+                              "key": {
+                                "type": "string",
+                                "value": "key",
+                              },
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                  "order_number": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "order_number",
+                    },
                   },
                   "shipment": {
                     "properties": {
@@ -10186,12 +10801,50 @@ we still recommend setting the Content-Type header to the value \`application/js
                       "value": "abcxyz-23456-def",
                     },
                   },
+                  "invoice_date": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "invoice_date",
+                    },
+                  },
                   "invoice_number": {
                     "type": "primitive",
                     "value": {
                       "type": "string",
                       "value": "ABCDEFGHIJKLMNOP",
                     },
+                  },
+                  "involved_parties": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/customs/involved_party",
+                            },
+                          },
+                          "name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "The West Coast Company",
+                            },
+                          },
+                          "type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "consignee",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                   },
                   "is_related_parties": {
                     "type": "primitive",
@@ -10495,6 +11148,42 @@ we still recommend setting the Content-Type header to the value \`application/js
                         "type": "object",
                       },
                     ],
+                  },
+                  "metadata": {
+                    "type": "map",
+                    "value": [
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "metadata",
+                        },
+                        "value": {
+                          "type": "map",
+                          "value": [
+                            {
+                              "key": {
+                                "type": "string",
+                                "value": "key",
+                              },
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                  "order_number": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "order_number",
+                    },
                   },
                   "shipment": {
                     "properties": {
@@ -10827,12 +11516,50 @@ we still recommend setting the Content-Type header to the value \`application/js
                       "value": "abcxyz-23456-def",
                     },
                   },
+                  "invoice_date": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "invoice_date",
+                    },
+                  },
                   "invoice_number": {
                     "type": "primitive",
                     "value": {
                       "type": "string",
                       "value": "ABCDEFGHIJKLMNOP",
                     },
+                  },
+                  "involved_parties": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/customs/involved_party",
+                            },
+                          },
+                          "name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "The West Coast Company",
+                            },
+                          },
+                          "type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "consignee",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                   },
                   "is_related_parties": {
                     "type": "primitive",
@@ -11136,6 +11863,42 @@ we still recommend setting the Content-Type header to the value \`application/js
                         "type": "object",
                       },
                     ],
+                  },
+                  "metadata": {
+                    "type": "map",
+                    "value": [
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "metadata",
+                        },
+                        "value": {
+                          "type": "map",
+                          "value": [
+                            {
+                              "key": {
+                                "type": "string",
+                                "value": "key",
+                              },
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                  "order_number": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "order_number",
+                    },
                   },
                   "shipment": {
                     "properties": {
@@ -11540,6 +12303,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                         "type": "object",
                       },
                     ],
+                  },
+                  "next": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "https://api.flexport.com/customs_entries?page=3&per=10",
+                    },
                   },
                   "prev": {
                     "type": "primitive",
@@ -12319,6 +13089,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                       },
                     ],
                   },
+                  "next": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "https://api.flexport.com/documents?page=3&per=10",
+                    },
+                  },
                   "prev": {
                     "type": "primitive",
                     "value": {
@@ -12934,6 +13711,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                       "value": "Flexport-Booking.pdf",
                     },
                   },
+                  "memo": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "memo",
+                    },
+                  },
                   "mime_type": {
                     "type": "primitive",
                     "value": {
@@ -13163,6 +13947,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                       "value": "/document",
                     },
                   },
+                  "archived_at": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime",
+                      "value": "2024-01-15T09:30:00Z",
+                    },
+                  },
                   "document_type": {
                     "type": "primitive",
                     "value": {
@@ -13215,6 +14006,13 @@ we still recommend setting the Content-Type header to the value \`application/js
                     "value": {
                       "type": "string",
                       "value": "ABC123",
+                    },
+                  },
+                  "memo": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "memo",
                     },
                   },
                   "shipment": {
@@ -13489,6 +14287,84 @@ we still recommend setting the Content-Type header to the value \`application/js
                   "type": "string",
                   "value": "/api/response",
                 },
+              },
+              "data": {
+                "properties": {
+                  "_object": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "/api/collections/paginated",
+                    },
+                  },
+                  "data": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/event",
+                            },
+                          },
+                          "created_at": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "2019-04-16T18:05:10.964Z",
+                            },
+                          },
+                          "id": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "int",
+                              "value": 354987,
+                            },
+                          },
+                          "occurred_at": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "2019-04-16T18:05:10.964Z",
+                            },
+                          },
+                          "type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/shipment_leg#departed",
+                            },
+                          },
+                          "version": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "int",
+                              "value": 2,
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                  },
+                  "next": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "next",
+                    },
+                  },
+                  "prev": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "prev",
+                    },
+                  },
+                },
+                "type": "object",
               },
               "self": {
                 "type": "primitive",
@@ -13981,6 +14857,359 @@ we still recommend setting the Content-Type header to the value \`application/js
                   "type": "string",
                   "value": "/api/response",
                 },
+              },
+              "data": {
+                "properties": {
+                  "_object": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "/event",
+                    },
+                  },
+                  "created_at": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "2019-04-16T18:05:10.964Z",
+                    },
+                  },
+                  "data": {
+                    "properties": {
+                      "_object": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/shipment_event_data",
+                        },
+                      },
+                      "containers": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "_object": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "/ocean/shipment_container",
+                                },
+                              },
+                              "container_number": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "BWSE3982156",
+                                },
+                              },
+                              "id": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "int",
+                                  "value": 283910,
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "exception": {
+                        "properties": {
+                          "message": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "US Customs Hold",
+                            },
+                          },
+                          "root_cause_name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "Government Agency",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "location": {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/shipment_node",
+                            },
+                          },
+                          "tags": {
+                            "type": "array",
+                            "value": [
+                              {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "port_of_loading",
+                                },
+                              },
+                            ],
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "resource": {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/shipments",
+                            },
+                          },
+                          "id": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "int",
+                              "value": 2983,
+                            },
+                          },
+                          "it_number": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "V12345678",
+                            },
+                          },
+                          "name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "ABC Shipment",
+                            },
+                          },
+                          "pieces": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "int",
+                              "value": 8372,
+                            },
+                          },
+                          "visibility_only": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "value": true,
+                            },
+                          },
+                          "wants_commercial_invoice_transcription": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "value": true,
+                            },
+                          },
+                          "wants_delivery_service": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "value": true,
+                            },
+                          },
+                          "wants_export_customs_service": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "value": true,
+                            },
+                          },
+                          "wants_flexport_freight": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "value": true,
+                            },
+                          },
+                          "wants_flexport_insurance": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "value": true,
+                            },
+                          },
+                          "wants_freight_management_bco": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "value": true,
+                            },
+                          },
+                          "wants_import_customs_service": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "value": true,
+                            },
+                          },
+                          "wants_pickup_service": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "value": true,
+                            },
+                          },
+                          "wants_trade_declaration_service": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "value": true,
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "shipment": {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/shipments",
+                            },
+                          },
+                          "id": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "int",
+                              "value": 2983,
+                            },
+                          },
+                          "it_number": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "V12345678",
+                            },
+                          },
+                          "name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "ABC Shipment",
+                            },
+                          },
+                          "pieces": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "int",
+                              "value": 8372,
+                            },
+                          },
+                          "visibility_only": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "value": true,
+                            },
+                          },
+                          "wants_commercial_invoice_transcription": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "value": true,
+                            },
+                          },
+                          "wants_delivery_service": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "value": true,
+                            },
+                          },
+                          "wants_export_customs_service": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "value": true,
+                            },
+                          },
+                          "wants_flexport_freight": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "value": true,
+                            },
+                          },
+                          "wants_flexport_insurance": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "value": true,
+                            },
+                          },
+                          "wants_freight_management_bco": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "value": true,
+                            },
+                          },
+                          "wants_import_customs_service": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "value": true,
+                            },
+                          },
+                          "wants_pickup_service": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "value": true,
+                            },
+                          },
+                          "wants_trade_declaration_service": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "boolean",
+                              "value": true,
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "id": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "int",
+                      "value": 354987,
+                    },
+                  },
+                  "occurred_at": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "2019-04-16T18:05:10.964Z",
+                    },
+                  },
+                  "type": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "/shipment_leg#departed",
+                    },
+                  },
+                  "version": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "int",
+                      "value": 2,
+                    },
+                  },
+                },
+                "type": "object",
               },
               "self": {
                 "type": "primitive",
@@ -15444,6 +16673,13 @@ Other details about this invoice",
                     "value": {
                       "type": "string",
                       "value": "https://api.flexport.com/invoices?page=2&per=10",
+                    },
+                  },
+                  "prev": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "https://api.flexport.com/invoices?page=1&per=10",
                     },
                   },
                 },
@@ -17793,6 +19029,13 @@ Other details about this invoice",
                       },
                     ],
                   },
+                  "next": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "https://api.flexport.com/network/companies?page=3&per=10",
+                    },
+                  },
                   "prev": {
                     "type": "primitive",
                     "value": {
@@ -18463,6 +19706,35 @@ Other details about this invoice",
                     },
                     "type": "object",
                   },
+                  "metadata": {
+                    "type": "map",
+                    "value": [
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "metadata",
+                        },
+                        "value": {
+                          "type": "map",
+                          "value": [
+                            {
+                              "key": {
+                                "type": "string",
+                                "value": "key",
+                              },
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
                   "name": {
                     "type": "primitive",
                     "value": {
@@ -18899,6 +20171,35 @@ Other details about this invoice",
                       },
                     },
                     "type": "object",
+                  },
+                  "metadata": {
+                    "type": "map",
+                    "value": [
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "metadata",
+                        },
+                        "value": {
+                          "type": "map",
+                          "value": [
+                            {
+                              "key": {
+                                "type": "string",
+                                "value": "key",
+                              },
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
                   },
                   "name": {
                     "type": "primitive",
@@ -19363,6 +20664,35 @@ Other details about this invoice",
                     },
                     "type": "object",
                   },
+                  "metadata": {
+                    "type": "map",
+                    "value": [
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "metadata",
+                        },
+                        "value": {
+                          "type": "map",
+                          "value": [
+                            {
+                              "key": {
+                                "type": "string",
+                                "value": "key",
+                              },
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
                   "name": {
                     "type": "primitive",
                     "value": {
@@ -19763,6 +21093,13 @@ Other details about this invoice",
                         "type": "object",
                       },
                     ],
+                  },
+                  "next": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "https://api.flexport.com/network/company_entities?page=3&per=10",
+                    },
                   },
                   "prev": {
                     "type": "primitive",
@@ -21539,6 +22876,13 @@ Other details about this invoice",
                       },
                     ],
                   },
+                  "next": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "https://api.flexport.com/network/contacts?page=3&per=10",
+                    },
+                  },
                   "prev": {
                     "type": "primitive",
                     "value": {
@@ -23153,6 +24497,13 @@ Other details about this invoice",
                       },
                     ],
                   },
+                  "next": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "https://api.flexport.com/network/locations?page=3&per=10",
+                    },
+                  },
                   "prev": {
                     "type": "primitive",
                     "value": {
@@ -23863,6 +25214,13 @@ Other details about this invoice",
                           "value": "/api/refs/collection",
                         },
                       },
+                      "id": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "id",
+                        },
+                      },
                       "link": {
                         "type": "primitive",
                         "value": {
@@ -23894,11 +25252,47 @@ Other details about this invoice",
                       "value": "abdef123",
                     },
                   },
+                  "metadata": {
+                    "type": "map",
+                    "value": [
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "metadata",
+                        },
+                        "value": {
+                          "type": "map",
+                          "value": [
+                            {
+                              "key": {
+                                "type": "string",
+                                "value": "key",
+                              },
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
                   "name": {
                     "type": "primitive",
                     "value": {
                       "type": "string",
                       "value": "Zoomit",
+                    },
+                  },
+                  "ref": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "ref",
                     },
                   },
                 },
@@ -24233,6 +25627,13 @@ Other details about this invoice",
                           "value": "/api/refs/collection",
                         },
                       },
+                      "id": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "id",
+                        },
+                      },
                       "link": {
                         "type": "primitive",
                         "value": {
@@ -24264,11 +25665,47 @@ Other details about this invoice",
                       "value": "abdef123",
                     },
                   },
+                  "metadata": {
+                    "type": "map",
+                    "value": [
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "metadata",
+                        },
+                        "value": {
+                          "type": "map",
+                          "value": [
+                            {
+                              "key": {
+                                "type": "string",
+                                "value": "key",
+                              },
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
                   "name": {
                     "type": "primitive",
                     "value": {
                       "type": "string",
                       "value": "Wayne Enterprises",
+                    },
+                  },
+                  "ref": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "ref",
                     },
                   },
                 },
@@ -24554,6 +25991,13 @@ Other details about this invoice",
                           "value": "2 World Way",
                         },
                       },
+                      "street_address2": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "STE 2918",
+                        },
+                      },
                       "timezone": {
                         "type": "primitive",
                         "value": {
@@ -24620,6 +26064,13 @@ Other details about this invoice",
                           "value": "/api/refs/collection",
                         },
                       },
+                      "id": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "id",
+                        },
+                      },
                       "link": {
                         "type": "primitive",
                         "value": {
@@ -24651,11 +26102,47 @@ Other details about this invoice",
                       "value": "abdef123",
                     },
                   },
+                  "metadata": {
+                    "type": "map",
+                    "value": [
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "metadata",
+                        },
+                        "value": {
+                          "type": "map",
+                          "value": [
+                            {
+                              "key": {
+                                "type": "string",
+                                "value": "key",
+                              },
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
                   "name": {
                     "type": "primitive",
                     "value": {
                       "type": "string",
                       "value": "Zoomit V2",
+                    },
+                  },
+                  "ref": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "ref",
                     },
                   },
                 },
@@ -25089,6 +26576,35 @@ Other details about this invoice",
                       },
                     },
                     "type": "object",
+                  },
+                  "metadata": {
+                    "type": "map",
+                    "value": [
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "metadata",
+                        },
+                        "value": {
+                          "type": "map",
+                          "value": [
+                            {
+                              "key": {
+                                "type": "string",
+                                "value": "key",
+                              },
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
                   },
                   "name": {
                     "type": "primitive",
@@ -27258,6 +28774,42 @@ Other details about this invoice",
                     "value": {
                       "type": "datetime",
                       "value": "2019-02-16T00:00:00.000Z",
+                    },
+                  },
+                  "metadata": {
+                    "type": "map",
+                    "value": [
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "metadata",
+                        },
+                        "value": {
+                          "type": "map",
+                          "value": [
+                            {
+                              "key": {
+                                "type": "string",
+                                "value": "key",
+                              },
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                  "pickup_number": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "ABCD1234",
                     },
                   },
                   "seal_number": {
@@ -31643,6 +33195,124 @@ Other details about this invoice",
                       },
                     ],
                   },
+                  "destination_port": {
+                    "properties": {
+                      "_object": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/place",
+                        },
+                      },
+                      "address": {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/address",
+                            },
+                          },
+                          "city": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "Albany",
+                            },
+                          },
+                          "country": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "United States of America",
+                            },
+                          },
+                          "country_code": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "US",
+                            },
+                          },
+                          "ref": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "address_ref_x",
+                            },
+                          },
+                          "street_address": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "1641 Settlers Lane",
+                            },
+                          },
+                          "timezone": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "America/Los_Angeles",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "details": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "_object": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "/air/port",
+                                },
+                              },
+                              "country_code": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "US",
+                                },
+                              },
+                              "iata_code": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "LAX",
+                                },
+                              },
+                              "icao_code": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "KLAX",
+                                },
+                              },
+                              "port_code": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "3901",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "name": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "ORD - Chicago - IL",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
                   "hs_codes": {
                     "type": "array",
                     "value": [
@@ -31821,6 +33491,13 @@ Other details about this invoice",
                           "value": "10th YouSong Industrial District",
                         },
                       },
+                      "street_address2": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "STE 2918",
+                        },
+                      },
                       "timezone": {
                         "type": "primitive",
                         "value": {
@@ -31828,8 +33505,147 @@ Other details about this invoice",
                           "value": "China/Shenzhen",
                         },
                       },
+                      "unlocode": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "US AL2",
+                        },
+                      },
+                      "zip": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "56307",
+                        },
+                      },
                     },
                     "type": "object",
+                  },
+                  "origin_port": {
+                    "properties": {
+                      "_object": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/place",
+                        },
+                      },
+                      "address": {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/address",
+                            },
+                          },
+                          "city": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "Albany",
+                            },
+                          },
+                          "country": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "United States of America",
+                            },
+                          },
+                          "country_code": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "US",
+                            },
+                          },
+                          "ref": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "address_ref_x",
+                            },
+                          },
+                          "street_address": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "1641 Settlers Lane",
+                            },
+                          },
+                          "timezone": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "America/Los_Angeles",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "details": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "_object": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "/air/port",
+                                },
+                              },
+                              "country_code": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "US",
+                                },
+                              },
+                              "iata_code": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "LAX",
+                                },
+                              },
+                              "icao_code": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "KLAX",
+                                },
+                              },
+                              "port_code": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "3901",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "name": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "ORD - Chicago - IL",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "parent_line_key": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "parent_line_key",
+                    },
                   },
                   "product": {
                     "properties": {
@@ -34891,6 +36707,264 @@ Other details about this invoice",
                   "value": "/api/response",
                 },
               },
+              "archived_at": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "archived_at",
+                },
+              },
+              "cargo_ready_date": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "cargo_ready_date",
+                },
+              },
+              "created_at": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "created_at",
+                },
+              },
+              "destination_addresses": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "_object": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/address",
+                        },
+                      },
+                      "city": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "Albany",
+                        },
+                      },
+                      "country": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "United States of America",
+                        },
+                      },
+                      "country_code": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "US",
+                        },
+                      },
+                      "ref": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "address_ref_x",
+                        },
+                      },
+                      "state": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "MN",
+                        },
+                      },
+                      "street_address": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "1641 Settlers Lane",
+                        },
+                      },
+                      "street_address2": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "STE 2918",
+                        },
+                      },
+                      "timezone": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "America/Los_Angeles",
+                        },
+                      },
+                      "unlocode": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "US AL2",
+                        },
+                      },
+                      "zip": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "56307",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "destination_port": {
+                "properties": {
+                  "_object": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "/place",
+                    },
+                  },
+                  "address": {
+                    "properties": {
+                      "_object": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/address",
+                        },
+                      },
+                      "city": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "Albany",
+                        },
+                      },
+                      "country": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "United States of America",
+                        },
+                      },
+                      "country_code": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "US",
+                        },
+                      },
+                      "ref": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "address_ref_x",
+                        },
+                      },
+                      "state": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "MN",
+                        },
+                      },
+                      "street_address": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "1641 Settlers Lane",
+                        },
+                      },
+                      "street_address2": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "STE 2918",
+                        },
+                      },
+                      "timezone": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "America/Los_Angeles",
+                        },
+                      },
+                      "unlocode": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "US AL2",
+                        },
+                      },
+                      "zip": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "56307",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "details": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/air/port",
+                            },
+                          },
+                          "country_code": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "US",
+                            },
+                          },
+                          "iata_code": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "LAX",
+                            },
+                          },
+                          "icao_code": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "KLAX",
+                            },
+                          },
+                          "port_code": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "3901",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                  },
+                  "name": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "ORD - Chicago - IL",
+                    },
+                  },
+                },
+                "type": "object",
+              },
+              "freight_paymnet_terms": {
+                "type": "enum",
+                "value": "freight_collect",
+              },
               "id": {
                 "type": "primitive",
                 "value": {
@@ -34898,11 +36972,84 @@ Other details about this invoice",
                   "value": 2983,
                 },
               },
+              "incoterm": {
+                "type": "enum",
+                "value": "EXW",
+              },
+              "issue_date": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "issue_date",
+                },
+              },
+              "line_items": {
+                "properties": {
+                  "_object": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "/api/refs/collection",
+                    },
+                  },
+                  "link": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "https://api.flexport.com/purchase_order_line_items?f.purchase_order.id=123",
+                    },
+                  },
+                  "ref_type": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "/purchase_orders/line_item",
+                    },
+                  },
+                },
+                "type": "object",
+              },
               "memo": {
                 "type": "primitive",
                 "value": {
                   "type": "string",
                   "value": "This message is written in invisible ink",
+                },
+              },
+              "metadata": {
+                "type": "map",
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "metadata",
+                    },
+                    "value": {
+                      "type": "map",
+                      "value": [
+                        {
+                          "key": {
+                            "type": "string",
+                            "value": "key",
+                          },
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "value",
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+              "must_arrive_date": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "must_arrive_date",
                 },
               },
               "name": {
@@ -34912,11 +37059,408 @@ Other details about this invoice",
                   "value": "PO 12345 - "shipment"",
                 },
               },
+              "order_class": {
+                "type": "enum",
+                "value": "purchase_order",
+              },
               "order_type": {
                 "type": "primitive",
                 "value": {
                   "type": "string",
                   "value": "Apparel",
+                },
+              },
+              "origin_address": {
+                "properties": {
+                  "_object": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "/address",
+                    },
+                  },
+                  "city": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "Albany",
+                    },
+                  },
+                  "country": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "United States of America",
+                    },
+                  },
+                  "country_code": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "US",
+                    },
+                  },
+                  "ref": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "address_ref_x",
+                    },
+                  },
+                  "state": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "MN",
+                    },
+                  },
+                  "street_address": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "1641 Settlers Lane",
+                    },
+                  },
+                  "street_address2": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "STE 2918",
+                    },
+                  },
+                  "timezone": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "America/Los_Angeles",
+                    },
+                  },
+                  "unlocode": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "US AL2",
+                    },
+                  },
+                  "zip": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "56307",
+                    },
+                  },
+                },
+                "type": "object",
+              },
+              "origin_port": {
+                "properties": {
+                  "_object": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "/place",
+                    },
+                  },
+                  "address": {
+                    "properties": {
+                      "_object": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/address",
+                        },
+                      },
+                      "city": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "Albany",
+                        },
+                      },
+                      "country": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "United States of America",
+                        },
+                      },
+                      "country_code": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "US",
+                        },
+                      },
+                      "ref": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "address_ref_x",
+                        },
+                      },
+                      "state": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "MN",
+                        },
+                      },
+                      "street_address": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "1641 Settlers Lane",
+                        },
+                      },
+                      "street_address2": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "STE 2918",
+                        },
+                      },
+                      "timezone": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "America/Los_Angeles",
+                        },
+                      },
+                      "unlocode": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "US AL2",
+                        },
+                      },
+                      "zip": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "56307",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "details": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/air/port",
+                            },
+                          },
+                          "country_code": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "US",
+                            },
+                          },
+                          "iata_code": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "LAX",
+                            },
+                          },
+                          "icao_code": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "KLAX",
+                            },
+                          },
+                          "port_code": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "3901",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                  },
+                  "name": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "ORD - Chicago - IL",
+                    },
+                  },
+                },
+                "type": "object",
+              },
+              "parties": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "company_entity": {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/company_entity",
+                            },
+                          },
+                          "id": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "int",
+                              "value": 9281,
+                            },
+                          },
+                          "name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "Zoomit",
+                            },
+                          },
+                          "ref": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "zoomit_ref",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "contacts": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "department": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "marketing",
+                                },
+                              },
+                              "email": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "John.Doe@example.com",
+                                },
+                              },
+                              "fax": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "1 323 555 1234",
+                                },
+                              },
+                              "name": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "John Doe",
+                                },
+                              },
+                              "phone": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "767 878 8888",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "location": {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/address",
+                            },
+                          },
+                          "city": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "Albany",
+                            },
+                          },
+                          "country": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "United States of America",
+                            },
+                          },
+                          "country_code": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "US",
+                            },
+                          },
+                          "ref": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "address_ref_x",
+                            },
+                          },
+                          "street_address": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "1641 Settlers Lane",
+                            },
+                          },
+                          "timezone": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "America/Los_Angeles",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "role": {
+                        "type": "enum",
+                        "value": "buyer",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "priority": {
+                "type": "enum",
+                "value": "standard",
+              },
+              "status": {
+                "type": "enum",
+                "value": "open",
+              },
+              "transportation_mode": {
+                "type": "enum",
+                "value": "ocean",
+              },
+              "updated_at": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "updated_at",
                 },
               },
             },
@@ -35004,6 +37548,553 @@ Other details about this invoice",
                   "type": "string",
                   "value": "/purchase_order",
                 },
+              },
+              "data": {
+                "properties": {
+                  "_object": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "/booking",
+                    },
+                  },
+                  "archived_at": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "archived_at",
+                    },
+                  },
+                  "cargo_ready_date": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "cargo_ready_date",
+                    },
+                  },
+                  "created_at": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "created_at",
+                    },
+                  },
+                  "destination_addresses": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/address",
+                            },
+                          },
+                          "city": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "Albany",
+                            },
+                          },
+                          "country": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "United States of America",
+                            },
+                          },
+                          "country_code": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "US",
+                            },
+                          },
+                          "ref": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "address_ref_x",
+                            },
+                          },
+                          "street_address": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "1641 Settlers Lane",
+                            },
+                          },
+                          "timezone": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "America/Los_Angeles",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                  },
+                  "destination_port": {
+                    "properties": {
+                      "_object": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/place",
+                        },
+                      },
+                      "address": {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/address",
+                            },
+                          },
+                          "city": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "Albany",
+                            },
+                          },
+                          "country": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "United States of America",
+                            },
+                          },
+                          "country_code": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "US",
+                            },
+                          },
+                          "ref": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "address_ref_x",
+                            },
+                          },
+                          "street_address": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "1641 Settlers Lane",
+                            },
+                          },
+                          "timezone": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "America/Los_Angeles",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "details": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "_object": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "/air/port",
+                                },
+                              },
+                              "country_code": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "US",
+                                },
+                              },
+                              "iata_code": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "LAX",
+                                },
+                              },
+                              "icao_code": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "KLAX",
+                                },
+                              },
+                              "port_code": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "3901",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "name": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "ORD - Chicago - IL",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "freight_paymnet_terms": {
+                    "type": "enum",
+                    "value": "freight_collect",
+                  },
+                  "id": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "int",
+                      "value": 2983,
+                    },
+                  },
+                  "incoterm": {
+                    "type": "enum",
+                    "value": "EXW",
+                  },
+                  "issue_date": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "issue_date",
+                    },
+                  },
+                  "line_items": {
+                    "properties": {
+                      "_object": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/api/refs/collection",
+                        },
+                      },
+                      "link": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "https://api.flexport.com/purchase_order_line_items?f.purchase_order.id=123",
+                        },
+                      },
+                      "ref_type": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/purchase_orders/line_item",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "memo": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "This message is written in invisible ink",
+                    },
+                  },
+                  "metadata": {
+                    "type": "map",
+                    "value": [
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "metadata",
+                        },
+                        "value": {
+                          "type": "map",
+                          "value": [
+                            {
+                              "key": {
+                                "type": "string",
+                                "value": "key",
+                              },
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                  "must_arrive_date": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "must_arrive_date",
+                    },
+                  },
+                  "name": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "PO 12345 - "shipment"",
+                    },
+                  },
+                  "order_class": {
+                    "type": "enum",
+                    "value": "purchase_order",
+                  },
+                  "order_type": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "Apparel",
+                    },
+                  },
+                  "origin_address": {
+                    "properties": {
+                      "_object": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/address",
+                        },
+                      },
+                      "city": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "Albany",
+                        },
+                      },
+                      "country": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "United States of America",
+                        },
+                      },
+                      "country_code": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "US",
+                        },
+                      },
+                      "ref": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "address_ref_x",
+                        },
+                      },
+                      "state": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "MN",
+                        },
+                      },
+                      "street_address": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "1641 Settlers Lane",
+                        },
+                      },
+                      "street_address2": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "STE 2918",
+                        },
+                      },
+                      "timezone": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "America/Los_Angeles",
+                        },
+                      },
+                      "unlocode": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "US AL2",
+                        },
+                      },
+                      "zip": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "56307",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "origin_port": {
+                    "properties": {
+                      "_object": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/place",
+                        },
+                      },
+                      "address": {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/address",
+                            },
+                          },
+                          "city": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "Albany",
+                            },
+                          },
+                          "country": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "United States of America",
+                            },
+                          },
+                          "country_code": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "US",
+                            },
+                          },
+                          "ref": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "address_ref_x",
+                            },
+                          },
+                          "street_address": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "1641 Settlers Lane",
+                            },
+                          },
+                          "timezone": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "America/Los_Angeles",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "details": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "_object": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "/air/port",
+                                },
+                              },
+                              "country_code": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "US",
+                                },
+                              },
+                              "iata_code": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "LAX",
+                                },
+                              },
+                              "icao_code": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "KLAX",
+                                },
+                              },
+                              "port_code": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "3901",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "name": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "ORD - Chicago - IL",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "parties": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    ],
+                  },
+                  "priority": {
+                    "type": "enum",
+                    "value": "standard",
+                  },
+                  "status": {
+                    "type": "enum",
+                    "value": "open",
+                  },
+                  "transportation_mode": {
+                    "type": "enum",
+                    "value": "ocean",
+                  },
+                  "updated_at": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "updated_at",
+                    },
+                  },
+                },
+                "type": "object",
               },
               "self": {
                 "type": "primitive",
@@ -35670,6 +38761,264 @@ Other details about this invoice",
                   "value": "/api/response",
                 },
               },
+              "archived_at": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "archived_at",
+                },
+              },
+              "cargo_ready_date": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "cargo_ready_date",
+                },
+              },
+              "created_at": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "created_at",
+                },
+              },
+              "destination_addresses": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "_object": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/address",
+                        },
+                      },
+                      "city": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "Albany",
+                        },
+                      },
+                      "country": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "United States of America",
+                        },
+                      },
+                      "country_code": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "US",
+                        },
+                      },
+                      "ref": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "address_ref_x",
+                        },
+                      },
+                      "state": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "MN",
+                        },
+                      },
+                      "street_address": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "1641 Settlers Lane",
+                        },
+                      },
+                      "street_address2": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "STE 2918",
+                        },
+                      },
+                      "timezone": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "America/Los_Angeles",
+                        },
+                      },
+                      "unlocode": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "US AL2",
+                        },
+                      },
+                      "zip": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "56307",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "destination_port": {
+                "properties": {
+                  "_object": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "/place",
+                    },
+                  },
+                  "address": {
+                    "properties": {
+                      "_object": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/address",
+                        },
+                      },
+                      "city": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "Albany",
+                        },
+                      },
+                      "country": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "United States of America",
+                        },
+                      },
+                      "country_code": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "US",
+                        },
+                      },
+                      "ref": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "address_ref_x",
+                        },
+                      },
+                      "state": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "MN",
+                        },
+                      },
+                      "street_address": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "1641 Settlers Lane",
+                        },
+                      },
+                      "street_address2": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "STE 2918",
+                        },
+                      },
+                      "timezone": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "America/Los_Angeles",
+                        },
+                      },
+                      "unlocode": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "US AL2",
+                        },
+                      },
+                      "zip": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "56307",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "details": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/air/port",
+                            },
+                          },
+                          "country_code": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "US",
+                            },
+                          },
+                          "iata_code": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "LAX",
+                            },
+                          },
+                          "icao_code": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "KLAX",
+                            },
+                          },
+                          "port_code": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "3901",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                  },
+                  "name": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "ORD - Chicago - IL",
+                    },
+                  },
+                },
+                "type": "object",
+              },
+              "freight_paymnet_terms": {
+                "type": "enum",
+                "value": "freight_collect",
+              },
               "id": {
                 "type": "primitive",
                 "value": {
@@ -35677,11 +39026,84 @@ Other details about this invoice",
                   "value": 2983,
                 },
               },
+              "incoterm": {
+                "type": "enum",
+                "value": "EXW",
+              },
+              "issue_date": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "issue_date",
+                },
+              },
+              "line_items": {
+                "properties": {
+                  "_object": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "/api/refs/collection",
+                    },
+                  },
+                  "link": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "https://api.flexport.com/purchase_order_line_items?f.purchase_order.id=123",
+                    },
+                  },
+                  "ref_type": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "/purchase_orders/line_item",
+                    },
+                  },
+                },
+                "type": "object",
+              },
               "memo": {
                 "type": "primitive",
                 "value": {
                   "type": "string",
                   "value": "This message is written in invisible ink",
+                },
+              },
+              "metadata": {
+                "type": "map",
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "metadata",
+                    },
+                    "value": {
+                      "type": "map",
+                      "value": [
+                        {
+                          "key": {
+                            "type": "string",
+                            "value": "key",
+                          },
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "value",
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+              "must_arrive_date": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "must_arrive_date",
                 },
               },
               "name": {
@@ -35691,11 +39113,408 @@ Other details about this invoice",
                   "value": "PO 12345 - "shipment"",
                 },
               },
+              "order_class": {
+                "type": "enum",
+                "value": "purchase_order",
+              },
               "order_type": {
                 "type": "primitive",
                 "value": {
                   "type": "string",
                   "value": "Apparel",
+                },
+              },
+              "origin_address": {
+                "properties": {
+                  "_object": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "/address",
+                    },
+                  },
+                  "city": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "Albany",
+                    },
+                  },
+                  "country": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "United States of America",
+                    },
+                  },
+                  "country_code": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "US",
+                    },
+                  },
+                  "ref": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "address_ref_x",
+                    },
+                  },
+                  "state": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "MN",
+                    },
+                  },
+                  "street_address": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "1641 Settlers Lane",
+                    },
+                  },
+                  "street_address2": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "STE 2918",
+                    },
+                  },
+                  "timezone": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "America/Los_Angeles",
+                    },
+                  },
+                  "unlocode": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "US AL2",
+                    },
+                  },
+                  "zip": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "56307",
+                    },
+                  },
+                },
+                "type": "object",
+              },
+              "origin_port": {
+                "properties": {
+                  "_object": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "/place",
+                    },
+                  },
+                  "address": {
+                    "properties": {
+                      "_object": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/address",
+                        },
+                      },
+                      "city": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "Albany",
+                        },
+                      },
+                      "country": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "United States of America",
+                        },
+                      },
+                      "country_code": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "US",
+                        },
+                      },
+                      "ref": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "address_ref_x",
+                        },
+                      },
+                      "state": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "MN",
+                        },
+                      },
+                      "street_address": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "1641 Settlers Lane",
+                        },
+                      },
+                      "street_address2": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "STE 2918",
+                        },
+                      },
+                      "timezone": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "America/Los_Angeles",
+                        },
+                      },
+                      "unlocode": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "US AL2",
+                        },
+                      },
+                      "zip": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "56307",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "details": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/air/port",
+                            },
+                          },
+                          "country_code": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "US",
+                            },
+                          },
+                          "iata_code": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "LAX",
+                            },
+                          },
+                          "icao_code": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "KLAX",
+                            },
+                          },
+                          "port_code": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "3901",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                  },
+                  "name": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "ORD - Chicago - IL",
+                    },
+                  },
+                },
+                "type": "object",
+              },
+              "parties": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "company_entity": {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/company_entity",
+                            },
+                          },
+                          "id": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "int",
+                              "value": 9281,
+                            },
+                          },
+                          "name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "Zoomit",
+                            },
+                          },
+                          "ref": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "zoomit_ref",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "contacts": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "department": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "marketing",
+                                },
+                              },
+                              "email": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "John.Doe@example.com",
+                                },
+                              },
+                              "fax": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "1 323 555 1234",
+                                },
+                              },
+                              "name": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "John Doe",
+                                },
+                              },
+                              "phone": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "767 878 8888",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "location": {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/address",
+                            },
+                          },
+                          "city": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "Albany",
+                            },
+                          },
+                          "country": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "United States of America",
+                            },
+                          },
+                          "country_code": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "US",
+                            },
+                          },
+                          "ref": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "address_ref_x",
+                            },
+                          },
+                          "street_address": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "1641 Settlers Lane",
+                            },
+                          },
+                          "timezone": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "America/Los_Angeles",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "role": {
+                        "type": "enum",
+                        "value": "buyer",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "priority": {
+                "type": "enum",
+                "value": "standard",
+              },
+              "status": {
+                "type": "enum",
+                "value": "open",
+              },
+              "transportation_mode": {
+                "type": "enum",
+                "value": "ocean",
+              },
+              "updated_at": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "updated_at",
                 },
               },
             },
@@ -37064,11 +40883,58 @@ Other details about this invoice",
                     },
                     "type": "object",
                   },
+                  "air_leg": {
+                    "properties": {
+                      "_object": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/air/shipment_leg",
+                        },
+                      },
+                      "flight_number": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "Y8 1234",
+                        },
+                      },
+                      "iata_code": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "2Q",
+                        },
+                      },
+                      "icao_code": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "SNC",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "cargo_ready_date": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "cargo_ready_date",
+                    },
+                  },
                   "carrier_name": {
                     "type": "primitive",
                     "value": {
                       "type": "string",
                       "value": "Liberty Carrier",
+                    },
+                  },
+                  "deleted_at": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime",
+                      "value": "2024-01-15T09:30:00Z",
                     },
                   },
                   "destination": {
@@ -37277,6 +41143,32 @@ Other details about this invoice",
                             },
                           },
                         ],
+                      },
+                      "terminal": {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/shipment_node/terminal",
+                            },
+                          },
+                          "firms_code": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "I092",
+                            },
+                          },
+                          "name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "Terminal 3",
+                            },
+                          },
+                        },
+                        "type": "object",
                       },
                     },
                     "type": "object",
@@ -37679,6 +41571,44 @@ Other details about this invoice",
                     },
                     "type": "object",
                   },
+                  "rail_leg": {
+                    "properties": {
+                      "_object": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/rail/shipment_leg",
+                        },
+                      },
+                      "container_legs": {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/api/refs/collection",
+                            },
+                          },
+                          "link": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "https://api.flexport.com/ocean/shipment_container_legs?f.shipment_container.id=123",
+                            },
+                          },
+                          "ref_type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/ocean/shipment_container_leg",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
                   "shipment": {
                     "properties": {
                       "_object": {
@@ -37715,6 +41645,69 @@ Other details about this invoice",
                   "transportation_mode": {
                     "type": "enum",
                     "value": "ocean",
+                  },
+                  "trucking_leg": {
+                    "properties": {
+                      "_object": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/trucking/shipment_leg",
+                        },
+                      },
+                      "container_legs": {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/api/refs/collection",
+                            },
+                          },
+                          "link": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "https://api.flexport.com/ocean/shipment_container_legs?f.shipment_container.id=123",
+                            },
+                          },
+                          "ref_type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/ocean/shipment_container_leg",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "pieces": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 32,
+                        },
+                      },
+                      "scac_code": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "ABCD",
+                        },
+                      },
+                      "service_type": {
+                        "type": "enum",
+                        "value": "ltl",
+                      },
+                      "tracking_number": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "FBA123456789",
+                        },
+                      },
+                    },
+                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -39422,6 +43415,20 @@ Other details about this invoice",
                       },
                     ],
                   },
+                  "next": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "next",
+                    },
+                  },
+                  "prev": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "prev",
+                    },
+                  },
                 },
                 "type": "object",
               },
@@ -40553,6 +44560,70 @@ Other details about this invoice",
                       "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
+                  "air_shipment": {
+                    "properties": {
+                      "_object": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/air/shipment",
+                        },
+                      },
+                      "chargeable_volume": {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/quantity/volume",
+                            },
+                          },
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "double",
+                              "value": 472.62,
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "chargeable_weight": {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/quantity/weight",
+                            },
+                          },
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "double",
+                              "value": 2300.4,
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "house_airway_bill": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "HWXJKE67732",
+                        },
+                      },
+                      "master_airway_bill": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "22831046871",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
                   "arrival_date": {
                     "type": "primitive",
                     "value": {
@@ -40803,6 +44874,44 @@ Other details about this invoice",
                       "type": "string",
                       "value": "2019-02-06",
                     },
+                  },
+                  "child_shipments": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/api/refs/object",
+                            },
+                          },
+                          "id": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "int",
+                              "value": 123,
+                            },
+                          },
+                          "link": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "https://api.flexport.com/shipments/123",
+                            },
+                          },
+                          "ref_type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/shipment",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                   },
                   "commercial_invoices": {
                     "properties": {
@@ -41454,6 +45563,35 @@ Other details about this invoice",
                     },
                     "type": "object",
                   },
+                  "metadata": {
+                    "type": "map",
+                    "value": [
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "metadata",
+                        },
+                        "value": {
+                          "type": "map",
+                          "value": [
+                            {
+                              "key": {
+                                "type": "string",
+                                "value": "key",
+                              },
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "value",
+                                },
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
                   "name": {
                     "type": "primitive",
                     "value": {
@@ -41529,6 +45667,39 @@ Other details about this invoice",
                         "value": {
                           "type": "string",
                           "value": "NEWO697216024",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "parent_shipment": {
+                    "properties": {
+                      "_object": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/api/refs/object",
+                        },
+                      },
+                      "id": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 123,
+                        },
+                      },
+                      "link": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "https://api.flexport.com/shipments/123",
+                        },
+                      },
+                      "ref_type": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/shipment",
                         },
                       },
                     },
@@ -41858,6 +46029,13 @@ Other details about this invoice",
                     "type": "enum",
                     "value": "in_transit_to_arrival_port",
                   },
+                  "target_delivery_date": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "target_delivery_date",
+                    },
+                  },
                   "transportation_mode": {
                     "type": "enum",
                     "value": "ocean",
@@ -42184,11 +46362,82 @@ Other details about this invoice",
                       "value": "2019-02-06T19:28:25+00:00",
                     },
                   },
+                  "air_shipment": {
+                    "properties": {
+                      "_object": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/air/shipment",
+                        },
+                      },
+                      "chargeable_volume": {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/quantity/volume",
+                            },
+                          },
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "double",
+                              "value": 472.62,
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "chargeable_weight": {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/quantity/weight",
+                            },
+                          },
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "double",
+                              "value": 2300.4,
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "house_airway_bill": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "HWXJKE67732",
+                        },
+                      },
+                      "master_airway_bill": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "22831046871",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
                   "arrival_date": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
                       "value": "2019-02-06T19:28:25+00:00",
+                    },
+                  },
+                  "belongs_to_a_buyers_consol": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean",
+                      "value": true,
                     },
                   },
                   "booking": {
@@ -42427,6 +46676,44 @@ Other details about this invoice",
                       "type": "string",
                       "value": "2019-02-06",
                     },
+                  },
+                  "child_shipments": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "_object": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/api/refs/object",
+                            },
+                          },
+                          "id": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "int",
+                              "value": 123,
+                            },
+                          },
+                          "link": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "https://api.flexport.com/shipments/123",
+                            },
+                          },
+                          "ref_type": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "/shipment",
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                   },
                   "commercial_invoices": {
                     "properties": {
@@ -43190,6 +47477,39 @@ Other details about this invoice",
                     },
                     "type": "object",
                   },
+                  "parent_shipment": {
+                    "properties": {
+                      "_object": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/api/refs/object",
+                        },
+                      },
+                      "id": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 123,
+                        },
+                      },
+                      "link": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "https://api.flexport.com/shipments/123",
+                        },
+                      },
+                      "ref_type": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "/shipment",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
                   "picked_up_in_full_date": {
                     "type": "primitive",
                     "value": {
@@ -43513,6 +47833,13 @@ Other details about this invoice",
                   "status": {
                     "type": "enum",
                     "value": "in_transit_to_arrival_port",
+                  },
+                  "target_delivery_date": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "target_delivery_date",
+                    },
                   },
                   "transportation_mode": {
                     "type": "enum",

@@ -204,7 +204,15 @@ Log.d("TAG", file.toString())
             "type": "object",
           },
           "response": {
-            "properties": {},
+            "properties": {
+              "filename": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "filename",
+                },
+              },
+            },
             "type": "object",
           },
           "type": "full",
@@ -1513,6 +1521,13 @@ Log.d("TAG", file.toString())
                   "value": "IMG-0412_123.JPG",
                 },
               },
+              "s3_bucket": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "custom-s3-bucket-name",
+                },
+              },
               "size": {
                 "type": "primitive",
                 "value": {
@@ -1533,6 +1548,105 @@ Log.d("TAG", file.toString())
                   "type": "string",
                   "value": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
                 },
+              },
+              "video_info": {
+                "properties": {
+                  "audio": {
+                    "properties": {
+                      "bitrate": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 78,
+                        },
+                      },
+                      "channels": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "2",
+                        },
+                      },
+                      "codec": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "aac",
+                        },
+                      },
+                      "sample_rate": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 44100,
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "bitrate": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 393,
+                    },
+                  },
+                  "duration": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 261827,
+                    },
+                  },
+                  "format": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "mp4",
+                    },
+                  },
+                  "video": {
+                    "properties": {
+                      "bitrate": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 315,
+                        },
+                      },
+                      "codec": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "h264",
+                        },
+                      },
+                      "frame_rate": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 30,
+                        },
+                      },
+                      "height": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 360,
+                        },
+                      },
+                      "width": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 640,
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
               },
             },
             "type": "object",
@@ -3559,6 +3673,13 @@ Log.d("TAG", file.toString())
                   "value": "IMG-0412_123.JPG",
                 },
               },
+              "s3_bucket": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "custom-s3-bucket-name",
+                },
+              },
               "size": {
                 "type": "primitive",
                 "value": {
@@ -3579,6 +3700,105 @@ Log.d("TAG", file.toString())
                   "type": "string",
                   "value": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
                 },
+              },
+              "video_info": {
+                "properties": {
+                  "audio": {
+                    "properties": {
+                      "bitrate": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 78,
+                        },
+                      },
+                      "channels": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "2",
+                        },
+                      },
+                      "codec": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "aac",
+                        },
+                      },
+                      "sample_rate": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 44100,
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "bitrate": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 393,
+                    },
+                  },
+                  "duration": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 261827,
+                    },
+                  },
+                  "format": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "mp4",
+                    },
+                  },
+                  "video": {
+                    "properties": {
+                      "bitrate": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 315,
+                        },
+                      },
+                      "codec": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "h264",
+                        },
+                      },
+                      "frame_rate": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 30,
+                        },
+                      },
+                      "height": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 360,
+                        },
+                      },
+                      "width": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 640,
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
               },
             },
             "type": "object",
@@ -3822,6 +4042,13 @@ Log.d("TAG", group.toString())
                 "value": {
                   "type": "datetime",
                   "value": "2018-09-12T10:03:38.686710Z",
+                },
+              },
+              "datetime_stored": {
+                "type": "primitive",
+                "value": {
+                  "type": "datetime",
+                  "value": "2015-09-21T12:39:13.953757Z",
                 },
               },
               "files": {
@@ -4737,6 +4964,13 @@ Log.d("TAG", group.toString())
                 "value": {
                   "type": "datetime",
                   "value": "2018-09-12T10:03:38.686710Z",
+                },
+              },
+              "datetime_stored": {
+                "type": "primitive",
+                "value": {
+                  "type": "datetime",
+                  "value": "2015-09-21T12:39:13.953757Z",
                 },
               },
               "files": {

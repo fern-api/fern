@@ -243,6 +243,19 @@ Here are some of the most used payload fields explained (you can find the full p
                 "value": [
                   {
                     "properties": {
+                      "labels": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "enum",
+                            "value": "UNEXPECTED_BEHAVIOR",
+                          },
+                        ],
+                      },
+                      "nature": {
+                        "type": "enum",
+                        "value": "AML",
+                      },
                       "ruleAction": {
                         "type": "enum",
                         "value": "BLOCK",
@@ -292,6 +305,19 @@ Here are some of the most used payload fields explained (you can find the full p
                 "value": [
                   {
                     "properties": {
+                      "labels": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "enum",
+                            "value": "UNEXPECTED_BEHAVIOR",
+                          },
+                        ],
+                      },
+                      "nature": {
+                        "type": "enum",
+                        "value": "AML",
+                      },
                       "ruleAction": {
                         "type": "enum",
                         "value": "BLOCK",
@@ -328,6 +354,13 @@ Here are some of the most used payload fields explained (you can find the full p
                     "type": "object",
                   },
                 ],
+              },
+              "message": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "message",
+                },
               },
               "transactionId": {
                 "type": "primitive",
@@ -616,6 +649,19 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                 "value": [
                   {
                     "properties": {
+                      "labels": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "enum",
+                            "value": "UNEXPECTED_BEHAVIOR",
+                          },
+                        ],
+                      },
+                      "nature": {
+                        "type": "enum",
+                        "value": "AML",
+                      },
                       "ruleAction": {
                         "type": "enum",
                         "value": "BLOCK",
@@ -665,6 +711,19 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                 "value": [
                   {
                     "properties": {
+                      "labels": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "enum",
+                            "value": "UNEXPECTED_BEHAVIOR",
+                          },
+                        ],
+                      },
+                      "nature": {
+                        "type": "enum",
+                        "value": "AML",
+                      },
                       "ruleAction": {
                         "type": "enum",
                         "value": "BLOCK",
@@ -729,6 +788,13 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                   "value": "8650a2611d0771cba03310f74bf6",
                 },
               },
+              "productType": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "productType",
+                },
+              },
               "promotionCodeUsed": {
                 "type": "primitive",
                 "value": {
@@ -742,6 +808,18 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                   "type": "string",
                   "value": "loan repayment",
                 },
+              },
+              "relatedTransactionIds": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "relatedTransactionIds",
+                    },
+                  },
+                ],
               },
               "tags": {
                 "type": "array",
@@ -780,6 +858,14 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                   "type": "string",
                   "value": "7b80a539eea6e78acbd6d458e5971482",
                 },
+              },
+              "transactionState": {
+                "type": "enum",
+                "value": "CREATED",
+              },
+              "type": {
+                "type": "enum",
+                "value": "DEPOSIT",
               },
             },
             "type": "object",
@@ -1127,6 +1213,19 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "value": [
                   {
                     "properties": {
+                      "labels": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "enum",
+                            "value": "UNEXPECTED_BEHAVIOR",
+                          },
+                        ],
+                      },
+                      "nature": {
+                        "type": "enum",
+                        "value": "AML",
+                      },
                       "ruleAction": {
                         "type": "enum",
                         "value": "BLOCK",
@@ -1176,6 +1275,19 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "value": [
                   {
                     "properties": {
+                      "labels": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "enum",
+                            "value": "UNEXPECTED_BEHAVIOR",
+                          },
+                        ],
+                      },
+                      "nature": {
+                        "type": "enum",
+                        "value": "AML",
+                      },
                       "ruleAction": {
                         "type": "enum",
                         "value": "BLOCK",
@@ -1351,6 +1463,13 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "value": "8650a2611d0771cba03310f74bf6",
                     },
                   },
+                  "productType": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "productType",
+                    },
+                  },
                   "promotionCodeUsed": {
                     "type": "primitive",
                     "value": {
@@ -1364,6 +1483,18 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "type": "string",
                       "value": "loan repayment",
                     },
+                  },
+                  "relatedTransactionIds": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "relatedTransactionIds",
+                        },
+                      },
+                    ],
                   },
                   "tags": {
                     "type": "array",
@@ -1402,6 +1533,14 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "type": "string",
                       "value": "7b80a539eea6e78acbd6d458e5971482",
                     },
+                  },
+                  "transactionState": {
+                    "type": "enum",
+                    "value": "CREATED",
+                  },
+                  "type": {
+                    "type": "enum",
+                    "value": "DEPOSIT",
                   },
                 },
                 "type": "object",
@@ -1889,6 +2028,19 @@ Each consumer User entity needs three mandatory fields:
                 "value": [
                   {
                     "properties": {
+                      "labels": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "enum",
+                            "value": "UNEXPECTED_BEHAVIOR",
+                          },
+                        ],
+                      },
+                      "nature": {
+                        "type": "enum",
+                        "value": "AML",
+                      },
                       "ruleAction": {
                         "type": "enum",
                         "value": "BLOCK",
@@ -1938,6 +2090,15 @@ Each consumer User entity needs three mandatory fields:
                 "value": [
                   {
                     "properties": {
+                      "labels": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "enum",
+                            "value": "UNEXPECTED_BEHAVIOR",
+                          },
+                        ],
+                      },
                       "nature": {
                         "type": "enum",
                         "value": "FRAUD",
@@ -1978,6 +2139,13 @@ Each consumer User entity needs three mandatory fields:
                     "type": "object",
                   },
                 ],
+              },
+              "message": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "message",
+                },
               },
               "userId": {
                 "type": "primitive",
@@ -2119,6 +2287,10 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
           "request": null,
           "response": {
             "properties": {
+              "acquisitionChannel": {
+                "type": "enum",
+                "value": "ORGANIC",
+              },
               "contactDetails": {
                 "properties": {
                   "addresses": {
@@ -2222,6 +2394,18 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                       },
                     ],
                   },
+                  "faxNumbers": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "faxNumbers",
+                        },
+                      },
+                    ],
+                  },
                   "websites": {
                     "type": "array",
                     "value": [
@@ -2243,6 +2427,22 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                   "type": "double",
                   "value": 1641654664000,
                 },
+              },
+              "kycStatusDetails": {
+                "properties": {
+                  "reason": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "reason",
+                    },
+                  },
+                  "status": {
+                    "type": "enum",
+                    "value": "SUCCESSFUL",
+                  },
+                },
+                "type": "object",
               },
               "legalDocuments": {
                 "type": "array",
@@ -2335,6 +2535,46 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                     "type": "object",
                   },
                 ],
+              },
+              "pepStatus": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "isPepHit": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean",
+                          "value": true,
+                        },
+                      },
+                      "pepCountry": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "pepCountry",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "reasonForAccountOpening": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "reasonForAccountOpening",
+                    },
+                  },
+                ],
+              },
+              "riskLevel": {
+                "type": "enum",
+                "value": "VERY_HIGH",
               },
               "tags": {
                 "type": "array",
@@ -2478,6 +2718,10 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                       "value": "1991-01-01",
                     },
                   },
+                  "gender": {
+                    "type": "enum",
+                    "value": "M",
+                  },
                   "name": {
                     "properties": {
                       "firstName": {
@@ -2513,6 +2757,33 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                   "type": "string",
                   "value": "96647cfd9e8fe66ee0f3362e011e34e8",
                 },
+              },
+              "userSegment": {
+                "type": "enum",
+                "value": "RETAIL",
+              },
+              "userStateDetails": {
+                "properties": {
+                  "reason": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "reason",
+                    },
+                  },
+                  "state": {
+                    "type": "enum",
+                    "value": "UNACCEPTABLE",
+                  },
+                  "userId": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "userId",
+                    },
+                  },
+                },
+                "type": "object",
               },
             },
             "type": "object",
@@ -3494,6 +3765,19 @@ Each consumer Business entity needs three mandatory fields:
                 "value": [
                   {
                     "properties": {
+                      "labels": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "enum",
+                            "value": "UNEXPECTED_BEHAVIOR",
+                          },
+                        ],
+                      },
+                      "nature": {
+                        "type": "enum",
+                        "value": "AML",
+                      },
                       "ruleAction": {
                         "type": "enum",
                         "value": "BLOCK",
@@ -3543,6 +3827,15 @@ Each consumer Business entity needs three mandatory fields:
                 "value": [
                   {
                     "properties": {
+                      "labels": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "enum",
+                            "value": "UNEXPECTED_BEHAVIOR",
+                          },
+                        ],
+                      },
                       "nature": {
                         "type": "enum",
                         "value": "FRAUD",
@@ -3583,6 +3876,13 @@ Each consumer Business entity needs three mandatory fields:
                     "type": "object",
                   },
                 ],
+              },
+              "message": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "message",
+                },
               },
               "userId": {
                 "type": "primitive",
@@ -3724,6 +4024,19 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
           "request": null,
           "response": {
             "properties": {
+              "acquisitionChannel": {
+                "type": "enum",
+                "value": "ORGANIC",
+              },
+              "allowedPaymentMethods": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "enum",
+                    "value": "ACH",
+                  },
+                ],
+              },
               "createdTimestamp": {
                 "type": "primitive",
                 "value": {
@@ -3992,6 +4305,23 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                           },
                         ],
                       },
+                      "pepStatus": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "isPepHit": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "boolean",
+                                  "value": true,
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
                       "tags": {
                         "type": "array",
                         "value": [
@@ -4020,6 +4350,22 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                     "type": "object",
                   },
                 ],
+              },
+              "kycStatusDetails": {
+                "properties": {
+                  "reason": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "reason",
+                    },
+                  },
+                  "status": {
+                    "type": "enum",
+                    "value": "SUCCESSFUL",
+                  },
+                },
+                "type": "object",
               },
               "legalEntity": {
                 "properties": {
@@ -4141,11 +4487,33 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                           },
                         ],
                       },
+                      "userRegistrationStatus": {
+                        "type": "enum",
+                        "value": "REGISTERED",
+                      },
+                      "userSegment": {
+                        "type": "enum",
+                        "value": "SOLE_PROPRIETORSHIP",
+                      },
                     },
                     "type": "object",
                   },
                   "companyRegistrationDetails": {
                     "properties": {
+                      "dateOfRegistration": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "dateOfRegistration",
+                        },
+                      },
+                      "legalEntityType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "legalEntityType",
+                        },
+                      },
                       "registrationCountry": {
                         "type": "enum",
                         "value": "DE",
@@ -4180,6 +4548,13 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                             "type": "object",
                           },
                         ],
+                      },
+                      "taxIdentifier": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "taxIdentifier",
+                        },
                       },
                     },
                     "type": "object",
@@ -4263,6 +4638,54 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                           },
                         ],
                       },
+                      "contactNumbers": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "contactNumbers",
+                            },
+                          },
+                        ],
+                      },
+                      "emailIds": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "emailIds",
+                            },
+                          },
+                        ],
+                      },
+                      "faxNumbers": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "faxNumbers",
+                            },
+                          },
+                        ],
+                      },
+                      "websites": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "websites",
+                            },
+                          },
+                        ],
+                      },
                     },
                     "type": "object",
                   },
@@ -4280,6 +4703,53 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                   },
                 },
                 "type": "object",
+              },
+              "linkedEntities": {
+                "properties": {
+                  "childUserIds": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "childUserIds",
+                        },
+                      },
+                    ],
+                  },
+                  "parentUserId": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "parentUserId",
+                    },
+                  },
+                },
+                "type": "object",
+              },
+              "mccDetails": {
+                "properties": {
+                  "code": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
+                    },
+                  },
+                  "description": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "description",
+                    },
+                  },
+                },
+                "type": "object",
+              },
+              "riskLevel": {
+                "type": "enum",
+                "value": "VERY_HIGH",
               },
               "shareHolders": {
                 "type": "array",
@@ -4542,6 +5012,23 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                           },
                         ],
                       },
+                      "pepStatus": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "isPepHit": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "boolean",
+                                  "value": true,
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
                       "tags": {
                         "type": "array",
                         "value": [
@@ -4702,6 +5189,29 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                   "type": "string",
                   "value": "96647cfd9e8fe66ee0f3362e011e34e8",
                 },
+              },
+              "userStateDetails": {
+                "properties": {
+                  "reason": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "reason",
+                    },
+                  },
+                  "state": {
+                    "type": "enum",
+                    "value": "UNACCEPTABLE",
+                  },
+                  "userId": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "userId",
+                    },
+                  },
+                },
+                "type": "object",
               },
             },
             "type": "object",
@@ -5153,6 +5663,140 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "response": {
             "properties": {
+              "acquisitionChannel": {
+                "type": "enum",
+                "value": "ORGANIC",
+              },
+              "contactDetails": {
+                "properties": {
+                  "addresses": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "properties": {
+                          "addressLines": {
+                            "type": "array",
+                            "value": [
+                              {
+                                "type": "unknown",
+                                "value": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "Klara-Franke Str 20",
+                                  },
+                                },
+                              },
+                            ],
+                          },
+                          "city": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "Berlin",
+                            },
+                          },
+                          "country": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "Germany",
+                            },
+                          },
+                          "postcode": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "10557",
+                            },
+                          },
+                          "state": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "Berlin",
+                            },
+                          },
+                          "tags": {
+                            "type": "array",
+                            "value": [
+                              {
+                                "properties": {
+                                  "key": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "customKey",
+                                    },
+                                  },
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "customValue",
+                                    },
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                  },
+                  "contactNumbers": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "contactNumbers",
+                        },
+                      },
+                    ],
+                  },
+                  "emailIds": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "emailIds",
+                        },
+                      },
+                    ],
+                  },
+                  "faxNumbers": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "faxNumbers",
+                        },
+                      },
+                    ],
+                  },
+                  "websites": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "websites",
+                        },
+                      },
+                    ],
+                  },
+                },
+                "type": "object",
+              },
               "createdTimestamp": {
                 "type": "primitive",
                 "value": {
@@ -5165,6 +5809,19 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "value": [
                   {
                     "properties": {
+                      "labels": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "enum",
+                            "value": "UNEXPECTED_BEHAVIOR",
+                          },
+                        ],
+                      },
+                      "nature": {
+                        "type": "enum",
+                        "value": "AML",
+                      },
                       "ruleAction": {
                         "type": "enum",
                         "value": "BLOCK",
@@ -5214,6 +5871,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "value": [
                   {
                     "properties": {
+                      "labels": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "enum",
+                            "value": "UNEXPECTED_BEHAVIOR",
+                          },
+                        ],
+                      },
                       "nature": {
                         "type": "enum",
                         "value": "FRAUD",
@@ -5254,6 +5920,22 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "type": "object",
                   },
                 ],
+              },
+              "kycStatusDetails": {
+                "properties": {
+                  "reason": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "reason",
+                    },
+                  },
+                  "status": {
+                    "type": "enum",
+                    "value": "SUCCESSFUL",
+                  },
+                },
+                "type": "object",
               },
               "legalDocuments": {
                 "type": "array",
@@ -5346,6 +6028,46 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "type": "object",
                   },
                 ],
+              },
+              "pepStatus": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "isPepHit": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean",
+                          "value": true,
+                        },
+                      },
+                      "pepCountry": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "pepCountry",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "reasonForAccountOpening": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "reasonForAccountOpening",
+                    },
+                  },
+                ],
+              },
+              "riskLevel": {
+                "type": "enum",
+                "value": "VERY_HIGH",
               },
               "tags": {
                 "type": "array",
@@ -5489,6 +6211,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "value": "1991-01-01",
                     },
                   },
+                  "gender": {
+                    "type": "enum",
+                    "value": "M",
+                  },
                   "name": {
                     "properties": {
                       "firstName": {
@@ -5524,6 +6250,33 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "type": "string",
                   "value": "userId",
                 },
+              },
+              "userSegment": {
+                "type": "enum",
+                "value": "RETAIL",
+              },
+              "userStateDetails": {
+                "properties": {
+                  "reason": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "reason",
+                    },
+                  },
+                  "state": {
+                    "type": "enum",
+                    "value": "UNACCEPTABLE",
+                  },
+                  "userId": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "userId",
+                    },
+                  },
+                },
+                "type": "object",
               },
             },
             "type": "object",
@@ -6599,6 +7352,19 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "response": {
             "properties": {
+              "acquisitionChannel": {
+                "type": "enum",
+                "value": "ORGANIC",
+              },
+              "allowedPaymentMethods": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "enum",
+                    "value": "ACH",
+                  },
+                ],
+              },
               "createdTimestamp": {
                 "type": "primitive",
                 "value": {
@@ -6867,6 +7633,23 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                           },
                         ],
                       },
+                      "pepStatus": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "isPepHit": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "boolean",
+                                  "value": true,
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
                       "tags": {
                         "type": "array",
                         "value": [
@@ -6901,6 +7684,19 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "value": [
                   {
                     "properties": {
+                      "labels": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "enum",
+                            "value": "UNEXPECTED_BEHAVIOR",
+                          },
+                        ],
+                      },
+                      "nature": {
+                        "type": "enum",
+                        "value": "AML",
+                      },
                       "ruleAction": {
                         "type": "enum",
                         "value": "BLOCK",
@@ -6950,6 +7746,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "value": [
                   {
                     "properties": {
+                      "labels": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "enum",
+                            "value": "UNEXPECTED_BEHAVIOR",
+                          },
+                        ],
+                      },
                       "nature": {
                         "type": "enum",
                         "value": "FRAUD",
@@ -6990,6 +7795,22 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "type": "object",
                   },
                 ],
+              },
+              "kycStatusDetails": {
+                "properties": {
+                  "reason": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "reason",
+                    },
+                  },
+                  "status": {
+                    "type": "enum",
+                    "value": "SUCCESSFUL",
+                  },
+                },
+                "type": "object",
               },
               "legalEntity": {
                 "properties": {
@@ -7111,11 +7932,33 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                           },
                         ],
                       },
+                      "userRegistrationStatus": {
+                        "type": "enum",
+                        "value": "REGISTERED",
+                      },
+                      "userSegment": {
+                        "type": "enum",
+                        "value": "SOLE_PROPRIETORSHIP",
+                      },
                     },
                     "type": "object",
                   },
                   "companyRegistrationDetails": {
                     "properties": {
+                      "dateOfRegistration": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "dateOfRegistration",
+                        },
+                      },
+                      "legalEntityType": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "legalEntityType",
+                        },
+                      },
                       "registrationCountry": {
                         "type": "enum",
                         "value": "DE",
@@ -7151,11 +7994,207 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                           },
                         ],
                       },
+                      "taxIdentifier": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "taxIdentifier",
+                        },
+                      },
                     },
                     "type": "object",
                   },
+                  "contactDetails": {
+                    "properties": {
+                      "addresses": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "addressLines": {
+                                "type": "array",
+                                "value": [
+                                  {
+                                    "type": "unknown",
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "Klara-Franke Str 20",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                              "city": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Berlin",
+                                },
+                              },
+                              "country": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Germany",
+                                },
+                              },
+                              "postcode": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "10557",
+                                },
+                              },
+                              "state": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Berlin",
+                                },
+                              },
+                              "tags": {
+                                "type": "array",
+                                "value": [
+                                  {
+                                    "properties": {
+                                      "key": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "customKey",
+                                        },
+                                      },
+                                      "value": {
+                                        "type": "primitive",
+                                        "value": {
+                                          "type": "string",
+                                          "value": "customValue",
+                                        },
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "contactNumbers": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "contactNumbers",
+                            },
+                          },
+                        ],
+                      },
+                      "emailIds": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "emailIds",
+                            },
+                          },
+                        ],
+                      },
+                      "faxNumbers": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "faxNumbers",
+                            },
+                          },
+                        ],
+                      },
+                      "websites": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "websites",
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "reasonForAccountOpening": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "reasonForAccountOpening",
+                        },
+                      },
+                    ],
+                  },
                 },
                 "type": "object",
+              },
+              "linkedEntities": {
+                "properties": {
+                  "childUserIds": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "childUserIds",
+                        },
+                      },
+                    ],
+                  },
+                  "parentUserId": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "parentUserId",
+                    },
+                  },
+                },
+                "type": "object",
+              },
+              "mccDetails": {
+                "properties": {
+                  "code": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 1.1,
+                    },
+                  },
+                  "description": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "description",
+                    },
+                  },
+                },
+                "type": "object",
+              },
+              "riskLevel": {
+                "type": "enum",
+                "value": "VERY_HIGH",
               },
               "shareHolders": {
                 "type": "array",
@@ -7418,6 +8457,23 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                           },
                         ],
                       },
+                      "pepStatus": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "isPepHit": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "boolean",
+                                  "value": true,
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
                       "tags": {
                         "type": "array",
                         "value": [
@@ -7578,6 +8634,29 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "type": "string",
                   "value": "userId",
                 },
+              },
+              "userStateDetails": {
+                "properties": {
+                  "reason": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "reason",
+                    },
+                  },
+                  "state": {
+                    "type": "enum",
+                    "value": "UNACCEPTABLE",
+                  },
+                  "userId": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "userId",
+                    },
+                  },
+                },
+                "type": "object",
               },
             },
             "type": "object",

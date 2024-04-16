@@ -626,8 +626,14 @@ If we check the checkbox where \`us_based_employees\` and \`private_repos->clone
                     "key": "na_based_employees",
                     "name": "US or Canada based employees",
                     "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "parent_id": "parent_id",
                     "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                     "resource": {
+                      "action_groups": {
+                        "action_groups": [
+                          "action_groups",
+                        ],
+                      },
                       "actions": {
                         "clone": {
                           "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
@@ -787,8 +793,14 @@ This includes any permissions granted to said condition set (i.e: any matching c
                     "key": "na_based_employees",
                     "name": "US or Canada based employees",
                     "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "parent_id": "parent_id",
                     "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                     "resource": {
+                      "action_groups": {
+                        "action_groups": [
+                          "action_groups",
+                        ],
+                      },
                       "actions": {
                         "clone": {
                           "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
@@ -893,8 +905,14 @@ This includes any permissions granted to said condition set (i.e: any matching c
                       "key": "na_based_employees",
                       "name": "US or Canada based employees",
                       "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                      "parent_id": "parent_id",
                       "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                       "resource": {
+                        "action_groups": {
+                          "action_groups": [
+                            "action_groups",
+                          ],
+                        },
                         "actions": {
                           "clone": {
                             "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
@@ -1013,8 +1031,14 @@ This includes any permissions granted to said condition set (i.e: any matching c
                       "key": "na_based_employees",
                       "name": "US or Canada based employees",
                       "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                      "parent_id": "parent_id",
                       "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                       "resource": {
+                        "action_groups": {
+                          "action_groups": [
+                            "action_groups",
+                          ],
+                        },
                         "actions": {
                           "clone": {
                             "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
@@ -1133,6 +1157,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                         "key": "na_based_employees",
                         "name": "US or Canada based employees",
                         "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                        "parent_id": "parent_id",
                         "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                         "resource": {
                           "actions": {
@@ -1174,6 +1199,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
                         "updated_at": "2019-08-24T14:15:22Z",
                       },
                     ],
+                    "page_count": 1,
                     "total_count": 1,
                   },
                 },
@@ -1282,8 +1308,14 @@ Fields that will be provided will be completely overwritten.",
                     "key": "na_based_employees",
                     "name": "US or Canada based employees",
                     "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "parent_id": "parent_id",
                     "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                     "resource": {
+                      "action_groups": {
+                        "action_groups": [
+                          "action_groups",
+                        ],
+                      },
                       "actions": {
                         "clone": {
                           "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
@@ -1434,11 +1466,23 @@ allowed.",
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
+                    "custom_branch_name": "custom_branch_name",
+                    "description": "description",
                     "id": "id",
+                    "jwks": {
+                      "keys": [
+                        {},
+                      ],
+                    },
                     "key": "key",
                     "name": "name",
                     "organization_id": "organization_id",
                     "project_id": "project_id",
+                    "settings": {
+                      "settings": {
+                        "key": "value",
+                      },
+                    },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
                 },
@@ -1501,11 +1545,23 @@ allowed.",
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
+                    "custom_branch_name": "custom_branch_name",
+                    "description": "description",
                     "id": "id",
+                    "jwks": {
+                      "keys": [
+                        {},
+                      ],
+                    },
                     "key": "key",
                     "name": "name",
                     "organization_id": "organization_id",
                     "project_id": "project_id",
+                    "settings": {
+                      "settings": {
+                        "key": "value",
+                      },
+                    },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
                 },
@@ -1563,11 +1619,23 @@ allowed.",
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
+                    "custom_branch_name": "custom_branch_name",
+                    "description": "description",
                     "id": "id",
+                    "jwks": {
+                      "keys": [
+                        {},
+                      ],
+                    },
                     "key": "key",
                     "name": "name",
                     "organization_id": "organization_id",
                     "project_id": "project_id",
+                    "settings": {
+                      "settings": {
+                        "key": "value",
+                      },
+                    },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
                 },
@@ -1606,11 +1674,23 @@ allowed.",
                   "body": [
                     {
                       "created_at": "2024-01-15T09:30:00Z",
+                      "custom_branch_name": "custom_branch_name",
+                      "description": "description",
                       "id": "id",
+                      "jwks": {
+                        "keys": [
+                          {},
+                        ],
+                      },
                       "key": "key",
                       "name": "name",
                       "organization_id": "organization_id",
                       "project_id": "project_id",
+                      "settings": {
+                        "settings": {
+                          "key": "value",
+                        },
+                      },
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
                   ],
@@ -1659,7 +1739,14 @@ allowed.",
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
+                    "custom_branch_name": "custom_branch_name",
+                    "description": "description",
                     "id": "id",
+                    "jwks": {
+                      "keys": [
+                        {},
+                      ],
+                    },
                     "key": "key",
                     "name": "name",
                     "organization_id": "organization_id",
@@ -1668,11 +1755,17 @@ allowed.",
                         "client_secret": "client_secret",
                         "environment_id": "environment_id",
                         "id": "id",
+                        "name": "name",
                         "organization_id": "organization_id",
                         "project_id": "project_id",
                       },
                     ],
                     "project_id": "project_id",
+                    "settings": {
+                      "settings": {
+                        "key": "value",
+                      },
+                    },
                     "stats": {
                       "has_decision_logs": true,
                       "members": [
@@ -1769,11 +1862,23 @@ allowed.",
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
+                    "custom_branch_name": "custom_branch_name",
+                    "description": "description",
                     "id": "id",
+                    "jwks": {
+                      "keys": [
+                        {},
+                      ],
+                    },
                     "key": "key",
                     "name": "name",
                     "organization_id": "organization_id",
                     "project_id": "project_id",
+                    "settings": {
+                      "settings": {
+                        "key": "value",
+                      },
+                    },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
                 },
@@ -1869,11 +1974,18 @@ authenticated actor (i.e: human team member or api key).",
                 },
                 "response": {
                   "body": {
+                    "api_key_id": "api_key_id",
+                    "api_key_secret": "api_key_secret",
                     "created_at": "2024-01-15T09:30:00Z",
                     "id": "id",
                     "is_enterprise": true,
                     "key": "key",
                     "name": "name",
+                    "settings": {
+                      "settings": {
+                        "key": "value",
+                      },
+                    },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
                 },
@@ -1940,6 +2052,11 @@ if such org exists and can be accessed by the authenticated actor.",
                     "is_enterprise": true,
                     "key": "key",
                     "name": "name",
+                    "settings": {
+                      "settings": {
+                        "key": "value",
+                      },
+                    },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
                 },
@@ -1972,6 +2089,11 @@ if such org exists and can be accessed by the authenticated actor.",
                     "is_enterprise": true,
                     "key": "key",
                     "name": "name",
+                    "settings": {
+                      "settings": {
+                        "key": "value",
+                      },
+                    },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
                 },
@@ -2008,6 +2130,11 @@ authenticated actor (i.e: human team member or api key).",
                       "is_enterprise": true,
                       "key": "key",
                       "name": "name",
+                      "settings": {
+                        "settings": {
+                          "key": "value",
+                        },
+                      },
                       "updated_at": "2024-01-15T09:30:00Z",
                     },
                   ],
@@ -2054,6 +2181,11 @@ authenticated actor (i.e: human team member or api key).",
                     "is_enterprise": true,
                     "key": "key",
                     "name": "name",
+                    "settings": {
+                      "settings": {
+                        "key": "value",
+                      },
+                    },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
                 },
@@ -2122,12 +2254,20 @@ Every project is a separate silo, and has its own unique set of environments and
                 },
                 "response": {
                   "body": {
+                    "active_policy_repo_id": "active_policy_repo_id",
                     "created_at": "2024-01-15T09:30:00Z",
+                    "description": "description",
                     "id": "id",
                     "key": "key",
                     "name": "name",
                     "organization_id": "organization_id",
+                    "settings": {
+                      "settings": {
+                        "key": "value",
+                      },
+                    },
                     "updated_at": "2024-01-15T09:30:00Z",
+                    "urn_namespace": "urn_namespace",
                   },
                 },
               },
@@ -2202,12 +2342,20 @@ Every project is a separate silo, and has its own unique set of environments and
                 },
                 "response": {
                   "body": {
+                    "active_policy_repo_id": "active_policy_repo_id",
                     "created_at": "2024-01-15T09:30:00Z",
+                    "description": "description",
                     "id": "id",
                     "key": "key",
                     "name": "name",
                     "organization_id": "organization_id",
+                    "settings": {
+                      "settings": {
+                        "key": "value",
+                      },
+                    },
                     "updated_at": "2024-01-15T09:30:00Z",
+                    "urn_namespace": "urn_namespace",
                   },
                 },
               },
@@ -2237,12 +2385,20 @@ Every project is a separate silo, and has its own unique set of environments and
                 "response": {
                   "body": [
                     {
+                      "active_policy_repo_id": "active_policy_repo_id",
                       "created_at": "2024-01-15T09:30:00Z",
+                      "description": "description",
                       "id": "id",
                       "key": "key",
                       "name": "name",
                       "organization_id": "organization_id",
+                      "settings": {
+                        "settings": {
+                          "key": "value",
+                        },
+                      },
                       "updated_at": "2024-01-15T09:30:00Z",
+                      "urn_namespace": "urn_namespace",
                     },
                   ],
                 },
@@ -2283,12 +2439,20 @@ Every project is a separate silo, and has its own unique set of environments and
                 "request": {},
                 "response": {
                   "body": {
+                    "active_policy_repo_id": "active_policy_repo_id",
                     "created_at": "2024-01-15T09:30:00Z",
+                    "description": "description",
                     "id": "id",
                     "key": "key",
                     "name": "name",
                     "organization_id": "organization_id",
+                    "settings": {
+                      "settings": {
+                        "key": "value",
+                      },
+                    },
                     "updated_at": "2024-01-15T09:30:00Z",
+                    "urn_namespace": "urn_namespace",
                   },
                 },
               },
@@ -2376,6 +2540,11 @@ to a role as one action.
                       "read",
                       "update",
                     ],
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "Writer Action Group",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -2487,6 +2656,11 @@ This includes any permissions granted to perform the action.",
                       "read",
                       "update",
                     ],
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "Writer Action Group",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -2547,6 +2721,11 @@ This includes any permissions granted to perform the action.",
                         "read",
                         "update",
                       ],
+                      "attributes": {
+                        "attributes": {
+                          "key": "value",
+                        },
+                      },
                       "created_at": "2019-08-24T14:15:22Z",
                       "description": "Writer Action Group",
                       "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -2619,6 +2798,11 @@ Fields that will be provided will be completely overwritten.",
                       "read",
                       "update",
                     ],
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "Writer Action Group",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -2717,6 +2901,11 @@ Each (resource, action) pair defines a unique permission level.
                 },
                 "response": {
                   "body": {
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "read a document",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -2824,6 +3013,11 @@ This includes any permissions granted to perform the action.",
                 },
                 "response": {
                   "body": {
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "read a document",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -2881,6 +3075,11 @@ This includes any permissions granted to perform the action.",
                 "response": {
                   "body": [
                     {
+                      "attributes": {
+                        "attributes": {
+                          "key": "value",
+                        },
+                      },
                       "created_at": "2019-08-24T14:15:22Z",
                       "description": "read a document",
                       "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -2952,6 +3151,11 @@ Fields that will be provided will be completely overwritten.",
                 },
                 "response": {
                   "body": {
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "read a document",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -3705,6 +3909,11 @@ If some of the permissions specified are already assigned, will skip them.",
                 },
                 "response": {
                   "body": {
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the maintainer role can read from the repo and push changes",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -3780,6 +3989,11 @@ If some of the permissions specified are already assigned, will skip them.",
                 },
                 "response": {
                   "body": {
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the maintainer role can read from the repo and push changes",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -3900,6 +4114,11 @@ This includes any permissions granted to said role.",
                 },
                 "response": {
                   "body": {
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the maintainer role can read from the repo and push changes",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -4094,6 +4313,11 @@ This includes any permissions granted to said role.",
                 "response": {
                   "body": [
                     {
+                      "attributes": {
+                        "attributes": {
+                          "key": "value",
+                        },
+                      },
                       "created_at": "2019-08-24T14:15:22Z",
                       "description": "the maintainer role can read from the repo and push changes",
                       "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -4173,6 +4397,11 @@ If some of the permissions specified are already unassigned, will skip them.",
                 },
                 "response": {
                   "body": {
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the maintainer role can read from the repo and push changes",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -4245,6 +4474,11 @@ Fields that will be provided will be completely overwritten.",
                 },
                 "response": {
                   "body": {
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the maintainer role can read from the repo and push changes",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -4378,26 +4612,42 @@ A resource may also contain:
                 },
                 "response": {
                   "body": {
+                    "action_groups": {
+                      "action_groups": [
+                        "action_groups",
+                      ],
+                    },
                     "actions": {
                       "clone": {
+                        "description": "description",
                         "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
+                        "key": "key",
+                        "name": "name",
                       },
                       "push": {
+                        "description": "description",
                         "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
+                        "key": "key",
+                        "name": "name",
                       },
                       "read": {
+                        "description": "description",
                         "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
+                        "key": "key",
+                        "name": "name",
                       },
                     },
                     "attributes": {
                       "created": {
                         "description": "the time (timestamp) the repository was created",
                         "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                        "key": "key",
                         "type": "time",
                       },
                       "private": {
                         "description": "whether the repo is private (if false, the repo is public)",
                         "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                        "key": "key",
                         "type": "bool",
                       },
                     },
@@ -4508,26 +4758,42 @@ A resource may also contain:
                 },
                 "response": {
                   "body": {
+                    "action_groups": {
+                      "action_groups": [
+                        "action_groups",
+                      ],
+                    },
                     "actions": {
                       "clone": {
+                        "description": "description",
                         "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
+                        "key": "key",
+                        "name": "name",
                       },
                       "push": {
+                        "description": "description",
                         "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
+                        "key": "key",
+                        "name": "name",
                       },
                       "read": {
+                        "description": "description",
                         "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
+                        "key": "key",
+                        "name": "name",
                       },
                     },
                     "attributes": {
                       "created": {
                         "description": "the time (timestamp) the repository was created",
                         "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                        "key": "key",
                         "type": "time",
                       },
                       "private": {
                         "description": "whether the repo is private (if false, the repo is public)",
                         "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                        "key": "key",
                         "type": "bool",
                       },
                     },
@@ -4583,6 +4849,11 @@ A resource may also contain:
                   "body": {
                     "data": [
                       {
+                        "action_groups": {
+                          "action_groups": [
+                            "action_groups",
+                          ],
+                        },
                         "actions": {
                           "clone": {
                             "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
@@ -4618,6 +4889,7 @@ A resource may also contain:
                         "urn": "prn:github:scm:repository",
                       },
                     ],
+                    "page_count": 1,
                     "total_count": 1,
                   },
                 },
@@ -4693,26 +4965,42 @@ TODO: we need to decide if we are auto-revoking, or if we are rejecting the PUT 
                 },
                 "response": {
                   "body": {
+                    "action_groups": {
+                      "action_groups": [
+                        "action_groups",
+                      ],
+                    },
                     "actions": {
                       "clone": {
+                        "description": "description",
                         "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
+                        "key": "key",
+                        "name": "name",
                       },
                       "push": {
+                        "description": "description",
                         "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
+                        "key": "key",
+                        "name": "name",
                       },
                       "read": {
+                        "description": "description",
                         "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
+                        "key": "key",
+                        "name": "name",
                       },
                     },
                     "attributes": {
                       "created": {
                         "description": "the time (timestamp) the repository was created",
                         "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                        "key": "key",
                         "type": "time",
                       },
                       "private": {
                         "description": "whether the repo is private (if false, the repo is public)",
                         "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                        "key": "key",
                         "type": "bool",
                       },
                     },
@@ -4801,26 +5089,42 @@ Fields that will be provided will be completely overwritten.",
                 "request": {},
                 "response": {
                   "body": {
+                    "action_groups": {
+                      "action_groups": [
+                        "action_groups",
+                      ],
+                    },
                     "actions": {
                       "clone": {
+                        "description": "description",
                         "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
+                        "key": "key",
+                        "name": "name",
                       },
                       "push": {
+                        "description": "description",
                         "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
+                        "key": "key",
+                        "name": "name",
                       },
                       "read": {
+                        "description": "description",
                         "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
+                        "key": "key",
+                        "name": "name",
                       },
                     },
                     "attributes": {
                       "created": {
                         "description": "the time (timestamp) the repository was created",
                         "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                        "key": "key",
                         "type": "time",
                       },
                       "private": {
                         "description": "whether the repo is private (if false, the repo is public)",
                         "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                        "key": "key",
                         "type": "bool",
                       },
                     },
@@ -4997,7 +5301,9 @@ The tenant defines the scope of the assignment. In other words, the role is effe
                   },
                 ],
                 "response": {
-                  "body": {},
+                  "body": {
+                    "assignments_created": 1,
+                  },
                 },
               },
             ],
@@ -5042,7 +5348,9 @@ The tenant defines the scope of the assignment. In other words, the role is effe
                   },
                 ],
                 "response": {
-                  "body": {},
+                  "body": {
+                    "assignments_removed": 1,
+                  },
                 },
               },
             ],
@@ -5215,6 +5523,11 @@ If some of the permissions specified are already assigned, will skip them.",
                 },
                 "response": {
                   "body": {
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the editor role can read and write to documents",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -5284,6 +5597,11 @@ If some of the permissions specified are already assigned, will skip them.",
                 },
                 "response": {
                   "body": {
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the editor role can read and write to documents",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -5394,6 +5712,11 @@ This includes any permissions granted to said role.",
                 },
                 "response": {
                   "body": {
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the editor role can read and write to documents",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -5588,6 +5911,7 @@ This includes any permissions granted to said role.",
                         "updated_at": "2019-08-24T14:15:22Z",
                       },
                     ],
+                    "page_count": 1,
                     "total_count": 1,
                   },
                 },
@@ -5654,6 +5978,11 @@ If some of the permissions specified are already unassigned, will skip them.",
                 },
                 "response": {
                   "body": {
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the editor role can read and write to documents",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -5720,6 +6049,11 @@ Fields that will be provided will be completely overwritten.",
                 },
                 "response": {
                   "body": {
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the editor role can read and write to documents",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -5857,6 +6191,7 @@ and will return the existing tenant object in the response body.",
                       },
                     },
                     "created_at": "2019-08-24T14:15:22Z",
+                    "description": "description",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
                     "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                     "key": "stripeinc",
@@ -5964,6 +6299,7 @@ and will return the existing tenant object in the response body.",
                       },
                     },
                     "created_at": "2019-08-24T14:15:22Z",
+                    "description": "description",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
                     "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                     "key": "stripeinc",
@@ -6059,6 +6395,7 @@ and will return the existing tenant object in the response body.",
                         ],
                       },
                     ],
+                    "page_count": 1,
                     "total_count": 1,
                   },
                 },
@@ -6130,6 +6467,7 @@ and will return the existing tenant object in the response body.",
                           },
                         },
                         "created_at": "2019-08-24T14:15:22Z",
+                        "description": "description",
                         "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
                         "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                         "key": "stripeinc",
@@ -6140,6 +6478,7 @@ and will return the existing tenant object in the response body.",
                         "updated_at": "2019-08-24T14:15:22Z",
                       },
                     ],
+                    "page_count": 1,
                     "total_count": 1,
                   },
                 },
@@ -6208,6 +6547,7 @@ Fields that will be provided will be completely overwritten.",
                       },
                     },
                     "created_at": "2019-08-24T14:15:22Z",
+                    "description": "description",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
                     "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                     "key": "stripeinc",
@@ -6947,6 +7287,7 @@ and will return the existing user object in the response body.",
                         ],
                       },
                     ],
+                    "page_count": 1,
                     "total_count": 1,
                   },
                 },
