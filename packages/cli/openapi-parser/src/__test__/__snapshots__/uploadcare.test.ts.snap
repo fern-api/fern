@@ -204,15 +204,7 @@ Log.d("TAG", file.toString())
             "type": "object",
           },
           "response": {
-            "properties": {
-              "filename": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "filename",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -940,126 +932,7 @@ You can upload the file parts in parallel provided that the byte order stays unc
 **Note**: You MUST define \`Content-Type\` header for your data.
 ",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "codeSamples": [
-            {
-              "code": "import { multipartUpload } from '@uploadcare/upload-client'
-
-// partData is a chunk of the uploaded file's content
-// must be \`Blob\` or \`File\` or \`Buffer\`
-const result = await multipartUpload(
-  partData,
-  '<presigned-url-x>'
-)
-",
-              "description": null,
-              "install": null,
-              "language": "JavaScript",
-              "name": "JS",
-              "type": "language",
-            },
-            {
-              "code": "// Uploadcare lib provides high level API for multipart uploads that does everything for you
-
-<?php
-$configuration = Uploadcare\\Configuration::create((string) $_ENV['UPLOADCARE_PUBLIC_KEY'], (string) $_ENV['UPLOADCARE_SECRET_KEY']);
-
-$uploader = new Uploadcare\\Uploader\\Uploader($configuration);
-$path = '/path-to-large-file.zip';
-$handle = \\fopen($path, 'rb');
-$response = $uploader->fromResource($handle, null, null, 'auto', [
-    'size' => \\filesize($path), // The "size" is the metadata key
-]);
-echo \\sprintf('File uploaded. ID is \\'%s\\'', $response->getUuid());
-",
-              "description": null,
-              "install": null,
-              "language": "PHP",
-              "name": "PHP",
-              "type": "language",
-            },
-            {
-              "code": "// Uploadcare lib provides high level API for multipart uploads that does everything for you
-
-from pyuploadcare import Uploadcare, File
-
-uploadcare = Uploadcare(public_key='YOUR_PUBLIC_KEY', secret_key='YOUR_SECRET_KEY')
-with open('test1.txt', 'rb') as file_object:
-    ucare_file = uploadcare.multipart_upload(file_object)
-",
-              "description": null,
-              "install": null,
-              "language": "Python",
-              "name": "Python",
-              "type": "language",
-            },
-            {
-              "code": "// Uploadcare lib provides high level API for multipart uploads that does everything for you
-
-require 'uploadcare'
-Uploadcare.config.public_key = "YOUR_PUBLIC_KEY"
-Uploadcare.config.secret_key = "YOUR_SECRET_KEY"
-
-source_file = File.open('image.png')
-uploaded_file = Uploadcare::Uploader.upload(source_file, store: auto)
-",
-              "description": null,
-              "install": null,
-              "language": "Ruby",
-              "name": "Ruby",
-              "type": "language",
-            },
-            {
-              "code": "// Uploadcare lib provides high level API for multipart uploads that does everything for you
-
-import Uploadcare
-
-let uploadcare = Uploadcare(withPublicKey: "YOUR_PUBLIC_KEY", secretKey: "YOUR_SECRET_KEY")
-
-guard let url = Bundle.main.url(forResource: "Mona_Lisa_23mb", withExtension: "jpg"),
-      let data = try? Data(contentsOf: url) else { return }
-
-let metadata = ["subsystem": "uploader", "pet": "cat"]
-let onProgress: (Double)->Void = { (progress) in
-  print("progress: \\(progress)")
-}
-
-let file = try await uploadcare.uploadAPI.multipartUpload(data, withName: "Mona_Lisa_big.jpg", store: .auto, metadata: metadata, onProgress)
-print(file)
-",
-              "description": null,
-              "install": null,
-              "language": "Swift",
-              "name": "Swift",
-              "type": "language",
-            },
-            {
-              "code": "import com.uploadcare.android.library.api.UploadcareClient
-
-val uploadcare = UploadcareClient(publicKey = "YOUR_PUBLIC_KEY", secretKey = "YOUR_SECRET_KEY")
-
-val uri = "content://com.android.providers.media.documents/document/image%3A1000001178".toUri()
-val file = FileUploader(uploadcare, uri = uri, context = context).upload()
-Log.d("TAG", file.toString())
-",
-              "description": null,
-              "install": null,
-              "language": "Kotlin",
-              "name": "Kotlin",
-              "type": "language",
-            },
-          ],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": null,
-          "response": null,
-          "type": "full",
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "MultipartFileUploadPartRequest",
       "headers": [],
       "internal": null,
@@ -1640,13 +1513,6 @@ Log.d("TAG", file.toString())
                   "value": "IMG-0412_123.JPG",
                 },
               },
-              "s3_bucket": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "custom-s3-bucket-name",
-                },
-              },
               "size": {
                 "type": "primitive",
                 "value": {
@@ -1667,105 +1533,6 @@ Log.d("TAG", file.toString())
                   "type": "string",
                   "value": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
                 },
-              },
-              "video_info": {
-                "properties": {
-                  "audio": {
-                    "properties": {
-                      "bitrate": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 78,
-                        },
-                      },
-                      "channels": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2",
-                        },
-                      },
-                      "codec": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "aac",
-                        },
-                      },
-                      "sample_rate": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 44100,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "bitrate": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 393,
-                    },
-                  },
-                  "duration": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 261827,
-                    },
-                  },
-                  "format": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "mp4",
-                    },
-                  },
-                  "video": {
-                    "properties": {
-                      "bitrate": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 315,
-                        },
-                      },
-                      "codec": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "h264",
-                        },
-                      },
-                      "frame_rate": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 30,
-                        },
-                      },
-                      "height": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 360,
-                        },
-                      },
-                      "width": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 640,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                },
-                "type": "object",
               },
             },
             "type": "object",
@@ -1982,7 +1749,182 @@ Log.d("TAG", file.toString())
           ],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "type-token",
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "expire": {
+                "type": "primitive",
+                "value": {
+                  "type": "double",
+                  "value": 1454902434,
+                },
+              },
+              "metadata[{key}]": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "#/components/examples/metadataValue/value",
+                },
+              },
+              "pub_key": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "caa9d29da887ee88ffe6",
+                },
+              },
+              "signature": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "04b29480233f4def5c875875b6bdc3b1",
+                },
+              },
+              "source_url": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "source_url",
+                },
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "token": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "945ebb27-1fd6-46c6-a859-b9893712d650",
+                },
+              },
+              "type": {
+                "type": "literal",
+                "value": {
+                  "type": "string",
+                  "value": "token",
+                },
+              },
+            },
+            "type": "object",
+          },
+          "type": "full",
+        },
+        {
+          "codeSamples": [
+            {
+              "code": "import { fromUrl } from '@uploadcare/upload-client'
+
+const result = await fromUrl(
+  'https://source.unsplash.com/featured',
+  {
+    publicKey: 'YOUR_PUBLIC_KEY',
+    metadata: {
+      subsystem: 'uploader',
+      pet: 'cat'
+    }
+  }
+)
+",
+              "description": null,
+              "install": null,
+              "language": "JavaScript",
+              "name": "JS",
+              "type": "language",
+            },
+            {
+              "code": "<?php
+$configuration = Uploadcare\\Configuration::create((string) $_ENV['UPLOADCARE_PUBLIC_KEY'], (string) $_ENV['UPLOADCARE_SECRET_KEY']);
+
+$uploader = new Uploadcare\\Uploader\\Uploader($configuration);
+$url = 'https://source.unsplash.com/featured';
+$token = $uploader->fromUrl($url, null, null, 'auto', [
+    'action' => 'upload from URL', // The "Action" is the metadata key
+    'checkDuplicates' => true,
+    'storeDuplicates' => false,
+]);
+echo \\sprintf('Upload from URL \\'%s\\' has been started. Token is %s', $url, $token);
+",
+              "description": null,
+              "install": null,
+              "language": "PHP",
+              "name": "PHP",
+              "type": "language",
+            },
+            {
+              "code": "from pyuploadcare import Uploadcare
+
+uploadcare = Uploadcare(public_key='YOUR_PUBLIC_KEY', secret_key='YOUR_SECRET_KEY')
+ucare_file = uploadcare.upload_from_url_sync(
+    "https://source.unsplash.com/featured",
+    check_duplicates=True,
+    save_duplicates=False
+)
+",
+              "description": null,
+              "install": null,
+              "language": "Python",
+              "name": "Python",
+              "type": "language",
+            },
+            {
+              "code": "require 'uploadcare'
+Uploadcare.config.public_key = "YOUR_PUBLIC_KEY"
+
+source_url = "https://source.unsplash.com/featured"
+uploaded_file = Uploadcare::Uploader.upload(source_url, store: auto)
+",
+              "description": null,
+              "install": null,
+              "language": "Ruby",
+              "name": "Ruby",
+              "type": "language",
+            },
+            {
+              "code": "import Uploadcare
+
+let uploadcare = Uploadcare(withPublicKey: "YOUR_PUBLIC_KEY", secretKey: "YOUR_SECRET_KEY")
+
+let url = URL(string: "https://source.unsplash.com/featured")!
+let task = UploadFromURLTask(sourceUrl: url)
+  .store(.auto)
+  .setMetadata("uploader", forKey: "subsystem")
+  .setMetadata("cat", forKey: "pet")
+
+let file = try await uploadcare.uploadAPI.uploadAndWaitForCompletion(task: task)
+print(file)
+",
+              "description": null,
+              "install": null,
+              "language": "Swift",
+              "name": "Swift",
+              "type": "language",
+            },
+            {
+              "code": "import com.uploadcare.android.library.api.UploadcareClient
+
+val uploadcare = UploadcareClient(publicKey = "YOUR_PUBLIC_KEY", secretKey = "YOUR_SECRET_KEY")
+
+val uploader = UrlUploader(
+    client = uploadcare,
+    sourceUrl = "https://source.unsplash.com/featured"
+)
+val file = uploader.upload()
+Log.d("TAG", file.toString())
+",
+              "description": null,
+              "install": null,
+              "language": "Kotlin",
+              "name": "Kotlin",
+              "type": "language",
+            },
+          ],
+          "description": null,
+          "headers": [],
+          "name": "type-file-info",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -2478,7 +2420,483 @@ Log.d("TAG", status.toString())
           ],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "status-waiting",
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "token",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "token",
+                },
+              },
+            },
+          ],
+          "request": null,
+          "response": {
+            "properties": {
+              "status": {
+                "type": "literal",
+                "value": {
+                  "type": "string",
+                  "value": "waiting",
+                },
+              },
+            },
+            "type": "object",
+          },
+          "type": "full",
+        },
+        {
+          "codeSamples": [
+            {
+              "code": "import { fromUrlStatus } from '@uploadcare/upload-client'
+
+const result = await fromUrlStatus(
+  '945ebb27-1fd6-46c6-a859-b9893712d650',
+  {
+    publicKey: 'YOUR_PUBLIC_KEY'
+  }
+)
+",
+              "description": null,
+              "install": null,
+              "language": "JavaScript",
+              "name": "JS",
+              "type": "language",
+            },
+            {
+              "code": "<?php
+$configuration = Uploadcare\\Configuration::create((string) $_ENV['UPLOADCARE_PUBLIC_KEY'], (string) $_ENV['UPLOADCARE_SECRET_KEY']);
+
+$uploader = new Uploadcare\\Uploader\\Uploader($configuration);
+$status = $uploader->checkStatus('945ebb27-1fd6-46c6-a859-b9893712d650');
+echo \\sprintf('Upload status is %s', $status);
+",
+              "description": null,
+              "install": null,
+              "language": "PHP",
+              "name": "PHP",
+              "type": "language",
+            },
+            {
+              "code": "from pyuploadcare import Uploadcare, File
+
+uploadcare = Uploadcare(public_key='YOUR_PUBLIC_KEY', secret_key='YOUR_SECRET_KEY')
+file = uploadcare.file_from_url('945ebb27-1fd6-46c6-a859-b9893712d650')
+print(file.info)
+",
+              "description": null,
+              "install": null,
+              "language": "Python",
+              "name": "Python",
+              "type": "language",
+            },
+            {
+              "code": "require 'uploadcare'
+Uploadcare.config.public_key = "YOUR_PUBLIC_KEY"
+Uploadcare.config.secret_key = "YOUR_SECRET_KEY"
+
+token = '945ebb27-1fd6-46c6-a859-b9893712d650'
+puts Uploadcare::Uploader.get_upload_from_url_status(token)
+",
+              "description": null,
+              "install": null,
+              "language": "Ruby",
+              "name": "Ruby",
+              "type": "language",
+            },
+            {
+              "code": "import Uploadcare
+
+let uploadcare = Uploadcare(withPublicKey: "YOUR_PUBLIC_KEY", secretKey: "YOUR_SECRET_KEY")
+
+let status = try await uploadcare.uploadAPI.uploadStatus(forToken: "945ebb27-1fd6-46c6-a859-b9893712d650")
+print(status)
+",
+              "description": null,
+              "install": null,
+              "language": "Swift",
+              "name": "Swift",
+              "type": "language",
+            },
+            {
+              "code": "import com.uploadcare.android.library.api.UploadcareClient
+
+val uploadcare = UploadcareClient(publicKey = "YOUR_PUBLIC_KEY", secretKey = "YOUR_SECRET_KEY")
+
+val status = uploadcare.getFromUrlStatus(token = "945ebb27-1fd6-46c6-a859-b9893712d650")
+Log.d("TAG", status.toString())
+",
+              "description": null,
+              "install": null,
+              "language": "Kotlin",
+              "name": "Kotlin",
+              "type": "language",
+            },
+          ],
+          "description": null,
+          "headers": [],
+          "name": "status-progress",
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "token",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "token",
+                },
+              },
+            },
+          ],
+          "request": null,
+          "response": {
+            "properties": {
+              "status": {
+                "type": "literal",
+                "value": {
+                  "type": "string",
+                  "value": "waiting",
+                },
+              },
+            },
+            "type": "object",
+          },
+          "type": "full",
+        },
+        {
+          "codeSamples": [
+            {
+              "code": "import { fromUrlStatus } from '@uploadcare/upload-client'
+
+const result = await fromUrlStatus(
+  '945ebb27-1fd6-46c6-a859-b9893712d650',
+  {
+    publicKey: 'YOUR_PUBLIC_KEY'
+  }
+)
+",
+              "description": null,
+              "install": null,
+              "language": "JavaScript",
+              "name": "JS",
+              "type": "language",
+            },
+            {
+              "code": "<?php
+$configuration = Uploadcare\\Configuration::create((string) $_ENV['UPLOADCARE_PUBLIC_KEY'], (string) $_ENV['UPLOADCARE_SECRET_KEY']);
+
+$uploader = new Uploadcare\\Uploader\\Uploader($configuration);
+$status = $uploader->checkStatus('945ebb27-1fd6-46c6-a859-b9893712d650');
+echo \\sprintf('Upload status is %s', $status);
+",
+              "description": null,
+              "install": null,
+              "language": "PHP",
+              "name": "PHP",
+              "type": "language",
+            },
+            {
+              "code": "from pyuploadcare import Uploadcare, File
+
+uploadcare = Uploadcare(public_key='YOUR_PUBLIC_KEY', secret_key='YOUR_SECRET_KEY')
+file = uploadcare.file_from_url('945ebb27-1fd6-46c6-a859-b9893712d650')
+print(file.info)
+",
+              "description": null,
+              "install": null,
+              "language": "Python",
+              "name": "Python",
+              "type": "language",
+            },
+            {
+              "code": "require 'uploadcare'
+Uploadcare.config.public_key = "YOUR_PUBLIC_KEY"
+Uploadcare.config.secret_key = "YOUR_SECRET_KEY"
+
+token = '945ebb27-1fd6-46c6-a859-b9893712d650'
+puts Uploadcare::Uploader.get_upload_from_url_status(token)
+",
+              "description": null,
+              "install": null,
+              "language": "Ruby",
+              "name": "Ruby",
+              "type": "language",
+            },
+            {
+              "code": "import Uploadcare
+
+let uploadcare = Uploadcare(withPublicKey: "YOUR_PUBLIC_KEY", secretKey: "YOUR_SECRET_KEY")
+
+let status = try await uploadcare.uploadAPI.uploadStatus(forToken: "945ebb27-1fd6-46c6-a859-b9893712d650")
+print(status)
+",
+              "description": null,
+              "install": null,
+              "language": "Swift",
+              "name": "Swift",
+              "type": "language",
+            },
+            {
+              "code": "import com.uploadcare.android.library.api.UploadcareClient
+
+val uploadcare = UploadcareClient(publicKey = "YOUR_PUBLIC_KEY", secretKey = "YOUR_SECRET_KEY")
+
+val status = uploadcare.getFromUrlStatus(token = "945ebb27-1fd6-46c6-a859-b9893712d650")
+Log.d("TAG", status.toString())
+",
+              "description": null,
+              "install": null,
+              "language": "Kotlin",
+              "name": "Kotlin",
+              "type": "language",
+            },
+          ],
+          "description": null,
+          "headers": [],
+          "name": "status-success",
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "token",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "token",
+                },
+              },
+            },
+          ],
+          "request": null,
+          "response": {
+            "properties": {
+              "status": {
+                "type": "literal",
+                "value": {
+                  "type": "string",
+                  "value": "waiting",
+                },
+              },
+            },
+            "type": "object",
+          },
+          "type": "full",
+        },
+        {
+          "codeSamples": [
+            {
+              "code": "import { fromUrlStatus } from '@uploadcare/upload-client'
+
+const result = await fromUrlStatus(
+  '945ebb27-1fd6-46c6-a859-b9893712d650',
+  {
+    publicKey: 'YOUR_PUBLIC_KEY'
+  }
+)
+",
+              "description": null,
+              "install": null,
+              "language": "JavaScript",
+              "name": "JS",
+              "type": "language",
+            },
+            {
+              "code": "<?php
+$configuration = Uploadcare\\Configuration::create((string) $_ENV['UPLOADCARE_PUBLIC_KEY'], (string) $_ENV['UPLOADCARE_SECRET_KEY']);
+
+$uploader = new Uploadcare\\Uploader\\Uploader($configuration);
+$status = $uploader->checkStatus('945ebb27-1fd6-46c6-a859-b9893712d650');
+echo \\sprintf('Upload status is %s', $status);
+",
+              "description": null,
+              "install": null,
+              "language": "PHP",
+              "name": "PHP",
+              "type": "language",
+            },
+            {
+              "code": "from pyuploadcare import Uploadcare, File
+
+uploadcare = Uploadcare(public_key='YOUR_PUBLIC_KEY', secret_key='YOUR_SECRET_KEY')
+file = uploadcare.file_from_url('945ebb27-1fd6-46c6-a859-b9893712d650')
+print(file.info)
+",
+              "description": null,
+              "install": null,
+              "language": "Python",
+              "name": "Python",
+              "type": "language",
+            },
+            {
+              "code": "require 'uploadcare'
+Uploadcare.config.public_key = "YOUR_PUBLIC_KEY"
+Uploadcare.config.secret_key = "YOUR_SECRET_KEY"
+
+token = '945ebb27-1fd6-46c6-a859-b9893712d650'
+puts Uploadcare::Uploader.get_upload_from_url_status(token)
+",
+              "description": null,
+              "install": null,
+              "language": "Ruby",
+              "name": "Ruby",
+              "type": "language",
+            },
+            {
+              "code": "import Uploadcare
+
+let uploadcare = Uploadcare(withPublicKey: "YOUR_PUBLIC_KEY", secretKey: "YOUR_SECRET_KEY")
+
+let status = try await uploadcare.uploadAPI.uploadStatus(forToken: "945ebb27-1fd6-46c6-a859-b9893712d650")
+print(status)
+",
+              "description": null,
+              "install": null,
+              "language": "Swift",
+              "name": "Swift",
+              "type": "language",
+            },
+            {
+              "code": "import com.uploadcare.android.library.api.UploadcareClient
+
+val uploadcare = UploadcareClient(publicKey = "YOUR_PUBLIC_KEY", secretKey = "YOUR_SECRET_KEY")
+
+val status = uploadcare.getFromUrlStatus(token = "945ebb27-1fd6-46c6-a859-b9893712d650")
+Log.d("TAG", status.toString())
+",
+              "description": null,
+              "install": null,
+              "language": "Kotlin",
+              "name": "Kotlin",
+              "type": "language",
+            },
+          ],
+          "description": null,
+          "headers": [],
+          "name": "status-error",
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "token",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "token",
+                },
+              },
+            },
+          ],
+          "request": null,
+          "response": {
+            "properties": {
+              "status": {
+                "type": "literal",
+                "value": {
+                  "type": "string",
+                  "value": "waiting",
+                },
+              },
+            },
+            "type": "object",
+          },
+          "type": "full",
+        },
+        {
+          "codeSamples": [
+            {
+              "code": "import { fromUrlStatus } from '@uploadcare/upload-client'
+
+const result = await fromUrlStatus(
+  '945ebb27-1fd6-46c6-a859-b9893712d650',
+  {
+    publicKey: 'YOUR_PUBLIC_KEY'
+  }
+)
+",
+              "description": null,
+              "install": null,
+              "language": "JavaScript",
+              "name": "JS",
+              "type": "language",
+            },
+            {
+              "code": "<?php
+$configuration = Uploadcare\\Configuration::create((string) $_ENV['UPLOADCARE_PUBLIC_KEY'], (string) $_ENV['UPLOADCARE_SECRET_KEY']);
+
+$uploader = new Uploadcare\\Uploader\\Uploader($configuration);
+$status = $uploader->checkStatus('945ebb27-1fd6-46c6-a859-b9893712d650');
+echo \\sprintf('Upload status is %s', $status);
+",
+              "description": null,
+              "install": null,
+              "language": "PHP",
+              "name": "PHP",
+              "type": "language",
+            },
+            {
+              "code": "from pyuploadcare import Uploadcare, File
+
+uploadcare = Uploadcare(public_key='YOUR_PUBLIC_KEY', secret_key='YOUR_SECRET_KEY')
+file = uploadcare.file_from_url('945ebb27-1fd6-46c6-a859-b9893712d650')
+print(file.info)
+",
+              "description": null,
+              "install": null,
+              "language": "Python",
+              "name": "Python",
+              "type": "language",
+            },
+            {
+              "code": "require 'uploadcare'
+Uploadcare.config.public_key = "YOUR_PUBLIC_KEY"
+Uploadcare.config.secret_key = "YOUR_SECRET_KEY"
+
+token = '945ebb27-1fd6-46c6-a859-b9893712d650'
+puts Uploadcare::Uploader.get_upload_from_url_status(token)
+",
+              "description": null,
+              "install": null,
+              "language": "Ruby",
+              "name": "Ruby",
+              "type": "language",
+            },
+            {
+              "code": "import Uploadcare
+
+let uploadcare = Uploadcare(withPublicKey: "YOUR_PUBLIC_KEY", secretKey: "YOUR_SECRET_KEY")
+
+let status = try await uploadcare.uploadAPI.uploadStatus(forToken: "945ebb27-1fd6-46c6-a859-b9893712d650")
+print(status)
+",
+              "description": null,
+              "install": null,
+              "language": "Swift",
+              "name": "Swift",
+              "type": "language",
+            },
+            {
+              "code": "import com.uploadcare.android.library.api.UploadcareClient
+
+val uploadcare = UploadcareClient(publicKey = "YOUR_PUBLIC_KEY", secretKey = "YOUR_SECRET_KEY")
+
+val status = uploadcare.getFromUrlStatus(token = "945ebb27-1fd6-46c6-a859-b9893712d650")
+Log.d("TAG", status.toString())
+",
+              "description": null,
+              "install": null,
+              "language": "Kotlin",
+              "name": "Kotlin",
+              "type": "language",
+            },
+          ],
+          "description": null,
+          "headers": [],
+          "name": "status-unknown",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -3141,13 +3559,6 @@ Log.d("TAG", file.toString())
                   "value": "IMG-0412_123.JPG",
                 },
               },
-              "s3_bucket": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "custom-s3-bucket-name",
-                },
-              },
               "size": {
                 "type": "primitive",
                 "value": {
@@ -3168,105 +3579,6 @@ Log.d("TAG", file.toString())
                   "type": "string",
                   "value": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
                 },
-              },
-              "video_info": {
-                "properties": {
-                  "audio": {
-                    "properties": {
-                      "bitrate": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 78,
-                        },
-                      },
-                      "channels": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2",
-                        },
-                      },
-                      "codec": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "aac",
-                        },
-                      },
-                      "sample_rate": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 44100,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "bitrate": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 393,
-                    },
-                  },
-                  "duration": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 261827,
-                    },
-                  },
-                  "format": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "mp4",
-                    },
-                  },
-                  "video": {
-                    "properties": {
-                      "bitrate": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 315,
-                        },
-                      },
-                      "codec": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "h264",
-                        },
-                      },
-                      "frame_rate": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 30,
-                        },
-                      },
-                      "height": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 360,
-                        },
-                      },
-                      "width": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 640,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                },
-                "type": "object",
               },
             },
             "type": "object",
@@ -3510,13 +3822,6 @@ Log.d("TAG", group.toString())
                 "value": {
                   "type": "datetime",
                   "value": "2018-09-12T10:03:38.686710Z",
-                },
-              },
-              "datetime_stored": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2015-09-21T12:39:13.953757Z",
                 },
               },
               "files": {
@@ -4432,13 +4737,6 @@ Log.d("TAG", group.toString())
                 "value": {
                   "type": "datetime",
                   "value": "2018-09-12T10:03:38.686710Z",
-                },
-              },
-              "datetime_stored": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2015-09-21T12:39:13.953757Z",
                 },
               },
               "files": {

@@ -132,7 +132,10 @@ function getRequestBody({
         ? context.resolveRequestBodyReference(operation.requestBody)
         : operation.requestBody;
 
-    const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedRequestBody.content);
+    const jsonMediaObject = getApplicationJsonSchemaMediaObject(
+        resolvedRequestBody.content,
+        context.document.components
+    );
 
     if (jsonMediaObject == null) {
         return undefined;

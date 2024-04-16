@@ -638,44 +638,6 @@ exports[`open api parser supertokens parse open api 1`] = `
             "value": {
               "type": "discriminated",
               "value": {
-                "devices": {
-                  "type": "array",
-                  "value": [
-                    {
-                      "properties": {
-                        "name": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string",
-                            "value": "name",
-                          },
-                        },
-                        "period": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "double",
-                            "value": 1.1,
-                          },
-                        },
-                        "skew": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "double",
-                            "value": 1.1,
-                          },
-                        },
-                        "verified": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "boolean",
-                            "value": true,
-                          },
-                        },
-                      },
-                      "type": "object",
-                    },
-                  ],
-                },
                 "status": {
                   "type": "primitive",
                   "value": {
@@ -2598,22 +2560,7 @@ exports[`open api parser supertokens parse open api 1`] = `
             "type": "object",
           },
           "response": {
-            "properties": {
-              "didMappingExist": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean",
-                  "value": true,
-                },
-              },
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -3231,46 +3178,6 @@ exports[`open api parser supertokens parse open api 1`] = `
                   "value": true,
                 },
               },
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
-              "user": {
-                "properties": {
-                  "email": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "johndoe@gmail.com",
-                    },
-                  },
-                  "id": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "fa7a0841-b533-4478-95533-0fde890c3483",
-                    },
-                  },
-                  "phoneNumber": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "+14155552671",
-                    },
-                  },
-                  "timeJoined": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 1623918032231,
-                    },
-                  },
-                },
-                "type": "object",
-              },
             },
             "type": "object",
           },
@@ -3779,25 +3686,11 @@ Passing the optional deviceId signifies a resend code flow.
                   "value": "kFmkPQEAJtACiT2w/K8fndEuNm+XozJXSZSlWEr+iGs=",
                 },
               },
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
               "timeCreated": {
                 "type": "primitive",
                 "value": {
                   "type": "double",
                   "value": 1637262633029,
-                },
-              },
-              "userInputCode": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "userInputCode",
                 },
               },
             },
@@ -4339,15 +4232,7 @@ Passing the optional deviceId signifies a resend code flow.
             "type": "object",
           },
           "response": {
-            "properties": {
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -4565,84 +4450,7 @@ Passing the optional deviceId signifies a resend code flow.
           ],
           "request": null,
           "response": {
-            "properties": {
-              "devices": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "codes": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "codeId": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "QZ0Mx9zG9cfqNXmPI0I/67r9bpKghUBDQZeMMbayi+I=",
-                                },
-                              },
-                              "codeLifetime": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "double",
-                                  "value": 900000,
-                                },
-                              },
-                              "timeCreated": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "double",
-                                  "value": 1637262633029,
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "johndoe@gmail.com",
-                        },
-                      },
-                      "failedCodeInputAttemptCount": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 2,
-                        },
-                      },
-                      "phoneNumber": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "+14155552671",
-                        },
-                      },
-                      "preAuthSessionId": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "kFmkPQEAJtACiT2w/K8fndEuNm+XozJXSZSlWEr+iGs=",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -5107,15 +4915,7 @@ Passing the optional deviceId signifies a resend code flow.
             "type": "object",
           },
           "response": {
-            "properties": {
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -5371,48 +5171,7 @@ Note that there is an invisible character at the end of the path, this was to av
           ],
           "request": null,
           "response": {
-            "properties": {
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
-              "user": {
-                "properties": {
-                  "email": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "johndoe@gmail.com",
-                    },
-                  },
-                  "id": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "fa7a0841-b533-4478-95533-0fde890c3483",
-                    },
-                  },
-                  "phoneNumber": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "+14155552671",
-                    },
-                  },
-                  "timeJoined": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 1623918032231,
-                    },
-                  },
-                },
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -5749,12 +5508,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
             "type": "object",
           },
           "response": {
-            "properties": {
-              "status": {
-                "type": "enum",
-                "value": "OK",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -6081,32 +5835,6 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                     "value": "OK",
                   },
                 },
-                "user": {
-                  "properties": {
-                    "email": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "johndoe@gmail.com",
-                      },
-                    },
-                    "id": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "fa7a0841-b533-4478-95533-0fde890c3483",
-                      },
-                    },
-                    "timeJoined": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double",
-                        "value": 1623918032231,
-                      },
-                    },
-                  },
-                  "type": "object",
-                },
               },
             },
           },
@@ -6373,32 +6101,6 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                     "value": "OK",
                   },
                 },
-                "user": {
-                  "properties": {
-                    "email": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "johndoe@gmail.com",
-                      },
-                    },
-                    "id": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "fa7a0841-b533-4478-95533-0fde890c3483",
-                      },
-                    },
-                    "timeJoined": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double",
-                        "value": 1623918032231,
-                      },
-                    },
-                  },
-                  "type": "object",
-                },
               },
             },
           },
@@ -6659,41 +6361,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           ],
           "request": null,
           "response": {
-            "properties": {
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
-              "user": {
-                "properties": {
-                  "email": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "johndoe@gmail.com",
-                    },
-                  },
-                  "id": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "fa7a0841-b533-4478-95533-0fde890c3483",
-                    },
-                  },
-                  "timeJoined": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 1623918032231,
-                    },
-                  },
-                },
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -7007,12 +6675,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
             "type": "object",
           },
           "response": {
-            "properties": {
-              "status": {
-                "type": "enum",
-                "value": "OK",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -7537,44 +7200,6 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                   "type": "string",
                   "value": "ZmE3YTA4ND...OzE2MjM5MTgwMzIyMzE=",
                 },
-              },
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
-              "users": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "johndoe@gmail.com",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "fa7a0841-b533-4478-95533-0fde890c3483",
-                        },
-                      },
-                      "timeJoined": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 1623918032231,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
               },
             },
             "type": "object",
@@ -8186,13 +7811,6 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                   "value": 10,
                 },
               },
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
             },
             "type": "object",
           },
@@ -8392,48 +8010,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
             "type": "object",
           },
           "response": {
-            "properties": {
-              "didUserAlreadyExist": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean",
-                  "value": true,
-                },
-              },
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
-              "user": {
-                "properties": {
-                  "email": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "johndoe@gmail.com",
-                    },
-                  },
-                  "id": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "fa7a0841-b533-4478-95533-0fde890c3483",
-                    },
-                  },
-                  "timeJoined": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 1623918032231,
-                    },
-                  },
-                },
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -8773,58 +8350,6 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                   "value": true,
                 },
               },
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
-              "user": {
-                "properties": {
-                  "email": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "johndoe@gmail.com",
-                    },
-                  },
-                  "id": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "fa7a0841-b533-4478-95533-0fde890c3483",
-                    },
-                  },
-                  "thirdParty": {
-                    "properties": {
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "google",
-                        },
-                      },
-                      "userId": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "userId",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "timeJoined": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 1623918032231,
-                    },
-                  },
-                },
-                "type": "object",
-              },
             },
             "type": "object",
           },
@@ -9127,60 +8652,7 @@ Note that there is an invisible character at the end of the path, this was to av
           ],
           "request": null,
           "response": {
-            "properties": {
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
-              "user": {
-                "properties": {
-                  "email": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "johndoe@gmail.com",
-                    },
-                  },
-                  "id": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "fa7a0841-b533-4478-95533-0fde890c3483",
-                    },
-                  },
-                  "thirdParty": {
-                    "properties": {
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "google",
-                        },
-                      },
-                      "userId": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "userId",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "timeJoined": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 1623918032231,
-                    },
-                  },
-                },
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -9503,58 +8975,7 @@ Note that there is an invisible character at the end of the path, this was to av
           ],
           "request": null,
           "response": {
-            "properties": {
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
-              "users": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "johndoe@gmail.com",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "fa7a0841-b533-4478-95533-0fde890c3483",
-                        },
-                      },
-                      "thirdParty": {
-                        "properties": {
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "google",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "timeJoined": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 1623918032231,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -9766,56 +9187,6 @@ Note that there is an invisible character at the end of the path, this was to av
                   "type": "string",
                   "value": "ZmE3YTA4ND...OzE2MjM5MTgwMzIyMzE=",
                 },
-              },
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
-              "user": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "johndoe@gmail.com",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "fa7a0841-b533-4478-95533-0fde890c3483",
-                        },
-                      },
-                      "thirdParty": {
-                        "properties": {
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "google",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "timeJoined": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 1623918032231,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
               },
             },
             "type": "object",
@@ -10123,13 +9494,6 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "type": "double",
                   "value": 10,
-                },
-              },
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
                 },
               },
             },
@@ -10561,15 +9925,7 @@ Note that there is an invisible character at the end of the path, this was to av
             "type": "object",
           },
           "response": {
-            "properties": {
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -10769,13 +10125,6 @@ Note that there is an invisible character at the end of the path, this was to av
                 "value": {
                   "type": "boolean",
                   "value": true,
-                },
-              },
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
                 },
               },
             },
@@ -11323,15 +10672,7 @@ Note that there is an invisible character at the end of the path, this was to av
             "type": "object",
           },
           "response": {
-            "properties": {
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -11515,44 +10856,7 @@ Note that there is an invisible character at the end of the path, this was to av
           ],
           "request": null,
           "response": {
-            "properties": {
-              "metadata": {
-                "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "metadata",
-                    },
-                    "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ],
-              },
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -11768,44 +11072,7 @@ e.g.:
             "type": "object",
           },
           "response": {
-            "properties": {
-              "metadata": {
-                "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "metadata",
-                    },
-                    "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ],
-              },
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -12052,15 +11319,7 @@ e.g.:
             "type": "object",
           },
           "response": {
-            "properties": {
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -12800,13 +12059,6 @@ e.g.:
                   },
                 ],
               },
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
             },
             "type": "object",
           },
@@ -13279,13 +12531,6 @@ e.g.:
                 "value": {
                   "type": "boolean",
                   "value": true,
-                },
-              },
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
                 },
               },
             },
@@ -14050,13 +13295,6 @@ e.g.:
                   },
                 ],
               },
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
             },
             "type": "object",
           },
@@ -14284,13 +13522,6 @@ e.g.:
                   "value": true,
                 },
               },
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
             },
             "type": "object",
           },
@@ -14513,13 +13744,6 @@ e.g.:
                     },
                   },
                 ],
-              },
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
               },
             },
             "type": "object",
@@ -14753,64 +13977,6 @@ e.g.:
                     "type": "double",
                     "value": 1637262633029,
                   },
-                },
-                "userDataInDatabase": {
-                  "type": "map",
-                  "value": [
-                    {
-                      "key": {
-                        "type": "string",
-                        "value": "string",
-                      },
-                      "value": {
-                        "type": "map",
-                        "value": [
-                          {
-                            "key": {
-                              "type": "string",
-                              "value": "key",
-                            },
-                            "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string",
-                                "value": "value",
-                              },
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                },
-                "userDataInJWT": {
-                  "type": "map",
-                  "value": [
-                    {
-                      "key": {
-                        "type": "string",
-                        "value": "string",
-                      },
-                      "value": {
-                        "type": "map",
-                        "value": [
-                          {
-                            "key": {
-                              "type": "string",
-                              "value": "key",
-                            },
-                            "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string",
-                                "value": "value",
-                              },
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  ],
                 },
                 "userId": {
                   "type": "primitive",
@@ -15151,118 +14317,11 @@ e.g.:
           },
           "response": {
             "properties": {
-              "accessToken": {
-                "properties": {
-                  "createdTime": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 1637262633029,
-                    },
-                  },
-                  "expiry": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 1637262633029,
-                    },
-                  },
-                  "token": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "ZTRiOTBjNz...jI5MTZlODkxw",
-                    },
-                  },
-                },
-                "type": "object",
-              },
               "antiCsrfToken": {
                 "type": "primitive",
                 "value": {
                   "type": "string",
                   "value": "ZTRiOTBjNz...jI5MTZlODkxw",
-                },
-              },
-              "refreshToken": {
-                "properties": {
-                  "createdTime": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 1637262633029,
-                    },
-                  },
-                  "expiry": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 1637262633029,
-                    },
-                  },
-                  "token": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "ZTRiOTBjNz...jI5MTZlODkxw",
-                    },
-                  },
-                },
-                "type": "object",
-              },
-              "session": {
-                "properties": {
-                  "handle": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "68en6gd6-865b-4af6-ba00-96e5c153257d",
-                    },
-                  },
-                  "userDataInJWT": {
-                    "type": "map",
-                    "value": [
-                      {
-                        "key": {
-                          "type": "string",
-                          "value": "userDataInJWT",
-                        },
-                        "value": {
-                          "type": "map",
-                          "value": [
-                            {
-                              "key": {
-                                "type": "string",
-                                "value": "key",
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "value",
-                                },
-                              },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                  "userId": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "fa7a0841-b533-4478-95533-0fde890c3483",
-                    },
-                  },
-                },
-                "type": "object",
-              },
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
                 },
               },
             },
@@ -15658,13 +14717,6 @@ e.g.:
                   },
                 ],
               },
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
             },
             "type": "object",
           },
@@ -15967,80 +15019,6 @@ e.g.:
             "value": {
               "type": "discriminated",
               "value": {
-                "accessToken": {
-                  "properties": {
-                    "createdTime": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double",
-                        "value": 1637262633029,
-                      },
-                    },
-                    "expiry": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double",
-                        "value": 1637262633029,
-                      },
-                    },
-                    "token": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "ZTRiOTBjNz...jI5MTZlODkxw",
-                      },
-                    },
-                  },
-                  "type": "object",
-                },
-                "session": {
-                  "properties": {
-                    "handle": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "68en6gd6-865b-4af6-ba00-96e5c153257d",
-                      },
-                    },
-                    "userDataInJWT": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "userDataInJWT",
-                          },
-                          "value": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "key",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "value",
-                                  },
-                                },
-                              },
-                            ],
-                          },
-                        },
-                      ],
-                    },
-                    "userId": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "fa7a0841-b533-4478-95533-0fde890c3483",
-                      },
-                    },
-                  },
-                  "type": "object",
-                },
                 "status": {
                   "type": "primitive",
                   "value": {
@@ -16434,112 +15412,12 @@ e.g.:
             "value": {
               "type": "discriminated",
               "value": {
-                "accessToken": {
-                  "properties": {
-                    "createdTime": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double",
-                        "value": 1637262633029,
-                      },
-                    },
-                    "expiry": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double",
-                        "value": 1637262633029,
-                      },
-                    },
-                    "token": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "ZTRiOTBjNz...jI5MTZlODkxw",
-                      },
-                    },
-                  },
-                  "type": "object",
-                },
                 "antiCsrfToken": {
                   "type": "primitive",
                   "value": {
                     "type": "string",
                     "value": "ZTRiOTBjNz...jI5MTZlODkxw",
                   },
-                },
-                "refreshToken": {
-                  "properties": {
-                    "createdTime": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double",
-                        "value": 1637262633029,
-                      },
-                    },
-                    "expiry": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double",
-                        "value": 1637262633029,
-                      },
-                    },
-                    "token": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "ZTRiOTBjNz...jI5MTZlODkxw",
-                      },
-                    },
-                  },
-                  "type": "object",
-                },
-                "session": {
-                  "properties": {
-                    "handle": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "68en6gd6-865b-4af6-ba00-96e5c153257d",
-                      },
-                    },
-                    "userDataInJWT": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "userDataInJWT",
-                          },
-                          "value": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "key",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "value",
-                                  },
-                                },
-                              },
-                            ],
-                          },
-                        },
-                      ],
-                    },
-                    "userId": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "fa7a0841-b533-4478-95533-0fde890c3483",
-                      },
-                    },
-                  },
-                  "type": "object",
                 },
                 "status": {
                   "type": "primitive",
@@ -16956,13 +15834,6 @@ e.g.:
                   },
                 ],
               },
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
             },
             "type": "object",
           },
@@ -17182,80 +16053,6 @@ e.g.:
             "value": {
               "type": "discriminated",
               "value": {
-                "accessToken": {
-                  "properties": {
-                    "createdTime": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double",
-                        "value": 1637262633029,
-                      },
-                    },
-                    "expiry": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double",
-                        "value": 1637262633029,
-                      },
-                    },
-                    "token": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "ZTRiOTBjNz...jI5MTZlODkxw",
-                      },
-                    },
-                  },
-                  "type": "object",
-                },
-                "session": {
-                  "properties": {
-                    "handle": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "68en6gd6-865b-4af6-ba00-96e5c153257d",
-                      },
-                    },
-                    "userDataInJWT": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "userDataInJWT",
-                          },
-                          "value": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "key",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "value",
-                                  },
-                                },
-                              },
-                            ],
-                          },
-                        },
-                      ],
-                    },
-                    "userId": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "fa7a0841-b533-4478-95533-0fde890c3483",
-                      },
-                    },
-                  },
-                  "type": "object",
-                },
                 "status": {
                   "type": "primitive",
                   "value": {
@@ -17542,35 +16339,6 @@ e.g.:
                     "type": "string",
                     "value": "OK",
                   },
-                },
-                "userDataInDatabase": {
-                  "type": "map",
-                  "value": [
-                    {
-                      "key": {
-                        "type": "string",
-                        "value": "string",
-                      },
-                      "value": {
-                        "type": "map",
-                        "value": [
-                          {
-                            "key": {
-                              "type": "string",
-                              "value": "key",
-                            },
-                            "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string",
-                                "value": "value",
-                              },
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  ],
                 },
               },
             },
@@ -18320,58 +17088,7 @@ e.g.:
           "queryParameters": [],
           "request": null,
           "response": {
-            "properties": {
-              "keys": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "alg": {
-                        "type": "literal",
-                        "value": {
-                          "type": "string",
-                          "value": "RS256",
-                        },
-                      },
-                      "kid": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "kid",
-                        },
-                      },
-                      "kty": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "RSA",
-                        },
-                      },
-                      "use": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "sig",
-                        },
-                      },
-                      "x5c": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "x5c",
-                            },
-                          },
-                        ],
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -18481,35 +17198,6 @@ e.g.:
                     "type": "string",
                     "value": "OK",
                   },
-                },
-                "userDataInJWT": {
-                  "type": "map",
-                  "value": [
-                    {
-                      "key": {
-                        "type": "string",
-                        "value": "string",
-                      },
-                      "value": {
-                        "type": "map",
-                        "value": [
-                          {
-                            "key": {
-                              "type": "string",
-                              "value": "key",
-                            },
-                            "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string",
-                                "value": "value",
-                              },
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  ],
                 },
               },
             },
@@ -18940,32 +17628,6 @@ e.g.:
                     "value": "OK",
                   },
                 },
-                "user": {
-                  "properties": {
-                    "email": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "test@example.com",
-                      },
-                    },
-                    "timeCreated": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double",
-                        "value": 1231321231,
-                      },
-                    },
-                    "userId": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "example-userid",
-                      },
-                    },
-                  },
-                  "type": "object",
-                },
               },
             },
           },
@@ -19370,32 +18032,6 @@ e.g.:
                     "type": "string",
                     "value": "OK",
                   },
-                },
-                "user": {
-                  "properties": {
-                    "email": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "test@example.com",
-                      },
-                    },
-                    "timeCreated": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double",
-                        "value": 391238234792,
-                      },
-                    },
-                    "userId": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "r23r-f235th54-g3413gf-r32dr2",
-                      },
-                    },
-                  },
-                  "type": "object",
                 },
               },
             },
@@ -19920,22 +18556,7 @@ e.g.:
           ],
           "request": null,
           "response": {
-            "properties": {
-              "didUserExist": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean",
-                  "value": true,
-                },
-              },
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -20165,53 +18786,7 @@ e.g.:
           "queryParameters": [],
           "request": null,
           "response": {
-            "properties": {
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
-              "users": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "test@example.com",
-                        },
-                      },
-                      "isSuspended": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": false,
-                        },
-                      },
-                      "timeCreated": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 16382348324,
-                        },
-                      },
-                      "userId": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "uf2323-f223r233-f23-f23-f2f32",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -20768,15 +19343,7 @@ e.g.:
           ],
           "request": null,
           "response": {
-            "properties": {
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -20981,13 +19548,6 @@ e.g.:
             "value": {
               "type": "discriminated",
               "value": {
-                "sessionId": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string",
-                    "value": "string",
-                  },
-                },
                 "status": {
                   "type": "primitive",
                   "value": {
@@ -21293,46 +19853,7 @@ e.g.:
           ],
           "request": null,
           "response": {
-            "properties": {
-              "sessions": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "expiry": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 16382348324,
-                        },
-                      },
-                      "sessionId": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "fni29f-f23f23-f2fq32qt-h35evf",
-                        },
-                      },
-                      "timeCreated": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 16382348324,
-                        },
-                      },
-                      "userId": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "fa7a0841-b533-4478-95533-0fde890c3483",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -21617,20 +20138,7 @@ e.g.:
           "queryParameters": [],
           "request": null,
           "response": {
-            "properties": {
-              "versions": {
-                "type": "array",
-                "value": [
-                  {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "versions",
-                    },
-                  },
-                ],
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -22244,13 +20752,6 @@ e.g.:
           "request": null,
           "response": {
             "properties": {
-              "exists": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean",
-                  "value": true,
-                },
-              },
               "telemetryId": {
                 "type": "primitive",
                 "value": {
@@ -22483,13 +20984,6 @@ e.g.:
                   "value": 1000000,
                 },
               },
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
             },
             "type": "object",
           },
@@ -22688,13 +21182,6 @@ e.g.:
                 "value": {
                   "type": "double",
                   "value": 100000,
-                },
-              },
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
                 },
               },
             },
@@ -22927,53 +21414,6 @@ e.g.:
                   "type": "string",
                   "value": "ZmE3YTA4ND...OzE2MjM5MTgwMzIyMzE=",
                 },
-              },
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
-              "users": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "recipeId": {
-                        "type": "enum",
-                        "value": "emailpassword",
-                      },
-                      "user": {
-                        "properties": {
-                          "email": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "johndoe@gmail.com",
-                            },
-                          },
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "fa7a0841-b533-4478-95533-0fde890c3483",
-                            },
-                          },
-                          "timeJoined": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 1623918032231,
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
               },
             },
             "type": "object",
@@ -23473,15 +21913,7 @@ e.g.:
             "type": "object",
           },
           "response": {
-            "properties": {
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -23650,27 +22082,7 @@ e.g.:
           "queryParameters": [],
           "request": null,
           "response": {
-            "properties": {
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
-              "tags": {
-                "type": "array",
-                "value": [
-                  {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "tags",
-                    },
-                  },
-                ],
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -23835,56 +22247,7 @@ e.g.:
           "queryParameters": [],
           "request": null,
           "response": {
-            "properties": {
-              "features": {
-                "type": "array",
-                "value": [
-                  {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "features",
-                    },
-                  },
-                ],
-              },
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
-              "usageStats": {
-                "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "usageStats",
-                    },
-                    "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ],
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -24468,15 +22831,7 @@ e.g.:
           "queryParameters": [],
           "request": null,
           "response": {
-            "properties": {
-              "status": {
-                "type": "literal",
-                "value": {
-                  "type": "string",
-                  "value": "OK",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",

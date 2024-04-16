@@ -21,15 +21,7 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
           "queryParameters": [],
           "request": null,
           "response": {
-            "properties": {
-              "message": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "message",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",

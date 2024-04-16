@@ -33,10 +33,6 @@ exports[`open api parser merge parse open api 1`] = `
           "request": null,
           "response": {
             "properties": {
-              "category": {
-                "type": "enum",
-                "value": "hris",
-              },
               "end_user_email_address": {
                 "type": "primitive",
                 "value": {
@@ -77,13 +73,6 @@ exports[`open api parser merge parse open api 1`] = `
                 "value": {
                   "type": "string",
                   "value": "bamboohr",
-                },
-              },
-              "is_duplicate": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean",
-                  "value": true,
                 },
               },
               "status": {
@@ -192,84 +181,11 @@ exports[`open api parser merge parse open api 1`] = `
               },
               "integration": {
                 "properties": {
-                  "api_endpoints_to_documentation_urls": {
-                    "type": "map",
-                    "value": [
-                      {
-                        "key": {
-                          "type": "string",
-                          "value": "api_endpoints_to_documentation_urls",
-                        },
-                        "value": {
-                          "type": "map",
-                          "value": [
-                            {
-                              "key": {
-                                "type": "string",
-                                "value": "key",
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "value",
-                                },
-                              },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                  "categories": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "type": "enum",
-                        "value": "hris",
-                      },
-                    ],
-                  },
-                  "color": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "color",
-                    },
-                  },
-                  "image": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "image",
-                    },
-                  },
-                  "is_in_beta": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": true,
-                    },
-                  },
                   "name": {
                     "type": "primitive",
                     "value": {
                       "type": "string",
                       "value": "name",
-                    },
-                  },
-                  "slug": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "slug",
-                    },
-                  },
-                  "square_image": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "square_image",
                     },
                   },
                 },
@@ -412,84 +328,11 @@ exports[`open api parser merge parse open api 1`] = `
               },
               "integration": {
                 "properties": {
-                  "api_endpoints_to_documentation_urls": {
-                    "type": "map",
-                    "value": [
-                      {
-                        "key": {
-                          "type": "string",
-                          "value": "api_endpoints_to_documentation_urls",
-                        },
-                        "value": {
-                          "type": "map",
-                          "value": [
-                            {
-                              "key": {
-                                "type": "string",
-                                "value": "key",
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "value",
-                                },
-                              },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                  "categories": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "type": "enum",
-                        "value": "hris",
-                      },
-                    ],
-                  },
-                  "color": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "color",
-                    },
-                  },
-                  "image": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "image",
-                    },
-                  },
-                  "is_in_beta": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": true,
-                    },
-                  },
                   "name": {
                     "type": "primitive",
                     "value": {
                       "type": "string",
                       "value": "name",
-                    },
-                  },
-                  "slug": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "slug",
-                    },
-                  },
-                  "square_image": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "square_image",
                     },
                   },
                 },
@@ -584,116 +427,7 @@ exports[`open api parser merge parse open api 1`] = `
           "queryParameters": [],
           "request": null,
           "response": {
-            "properties": {
-              "next": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                },
-              },
-              "previous": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                },
-              },
-              "results": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "account_number": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "439291590",
-                        },
-                      },
-                      "account_type": {
-                        "type": "enum",
-                        "value": "SAVINGS",
-                      },
-                      "bank_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Chase",
-                        },
-                      },
-                      "employee": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "a3617eb4-dfe3-426f-921e-a65fc1661e10",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "fd1e0fb5-8f92-4ec9-9f32-179cf732867d",
-                        },
-                      },
-                      "modified_at": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2021-10-16T00:00:00Z",
-                        },
-                      },
-                      "remote_created_at": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2021-12-06T10:11:26Z",
-                        },
-                      },
-                      "remote_data": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "path": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "path",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "remote_id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "123234",
-                        },
-                      },
-                      "remote_was_deleted": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "routing_number": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "089690059",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -1200,60 +934,6 @@ exports[`open api parser merge parse open api 1`] = `
           "request": null,
           "response": {
             "properties": {
-              "account_number": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "439291590",
-                },
-              },
-              "account_type": {
-                "type": "enum",
-                "value": "SAVINGS",
-              },
-              "bank_name": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "Chase",
-                },
-              },
-              "employee": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "a3617eb4-dfe3-426f-921e-a65fc1661e10",
-                },
-              },
-              "field_mappings": {
-                "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "field_mappings",
-                    },
-                    "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ],
-              },
               "id": {
                 "type": "primitive",
                 "value": {
@@ -1266,51 +946,6 @@ exports[`open api parser merge parse open api 1`] = `
                 "value": {
                   "type": "datetime",
                   "value": "2021-10-16T00:00:00Z",
-                },
-              },
-              "remote_created_at": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2021-12-06T10:11:26Z",
-                },
-              },
-              "remote_data": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "path": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "path",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "remote_id": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "123234",
-                },
-              },
-              "remote_was_deleted": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean",
-                  "value": true,
-                },
-              },
-              "routing_number": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "089690059",
                 },
               },
             },
@@ -1505,126 +1140,7 @@ exports[`open api parser merge parse open api 1`] = `
           "queryParameters": [],
           "request": null,
           "response": {
-            "properties": {
-              "next": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                },
-              },
-              "previous": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                },
-              },
-              "results": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "benefit_plan_type": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "benefit_plan_type",
-                        },
-                      },
-                      "company_contribution": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 150,
-                        },
-                      },
-                      "employee": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                        },
-                      },
-                      "employee_contribution": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 23.65,
-                        },
-                      },
-                      "end_date": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2021-10-15 00:23:25.309761+00:00",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "3fe5ae7a-f1ba-4529-b7af-84e86dc6d232",
-                        },
-                      },
-                      "modified_at": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2021-10-16T00:00:00Z",
-                        },
-                      },
-                      "provider_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Blue Shield of California",
-                        },
-                      },
-                      "remote_data": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "path": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "path",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "remote_id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "19202938",
-                        },
-                      },
-                      "remote_was_deleted": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "start_date": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2020-11-15 00:59:25.309761+00:00",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -1968,70 +1484,6 @@ exports[`open api parser merge parse open api 1`] = `
           "request": null,
           "response": {
             "properties": {
-              "benefit_plan_type": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "benefit_plan_type",
-                },
-              },
-              "company_contribution": {
-                "type": "primitive",
-                "value": {
-                  "type": "double",
-                  "value": 150,
-                },
-              },
-              "employee": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                },
-              },
-              "employee_contribution": {
-                "type": "primitive",
-                "value": {
-                  "type": "double",
-                  "value": 23.65,
-                },
-              },
-              "end_date": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2021-10-15 00:23:25.309761+00:00",
-                },
-              },
-              "field_mappings": {
-                "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "field_mappings",
-                    },
-                    "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ],
-              },
               "id": {
                 "type": "primitive",
                 "value": {
@@ -2044,51 +1496,6 @@ exports[`open api parser merge parse open api 1`] = `
                 "value": {
                   "type": "datetime",
                   "value": "2021-10-16T00:00:00Z",
-                },
-              },
-              "provider_name": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "Blue Shield of California",
-                },
-              },
-              "remote_data": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "path": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "path",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "remote_id": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "19202938",
-                },
-              },
-              "remote_was_deleted": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean",
-                  "value": true,
-                },
-              },
-              "start_date": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2020-11-15 00:59:25.309761+00:00",
                 },
               },
             },
@@ -2237,91 +1644,7 @@ exports[`open api parser merge parse open api 1`] = `
           "queryParameters": [],
           "request": null,
           "response": {
-            "properties": {
-              "next": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                },
-              },
-              "previous": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                },
-              },
-              "results": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "display_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Waystar Royco",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
-                        },
-                      },
-                      "legal_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Waystar Royco, Inc.",
-                        },
-                      },
-                      "modified_at": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2021-10-16T00:00:00Z",
-                        },
-                      },
-                      "remote_data": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "path": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "path",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "remote_id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "19202938",
-                        },
-                      },
-                      "remote_was_deleted": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -2618,54 +1941,6 @@ exports[`open api parser merge parse open api 1`] = `
           "request": null,
           "response": {
             "properties": {
-              "display_name": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "Waystar Royco",
-                },
-              },
-              "eins": {
-                "type": "array",
-                "value": [
-                  {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "eins",
-                    },
-                  },
-                ],
-              },
-              "field_mappings": {
-                "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "field_mappings",
-                    },
-                    "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ],
-              },
               "id": {
                 "type": "primitive",
                 "value": {
@@ -2673,49 +1948,11 @@ exports[`open api parser merge parse open api 1`] = `
                   "value": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
                 },
               },
-              "legal_name": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "Waystar Royco, Inc.",
-                },
-              },
               "modified_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
                   "value": "2021-10-16T00:00:00Z",
-                },
-              },
-              "remote_data": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "path": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "path",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "remote_id": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "19202938",
-                },
-              },
-              "remote_was_deleted": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean",
-                  "value": true,
                 },
               },
             },
@@ -2820,30 +2057,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": null,
       "description": "Delete a linked account.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [
-            {
-              "name": "X-Account-Token",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "X-Account-Token",
-                },
-              },
-            },
-          ],
-          "name": null,
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": null,
-          "response": null,
-          "type": "full",
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DeleteAccountCreateRequest",
       "headers": [
         {
@@ -2908,198 +2122,7 @@ exports[`open api parser merge parse open api 1`] = `
           "queryParameters": [],
           "request": null,
           "response": {
-            "properties": {
-              "next": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                },
-              },
-              "previous": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                },
-              },
-              "results": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "check_date": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2020-11-10T00:00:00Z",
-                        },
-                      },
-                      "deductions": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "id": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "5fd439fc-1b64-4755-b275-64918936c365",
-                                },
-                              },
-                              "modified_at": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "datetime",
-                                  "value": "2021-10-16T00:00:00Z",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "earnings": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "id": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "babbced6-3a81-4775-8da2-490dc6385259",
-                                },
-                              },
-                              "modified_at": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "datetime",
-                                  "value": "2021-10-16T00:00:00Z",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "employee": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                        },
-                      },
-                      "end_date": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2020-11-09T00:00:00Z",
-                        },
-                      },
-                      "gross_pay": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 1342.67,
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "fb8c55b6-1cb8-4b4c-9fb6-17924231619d",
-                        },
-                      },
-                      "modified_at": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2021-10-16T00:00:00Z",
-                        },
-                      },
-                      "net_pay": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 865.78,
-                        },
-                      },
-                      "payroll_run": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                        },
-                      },
-                      "remote_data": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "path": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "path",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "remote_id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "19202938",
-                        },
-                      },
-                      "remote_was_deleted": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "start_date": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2020-11-08T00:00:00Z",
-                        },
-                      },
-                      "taxes": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "id": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "e3a825fd-c38d-4095-a717-df98c4cb9ebc",
-                                },
-                              },
-                              "modified_at": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "datetime",
-                                  "value": "2021-10-16T00:00:00Z",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -3589,219 +2612,6 @@ exports[`open api parser merge parse open api 1`] = `
           "request": null,
           "response": {
             "properties": {
-              "check_date": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2020-11-10T00:00:00Z",
-                },
-              },
-              "deductions": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "company_deduction": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 78.78,
-                        },
-                      },
-                      "employee_deduction": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 34.54,
-                        },
-                      },
-                      "employee_payroll_run": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "5fd439fc-1b64-4755-b275-64918936c365",
-                        },
-                      },
-                      "modified_at": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2021-10-16T00:00:00Z",
-                        },
-                      },
-                      "name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Social Security",
-                        },
-                      },
-                      "remote_data": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "path": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "path",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "remote_id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "93478612",
-                        },
-                      },
-                      "remote_was_deleted": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "earnings": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "amount": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 1002.34,
-                        },
-                      },
-                      "employee_payroll_run": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "babbced6-3a81-4775-8da2-490dc6385259",
-                        },
-                      },
-                      "modified_at": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2021-10-16T00:00:00Z",
-                        },
-                      },
-                      "remote_data": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "path": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "path",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "remote_id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "52802",
-                        },
-                      },
-                      "remote_was_deleted": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "type": {
-                        "type": "enum",
-                        "value": "SALARY",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "employee": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                },
-              },
-              "end_date": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2020-11-09T00:00:00Z",
-                },
-              },
-              "field_mappings": {
-                "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "field_mappings",
-                    },
-                    "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ],
-              },
-              "gross_pay": {
-                "type": "primitive",
-                "value": {
-                  "type": "double",
-                  "value": 1342.67,
-                },
-              },
               "id": {
                 "type": "primitive",
                 "value": {
@@ -3815,141 +2625,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "datetime",
                   "value": "2021-10-16T00:00:00Z",
                 },
-              },
-              "net_pay": {
-                "type": "primitive",
-                "value": {
-                  "type": "double",
-                  "value": 865.78,
-                },
-              },
-              "payroll_run": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                },
-              },
-              "remote_data": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "path": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "path",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "remote_id": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "19202938",
-                },
-              },
-              "remote_was_deleted": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean",
-                  "value": true,
-                },
-              },
-              "start_date": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2020-11-08T00:00:00Z",
-                },
-              },
-              "taxes": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "amount": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 100.25,
-                        },
-                      },
-                      "employee_payroll_run": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                        },
-                      },
-                      "employer_tax": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "e3a825fd-c38d-4095-a717-df98c4cb9ebc",
-                        },
-                      },
-                      "modified_at": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2021-10-16T00:00:00Z",
-                        },
-                      },
-                      "name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "California State Income Tax",
-                        },
-                      },
-                      "remote_data": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "path": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "path",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "remote_id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "26806834",
-                        },
-                      },
-                      "remote_was_deleted": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
               },
             },
             "type": "object",
@@ -4131,240 +2806,7 @@ exports[`open api parser merge parse open api 1`] = `
           "queryParameters": [],
           "request": null,
           "response": {
-            "properties": {
-              "next": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                },
-              },
-              "previous": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                },
-              },
-              "results": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "avatar": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "http://alturl.com/h2h8m",
-                        },
-                      },
-                      "company": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "8d9fd929-436c-4fd4-a48b-0c61f68d6178",
-                        },
-                      },
-                      "date_of_birth": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "1990-11-10T00:00:00Z",
-                        },
-                      },
-                      "display_full_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Cousin Greg Hirsch",
-                        },
-                      },
-                      "employee_number": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2",
-                        },
-                      },
-                      "employment_status": {
-                        "type": "enum",
-                        "value": "ACTIVE",
-                      },
-                      "ethnicity": {
-                        "type": "enum",
-                        "value": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
-                      },
-                      "first_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Greg",
-                        },
-                      },
-                      "gender": {
-                        "type": "enum",
-                        "value": "MALE",
-                      },
-                      "hire_date": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2020-10-10T00:00:00Z",
-                        },
-                      },
-                      "home_location": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "0958cbc6-6040-430a-848e-aafacbadf4ae",
-                        },
-                      },
-                      "last_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Hirsch",
-                        },
-                      },
-                      "manager": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "0048ea5b-911e-4dff-9364-92070dea62ff",
-                        },
-                      },
-                      "marital_status": {
-                        "type": "enum",
-                        "value": "SINGLE",
-                      },
-                      "mobile_phone_number": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "+1234567890",
-                        },
-                      },
-                      "modified_at": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2021-10-16T00:00:00Z",
-                        },
-                      },
-                      "pay_group": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "ad1264e2-39be-4787-b749-f1aade9e3405",
-                        },
-                      },
-                      "personal_email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "greg@gmail.com",
-                        },
-                      },
-                      "remote_created_at": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2020-10-11T00:00:00Z",
-                        },
-                      },
-                      "remote_data": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "path": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "path",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "remote_id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "19202938",
-                        },
-                      },
-                      "remote_was_deleted": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "ssn": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "1234567890",
-                        },
-                      },
-                      "start_date": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2020-10-11T00:00:00Z",
-                        },
-                      },
-                      "team": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "249c9faa-3045-4a31-953b-8f22d3613301",
-                        },
-                      },
-                      "termination_date": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2021-10-12T00:00:00Z",
-                        },
-                      },
-                      "username": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "cousingreg",
-                        },
-                      },
-                      "work_email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "greg@merge.dev",
-                        },
-                      },
-                      "work_location": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -8595,18 +7037,6 @@ exports[`open api parser merge parse open api 1`] = `
                           "value": "MISSING_REQUIRED_FIELD",
                         },
                       },
-                      "source": {
-                        "properties": {
-                          "pointer": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "pointer",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
                       "title": {
                         "type": "primitive",
                         "value": {
@@ -8671,156 +7101,6 @@ exports[`open api parser merge parse open api 1`] = `
               },
               "model": {
                 "properties": {
-                  "avatar": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "http://alturl.com/h2h8m",
-                    },
-                  },
-                  "company": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "8d9fd929-436c-4fd4-a48b-0c61f68d6178",
-                    },
-                  },
-                  "custom_fields": {
-                    "type": "map",
-                    "value": [
-                      {
-                        "key": {
-                          "type": "string",
-                          "value": "custom_fields",
-                        },
-                        "value": {
-                          "type": "map",
-                          "value": [
-                            {
-                              "key": {
-                                "type": "string",
-                                "value": "key",
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "value",
-                                },
-                              },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                  "date_of_birth": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "datetime",
-                      "value": "1990-11-10T00:00:00Z",
-                    },
-                  },
-                  "display_full_name": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "Cousin Greg Hirsch",
-                    },
-                  },
-                  "employee_number": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "2",
-                    },
-                  },
-                  "employment_status": {
-                    "type": "enum",
-                    "value": "ACTIVE",
-                  },
-                  "employments": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "employments",
-                        },
-                      },
-                    ],
-                  },
-                  "ethnicity": {
-                    "type": "enum",
-                    "value": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
-                  },
-                  "field_mappings": {
-                    "type": "map",
-                    "value": [
-                      {
-                        "key": {
-                          "type": "string",
-                          "value": "field_mappings",
-                        },
-                        "value": {
-                          "type": "map",
-                          "value": [
-                            {
-                              "key": {
-                                "type": "string",
-                                "value": "key",
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "value",
-                                },
-                              },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                  "first_name": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "Greg",
-                    },
-                  },
-                  "gender": {
-                    "type": "enum",
-                    "value": "MALE",
-                  },
-                  "groups": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "groups",
-                        },
-                      },
-                    ],
-                  },
-                  "hire_date": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "datetime",
-                      "value": "2020-10-10T00:00:00Z",
-                    },
-                  },
-                  "home_location": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                    },
-                  },
                   "id": {
                     "type": "primitive",
                     "value": {
@@ -8828,137 +7108,11 @@ exports[`open api parser merge parse open api 1`] = `
                       "value": "0958cbc6-6040-430a-848e-aafacbadf4ae",
                     },
                   },
-                  "last_name": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "Hirsch",
-                    },
-                  },
-                  "manager": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "0048ea5b-911e-4dff-9364-92070dea62ff",
-                    },
-                  },
-                  "marital_status": {
-                    "type": "enum",
-                    "value": "SINGLE",
-                  },
-                  "mobile_phone_number": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "+1234567890",
-                    },
-                  },
                   "modified_at": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
                       "value": "2021-10-16T00:00:00Z",
-                    },
-                  },
-                  "pay_group": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "ad1264e2-39be-4787-b749-f1aade9e3405",
-                    },
-                  },
-                  "personal_email": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "greg@gmail.com",
-                    },
-                  },
-                  "remote_created_at": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "datetime",
-                      "value": "2020-10-11T00:00:00Z",
-                    },
-                  },
-                  "remote_data": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "path": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "path",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                  },
-                  "remote_id": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "19202938",
-                    },
-                  },
-                  "remote_was_deleted": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": true,
-                    },
-                  },
-                  "ssn": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "1234567890",
-                    },
-                  },
-                  "start_date": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "datetime",
-                      "value": "2020-10-11T00:00:00Z",
-                    },
-                  },
-                  "team": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "249c9faa-3045-4a31-953b-8f22d3613301",
-                    },
-                  },
-                  "termination_date": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "datetime",
-                      "value": "2021-10-12T00:00:00Z",
-                    },
-                  },
-                  "username": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "cousingreg",
-                    },
-                  },
-                  "work_email": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "greg@merge.dev",
-                    },
-                  },
-                  "work_location": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
                     },
                   },
                 },
@@ -8982,18 +7136,6 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "string",
                           "value": "UNRECOGNIZED_FIELD",
                         },
-                      },
-                      "source": {
-                        "properties": {
-                          "pointer": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "pointer",
-                            },
-                          },
-                        },
-                        "type": "object",
                       },
                       "title": {
                         "type": "primitive",
@@ -9158,156 +7300,6 @@ exports[`open api parser merge parse open api 1`] = `
           "request": null,
           "response": {
             "properties": {
-              "avatar": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "http://alturl.com/h2h8m",
-                },
-              },
-              "company": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "8d9fd929-436c-4fd4-a48b-0c61f68d6178",
-                },
-              },
-              "custom_fields": {
-                "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "custom_fields",
-                    },
-                    "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ],
-              },
-              "date_of_birth": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "1990-11-10T00:00:00Z",
-                },
-              },
-              "display_full_name": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "Cousin Greg Hirsch",
-                },
-              },
-              "employee_number": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "2",
-                },
-              },
-              "employment_status": {
-                "type": "enum",
-                "value": "ACTIVE",
-              },
-              "employments": {
-                "type": "array",
-                "value": [
-                  {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "employments",
-                    },
-                  },
-                ],
-              },
-              "ethnicity": {
-                "type": "enum",
-                "value": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
-              },
-              "field_mappings": {
-                "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "field_mappings",
-                    },
-                    "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ],
-              },
-              "first_name": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "Greg",
-                },
-              },
-              "gender": {
-                "type": "enum",
-                "value": "MALE",
-              },
-              "groups": {
-                "type": "array",
-                "value": [
-                  {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "groups",
-                    },
-                  },
-                ],
-              },
-              "hire_date": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2020-10-10T00:00:00Z",
-                },
-              },
-              "home_location": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                },
-              },
               "id": {
                 "type": "primitive",
                 "value": {
@@ -9315,137 +7307,11 @@ exports[`open api parser merge parse open api 1`] = `
                   "value": "0958cbc6-6040-430a-848e-aafacbadf4ae",
                 },
               },
-              "last_name": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "Hirsch",
-                },
-              },
-              "manager": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "0048ea5b-911e-4dff-9364-92070dea62ff",
-                },
-              },
-              "marital_status": {
-                "type": "enum",
-                "value": "SINGLE",
-              },
-              "mobile_phone_number": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "+1234567890",
-                },
-              },
               "modified_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
                   "value": "2021-10-16T00:00:00Z",
-                },
-              },
-              "pay_group": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "ad1264e2-39be-4787-b749-f1aade9e3405",
-                },
-              },
-              "personal_email": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "greg@gmail.com",
-                },
-              },
-              "remote_created_at": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2020-10-11T00:00:00Z",
-                },
-              },
-              "remote_data": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "path": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "path",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "remote_id": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "19202938",
-                },
-              },
-              "remote_was_deleted": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean",
-                  "value": true,
-                },
-              },
-              "ssn": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "1234567890",
-                },
-              },
-              "start_date": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2020-10-11T00:00:00Z",
-                },
-              },
-              "team": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "249c9faa-3045-4a31-953b-8f22d3613301",
-                },
-              },
-              "termination_date": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2021-10-12T00:00:00Z",
-                },
-              },
-              "username": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cousingreg",
-                },
-              },
-              "work_email": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "greg@merge.dev",
-                },
-              },
-              "work_location": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
                 },
               },
             },
@@ -13055,56 +10921,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": null,
       "description": "Ignores a specific row based on the \`model_id\` in the url. These records will have their properties set to null, and will not be updated in future syncs. The "reason" and "message" fields in the request body will be stored for audit purposes.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [
-            {
-              "name": "X-Account-Token",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "X-Account-Token",
-                },
-              },
-            },
-          ],
-          "name": null,
-          "pathParameters": [
-            {
-              "name": "model_id",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "model_id",
-                },
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "message": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "deletion request by user id 51903790-7dfe-4053-8d63-5a10cc4ffd39",
-                },
-              },
-              "reason": {
-                "type": "enum",
-                "value": "GENERAL_CUSTOMER_REQUEST",
-              },
-            },
-            "type": "object",
-          },
-          "response": null,
-          "type": "full",
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "EmployeesIgnoreCreateRequest",
       "headers": [
         {
@@ -13214,82 +11031,9 @@ exports[`open api parser merge parse open api 1`] = `
                   "value": true,
                 },
               },
-              "remote_field_classes": {
-                "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "remote_field_classes",
-                    },
-                    "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ],
-              },
               "request_schema": {
                 "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "request_schema",
-                    },
-                    "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ],
-              },
-              "status": {
-                "properties": {
-                  "can_make_request": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": true,
-                    },
-                  },
-                  "linked_account_status": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "linked_account_status",
-                    },
-                  },
-                },
-                "type": "object",
+                "value": [],
               },
             },
             "type": "object",
@@ -13373,132 +11117,7 @@ exports[`open api parser merge parse open api 1`] = `
           "queryParameters": [],
           "request": null,
           "response": {
-            "properties": {
-              "next": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                },
-              },
-              "previous": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                },
-              },
-              "results": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "effective_date": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2023-10-06T18:42:34Z",
-                        },
-                      },
-                      "employee": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "0958cbc6-6040-430a-848e-aafacbadf4ae",
-                        },
-                      },
-                      "employment_type": {
-                        "type": "enum",
-                        "value": "FULL_TIME",
-                      },
-                      "flsa_status": {
-                        "type": "enum",
-                        "value": "EXEMPT",
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "65d8ffd0-211b-4ba4-b85a-fbe2ce220982",
-                        },
-                      },
-                      "job_title": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Executive Assistant to Tom Wambsgans",
-                        },
-                      },
-                      "modified_at": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2021-10-16T00:00:00Z",
-                        },
-                      },
-                      "pay_currency": {
-                        "type": "enum",
-                        "value": "XUA",
-                      },
-                      "pay_frequency": {
-                        "type": "enum",
-                        "value": "WEEKLY",
-                      },
-                      "pay_group": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "d4e4837f-9900-484c-ac40-528365bb08ef",
-                        },
-                      },
-                      "pay_period": {
-                        "type": "enum",
-                        "value": "HOUR",
-                      },
-                      "pay_rate": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 1.1,
-                        },
-                      },
-                      "remote_data": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "path": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "path",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "remote_id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "19202938",
-                        },
-                      },
-                      "remote_was_deleted": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -14323,57 +11942,6 @@ exports[`open api parser merge parse open api 1`] = `
           "request": null,
           "response": {
             "properties": {
-              "effective_date": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2023-10-06T18:42:34Z",
-                },
-              },
-              "employee": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "0958cbc6-6040-430a-848e-aafacbadf4ae",
-                },
-              },
-              "employment_type": {
-                "type": "enum",
-                "value": "FULL_TIME",
-              },
-              "field_mappings": {
-                "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "field_mappings",
-                    },
-                    "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ],
-              },
-              "flsa_status": {
-                "type": "enum",
-                "value": "EXEMPT",
-              },
               "id": {
                 "type": "primitive",
                 "value": {
@@ -14381,75 +11949,11 @@ exports[`open api parser merge parse open api 1`] = `
                   "value": "65d8ffd0-211b-4ba4-b85a-fbe2ce220982",
                 },
               },
-              "job_title": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "Executive Assistant to Tom Wambsgans",
-                },
-              },
               "modified_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
                   "value": "2021-10-16T00:00:00Z",
-                },
-              },
-              "pay_currency": {
-                "type": "enum",
-                "value": "XUA",
-              },
-              "pay_frequency": {
-                "type": "enum",
-                "value": "WEEKLY",
-              },
-              "pay_group": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "d4e4837f-9900-484c-ac40-528365bb08ef",
-                },
-              },
-              "pay_period": {
-                "type": "enum",
-                "value": "HOUR",
-              },
-              "pay_rate": {
-                "type": "primitive",
-                "value": {
-                  "type": "double",
-                  "value": 1.1,
-                },
-              },
-              "remote_data": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "path": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "path",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "remote_id": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "19202938",
-                },
-              },
-              "remote_was_deleted": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean",
-                  "value": true,
                 },
               },
             },
@@ -15124,95 +12628,7 @@ exports[`open api parser merge parse open api 1`] = `
           "queryParameters": [],
           "request": null,
           "response": {
-            "properties": {
-              "next": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                },
-              },
-              "previous": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                },
-              },
-              "results": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "134e0111-0f67-44f6-98f0-597000290bb3",
-                        },
-                      },
-                      "modified_at": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2021-10-16T00:00:00Z",
-                        },
-                      },
-                      "name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "COST_CENTER_US",
-                        },
-                      },
-                      "parent_group": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2ef51b11-2c4e-4b02-8d1d-50592d9e96ef",
-                        },
-                      },
-                      "remote_data": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "path": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "path",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "remote_id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "800293",
-                        },
-                      },
-                      "remote_was_deleted": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "type": {
-                        "type": "enum",
-                        "value": "TEAM",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -15579,35 +12995,6 @@ exports[`open api parser merge parse open api 1`] = `
           "request": null,
           "response": {
             "properties": {
-              "field_mappings": {
-                "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "field_mappings",
-                    },
-                    "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ],
-              },
               "id": {
                 "type": "primitive",
                 "value": {
@@ -15621,55 +13008,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "datetime",
                   "value": "2021-10-16T00:00:00Z",
                 },
-              },
-              "name": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "COST_CENTER_US",
-                },
-              },
-              "parent_group": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "2ef51b11-2c4e-4b02-8d1d-50592d9e96ef",
-                },
-              },
-              "remote_data": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "path": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "path",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "remote_id": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "800293",
-                },
-              },
-              "remote_was_deleted": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean",
-                  "value": true,
-                },
-              },
-              "type": {
-                "type": "enum",
-                "value": "TEAM",
               },
             },
             "type": "object",
@@ -15830,20 +13168,6 @@ exports[`open api parser merge parse open api 1`] = `
           "request": null,
           "response": {
             "properties": {
-              "next": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                },
-              },
-              "previous": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                },
-              },
               "results": {
                 "type": "array",
                 "value": [
@@ -15854,25 +13178,6 @@ exports[`open api parser merge parse open api 1`] = `
                         "value": {
                           "type": "string",
                           "value": "string",
-                        },
-                      },
-                      "error_details": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "error_details",
-                            },
-                          },
-                        ],
-                      },
-                      "first_incident_time": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-12-05T16:19:15.161Z",
                         },
                       },
                       "id": {
@@ -15888,17 +13193,6 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "boolean",
                           "value": true,
                         },
-                      },
-                      "last_incident_time": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-12-05T16:19:15.161Z",
-                        },
-                      },
-                      "status": {
-                        "type": "enum",
-                        "value": "ONGOING",
                       },
                     },
                     "type": "object",
@@ -16296,59 +13590,11 @@ exports[`open api parser merge parse open api 1`] = `
           "request": null,
           "response": {
             "properties": {
-              "end_user": {
-                "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "end_user",
-                    },
-                    "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ],
-              },
               "error_description": {
                 "type": "primitive",
                 "value": {
                   "type": "string",
                   "value": "string",
-                },
-              },
-              "error_details": {
-                "type": "array",
-                "value": [
-                  {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "error_details",
-                    },
-                  },
-                ],
-              },
-              "first_incident_time": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2022-12-05T16:19:15.161Z",
                 },
               },
               "id": {
@@ -16364,17 +13610,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "boolean",
                   "value": true,
                 },
-              },
-              "last_incident_time": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2022-12-05T16:19:15.161Z",
-                },
-              },
-              "status": {
-                "type": "enum",
-                "value": "ONGOING",
               },
             },
             "type": "object",
@@ -16567,29 +13802,11 @@ exports[`open api parser merge parse open api 1`] = `
           "request": null,
           "response": {
             "properties": {
-              "next": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                },
-              },
-              "previous": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                },
-              },
               "results": {
                 "type": "array",
                 "value": [
                   {
                     "properties": {
-                      "category": {
-                        "type": "enum",
-                        "value": "hris",
-                      },
                       "end_user_email_address": {
                         "type": "primitive",
                         "value": {
@@ -16618,118 +13835,9 @@ exports[`open api parser merge parse open api 1`] = `
                           "value": "e59b1821-f85c-4e28-a6b3-1804156f3563",
                         },
                       },
-                      "integration": {
-                        "properties": {
-                          "available_model_operations": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "properties": {
-                                  "available_operations": {
-                                    "type": "array",
-                                    "value": [
-                                      {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "available_operations",
-                                        },
-                                      },
-                                    ],
-                                  },
-                                  "model_name": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "Candidate",
-                                    },
-                                  },
-                                  "required_post_parameters": {
-                                    "type": "array",
-                                    "value": [
-                                      {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "required_post_parameters",
-                                        },
-                                      },
-                                    ],
-                                  },
-                                  "supported_fields": {
-                                    "type": "array",
-                                    "value": [
-                                      {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "supported_fields",
-                                        },
-                                      },
-                                    ],
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            ],
-                          },
-                          "categories": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "type": "enum",
-                                "value": "hris",
-                              },
-                            ],
-                          },
-                          "color": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "color",
-                            },
-                          },
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "name",
-                            },
-                          },
-                          "passthrough_available": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "boolean",
-                              "value": true,
-                            },
-                          },
-                          "slug": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "slug",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "is_duplicate": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
                       "status": {
                         "type": "enum",
                         "value": "COMPLETE",
-                      },
-                      "status_detail": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "status_detail",
-                        },
                       },
                       "webhook_listener_url": {
                         "type": "primitive",
@@ -17204,134 +14312,7 @@ exports[`open api parser merge parse open api 1`] = `
           "queryParameters": [],
           "request": null,
           "response": {
-            "properties": {
-              "next": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                },
-              },
-              "previous": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                },
-              },
-              "results": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "city": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "New York ",
-                        },
-                      },
-                      "country": {
-                        "type": "enum",
-                        "value": "AF",
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "f5e6a151-f44e-449a-afb1-8fd781905958",
-                        },
-                      },
-                      "location_type": {
-                        "type": "enum",
-                        "value": "HOME",
-                      },
-                      "modified_at": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2021-10-16T00:00:00Z",
-                        },
-                      },
-                      "name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "NYC Office",
-                        },
-                      },
-                      "phone_number": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "+1111111111",
-                        },
-                      },
-                      "remote_data": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "path": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "path",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "remote_id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "93018402",
-                        },
-                      },
-                      "remote_was_deleted": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "state": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "NY",
-                        },
-                      },
-                      "street_1": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2920 Broadway",
-                        },
-                      },
-                      "street_2": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2nd Floor",
-                        },
-                      },
-                      "zip_code": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "10027",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -17674,46 +14655,6 @@ exports[`open api parser merge parse open api 1`] = `
           "request": null,
           "response": {
             "properties": {
-              "city": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "New York ",
-                },
-              },
-              "country": {
-                "type": "enum",
-                "value": "AF",
-              },
-              "field_mappings": {
-                "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "field_mappings",
-                    },
-                    "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ],
-              },
               "id": {
                 "type": "primitive",
                 "value": {
@@ -17721,88 +14662,11 @@ exports[`open api parser merge parse open api 1`] = `
                   "value": "f5e6a151-f44e-449a-afb1-8fd781905958",
                 },
               },
-              "location_type": {
-                "type": "enum",
-                "value": "HOME",
-              },
               "modified_at": {
                 "type": "primitive",
                 "value": {
                   "type": "datetime",
                   "value": "2021-10-16T00:00:00Z",
-                },
-              },
-              "name": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "NYC Office",
-                },
-              },
-              "phone_number": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "+1111111111",
-                },
-              },
-              "remote_data": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "path": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "path",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "remote_id": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "93018402",
-                },
-              },
-              "remote_was_deleted": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean",
-                  "value": true,
-                },
-              },
-              "state": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "NY",
-                },
-              },
-              "street_1": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "2920 Broadway",
-                },
-              },
-              "street_2": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "2nd Floor",
-                },
-              },
-              "zip_code": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "10027",
                 },
               },
             },
@@ -17953,150 +14817,7 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": null,
       "description": "Pull data from an endpoint not currently supported by Merge.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [
-            {
-              "name": "X-Account-Token",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "X-Account-Token",
-                },
-              },
-            },
-          ],
-          "name": null,
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "method": {
-                "type": "enum",
-                "value": "GET",
-              },
-              "path": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "/scooters",
-                },
-              },
-            },
-            "type": "object",
-          },
-          "response": {
-            "properties": {
-              "headers": {
-                "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "headers",
-                    },
-                    "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ],
-              },
-              "method": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "GET",
-                },
-              },
-              "path": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "/scooters",
-                },
-              },
-              "response": {
-                "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "key",
-                    },
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "value",
-                      },
-                    },
-                  },
-                ],
-              },
-              "response_headers": {
-                "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "response_headers",
-                    },
-                    "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ],
-              },
-              "response_type": {
-                "type": "enum",
-                "value": "JSON",
-              },
-              "status": {
-                "type": "primitive",
-                "value": {
-                  "type": "int",
-                  "value": 200,
-                },
-              },
-            },
-            "type": "object",
-          },
-          "type": "full",
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "PassthroughCreateRequest",
       "headers": [
         {
@@ -18185,84 +14906,7 @@ exports[`open api parser merge parse open api 1`] = `
           "queryParameters": [],
           "request": null,
           "response": {
-            "properties": {
-              "next": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                },
-              },
-              "previous": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                },
-              },
-              "results": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "fd1e0fb5-8f92-4ec9-9f32-179cf732867d",
-                        },
-                      },
-                      "modified_at": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2021-10-16T00:00:00Z",
-                        },
-                      },
-                      "pay_group_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "contractor",
-                        },
-                      },
-                      "remote_data": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "path": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "path",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "remote_id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "800293",
-                        },
-                      },
-                      "remote_was_deleted": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -18559,35 +15203,6 @@ exports[`open api parser merge parse open api 1`] = `
           "request": null,
           "response": {
             "properties": {
-              "field_mappings": {
-                "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "field_mappings",
-                    },
-                    "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ],
-              },
               "id": {
                 "type": "primitive",
                 "value": {
@@ -18600,44 +15215,6 @@ exports[`open api parser merge parse open api 1`] = `
                 "value": {
                   "type": "datetime",
                   "value": "2021-10-16T00:00:00Z",
-                },
-              },
-              "pay_group_name": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "contractor",
-                },
-              },
-              "remote_data": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "path": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "path",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "remote_id": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "800293",
-                },
-              },
-              "remote_was_deleted": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean",
-                  "value": true,
                 },
               },
             },
@@ -18763,106 +15340,7 @@ exports[`open api parser merge parse open api 1`] = `
           "queryParameters": [],
           "request": null,
           "response": {
-            "properties": {
-              "next": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                },
-              },
-              "previous": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                },
-              },
-              "results": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "check_date": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2020-11-15T00:00:00Z",
-                        },
-                      },
-                      "end_date": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2020-11-15T00:00:00Z",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "37336947-b3d4-4a4c-a310-ab6ab510e079",
-                        },
-                      },
-                      "modified_at": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2021-10-16T00:00:00Z",
-                        },
-                      },
-                      "remote_data": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "path": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "path",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "remote_id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "19202938",
-                        },
-                      },
-                      "remote_was_deleted": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "run_state": {
-                        "type": "enum",
-                        "value": "PAID",
-                      },
-                      "run_type": {
-                        "type": "enum",
-                        "value": "REGULAR",
-                      },
-                      "start_date": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2020-11-08T00:00:00Z",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -19448,49 +15926,6 @@ exports[`open api parser merge parse open api 1`] = `
           "request": null,
           "response": {
             "properties": {
-              "check_date": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2020-11-15T00:00:00Z",
-                },
-              },
-              "end_date": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2020-11-15T00:00:00Z",
-                },
-              },
-              "field_mappings": {
-                "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "field_mappings",
-                    },
-                    "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ],
-              },
               "id": {
                 "type": "primitive",
                 "value": {
@@ -19503,52 +15938,6 @@ exports[`open api parser merge parse open api 1`] = `
                 "value": {
                   "type": "datetime",
                   "value": "2021-10-16T00:00:00Z",
-                },
-              },
-              "remote_data": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "path": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "path",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "remote_id": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "19202938",
-                },
-              },
-              "remote_was_deleted": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean",
-                  "value": true,
-                },
-              },
-              "run_state": {
-                "type": "enum",
-                "value": "PAID",
-              },
-              "run_type": {
-                "type": "enum",
-                "value": "REGULAR",
-              },
-              "start_date": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2020-11-08T00:00:00Z",
                 },
               },
             },
@@ -19873,7 +16262,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
-          "name": null,
+          "name": "Employees that started on or after January 1st, 2022",
           "pathParameters": [],
           "queryParameters": [],
           "request": null,
@@ -20203,7 +16592,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
-          "name": null,
+          "name": "Employees that started on or after January 1st, 2022",
           "pathParameters": [],
           "queryParameters": [],
           "request": null,
@@ -20469,20 +16858,6 @@ exports[`open api parser merge parse open api 1`] = `
           "request": null,
           "response": {
             "properties": {
-              "next": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                },
-              },
-              "previous": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                },
-              },
               "results": {
                 "type": "array",
                 "value": [
@@ -20522,10 +16897,6 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "datetime",
                           "value": "2021-03-30T20:44:18.662942Z",
                         },
-                      },
-                      "selective_sync_configurations_usage": {
-                        "type": "enum",
-                        "value": "IN_NEXT_SYNC",
                       },
                       "status": {
                         "type": "enum",
@@ -20704,10 +17075,6 @@ exports[`open api parser merge parse open api 1`] = `
                       "value": "2021-03-30T20:44:18.662942Z",
                     },
                   },
-                  "selective_sync_configurations_usage": {
-                    "type": "enum",
-                    "value": "IN_NEXT_SYNC",
-                  },
                   "status": {
                     "type": "enum",
                     "value": "SYNCING",
@@ -20803,91 +17170,7 @@ exports[`open api parser merge parse open api 1`] = `
           "queryParameters": [],
           "request": null,
           "response": {
-            "properties": {
-              "next": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                },
-              },
-              "previous": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                },
-              },
-              "results": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "13a72919-9fae-4f54-81ca-ddfd8712a1ba",
-                        },
-                      },
-                      "modified_at": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2021-10-16T00:00:00Z",
-                        },
-                      },
-                      "name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Engineering",
-                        },
-                      },
-                      "parent_team": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
-                        },
-                      },
-                      "remote_data": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "path": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "path",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "remote_id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "19202938",
-                        },
-                      },
-                      "remote_was_deleted": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -21231,35 +17514,6 @@ exports[`open api parser merge parse open api 1`] = `
           "request": null,
           "response": {
             "properties": {
-              "field_mappings": {
-                "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "field_mappings",
-                    },
-                    "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ],
-              },
               "id": {
                 "type": "primitive",
                 "value": {
@@ -21272,51 +17526,6 @@ exports[`open api parser merge parse open api 1`] = `
                 "value": {
                   "type": "datetime",
                   "value": "2021-10-16T00:00:00Z",
-                },
-              },
-              "name": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "Engineering",
-                },
-              },
-              "parent_team": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
-                },
-              },
-              "remote_data": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "path": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "path",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "remote_id": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "19202938",
-                },
-              },
-              "remote_was_deleted": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean",
-                  "value": true,
                 },
               },
             },
@@ -21465,131 +17674,7 @@ exports[`open api parser merge parse open api 1`] = `
           "queryParameters": [],
           "request": null,
           "response": {
-            "properties": {
-              "next": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                },
-              },
-              "previous": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                },
-              },
-              "results": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "amount": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 3,
-                        },
-                      },
-                      "approver": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
-                        },
-                      },
-                      "employee": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                        },
-                      },
-                      "employee_note": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Moving into the new apartment Kendall Roy gave me!",
-                        },
-                      },
-                      "end_time": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2020-11-17T00:00:00Z",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "91b2b905-e866-40c8-8be2-efe53827a0aa",
-                        },
-                      },
-                      "modified_at": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2021-10-16T00:00:00Z",
-                        },
-                      },
-                      "remote_data": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "path": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "path",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "remote_id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "19202938",
-                        },
-                      },
-                      "remote_was_deleted": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "request_type": {
-                        "type": "enum",
-                        "value": "VACATION",
-                      },
-                      "start_time": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2020-11-10T00:00:00Z",
-                        },
-                      },
-                      "status": {
-                        "type": "enum",
-                        "value": "REQUESTED",
-                      },
-                      "units": {
-                        "type": "enum",
-                        "value": "HOURS",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -22404,18 +18489,6 @@ exports[`open api parser merge parse open api 1`] = `
                           "value": "MISSING_REQUIRED_FIELD",
                         },
                       },
-                      "source": {
-                        "properties": {
-                          "pointer": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "pointer",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
                       "title": {
                         "type": "primitive",
                         "value": {
@@ -22480,70 +18553,6 @@ exports[`open api parser merge parse open api 1`] = `
               },
               "model": {
                 "properties": {
-                  "amount": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 3,
-                    },
-                  },
-                  "approver": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
-                    },
-                  },
-                  "employee": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                    },
-                  },
-                  "employee_note": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "Moving into the new apartment Kendall Roy gave me!",
-                    },
-                  },
-                  "end_time": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "datetime",
-                      "value": "2020-11-17T00:00:00Z",
-                    },
-                  },
-                  "field_mappings": {
-                    "type": "map",
-                    "value": [
-                      {
-                        "key": {
-                          "type": "string",
-                          "value": "field_mappings",
-                        },
-                        "value": {
-                          "type": "map",
-                          "value": [
-                            {
-                              "key": {
-                                "type": "string",
-                                "value": "key",
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "value",
-                                },
-                              },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
                   "id": {
                     "type": "primitive",
                     "value": {
@@ -22557,56 +18566,6 @@ exports[`open api parser merge parse open api 1`] = `
                       "type": "datetime",
                       "value": "2021-10-16T00:00:00Z",
                     },
-                  },
-                  "remote_data": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "path": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "path",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                  },
-                  "remote_id": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "19202938",
-                    },
-                  },
-                  "remote_was_deleted": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": true,
-                    },
-                  },
-                  "request_type": {
-                    "type": "enum",
-                    "value": "VACATION",
-                  },
-                  "start_time": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "datetime",
-                      "value": "2020-11-10T00:00:00Z",
-                    },
-                  },
-                  "status": {
-                    "type": "enum",
-                    "value": "REQUESTED",
-                  },
-                  "units": {
-                    "type": "enum",
-                    "value": "HOURS",
                   },
                 },
                 "type": "object",
@@ -22629,18 +18588,6 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "string",
                           "value": "UNRECOGNIZED_FIELD",
                         },
-                      },
-                      "source": {
-                        "properties": {
-                          "pointer": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "pointer",
-                            },
-                          },
-                        },
-                        "type": "object",
                       },
                       "title": {
                         "type": "primitive",
@@ -22793,102 +18740,7 @@ exports[`open api parser merge parse open api 1`] = `
           "queryParameters": [],
           "request": null,
           "response": {
-            "properties": {
-              "next": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                },
-              },
-              "previous": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                },
-              },
-              "results": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "balance": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 1.1,
-                        },
-                      },
-                      "employee": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "91b2b905-e866-40c8-8be2-efe53827a0aa",
-                        },
-                      },
-                      "modified_at": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2021-10-16T00:00:00Z",
-                        },
-                      },
-                      "policy_type": {
-                        "type": "enum",
-                        "value": "VACATION",
-                      },
-                      "remote_data": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "path": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "path",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "remote_id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "19202938",
-                        },
-                      },
-                      "remote_was_deleted": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "used": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 1.1,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -23378,49 +19230,6 @@ exports[`open api parser merge parse open api 1`] = `
           "request": null,
           "response": {
             "properties": {
-              "balance": {
-                "type": "primitive",
-                "value": {
-                  "type": "double",
-                  "value": 1.1,
-                },
-              },
-              "employee": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                },
-              },
-              "field_mappings": {
-                "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "field_mappings",
-                    },
-                    "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ],
-              },
               "id": {
                 "type": "primitive",
                 "value": {
@@ -23433,48 +19242,6 @@ exports[`open api parser merge parse open api 1`] = `
                 "value": {
                   "type": "datetime",
                   "value": "2021-10-16T00:00:00Z",
-                },
-              },
-              "policy_type": {
-                "type": "enum",
-                "value": "VACATION",
-              },
-              "remote_data": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "path": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "path",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "remote_id": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "19202938",
-                },
-              },
-              "remote_was_deleted": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean",
-                  "value": true,
-                },
-              },
-              "used": {
-                "type": "primitive",
-                "value": {
-                  "type": "double",
-                  "value": 1.1,
                 },
               },
             },
@@ -23681,70 +19448,6 @@ exports[`open api parser merge parse open api 1`] = `
           "request": null,
           "response": {
             "properties": {
-              "amount": {
-                "type": "primitive",
-                "value": {
-                  "type": "double",
-                  "value": 3,
-                },
-              },
-              "approver": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
-                },
-              },
-              "employee": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                },
-              },
-              "employee_note": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "Moving into the new apartment Kendall Roy gave me!",
-                },
-              },
-              "end_time": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2020-11-17T00:00:00Z",
-                },
-              },
-              "field_mappings": {
-                "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "field_mappings",
-                    },
-                    "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ],
-              },
               "id": {
                 "type": "primitive",
                 "value": {
@@ -23758,56 +19461,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "datetime",
                   "value": "2021-10-16T00:00:00Z",
                 },
-              },
-              "remote_data": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "path": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "path",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "remote_id": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "19202938",
-                },
-              },
-              "remote_was_deleted": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean",
-                  "value": true,
-                },
-              },
-              "request_type": {
-                "type": "enum",
-                "value": "VACATION",
-              },
-              "start_time": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2020-11-10T00:00:00Z",
-                },
-              },
-              "status": {
-                "type": "enum",
-                "value": "REQUESTED",
-              },
-              "units": {
-                "type": "enum",
-                "value": "HOURS",
               },
             },
             "type": "object",
@@ -24214,82 +19867,9 @@ exports[`open api parser merge parse open api 1`] = `
                   "value": true,
                 },
               },
-              "remote_field_classes": {
-                "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "remote_field_classes",
-                    },
-                    "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ],
-              },
               "request_schema": {
                 "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "request_schema",
-                    },
-                    "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ],
-              },
-              "status": {
-                "properties": {
-                  "can_make_request": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": true,
-                    },
-                  },
-                  "linked_account_status": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "linked_account_status",
-                    },
-                  },
-                },
-                "type": "object",
+                "value": [],
               },
             },
             "type": "object",
@@ -24389,13 +19969,6 @@ exports[`open api parser merge parse open api 1`] = `
                     "value": {
                       "type": "boolean",
                       "value": true,
-                    },
-                  },
-                  "key": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "key",
                     },
                   },
                 },
@@ -24520,13 +20093,6 @@ exports[`open api parser merge parse open api 1`] = `
                 "value": {
                   "type": "boolean",
                   "value": true,
-                },
-              },
-              "key": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "key",
                 },
               },
             },

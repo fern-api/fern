@@ -39,16 +39,19 @@ export class ExampleTypeFactory {
 
     public buildExample({
         schema,
+        exampleId,
         example,
         options
     }: {
         schema: SchemaWithExample;
+        exampleId: string | undefined;
         example: unknown | undefined;
         options: ExampleTypeFactory.Options;
     }): FullExample | undefined {
         return this.buildExampleHelper({
             schema,
             visitedSchemaIds: new Set(),
+            exampleId,
             example,
             // Default maxCheckerDepth to 5
             options: { ...options, maxCheckerDepth: options.maxCheckerDepth ?? 5 },
@@ -57,12 +60,14 @@ export class ExampleTypeFactory {
     }
 
     private buildExampleHelper({
+        exampleId,
         example,
         schema,
         depth,
         visitedSchemaIds,
         options
     }: {
+        exampleId: string | undefined;
         example: unknown | undefined;
         schema: SchemaWithExample;
         depth: number;
@@ -88,6 +93,7 @@ export class ExampleTypeFactory {
                 const result = this.buildExampleHelper({
                     schema: schema.value,
                     visitedSchemaIds,
+                    exampleId,
                     example,
                     depth,
                     options
@@ -114,6 +120,7 @@ export class ExampleTypeFactory {
                 const result = this.buildExampleHelper({
                     schema: schema.value,
                     visitedSchemaIds,
+                    exampleId,
                     example,
                     depth,
                     options
@@ -140,6 +147,7 @@ export class ExampleTypeFactory {
                     const referencedExample = this.buildExampleHelper({
                         example,
                         schema: referencedSchemaWithExample,
+                        exampleId,
                         visitedSchemaIds,
                         depth,
                         options
@@ -195,6 +203,7 @@ export class ExampleTypeFactory {
                             if (required && fullExample?.[property] != null) {
                                 const propertyExample = this.buildExampleHelper({
                                     schema,
+                                    exampleId,
                                     example: fullExample[property],
                                     visitedSchemaIds,
                                     depth: depth + 1,
@@ -207,6 +216,7 @@ export class ExampleTypeFactory {
                                 }
                             } else {
                                 const propertyExample = this.buildExampleHelper({
+                                    exampleId,
                                     schema,
                                     example: fullExample?.[property],
                                     visitedSchemaIds,
@@ -226,6 +236,7 @@ export class ExampleTypeFactory {
                         if (schema.value.schemas[0] != null) {
                             // TODO (we should select the oneOf schema based on the example)
                             return this.buildExampleHelper({
+                                exampleId,
                                 example,
                                 schema: schema.value.schemas[0],
                                 visitedSchemaIds,
@@ -263,6 +274,7 @@ export class ExampleTypeFactory {
                 if (fullExample != null && fullExample.length > 0) {
                     for (const item of fullExample) {
                         const itemExample = this.buildExampleHelper({
+                            exampleId,
                             example: item,
                             schema: schema.value,
                             depth: depth + 1,
@@ -276,6 +288,7 @@ export class ExampleTypeFactory {
                 } else {
                     // Otherwise, generate an example
                     const itemExample = this.buildExampleHelper({
+                        exampleId,
                         example: undefined,
                         schema: schema.value,
                         depth: depth + 1,
@@ -300,6 +313,7 @@ export class ExampleTypeFactory {
                             options
                         });
                         const valueExample = this.buildExampleHelper({
+                            exampleId,
                             example: value,
                             schema: schema.value,
                             visitedSchemaIds,
@@ -321,6 +335,7 @@ export class ExampleTypeFactory {
                     options
                 });
                 const valueExample = this.buildExampleHelper({
+                    exampleId,
                     example: undefined,
                     schema: schema.value,
                     visitedSchemaIds,
@@ -339,9 +354,13 @@ export class ExampleTypeFactory {
             }
             case "object": {
                 const result: Record<string, FullExample> = {};
+                const foundObjectExample =
+                    schema.fullExamples?.find((example) => example.name === exampleId) ??
+                    schema.fullExamples?.find((example) => example.name == null) ??
+                    schema.fullExamples?.[0];
                 const fullExample =
                     getFullExampleAsObject(example) ??
-                    (schema.fullExamples?.[0] != null ? getFullExampleAsObject(schema.fullExamples[0].value) : {}) ??
+                    (foundObjectExample != null ? getFullExampleAsObject(foundObjectExample.value) : {}) ??
                     {};
                 const allProperties = this.getAllProperties(schema);
                 const requiredProperties = this.getAllRequiredProperties(schema);
@@ -349,6 +368,7 @@ export class ExampleTypeFactory {
                     const required = property in requiredProperties;
                     const propertyExample = this.buildExampleHelper({
                         schema,
+                        exampleId,
                         example: fullExample[property],
                         visitedSchemaIds,
                         depth: depth + 1,
@@ -362,6 +382,7 @@ export class ExampleTypeFactory {
                     } else if (required) {
                         const generatedExample = this.buildExampleHelper({
                             schema,
+                            exampleId,
                             example: fullExample[property],
                             visitedSchemaIds,
                             depth: depth + 1,

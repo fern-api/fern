@@ -46,6 +46,7 @@ export class ExampleWebsocketSessionFactory {
                 const required = this.isSchemaRequired(queryParameter.schema);
                 let example = this.exampleTypeFactory.buildExample({
                     schema: queryParameter.schema,
+                    exampleId: undefined,
                     example: extensionExample.queryParameters?.[queryParameter.name],
                     options: {
                         name: queryParameter.name,
@@ -71,6 +72,7 @@ export class ExampleWebsocketSessionFactory {
                 const required = this.isSchemaRequired(header.schema);
                 let example = this.exampleTypeFactory.buildExample({
                     schema: header.schema,
+                    exampleId: undefined,
                     example: extensionExample.headers?.[header.name],
                     options: {
                         name: header.name,
@@ -101,6 +103,7 @@ export class ExampleWebsocketSessionFactory {
                     : messageSchema.payload;
                 const example = this.exampleTypeFactory.buildExample({
                     schema: convertSchema(resolvedSchema, false, context, [messageExample.messageId]),
+                    exampleId: undefined,
                     example: messageExample.value,
                     options: {
                         isParameter: false,
@@ -150,6 +153,7 @@ export class ExampleWebsocketSessionFactory {
             const required = this.isSchemaRequired(queryParameter.schema);
             let example = this.exampleTypeFactory.buildExample({
                 schema: queryParameter.schema,
+                exampleId: undefined,
                 example: undefined,
                 options: {
                     name: queryParameter.name,
@@ -175,6 +179,7 @@ export class ExampleWebsocketSessionFactory {
             const required = this.isSchemaRequired(header.schema);
             let example = this.exampleTypeFactory.buildExample({
                 schema: header.schema,
+                exampleId: undefined,
                 example: undefined,
                 options: {
                     name: header.name,
@@ -198,6 +203,7 @@ export class ExampleWebsocketSessionFactory {
         if (publish != null) {
             const publishMessageExample = this.exampleTypeFactory.buildExample({
                 schema: publish,
+                exampleId: undefined,
                 example: undefined,
                 options: {
                     isParameter: false,
@@ -216,6 +222,7 @@ export class ExampleWebsocketSessionFactory {
         if (subscribe != null) {
             const publishMessageExample = this.exampleTypeFactory.buildExample({
                 schema: subscribe,
+                exampleId: undefined,
                 example: undefined,
                 options: {
                     isParameter: false,

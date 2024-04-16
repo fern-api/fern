@@ -84,10 +84,6 @@ Used to retrieve a deployment given its ID or name.
                   "value": "2024-01-15T09:30:00Z",
                 },
               },
-              "environment": {
-                "type": "enum",
-                "value": "DEVELOPMENT",
-              },
               "id": {
                 "type": "primitive",
                 "value": {
@@ -119,10 +115,6 @@ Used to retrieve a deployment given its ID or name.
                   "type": "string",
                   "value": "name",
                 },
-              },
-              "status": {
-                "type": "enum",
-                "value": "ACTIVE",
               },
             },
             "type": "object",
@@ -368,10 +360,6 @@ Creates a new document index.",
                   "value": "2024-01-15T09:30:00Z",
                 },
               },
-              "environment": {
-                "type": "enum",
-                "value": "DEVELOPMENT",
-              },
               "id": {
                 "type": "primitive",
                 "value": {
@@ -381,32 +369,7 @@ Creates a new document index.",
               },
               "indexing_config": {
                 "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "indexing_config",
-                    },
-                    "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ],
+                "value": [],
               },
               "label": {
                 "type": "primitive",
@@ -422,9 +385,361 @@ Creates a new document index.",
                   "value": "name",
                 },
               },
-              "status": {
-                "type": "enum",
-                "value": "ACTIVE",
+            },
+            "type": "object",
+          },
+          "type": "full",
+        },
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": "Index Using a Sentence Transformers Model",
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "indexing_config": {
+                "type": "map",
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "chunking",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "chunker_name",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "sentence-chunker",
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "chunker_config",
+                            },
+                            "value": {
+                              "type": "map",
+                              "value": [
+                                {
+                                  "key": {
+                                    "type": "string",
+                                    "value": "character_limit",
+                                  },
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "int",
+                                      "value": 1000,
+                                    },
+                                  },
+                                },
+                                {
+                                  "key": {
+                                    "type": "string",
+                                    "value": "min_overlap_ratio",
+                                  },
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "double",
+                                      "value": 0.5,
+                                    },
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "vectorizer",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "model_name",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "sentence-transformers/multi-qa-mpnet-base-dot-v1",
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "config",
+                            },
+                            "value": {
+                              "type": "map",
+                              "value": [],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  },
+                ],
+              },
+              "label": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "My Document Index",
+                },
+              },
+              "name": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "my-document-index",
+                },
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "created": {
+                "type": "primitive",
+                "value": {
+                  "type": "datetime",
+                  "value": "2024-01-15T09:30:00Z",
+                },
+              },
+              "id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+              "indexing_config": {
+                "type": "map",
+                "value": [],
+              },
+              "label": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "label",
+                },
+              },
+              "name": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "name",
+                },
+              },
+            },
+            "type": "object",
+          },
+          "type": "full",
+        },
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": "Index Using OpenAI Model",
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "indexing_config": {
+                "type": "map",
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "chunking",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "chunker_name",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "sentence-chunker",
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "chunker_config",
+                            },
+                            "value": {
+                              "type": "map",
+                              "value": [
+                                {
+                                  "key": {
+                                    "type": "string",
+                                    "value": "character_limit",
+                                  },
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "int",
+                                      "value": 1000,
+                                    },
+                                  },
+                                },
+                                {
+                                  "key": {
+                                    "type": "string",
+                                    "value": "min_overlap_ratio",
+                                  },
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "double",
+                                      "value": 0.5,
+                                    },
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "vectorizer",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "model_name",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "text-embedding-ada-002",
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "config",
+                            },
+                            "value": {
+                              "type": "map",
+                              "value": [
+                                {
+                                  "key": {
+                                    "type": "string",
+                                    "value": "add_openai_api_key",
+                                  },
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "boolean",
+                                      "value": true,
+                                    },
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  },
+                ],
+              },
+              "label": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "My Document Index",
+                },
+              },
+              "name": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "my-document-index",
+                },
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "created": {
+                "type": "primitive",
+                "value": {
+                  "type": "datetime",
+                  "value": "2024-01-15T09:30:00Z",
+                },
+              },
+              "id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+              "indexing_config": {
+                "type": "map",
+                "value": [],
+              },
+              "label": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "label",
+                },
+              },
+              "name": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "name",
+                },
               },
             },
             "type": "object",
@@ -501,112 +816,6 @@ Used to list documents. Optionally filter on supported fields.
                   "type": "int",
                   "value": 123,
                 },
-              },
-              "next": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "http://api.example.org/accounts/?offset=400&limit=100",
-                },
-              },
-              "previous": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "http://api.example.org/accounts/?offset=200&limit=100",
-                },
-              },
-              "results": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "document_to_document_indexes": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "document_index_id": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "document_index_id",
-                                },
-                              },
-                              "id": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "id",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "external_id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "external_id",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "id",
-                        },
-                      },
-                      "keywords": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "keywords",
-                            },
-                          },
-                        ],
-                      },
-                      "label": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "label",
-                        },
-                      },
-                      "last_uploaded_at": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2024-01-15T09:30:00Z",
-                        },
-                      },
-                      "processing_failure_reason": {
-                        "type": "literal",
-                        "value": {
-                          "type": "string",
-                          "value": "EXCEEDED_CHARACTER_LIMIT",
-                        },
-                      },
-                      "processing_state": {
-                        "type": "enum",
-                        "value": "QUEUED",
-                      },
-                      "status": {
-                        "type": "literal",
-                        "value": {
-                          "type": "string",
-                          "value": "ACTIVE",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
               },
             },
             "type": "object",
@@ -745,27 +954,7 @@ Used to list documents. Optionally filter on supported fields.
 
 Executes a deployed Workflow and streams back its results.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "inputs": {
-                "type": "array",
-                "value": [],
-              },
-            },
-            "type": "object",
-          },
-          "response": null,
-          "type": "full",
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "ExecuteWorkflowStreamRequest",
       "headers": [],
       "internal": null,
@@ -862,56 +1051,7 @@ Generate a completion using a previously defined deployment.
                 "type": "array",
                 "value": [
                   {
-                    "properties": {
-                      "data": {
-                        "properties": {
-                          "completions": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "properties": {
-                                  "id": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "id",
-                                    },
-                                  },
-                                  "model_version_id": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "model_version_id",
-                                    },
-                                  },
-                                  "text": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "text",
-                                    },
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            ],
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "error": {
-                        "properties": {
-                          "message": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "message",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
+                    "properties": {},
                     "type": "object",
                   },
                 ],
@@ -985,37 +1125,7 @@ Generate a stream of completions using a previously defined deployment.
         404,
         500,
       ],
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "requests": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "input_values": {
-                        "type": "map",
-                        "value": [],
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-            },
-            "type": "object",
-          },
-          "response": null,
-          "type": "full",
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GenerateStreamRequest",
       "headers": [],
       "internal": null,
@@ -1105,39 +1215,6 @@ Used to retrieve a model version given its ID.
                       "value": "base_model",
                     },
                   },
-                  "sandbox_snapshot": {
-                    "properties": {
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "id",
-                        },
-                      },
-                      "prompt_id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "prompt_id",
-                        },
-                      },
-                      "prompt_index": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "sandbox_id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "sandbox_id",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
                 },
                 "type": "object",
               },
@@ -1190,26 +1267,7 @@ Used to retrieve a model version given its ID.
                           "value": 1.1,
                         },
                       },
-                      "stop": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "stop",
-                            },
-                          },
-                        ],
-                      },
                       "temperature": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 1.1,
-                        },
-                      },
-                      "top_k": {
                         "type": "primitive",
                         "value": {
                           "type": "double",
@@ -1225,57 +1283,6 @@ Used to retrieve a model version given its ID.
                       },
                     },
                     "type": "object",
-                  },
-                  "prompt_block_data": {
-                    "properties": {
-                      "blocks": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "block_type": {
-                                "type": "enum",
-                                "value": "CHAT_MESSAGE",
-                              },
-                              "id": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "id",
-                                },
-                              },
-                              "properties": {
-                                "properties": {},
-                                "type": "object",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "version": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "prompt_syntax_version": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "int",
-                      "value": 1,
-                    },
-                  },
-                  "prompt_template": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "prompt_template",
-                    },
                   },
                 },
                 "type": "object",
@@ -1308,10 +1315,6 @@ Used to retrieve a model version given its ID.
               "provider": {
                 "type": "enum",
                 "value": "ANTHROPIC",
-              },
-              "status": {
-                "type": "enum",
-                "value": "CREATING",
               },
             },
             "type": "object",
@@ -1895,6 +1898,52 @@ or overwritten with default values.",
                 "value": [
                   {
                     "properties": {
+                      "key": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "key",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "metric_input_params": {
+                "properties": {},
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+          "type": "full",
+        },
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": "Chat History Example",
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "inputs": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
                       "chat_history": {
                         "type": "array",
                         "value": [
@@ -1902,13 +1951,29 @@ or overwritten with default values.",
                             "properties": {
                               "role": {
                                 "type": "enum",
-                                "value": "SYSTEM",
+                                "value": "USER",
                               },
                               "text": {
                                 "type": "primitive",
                                 "value": {
                                   "type": "string",
-                                  "value": "text",
+                                  "value": "What's your favorite color?",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                          {
+                            "properties": {
+                              "role": {
+                                "type": "enum",
+                                "value": "ASSISTANT",
+                              },
+                              "text": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "AI's don't have a favorite color.... Yet.",
                                 },
                               },
                             },
@@ -1920,19 +1985,12 @@ or overwritten with default values.",
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "key",
+                          "value": "$chat_history",
                         },
                       },
                       "type": {
                         "type": "enum",
-                        "value": "TEXT",
-                      },
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "value",
-                        },
+                        "value": "CHAT_HISTORY",
                       },
                     },
                     "type": "object",
@@ -1943,24 +2001,40 @@ or overwritten with default values.",
                 "type": "primitive",
                 "value": {
                   "type": "string",
-                  "value": "label",
+                  "value": "Scenario 2",
                 },
               },
-              "metric_input_params": {
-                "properties": {
-                  "params": {
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+              "inputs": {
+                "type": "array",
+                "value": [
+                  {
                     "properties": {
-                      "target": {
+                      "key": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "target",
+                          "value": "key",
                         },
                       },
                     },
                     "type": "object",
                   },
-                },
+                ],
+              },
+              "metric_input_params": {
+                "properties": {},
                 "type": "object",
               },
             },
@@ -2037,40 +2111,7 @@ or overwritten with default values.",
 
 Deletes an existing scenario from a sandbox, keying off of the provided scenario id.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [
-            {
-              "name": "id",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "id",
-                },
-              },
-            },
-            {
-              "name": "scenario_id",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "scenario_id",
-                },
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": null,
-          "response": null,
-          "type": "full",
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DeleteSandboxScenarioRequest",
       "headers": [],
       "internal": null,
@@ -2283,32 +2324,7 @@ Used to submit feedback regarding the quality of previously generated completion
         404,
         500,
       ],
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [],
-          "queryParameters": [],
-          "request": {
-            "properties": {
-              "actuals": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {},
-                    "type": "object",
-                  },
-                ],
-              },
-            },
-            "type": "object",
-          },
-          "response": null,
-          "type": "full",
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "SubmitCompletionActualsRequest",
       "headers": [],
       "internal": null,
@@ -2394,59 +2410,12 @@ or overwritten with default values.",
           "response": {
             "properties": {
               "evaluation_params": {
-                "properties": {
-                  "target": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "target",
-                    },
-                  },
-                },
+                "properties": {},
                 "type": "object",
               },
               "input_values": {
                 "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "input_values",
-                    },
-                    "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
-                        },
-                      ],
-                    },
-                  },
-                ],
-              },
-              "label": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "label",
-                },
-              },
-              "test_case_id": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "test_case_id",
-                },
+                "value": [],
               },
             },
             "type": "object",
@@ -2522,40 +2491,7 @@ or overwritten with default values.",
 
 Deletes an existing test case for a test suite, keying off of the test case id.",
       "errorStatusCode": [],
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [
-            {
-              "name": "id",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "id",
-                },
-              },
-            },
-            {
-              "name": "test_case_id",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "test_case_id",
-                },
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": null,
-          "response": null,
-          "type": "full",
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "DeleteTestSuiteTestCaseRequest",
       "headers": [],
       "internal": null,

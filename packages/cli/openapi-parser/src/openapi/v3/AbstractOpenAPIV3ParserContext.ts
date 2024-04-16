@@ -8,6 +8,7 @@ import { isReferenceObject } from "../../schema/utils/isReferenceObject";
 
 export const PARAMETER_REFERENCE_PREFIX = "#/components/parameters/";
 export const RESPONSE_REFERENCE_PREFIX = "#/components/responses/";
+export const EXAMPLES_REFERENCE_PREFIX = "#/components/examples/";
 export const REQUEST_BODY_REFERENCE_PREFIX = "#/components/requestBodies/";
 
 export interface DiscriminatedUnionReference {
@@ -111,6 +112,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         return resolvedRequestBody;
     }
 
+    // this is copied into getApplicationJsonSchema. please keep in sync or refactor
     public resolveResponseReference(response: OpenAPIV3.ReferenceObject): OpenAPIV3.ResponseObject {
         if (
             this.document.components == null ||

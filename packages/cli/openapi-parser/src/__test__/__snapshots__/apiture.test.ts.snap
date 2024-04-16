@@ -81,138 +81,9 @@ Transfers support recurring schedules, such as repeating every week or every mon
           "request": null,
           "response": {
             "properties": {
-              "count": {
-                "type": "primitive",
-                "value": {
-                  "type": "int",
-                  "value": 1,
-                },
-              },
               "items": {
                 "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "allows": {
-                        "properties": {
-                          "billPay": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "boolean",
-                              "value": true,
-                            },
-                          },
-                          "manageCards": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "boolean",
-                              "value": true,
-                            },
-                          },
-                          "mobileCheckDeposit": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "boolean",
-                              "value": true,
-                            },
-                          },
-                          "transferFrom": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "boolean",
-                              "value": true,
-                            },
-                          },
-                          "transferTo": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "boolean",
-                              "value": true,
-                            },
-                          },
-                          "view": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "boolean",
-                              "value": true,
-                            },
-                          },
-                          "viewCards": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "boolean",
-                              "value": true,
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "id",
-                        },
-                      },
-                      "label": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Checking *1008",
-                        },
-                      },
-                      "location": {
-                        "type": "enum",
-                        "value": "internal",
-                      },
-                      "maskedNumber": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "maskedNumber",
-                        },
-                      },
-                      "nickname": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Payroll Checking",
-                        },
-                      },
-                      "product": {
-                        "properties": {
-                          "code": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "180D_CDA",
-                            },
-                          },
-                          "description": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Certificate of Deposit with a 180 day term",
-                            },
-                          },
-                          "label": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "180 Day CD",
-                            },
-                          },
-                          "type": {
-                            "type": "enum",
-                            "value": "cd",
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "value": [],
               },
               "limit": {
                 "type": "primitive",
@@ -226,20 +97,6 @@ Transfers support recurring schedules, such as repeating every week or every mon
                 "value": {
                   "type": "string",
                   "value": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
-                },
-              },
-              "primaryAccountId": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "primaryAccountId",
-                },
-              },
-              "start": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "start",
                 },
               },
             },
@@ -1289,13 +1146,6 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
                   "value": "https://production.api.apiture.com/banking/accounts/f204d292df9fb/eligibleOverdraftAccounts?start=641f62296ecbf1882c84?limit=100",
                 },
               },
-              "start": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "start",
-                },
-              },
             },
             "type": "object",
           },
@@ -1430,24 +1280,6 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
           "request": null,
           "response": {
             "properties": {
-              "accounts": {
-                "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "key",
-                    },
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "value",
-                      },
-                    },
-                  },
-                ],
-              },
               "maximumOverdraftAccounts": {
                 "type": "primitive",
                 "value": {
@@ -1549,24 +1381,6 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
           },
           "response": {
             "properties": {
-              "accounts": {
-                "type": "map",
-                "value": [
-                  {
-                    "key": {
-                      "type": "string",
-                      "value": "key",
-                    },
-                    "value": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "value",
-                      },
-                    },
-                  },
-                ],
-              },
               "maximumOverdraftAccounts": {
                 "type": "primitive",
                 "value": {
@@ -1758,13 +1572,6 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                   "value": "obsolete obese octopus",
                 },
               },
-              "taxId": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "taxId",
-                },
-              },
             },
             "type": "object",
           },
@@ -1933,13 +1740,6 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                         "value": {
                           "type": "string",
                           "value": "NC",
-                        },
-                      },
-                      "regionName": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "regionName",
                         },
                       },
                     },
@@ -3459,37 +3259,6 @@ The default response lists only recent transactions. Normally, this is transacti
                           "value": "8509.38",
                         },
                       },
-                      "category": {
-                        "properties": {
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "id",
-                            },
-                          },
-                          "label": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "label",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "check": {
-                        "properties": {
-                          "number": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "int",
-                              "value": 1,
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
                       "createdOn": {
                         "type": "primitive",
                         "value": {
@@ -3497,25 +3266,11 @@ The default response lists only recent transactions. Normally, this is transacti
                           "value": "2023-05-18",
                         },
                       },
-                      "description": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "description",
-                        },
-                      },
                       "id": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
                           "value": "d62c0701-0d74",
-                        },
-                      },
-                      "memo": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "memo",
                         },
                       },
                       "occurredOn": {
@@ -3616,13 +3371,6 @@ The default response lists only recent transactions. Normally, this is transacti
                         "value": {
                           "type": "string",
                           "value": "2023-05-18",
-                        },
-                      },
-                      "description": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "description",
                         },
                       },
                       "id": {
@@ -4192,13 +3940,6 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
           "request": null,
           "response": {
             "properties": {
-              "count": {
-                "type": "primitive",
-                "value": {
-                  "type": "int",
-                  "value": 1,
-                },
-              },
               "items": {
                 "type": "array",
                 "value": [
@@ -4341,13 +4082,6 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                           "value": "2022-04-18T07:21:35.375Z",
                         },
                       },
-                      "updatedBy": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "updatedBy",
-                        },
-                      },
                     },
                     "type": "object",
                   },
@@ -4379,13 +4113,6 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                         "value": {
                           "type": "string",
                           "value": "school expenses",
-                        },
-                      },
-                      "processedAt": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2024-01-15T09:30:00Z",
                         },
                       },
                       "schedule": {
@@ -4495,13 +4222,6 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                         "value": {
                           "type": "datetime",
                           "value": "2022-04-18T07:21:35.375Z",
-                        },
-                      },
-                      "updatedBy": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "updatedBy",
                         },
                       },
                     },
@@ -4839,13 +4559,6 @@ Note: This operation requires an identity challenge if the financial institution
                   "value": "Cover check for car repair",
                 },
               },
-              "processedAt": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2024-01-15T09:30:00Z",
-                },
-              },
               "schedule": {
                 "properties": {
                   "amountLimit": {
@@ -4853,13 +4566,6 @@ Note: This operation requires an identity challenge if the financial institution
                     "value": {
                       "type": "string",
                       "value": "3456.78",
-                    },
-                  },
-                  "count": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "int",
-                      "value": 1,
                     },
                   },
                   "creditsOn": {
@@ -4876,20 +4582,9 @@ Note: This operation requires an identity challenge if the financial institution
                       "value": "2026-06-24",
                     },
                   },
-                  "endsOn": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "endsOn",
-                    },
-                  },
                   "frequency": {
                     "type": "enum",
                     "value": "once",
-                  },
-                  "recurrenceType": {
-                    "type": "enum",
-                    "value": "fixed",
                   },
                   "scheduledOn": {
                     "type": "primitive",
@@ -4964,13 +4659,6 @@ Note: This operation requires an identity challenge if the financial institution
                 "value": {
                   "type": "datetime",
                   "value": "2022-04-18T07:21:35.375Z",
-                },
-              },
-              "updatedBy": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "updatedBy",
                 },
               },
             },
@@ -5108,13 +4796,6 @@ Note: This operation requires an identity challenge if the financial institution
                   "value": "Cover check for car repair",
                 },
               },
-              "processedAt": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2024-01-15T09:30:00Z",
-                },
-              },
               "schedule": {
                 "properties": {
                   "amountLimit": {
@@ -5122,13 +4803,6 @@ Note: This operation requires an identity challenge if the financial institution
                     "value": {
                       "type": "string",
                       "value": "3456.78",
-                    },
-                  },
-                  "count": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "int",
-                      "value": 1,
                     },
                   },
                   "creditsOn": {
@@ -5145,20 +4819,9 @@ Note: This operation requires an identity challenge if the financial institution
                       "value": "2026-06-24",
                     },
                   },
-                  "endsOn": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "endsOn",
-                    },
-                  },
                   "frequency": {
                     "type": "enum",
                     "value": "once",
-                  },
-                  "recurrenceType": {
-                    "type": "enum",
-                    "value": "fixed",
                   },
                   "scheduledOn": {
                     "type": "primitive",
@@ -5235,13 +4898,6 @@ Note: This operation requires an identity challenge if the financial institution
                   "value": "2022-04-18T07:21:35.375Z",
                 },
               },
-              "updatedBy": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "updatedBy",
-                },
-              },
             },
             "type": "object",
           },
@@ -5308,30 +4964,7 @@ Note: This operation requires an identity challenge if the financial institution
         404,
         409,
       ],
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [
-            {
-              "name": "transferId",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "transferId",
-                },
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": null,
-          "response": null,
-          "type": "full",
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "TransfersDeleteTransferRequest",
       "headers": [],
       "internal": null,
@@ -5513,13 +5146,6 @@ Note: This operation requires an identity challenge if the financial institution
                   "value": "Cover check for car repair",
                 },
               },
-              "processedAt": {
-                "type": "primitive",
-                "value": {
-                  "type": "datetime",
-                  "value": "2024-01-15T09:30:00Z",
-                },
-              },
               "schedule": {
                 "properties": {
                   "amountLimit": {
@@ -5527,13 +5153,6 @@ Note: This operation requires an identity challenge if the financial institution
                     "value": {
                       "type": "string",
                       "value": "3456.78",
-                    },
-                  },
-                  "count": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "int",
-                      "value": 1,
                     },
                   },
                   "creditsOn": {
@@ -5550,20 +5169,9 @@ Note: This operation requires an identity challenge if the financial institution
                       "value": "2026-06-24",
                     },
                   },
-                  "endsOn": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "endsOn",
-                    },
-                  },
                   "frequency": {
                     "type": "enum",
                     "value": "once",
-                  },
-                  "recurrenceType": {
-                    "type": "enum",
-                    "value": "fixed",
                   },
                   "scheduledOn": {
                     "type": "primitive",
@@ -5638,13 +5246,6 @@ Note: This operation requires an identity challenge if the financial institution
                 "value": {
                   "type": "datetime",
                   "value": "2022-04-18T07:21:35.375Z",
-                },
-              },
-              "updatedBy": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "updatedBy",
                 },
               },
             },

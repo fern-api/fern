@@ -110,94 +110,12 @@ exports[`open api parser deel parse open api 1`] = `
                       "value": "BRL",
                     },
                   },
-                  "definite_contract": {
-                    "properties": {
-                      "maximum_limitation": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 36,
-                        },
-                      },
-                      "type": {
-                        "type": "enum",
-                        "value": "ALLOWED_WITHOUT_LIMITATION",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "health_insurance": {
-                    "properties": {
-                      "providers": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "currency": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "USD",
-                                },
-                              },
-                              "ending_rule": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "END_OF_MONTH",
-                                },
-                              },
-                              "home_page_url": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "https://bit.ly/3uW72fp",
-                                },
-                              },
-                              "name": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "United Healthcare VSP Vision & Delta Dental: Singles Only",
-                                },
-                              },
-                              "type": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "PLAN",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "status": {
-                        "type": "enum",
-                        "value": "REQUIRED",
-                      },
-                    },
-                    "type": "object",
-                  },
                   "hiring_guide_country_name": {
                     "type": "primitive",
                     "value": {
                       "type": "string",
                       "value": "brazil",
                     },
-                  },
-                  "holiday": {
-                    "properties": {
-                      "min": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "20",
-                        },
-                      },
-                    },
-                    "type": "object",
                   },
                   "insurance_fee": {
                     "type": "primitive",
@@ -206,133 +124,12 @@ exports[`open api parser deel parse open api 1`] = `
                       "value": "15.00",
                     },
                   },
-                  "part_time_holiday": {
-                    "properties": {
-                      "min": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "15",
-                        },
-                      },
-                      "type": {
-                        "type": "enum",
-                        "value": "PRORATED",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "part_time_probation": {
-                    "properties": {
-                      "max": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 60,
-                        },
-                      },
-                      "min": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 30,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "probation": {
-                    "properties": {
-                      "max": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 90,
-                        },
-                      },
-                      "min": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "min",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "salary": {
-                    "properties": {
-                      "max": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2649300.00",
-                        },
-                      },
-                      "min": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "14544.00",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "sick_days": {
-                    "properties": {
-                      "max": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "max",
-                        },
-                      },
-                      "min": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "0",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
                   "start_date_buffer": {
                     "type": "primitive",
                     "value": {
                       "type": "double",
                       "value": 5,
                     },
-                  },
-                  "work_schedule": {
-                    "properties": {
-                      "days": {
-                        "properties": {
-                          "max": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "6",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "hours": {
-                        "properties": {
-                          "max": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "10",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -477,213 +274,12 @@ exports[`open api parser deel parse open api 1`] = `
             "properties": {
               "data": {
                 "properties": {
-                  "compensation_details": {
-                    "properties": {
-                      "currency": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "currency",
-                        },
-                      },
-                      "salary": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 1.1,
-                        },
-                      },
-                      "variable_compensation": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "variable_compensation",
-                        },
-                      },
-                      "variable_compensation_type": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "variable_compensation_type",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "created_at": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "datetime",
-                      "value": "2022-05-24T09:38:46.235Z",
-                    },
-                  },
-                  "employee": {
-                    "properties": {
-                      "email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "email",
-                        },
-                      },
-                      "first_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "first_name",
-                        },
-                      },
-                      "last_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "last_name",
-                        },
-                      },
-                      "legal_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "legal_name",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "employment": {
-                    "properties": {
-                      "calculated_holidays": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "calculated_holidays",
-                        },
-                      },
-                      "country": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "country",
-                        },
-                      },
-                      "end_date": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "1999-12-31",
-                        },
-                      },
-                      "probation_period": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 1.1,
-                        },
-                      },
-                      "scope_of_work": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "A designer works on the entire process of defining requirements, visualizing and creating graphics including illustrations or logos. Also, the designer works on shaping the visual aspects of websites, product packaging, and more.",
-                        },
-                      },
-                      "start_date": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "1999-12-31",
-                        },
-                      },
-                      "state": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "state",
-                        },
-                      },
-                      "time_off_type": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "time_off_type",
-                        },
-                      },
-                      "work_visa_required": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "health_plan": {
-                    "properties": {
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "id",
-                        },
-                      },
-                      "name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "name",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "id": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "id",
-                    },
-                  },
                   "job_title": {
                     "type": "primitive",
                     "value": {
                       "type": "string",
                       "value": "Designer",
                     },
-                  },
-                  "seniority": {
-                    "properties": {
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 2,
-                        },
-                      },
-                      "level": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 2,
-                        },
-                      },
-                      "name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Mid (Individual Contributor Level 2)",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "status": {
-                    "type": "enum",
-                    "value": "new",
-                  },
-                  "type": {
-                    "type": "enum",
-                    "value": "ongoing_time_based",
                   },
                 },
                 "type": "object",
@@ -922,95 +518,6 @@ exports[`open api parser deel parse open api 1`] = `
             "properties": {
               "data": {
                 "properties": {
-                  "client": {
-                    "properties": {
-                      "email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "email",
-                        },
-                      },
-                      "full_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "full_name",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int64",
-                          "value": 1000000,
-                        },
-                      },
-                      "legal_entity": {
-                        "properties": {
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "int64",
-                              "value": 1000000,
-                            },
-                          },
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "name",
-                            },
-                          },
-                          "registration_number": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "registration_number",
-                            },
-                          },
-                          "subtype": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "subtype",
-                            },
-                          },
-                          "type": {
-                            "type": "enum",
-                            "value": "individual",
-                          },
-                          "vat_number": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "vat_number",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "team": {
-                        "properties": {
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 1.1,
-                            },
-                          },
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "name",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
                   "compensation_details": {
                     "properties": {
                       "amount": {
@@ -1086,30 +593,6 @@ exports[`open api parser deel parse open api 1`] = `
                       "value": "2022-05-24T09:38:46.235Z",
                     },
                   },
-                  "custom_fields": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Employee ID",
-                            },
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "54234",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                  },
                   "employment_details": {
                     "properties": {
                       "country": {
@@ -1140,20 +623,6 @@ exports[`open api parser deel parse open api 1`] = `
                           "value": 1.1,
                         },
                       },
-                      "probation_period": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 1.1,
-                        },
-                      },
-                      "state": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "CO",
-                        },
-                      },
                       "type": {
                         "type": "primitive",
                         "value": {
@@ -1164,13 +633,6 @@ exports[`open api parser deel parse open api 1`] = `
                     },
                     "type": "object",
                   },
-                  "external_id": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "external_id",
-                    },
-                  },
                   "id": {
                     "type": "primitive",
                     "value": {
@@ -1179,22 +641,7 @@ exports[`open api parser deel parse open api 1`] = `
                     },
                   },
                   "invitations": {
-                    "properties": {
-                      "client_email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "client_email",
-                        },
-                      },
-                      "worker_email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "worker_email",
-                        },
-                      },
-                    },
+                    "properties": {},
                     "type": "object",
                   },
                   "is_archived": {
@@ -1218,23 +665,9 @@ exports[`open api parser deel parse open api 1`] = `
                       "value": 15,
                     },
                   },
-                  "scope_of_work": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "scope_of_work",
-                    },
-                  },
                   "seniority": {
                     "properties": {
                       "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 2,
-                        },
-                      },
-                      "level": {
                         "type": "primitive",
                         "value": {
                           "type": "double",
@@ -1326,118 +759,6 @@ exports[`open api parser deel parse open api 1`] = `
                   "type": {
                     "type": "enum",
                     "value": "ongoing_time_based",
-                  },
-                  "who_reports": {
-                    "type": "enum",
-                    "value": "both",
-                  },
-                  "worker": {
-                    "properties": {
-                      "alternate_email": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "isVerified": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "boolean",
-                                  "value": true,
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "date_of_birth": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-05-24T09:38:46.235Z",
-                        },
-                      },
-                      "email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "email",
-                        },
-                      },
-                      "expected_email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "expected_email",
-                        },
-                      },
-                      "first_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "John",
-                        },
-                      },
-                      "full_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "full_name",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int64",
-                          "value": 1000000,
-                        },
-                      },
-                      "image": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "image",
-                        },
-                      },
-                      "last_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Doe",
-                        },
-                      },
-                      "legal_entity": {
-                        "properties": {
-                          "personal_name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "personal_name",
-                            },
-                          },
-                          "registration_number": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "registration_number",
-                            },
-                          },
-                          "type": {
-                            "type": "enum",
-                            "value": "individual",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "nationality": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "US",
-                        },
-                      },
-                    },
-                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -1672,95 +993,6 @@ exports[`open api parser deel parse open api 1`] = `
             "properties": {
               "data": {
                 "properties": {
-                  "client": {
-                    "properties": {
-                      "email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "email",
-                        },
-                      },
-                      "full_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "full_name",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int64",
-                          "value": 1000000,
-                        },
-                      },
-                      "legal_entity": {
-                        "properties": {
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "int64",
-                              "value": 1000000,
-                            },
-                          },
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "name",
-                            },
-                          },
-                          "registration_number": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "registration_number",
-                            },
-                          },
-                          "subtype": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "subtype",
-                            },
-                          },
-                          "type": {
-                            "type": "enum",
-                            "value": "individual",
-                          },
-                          "vat_number": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "vat_number",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "team": {
-                        "properties": {
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 1.1,
-                            },
-                          },
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "name",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
                   "compensation_details": {
                     "properties": {
                       "amount": {
@@ -1836,30 +1068,6 @@ exports[`open api parser deel parse open api 1`] = `
                       "value": "2022-05-24T09:38:46.235Z",
                     },
                   },
-                  "custom_fields": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Employee ID",
-                            },
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "54234",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                  },
                   "employment_details": {
                     "properties": {
                       "country": {
@@ -1890,20 +1098,6 @@ exports[`open api parser deel parse open api 1`] = `
                           "value": 1.1,
                         },
                       },
-                      "probation_period": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 1.1,
-                        },
-                      },
-                      "state": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "CO",
-                        },
-                      },
                       "type": {
                         "type": "primitive",
                         "value": {
@@ -1914,13 +1108,6 @@ exports[`open api parser deel parse open api 1`] = `
                     },
                     "type": "object",
                   },
-                  "external_id": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "external_id",
-                    },
-                  },
                   "id": {
                     "type": "primitive",
                     "value": {
@@ -1929,22 +1116,7 @@ exports[`open api parser deel parse open api 1`] = `
                     },
                   },
                   "invitations": {
-                    "properties": {
-                      "client_email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "client_email",
-                        },
-                      },
-                      "worker_email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "worker_email",
-                        },
-                      },
-                    },
+                    "properties": {},
                     "type": "object",
                   },
                   "is_archived": {
@@ -1968,23 +1140,9 @@ exports[`open api parser deel parse open api 1`] = `
                       "value": 15,
                     },
                   },
-                  "scope_of_work": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "scope_of_work",
-                    },
-                  },
                   "seniority": {
                     "properties": {
                       "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 2,
-                        },
-                      },
-                      "level": {
                         "type": "primitive",
                         "value": {
                           "type": "double",
@@ -2076,118 +1234,6 @@ exports[`open api parser deel parse open api 1`] = `
                   "type": {
                     "type": "enum",
                     "value": "ongoing_time_based",
-                  },
-                  "who_reports": {
-                    "type": "enum",
-                    "value": "both",
-                  },
-                  "worker": {
-                    "properties": {
-                      "alternate_email": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "isVerified": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "boolean",
-                                  "value": true,
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "date_of_birth": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-05-24T09:38:46.235Z",
-                        },
-                      },
-                      "email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "email",
-                        },
-                      },
-                      "expected_email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "expected_email",
-                        },
-                      },
-                      "first_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "John",
-                        },
-                      },
-                      "full_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "full_name",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int64",
-                          "value": 1000000,
-                        },
-                      },
-                      "image": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "image",
-                        },
-                      },
-                      "last_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Doe",
-                        },
-                      },
-                      "legal_entity": {
-                        "properties": {
-                          "personal_name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "personal_name",
-                            },
-                          },
-                          "registration_number": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "registration_number",
-                            },
-                          },
-                          "type": {
-                            "type": "enum",
-                            "value": "individual",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "nationality": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "US",
-                        },
-                      },
-                    },
-                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -2422,95 +1468,6 @@ exports[`open api parser deel parse open api 1`] = `
             "properties": {
               "data": {
                 "properties": {
-                  "client": {
-                    "properties": {
-                      "email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "email",
-                        },
-                      },
-                      "full_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "full_name",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int64",
-                          "value": 1000000,
-                        },
-                      },
-                      "legal_entity": {
-                        "properties": {
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "int64",
-                              "value": 1000000,
-                            },
-                          },
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "name",
-                            },
-                          },
-                          "registration_number": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "registration_number",
-                            },
-                          },
-                          "subtype": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "subtype",
-                            },
-                          },
-                          "type": {
-                            "type": "enum",
-                            "value": "individual",
-                          },
-                          "vat_number": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "vat_number",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "team": {
-                        "properties": {
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 1.1,
-                            },
-                          },
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "name",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
                   "compensation_details": {
                     "properties": {
                       "amount": {
@@ -2586,30 +1543,6 @@ exports[`open api parser deel parse open api 1`] = `
                       "value": "2022-05-24T09:38:46.235Z",
                     },
                   },
-                  "custom_fields": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Employee ID",
-                            },
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "54234",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                  },
                   "employment_details": {
                     "properties": {
                       "country": {
@@ -2640,20 +1573,6 @@ exports[`open api parser deel parse open api 1`] = `
                           "value": 1.1,
                         },
                       },
-                      "probation_period": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 1.1,
-                        },
-                      },
-                      "state": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "CO",
-                        },
-                      },
                       "type": {
                         "type": "primitive",
                         "value": {
@@ -2664,13 +1583,6 @@ exports[`open api parser deel parse open api 1`] = `
                     },
                     "type": "object",
                   },
-                  "external_id": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "external_id",
-                    },
-                  },
                   "id": {
                     "type": "primitive",
                     "value": {
@@ -2679,22 +1591,7 @@ exports[`open api parser deel parse open api 1`] = `
                     },
                   },
                   "invitations": {
-                    "properties": {
-                      "client_email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "client_email",
-                        },
-                      },
-                      "worker_email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "worker_email",
-                        },
-                      },
-                    },
+                    "properties": {},
                     "type": "object",
                   },
                   "is_archived": {
@@ -2718,23 +1615,9 @@ exports[`open api parser deel parse open api 1`] = `
                       "value": 15,
                     },
                   },
-                  "scope_of_work": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "scope_of_work",
-                    },
-                  },
                   "seniority": {
                     "properties": {
                       "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 2,
-                        },
-                      },
-                      "level": {
                         "type": "primitive",
                         "value": {
                           "type": "double",
@@ -2826,118 +1709,6 @@ exports[`open api parser deel parse open api 1`] = `
                   "type": {
                     "type": "enum",
                     "value": "ongoing_time_based",
-                  },
-                  "who_reports": {
-                    "type": "enum",
-                    "value": "both",
-                  },
-                  "worker": {
-                    "properties": {
-                      "alternate_email": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "isVerified": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "boolean",
-                                  "value": true,
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "date_of_birth": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-05-24T09:38:46.235Z",
-                        },
-                      },
-                      "email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "email",
-                        },
-                      },
-                      "expected_email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "expected_email",
-                        },
-                      },
-                      "first_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "John",
-                        },
-                      },
-                      "full_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "full_name",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int64",
-                          "value": 1000000,
-                        },
-                      },
-                      "image": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "image",
-                        },
-                      },
-                      "last_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Doe",
-                        },
-                      },
-                      "legal_entity": {
-                        "properties": {
-                          "personal_name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "personal_name",
-                            },
-                          },
-                          "registration_number": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "registration_number",
-                            },
-                          },
-                          "type": {
-                            "type": "enum",
-                            "value": "individual",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "nationality": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "US",
-                        },
-                      },
-                    },
-                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -3176,95 +1947,6 @@ exports[`open api parser deel parse open api 1`] = `
             "properties": {
               "data": {
                 "properties": {
-                  "client": {
-                    "properties": {
-                      "email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "email",
-                        },
-                      },
-                      "full_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "full_name",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int64",
-                          "value": 1000000,
-                        },
-                      },
-                      "legal_entity": {
-                        "properties": {
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "int64",
-                              "value": 1000000,
-                            },
-                          },
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "name",
-                            },
-                          },
-                          "registration_number": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "registration_number",
-                            },
-                          },
-                          "subtype": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "subtype",
-                            },
-                          },
-                          "type": {
-                            "type": "enum",
-                            "value": "individual",
-                          },
-                          "vat_number": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "vat_number",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "team": {
-                        "properties": {
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 1.1,
-                            },
-                          },
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "name",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
                   "compensation_details": {
                     "properties": {
                       "amount": {
@@ -3340,30 +2022,6 @@ exports[`open api parser deel parse open api 1`] = `
                       "value": "2022-05-24T09:38:46.235Z",
                     },
                   },
-                  "custom_fields": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Employee ID",
-                            },
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "54234",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                  },
                   "employment_details": {
                     "properties": {
                       "country": {
@@ -3394,20 +2052,6 @@ exports[`open api parser deel parse open api 1`] = `
                           "value": 1.1,
                         },
                       },
-                      "probation_period": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 1.1,
-                        },
-                      },
-                      "state": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "CO",
-                        },
-                      },
                       "type": {
                         "type": "primitive",
                         "value": {
@@ -3418,13 +2062,6 @@ exports[`open api parser deel parse open api 1`] = `
                     },
                     "type": "object",
                   },
-                  "external_id": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "external_id",
-                    },
-                  },
                   "id": {
                     "type": "primitive",
                     "value": {
@@ -3433,22 +2070,7 @@ exports[`open api parser deel parse open api 1`] = `
                     },
                   },
                   "invitations": {
-                    "properties": {
-                      "client_email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "client_email",
-                        },
-                      },
-                      "worker_email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "worker_email",
-                        },
-                      },
-                    },
+                    "properties": {},
                     "type": "object",
                   },
                   "is_archived": {
@@ -3472,23 +2094,9 @@ exports[`open api parser deel parse open api 1`] = `
                       "value": 15,
                     },
                   },
-                  "scope_of_work": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "scope_of_work",
-                    },
-                  },
                   "seniority": {
                     "properties": {
                       "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 2,
-                        },
-                      },
-                      "level": {
                         "type": "primitive",
                         "value": {
                           "type": "double",
@@ -3580,118 +2188,6 @@ exports[`open api parser deel parse open api 1`] = `
                   "type": {
                     "type": "enum",
                     "value": "ongoing_time_based",
-                  },
-                  "who_reports": {
-                    "type": "enum",
-                    "value": "both",
-                  },
-                  "worker": {
-                    "properties": {
-                      "alternate_email": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "isVerified": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "boolean",
-                                  "value": true,
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "date_of_birth": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-05-24T09:38:46.235Z",
-                        },
-                      },
-                      "email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "email",
-                        },
-                      },
-                      "expected_email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "expected_email",
-                        },
-                      },
-                      "first_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "John",
-                        },
-                      },
-                      "full_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "full_name",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int64",
-                          "value": 1000000,
-                        },
-                      },
-                      "image": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "image",
-                        },
-                      },
-                      "last_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Doe",
-                        },
-                      },
-                      "legal_entity": {
-                        "properties": {
-                          "personal_name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "personal_name",
-                            },
-                          },
-                          "registration_number": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "registration_number",
-                            },
-                          },
-                          "type": {
-                            "type": "enum",
-                            "value": "individual",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "nationality": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "US",
-                        },
-                      },
-                    },
-                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -3785,13 +2281,6 @@ exports[`open api parser deel parse open api 1`] = `
                           "value": "2022-05-24T09:38:46.235Z",
                         },
                       },
-                      "external_id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "external_id",
-                        },
-                      },
                       "id": {
                         "type": "primitive",
                         "value": {
@@ -3871,29 +2360,6 @@ exports[`open api parser deel parse open api 1`] = `
                       "type": {
                         "type": "enum",
                         "value": "ongoing_time_based",
-                      },
-                      "who_reports": {
-                        "type": "enum",
-                        "value": "both",
-                      },
-                      "worker": {
-                        "properties": {
-                          "full_name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "full_name",
-                            },
-                          },
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "int64",
-                              "value": 1000000,
-                            },
-                          },
-                        },
-                        "type": "object",
                       },
                     },
                     "type": "object",
@@ -4378,95 +2844,6 @@ exports[`open api parser deel parse open api 1`] = `
             "properties": {
               "data": {
                 "properties": {
-                  "client": {
-                    "properties": {
-                      "email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "email",
-                        },
-                      },
-                      "full_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "full_name",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int64",
-                          "value": 1000000,
-                        },
-                      },
-                      "legal_entity": {
-                        "properties": {
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "int64",
-                              "value": 1000000,
-                            },
-                          },
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "name",
-                            },
-                          },
-                          "registration_number": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "registration_number",
-                            },
-                          },
-                          "subtype": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "subtype",
-                            },
-                          },
-                          "type": {
-                            "type": "enum",
-                            "value": "individual",
-                          },
-                          "vat_number": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "vat_number",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "team": {
-                        "properties": {
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 1.1,
-                            },
-                          },
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "name",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
                   "compensation_details": {
                     "properties": {
                       "amount": {
@@ -4542,30 +2919,6 @@ exports[`open api parser deel parse open api 1`] = `
                       "value": "2022-05-24T09:38:46.235Z",
                     },
                   },
-                  "custom_fields": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Employee ID",
-                            },
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "54234",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                  },
                   "employment_details": {
                     "properties": {
                       "country": {
@@ -4596,20 +2949,6 @@ exports[`open api parser deel parse open api 1`] = `
                           "value": 1.1,
                         },
                       },
-                      "probation_period": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 1.1,
-                        },
-                      },
-                      "state": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "CO",
-                        },
-                      },
                       "type": {
                         "type": "primitive",
                         "value": {
@@ -4620,13 +2959,6 @@ exports[`open api parser deel parse open api 1`] = `
                     },
                     "type": "object",
                   },
-                  "external_id": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "external_id",
-                    },
-                  },
                   "id": {
                     "type": "primitive",
                     "value": {
@@ -4635,22 +2967,7 @@ exports[`open api parser deel parse open api 1`] = `
                     },
                   },
                   "invitations": {
-                    "properties": {
-                      "client_email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "client_email",
-                        },
-                      },
-                      "worker_email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "worker_email",
-                        },
-                      },
-                    },
+                    "properties": {},
                     "type": "object",
                   },
                   "is_archived": {
@@ -4674,23 +2991,9 @@ exports[`open api parser deel parse open api 1`] = `
                       "value": 15,
                     },
                   },
-                  "scope_of_work": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "scope_of_work",
-                    },
-                  },
                   "seniority": {
                     "properties": {
                       "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 2,
-                        },
-                      },
-                      "level": {
                         "type": "primitive",
                         "value": {
                           "type": "double",
@@ -4782,118 +3085,6 @@ exports[`open api parser deel parse open api 1`] = `
                   "type": {
                     "type": "enum",
                     "value": "ongoing_time_based",
-                  },
-                  "who_reports": {
-                    "type": "enum",
-                    "value": "both",
-                  },
-                  "worker": {
-                    "properties": {
-                      "alternate_email": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "isVerified": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "boolean",
-                                  "value": true,
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "date_of_birth": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-05-24T09:38:46.235Z",
-                        },
-                      },
-                      "email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "email",
-                        },
-                      },
-                      "expected_email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "expected_email",
-                        },
-                      },
-                      "first_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "John",
-                        },
-                      },
-                      "full_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "full_name",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int64",
-                          "value": 1000000,
-                        },
-                      },
-                      "image": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "image",
-                        },
-                      },
-                      "last_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Doe",
-                        },
-                      },
-                      "legal_entity": {
-                        "properties": {
-                          "personal_name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "personal_name",
-                            },
-                          },
-                          "registration_number": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "registration_number",
-                            },
-                          },
-                          "type": {
-                            "type": "enum",
-                            "value": "individual",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "nationality": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "US",
-                        },
-                      },
-                    },
-                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -4984,95 +3175,6 @@ exports[`open api parser deel parse open api 1`] = `
             "properties": {
               "data": {
                 "properties": {
-                  "client": {
-                    "properties": {
-                      "email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "email",
-                        },
-                      },
-                      "full_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "full_name",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int64",
-                          "value": 1000000,
-                        },
-                      },
-                      "legal_entity": {
-                        "properties": {
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "int64",
-                              "value": 1000000,
-                            },
-                          },
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "name",
-                            },
-                          },
-                          "registration_number": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "registration_number",
-                            },
-                          },
-                          "subtype": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "subtype",
-                            },
-                          },
-                          "type": {
-                            "type": "enum",
-                            "value": "individual",
-                          },
-                          "vat_number": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "vat_number",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "team": {
-                        "properties": {
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 1.1,
-                            },
-                          },
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "name",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
                   "compensation_details": {
                     "properties": {
                       "amount": {
@@ -5148,30 +3250,6 @@ exports[`open api parser deel parse open api 1`] = `
                       "value": "2022-05-24T09:38:46.235Z",
                     },
                   },
-                  "custom_fields": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Employee ID",
-                            },
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "54234",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                  },
                   "employment_details": {
                     "properties": {
                       "country": {
@@ -5202,20 +3280,6 @@ exports[`open api parser deel parse open api 1`] = `
                           "value": 1.1,
                         },
                       },
-                      "probation_period": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 1.1,
-                        },
-                      },
-                      "state": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "CO",
-                        },
-                      },
                       "type": {
                         "type": "primitive",
                         "value": {
@@ -5226,13 +3290,6 @@ exports[`open api parser deel parse open api 1`] = `
                     },
                     "type": "object",
                   },
-                  "external_id": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "external_id",
-                    },
-                  },
                   "id": {
                     "type": "primitive",
                     "value": {
@@ -5241,22 +3298,7 @@ exports[`open api parser deel parse open api 1`] = `
                     },
                   },
                   "invitations": {
-                    "properties": {
-                      "client_email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "client_email",
-                        },
-                      },
-                      "worker_email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "worker_email",
-                        },
-                      },
-                    },
+                    "properties": {},
                     "type": "object",
                   },
                   "is_archived": {
@@ -5280,23 +3322,9 @@ exports[`open api parser deel parse open api 1`] = `
                       "value": 15,
                     },
                   },
-                  "scope_of_work": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "scope_of_work",
-                    },
-                  },
                   "seniority": {
                     "properties": {
                       "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 2,
-                        },
-                      },
-                      "level": {
                         "type": "primitive",
                         "value": {
                           "type": "double",
@@ -5388,118 +3416,6 @@ exports[`open api parser deel parse open api 1`] = `
                   "type": {
                     "type": "enum",
                     "value": "ongoing_time_based",
-                  },
-                  "who_reports": {
-                    "type": "enum",
-                    "value": "both",
-                  },
-                  "worker": {
-                    "properties": {
-                      "alternate_email": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "isVerified": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "boolean",
-                                  "value": true,
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "date_of_birth": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-05-24T09:38:46.235Z",
-                        },
-                      },
-                      "email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "email",
-                        },
-                      },
-                      "expected_email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "expected_email",
-                        },
-                      },
-                      "first_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "John",
-                        },
-                      },
-                      "full_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "full_name",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int64",
-                          "value": 1000000,
-                        },
-                      },
-                      "image": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "image",
-                        },
-                      },
-                      "last_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Doe",
-                        },
-                      },
-                      "legal_entity": {
-                        "properties": {
-                          "personal_name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "personal_name",
-                            },
-                          },
-                          "registration_number": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "registration_number",
-                            },
-                          },
-                          "type": {
-                            "type": "enum",
-                            "value": "individual",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "nationality": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "US",
-                        },
-                      },
-                    },
-                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -5726,27 +3642,7 @@ exports[`open api parser deel parse open api 1`] = `
             "type": "object",
           },
           "response": {
-            "properties": {
-              "data": {
-                "properties": {
-                  "filename": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "filename",
-                    },
-                  },
-                  "key": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "key",
-                    },
-                  },
-                },
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -5853,27 +3749,7 @@ exports[`open api parser deel parse open api 1`] = `
             "type": "object",
           },
           "response": {
-            "properties": {
-              "data": {
-                "properties": {
-                  "filename": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "filename",
-                    },
-                  },
-                  "key": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "key",
-                    },
-                  },
-                },
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -5956,30 +3832,7 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [
-            {
-              "name": "contract_id",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "contract_id",
-                },
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": null,
-          "response": null,
-          "type": "full",
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetContractPreviewRequest",
       "headers": [],
       "internal": null,
@@ -6088,25 +3941,6 @@ exports[`open api parser deel parse open api 1`] = `
                           "type": "string",
                           "value": "200",
                         },
-                      },
-                      "attachment": {
-                        "properties": {
-                          "filename": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "filename",
-                            },
-                          },
-                          "key": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "key",
-                            },
-                          },
-                        },
-                        "type": "object",
                       },
                       "date_submitted": {
                         "type": "primitive",
@@ -6376,13 +4210,6 @@ exports[`open api parser deel parse open api 1`] = `
             "value": [
               {
                 "properties": {
-                  "email": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "email",
-                    },
-                  },
                   "isVerified": {
                     "type": "primitive",
                     "value": {
@@ -6518,25 +4345,6 @@ exports[`open api parser deel parse open api 1`] = `
                           "type": "string",
                           "value": "200",
                         },
-                      },
-                      "attachment": {
-                        "properties": {
-                          "filename": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "filename",
-                            },
-                          },
-                          "key": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "key",
-                            },
-                          },
-                        },
-                        "type": "object",
                       },
                       "date_submitted": {
                         "type": "primitive",
@@ -6707,25 +4515,6 @@ exports[`open api parser deel parse open api 1`] = `
                           "type": "string",
                           "value": "200",
                         },
-                      },
-                      "attachment": {
-                        "properties": {
-                          "filename": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "filename",
-                            },
-                          },
-                          "key": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "key",
-                            },
-                          },
-                        },
-                        "type": "object",
                       },
                       "date_submitted": {
                         "type": "primitive",
@@ -7207,22 +4996,7 @@ exports[`open api parser deel parse open api 1`] = `
           "response": {
             "properties": {
               "data": {
-                "properties": {
-                  "completion_date": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "1999-12-31",
-                    },
-                  },
-                  "id": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "id",
-                    },
-                  },
-                },
+                "properties": {},
                 "type": "object",
               },
             },
@@ -7801,25 +5575,6 @@ exports[`open api parser deel parse open api 1`] = `
                 "value": [
                   {
                     "properties": {
-                      "attachment": {
-                        "properties": {
-                          "filename": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "filename",
-                            },
-                          },
-                          "key": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "key",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
                       "contract": {
                         "properties": {
                           "id": {
@@ -7857,13 +5612,6 @@ exports[`open api parser deel parse open api 1`] = `
                           "value": "USD",
                         },
                       },
-                      "custom_scale": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "custom_scale",
-                        },
-                      },
                       "date_submitted": {
                         "type": "primitive",
                         "value": {
@@ -7883,13 +5631,6 @@ exports[`open api parser deel parse open api 1`] = `
                         "value": {
                           "type": "string",
                           "value": "id",
-                        },
-                      },
-                      "public_id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "00000000-0000-0000-0000-000000000000",
                         },
                       },
                       "quantity": {
@@ -7950,13 +5691,6 @@ exports[`open api parser deel parse open api 1`] = `
                           },
                         },
                         "type": "object",
-                      },
-                      "scale": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "custom",
-                        },
                       },
                       "status": {
                         "type": "primitive",
@@ -9275,13 +7009,6 @@ exports[`open api parser deel parse open api 1`] = `
                           "value": "id",
                         },
                       },
-                      "public_id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "00000000-0000-0000-0000-000000000000",
-                        },
-                      },
                       "reported_by": {
                         "properties": {
                           "full_name": {
@@ -9333,13 +7060,6 @@ exports[`open api parser deel parse open api 1`] = `
                           },
                         },
                         "type": "object",
-                      },
-                      "status": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "status",
-                        },
                       },
                     },
                     "type": "object",
@@ -9627,13 +7347,6 @@ exports[`open api parser deel parse open api 1`] = `
                       "value": "id",
                     },
                   },
-                  "public_id": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                    },
-                  },
                   "reported_by": {
                     "properties": {
                       "full_name": {
@@ -9685,13 +7398,6 @@ exports[`open api parser deel parse open api 1`] = `
                       },
                     },
                     "type": "object",
-                  },
-                  "status": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "status",
-                    },
                   },
                 },
                 "type": "object",
@@ -9840,60 +7546,15 @@ exports[`open api parser deel parse open api 1`] = `
                     },
                   },
                   "misclassification_guarantee": {
-                    "properties": {
-                      "description": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "description",
-                        },
-                      },
-                      "name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "name",
-                        },
-                      },
-                    },
+                    "properties": {},
                     "type": "object",
                   },
                   "penalties": {
-                    "properties": {
-                      "description": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "description",
-                        },
-                      },
-                      "name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "name",
-                        },
-                      },
-                    },
+                    "properties": {},
                     "type": "object",
                   },
                   "third_party_liabilities": {
-                    "properties": {
-                      "description": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "description",
-                        },
-                      },
-                      "name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "name",
-                        },
-                      },
-                    },
+                    "properties": {},
                     "type": "object",
                   },
                 },
@@ -10139,29 +7800,7 @@ exports[`open api parser deel parse open api 1`] = `
                     },
                   },
                   "last_cycle": {
-                    "properties": {
-                      "completion_date": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-05-24T09:38:46.235Z",
-                        },
-                      },
-                      "end": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-05-24T09:38:46.235Z",
-                        },
-                      },
-                      "start": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-05-24T09:38:46.235Z",
-                        },
-                      },
-                    },
+                    "properties": {},
                     "type": "object",
                   },
                   "remaining_days": {
@@ -10456,84 +8095,7 @@ exports[`open api parser deel parse open api 1`] = `
           "response": {
             "properties": {
               "data": {
-                "properties": {
-                  "first_payment_dates": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "due": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "1999-12-31",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                  },
-                  "pro_rata": {
-                    "properties": {
-                      "calculation_type": {
-                        "type": "enum",
-                        "value": "CUSTOM_AMOUNT",
-                      },
-                      "cycle_end": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "1999-12-31",
-                        },
-                      },
-                      "cycle_start": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "1999-12-31",
-                        },
-                      },
-                      "cycle_work_days": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 11,
-                        },
-                      },
-                      "daily_rate": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 2500,
-                        },
-                      },
-                      "rate": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 2500,
-                        },
-                      },
-                      "total": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 2500,
-                        },
-                      },
-                      "work_week_end": {
-                        "type": "enum",
-                        "value": "Sunday",
-                      },
-                      "work_week_start": {
-                        "type": "enum",
-                        "value": "Sunday",
-                      },
-                    },
-                    "type": "object",
-                  },
-                },
+                "properties": {},
                 "type": "object",
               },
             },
@@ -10622,109 +8184,6 @@ exports[`open api parser deel parse open api 1`] = `
                 "value": [
                   {
                     "properties": {
-                      "applied_changes": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "days_used_end_year": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "2.00",
-                                },
-                              },
-                              "days_used_start_year": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "2.00",
-                                },
-                              },
-                              "requested_at": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "datetime",
-                                  "value": "2022-05-24T09:38:46.235Z",
-                                },
-                              },
-                              "status": {
-                                "type": "enum",
-                                "value": "REQUESTED",
-                              },
-                              "total_days_used": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "4.00",
-                                },
-                              },
-                              "type": {
-                                "type": "enum",
-                                "value": "VACATION",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "attachments": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {},
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "can_request_changes": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "change_request": {
-                        "properties": {
-                          "days_used_end_year": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2.00",
-                            },
-                          },
-                          "days_used_start_year": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2.00",
-                            },
-                          },
-                          "requested_at": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "datetime",
-                              "value": "2022-05-24T09:38:46.235Z",
-                            },
-                          },
-                          "status": {
-                            "type": "enum",
-                            "value": "REQUESTED",
-                          },
-                          "total_days_used": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "4.00",
-                            },
-                          },
-                          "type": {
-                            "type": "enum",
-                            "value": "VACATION",
-                          },
-                        },
-                        "type": "object",
-                      },
                       "contract_id": {
                         "type": "primitive",
                         "value": {
@@ -10737,13 +8196,6 @@ exports[`open api parser deel parse open api 1`] = `
                         "value": {
                           "type": "datetime",
                           "value": "2022-05-24T09:38:46.235Z",
-                        },
-                      },
-                      "date_is_half_day": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
                         },
                       },
                       "days_used_end_year": {
@@ -10760,34 +8212,6 @@ exports[`open api parser deel parse open api 1`] = `
                           "value": "2.00",
                         },
                       },
-                      "denial_reason": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "No time off available",
-                        },
-                      },
-                      "end_date": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-05-24T09:38:46.235Z",
-                        },
-                      },
-                      "end_date_is_half_day": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "has_multiple_dates": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
                       "id": {
                         "type": "primitive",
                         "value": {
@@ -10795,106 +8219,11 @@ exports[`open api parser deel parse open api 1`] = `
                           "value": 6938,
                         },
                       },
-                      "is_updated": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "other_timeoff_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "This is time off for a doctor's appointment",
-                        },
-                      },
-                      "reason": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "I have a doctors appointment",
-                        },
-                      },
                       "requested_at": {
                         "type": "primitive",
                         "value": {
                           "type": "datetime",
                           "value": "2022-05-24T09:38:46.235Z",
-                        },
-                      },
-                      "requester": {
-                        "properties": {
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 409222,
-                            },
-                          },
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Mr. Rogers",
-                            },
-                          },
-                          "profile_type": {
-                            "type": "enum",
-                            "value": "client",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "reviewed_at": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-05-24T09:38:46.235Z",
-                        },
-                      },
-                      "reviewer": {
-                        "properties": {
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 409222,
-                            },
-                          },
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Mr. Rogers",
-                            },
-                          },
-                          "profile_type": {
-                            "type": "enum",
-                            "value": "client",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "single_date": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-05-24T09:38:46.235Z",
-                        },
-                      },
-                      "start_date": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-05-24T09:38:46.235Z",
-                        },
-                      },
-                      "start_date_is_half_day": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
                         },
                       },
                       "status": {
@@ -10911,13 +8240,6 @@ exports[`open api parser deel parse open api 1`] = `
                       "type": {
                         "type": "enum",
                         "value": "VACATION",
-                      },
-                      "updated_at": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-05-24T09:38:46.235Z",
-                        },
                       },
                     },
                     "type": "object",
@@ -11075,227 +8397,6 @@ exports[`open api parser deel parse open api 1`] = `
             "properties": {
               "data": {
                 "properties": {
-                  "applied_changes": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "days_used_end_year": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2.00",
-                            },
-                          },
-                          "days_used_start_year": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2.00",
-                            },
-                          },
-                          "requested_at": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "datetime",
-                              "value": "2022-05-24T09:38:46.235Z",
-                            },
-                          },
-                          "status": {
-                            "type": "enum",
-                            "value": "REQUESTED",
-                          },
-                          "total_days_used": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "4.00",
-                            },
-                          },
-                          "type": {
-                            "type": "enum",
-                            "value": "VACATION",
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                  },
-                  "attachments": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {},
-                        "type": "object",
-                      },
-                    ],
-                  },
-                  "can_request_changes": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": true,
-                    },
-                  },
-                  "change_request": {
-                    "properties": {
-                      "attachments": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {},
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "date_is_half_day": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "days_used_end_year": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2.00",
-                        },
-                      },
-                      "days_used_start_year": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2.00",
-                        },
-                      },
-                      "denial_reason": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "No time off available",
-                        },
-                      },
-                      "end_date_is_half_day": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "has_multiple_dates": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "other_timeoff_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "This is time off for a doctor's appointment",
-                        },
-                      },
-                      "reason": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "I have a doctors appointment",
-                        },
-                      },
-                      "requested_at": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-05-24T09:38:46.235Z",
-                        },
-                      },
-                      "requester": {
-                        "properties": {
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 409222,
-                            },
-                          },
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Mr. Rogers",
-                            },
-                          },
-                          "profile_type": {
-                            "type": "enum",
-                            "value": "client",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "reviewed_at": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-05-24T09:38:46.235Z",
-                        },
-                      },
-                      "reviewer": {
-                        "properties": {
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 409222,
-                            },
-                          },
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Mr. Rogers",
-                            },
-                          },
-                          "profile_type": {
-                            "type": "enum",
-                            "value": "client",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "single_date": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-05-24T09:38:46.235Z",
-                        },
-                      },
-                      "start_date_is_half_day": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "status": {
-                        "type": "enum",
-                        "value": "REQUESTED",
-                      },
-                      "total_days_used": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "4.00",
-                        },
-                      },
-                      "type": {
-                        "type": "enum",
-                        "value": "VACATION",
-                      },
-                    },
-                    "type": "object",
-                  },
                   "contract_id": {
                     "type": "primitive",
                     "value": {
@@ -11308,13 +8409,6 @@ exports[`open api parser deel parse open api 1`] = `
                     "value": {
                       "type": "datetime",
                       "value": "2022-05-24T09:38:46.235Z",
-                    },
-                  },
-                  "date_is_half_day": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": true,
                     },
                   },
                   "days_used_end_year": {
@@ -11331,34 +8425,6 @@ exports[`open api parser deel parse open api 1`] = `
                       "value": "2.00",
                     },
                   },
-                  "denial_reason": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "No time off available",
-                    },
-                  },
-                  "end_date": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "datetime",
-                      "value": "2022-05-24T09:38:46.235Z",
-                    },
-                  },
-                  "end_date_is_half_day": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": true,
-                    },
-                  },
-                  "has_multiple_dates": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": true,
-                    },
-                  },
                   "id": {
                     "type": "primitive",
                     "value": {
@@ -11366,134 +8432,11 @@ exports[`open api parser deel parse open api 1`] = `
                       "value": 6938,
                     },
                   },
-                  "is_updated": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": true,
-                    },
-                  },
-                  "other_timeoff_name": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "This is time off for a doctor's appointment",
-                    },
-                  },
-                  "reason": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "I have a doctors appointment",
-                    },
-                  },
                   "requested_at": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
                       "value": "2022-05-24T09:38:46.235Z",
-                    },
-                  },
-                  "requester": {
-                    "properties": {
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 409222,
-                        },
-                      },
-                      "is_employee": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Mr. Rogers",
-                        },
-                      },
-                      "pic_url": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "pic_url",
-                        },
-                      },
-                      "profile_type": {
-                        "type": "enum",
-                        "value": "client",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "reviewed_at": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "datetime",
-                      "value": "2022-05-24T09:38:46.235Z",
-                    },
-                  },
-                  "reviewer": {
-                    "properties": {
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 409222,
-                        },
-                      },
-                      "is_employee": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Mr. Rogers",
-                        },
-                      },
-                      "pic_url": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "pic_url",
-                        },
-                      },
-                      "profile_type": {
-                        "type": "enum",
-                        "value": "client",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "single_date": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "datetime",
-                      "value": "2022-05-24T09:38:46.235Z",
-                    },
-                  },
-                  "start_date": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "datetime",
-                      "value": "2022-05-24T09:38:46.235Z",
-                    },
-                  },
-                  "start_date_is_half_day": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": true,
                     },
                   },
                   "status": {
@@ -11510,13 +8453,6 @@ exports[`open api parser deel parse open api 1`] = `
                   "type": {
                     "type": "enum",
                     "value": "VACATION",
-                  },
-                  "updated_at": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "datetime",
-                      "value": "2022-05-24T09:38:46.235Z",
-                    },
                   },
                 },
                 "type": "object",
@@ -11694,227 +8630,6 @@ exports[`open api parser deel parse open api 1`] = `
             "properties": {
               "data": {
                 "properties": {
-                  "applied_changes": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "days_used_end_year": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2.00",
-                            },
-                          },
-                          "days_used_start_year": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2.00",
-                            },
-                          },
-                          "requested_at": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "datetime",
-                              "value": "2022-05-24T09:38:46.235Z",
-                            },
-                          },
-                          "status": {
-                            "type": "enum",
-                            "value": "REQUESTED",
-                          },
-                          "total_days_used": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "4.00",
-                            },
-                          },
-                          "type": {
-                            "type": "enum",
-                            "value": "VACATION",
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                  },
-                  "attachments": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {},
-                        "type": "object",
-                      },
-                    ],
-                  },
-                  "can_request_changes": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": true,
-                    },
-                  },
-                  "change_request": {
-                    "properties": {
-                      "attachments": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {},
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "date_is_half_day": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "days_used_end_year": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2.00",
-                        },
-                      },
-                      "days_used_start_year": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2.00",
-                        },
-                      },
-                      "denial_reason": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "No time off available",
-                        },
-                      },
-                      "end_date_is_half_day": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "has_multiple_dates": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "other_timeoff_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "This is time off for a doctor's appointment",
-                        },
-                      },
-                      "reason": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "I have a doctors appointment",
-                        },
-                      },
-                      "requested_at": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-05-24T09:38:46.235Z",
-                        },
-                      },
-                      "requester": {
-                        "properties": {
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 409222,
-                            },
-                          },
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Mr. Rogers",
-                            },
-                          },
-                          "profile_type": {
-                            "type": "enum",
-                            "value": "client",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "reviewed_at": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-05-24T09:38:46.235Z",
-                        },
-                      },
-                      "reviewer": {
-                        "properties": {
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 409222,
-                            },
-                          },
-                          "name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Mr. Rogers",
-                            },
-                          },
-                          "profile_type": {
-                            "type": "enum",
-                            "value": "client",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "single_date": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-05-24T09:38:46.235Z",
-                        },
-                      },
-                      "start_date_is_half_day": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "status": {
-                        "type": "enum",
-                        "value": "REQUESTED",
-                      },
-                      "total_days_used": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "4.00",
-                        },
-                      },
-                      "type": {
-                        "type": "enum",
-                        "value": "VACATION",
-                      },
-                    },
-                    "type": "object",
-                  },
                   "contract_id": {
                     "type": "primitive",
                     "value": {
@@ -11927,13 +8642,6 @@ exports[`open api parser deel parse open api 1`] = `
                     "value": {
                       "type": "datetime",
                       "value": "2022-05-24T09:38:46.235Z",
-                    },
-                  },
-                  "date_is_half_day": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": true,
                     },
                   },
                   "days_used_end_year": {
@@ -11950,34 +8658,6 @@ exports[`open api parser deel parse open api 1`] = `
                       "value": "2.00",
                     },
                   },
-                  "denial_reason": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "No time off available",
-                    },
-                  },
-                  "end_date": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "datetime",
-                      "value": "2022-05-24T09:38:46.235Z",
-                    },
-                  },
-                  "end_date_is_half_day": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": true,
-                    },
-                  },
-                  "has_multiple_dates": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": true,
-                    },
-                  },
                   "id": {
                     "type": "primitive",
                     "value": {
@@ -11985,134 +8665,11 @@ exports[`open api parser deel parse open api 1`] = `
                       "value": 6938,
                     },
                   },
-                  "is_updated": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": true,
-                    },
-                  },
-                  "other_timeoff_name": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "This is time off for a doctor's appointment",
-                    },
-                  },
-                  "reason": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "I have a doctors appointment",
-                    },
-                  },
                   "requested_at": {
                     "type": "primitive",
                     "value": {
                       "type": "datetime",
                       "value": "2022-05-24T09:38:46.235Z",
-                    },
-                  },
-                  "requester": {
-                    "properties": {
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 409222,
-                        },
-                      },
-                      "is_employee": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Mr. Rogers",
-                        },
-                      },
-                      "pic_url": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "pic_url",
-                        },
-                      },
-                      "profile_type": {
-                        "type": "enum",
-                        "value": "client",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "reviewed_at": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "datetime",
-                      "value": "2022-05-24T09:38:46.235Z",
-                    },
-                  },
-                  "reviewer": {
-                    "properties": {
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 409222,
-                        },
-                      },
-                      "is_employee": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Mr. Rogers",
-                        },
-                      },
-                      "pic_url": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "pic_url",
-                        },
-                      },
-                      "profile_type": {
-                        "type": "enum",
-                        "value": "client",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "single_date": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "datetime",
-                      "value": "2022-05-24T09:38:46.235Z",
-                    },
-                  },
-                  "start_date": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "datetime",
-                      "value": "2022-05-24T09:38:46.235Z",
-                    },
-                  },
-                  "start_date_is_half_day": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": true,
                     },
                   },
                   "status": {
@@ -12129,13 +8686,6 @@ exports[`open api parser deel parse open api 1`] = `
                   "type": {
                     "type": "enum",
                     "value": "VACATION",
-                  },
-                  "updated_at": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "datetime",
-                      "value": "2022-05-24T09:38:46.235Z",
-                    },
                   },
                 },
                 "type": "object",
@@ -12379,25 +8929,6 @@ exports[`open api parser deel parse open api 1`] = `
                 "value": [
                   {
                     "properties": {
-                      "attachment": {
-                        "properties": {
-                          "filename": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "filename",
-                            },
-                          },
-                          "key": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "key",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
                       "contract": {
                         "properties": {
                           "id": {
@@ -12435,13 +8966,6 @@ exports[`open api parser deel parse open api 1`] = `
                           "value": "USD",
                         },
                       },
-                      "custom_scale": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "custom_scale",
-                        },
-                      },
                       "date_submitted": {
                         "type": "primitive",
                         "value": {
@@ -12461,13 +8985,6 @@ exports[`open api parser deel parse open api 1`] = `
                         "value": {
                           "type": "string",
                           "value": "id",
-                        },
-                      },
-                      "public_id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "00000000-0000-0000-0000-000000000000",
                         },
                       },
                       "quantity": {
@@ -12528,13 +9045,6 @@ exports[`open api parser deel parse open api 1`] = `
                           },
                         },
                         "type": "object",
-                      },
-                      "scale": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "custom",
-                        },
                       },
                       "status": {
                         "type": "primitive",
@@ -12885,34 +9395,6 @@ exports[`open api parser deel parse open api 1`] = `
                       "value": true,
                     },
                   },
-                  "created_at": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "datetime",
-                      "value": "2022-05-24T09:38:46.235Z",
-                    },
-                  },
-                  "id": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "id",
-                    },
-                  },
-                  "public_id": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                    },
-                  },
-                  "status": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "status",
-                    },
-                  },
                 },
                 "type": "object",
               },
@@ -13033,25 +9515,6 @@ exports[`open api parser deel parse open api 1`] = `
                       },
                     ],
                   },
-                  "attachment": {
-                    "properties": {
-                      "filename": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "filename",
-                        },
-                      },
-                      "key": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "key",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
                   "contract": {
                     "properties": {
                       "id": {
@@ -13089,13 +9552,6 @@ exports[`open api parser deel parse open api 1`] = `
                       "value": "USD",
                     },
                   },
-                  "custom_scale": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "custom_scale",
-                    },
-                  },
                   "date_submitted": {
                     "type": "primitive",
                     "value": {
@@ -13115,32 +9571,6 @@ exports[`open api parser deel parse open api 1`] = `
                     "value": {
                       "type": "string",
                       "value": "id",
-                    },
-                  },
-                  "payment_cycle": {
-                    "properties": {
-                      "end_date": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-05-24T09:38:46.235Z",
-                        },
-                      },
-                      "start_date": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "datetime",
-                          "value": "2022-05-24T09:38:46.235Z",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "public_id": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "00000000-0000-0000-0000-000000000000",
                     },
                   },
                   "quantity": {
@@ -13201,13 +9631,6 @@ exports[`open api parser deel parse open api 1`] = `
                       },
                     },
                     "type": "object",
-                  },
-                  "scale": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "custom",
-                    },
                   },
                   "status": {
                     "type": "primitive",
@@ -13854,25 +10277,6 @@ exports[`open api parser deel parse open api 1`] = `
                 "value": [
                   {
                     "properties": {
-                      "attachment": {
-                        "properties": {
-                          "filename": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "filename",
-                            },
-                          },
-                          "key": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "key",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
                       "contract": {
                         "properties": {
                           "id": {
@@ -13908,13 +10312,6 @@ exports[`open api parser deel parse open api 1`] = `
                         "value": {
                           "type": "string",
                           "value": "USD",
-                        },
-                      },
-                      "custom_scale": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "custom_scale",
                         },
                       },
                       "date_submitted": {
@@ -13956,13 +10353,6 @@ exports[`open api parser deel parse open api 1`] = `
                           },
                         },
                         "type": "object",
-                      },
-                      "public_id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "00000000-0000-0000-0000-000000000000",
-                        },
                       },
                       "quantity": {
                         "type": "primitive",
@@ -14022,20 +10412,6 @@ exports[`open api parser deel parse open api 1`] = `
                           },
                         },
                         "type": "object",
-                      },
-                      "scale": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "custom",
-                        },
-                      },
-                      "status": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "status",
-                        },
                       },
                       "total_amount": {
                         "type": "primitive",
@@ -14385,25 +10761,6 @@ exports[`open api parser deel parse open api 1`] = `
                 "value": [
                   {
                     "properties": {
-                      "attachment": {
-                        "properties": {
-                          "filename": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "filename",
-                            },
-                          },
-                          "key": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "key",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
                       "contract": {
                         "properties": {
                           "id": {
@@ -14439,13 +10796,6 @@ exports[`open api parser deel parse open api 1`] = `
                         "value": {
                           "type": "string",
                           "value": "USD",
-                        },
-                      },
-                      "custom_scale": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "custom_scale",
                         },
                       },
                       "date_submitted": {
@@ -14487,13 +10837,6 @@ exports[`open api parser deel parse open api 1`] = `
                           },
                         },
                         "type": "object",
-                      },
-                      "public_id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "00000000-0000-0000-0000-000000000000",
-                        },
                       },
                       "quantity": {
                         "type": "primitive",
@@ -14553,20 +10896,6 @@ exports[`open api parser deel parse open api 1`] = `
                           },
                         },
                         "type": "object",
-                      },
-                      "scale": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "custom",
-                        },
-                      },
-                      "status": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "status",
-                        },
                       },
                       "total_amount": {
                         "type": "primitive",
@@ -14965,34 +11294,6 @@ exports[`open api parser deel parse open api 1`] = `
                     "value": {
                       "type": "boolean",
                       "value": true,
-                    },
-                  },
-                  "created_at": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "datetime",
-                      "value": "2022-05-24T09:38:46.235Z",
-                    },
-                  },
-                  "id": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "id",
-                    },
-                  },
-                  "public_id": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "00000000-0000-0000-0000-000000000000",
-                    },
-                  },
-                  "status": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "status",
                     },
                   },
                 },
@@ -15558,43 +11859,7 @@ exports[`open api parser deel parse open api 1`] = `
           "queryParameters": [],
           "request": null,
           "response": {
-            "properties": {
-              "data": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "entity_subtype": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "entity_subtype",
-                        },
-                      },
-                      "entity_type": {
-                        "type": "enum",
-                        "value": "individual",
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 1.1,
-                        },
-                      },
-                      "name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "name",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -16563,18 +12828,6 @@ exports[`open api parser deel parse open api 1`] = `
                     "type": "object",
                   },
                 ],
-              },
-              "page": {
-                "properties": {
-                  "total_rows": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 1.1,
-                    },
-                  },
-                },
-                "type": "object",
               },
             },
             "type": "object",
@@ -17586,13 +13839,6 @@ exports[`open api parser deel parse open api 1`] = `
                       },
                     ],
                   },
-                  "total": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 1.1,
-                    },
-                  },
                 },
                 "type": "object",
               },
@@ -18056,13 +14302,6 @@ exports[`open api parser deel parse open api 1`] = `
                       },
                     ],
                   },
-                  "total": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 1.1,
-                    },
-                  },
                 },
                 "type": "object",
               },
@@ -18233,153 +14472,6 @@ exports[`open api parser deel parse open api 1`] = `
                 "value": [
                   {
                     "properties": {
-                      "birth_date": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "birth_date",
-                        },
-                      },
-                      "completion_date": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "completion_date",
-                        },
-                      },
-                      "contract_types": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "contract_types",
-                            },
-                          },
-                        ],
-                      },
-                      "country": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "country",
-                        },
-                      },
-                      "country_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "country_name",
-                        },
-                      },
-                      "department": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "department",
-                        },
-                      },
-                      "direct_manager": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "direct_manager",
-                        },
-                      },
-                      "direct_reports": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "direct_reports",
-                        },
-                      },
-                      "direct_reports_count": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "email",
-                        },
-                      },
-                      "employments": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {},
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "first_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "first_name",
-                        },
-                      },
-                      "full_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "full_name",
-                        },
-                      },
-                      "has_deel_user": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
-                      },
-                      "hiring_status": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "hiring_status",
-                        },
-                      },
-                      "hiring_type": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "hiring_type",
-                        },
-                      },
-                      "hourly_report_total": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "hourly_report_total",
-                        },
-                      },
-                      "id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "id",
-                        },
-                      },
-                      "job_title": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "job_title",
-                        },
-                      },
-                      "last_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "last_name",
-                        },
-                      },
                       "payments": {
                         "type": "array",
                         "value": [
@@ -18461,76 +14553,6 @@ exports[`open api parser deel parse open api 1`] = `
                             "type": "object",
                           },
                         ],
-                      },
-                      "personal_email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "personal_email",
-                        },
-                      },
-                      "pic_url": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "pic_url",
-                        },
-                      },
-                      "seniority": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "seniority",
-                        },
-                      },
-                      "start_date": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "start_date",
-                        },
-                      },
-                      "state": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "state",
-                        },
-                      },
-                      "team": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "team",
-                        },
-                      },
-                      "team_id": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "int",
-                          "value": 1,
-                        },
-                      },
-                      "timezone": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "timezone",
-                        },
-                      },
-                      "work_email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "work_email",
-                        },
-                      },
-                      "work_location": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "work_location",
-                        },
                       },
                     },
                     "type": "object",
@@ -18642,117 +14664,7 @@ exports[`open api parser deel parse open api 1`] = `
           "queryParameters": [],
           "request": null,
           "response": {
-            "properties": {
-              "avatar_url": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "avatar_url",
-                },
-              },
-              "client_country": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "US",
-                },
-              },
-              "contractor_country": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "US",
-                },
-              },
-              "email": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "email",
-                },
-              },
-              "first_name": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "first_name",
-                },
-              },
-              "full_name": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "full_name",
-                },
-              },
-              "id": {
-                "type": "primitive",
-                "value": {
-                  "type": "double",
-                  "value": 1.1,
-                },
-              },
-              "last_name": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "last_name",
-                },
-              },
-              "middle_name": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "middle_name",
-                },
-              },
-              "organization_id": {
-                "type": "primitive",
-                "value": {
-                  "type": "double",
-                  "value": 1.1,
-                },
-              },
-              "organization_name": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "organization_name",
-                },
-              },
-              "profile_type": {
-                "type": "enum",
-                "value": "client",
-              },
-              "slack_team_id": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "slack_team_id",
-                },
-              },
-              "slack_user_id": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "slack_user_id",
-                },
-              },
-              "user_id": {
-                "type": "primitive",
-                "value": {
-                  "type": "double",
-                  "value": 1.1,
-                },
-              },
-              "username": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "username",
-                },
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "type": "full",
@@ -18851,13 +14763,6 @@ exports[`open api parser deel parse open api 1`] = `
                           },
                         ],
                       },
-                      "hidden": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": false,
-                        },
-                      },
                       "id": {
                         "type": "primitive",
                         "value": {
@@ -18870,13 +14775,6 @@ exports[`open api parser deel parse open api 1`] = `
                         "value": {
                           "type": "string",
                           "value": "My webhooks",
-                        },
-                      },
-                      "signing_key": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "signing_key",
                         },
                       },
                       "status": {
@@ -19046,13 +14944,6 @@ exports[`open api parser deel parse open api 1`] = `
                       },
                     ],
                   },
-                  "hidden": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": false,
-                    },
-                  },
                   "id": {
                     "type": "primitive",
                     "value": {
@@ -19065,13 +14956,6 @@ exports[`open api parser deel parse open api 1`] = `
                     "value": {
                       "type": "string",
                       "value": "My webhooks",
-                    },
-                  },
-                  "signing_key": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "signing_key",
                     },
                   },
                   "status": {
@@ -19214,13 +15098,6 @@ exports[`open api parser deel parse open api 1`] = `
                       },
                     ],
                   },
-                  "hidden": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": false,
-                    },
-                  },
                   "id": {
                     "type": "primitive",
                     "value": {
@@ -19233,13 +15110,6 @@ exports[`open api parser deel parse open api 1`] = `
                     "value": {
                       "type": "string",
                       "value": "My webhooks",
-                    },
-                  },
-                  "signing_key": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "signing_key",
                     },
                   },
                   "status": {
@@ -19331,30 +15201,7 @@ exports[`open api parser deel parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [
-            {
-              "name": "id",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "id",
-                },
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": null,
-          "response": null,
-          "type": "full",
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "WebhookControllerDeleteByIdRequest",
       "headers": [],
       "internal": null,
@@ -19503,13 +15350,6 @@ exports[`open api parser deel parse open api 1`] = `
                       },
                     ],
                   },
-                  "hidden": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": false,
-                    },
-                  },
                   "id": {
                     "type": "primitive",
                     "value": {
@@ -19522,13 +15362,6 @@ exports[`open api parser deel parse open api 1`] = `
                     "value": {
                       "type": "string",
                       "value": "My webhooks",
-                    },
-                  },
-                  "signing_key": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "signing_key",
                     },
                   },
                   "status": {
@@ -19664,20 +15497,6 @@ exports[`open api parser deel parse open api 1`] = `
                         "value": {
                           "type": "string",
                           "value": "0.00",
-                        },
-                      },
-                      "approve_date": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "approve_date",
-                        },
-                      },
-                      "approvers": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "approvers",
                         },
                       },
                       "bonus": {
