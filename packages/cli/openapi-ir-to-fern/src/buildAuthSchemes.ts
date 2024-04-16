@@ -125,19 +125,107 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                 });
             }
         } else if (securityScheme.type === "oauth") {
-            // TODO: pass through the security config for oauth,
-            // there's some weirdness given the OpenAPI spec gives a url, but fern def gives an endpoint ID
-            const bearerAuthScheme: RawSchemas.AuthSchemeDeclarationSchema = {
-                scheme: "bearer"
-            };
-            context.builder.addAuthScheme({
-                name: BEARER_AUTH_SCHEME,
-                schema: bearerAuthScheme
-            });
-            if (!setAuth) {
-                context.builder.setAuth(BEARER_AUTH_SCHEME);
-                setAuth = true;
+            if (securityScheme.configuration != null) {
+                const subScheme = securityScheme.configuration._visit<RawSchemas.OAuthSchemeSchema | undefined>({
+                    authorizationCode: (config) => ({
+                        scheme: "oauth",
+                        "client-id-env": config.clientIdEnvVar,
+                        "client-secret-env": config.clientSecretEnvVar,
+                        "redirect-uri": config.redirectUri,
+                        "token-prefix": config.tokenPrefix,
+                        scopes: config.defaultScopes,
+                        type: "authorization-code",
+                        "authorization-code-env": config.authorizationCodeEnvVar,
+                        "authorization-endpoint": {
+                            path: config.authorizationEndpoint.path,
+                            "query-parameters": config.authorizationEndpoint.parameters.reduce((acc, val) => {
+                                acc[val] = "string";
+                                return acc;
+                            }, {} as Record<string, string>)
+                        },
+                        "token-endpoint": {
+                            endpoint: config.tokenEndpoint.endpointReference,
+                            "response-fields": {
+                                "access-token": config.tokenEndpoint.responseFields.accessToken,
+                                "expires-in": config.tokenEndpoint.responseFields.expiresIn,
+                                "refresh-token": config.tokenEndpoint.responseFields.refreshToken
+                            }
+                        },
+                        "refresh-endpoint":
+                            config.refreshEndpoint != null
+                                ? {
+                                      endpoint: config.refreshEndpoint.endpointReference,
+                                      "request-fields": {
+                                          "refresh-token": config.refreshEndpoint.requestFields.refreshToken
+                                      },
+                                      "response-fields": {
+                                          "access-token": config.refreshEndpoint.responseFields.accessToken,
+                                          "expires-in": config.refreshEndpoint.responseFields.expiresIn,
+                                          "refresh-token": config.refreshEndpoint.responseFields.refreshToken
+                                      }
+                                  }
+                                : undefined
+                    }),
+                    clientCredentials: (config) => ({
+                        scheme: "oauth",
+                        "client-id-env": config.clientIdEnvVar,
+                        "client-secret-env": config.clientSecretEnvVar,
+                        "redirect-uri": config.redirectUri,
+                        "token-prefix": config.tokenPrefix,
+                        scopes: config.defaultScopes,
+                        type: "client-credentials",
+                        "token-endpoint": {
+                            endpoint: config.tokenEndpoint.endpointReference,
+                            "response-fields": {
+                                "access-token": config.tokenEndpoint.responseFields.accessToken,
+                                "expires-in": config.tokenEndpoint.responseFields.expiresIn,
+                                "refresh-token": config.tokenEndpoint.responseFields.refreshToken
+                            }
+                        },
+                        "refresh-endpoint":
+                            config.refreshEndpoint != null
+                                ? {
+                                      endpoint: config.refreshEndpoint.endpointReference,
+                                      "request-fields": {
+                                          "refresh-token": config.refreshEndpoint.requestFields.refreshToken
+                                      },
+                                      "response-fields": {
+                                          "access-token": config.refreshEndpoint.responseFields.accessToken,
+                                          "expires-in": config.refreshEndpoint.responseFields.expiresIn,
+                                          "refresh-token": config.refreshEndpoint.responseFields.refreshToken
+                                      }
+                                  }
+                                : undefined
+                    }),
+                    _other: () => {
+                        return undefined;
+                    }
+                });
+                if (subScheme != null) {
+                    context.builder.addAuthScheme({
+                        name: OAUTH_SCHEME,
+                        schema: subScheme
+                    });
+
+                    if (!setAuth) {
+                        context.builder.setAuth(OAUTH_SCHEME);
+                        setAuth = true;
+                    }
+                }
+            } else {
+                const bearerAuthScheme: RawSchemas.AuthSchemeDeclarationSchema = {
+                    scheme: "bearer"
+                };
+                context.builder.addAuthScheme({
+                    name: BEARER_AUTH_SCHEME,
+                    schema: bearerAuthScheme
+                });
+                if (!setAuth) {
+                    context.builder.setAuth(BEARER_AUTH_SCHEME);
+                    setAuth = true;
+                }
             }
+
             if (securityScheme.scopesEnum != null && securityScheme.scopesEnum.values.length > 0) {
                 context.builder.addType(RelativeFilePath.of("__package__.yml"), {
                     name: "OauthScope",

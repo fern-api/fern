@@ -6,7 +6,7 @@ import * as FernOpenapiIr from "../../..";
 
 export interface AuthorizationCodeOAuthScheme extends FernOpenapiIr.BaseOauthSecurityScheme {
     authorizationCodeEnvVar: string | undefined;
-    tokenEndpoint: string;
-    authorizationEndpoint: string;
-    refreshEndpoint: string | undefined;
+    tokenEndpoint: FernOpenapiIr.OAuthTokenEndpoint;
+    authorizationEndpoint: FernOpenapiIr.OAuthAuthorizationEndpoint;
+    refreshEndpoint: FernOpenapiIr.OAuthRefreshTokenEndpoint | undefined;
 }

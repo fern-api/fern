@@ -320,21 +320,7 @@ export const FernOpenAPIExtension = {
     /**
      * If you are leveraging client credential grants, you must map out how
      * the response and request objects are mapped to general Oauth concepts (access_token, refresh_token, etc.)
-     *
-     * paths:
-     *     /oauth/token:
-     *       x-fern-oauth:
-     *         access_token: $response.token
-     *         refresh_token: $response.refresh_token
-     *         expires_in: $response.expires_in
-     *     /oauth/refresh:
-     *       x-fern-oauth:
-     *         input_refresh_token: $request.refresh_token
-     *         access_token: $response.token
-     *         refresh_token: $response.refresh_token
-     *         expires_in: $response.expires_in
-     *
-     * ...
+     * see this in x-fern-oauth-token.token and x-fern-oauth-token.refresh
      *
      * securitySchemes:
      *   myOAuthSample:
@@ -357,12 +343,27 @@ export const FernOpenAPIExtension = {
      *       authorizationCodeEnv: MY_AUTH_CODE
      *
      *       # Optional configuration for authorization code flow
-     *       authorizationPath: /my/auth/path   # <---- The path to append to the base URL to get the authorization endpoint a user is meant to visit within the browser.
-     *       authorizationQueryParams:
-     *        - name: state
-     *          value: string
-     *        - name: grant_type
-     *          value: "code"
+     *       authorizationCode:   # <---- The path to append to the base URL to get the authorization endpoint a user is meant to visit within the browser.
+     *         path: /my/auth/path
+     *         queryParams:
+     *            - state
+     *            - grant_type
+     *       token:
+     *          path: /my/token/path
+     *          method: POST
+     *          responseFields:
+     *             accessToken: $response.token
+     *             refreshToken: $response.refresh_token
+     *             expiresIn: $response.expires_in
+     *       refresh:
+     *          path: /my/token/path
+     *          method: POST
+     *          requestFields:
+     *             refreshToken: $request.query.token
+     *          responseFields:
+     *             accessToken: $response.token
+     *             refreshToken: $response.refresh_token
+     *             expiresIn: $response.expires_in
      *
      */
     FERN_OAUTH: "x-fern-oauth",

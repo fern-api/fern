@@ -1,6 +1,11 @@
 import { z } from "zod";
 import { TypeReferenceSchema } from "./TypeReferenceSchema";
 
+const EndpointReference = z.strictObject({
+    path: z.string(),
+    method: z.string()
+});
+
 // The base URL and content-type for the endpoints should be defined with the endpoint for simplicity
 const BaseOAuthSchema = z.strictObject({
     scheme: z.literal("oauth"),
@@ -11,36 +16,36 @@ const BaseOAuthSchema = z.strictObject({
     "redirect-uri": z.optional(z.string())
 });
 
-const OAuthAccessTokenFields = BaseOAuthSchema.extend({
+const OAuthAccessTokenFields = z.strictObject({
     "access-token": z.string(),
     "expires-in": z.optional(z.number()),
     "refresh-token": z.optional(z.string())
 });
 
-const OAuthRefreshTokenFields = BaseOAuthSchema.extend({
-    "refresh-token": z.optional(z.string())
+const OAuthRefreshTokenFields = z.strictObject({
+    "refresh-token": z.string()
 });
 
-const OAuthTokenEndpoint = BaseOAuthSchema.extend({
-    endpoint: z.string(),
+const OAuthTokenEndpoint = z.strictObject({
+    endpoint: EndpointReference,
     "response-fields": OAuthAccessTokenFields
 });
 
-const OAuthRefreshEndpoint = BaseOAuthSchema.extend({
-    endpoint: z.string(),
+const OAuthRefreshEndpoint = z.strictObject({
+    endpoint: EndpointReference,
     "request-fields": OAuthRefreshTokenFields,
     "response-fields": OAuthAccessTokenFields
+});
+
+const OAuthAuthorizationEndpoint = z.strictObject({
+    path: z.string(),
+    "query-parameters": z.record(TypeReferenceSchema)
 });
 
 const OAuthClientCredentialsSchema = BaseOAuthSchema.extend({
     type: z.literal("client-credentials"),
     "token-endpoint": OAuthTokenEndpoint,
     "refresh-endpoint": z.optional(OAuthRefreshEndpoint)
-});
-
-const OAuthAuthorizationEndpoint = BaseOAuthSchema.extend({
-    path: z.string(),
-    "query-parameters": z.record(TypeReferenceSchema)
 });
 
 const OAuthAuthorizationCodeSchema = BaseOAuthSchema.extend({
@@ -51,6 +56,9 @@ const OAuthAuthorizationCodeSchema = BaseOAuthSchema.extend({
     "refresh-endpoint": z.optional(OAuthRefreshEndpoint)
 });
 
-export const OAuthSchemeSchema = z.union([OAuthClientCredentialsSchema, OAuthAuthorizationCodeSchema]);
+export const OAuthSchemeSchema = z.discriminatedUnion("type", [
+    OAuthClientCredentialsSchema,
+    OAuthAuthorizationCodeSchema
+]);
 
 export type OAuthSchemeSchema = z.infer<typeof OAuthSchemeSchema>;

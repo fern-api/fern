@@ -11,14 +11,16 @@ export const ClientCredentialsOAuthScheme: core.serialization.ObjectSchema<
     FernOpenapiIr.ClientCredentialsOAuthScheme
 > = core.serialization
     .objectWithoutOptionalProperties({
-        tokenEndpoint: core.serialization.string(),
-        refreshEndpoint: core.serialization.string().optional(),
+        tokenEndpoint: core.serialization.lazyObject(async () => (await import("../../..")).OAuthTokenEndpoint),
+        refreshEndpoint: core.serialization
+            .lazyObject(async () => (await import("../../..")).OAuthRefreshTokenEndpoint)
+            .optional(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).BaseOauthSecurityScheme));
 
 export declare namespace ClientCredentialsOAuthScheme {
     interface Raw extends serializers.BaseOauthSecurityScheme.Raw {
-        tokenEndpoint: string;
-        refreshEndpoint?: string | null;
+        tokenEndpoint: serializers.OAuthTokenEndpoint.Raw;
+        refreshEndpoint?: serializers.OAuthRefreshTokenEndpoint.Raw | null;
     }
 }

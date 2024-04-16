@@ -17,8 +17,6 @@ export const OAuthConfiguration: core.serialization.Schema<
         clientCredentials: core.serialization.lazyObject(
             async () => (await import("../../..")).ClientCredentialsOAuthScheme
         ),
-        implicit: core.serialization.lazyObject(async () => (await import("../../..")).ImplicitOAuthScheme),
-        password: core.serialization.lazyObject(async () => (await import("../../..")).PasswordOAuthScheme),
     })
     .transform<FernOpenapiIr.OAuthConfiguration>({
         transform: (value) => {
@@ -27,10 +25,6 @@ export const OAuthConfiguration: core.serialization.Schema<
                     return FernOpenapiIr.OAuthConfiguration.authorizationCode(value);
                 case "clientCredentials":
                     return FernOpenapiIr.OAuthConfiguration.clientCredentials(value);
-                case "implicit":
-                    return FernOpenapiIr.OAuthConfiguration.implicit(value);
-                case "password":
-                    return FernOpenapiIr.OAuthConfiguration.password(value);
                 default:
                     return value as FernOpenapiIr.OAuthConfiguration;
             }
@@ -39,11 +33,7 @@ export const OAuthConfiguration: core.serialization.Schema<
     });
 
 export declare namespace OAuthConfiguration {
-    type Raw =
-        | OAuthConfiguration.AuthorizationCode
-        | OAuthConfiguration.ClientCredentials
-        | OAuthConfiguration.Implicit
-        | OAuthConfiguration.Password;
+    type Raw = OAuthConfiguration.AuthorizationCode | OAuthConfiguration.ClientCredentials;
 
     interface AuthorizationCode extends serializers.AuthorizationCodeOAuthScheme.Raw {
         type: "authorizationCode";
@@ -51,13 +41,5 @@ export declare namespace OAuthConfiguration {
 
     interface ClientCredentials extends serializers.ClientCredentialsOAuthScheme.Raw {
         type: "clientCredentials";
-    }
-
-    interface Implicit extends serializers.ImplicitOAuthScheme.Raw {
-        type: "implicit";
-    }
-
-    interface Password extends serializers.PasswordOAuthScheme.Raw {
-        type: "password";
     }
 }

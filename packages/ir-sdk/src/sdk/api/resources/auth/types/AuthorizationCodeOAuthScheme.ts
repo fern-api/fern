@@ -6,12 +6,7 @@ import * as FernIr from "../../..";
 
 export interface AuthorizationCodeOAuthScheme extends FernIr.BaseOAuthScheme {
     authorizationCodeEnvVar: FernIr.EnvironmentVariable | undefined;
-    /**
-     * The refrence to the authorization endpoint. This is specifically the endpoint ID without the `endpoint_` prefix.
-     * This is gotten by following the path to the file the endpoint is defined in, so if the endpoint `authorize` is defined in foo/service.yml,
-     * the endpoint ID would be `foo/service.authorize`.
-     */
-    authorizationEndpoint: string;
-    tokenEndpoint: string;
-    refreshEndpoint: string | undefined;
+    authorizationEndpoint: FernIr.OauthAuthorizationEndpoint;
+    tokenEndpoint: FernIr.OauthTokenEndpoint;
+    refreshEndpoint: FernIr.OauthRefreshEndpoint | undefined;
 }

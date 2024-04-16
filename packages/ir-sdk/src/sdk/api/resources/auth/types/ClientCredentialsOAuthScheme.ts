@@ -5,16 +5,6 @@
 import * as FernIr from "../../..";
 
 export interface ClientCredentialsOAuthScheme extends FernIr.BaseOAuthScheme {
-    /**
-     * The refrence to the access token endpoint. This is specifically the endpoint ID without the `endpoint_` prefix.
-     * This is gotten by following the path to the file the endpoint is defined in, so if the endpoint `get_token` is defined in foo/service.yml,
-     * the endpoint ID would be `foo/service.get_token`.
-     */
-    tokenEndpoint: string;
-    /**
-     * The refrence to the refresh token endpoint. This is specifically the endpoint ID without the `endpoint_` prefix.
-     * This is gotten by following the path to the file the endpoint is defined in, so if the endpoint `refresh_token` is defined in foo/service.yml,
-     * the endpoint ID would be `foo/service.refresh_token`.
-     */
-    refreshEndpoint: string | undefined;
+    tokenEndpoint: FernIr.OauthTokenEndpoint;
+    refreshEndpoint: FernIr.OauthRefreshEndpoint | undefined;
 }

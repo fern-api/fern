@@ -12,17 +12,21 @@ export const AuthorizationCodeOAuthScheme: core.serialization.ObjectSchema<
 > = core.serialization
     .objectWithoutOptionalProperties({
         authorizationCodeEnvVar: core.serialization.string().optional(),
-        tokenEndpoint: core.serialization.string(),
-        authorizationEndpoint: core.serialization.string(),
-        refreshEndpoint: core.serialization.string().optional(),
+        tokenEndpoint: core.serialization.lazyObject(async () => (await import("../../..")).OAuthTokenEndpoint),
+        authorizationEndpoint: core.serialization.lazyObject(
+            async () => (await import("../../..")).OAuthAuthorizationEndpoint
+        ),
+        refreshEndpoint: core.serialization
+            .lazyObject(async () => (await import("../../..")).OAuthRefreshTokenEndpoint)
+            .optional(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).BaseOauthSecurityScheme));
 
 export declare namespace AuthorizationCodeOAuthScheme {
     interface Raw extends serializers.BaseOauthSecurityScheme.Raw {
         authorizationCodeEnvVar?: string | null;
-        tokenEndpoint: string;
-        authorizationEndpoint: string;
-        refreshEndpoint?: string | null;
+        tokenEndpoint: serializers.OAuthTokenEndpoint.Raw;
+        authorizationEndpoint: serializers.OAuthAuthorizationEndpoint.Raw;
+        refreshEndpoint?: serializers.OAuthRefreshTokenEndpoint.Raw | null;
     }
 }

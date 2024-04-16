@@ -1,6 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 imports:
+  http: http.yml
   types: types.yml
   commons: commons.yml
 types:
@@ -44,16 +45,20 @@ types:
     docs: The fields to map to the corresponding OAuth token primitive.
     properties:
       accessToken: string
-      expiresIn: optional<string>
+      expiresIn: optional<long>
       refreshToken: optional<string>
   OauthRefreshTokenFields:
     docs: The fields to map to the corresponding OAuth token primitive.
     properties:
       refreshToken: string
+  EndpointReference:
+    properties:
+      method: http.HttpMethod
+      path: http.HttpPath
   OauthTokenEndpoint:
     properties:
       endpointReference:
-        type: string
+        type: EndpointReference
         docs: |
           The refrence to the access token endpoint. This is specifically the endpoint ID without the `endpoint_` prefix.
           This is gotten by following the path to the file the endpoint is defined in, so if the endpoint `get_token` is defined in foo/service.yml,
@@ -62,7 +67,7 @@ types:
   OauthRefreshEndpoint:
     properties:
       endpointReference:
-        type: string
+        type: EndpointReference
         docs: |
           The refrence to the refresh token endpoint. This is specifically the endpoint ID without the `endpoint_` prefix.
           This is gotten by following the path to the file the endpoint is defined in, so if the endpoint `refresh_token` is defined in foo/service.yml,
@@ -71,7 +76,7 @@ types:
       responseFields: OauthAccessTokenFields
   OauthAuthorizationEndpointParameters:
     properties:
-      name: commons.Name
+      name: commons.NameAndWireValue
       type: types.TypeReference
   OauthAuthorizationEndpoint:
     properties:

@@ -5,6 +5,6 @@
 import * as FernOpenapiIr from "../../..";
 
 export interface ClientCredentialsOAuthScheme extends FernOpenapiIr.BaseOauthSecurityScheme {
-    tokenEndpoint: string;
-    refreshEndpoint: string | undefined;
+    tokenEndpoint: FernOpenapiIr.OAuthTokenEndpoint;
+    refreshEndpoint: FernOpenapiIr.OAuthRefreshTokenEndpoint | undefined;
 }

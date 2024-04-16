@@ -85,6 +85,7 @@ function convertSchemeReference({
             oauth: (rawScheme) =>
                 generateOAuth({
                     docs,
+                    file,
                     rawScheme
                 })
         });
@@ -112,9 +113,11 @@ function convertSchemeReference({
 
 function generateOAuth({
     docs,
+    file,
     rawScheme
 }: {
     docs: string | undefined;
+    file: FernFileContext;
     rawScheme: RawSchemas.OAuthSchemeSchema | undefined;
 }): AuthScheme.Oauth {
     if (rawScheme != null && rawScheme?.type === "authorization-code") {
@@ -126,9 +129,40 @@ function generateOAuth({
                 tokenPrefix: rawScheme["token-prefix"],
                 scopes: rawScheme.scopes,
                 authorizationCodeEnvVar: rawScheme["authorization-code-env"],
-                authorizationEndpoint: rawScheme["authorization-endpoint"],
-                tokenEndpoint: rawScheme["token-endpoint"],
-                refreshEndpoint: rawScheme["refresh-endpoint"],
+                authorizationEndpoint: {
+                    path: rawScheme["authorization-endpoint"].path,
+                    queryParameters: Object.entries(rawScheme["authorization-endpoint"]["query-parameters"]).map(
+                        ([key, value]) => ({
+                            name: file.casingsGenerator.generateNameAndWireValue({
+                                name: key,
+                                wireValue: key
+                            }),
+                            type: file.parseTypeReference(value)
+                        })
+                    )
+                },
+                tokenEndpoint: {
+                    endpointReference: rawScheme["token-endpoint"].endpoint,
+                    responseFields: {
+                        accessToken: rawScheme["token-endpoint"]["response-fields"]["access-token"],
+                        expiresIn: rawScheme["token-endpoint"]["response-fields"]["expires-in"],
+                        refreshToken: rawScheme["token-endpoint"]["response-fields"]["refresh-token"]
+                    }
+                },
+                refreshEndpoint:
+                    rawScheme["refresh-endpoint"] != null
+                        ? {
+                              endpointReference: rawScheme["refresh-endpoint"].endpoint,
+                              requestFields: {
+                                  refreshToken: rawScheme["refresh-endpoint"]["request-fields"]["refresh-token"]
+                              },
+                              responseFields: {
+                                  accessToken: rawScheme["refresh-endpoint"]["response-fields"]["access-token"],
+                                  expiresIn: rawScheme["refresh-endpoint"]["response-fields"]["expires-in"],
+                                  refreshToken: rawScheme["refresh-endpoint"]["response-fields"]["refresh-token"]
+                              }
+                          }
+                        : undefined,
                 redirectUri: rawScheme["redirect-uri"]
             })
         });
@@ -140,35 +174,28 @@ function generateOAuth({
                 clientSecretEnvVar: rawScheme["client-secret-env"],
                 tokenPrefix: rawScheme["token-prefix"],
                 scopes: rawScheme.scopes,
-                tokenEndpoint: rawScheme["token-endpoint"],
-                refreshEndpoint: rawScheme["refresh-endpoint"],
-                redirectUri: rawScheme["redirect-uri"]
-            })
-        });
-    } else if (rawScheme != null && rawScheme?.type === "implicit") {
-        return AuthScheme.oauth({
-            docs,
-            configuration: OAuthConfiguration.implicit({
-                clientIdEnvVar: rawScheme["client-id-env"],
-                clientSecretEnvVar: rawScheme["client-secret-env"],
-                tokenPrefix: rawScheme["token-prefix"],
-                scopes: rawScheme.scopes,
-                authorizationCodeEnvVar: rawScheme["authorization-code-env"],
-                authorizationEndpoint: rawScheme["authorization-endpoint"],
-                refreshEndpoint: rawScheme["refresh-endpoint"],
-                redirectUri: rawScheme["redirect-uri"]
-            })
-        });
-    } else if (rawScheme != null && rawScheme?.type === "password") {
-        return AuthScheme.oauth({
-            docs,
-            configuration: OAuthConfiguration.password({
-                clientIdEnvVar: rawScheme["client-id-env"],
-                clientSecretEnvVar: rawScheme["client-secret-env"],
-                tokenPrefix: rawScheme["token-prefix"],
-                scopes: rawScheme.scopes,
-                tokenEndpoint: rawScheme["token-endpoint"],
-                refreshEndpoint: rawScheme["refresh-endpoint"],
+                tokenEndpoint: {
+                    endpointReference: rawScheme["token-endpoint"].endpoint,
+                    responseFields: {
+                        accessToken: rawScheme["token-endpoint"]["response-fields"]["access-token"],
+                        expiresIn: rawScheme["token-endpoint"]["response-fields"]["expires-in"],
+                        refreshToken: rawScheme["token-endpoint"]["response-fields"]["refresh-token"]
+                    }
+                },
+                refreshEndpoint:
+                    rawScheme["refresh-endpoint"] != null
+                        ? {
+                              endpointReference: rawScheme["refresh-endpoint"].endpoint,
+                              requestFields: {
+                                  refreshToken: rawScheme["refresh-endpoint"]["request-fields"]["refresh-token"]
+                              },
+                              responseFields: {
+                                  accessToken: rawScheme["refresh-endpoint"]["response-fields"]["access-token"],
+                                  expiresIn: rawScheme["refresh-endpoint"]["response-fields"]["expires-in"],
+                                  refreshToken: rawScheme["refresh-endpoint"]["response-fields"]["refresh-token"]
+                              }
+                          }
+                        : undefined,
                 redirectUri: rawScheme["redirect-uri"]
             })
         });

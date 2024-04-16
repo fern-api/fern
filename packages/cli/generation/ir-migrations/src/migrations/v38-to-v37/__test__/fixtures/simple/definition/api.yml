@@ -8,5 +8,17 @@ auth-schemes:
     scopes:
       - user:read
     type: client-credentials
-    token-endpoint: foo.get_token
-    refresh-endpoint: foo.refresh_token
+    token-endpoint:
+      endpoint: foo.get_token
+      response-fields:
+        access-token: $response.access_token
+        expires-in: $response.expires_in
+        refresh-token: $response.refresh_token
+    refresh-endpoint:
+      endpoint: foo.refresh_token
+      request-fields:
+        refresh-token: $response.refresh_token
+      response-fields:
+        access-token: $response.access_token
+        expires-in: $response.expires_in
+        refresh-token: $response.refresh_token

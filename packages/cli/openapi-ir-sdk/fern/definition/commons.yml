@@ -82,35 +82,49 @@ types:
       clientIdEnvVar: optional<string>
       clientSecretEnvVar: optional<string>
       redirectUri: optional<string>
+  EndpointReference:
+    properties:
+      path: string
+      method: string
   OAuthConfiguration:
     union:
       authorizationCode: AuthorizationCodeOAuthScheme
       clientCredentials: ClientCredentialsOAuthScheme
-      implicit: ImplicitOAuthScheme
-      password: PasswordOAuthScheme
+  OAuthAccessTokenFields:
+    properties:
+      accessToken: string
+      expiresIn: optional<long>
+      refreshToken: optional<string>
+  OAuthTokenEndpoint:
+    properties:
+      endpointReference: EndpointReference
+      responseFields: OAuthAccessTokenFields
+  OAuthRefreshTokenFields:
+    properties:
+      refreshToken: string
+  OAuthRefreshTokenEndpoint:
+    properties:
+      endpointReference: EndpointReference
+      requestFields: OAuthRefreshTokenFields
+      responseFields: OAuthAccessTokenFields
+  OAuthAuthorizationEndpoint:
+    properties:
+      path: string
+      # To avoid complexity, let's just enforce that these params are strings
+      # so here we're just taking in the parameters' names
+      parameters: list<string>
   AuthorizationCodeOAuthScheme:
     extends: BaseOauthSecurityScheme
     properties:
       authorizationCodeEnvVar: optional<string>
-      tokenEndpoint: string
-      authorizationEndpoint: string
-      refreshEndpoint: optional<string>
+      tokenEndpoint: OAuthTokenEndpoint
+      authorizationEndpoint: OAuthAuthorizationEndpoint
+      refreshEndpoint: optional<OAuthRefreshTokenEndpoint>
   ClientCredentialsOAuthScheme:
     extends: BaseOauthSecurityScheme
     properties:
-      tokenEndpoint: string
-      refreshEndpoint: optional<string>
-  ImplicitOAuthScheme:
-    extends: BaseOauthSecurityScheme
-    properties:
-      authorizationCodeEnvVar: optional<string>
-      authorizationEndpoint: string
-      refreshEndpoint: optional<string>
-  PasswordOAuthScheme:
-    extends: BaseOauthSecurityScheme
-    properties:
-      tokenEndpoint: string
-      refreshEndpoint: optional<string>
+      tokenEndpoint: OAuthTokenEndpoint
+      refreshEndpoint: optional<OAuthRefreshTokenEndpoint>
 
   StatusCode:
     type: integer

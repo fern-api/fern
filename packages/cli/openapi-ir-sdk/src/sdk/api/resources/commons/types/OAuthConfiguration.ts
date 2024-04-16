@@ -6,9 +6,7 @@ import * as FernOpenapiIr from "../../..";
 
 export type OAuthConfiguration =
     | FernOpenapiIr.OAuthConfiguration.AuthorizationCode
-    | FernOpenapiIr.OAuthConfiguration.ClientCredentials
-    | FernOpenapiIr.OAuthConfiguration.Implicit
-    | FernOpenapiIr.OAuthConfiguration.Password;
+    | FernOpenapiIr.OAuthConfiguration.ClientCredentials;
 
 export declare namespace OAuthConfiguration {
     interface AuthorizationCode extends FernOpenapiIr.AuthorizationCodeOAuthScheme, _Utils {
@@ -19,14 +17,6 @@ export declare namespace OAuthConfiguration {
         type: "clientCredentials";
     }
 
-    interface Implicit extends FernOpenapiIr.ImplicitOAuthScheme, _Utils {
-        type: "implicit";
-    }
-
-    interface Password extends FernOpenapiIr.PasswordOAuthScheme, _Utils {
-        type: "password";
-    }
-
     interface _Utils {
         _visit: <_Result>(visitor: FernOpenapiIr.OAuthConfiguration._Visitor<_Result>) => _Result;
     }
@@ -34,8 +24,6 @@ export declare namespace OAuthConfiguration {
     interface _Visitor<_Result> {
         authorizationCode: (value: FernOpenapiIr.AuthorizationCodeOAuthScheme) => _Result;
         clientCredentials: (value: FernOpenapiIr.ClientCredentialsOAuthScheme) => _Result;
-        implicit: (value: FernOpenapiIr.ImplicitOAuthScheme) => _Result;
-        password: (value: FernOpenapiIr.PasswordOAuthScheme) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -71,32 +59,6 @@ export const OAuthConfiguration = {
         };
     },
 
-    implicit: (value: FernOpenapiIr.ImplicitOAuthScheme): FernOpenapiIr.OAuthConfiguration.Implicit => {
-        return {
-            ...value,
-            type: "implicit",
-            _visit: function <_Result>(
-                this: FernOpenapiIr.OAuthConfiguration.Implicit,
-                visitor: FernOpenapiIr.OAuthConfiguration._Visitor<_Result>
-            ) {
-                return FernOpenapiIr.OAuthConfiguration._visit(this, visitor);
-            },
-        };
-    },
-
-    password: (value: FernOpenapiIr.PasswordOAuthScheme): FernOpenapiIr.OAuthConfiguration.Password => {
-        return {
-            ...value,
-            type: "password",
-            _visit: function <_Result>(
-                this: FernOpenapiIr.OAuthConfiguration.Password,
-                visitor: FernOpenapiIr.OAuthConfiguration._Visitor<_Result>
-            ) {
-                return FernOpenapiIr.OAuthConfiguration._visit(this, visitor);
-            },
-        };
-    },
-
     _visit: <_Result>(
         value: FernOpenapiIr.OAuthConfiguration,
         visitor: FernOpenapiIr.OAuthConfiguration._Visitor<_Result>
@@ -106,10 +68,6 @@ export const OAuthConfiguration = {
                 return visitor.authorizationCode(value);
             case "clientCredentials":
                 return visitor.clientCredentials(value);
-            case "implicit":
-                return visitor.implicit(value);
-            case "password":
-                return visitor.password(value);
             default:
                 return visitor._other(value as any);
         }
