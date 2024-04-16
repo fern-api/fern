@@ -833,7 +833,30 @@ exports[`open api parser squidex parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "UserManagementDeleteUserRequest",
       "headers": [],
       "internal": null,
@@ -1650,7 +1673,30 @@ exports[`open api parser squidex parse open api 1`] = `
       "availability": null,
       "description": null,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "UsersGetUserPictureRequest",
       "headers": [],
       "internal": null,
@@ -13750,7 +13796,40 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+            {
+              "name": "schema",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "schema",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "SchemasDeleteSchemaRequest",
       "headers": [],
       "internal": null,
@@ -17179,7 +17258,30 @@ You will be assigned as owner of the new team automatically.",
         400,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "RulesDeleteRuleRunRequest",
       "headers": [],
       "internal": null,
@@ -17324,7 +17426,40 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "RulesDeleteRuleRequest",
       "headers": [],
       "internal": null,
@@ -17555,7 +17690,40 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "RulesTriggerRuleRequest",
       "headers": [],
       "internal": null,
@@ -17623,7 +17791,40 @@ You will be assigned as owner of the new team automatically.",
         400,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "RulesPutRuleRunRequest",
       "headers": [],
       "internal": null,
@@ -17714,7 +17915,40 @@ You will be assigned as owner of the new team automatically.",
         400,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "RulesDeleteRuleEventsRequest",
       "headers": [],
       "internal": null,
@@ -18416,7 +18650,30 @@ You will be assigned as owner of the new team automatically.",
         400,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "RulesDeleteEventsRequest",
       "headers": [],
       "internal": null,
@@ -18468,7 +18725,40 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "RulesPutEventRequest",
       "headers": [],
       "internal": null,
@@ -18537,7 +18827,40 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "RulesDeleteEventRequest",
       "headers": [],
       "internal": null,
@@ -19553,7 +19876,19 @@ You will be assigned as owner of the new team automatically.",
       "errorStatusCode": [
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "PingGetPingRequest",
       "headers": [],
       "internal": null,
@@ -19585,7 +19920,30 @@ You will be assigned as owner of the new team automatically.",
       "errorStatusCode": [
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "PingGetAppPingRequest",
       "headers": [],
       "internal": null,
@@ -20870,7 +21228,19 @@ You will be assigned as owner of the new team automatically.",
         500,
         501,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "DiagnosticsGetDumpRequest",
       "headers": [],
       "internal": null,
@@ -20903,7 +21273,19 @@ You will be assigned as owner of the new team automatically.",
         500,
         501,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "DiagnosticsGetGcDumpRequest",
       "headers": [],
       "internal": null,
@@ -23699,7 +24081,50 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+            {
+              "name": "schema",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "schema",
+                },
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "ContentsDeleteContentRequest",
       "headers": [],
       "internal": null,
@@ -24287,7 +24712,50 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+            {
+              "name": "schema",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "schema",
+                },
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "ContentsGetContentValidityRequest",
       "headers": [],
       "internal": null,
@@ -25279,7 +25747,60 @@ You will be assigned as owner of the new team automatically.",
       "availability": "Deprecated",
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+            {
+              "name": "schema",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "schema",
+                },
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+            {
+              "name": "version",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 1,
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "ContentsGetContentVersionRequest",
       "headers": [],
       "internal": null,
@@ -28154,7 +28675,50 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+            {
+              "name": "commentsId",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "commentsId",
+                },
+              },
+            },
+            {
+              "name": "commentId",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "commentId",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "CommentsPutCommentRequest",
       "headers": [],
       "internal": null,
@@ -28252,7 +28816,50 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+            {
+              "name": "commentsId",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "commentsId",
+                },
+              },
+            },
+            {
+              "name": "commentId",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "commentId",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "CommentsDeleteCommentRequest",
       "headers": [],
       "internal": null,
@@ -28559,7 +29166,40 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "userId",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "userId",
+                },
+              },
+            },
+            {
+              "name": "commentId",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "commentId",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "NotificationsDeleteCommentRequest",
       "headers": [],
       "internal": null,
@@ -28624,7 +29264,40 @@ You will be assigned as owner of the new team automatically.",
       "availability": null,
       "description": null,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "BackupsGetBackupContentRequest",
       "headers": [],
       "internal": null,
@@ -28696,7 +29369,40 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "BackupsDeleteBackupRequest",
       "headers": [],
       "internal": null,
@@ -28761,7 +29467,30 @@ You will be assigned as owner of the new team automatically.",
       "availability": null,
       "description": null,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "BackupsGetBackupContentV2Request",
       "headers": [],
       "internal": null,
@@ -29071,7 +29800,30 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "BackupsPostBackupRequest",
       "headers": [],
       "internal": null,
@@ -29219,7 +29971,19 @@ You will be assigned as owner of the new team automatically.",
         400,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "BackupsPostRestoreJobRequest",
       "headers": [],
       "internal": null,
@@ -29261,7 +30025,40 @@ You will be assigned as owner of the new team automatically.",
       "availability": null,
       "description": null,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+            {
+              "name": "idOrSlug",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "idOrSlug",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "AssetsGetAssetContentBySlugRequest",
       "headers": [],
       "internal": null,
@@ -29660,7 +30457,30 @@ You will be assigned as owner of the new team automatically.",
       "availability": "Deprecated",
       "description": null,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "AssetsGetAssetContentRequest",
       "headers": [],
       "internal": null,
@@ -30722,7 +31542,40 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "AssetsDeleteAssetFolderRequest",
       "headers": [],
       "internal": null,
@@ -33710,7 +34563,40 @@ You will be assigned as owner of the new team automatically.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "AssetsDeleteAssetRequest",
       "headers": [],
       "internal": null,
@@ -37000,7 +37886,30 @@ The client secret is auto generated on the server and returned. The client does 
       "availability": null,
       "description": null,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "AppsGetImageRequest",
       "headers": [],
       "internal": null,
@@ -40766,7 +41675,30 @@ You will retrieve all apps, where you are assigned as a contributor.",
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "app",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "app",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "AppsDeleteAppRequest",
       "headers": [],
       "internal": null,

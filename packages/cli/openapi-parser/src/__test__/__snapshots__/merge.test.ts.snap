@@ -2820,7 +2820,30 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": null,
       "description": "Delete a linked account.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [
+            {
+              "name": "X-Account-Token",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "X-Account-Token",
+                },
+              },
+            },
+          ],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "DeleteAccountCreateRequest",
       "headers": [
         {
@@ -13032,7 +13055,41 @@ exports[`open api parser merge parse open api 1`] = `
       "availability": null,
       "description": "Ignores a specific row based on the \`model_id\` in the url. These records will have their properties set to null, and will not be updated in future syncs. The "reason" and "message" fields in the request body will be stored for audit purposes.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [
+            {
+              "name": "X-Account-Token",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "X-Account-Token",
+                },
+              },
+            },
+          ],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "model_id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "model_id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "EmployeesIgnoreCreateRequest",
       "headers": [
         {

@@ -3571,7 +3571,37 @@ The parameter should map to a JSON encoded list of strings.
       "availability": null,
       "description": "Export your transcript in SRT or VTT format, to be plugged into a video player for subtitles and closed captions.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "transcript_id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "transcript_id",
+                },
+              },
+            },
+            {
+              "name": "subtitle_format",
+              "value": {
+                "type": "enum",
+                "value": "srt",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "TranscriptGetSubtitlesRequest",
       "headers": [],
       "internal": null,

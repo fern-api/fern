@@ -491,6 +491,14 @@ If the permission is not granted, it is skipped.",
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/v2/facts/{proj_id}/{env_id}/set_rules",
             "path-parameters": {
@@ -734,6 +742,15 @@ If we check the checkbox where \`us_based_employees\` and \`private_repos->clone
 This includes any permissions granted to said condition set (i.e: any matching condition set rules).",
             "errors": [
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "condition_set_id": "condition_set_id",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                },
+              },
             ],
             "method": "DELETE",
             "path": "/v2/schema/{proj_id}/{env_id}/condition_sets/{condition_set_id}",
@@ -1590,6 +1607,14 @@ allowed.",
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/v2/projects/{proj_id}/envs/{env_id}",
             "path-parameters": {
@@ -2026,6 +2051,13 @@ authenticated actor (i.e: human team member or api key).",
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "org_id": "org_id",
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/v2/orgs/{org_id}",
             "path-parameters": {
@@ -2318,6 +2350,13 @@ Every project is a separate silo, and has its own unique set of environments and
             "docs": "Deletes the project and all its related data.",
             "errors": [
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "proj_id": "proj_id",
+                },
+              },
             ],
             "method": "DELETE",
             "path": "/v2/projects/{proj_id}",
@@ -2613,6 +2652,16 @@ to a role as one action.
 This includes any permissions granted to perform the action.",
             "errors": [
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "action_group_id": "action_group_id",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
+                },
+              },
             ],
             "method": "DELETE",
             "path": "/v2/schema/{proj_id}/{env_id}/resources/{resource_id}/action_groups/{action_group_id}",
@@ -2975,6 +3024,16 @@ This includes any permissions granted to perform the action.",
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "action_id": "action_id",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/v2/schema/{proj_id}/{env_id}/resources/{resource_id}/actions/{action_id}",
             "path-parameters": {
@@ -3309,6 +3368,16 @@ Note: If the attribute is used by policies, removing it will cause the
 attribute to evaluate as \`undefined\`.",
             "errors": [
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "attribute_id": "attribute_id",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
+                },
+              },
             ],
             "method": "DELETE",
             "path": "/v2/schema/{proj_id}/{env_id}/resources/{resource_id}/attributes/{attribute_id}",
@@ -3647,6 +3716,15 @@ and will return the existing instance object in the response body.",
             "docs": "Deletes the instance and all its related data.",
             "errors": [
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "env_id": "env_id",
+                  "instance_id": "instance_id",
+                  "proj_id": "proj_id",
+                },
+              },
             ],
             "method": "DELETE",
             "path": "/v2/facts/{proj_id}/{env_id}/resource_instances/{instance_id}",
@@ -4075,6 +4153,16 @@ If some of the permissions specified are already assigned, will skip them.",
 This includes any permissions granted to said role.",
             "errors": [
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
+                  "role_id": "role_id",
+                },
+              },
             ],
             "method": "DELETE",
             "path": "/v2/schema/{proj_id}/{env_id}/resources/{resource_id}/roles/{role_id}",
@@ -4724,6 +4812,15 @@ A resource may also contain:
             "docs": "Deletes the resource and all its related data.",
             "errors": [
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
+                },
+              },
             ],
             "method": "DELETE",
             "path": "/v2/schema/{proj_id}/{env_id}/resources/{resource_id}",
@@ -5463,6 +5560,14 @@ If the role is not actually assigned, will return 404.",
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/v2/facts/{proj_id}/{env_id}/role_assignments",
             "path-parameters": {
@@ -5678,6 +5783,15 @@ If some of the permissions specified are already assigned, will skip them.",
 This includes any permissions granted to said role.",
             "errors": [
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "role_id": "role_id",
+                },
+              },
             ],
             "method": "DELETE",
             "path": "/v2/schema/{proj_id}/{env_id}/roles/{role_id}",
@@ -6231,6 +6345,15 @@ and will return the existing tenant object in the response body.",
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "tenant_id": "tenant_id",
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/v2/facts/{proj_id}/{env_id}/tenants/{tenant_id}",
             "path-parameters": {
@@ -6254,6 +6377,16 @@ and will return the existing tenant object in the response body.",
             "docs": "Deletes a user under a tenant.",
             "errors": [
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "tenant_id": "tenant_id",
+                  "user_id": "user_id",
+                },
+              },
             ],
             "method": "DELETE",
             "path": "/v2/facts/{proj_id}/{env_id}/tenants/{tenant_id}/users/{user_id}",
@@ -6706,6 +6839,15 @@ attribute to evaluate as \`undefined\`.",
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "attribute_id": "attribute_id",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/v2/schema/{proj_id}/{env_id}/users/attributes/{attribute_id}",
             "path-parameters": {
@@ -7126,6 +7268,15 @@ and will return the existing user object in the response body.",
             "errors": [
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "user_id": "user_id",
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/v2/facts/{proj_id}/{env_id}/users/{user_id}",
             "path-parameters": {
@@ -7441,6 +7592,15 @@ The tenant defines the scope of the assignment. In other words, the role is effe
 If the role is not actually assigned, will return 404.",
             "errors": [
               "root.UnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "user_id": "user_id",
+                },
+              },
             ],
             "method": "DELETE",
             "path": "/v2/facts/{proj_id}/{env_id}/users/{user_id}/roles",

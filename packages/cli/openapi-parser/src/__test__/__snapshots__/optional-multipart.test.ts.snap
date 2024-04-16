@@ -11,7 +11,30 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       "availability": null,
       "description": "speech",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "voice_id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "voice_id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "SpeechOperationRequest",
       "headers": [
         {
@@ -171,7 +194,30 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       "availability": null,
       "description": "speech_stream",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "voice_id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "voice_id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "SpeechStreamOperationRequest",
       "headers": [
         {

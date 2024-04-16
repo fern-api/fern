@@ -59357,7 +59357,30 @@ exports[`open api parser aries parse open api 1`] = `
       "availability": null,
       "description": null,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "rev_reg_id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "rev_reg_id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "DownloadTailsFileRequest",
       "headers": [],
       "internal": null,

@@ -11,6 +11,9 @@ exports[`x-fern-audiences x-fern-audiences simple 1`] = `
         "getV1Users": {
           "auth": false,
           "docs": undefined,
+          "examples": [
+            {},
+          ],
           "method": "GET",
           "path": "/v1/users",
           "request": {

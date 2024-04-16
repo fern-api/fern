@@ -657,6 +657,14 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Deletes an existing scenario from a sandbox, keying off of the provided scenario id.",
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                  "scenario_id": "scenario_id",
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/v1/sandboxes/{id}/scenarios/{scenario_id}",
             "path-parameters": {
@@ -827,6 +835,14 @@ or overwritten with default values.",
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Deletes an existing test case for a test suite, keying off of the test case id.",
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                  "test_case_id": "test_case_id",
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/v1/test-suites/{id}/test-cases/{test_case_id}",
             "path-parameters": {
@@ -952,6 +968,9 @@ or overwritten with default values.",
           "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Executes a deployed Workflow and streams back its results.",
+          "examples": [
+            {},
+          ],
           "method": "POST",
           "path": "/v1/execute-workflow-stream",
           "request": {
@@ -1076,6 +1095,9 @@ Generate a stream of completions using a previously defined deployment.
             "NotFoundError",
             "InternalServerError",
           ],
+          "examples": [
+            {},
+          ],
           "method": "POST",
           "path": "/v1/generate-stream",
           "request": {
@@ -1189,6 +1211,9 @@ Used to submit feedback regarding the quality of previously generated completion
             "BadRequestError",
             "NotFoundError",
             "InternalServerError",
+          ],
+          "examples": [
+            {},
           ],
           "method": "POST",
           "path": "/v1/submit-completion-actuals",

@@ -1890,7 +1890,58 @@ exports[`open api parser dopt parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "uid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "uid",
+                },
+              },
+            },
+            {
+              "name": "intent",
+              "value": {
+                "type": "enum",
+                "value": "finish",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "name": "version",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "double",
+                  "value": 1.1,
+                },
+              },
+            },
+            {
+              "name": "userIdentifier",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "userIdentifier",
+                },
+              },
+            },
+          ],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "FlowIntentRequest",
       "headers": [],
       "internal": null,

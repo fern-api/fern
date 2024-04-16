@@ -48,6 +48,9 @@ exports[`x-fern-streaming-with-reference x-fern-streaming-with-reference simple 
           "create_stream": {
             "auth": false,
             "docs": undefined,
+            "examples": [
+              {},
+            ],
             "method": "POST",
             "path": "/completions/chat",
             "request": {

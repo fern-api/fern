@@ -1230,6 +1230,14 @@ The parameter should map to a JSON encoded list of strings.
             "auth": true,
             "display-name": "Export transcript as SRT or VTT captions.",
             "docs": "Export your transcript in SRT or VTT format, to be plugged into a video player for subtitles and closed captions.",
+            "examples": [
+              {
+                "path-parameters": {
+                  "subtitle_format": "srt",
+                  "transcript_id": "transcript_id",
+                },
+              },
+            ],
             "method": "GET",
             "path": "/v2/transcript/{transcript_id}/{subtitle_format}",
             "path-parameters": {

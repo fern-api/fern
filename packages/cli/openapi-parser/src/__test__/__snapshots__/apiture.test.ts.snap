@@ -5308,7 +5308,30 @@ Note: This operation requires an identity challenge if the financial institution
         404,
         409,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "transferId",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "transferId",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "TransfersDeleteTransferRequest",
       "headers": [],
       "internal": null,

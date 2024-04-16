@@ -1167,7 +1167,19 @@ Used to list documents. Optionally filter on supported fields.
 
 Executes a deployed Workflow and streams back its results.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "ExecuteWorkflowStreamRequest",
       "headers": [],
       "internal": null,
@@ -1387,7 +1399,19 @@ Generate a stream of completions using a previously defined deployment.
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "GenerateStreamRequest",
       "headers": [],
       "internal": null,
@@ -2584,7 +2608,40 @@ or overwritten with default values.",
 
 Deletes an existing scenario from a sandbox, keying off of the provided scenario id.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+            {
+              "name": "scenario_id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "scenario_id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "DeleteSandboxScenarioRequest",
       "headers": [],
       "internal": null,
@@ -2797,7 +2854,19 @@ Used to submit feedback regarding the quality of previously generated completion
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "SubmitCompletionActualsRequest",
       "headers": [],
       "internal": null,
@@ -3011,7 +3080,40 @@ or overwritten with default values.",
 
 Deletes an existing test case for a test suite, keying off of the test case id.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+            {
+              "name": "test_case_id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "test_case_id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "DeleteTestSuiteTestCaseRequest",
       "headers": [],
       "internal": null,

@@ -160,6 +160,9 @@ connections can not be deleted using this method.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {},
+            ],
             "method": "POST",
             "path": "/dev-orgs.auth-connections.delete",
             "request": {
@@ -251,6 +254,9 @@ disabled.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {},
             ],
             "method": "POST",
             "path": "/dev-orgs.auth-connections.toggle",
@@ -399,6 +405,9 @@ given Dev organization.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {},
             ],
             "method": "POST",
             "path": "/auth-tokens.delete",
@@ -561,6 +570,9 @@ authenticated user.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {},
             ],
             "method": "POST",
             "path": "/auth-tokens.self.delete",

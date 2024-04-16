@@ -1322,6 +1322,13 @@ Note: This operation requires an identity challenge if the financial institution
               "root.NotFoundError",
               "root.ConflictError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "transferId": "transferId",
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/transfers/{transferId}",
             "path-parameters": {

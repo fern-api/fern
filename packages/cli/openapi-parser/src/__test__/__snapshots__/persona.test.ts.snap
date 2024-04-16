@@ -4100,7 +4100,30 @@ This endpoint can be used to comply with privacy regulations such as GDPR / CCPA
       "errorStatusCode": [
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "inquiry-id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "inquiry-id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "UpdateAnInquiryRequest",
       "headers": [
         {
@@ -5672,7 +5695,30 @@ Note that this will only delete the report -- it does not delete associated acco
       "availability": null,
       "description": "Retrieve the details of a specific Verification",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "verification-id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "verification-id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "RetrieveAVerificationRequest",
       "headers": [
         {
@@ -13421,7 +13467,19 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "availability": null,
       "description": "",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "ListAllApiLogsRequest",
       "headers": [
         {
@@ -21694,7 +21752,30 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "verification-id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "verification-id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "RetrieveADocumentVerificationRequest",
       "headers": [
         {
@@ -21769,7 +21850,30 @@ Note: A source account can only be consolidated once. Afterwards, the source acc
         404,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "account-id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "account-id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "ConsolidateIntoAnAccountRequest",
       "headers": [
         {
@@ -35064,7 +35168,19 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "CreateACountyListItemRequest",
       "headers": [
         {
@@ -36622,7 +36738,19 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "CreateAnIpAddressListItemRequest",
       "headers": [
         {
@@ -38135,7 +38263,19 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "CreateAPhoneNumberListItemRequest",
       "headers": [
         {
@@ -38838,7 +38978,30 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "list-item-id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "list-item-id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "ArchiveACountryListItemRequest",
       "headers": [
         {
@@ -40596,7 +40759,30 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "list-item-id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "list-item-id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "ArchiveAnIpAddressListItemRequest",
       "headers": [
         {
@@ -41236,7 +41422,30 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "list-item-id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "list-item-id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "ArchiveAPhoneNumberListItemRequest",
       "headers": [
         {
@@ -41330,7 +41539,19 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "ListAllReportsRequest",
       "headers": [
         {
@@ -41502,7 +41723,19 @@ The columns we allow are
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "CreateAReportRequest",
       "headers": [
         {
@@ -50205,7 +50438,30 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "inquiry-id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "inquiry-id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "AddATagRequest",
       "headers": [
         {
@@ -50363,7 +50619,30 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "inquiry-id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "inquiry-id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "RemoveATagRequest",
       "headers": [
         {
@@ -50521,7 +50800,30 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "inquiry-id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "inquiry-id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "SetAllTagsRequest",
       "headers": [
         {
@@ -50686,7 +50988,30 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "account-id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "account-id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "AddATag1Request",
       "headers": [
         {
@@ -50844,7 +51169,30 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "account-id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "account-id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "RemoveATag1Request",
       "headers": [
         {
@@ -51002,7 +51350,30 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "account-id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "account-id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "SetAllTags1Request",
       "headers": [
         {
@@ -51165,7 +51536,30 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "availability": null,
       "description": "Prints an inquiry as PDF.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "inquiry-id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "inquiry-id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "PrintAnInquiryPdfRequest",
       "headers": [],
       "internal": null,
@@ -51206,7 +51600,30 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "availability": null,
       "description": "Prints a verification in PDF format.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "verification-id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "verification-id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "PrintAVerificationAsPdfRequest",
       "headers": [],
       "internal": null,
@@ -51247,7 +51664,30 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "availability": null,
       "description": "Prints a report in PDF format.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "report-id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "report-id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "PrintReportPdfRequest",
       "headers": [],
       "internal": null,
@@ -56014,7 +56454,19 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "CreateAFaceListItemRequest",
       "headers": [
         {
@@ -56448,7 +56900,30 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "list-item-id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "list-item-id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "ArchiveAFaceListItemRequest",
       "headers": [
         {
@@ -59883,7 +60358,19 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
       "availability": null,
       "description": "",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "ListAllUserAuditLogsRequest",
       "headers": [
         {
@@ -83274,7 +83761,30 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "availability": null,
       "description": "Retrieve a Graph Query",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "graph-query-id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "graph-query-id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "RetrieveAGraphQueryRequest",
       "headers": [],
       "internal": null,
@@ -83317,7 +83827,19 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
       "errorStatusCode": [
         400,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "CreateAGraphQueryRequest",
       "headers": [],
       "internal": null,

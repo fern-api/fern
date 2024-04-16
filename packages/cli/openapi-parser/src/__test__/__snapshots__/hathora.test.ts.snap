@@ -987,7 +987,30 @@ exports[`open api parser hathora parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "appId",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "DeleteAppRequest",
       "headers": [],
       "internal": null,
@@ -1962,7 +1985,40 @@ exports[`open api parser hathora parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "appId",
+                },
+              },
+            },
+            {
+              "name": "buildId",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "double",
+                  "value": 1.1,
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "RunBuildRequest",
       "headers": [],
       "internal": null,
@@ -2033,7 +2089,40 @@ exports[`open api parser hathora parse open api 1`] = `
         422,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "appId",
+                },
+              },
+            },
+            {
+              "name": "buildId",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "double",
+                  "value": 1.1,
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "DeleteBuildRequest",
       "headers": [],
       "internal": null,
@@ -5347,7 +5436,30 @@ exports[`open api parser hathora parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "appId",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "GetLogsForAppRequest",
       "headers": [],
       "internal": null,
@@ -5453,7 +5565,40 @@ exports[`open api parser hathora parse open api 1`] = `
       "errorStatusCode": [
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "appId",
+                },
+              },
+            },
+            {
+              "name": "processId",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "processId",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "GetLogsForProcessRequest",
       "headers": [],
       "internal": null,
@@ -5550,7 +5695,40 @@ exports[`open api parser hathora parse open api 1`] = `
       "availability": null,
       "description": null,
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "appId",
+                },
+              },
+            },
+            {
+              "name": "deploymentId",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "double",
+                  "value": 1.1,
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "GetLogsForDeploymentRequest",
       "headers": [],
       "internal": null,
@@ -7282,7 +7460,40 @@ exports[`open api parser hathora parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "appId",
+                },
+              },
+            },
+            {
+              "name": "roomId",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "roomId",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "DestroyRoomRequest",
       "headers": [],
       "internal": null,
@@ -7337,7 +7548,40 @@ exports[`open api parser hathora parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "appId",
+                },
+              },
+            },
+            {
+              "name": "roomId",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "roomId",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "SuspendRoomRequest",
       "headers": [],
       "internal": null,

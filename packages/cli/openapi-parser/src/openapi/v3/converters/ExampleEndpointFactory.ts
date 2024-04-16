@@ -241,6 +241,19 @@ export class ExampleEndpointFactory {
             })
             .filter((ex): ex is CustomCodeSample => isNonNullish(ex));
 
+        if (requestResponsePairs.length === 0) {
+            return [EndpointExample.full({
+                name: undefined,
+                description: undefined,
+                pathParameters,
+                queryParameters,
+                headers,
+                request: undefined,
+                response: undefined,
+                codeSamples
+            })];
+        }
+
         return requestResponsePairs.map(({ id: exampleName, request: requestExample, response: responseExample }) => {
             return EndpointExample.full({
                 name: exampleName,

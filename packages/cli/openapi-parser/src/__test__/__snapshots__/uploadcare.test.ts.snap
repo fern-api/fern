@@ -940,7 +940,126 @@ You can upload the file parts in parallel provided that the byte order stays unc
 **Note**: You MUST define \`Content-Type\` header for your data.
 ",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [
+            {
+              "code": "import { multipartUpload } from '@uploadcare/upload-client'
+
+// partData is a chunk of the uploaded file's content
+// must be \`Blob\` or \`File\` or \`Buffer\`
+const result = await multipartUpload(
+  partData,
+  '<presigned-url-x>'
+)
+",
+              "description": null,
+              "install": null,
+              "language": "JavaScript",
+              "name": "JS",
+              "type": "language",
+            },
+            {
+              "code": "// Uploadcare lib provides high level API for multipart uploads that does everything for you
+
+<?php
+$configuration = Uploadcare\\Configuration::create((string) $_ENV['UPLOADCARE_PUBLIC_KEY'], (string) $_ENV['UPLOADCARE_SECRET_KEY']);
+
+$uploader = new Uploadcare\\Uploader\\Uploader($configuration);
+$path = '/path-to-large-file.zip';
+$handle = \\fopen($path, 'rb');
+$response = $uploader->fromResource($handle, null, null, 'auto', [
+    'size' => \\filesize($path), // The "size" is the metadata key
+]);
+echo \\sprintf('File uploaded. ID is \\'%s\\'', $response->getUuid());
+",
+              "description": null,
+              "install": null,
+              "language": "PHP",
+              "name": "PHP",
+              "type": "language",
+            },
+            {
+              "code": "// Uploadcare lib provides high level API for multipart uploads that does everything for you
+
+from pyuploadcare import Uploadcare, File
+
+uploadcare = Uploadcare(public_key='YOUR_PUBLIC_KEY', secret_key='YOUR_SECRET_KEY')
+with open('test1.txt', 'rb') as file_object:
+    ucare_file = uploadcare.multipart_upload(file_object)
+",
+              "description": null,
+              "install": null,
+              "language": "Python",
+              "name": "Python",
+              "type": "language",
+            },
+            {
+              "code": "// Uploadcare lib provides high level API for multipart uploads that does everything for you
+
+require 'uploadcare'
+Uploadcare.config.public_key = "YOUR_PUBLIC_KEY"
+Uploadcare.config.secret_key = "YOUR_SECRET_KEY"
+
+source_file = File.open('image.png')
+uploaded_file = Uploadcare::Uploader.upload(source_file, store: auto)
+",
+              "description": null,
+              "install": null,
+              "language": "Ruby",
+              "name": "Ruby",
+              "type": "language",
+            },
+            {
+              "code": "// Uploadcare lib provides high level API for multipart uploads that does everything for you
+
+import Uploadcare
+
+let uploadcare = Uploadcare(withPublicKey: "YOUR_PUBLIC_KEY", secretKey: "YOUR_SECRET_KEY")
+
+guard let url = Bundle.main.url(forResource: "Mona_Lisa_23mb", withExtension: "jpg"),
+      let data = try? Data(contentsOf: url) else { return }
+
+let metadata = ["subsystem": "uploader", "pet": "cat"]
+let onProgress: (Double)->Void = { (progress) in
+  print("progress: \\(progress)")
+}
+
+let file = try await uploadcare.uploadAPI.multipartUpload(data, withName: "Mona_Lisa_big.jpg", store: .auto, metadata: metadata, onProgress)
+print(file)
+",
+              "description": null,
+              "install": null,
+              "language": "Swift",
+              "name": "Swift",
+              "type": "language",
+            },
+            {
+              "code": "import com.uploadcare.android.library.api.UploadcareClient
+
+val uploadcare = UploadcareClient(publicKey = "YOUR_PUBLIC_KEY", secretKey = "YOUR_SECRET_KEY")
+
+val uri = "content://com.android.providers.media.documents/document/image%3A1000001178".toUri()
+val file = FileUploader(uploadcare, uri = uri, context = context).upload()
+Log.d("TAG", file.toString())
+",
+              "description": null,
+              "install": null,
+              "language": "Kotlin",
+              "name": "Kotlin",
+              "type": "language",
+            },
+          ],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": null,
+          "response": null,
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "MultipartFileUploadPartRequest",
       "headers": [],
       "internal": null,

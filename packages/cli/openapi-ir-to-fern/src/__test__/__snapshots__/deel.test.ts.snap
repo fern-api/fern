@@ -1535,6 +1535,13 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "contract_id": "contract_id",
+                },
+              },
+            ],
             "method": "GET",
             "path": "/contracts/{contract_id}/preview",
             "path-parameters": {
@@ -5844,6 +5851,13 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+              },
             ],
             "method": "DELETE",
             "path": "/webhooks/{id}",

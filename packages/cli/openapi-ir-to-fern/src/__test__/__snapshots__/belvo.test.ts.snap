@@ -97,6 +97,13 @@ client.accounts.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/api/accounts/{id}",
             "path-parameters": {
@@ -2233,6 +2240,13 @@ client.balances.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/api/balances/{id}",
             "path-parameters": {
@@ -4206,6 +4220,13 @@ At the moment, the employment records resource is available for:
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/api/employment-records/{id}",
             "path-parameters": {
@@ -4752,6 +4773,13 @@ client.incomes.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+              },
             ],
             "method": "DELETE",
             "path": "/api/incomes/{id}",
@@ -5457,6 +5485,13 @@ client. investments_portfolio.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/investments/portfolios/{id}",
             "path-parameters": {
@@ -5942,6 +5977,13 @@ client.invoices.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+              },
             ],
             "method": "DELETE",
             "path": "/api/invoices/{id}",
@@ -8372,6 +8414,13 @@ To delete links in bulk, we recommend looping through the list of links you want
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/api/links/{id}",
             "path-parameters": {
@@ -9080,6 +9129,13 @@ client.owners.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+              },
             ],
             "method": "DELETE",
             "path": "/api/owners/{id}",
@@ -10405,6 +10461,13 @@ You can use the Payment Transactions resource in order to get useful information
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/payments/webhooks/{id}",
             "path-parameters": {
@@ -10590,6 +10653,13 @@ You can use the Payment Transactions resource in order to get useful information
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+              },
             ],
             "method": "DELETE",
             "path": "/receivables/transactions/{id}",
@@ -11009,6 +11079,13 @@ client. recurring_expenses.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+              },
             ],
             "method": "DELETE",
             "path": "/api/recurring-expenses/{id}",
@@ -11595,6 +11672,90 @@ client. risk_insights.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "code-samples": [
+                  {
+                    "code": "curl -X DELETE \\
+https://sandbox.belvo.com/api/risk-insights/{id}/ \\
+-H 'Host: sandbox.belvo.com' \\
+-u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": "cURL",
+                  },
+                  {
+                    "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Delete Risk insight
+client.RiskInsights.delete('risk-insights.id')
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "python",
+                  },
+                  {
+                    "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.risk_insights.delete id: 'risk-insights.id'
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "ruby",
+                  },
+                  {
+                    "code": "// For more information about our SDKs go to:
+// https://developers.belvo.com/docs/belvo-sdks
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.riskInsights.delete('risk-insights.id')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "javascript",
+                    "name": "javascript",
+                  },
+                ],
+                "path-parameters": {
+                  "id": "id",
+                },
+              },
             ],
             "method": "DELETE",
             "path": "/api/risk-insights/{id}",
@@ -12650,6 +12811,13 @@ client.tax_compliance_status.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/api/tax-compliance-status/{id}",
             "path-parameters": {
@@ -12924,6 +13092,13 @@ At the moment, the Tax Declaration resource is available for:
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+              },
             ],
             "method": "DELETE",
             "path": "/api/tax-declarations/{id}",
@@ -13516,6 +13691,13 @@ client.tax_retentions.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/api/tax-retentions/{id}",
             "path-parameters": {
@@ -13914,6 +14096,13 @@ client.tax_returns.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+              },
             ],
             "method": "DELETE",
             "path": "/api/tax-returns/{id}",
@@ -15675,6 +15864,13 @@ client.tax_status.list(params: {
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/api/tax-status/{id}",
             "path-parameters": {
@@ -16483,6 +16679,13 @@ client.transactions.list(params: {
             "errors": [
               "root.UnauthorizedError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+              },
             ],
             "method": "DELETE",
             "path": "/api/transactions/{id}",

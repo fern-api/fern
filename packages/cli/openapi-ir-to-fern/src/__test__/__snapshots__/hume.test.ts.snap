@@ -30,6 +30,13 @@ exports[`open api parser hume simple 1`] = `
             "auth": true,
             "display-name": "Get Job Artifacts",
             "docs": "Get the artifacts ZIP of a completed job.",
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "id",
+                },
+              },
+            ],
             "method": "GET",
             "path": "/v0/batch/jobs/{id}/artifacts",
             "path-parameters": {
