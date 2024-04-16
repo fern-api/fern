@@ -11,6 +11,8 @@ class EndpointResponseCodeWriter:
     RESPONSE_JSON_VARIABLE = "_response_json"
     STREAM_TEXT_VARIABLE = "_text"
     FILE_CHUNK_VARIABLE = "_chunk"
+    EVENT_SOURCE_VARIABLE = "_event_source"
+    SSE_VARIABLE = "_sse"
 
     def __init__(
         self,
@@ -37,6 +39,32 @@ class EndpointResponseCodeWriter:
         return AST.CodeWriter(write)
 
     def _handle_success_stream(self, *, writer: AST.NodeWriter, stream_response: ir_types.StreamingResponse) -> None:
+        writer.write_line("try:")
+        with writer.indent():
+            self._handle_sse_stream(writer=writer, stream_response=stream_response)
+        writer.write_line("except Exception as e:")
+        with writer.indent():
+            self._handle_http_stream(writer=writer, stream_response=stream_response)
+
+    def _handle_sse_stream(self, *, writer: AST.NodeWriter, stream_response: ir_types.StreamingResponse) -> None:
+        writer.write_line(
+            f"{EndpointResponseCodeWriter.EVENT_SOURCE_VARIABLE} = EventSource({EndpointResponseCodeWriter.RESPONSE_VARIABLE})"
+        )
+        writer.write_line(
+            f"for {EndpointResponseCodeWriter.SSE_VARIABLE} in {EndpointResponseCodeWriter.EVENT_SOURCE_VARIABLE}.iter_sse():"
+        )
+        with writer.indent():
+            writer.write("yield ")
+            writer.write_node(
+                self._context.core_utilities.get_construct(
+                    self._get_streaming_response_data_type(stream_response),
+                    AST.Expression(
+                        f"json.loads({EndpointResponseCodeWriter.SSE_VARIABLE}.data)"
+                    ),
+                ),
+            )
+
+    def _handle_http_stream(self, *, writer: AST.NodeWriter, stream_response: ir_types.StreamingResponse) -> None:
         if self._is_async:
             writer.write("async ")
         writer.write_line(
