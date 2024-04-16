@@ -2838,7 +2838,20 @@ Used to submit feedback regarding the quality of previously generated completion
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
-          "request": null,
+          "request": {
+            "properties": {
+              "actuals": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {},
+                    "type": "object",
+                  },
+                ],
+              },
+            },
+            "type": "object",
+          },
           "response": null,
           "type": "full",
         },

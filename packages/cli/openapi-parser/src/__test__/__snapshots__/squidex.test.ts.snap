@@ -28638,7 +28638,18 @@ You will be assigned as owner of the new team automatically.",
             },
           ],
           "queryParameters": [],
-          "request": null,
+          "request": {
+            "properties": {
+              "text": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "text",
+                },
+              },
+            },
+            "type": "object",
+          },
           "response": null,
           "type": "full",
         },
@@ -29847,7 +29858,18 @@ You will be assigned as owner of the new team automatically.",
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
-          "request": null,
+          "request": {
+            "properties": {
+              "url": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "url",
+                },
+              },
+            },
+            "type": "object",
+          },
           "response": null,
           "type": "full",
         },

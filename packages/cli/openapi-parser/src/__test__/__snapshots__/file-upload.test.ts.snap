@@ -19,7 +19,10 @@ exports[`file-upload file-upload parse open api 1`] = `
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
-          "request": null,
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
           "response": null,
           "type": "full",
         },

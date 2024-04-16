@@ -534,6 +534,7 @@ exports[`open api parser hathora simple 1`] = `
                   "appId": "appId",
                   "buildId": 1.1,
                 },
+                "request": {},
               },
             ],
             "method": "POST",

@@ -374,7 +374,10 @@ given Dev organization.
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
-          "request": null,
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
           "response": null,
           "type": "full",
         },
@@ -846,7 +849,10 @@ authenticated user.
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
-          "request": null,
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
           "response": null,
           "type": "full",
         },
@@ -1150,7 +1156,18 @@ connections can not be deleted using this method.
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
-          "request": null,
+          "request": {
+            "properties": {
+              "id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+            "type": "object",
+          },
           "response": null,
           "type": "full",
         },
@@ -1346,7 +1363,18 @@ disabled.
           "name": null,
           "pathParameters": [],
           "queryParameters": [],
-          "request": null,
+          "request": {
+            "properties": {
+              "id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+            "type": "object",
+          },
           "response": null,
           "type": "full",
         },

@@ -161,7 +161,11 @@ connections can not be deleted using this method.
               "root.ServiceUnavailableError",
             ],
             "examples": [
-              {},
+              {
+                "request": {
+                  "id": "id",
+                },
+              },
             ],
             "method": "POST",
             "path": "/dev-orgs.auth-connections.delete",
@@ -256,7 +260,11 @@ disabled.
               "root.ServiceUnavailableError",
             ],
             "examples": [
-              {},
+              {
+                "request": {
+                  "id": "id",
+                },
+              },
             ],
             "method": "POST",
             "path": "/dev-orgs.auth-connections.toggle",
@@ -407,7 +415,9 @@ given Dev organization.
               "root.ServiceUnavailableError",
             ],
             "examples": [
-              {},
+              {
+                "request": {},
+              },
             ],
             "method": "POST",
             "path": "/auth-tokens.delete",
@@ -572,7 +582,9 @@ authenticated user.
               "root.ServiceUnavailableError",
             ],
             "examples": [
-              {},
+              {
+                "request": {},
+              },
             ],
             "method": "POST",
             "path": "/auth-tokens.self.delete",

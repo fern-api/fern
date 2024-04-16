@@ -13085,7 +13085,15 @@ exports[`open api parser merge parse open api 1`] = `
             },
           ],
           "queryParameters": [],
-          "request": null,
+          "request": {
+            "properties": {
+              "reason": {
+                "type": "enum",
+                "value": "GENERAL_CUSTOMER_REQUEST",
+              },
+            },
+            "type": "object",
+          },
           "response": null,
           "type": "full",
         },

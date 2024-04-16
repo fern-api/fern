@@ -1207,7 +1207,13 @@ Used to submit feedback regarding the quality of previously generated completion
             "InternalServerError",
           ],
           "examples": [
-            {},
+            {
+              "request": {
+                "actuals": [
+                  {},
+                ],
+              },
+            },
           ],
           "method": "POST",
           "path": "/v1/submit-completion-actuals",

@@ -2014,7 +2014,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
           ],
           "queryParameters": [],
-          "request": null,
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
           "response": null,
           "type": "full",
         },

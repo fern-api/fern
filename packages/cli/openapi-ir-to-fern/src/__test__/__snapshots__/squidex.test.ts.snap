@@ -3920,7 +3920,11 @@ The client secret is auto generated on the server and returned. The client does 
               "root.InternalServerError",
             ],
             "examples": [
-              {},
+              {
+                "request": {
+                  "url": "url",
+                },
+              },
             ],
             "method": "POST",
             "path": "/api/apps/restore",
@@ -4157,6 +4161,9 @@ The client secret is auto generated on the server and returned. The client does 
                   "app": "app",
                   "commentId": "commentId",
                   "commentsId": "commentsId",
+                },
+                "request": {
+                  "text": "text",
                 },
               },
             ],

@@ -12,7 +12,9 @@ exports[`x-fern-audiences x-fern-audiences simple 1`] = `
           "auth": false,
           "docs": undefined,
           "examples": [
-            {},
+            {
+              "request": {},
+            },
           ],
           "method": "GET",
           "path": "/v1/users",

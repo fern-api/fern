@@ -13,7 +13,9 @@ exports[`open api parser file-upload simple 1`] = `
           "display-name": "Upload a file",
           "docs": undefined,
           "examples": [
-            {},
+            {
+              "request": {},
+            },
           ],
           "method": "POST",
           "path": "/upload",
