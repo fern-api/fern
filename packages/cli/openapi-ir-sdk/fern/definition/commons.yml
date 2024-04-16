@@ -44,8 +44,7 @@ types:
       query:
         type: QuerySecurityScheme
         docs: parameter sent as a security scheme
-      oauth:
-        type: OauthSecurityScheme
+      oauth: OauthSecurityScheme
 
   BearerSecurityScheme:
     properties:
@@ -82,10 +81,6 @@ types:
       clientIdEnvVar: optional<string>
       clientSecretEnvVar: optional<string>
       redirectUri: optional<string>
-  EndpointReference:
-    properties:
-      path: string
-      method: string
   OAuthConfiguration:
     union:
       authorizationCode: AuthorizationCodeOAuthScheme
@@ -97,14 +92,14 @@ types:
       refreshToken: optional<string>
   OAuthTokenEndpoint:
     properties:
-      endpointReference: EndpointReference
+      endpointReference: finalIr.Endpoint
       responseFields: OAuthAccessTokenFields
   OAuthRefreshTokenFields:
     properties:
       refreshToken: string
   OAuthRefreshTokenEndpoint:
     properties:
-      endpointReference: EndpointReference
+      endpointReference: finalIr.Endpoint
       requestFields: OAuthRefreshTokenFields
       responseFields: OAuthAccessTokenFields
   OAuthAuthorizationEndpoint:

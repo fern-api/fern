@@ -1,4 +1,4 @@
-import { ApiAuth, AuthScheme, AuthSchemesRequirement, HttpMethod, OAuthConfiguration } from "@fern-api/ir-sdk";
+import { ApiAuth, AuthScheme, AuthSchemesRequirement, OAuthConfiguration } from "@fern-api/ir-sdk";
 import { RawSchemas, visitRawApiAuth, visitRawAuthSchemeDeclaration } from "@fern-api/yaml-schema";
 import { FernFileContext } from "../FernFileContext";
 
@@ -142,10 +142,13 @@ function generateOAuth({
                     )
                 },
                 tokenEndpoint: {
-                    endpointReference: {
-                        path: rawScheme["token-endpoint"].endpoint.path,
-                        method: rawScheme["token-endpoint"].endpoint.method as HttpMethod
-                    },
+                    // openapi -> path + method -> import, TODO: resolve path + method to import
+                    // fern -> endpoint import
+                    // zod -> endpoint import
+                    // id -> endpoint ID, TODO: resolve import to ID
+                    // property validation requires the endpoint
+                    endpointReference: rawScheme["token-endpoint"].endpoint,
+                    // TODO: add in ResponseProperty conversion
                     responseFields: {
                         accessToken: rawScheme["token-endpoint"]["response-fields"]["access-token"],
                         expiresIn: rawScheme["token-endpoint"]["response-fields"]["expires-in"],
@@ -155,13 +158,11 @@ function generateOAuth({
                 refreshEndpoint:
                     rawScheme["refresh-endpoint"] != null
                         ? {
-                              endpointReference: {
-                                  path: rawScheme["refresh-endpoint"].endpoint.path,
-                                  method: rawScheme["refresh-endpoint"].endpoint.method as HttpMethod
-                              },
+                              endpointReference: rawScheme["refresh-endpoint"].endpoint,
                               requestFields: {
                                   refreshToken: rawScheme["refresh-endpoint"]["request-fields"]["refresh-token"]
                               },
+                              // TODO: add in ResponseProperty conversion
                               responseFields: {
                                   accessToken: rawScheme["refresh-endpoint"]["response-fields"]["access-token"],
                                   expiresIn: rawScheme["refresh-endpoint"]["response-fields"]["expires-in"],
@@ -181,10 +182,7 @@ function generateOAuth({
                 tokenPrefix: rawScheme["token-prefix"],
                 scopes: rawScheme.scopes,
                 tokenEndpoint: {
-                    endpointReference: {
-                        path: rawScheme["token-endpoint"].endpoint.path,
-                        method: rawScheme["token-endpoint"].endpoint.method as HttpMethod
-                    },
+                    endpointReference: rawScheme["token-endpoint"].endpoint,
                     responseFields: {
                         accessToken: rawScheme["token-endpoint"]["response-fields"]["access-token"],
                         expiresIn: rawScheme["token-endpoint"]["response-fields"]["expires-in"],
@@ -194,10 +192,7 @@ function generateOAuth({
                 refreshEndpoint:
                     rawScheme["refresh-endpoint"] != null
                         ? {
-                              endpointReference: {
-                                  path: rawScheme["refresh-endpoint"].endpoint.path,
-                                  method: rawScheme["refresh-endpoint"].endpoint.method as HttpMethod
-                              },
+                              endpointReference: rawScheme["refresh-endpoint"].endpoint,
                               requestFields: {
                                   refreshToken: rawScheme["refresh-endpoint"]["request-fields"]["refresh-token"]
                               },

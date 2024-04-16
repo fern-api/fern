@@ -51,14 +51,10 @@ types:
     docs: The fields to map to the corresponding OAuth token primitive.
     properties:
       refreshToken: http.RequestProperty
-  EndpointReference:
-    properties:
-      method: http.HttpMethod
-      path: string
   OauthTokenEndpoint:
     properties:
       endpointReference:
-        type: EndpointReference
+        type: commons.EndpointId
         docs: |
           The refrence to the access token endpoint. This is specifically the endpoint ID without the `endpoint_` prefix.
           This is gotten by following the path to the file the endpoint is defined in, so if the endpoint `get_token` is defined in foo/service.yml,
@@ -67,7 +63,7 @@ types:
   OauthRefreshEndpoint:
     properties:
       endpointReference:
-        type: EndpointReference
+        type: commons.EndpointId
         docs: |
           The refrence to the refresh token endpoint. This is specifically the endpoint ID without the `endpoint_` prefix.
           This is gotten by following the path to the file the endpoint is defined in, so if the endpoint `refresh_token` is defined in foo/service.yml,

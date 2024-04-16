@@ -10,7 +10,7 @@ export interface OauthRefreshEndpoint {
      * This is gotten by following the path to the file the endpoint is defined in, so if the endpoint `refresh_token` is defined in foo/service.yml,
      * the endpoint ID would be `foo/service.refresh_token`.
      */
-    endpointReference: FernIr.EndpointReference;
+    endpointReference: FernIr.EndpointId;
     requestFields: FernIr.OauthRefreshTokenFields;
     responseFields: FernIr.OauthAccessTokenFields;
 }

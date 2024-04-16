@@ -11,7 +11,6 @@ export * from "./HeaderSecurityScheme";
 export * from "./QuerySecurityScheme";
 export * from "./OauthSecurityScheme";
 export * from "./BaseOauthSecurityScheme";
-export * from "./EndpointReference";
 export * from "./OAuthConfiguration";
 export * from "./OAuthAccessTokenFields";
 export * from "./OAuthTokenEndpoint";

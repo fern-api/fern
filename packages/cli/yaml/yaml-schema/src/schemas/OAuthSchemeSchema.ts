@@ -1,11 +1,6 @@
 import { z } from "zod";
 import { TypeReferenceSchema } from "./TypeReferenceSchema";
 
-const EndpointReference = z.strictObject({
-    path: z.string(),
-    method: z.string()
-});
-
 // The base URL and content-type for the endpoints should be defined with the endpoint for simplicity
 const BaseOAuthSchema = z.strictObject({
     scheme: z.literal("oauth"),
@@ -27,12 +22,12 @@ const OAuthRefreshTokenFields = z.strictObject({
 });
 
 const OAuthTokenEndpoint = z.strictObject({
-    endpoint: EndpointReference,
+    endpoint: z.string(),
     "response-fields": OAuthAccessTokenFields
 });
 
 const OAuthRefreshEndpoint = z.strictObject({
-    endpoint: EndpointReference,
+    endpoint: z.string(),
     "request-fields": OAuthRefreshTokenFields,
     "response-fields": OAuthAccessTokenFields
 });

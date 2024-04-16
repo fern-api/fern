@@ -5,6 +5,6 @@
 import * as FernOpenapiIr from "../../..";
 
 export interface OAuthTokenEndpoint {
-    endpointReference: FernOpenapiIr.EndpointReference;
+    endpointReference: FernOpenapiIr.Endpoint;
     responseFields: FernOpenapiIr.OAuthAccessTokenFields;
 }

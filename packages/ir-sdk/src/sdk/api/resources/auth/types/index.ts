@@ -7,7 +7,6 @@ export * from "./OAuthScheme";
 export * from "./OAuthConfiguration";
 export * from "./OauthAccessTokenFields";
 export * from "./OauthRefreshTokenFields";
-export * from "./EndpointReference";
 export * from "./OauthTokenEndpoint";
 export * from "./OauthRefreshEndpoint";
 export * from "./OauthAuthorizationEndpointParameters";

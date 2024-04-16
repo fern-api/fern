@@ -10,13 +10,13 @@ export const OauthTokenEndpoint: core.serialization.ObjectSchema<
     serializers.OauthTokenEndpoint.Raw,
     FernIr.OauthTokenEndpoint
 > = core.serialization.objectWithoutOptionalProperties({
-    endpointReference: core.serialization.lazyObject(async () => (await import("../../..")).EndpointReference),
+    endpointReference: core.serialization.lazy(async () => (await import("../../..")).EndpointId),
     responseFields: core.serialization.lazyObject(async () => (await import("../../..")).OauthAccessTokenFields),
 });
 
 export declare namespace OauthTokenEndpoint {
     interface Raw {
-        endpointReference: serializers.EndpointReference.Raw;
+        endpointReference: serializers.EndpointId.Raw;
         responseFields: serializers.OauthAccessTokenFields.Raw;
     }
 }

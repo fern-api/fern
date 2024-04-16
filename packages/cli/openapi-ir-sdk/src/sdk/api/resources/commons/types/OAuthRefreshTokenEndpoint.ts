@@ -5,7 +5,7 @@
 import * as FernOpenapiIr from "../../..";
 
 export interface OAuthRefreshTokenEndpoint {
-    endpointReference: FernOpenapiIr.EndpointReference;
+    endpointReference: FernOpenapiIr.Endpoint;
     requestFields: FernOpenapiIr.OAuthRefreshTokenFields;
     responseFields: FernOpenapiIr.OAuthAccessTokenFields;
 }
