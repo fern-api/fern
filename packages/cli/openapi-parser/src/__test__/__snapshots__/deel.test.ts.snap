@@ -418,49 +418,8 @@ exports[`open api parser deel parse open api 1`] = `
                     "properties": {},
                     "type": "object",
                   },
-                  "employee": {
-                    "properties": {
-                      "email": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "employee@email.com",
-                        },
-                      },
-                      "first_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Jane",
-                        },
-                      },
-                      "last_name": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Doe",
-                        },
-                      },
-                      "nationality": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "US",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
                   "employment": {
-                    "properties": {
-                      "country": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "US",
-                        },
-                      },
-                    },
+                    "properties": {},
                     "type": "object",
                   },
                   "seniority": {
@@ -818,30 +777,9 @@ exports[`open api parser deel parse open api 1`] = `
                         "type": "enum",
                         "value": "DAY_OF_WEEK",
                       },
-                      "first_payment": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 500,
-                        },
-                      },
                       "frequency": {
                         "type": "enum",
                         "value": "weekly",
-                      },
-                      "notice_period": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 15,
-                        },
-                      },
-                      "pay_before_weekends": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
                       },
                       "payment_due_days": {
                         "type": "primitive",
@@ -861,13 +799,6 @@ exports[`open api parser deel parse open api 1`] = `
                     },
                     "type": "object",
                   },
-                  "country_code": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "US",
-                    },
-                  },
                   "job_title": {
                     "properties": {},
                     "type": "object",
@@ -883,20 +814,6 @@ exports[`open api parser deel parse open api 1`] = `
                       },
                     },
                     "type": "object",
-                  },
-                  "notice_period": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 15,
-                    },
-                  },
-                  "start_date": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "1999-12-31",
-                    },
                   },
                   "title": {
                     "type": "primitive",
@@ -1547,13 +1464,6 @@ exports[`open api parser deel parse open api 1`] = `
                   },
                   "compensation_details": {
                     "properties": {
-                      "amount": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 100,
-                        },
-                      },
                       "currency_code": {
                         "type": "primitive",
                         "value": {
@@ -1572,30 +1482,9 @@ exports[`open api parser deel parse open api 1`] = `
                         "type": "enum",
                         "value": "DAY_OF_WEEK",
                       },
-                      "first_payment": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 500,
-                        },
-                      },
                       "frequency": {
                         "type": "enum",
                         "value": "weekly",
-                      },
-                      "notice_period": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 15,
-                        },
-                      },
-                      "pay_before_weekends": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
                       },
                       "payment_due_days": {
                         "type": "primitive",
@@ -1610,13 +1499,6 @@ exports[`open api parser deel parse open api 1`] = `
                       },
                     },
                     "type": "object",
-                  },
-                  "country_code": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "US",
-                    },
                   },
                   "job_title": {
                     "properties": {},
@@ -1633,20 +1515,6 @@ exports[`open api parser deel parse open api 1`] = `
                       },
                     },
                     "type": "object",
-                  },
-                  "notice_period": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 15,
-                    },
-                  },
-                  "start_date": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "1999-12-31",
-                    },
                   },
                   "title": {
                     "type": "primitive",
@@ -2297,13 +2165,6 @@ exports[`open api parser deel parse open api 1`] = `
                   },
                   "compensation_details": {
                     "properties": {
-                      "amount": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 100,
-                        },
-                      },
                       "currency_code": {
                         "type": "primitive",
                         "value": {
@@ -2322,30 +2183,9 @@ exports[`open api parser deel parse open api 1`] = `
                         "type": "enum",
                         "value": "DAY_OF_WEEK",
                       },
-                      "first_payment": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 500,
-                        },
-                      },
                       "frequency": {
                         "type": "enum",
                         "value": "weekly",
-                      },
-                      "notice_period": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 15,
-                        },
-                      },
-                      "pay_before_weekends": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
                       },
                       "payment_due_days": {
                         "type": "primitive",
@@ -2360,13 +2200,6 @@ exports[`open api parser deel parse open api 1`] = `
                       },
                     },
                     "type": "object",
-                  },
-                  "country_code": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "US",
-                    },
                   },
                   "job_title": {
                     "properties": {},
@@ -2383,20 +2216,6 @@ exports[`open api parser deel parse open api 1`] = `
                       },
                     },
                     "type": "object",
-                  },
-                  "notice_period": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 15,
-                    },
-                  },
-                  "start_date": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "1999-12-31",
-                    },
                   },
                   "title": {
                     "type": "primitive",
@@ -3072,30 +2891,9 @@ exports[`open api parser deel parse open api 1`] = `
                         "type": "enum",
                         "value": "DAY_OF_WEEK",
                       },
-                      "first_payment": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 500,
-                        },
-                      },
                       "frequency": {
                         "type": "enum",
                         "value": "weekly",
-                      },
-                      "notice_period": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 15,
-                        },
-                      },
-                      "pay_before_weekends": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
                       },
                       "payment_due_days": {
                         "type": "primitive",
@@ -3115,13 +2913,6 @@ exports[`open api parser deel parse open api 1`] = `
                     },
                     "type": "object",
                   },
-                  "country_code": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "US",
-                    },
-                  },
                   "job_title": {
                     "properties": {},
                     "type": "object",
@@ -3137,20 +2928,6 @@ exports[`open api parser deel parse open api 1`] = `
                       },
                     },
                     "type": "object",
-                  },
-                  "notice_period": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 15,
-                    },
-                  },
-                  "start_date": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "1999-12-31",
-                    },
                   },
                   "title": {
                     "type": "primitive",
@@ -4274,30 +4051,9 @@ exports[`open api parser deel parse open api 1`] = `
                         "type": "enum",
                         "value": "DAY_OF_WEEK",
                       },
-                      "first_payment": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 500,
-                        },
-                      },
                       "frequency": {
                         "type": "enum",
                         "value": "weekly",
-                      },
-                      "notice_period": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 15,
-                        },
-                      },
-                      "pay_before_weekends": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": true,
-                        },
                       },
                       "payment_due_days": {
                         "type": "primitive",
@@ -4317,13 +4073,6 @@ exports[`open api parser deel parse open api 1`] = `
                     },
                     "type": "object",
                   },
-                  "country_code": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "US",
-                    },
-                  },
                   "job_title": {
                     "properties": {},
                     "type": "object",
@@ -4339,20 +4088,6 @@ exports[`open api parser deel parse open api 1`] = `
                       },
                     },
                     "type": "object",
-                  },
-                  "notice_period": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 15,
-                    },
-                  },
-                  "start_date": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "1999-12-31",
-                    },
                   },
                   "title": {
                     "type": "primitive",
@@ -6246,13 +5981,6 @@ exports[`open api parser deel parse open api 1`] = `
                       "value": "1999-12-31",
                     },
                   },
-                  "description": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "Make the button pop.",
-                    },
-                  },
                 },
                 "type": "object",
               },
@@ -7033,50 +6761,7 @@ exports[`open api parser deel parse open api 1`] = `
           "request": {
             "properties": {
               "data": {
-                "properties": {
-                  "amount": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 100,
-                    },
-                  },
-                  "currency_code": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "USD",
-                    },
-                  },
-                  "effective_date": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "1999-12-31",
-                    },
-                  },
-                  "first_payment_date": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "1999-12-31",
-                    },
-                  },
-                  "job_title_name": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "3D Designer",
-                    },
-                  },
-                  "seniority_id": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 1,
-                    },
-                  },
-                },
+                "properties": {},
                 "type": "object",
               },
             },
@@ -10411,22 +10096,7 @@ exports[`open api parser deel parse open api 1`] = `
               "data": {
                 "properties": {
                   "compensation_details": {
-                    "properties": {
-                      "amount": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 2500,
-                        },
-                      },
-                      "currency_code": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "USD",
-                        },
-                      },
-                    },
+                    "properties": {},
                     "type": "object",
                   },
                   "country_code": {
@@ -11012,48 +10682,6 @@ exports[`open api parser deel parse open api 1`] = `
             "properties": {
               "data": {
                 "properties": {
-                  "end_date": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "2022-09-05",
-                    },
-                  },
-                  "is_end_date_half_day": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": false,
-                    },
-                  },
-                  "is_start_date_half_day": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": false,
-                    },
-                  },
-                  "other_timeoff_name": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "Birthday",
-                    },
-                  },
-                  "reason": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "Holiday",
-                    },
-                  },
-                  "start_date": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "2022-09-03",
-                    },
-                  },
                   "type": {
                     "type": "enum",
                     "value": "VACATION",
@@ -11631,48 +11259,6 @@ exports[`open api parser deel parse open api 1`] = `
             "properties": {
               "data": {
                 "properties": {
-                  "end_date": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "2022-09-05",
-                    },
-                  },
-                  "is_end_date_half_day": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": false,
-                    },
-                  },
-                  "is_start_date_half_day": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": false,
-                    },
-                  },
-                  "other_timeoff_name": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "Birthday",
-                    },
-                  },
-                  "reason": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "Holiday",
-                    },
-                  },
-                  "start_date": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "2022-09-03",
-                    },
-                  },
                   "type": {
                     "type": "enum",
                     "value": "VACATION",
@@ -14939,13 +14525,6 @@ exports[`open api parser deel parse open api 1`] = `
                       "value": "1999-12-31",
                     },
                   },
-                  "description": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "Bonus for being awesome.",
-                    },
-                  },
                   "type": {
                     "type": "enum",
                     "value": "bonus",
@@ -17379,13 +16958,6 @@ exports[`open api parser deel parse open api 1`] = `
             "properties": {
               "data": {
                 "properties": {
-                  "denial_reason": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "Not allowed for this day.",
-                    },
-                  },
                   "is_approved": {
                     "type": "primitive",
                     "value": {
@@ -18969,13 +18541,6 @@ exports[`open api parser deel parse open api 1`] = `
                   "value": "v1",
                 },
               },
-              "description": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "I like it very much.",
-                },
-              },
               "events": {
                 "type": "array",
                 "value": [
@@ -18987,13 +18552,6 @@ exports[`open api parser deel parse open api 1`] = `
                     },
                   },
                 ],
-              },
-              "name": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "My first webhook.",
-                },
               },
               "status": {
                 "type": "enum",
@@ -19426,13 +18984,6 @@ exports[`open api parser deel parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
-              "description": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "My first webhook",
-                },
-              },
               "events": {
                 "type": "array",
                 "value": [
@@ -19444,13 +18995,6 @@ exports[`open api parser deel parse open api 1`] = `
                     },
                   },
                 ],
-              },
-              "name": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "Demo webhook",
-                },
               },
               "status": {
                 "type": "enum",

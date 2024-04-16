@@ -13087,13 +13087,6 @@ exports[`open api parser merge parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
-              "message": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "deletion request by user id 51903790-7dfe-4053-8d63-5a10cc4ffd39",
-                },
-              },
               "reason": {
                 "type": "enum",
                 "value": "GENERAL_CUSTOMER_REQUEST",
@@ -19873,7 +19866,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
-          "name": null,
+          "name": "Employees that started on or after January 1st, 2022",
           "pathParameters": [],
           "queryParameters": [],
           "request": null,
@@ -20203,7 +20196,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
-          "name": null,
+          "name": "Employees that started on or after January 1st, 2022",
           "pathParameters": [],
           "queryParameters": [],
           "request": null,

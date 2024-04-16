@@ -1,6 +1,7 @@
-import { assertNever, Examples } from "@fern-api/core-utils";
+import { assertNever, Examples, isPlainObject } from "@fern-api/core-utils";
 import {
     EnumSchemaWithExample,
+    FernOpenapiIr,
     FullExample,
     FullOneOfExample,
     KeyValuePair,
@@ -39,16 +40,19 @@ export class ExampleTypeFactory {
 
     public buildExample({
         schema,
+        exampleId,
         example,
         options
     }: {
         schema: SchemaWithExample;
+        exampleId: string | undefined;
         example: unknown | undefined;
         options: ExampleTypeFactory.Options;
     }): FullExample | undefined {
         return this.buildExampleHelper({
             schema,
             visitedSchemaIds: new Set(),
+            exampleId,
             example,
             // Default maxCheckerDepth to 5
             options: { ...options, maxCheckerDepth: options.maxCheckerDepth ?? 5 },
@@ -57,12 +61,14 @@ export class ExampleTypeFactory {
     }
 
     private buildExampleHelper({
+        exampleId,
         example,
         schema,
         depth,
         visitedSchemaIds,
         options
     }: {
+        exampleId: string | undefined;
         example: unknown | undefined;
         schema: SchemaWithExample;
         depth: number;
@@ -88,6 +94,7 @@ export class ExampleTypeFactory {
                 const result = this.buildExampleHelper({
                     schema: schema.value,
                     visitedSchemaIds,
+                    exampleId,
                     example,
                     depth,
                     options
@@ -114,6 +121,7 @@ export class ExampleTypeFactory {
                 const result = this.buildExampleHelper({
                     schema: schema.value,
                     visitedSchemaIds,
+                    exampleId,
                     example,
                     depth,
                     options
@@ -140,6 +148,7 @@ export class ExampleTypeFactory {
                     const referencedExample = this.buildExampleHelper({
                         example,
                         schema: referencedSchemaWithExample,
+                        exampleId,
                         visitedSchemaIds,
                         depth,
                         options
@@ -161,7 +170,7 @@ export class ExampleTypeFactory {
                         const exampleDiscriminant = fullExample?.[schema.value.discriminantProperty];
                         const exampleUnionVariantSchema = schema.value.schemas[exampleDiscriminant];
 
-                        const firstUnionVariant = Object.entries(schema.value.schemas)[0];
+                        const unionVariant = this.getDiscriminatedUnionVariantSchema(schema.value, fullExample);
                         if (
                             exampleDiscriminant != null &&
                             exampleUnionVariantSchema != null &&
@@ -172,11 +181,11 @@ export class ExampleTypeFactory {
                             result[schema.value.discriminantProperty] = FullExample.primitive(
                                 PrimitiveExample.string(exampleDiscriminant)
                             );
-                        } else if (firstUnionVariant != null && firstUnionVariant[1].type === "object") {
-                            allProperties = this.getAllProperties(firstUnionVariant[1]);
-                            requiredProperties = this.getAllRequiredProperties(firstUnionVariant[1]);
+                        } else if (unionVariant != null && unionVariant[1].type === "object") {
+                            allProperties = this.getAllProperties(unionVariant[1]);
+                            requiredProperties = this.getAllRequiredProperties(unionVariant[1]);
                             result[schema.value.discriminantProperty] = FullExample.primitive(
-                                PrimitiveExample.string(firstUnionVariant[0])
+                                PrimitiveExample.string(unionVariant[0])
                             );
                         } else {
                             return undefined;
@@ -195,6 +204,7 @@ export class ExampleTypeFactory {
                             if (required && fullExample?.[property] != null) {
                                 const propertyExample = this.buildExampleHelper({
                                     schema,
+                                    exampleId,
                                     example: fullExample[property],
                                     visitedSchemaIds,
                                     depth: depth + 1,
@@ -207,6 +217,7 @@ export class ExampleTypeFactory {
                                 }
                             } else {
                                 const propertyExample = this.buildExampleHelper({
+                                    exampleId,
                                     schema,
                                     example: fullExample?.[property],
                                     visitedSchemaIds,
@@ -223,11 +234,13 @@ export class ExampleTypeFactory {
                         return FullExample.oneOf(FullOneOfExample.discriminated(result));
                     }
                     case "undisciminated": {
-                        if (schema.value.schemas[0] != null) {
+                        const unionVariantSchema = this.getUnDiscriminatedUnionVariantSchema(schema.value, example);
+                        if (unionVariantSchema != null) {
                             // TODO (we should select the oneOf schema based on the example)
                             return this.buildExampleHelper({
+                                exampleId,
                                 example,
-                                schema: schema.value.schemas[0],
+                                schema: unionVariantSchema,
                                 visitedSchemaIds,
                                 depth,
                                 options
@@ -263,6 +276,7 @@ export class ExampleTypeFactory {
                 if (fullExample != null && fullExample.length > 0) {
                     for (const item of fullExample) {
                         const itemExample = this.buildExampleHelper({
+                            exampleId,
                             example: item,
                             schema: schema.value,
                             depth: depth + 1,
@@ -276,6 +290,7 @@ export class ExampleTypeFactory {
                 } else {
                     // Otherwise, generate an example
                     const itemExample = this.buildExampleHelper({
+                        exampleId,
                         example: undefined,
                         schema: schema.value,
                         depth: depth + 1,
@@ -300,6 +315,7 @@ export class ExampleTypeFactory {
                             options
                         });
                         const valueExample = this.buildExampleHelper({
+                            exampleId,
                             example: value,
                             schema: schema.value,
                             visitedSchemaIds,
@@ -321,6 +337,7 @@ export class ExampleTypeFactory {
                     options
                 });
                 const valueExample = this.buildExampleHelper({
+                    exampleId,
                     example: undefined,
                     schema: schema.value,
                     visitedSchemaIds,
@@ -339,16 +356,22 @@ export class ExampleTypeFactory {
             }
             case "object": {
                 const result: Record<string, FullExample> = {};
+                const foundObjectExample =
+                    schema.fullExamples?.find((example) => example.name === exampleId) ??
+                    schema.fullExamples?.find((example) => example.name == null) ??
+                    schema.fullExamples?.[0];
                 const fullExample =
                     getFullExampleAsObject(example) ??
-                    (schema.fullExamples?.[0] != null ? getFullExampleAsObject(schema.fullExamples[0].value) : {}) ??
+                    (foundObjectExample != null ? getFullExampleAsObject(foundObjectExample.value) : {}) ??
                     {};
                 const allProperties = this.getAllProperties(schema);
                 const requiredProperties = this.getAllRequiredProperties(schema);
                 for (const [property, schema] of Object.entries(allProperties)) {
                     const required = property in requiredProperties;
+                    const inExample = Object.keys(fullExample).includes(property);
                     const propertyExample = this.buildExampleHelper({
                         schema,
+                        exampleId,
                         example: fullExample[property],
                         visitedSchemaIds,
                         depth: depth + 1,
@@ -357,23 +380,14 @@ export class ExampleTypeFactory {
                             name: property
                         }
                     });
-                    if (propertyExample != null) {
+                    if (required && propertyExample != null) {
                         result[property] = propertyExample;
                     } else if (required) {
-                        const generatedExample = this.buildExampleHelper({
-                            schema,
-                            example: fullExample[property],
-                            visitedSchemaIds,
-                            depth: depth + 1,
-                            options: {
-                                ...options,
-                                name: property
-                            }
-                        });
-                        if (generatedExample == null) {
-                            return undefined;
-                        }
-                        result[property] = generatedExample;
+                        return undefined;
+                    } else if (inExample && propertyExample != null) {
+                        result[property] = propertyExample;
+                    } else if (!options.ignoreOptionals && propertyExample != null) {
+                        result[property] = propertyExample;
                     }
                 }
                 return FullExample.object({
@@ -382,6 +396,135 @@ export class ExampleTypeFactory {
             }
             default:
                 assertNever(schema);
+        }
+    }
+
+    private getDiscriminatedUnionVariantSchema(
+        schema: FernOpenapiIr.DiscriminatedOneOfSchemaWithExample,
+        fullExample: Record<string, unknown> | undefined
+    ): [string, SchemaWithExample] | undefined {
+        const discriminantValue = fullExample?.[schema.discriminantProperty];
+        if (discriminantValue == null || typeof discriminantValue !== "string") {
+            return Object.entries(schema.schemas)[0];
+        }
+
+        const unionVariantSchema = schema.schemas[discriminantValue];
+        if (unionVariantSchema == null) {
+            return Object.entries(schema.schemas)[0];
+        }
+
+        return [discriminantValue, unionVariantSchema];
+    }
+
+    private getUnDiscriminatedUnionVariantSchema(
+        schema: FernOpenapiIr.UnDiscriminatedOneOfSchemaWithExample,
+        fullExample: unknown
+    ): SchemaWithExample | undefined {
+        if (fullExample == null) {
+            return schema.schemas[0];
+        }
+
+        // rank schemas by how many properties they have in the example
+        // if there are multiple schemas with the same number of properties, return the first one
+        // downrank schemas where the example has properties that are not in the schema
+        const matches = schema.schemas.map((schema) => ({
+            schema,
+            heuristic: this.calcExampleHeuristic(schema, fullExample)
+        }));
+
+        const sortedMatches = matches.sort((a, b) => b.heuristic - a.heuristic);
+
+        return sortedMatches[0]?.schema;
+    }
+
+    // this is not a perfect heuristic, but it's a start. algorithm is as follows:
+    // * tally up all properties that are both in the schema and example when traversing recursively
+    // * subtract 1 for every property that is in the example but not in the schema.
+    // this doesn't account for objects that can have arbitrary properties, and overvalues schemas with more properties.
+    private calcExampleHeuristic(schema: SchemaWithExample, fullExample: unknown): number {
+        switch (schema.type) {
+            case "literal": {
+                // if the example is the same as the literal, return a high score
+                return schema.value.value === fullExample ? 5 : 0;
+            }
+            case "enum": {
+                // if the example is in the enum, return a high score
+                return enumContainsValue({ schema, value: fullExample as string }) ? 5 : 0;
+            }
+            case "object": {
+                if (!isPlainObject(fullExample)) {
+                    return 0;
+                }
+                const allProperties = this.getAllProperties(schema);
+                let heuristic = 0;
+                for (const [property, schema] of Object.entries(allProperties)) {
+                    if (fullExample[property] != null) {
+                        heuristic++;
+                        heuristic += this.calcExampleHeuristic(schema, fullExample[property]);
+                    } else {
+                        heuristic--;
+                    }
+                }
+
+                return heuristic;
+            }
+            case "array": {
+                if (!Array.isArray(fullExample)) {
+                    return 0;
+                }
+                let heuristic = 0;
+                for (const item of fullExample) {
+                    heuristic += this.calcExampleHeuristic(schema.value, item);
+                }
+                return heuristic;
+            }
+            case "map": {
+                if (!isPlainObject(fullExample)) {
+                    return 0;
+                }
+                let heuristic = 0;
+                for (const [, value] of Object.entries(fullExample)) {
+                    heuristic += this.calcExampleHeuristic(schema.value, value);
+                }
+                return heuristic;
+            }
+            case "nullable":
+            case "optional": {
+                return this.calcExampleHeuristic(schema.value, fullExample);
+            }
+            case "reference": {
+                const resolvedSchema = this.getResolvedSchema(schema);
+                if (resolvedSchema == null) {
+                    return 0;
+                }
+                return this.calcExampleHeuristic(resolvedSchema, fullExample);
+            }
+            case "oneOf": {
+                const matches = Object.values(schema.value.schemas).map((schema) =>
+                    this.calcExampleHeuristic(schema, fullExample)
+                );
+                return matches.sort((a, b) => b - a)[0] ?? 0;
+            }
+            case "primitive": {
+                if (fullExample == null) {
+                    return 0;
+                }
+                const matches = schema.schema._visit({
+                    int: () => typeof fullExample === "number",
+                    int64: () => typeof fullExample === "number",
+                    float: () => typeof fullExample === "number",
+                    double: () => typeof fullExample === "number",
+                    string: () => typeof fullExample === "string",
+                    datetime: () => typeof fullExample === "string",
+                    date: () => typeof fullExample === "string",
+                    base64: () => typeof fullExample === "string",
+                    boolean: () => typeof fullExample === "boolean",
+                    _other: () => true
+                });
+                return matches ? 1 : -1;
+            }
+            default:
+                return 0;
         }
     }
 

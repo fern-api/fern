@@ -8,6 +8,7 @@ import { isReferenceObject } from "../../schema/utils/isReferenceObject";
 
 export const PARAMETER_REFERENCE_PREFIX = "#/components/parameters/";
 export const RESPONSE_REFERENCE_PREFIX = "#/components/responses/";
+export const EXAMPLES_REFERENCE_PREFIX = "#/components/examples/";
 export const REQUEST_BODY_REFERENCE_PREFIX = "#/components/requestBodies/";
 
 export interface DiscriminatedUnionReference {
@@ -128,6 +129,25 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
             return this.resolveResponseReference(resolvedResponse);
         }
         return resolvedResponse;
+    }
+
+    public resolveExampleReference(example: OpenAPIV3.ReferenceObject): OpenAPIV3.ExampleObject {
+        if (
+            this.document.components == null ||
+            this.document.components.examples == null ||
+            !example.$ref.startsWith(EXAMPLES_REFERENCE_PREFIX)
+        ) {
+            throw new Error(`Failed to resolve ${example.$ref}`);
+        }
+        const parameterKey = example.$ref.substring(EXAMPLES_REFERENCE_PREFIX.length);
+        const resolvedExample = this.document.components.examples[parameterKey];
+        if (resolvedExample == null) {
+            throw new Error(`${example.$ref} is undefined`);
+        }
+        if (isReferenceObject(resolvedExample)) {
+            return this.resolveExampleReference(resolvedExample);
+        }
+        return resolvedExample;
     }
 
     public abstract markSchemaAsReferencedByNonRequest(schemaId: SchemaId): void;

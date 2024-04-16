@@ -2,6 +2,7 @@ import { NamedFullExample } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../../getExtension";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
+import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { OpenAPIExtension } from "../../extensions/extensions";
 
 export interface ApplicationJsonMediaObject {
@@ -10,7 +11,8 @@ export interface ApplicationJsonMediaObject {
 }
 
 export function getApplicationJsonSchemaMediaObject(
-    media: Record<string, OpenAPIV3.MediaTypeObject>
+    media: Record<string, OpenAPIV3.MediaTypeObject>,
+    context: AbstractOpenAPIV3ParserContext
 ): ApplicationJsonMediaObject | undefined {
     for (const contentType of Object.keys(media)) {
         if (contentType.includes("json")) {
@@ -37,11 +39,11 @@ export function getApplicationJsonSchemaMediaObject(
             }
             if (mediaObject.examples != null && Object.keys(mediaObject.examples).length > 0) {
                 fullExamples.push(
-                    ...Object.entries(mediaObject.examples).map(([name, value]) => {
-                        if (isReferenceObject(value)) {
-                            return { name: undefined, value: undefined };
-                        }
-                        return { name: value.summary ?? name, value: value.value };
+                    ...Object.entries(mediaObject.examples).map(([name, example]) => {
+                        const resolvedExample: OpenAPIV3.ExampleObject = isReferenceObject(example)
+                            ? context.resolveExampleReference(example)
+                            : example;
+                        return { name: resolvedExample.summary ?? name, value: resolvedExample.value };
                     })
                 );
             }

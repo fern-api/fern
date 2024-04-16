@@ -18,7 +18,7 @@ exports[`open api parser persona parse open api 1`] = `
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "inquiry-id",
@@ -917,7 +917,7 @@ In the [Embedded Flow](doc:embedded-flow), the \`inquiry-id\` is the first param
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "inquiry-id",
@@ -3294,7 +3294,7 @@ This endpoint can be used to comply with privacy regulations such as GDPR / CCPA
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "inquiry-id",
@@ -4634,7 +4634,7 @@ This endpoint can be used to comply with privacy regulations such as GDPR / CCPA
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "report-id",
@@ -5300,7 +5300,7 @@ Note that this will only delete the report -- it does not delete associated acco
               },
             },
           ],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "report-id",
@@ -5802,7 +5802,7 @@ Note that this action will trigger any associated workflows and webhooks.",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "inquiry-id",
@@ -6707,7 +6707,7 @@ Note that this action will trigger any associated workflows and webhooks.",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "inquiry-id",
@@ -7610,7 +7610,7 @@ Note that this action will trigger any associated workflows and webhooks.",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "account-id",
@@ -7952,7 +7952,7 @@ Note: An account is still updatable after redaction. If you want to delete data 
               },
             },
           ],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "account-id",
@@ -8637,7 +8637,7 @@ Note: An account is still updatable after redaction. If you want to delete data 
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "account-id",
@@ -9562,7 +9562,7 @@ Note that this endpoint aggregates inquiries across all <<glossary:template>>(s)
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": null,
@@ -10627,7 +10627,7 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -11999,7 +11999,7 @@ See [Sessions](doc:inquiry-sessions) for how to continue the inquiry in [Embedde
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": null,
@@ -12493,7 +12493,7 @@ After the Account is created, you can create Inquiries with the \`account-id\` t
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -13372,7 +13372,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "file-id",
@@ -13616,7 +13616,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "api-log-id",
@@ -14284,7 +14284,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "document-id",
@@ -14904,7 +14904,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -15592,7 +15592,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "document-id",
@@ -16298,7 +16298,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "document-id",
@@ -17699,7 +17699,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -19164,7 +19164,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -19868,7 +19868,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": null,
@@ -20093,7 +20093,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "event-id",
@@ -20200,7 +20200,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -21023,7 +21023,7 @@ Any files connected to an Inquiry will be available to download via the ["Retrie
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "verification-id",
@@ -22054,7 +22054,7 @@ Note: A source account can only be consolidated once. Afterwards, the source acc
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "importer-id",
@@ -22460,7 +22460,7 @@ The columns we allow are
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -22950,7 +22950,7 @@ A match_type of 'email_address' will need to match the entire email address of a
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -23488,7 +23488,7 @@ The columns we allow are
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -24027,7 +24027,7 @@ Common values for id_class include 'pp' for passport and 'dl' for driver license
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -24565,7 +24565,7 @@ Both IPv4 and IPv6 are supported.",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -25102,7 +25102,7 @@ The columns we allow are
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -25638,7 +25638,7 @@ The columns we allow are
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -26171,7 +26171,7 @@ The columns we allow are
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -27462,7 +27462,7 @@ The columns we allow are
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "document-id",
@@ -28746,7 +28746,7 @@ The columns we allow are
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "document-id",
@@ -29766,7 +29766,7 @@ The columns we allow are
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "verification-id",
@@ -30945,7 +30945,7 @@ The columns we allow are
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "verification-id",
@@ -32568,7 +32568,7 @@ The columns we allow are
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": null,
@@ -32745,7 +32745,7 @@ The columns we allow are
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "list-id",
@@ -32854,7 +32854,7 @@ The columns we allow are
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "list-id",
@@ -32988,7 +32988,7 @@ The columns we allow are
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -33184,7 +33184,7 @@ The columns we allow are
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -33380,7 +33380,7 @@ The columns we allow are
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -33576,7 +33576,7 @@ The columns we allow are
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -33772,7 +33772,7 @@ The columns we allow are
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -33968,7 +33968,7 @@ The columns we allow are
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -34164,7 +34164,7 @@ The columns we allow are
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -34383,7 +34383,7 @@ The columns we allow are
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -34579,7 +34579,7 @@ The columns we allow are
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -35388,7 +35388,7 @@ The columns we allow are
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -36050,7 +36050,7 @@ The columns we allow are
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -36961,7 +36961,7 @@ The columns we allow are
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -37623,7 +37623,7 @@ The columns we allow are
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -38489,7 +38489,7 @@ The columns we allow are
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "list-item-id",
@@ -39120,7 +39120,7 @@ The columns we allow are
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "list-item-id",
@@ -39666,7 +39666,7 @@ The columns we allow are
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "list-item-id",
@@ -40238,7 +40238,7 @@ The columns we allow are
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "list-item-id",
@@ -40901,7 +40901,7 @@ The columns we allow are
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "list-item-id",
@@ -42402,7 +42402,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": null,
@@ -43373,7 +43373,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -45825,7 +45825,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "case-id",
@@ -47262,7 +47262,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "case-id",
@@ -48596,7 +48596,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -49693,7 +49693,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "verification-id",
@@ -51781,7 +51781,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -54093,7 +54093,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "case-id",
@@ -55301,7 +55301,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "case-id",
@@ -56758,7 +56758,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -57071,7 +57071,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -57611,7 +57611,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "report-id",
@@ -58543,7 +58543,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "report-id",
@@ -59475,7 +59475,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "report-id",
@@ -60548,7 +60548,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "user-audit-log-id",
@@ -60909,7 +60909,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": "Request Example",
+          "name": "Result",
           "pathParameters": [
             {
               "name": "case-id",
@@ -62127,7 +62127,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "verification-id",
@@ -63607,7 +63607,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "verification-id",
@@ -64483,7 +64483,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "verification-id",
@@ -65160,7 +65160,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "verification-id",
@@ -65949,7 +65949,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "verification-id",
@@ -67224,7 +67224,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "verification-id",
@@ -68513,7 +68513,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "verification-id",
@@ -69196,7 +69196,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "verification-id",
@@ -69972,7 +69972,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -70771,7 +70771,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "verification-id",
@@ -71412,7 +71412,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "verification-id",
@@ -72058,7 +72058,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "verification-id",
@@ -72792,7 +72792,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "verification-id",
@@ -73438,7 +73438,7 @@ Note that this endpoint aggregates cases across all <<glossary:case template>>(s
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "verification-id",
@@ -74095,7 +74095,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "workflow-id",
@@ -74802,7 +74802,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -75506,7 +75506,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "verification-id",
@@ -76129,7 +76129,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "verification-id",
@@ -76743,7 +76743,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "verification-id",
@@ -77355,7 +77355,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": null,
@@ -78083,7 +78083,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -78923,7 +78923,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "api-key-id",
@@ -79590,7 +79590,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "api-key-id",
@@ -80197,7 +80197,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "api-key-id",
@@ -81070,7 +81070,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "report-id",
@@ -81704,7 +81704,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "report-id",
@@ -82549,7 +82549,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "report-id",
@@ -83183,7 +83183,7 @@ Note: The payload is arbitrary and defined by the Workflow version trigger schem
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "report-id",
@@ -84074,7 +84074,7 @@ The inquiry can still be resumed after expiry.",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "inquiry-id",
@@ -84885,7 +84885,7 @@ The inquiry can still be resumed after expiry.",
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Result",
           "pathParameters": [
             {
               "name": "inquiry-id",

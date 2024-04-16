@@ -1437,14 +1437,6 @@ exports[`open api parser hathora simple 1`] = `
           "GetLogsForDeployment": {
             "auth": true,
             "docs": undefined,
-            "examples": [
-              {
-                "path-parameters": {
-                  "appId": "appId",
-                  "deploymentId": 1.1,
-                },
-              },
-            ],
             "method": "GET",
             "path": "/logs/v1/{appId}/deployment/{deploymentId}",
             "path-parameters": {

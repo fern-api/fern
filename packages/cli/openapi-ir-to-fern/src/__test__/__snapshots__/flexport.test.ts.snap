@@ -22,6 +22,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "f.consignee_entity_ref": "amazon-us",
                   "f.shipment.id": 123456,
@@ -155,16 +156,10 @@ exports[`open api parser flexport simple 1`] = `
                               "details": [
                                 {
                                   "_object": "/trucking/port",
-                                  "country_code": "US",
-                                  "iata_code": "LAX",
-                                  "icao_code": "KLAX",
                                   "port_code": "2704",
                                 },
                                 {
                                   "_object": "/ocean/port",
-                                  "country_code": "US",
-                                  "iata_code": "LAX",
-                                  "icao_code": "KLAX",
                                   "port_code": "2704",
                                 },
                               ],
@@ -187,16 +182,10 @@ exports[`open api parser flexport simple 1`] = `
                               "details": [
                                 {
                                   "_object": "/trucking/port",
-                                  "country_code": "US",
-                                  "iata_code": "LAX",
-                                  "icao_code": "KLAX",
                                   "port_code": "57035",
                                 },
                                 {
                                   "_object": "/ocean/port",
-                                  "country_code": "US",
-                                  "iata_code": "LAX",
-                                  "icao_code": "KLAX",
                                   "port_code": "57035",
                                 },
                               ],
@@ -358,23 +347,8 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "request": {
-                  "air_booking": {
-                    "incoterm": "EXW",
-                    "origin_port_iata_code": "HKG",
-                    "origin_port_icao_code": "VHHH",
-                    "origin_port_loc_code": "HKHKG",
-                    "product_descriptions": [
-                      {
-                        "description": "Wristwatches",
-                        "description_for_export_customs": "手表",
-                        "description_for_export_customs_locale": "zh_CN",
-                        "hs_code": "9101.01",
-                      },
-                    ],
-                    "wants_delivery_service": true,
-                    "wants_pickup_service": true,
-                  },
                   "cargo": {
                     "contains_hazmat": true,
                     "contains_li_ion": true,
@@ -426,8 +400,9 @@ exports[`open api parser flexport simple 1`] = `
                   "consignee_entity_ref": "zoomit_ref",
                   "delivery_date": "2019-07-31",
                   "destination_address_ref": "my-albany-ref",
-                  "eccn_codes": "3A001, 5A002",
-                  "flow_direct": true,
+                  "metadata": [
+                    {},
+                  ],
                   "name": "PO 123",
                   "ocean_booking": {
                     "container_counts": {
@@ -436,12 +411,8 @@ exports[`open api parser flexport simple 1`] = `
                       "forty_ft_hc": 4,
                       "twenty_ft": 2,
                     },
-                    "destination_port_loc_code": "USLAX",
-                    "destination_port_us_cbp_port_code": "2704",
                     "incoterm": "FOB",
                     "is_lcl": false,
-                    "origin_port_loc_code": "CNYTN",
-                    "origin_port_us_cbp_port_code": "57078",
                     "product_descriptions": [
                       {
                         "description": "Watches",
@@ -456,15 +427,7 @@ exports[`open api parser flexport simple 1`] = `
                   "origin_address_ref": "id-274346",
                   "shipper_entity_ref": "zoomit-us",
                   "special_instructions": "Handle carefully",
-                  "trucking_booking": {
-                    "description_of_products": "watches",
-                    "is_ltl": true,
-                    "payment_terms": "collect",
-                  },
-                  "wants_bco": false,
                   "wants_export_customs_service": true,
-                  "wants_flexport_freight": false,
-                  "wants_import_customs_service": false,
                 },
                 "response": {
                   "body": {
@@ -631,16 +594,10 @@ exports[`open api parser flexport simple 1`] = `
                           "details": [
                             {
                               "_object": "/trucking/port",
-                              "country_code": "US",
-                              "iata_code": "LAX",
-                              "icao_code": "KLAX",
                               "port_code": "2704",
                             },
                             {
                               "_object": "/ocean/port",
-                              "country_code": "US",
-                              "iata_code": "LAX",
-                              "icao_code": "KLAX",
                               "port_code": "2704",
                             },
                           ],
@@ -663,16 +620,10 @@ exports[`open api parser flexport simple 1`] = `
                           "details": [
                             {
                               "_object": "/trucking/port",
-                              "country_code": "US",
-                              "iata_code": "LAX",
-                              "icao_code": "KLAX",
                               "port_code": "57035",
                             },
                             {
                               "_object": "/ocean/port",
-                              "country_code": "US",
-                              "iata_code": "LAX",
-                              "icao_code": "KLAX",
                               "port_code": "57035",
                             },
                           ],
@@ -854,6 +805,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": 1,
                 },
@@ -1022,16 +974,10 @@ exports[`open api parser flexport simple 1`] = `
                           "details": [
                             {
                               "_object": "/trucking/port",
-                              "country_code": "US",
-                              "iata_code": "LAX",
-                              "icao_code": "KLAX",
                               "port_code": "57035",
                             },
                             {
                               "_object": "/ocean/port",
-                              "country_code": "US",
-                              "iata_code": "LAX",
-                              "icao_code": "KLAX",
                               "port_code": "57035",
                             },
                           ],
@@ -1054,16 +1000,10 @@ exports[`open api parser flexport simple 1`] = `
                           "details": [
                             {
                               "_object": "/trucking/port",
-                              "country_code": "US",
-                              "iata_code": "LAX",
-                              "icao_code": "KLAX",
                               "port_code": "57035",
                             },
                             {
                               "_object": "/ocean/port",
-                              "country_code": "US",
-                              "iata_code": "LAX",
-                              "icao_code": "KLAX",
                               "port_code": "57035",
                             },
                           ],
@@ -1243,6 +1183,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "request": {
                   "amendment_note": "This is an amendment note with useful context to changes made to the booking.",
                   "booking_id": 12345,
@@ -1300,22 +1241,12 @@ exports[`open api parser flexport simple 1`] = `
                     "forty_ft_hc": 4,
                     "twenty_ft": 2,
                   },
-                  "new_destination_address_ref": "id-123456",
-                  "new_destination_port_loc_code": "CNYTN",
-                  "new_destination_port_us_cbp_port_code": "57078",
+                  "new_metadata": [
+                    {},
+                  ],
                   "new_name": "Valentine's Day - 2020",
                   "new_origin_address_ref": "warehouse_cn",
                   "new_origin_port_loc_code": "CNSZP",
-                  "new_origin_port_us_cbp_port_code": "57078",
-                  "new_product_descriptions": [
-                    {
-                      "description": "Wristwatches",
-                      "description_for_export_customs": "手表",
-                      "hs_code": "9101.01",
-                    },
-                  ],
-                  "new_wants_bco": true,
-                  "new_wants_flexport_freight": true,
                   "new_wants_import_customs_service": false,
                   "new_wants_pickup_service": false,
                 },
@@ -1558,6 +1489,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "request": {
                   "booking_id": 9876,
                   "purchase_order_line_item_id": 112358,
@@ -1626,6 +1558,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "f.booking.id": 54321,
                   "f.purchase_order.id": 123,
@@ -1711,6 +1644,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": 1,
                 },
@@ -1819,13 +1753,13 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "response",
                 "request": {
                   "destination_port": "JFK",
                   "origin_coordinates": {
                     "latitude": "37.78",
                     "longitude": "-12.41",
                   },
-                  "teus": "2",
                   "transportation_mode": "air",
                   "weight": {
                     "unit": "kg",
@@ -1987,37 +1921,22 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "request": {
                   "currency_code": "USD",
                   "invoice_number": "INVOICE-04-05-2020",
-                  "is_related_parties": false,
                   "line_items": [
                     {
-                      "container_number": "522932-1",
-                      "country_of_origin": "CN",
-                      "document_line_number": 4,
-                      "price_per_unit": {
-                        "amount": "12.34",
-                        "currency_code": "USD",
-                      },
+                      "price_per_unit": {},
                       "product_sku": "PRODUCT-123",
-                      "purchase_order_number": "9876-ABC",
                       "quantity": {
                         "unit": "pcs",
                         "value": 1.1,
                       },
-                      "value": {
-                        "amount": "12.34",
-                        "currency_code": "USD",
-                      },
+                      "value": {},
                     },
                   ],
-                  "proration_amount": {
-                    "amount": "12.34",
-                    "currency_code": "USD",
-                  },
-                  "shipment_id": 79683,
-                  "shipment_ref": "PO-123",
+                  "proration_amount": {},
                 },
                 "response": {
                   "body": {
@@ -2177,6 +2096,7 @@ exports[`open api parser flexport simple 1`] = `
             "docs": "Returns a list of commercial invoices",
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "page": 1,
                   "per": 20,
@@ -2327,6 +2247,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": "id",
                 },
@@ -2460,32 +2381,8 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "request": {
-                  "currency_code": "USD",
-                  "invoice_number": "INVOICE-04-05-2020",
-                  "is_related_parties": false,
-                  "line_items": [
-                    {
-                      "container_number": "522932-1",
-                      "country_of_origin": "CN",
-                      "document_line_number": 4,
-                      "price_per_unit": {
-                        "amount": "12.34",
-                        "currency_code": "USD",
-                      },
-                      "product_sku": "PRODUCT-123",
-                      "purchase_order_number": "9876-ABC",
-                      "quantity": {
-                        "unit": "pcs",
-                        "value": 1.1,
-                      },
-                      "value": {
-                        "amount": "12.34",
-                        "currency_code": "USD",
-                      },
-                    },
-                  ],
-                },
+                "name": "Success",
+                "request": {},
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -2695,9 +2592,9 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "response",
                 "request": {
                   "name": "Zoomit",
-                  "ref": "zoomit-ref",
                 },
                 "response": {
                   "body": {
@@ -2791,6 +2688,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "page": 1,
                   "per": 20,
@@ -2894,6 +2792,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -2966,6 +2865,7 @@ exports[`open api parser flexport simple 1`] = `
             "docs": "Retrieves the details of a single company.",
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": "id",
                 },
@@ -3050,13 +2950,11 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "response",
                 "path-parameters": {
                   "id": "id",
                 },
-                "request": {
-                  "name": "Updated Zoomit",
-                  "ref": "zoomit_ref",
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -3225,6 +3123,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "page": 1,
                   "per": 20,
@@ -3313,26 +3212,10 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "response",
                 "request": {
-                  "company_id": "2UXaj4xcHoW8nwh9UVOMpw",
-                  "company_ref": "Zoomit",
-                  "mailing_address": {
-                    "city": "Albany",
-                    "country_code": "US",
-                    "state": "MN",
-                    "street_address": "1641 Settlers Lane",
-                    "street_address2": "STE 2918",
-                    "unlocode": "USAL2",
-                    "zip": "56307",
-                  },
+                  "mailing_address": {},
                   "name": "Zoomit",
-                  "ref": "my-zoomit-ref",
-                  "vat_numbers": [
-                    {
-                      "country_code": "GB",
-                      "number": "GB 123456789",
-                    },
-                  ],
                 },
                 "response": {
                   "body": {
@@ -3418,6 +3301,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "response",
                 "path-parameters": {
                   "id": "id",
                 },
@@ -3478,19 +3362,11 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "response",
                 "path-parameters": {
                   "id": "id",
                 },
-                "request": {
-                  "name": "Zoomit V2",
-                  "ref": "zoomit-us",
-                  "vat_numbers": [
-                    {
-                      "country_code": "GB",
-                      "number": "GB 123456789",
-                    },
-                  ],
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -3631,8 +3507,8 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "response",
                 "request": {
-                  "company_id": "2UXaj4xcHoW8nwh9UVOMpw",
                   "email": "john@example.com",
                   "name": "John Smith",
                   "phone_number": "861-555-5555",
@@ -3705,6 +3581,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "page": 1,
                   "per": 20,
@@ -3785,6 +3662,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": "id",
                 },
@@ -3837,14 +3715,11 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "response",
                 "path-parameters": {
                   "id": "id",
                 },
-                "request": {
-                  "email": "john_new_email@example.com",
-                  "name": "John Smith",
-                  "phone_number": "861-555-7777",
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -3976,6 +3851,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "page": 1,
                   "per": 20,
@@ -4098,6 +3974,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": "id",
                 },
@@ -4241,6 +4118,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "page": 1,
                   "per": 20,
@@ -4322,6 +4200,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": 1,
                 },
@@ -4418,6 +4297,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "page": 1,
                   "per": 20,
@@ -4484,6 +4364,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": "id",
                 },
@@ -4573,13 +4454,13 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "request": {
                   "document": "SGVsbG8sIFdvcmxkIQ==",
                   "document_type": "packing_list",
                   "file_name": "Flexport-Booking.pdf",
                   "mime_type": "application/pdf",
                   "shipment_id": 1234567,
-                  "user_email": "johndoe@flexport.com",
                 },
                 "response": {
                   "body": {
@@ -4613,13 +4494,6 @@ exports[`open api parser flexport simple 1`] = `
             "auth": false,
             "display-name": "Download a document",
             "docs": "Retrieves the contents of a specified file. Returns the file as a stream of bytes.",
-            "examples": [
-              {
-                "path-parameters": {
-                  "id": "id",
-                },
-              },
-            ],
             "method": "GET",
             "path": "/documents/{id}/download",
             "path-parameters": {
@@ -4642,6 +4516,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "page": 1,
                   "per": 20,
@@ -4738,6 +4613,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": "id",
                 },
@@ -5075,6 +4951,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "f.client_id": 54321,
                   "f.entity.id": 12345,
@@ -5416,6 +5293,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": "id",
                 },
@@ -5730,6 +5608,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "page": 1,
                   "per": 20,
@@ -5830,19 +5709,11 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "response",
                 "request": {
-                  "address": {
-                    "city": "Albany",
-                    "country_code": "US",
-                    "state": "MN",
-                    "street_address": "1641 Settlers Lane",
-                    "street_address2": "STE 2918",
-                    "unlocode": "USAL2",
-                    "zip": "56307",
-                  },
+                  "address": {},
                   "company_id": "xyz_123_ABC",
                   "name": "Zoomit",
-                  "ref": "zoomit-management-co",
                 },
                 "response": {
                   "body": {
@@ -5936,6 +5807,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "response",
                 "path-parameters": {
                   "id": "id",
                 },
@@ -6007,13 +5879,11 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "response",
                 "path-parameters": {
                   "id": "id",
                 },
-                "request": {
-                  "name": "Zoomit V2",
-                  "ref": "zoomit-management-co",
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -6169,6 +6039,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "f.unlocode": "CATOR",
                   "page": 1,
@@ -6205,9 +6076,6 @@ Other details about this invoice",
                             },
                             {
                               "_object": "/trucking/port",
-                              "country_code": "US",
-                              "iata_code": "LAX",
-                              "icao_code": "KLAX",
                               "port_code": "3901",
                             },
                           ],
@@ -6230,23 +6098,14 @@ Other details about this invoice",
                           "details": [
                             {
                               "_object": "/trucking/port",
-                              "country_code": "US",
-                              "iata_code": "LAX",
-                              "icao_code": "KLAX",
                               "port_code": "2811",
                             },
                             {
                               "_object": "/ocean/railport",
-                              "country_code": "US",
-                              "iata_code": "LAX",
-                              "icao_code": "KLAX",
                               "port_code": "2811",
                             },
                             {
                               "_object": "/ocean/port",
-                              "country_code": "US",
-                              "iata_code": "LAX",
-                              "icao_code": "KLAX",
                               "port_code": "2811",
                             },
                           ],
@@ -6342,34 +6201,12 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "request": {
-                  "classifications": [
-                    {
-                      "codes": [
-                        "codes",
-                      ],
-                      "region": "US",
-                    },
-                  ],
-                  "client_verified": true,
                   "country_of_origin": "China",
-                  "description": "The best 12V AC Adapter on the market",
                   "name": "AC Adapter 12V",
                   "product_category": "Cosmetics",
-                  "product_properties": [
-                    {
-                      "type": "color",
-                      "value": "blue",
-                    },
-                  ],
                   "sku": "WDVCDFD-RM00472",
-                  "suppliers": [
-                    {
-                      "country_of_origin": "CN",
-                      "id": 12345,
-                      "ref": "FACTORY-123",
-                    },
-                  ],
                 },
                 "response": {
                   "body": {
@@ -6475,6 +6312,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -6558,6 +6396,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": "id",
                 },
@@ -6626,38 +6465,11 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": "id",
                 },
-                "request": {
-                  "classifications": [
-                    {
-                      "codes": [
-                        "codes",
-                      ],
-                      "region": "US",
-                    },
-                  ],
-                  "client_verified": true,
-                  "country_of_origin": "China",
-                  "description": "The best 12V AC Adapter on the market",
-                  "name": "AC Adapter 12V",
-                  "product_category": "Cosmetics",
-                  "product_properties": [
-                    {
-                      "type": "color",
-                      "value": "blue",
-                    },
-                  ],
-                  "sku": "WDVCDFD-RM00472",
-                  "suppliers": [
-                    {
-                      "country_of_origin": "CN",
-                      "id": 12345,
-                      "ref": "FACTORY-123",
-                    },
-                  ],
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -6828,6 +6640,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "request": {
                   "cargo_ready_date": "2019-06-30",
                   "currency_code": "USD",
@@ -6871,6 +6684,9 @@ Other details about this invoice",
                           "unit_of_measure": "EA",
                           "value": "1.0",
                         },
+                      ],
+                      "metadata": [
+                        {},
                       ],
                       "must_arrive_date": "2019-07-31",
                       "origin_location_ref": "id-123456",
@@ -7105,6 +6921,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "f.buyer_entity_ref": "id-54321",
                   "f.buyer_ref": "amazon-us",
@@ -7156,23 +6973,14 @@ Other details about this invoice",
                             "details": [
                               {
                                 "_object": "/ocean/railport",
-                                "country_code": "US",
-                                "iata_code": "LAX",
-                                "icao_code": "KLAX",
                                 "port_code": "3901",
                               },
                               {
                                 "_object": "/trucking/port",
-                                "country_code": "US",
-                                "iata_code": "LAX",
-                                "icao_code": "KLAX",
                                 "port_code": "3901",
                               },
                               {
                                 "_object": "/ocean/port",
-                                "country_code": "US",
-                                "iata_code": "LAX",
-                                "icao_code": "KLAX",
                                 "port_code": "3901",
                               },
                             ],
@@ -7221,23 +7029,14 @@ Other details about this invoice",
                             "details": [
                               {
                                 "_object": "/ocean/railport",
-                                "country_code": "US",
-                                "iata_code": "LAX",
-                                "icao_code": "KLAX",
                                 "port_code": "3901",
                               },
                               {
                                 "_object": "/trucking/port",
-                                "country_code": "US",
-                                "iata_code": "LAX",
-                                "icao_code": "KLAX",
                                 "port_code": "3901",
                               },
                               {
                                 "_object": "/ocean/port",
-                                "country_code": "US",
-                                "iata_code": "LAX",
-                                "icao_code": "KLAX",
                                 "port_code": "3901",
                               },
                             ],
@@ -7438,6 +7237,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": 1,
                 },
@@ -7581,6 +7381,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": 1,
                 },
@@ -7600,52 +7401,9 @@ Other details about this invoice",
                   "issue_date": "2019-06-30",
                   "line_items": [
                     {
-                      "assigned_party_ref": "id-12321",
-                      "cargo_ready_date": "2019-06-30",
-                      "destination_locations": [
-                        {
-                          "location_ref": "id-1234",
-                          "units": 1,
-                        },
-                      ],
-                      "destination_port": {
-                        "code": "USFBN",
-                        "code_type": "unlocode",
-                      },
-                      "hs_codes": [
-                        {
-                          "code": "7608.20.00.00",
-                          "country_code": "CA",
-                        },
-                      ],
                       "item_key": "item_key_1",
-                      "line_item_number": 1,
-                      "measurements": [
-                        {
-                          "measure_type": "length",
-                          "unit_of_measure": "EA",
-                          "value": "1.0",
-                        },
-                      ],
-                      "must_arrive_date": "2019-09-30",
-                      "origin_location_ref": "id-123456",
-                      "origin_port": {
-                        "code": "USFBN",
-                        "code_type": "unlocode",
-                      },
                       "product": {
-                        "color": "red",
-                        "country_of_origin": "US",
-                        "dangerous": false,
-                        "ean_ucc_13": "0123456789012",
-                        "ean_ucc_8": "01234567",
-                        "lot_number": "123-456",
                         "name": "AC Adapter 12",
-                        "product_category": "Cosmetics",
-                        "size": "M",
-                        "sku": "SKU-123",
-                        "style": "classical",
-                        "upc": "012345678912",
                       },
                       "units": 100,
                     },
@@ -7914,6 +7672,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "f.item_key": "item1",
                   "f.purchase_order.id": 123,
@@ -8087,6 +7846,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": 1,
                 },
@@ -8319,6 +8079,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "f.container_number": "BWSE3982156",
                   "f.purchase_order": "PO002811",
@@ -8342,7 +8103,7 @@ Other details about this invoice",
                           "belongs_to_a_buyers_consol": false,
                           "booking": {
                             "_object": "api/refs/object",
-                            "id": "id",
+                            "id": 12345,
                             "link": "https://api.flexport.com/bookings/12345",
                             "ref_type": "/booking",
                           },
@@ -8750,6 +8511,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "request": {
                   "shipment_ids": [
                     123,
@@ -8810,6 +8572,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": "id",
                 },
@@ -8839,7 +8602,7 @@ Other details about this invoice",
                       "belongs_to_a_buyers_consol": false,
                       "booking": {
                         "_object": "api/refs/object",
-                        "id": "id",
+                        "id": 12345,
                         "link": "https://api.flexport.com/bookings/12345",
                         "ref_type": "/booking",
                       },
@@ -9139,6 +8902,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "response",
                 "path-parameters": {
                   "id": 1,
                 },
@@ -9169,7 +8933,7 @@ Other details about this invoice",
                       "belongs_to_a_buyers_consol": true,
                       "booking": {
                         "_object": "api/refs/object",
-                        "id": "id",
+                        "id": 12345,
                         "link": "https://api.flexport.com/bookings/12345",
                         "ref_type": "/booking",
                       },
@@ -9572,6 +9336,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "page": 1,
                   "per": 20,
@@ -9623,9 +9388,6 @@ Other details about this invoice",
                                 },
                                 {
                                   "_object": "/trucking/port",
-                                  "country_code": "US",
-                                  "iata_code": "LAX",
-                                  "icao_code": "KLAX",
                                   "port_code": "3901",
                                 },
                               ],
@@ -9677,9 +9439,6 @@ Other details about this invoice",
                                 },
                                 {
                                   "_object": "/trucking/port",
-                                  "country_code": "US",
-                                  "iata_code": "LAX",
-                                  "icao_code": "KLAX",
                                   "port_code": "3901",
                                 },
                               ],
@@ -9765,6 +9524,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": 1,
                 },
@@ -9820,9 +9580,6 @@ Other details about this invoice",
                             },
                             {
                               "_object": "/trucking/port",
-                              "country_code": "US",
-                              "iata_code": "LAX",
-                              "icao_code": "KLAX",
                               "port_code": "3901",
                             },
                           ],
@@ -9879,9 +9636,6 @@ Other details about this invoice",
                             },
                             {
                               "_object": "/trucking/port",
-                              "country_code": "US",
-                              "iata_code": "LAX",
-                              "icao_code": "KLAX",
                               "port_code": "3901",
                             },
                           ],

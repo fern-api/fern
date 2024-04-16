@@ -4739,13 +4739,6 @@ Note: This operation requires an identity challenge if the financial institution
               },
               "schedule": {
                 "properties": {
-                  "amountLimit": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "3456.78",
-                    },
-                  },
                   "frequency": {
                     "type": "enum",
                     "value": "once",
@@ -4769,13 +4762,6 @@ Note: This operation requires an identity challenge if the financial institution
                       "value": "bd9b7af2-6f9b",
                     },
                   },
-                  "label": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "Checking *1008",
-                    },
-                  },
                   "location": {
                     "type": "enum",
                     "value": "internal",
@@ -4790,13 +4776,6 @@ Note: This operation requires an identity challenge if the financial institution
                     "value": {
                       "type": "string",
                       "value": "88b1ca3e-d0f3",
-                    },
-                  },
-                  "label": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "Checking *1008",
                     },
                   },
                   "location": {
@@ -5413,13 +5392,6 @@ Note: This operation requires an identity challenge if the financial institution
               },
               "schedule": {
                 "properties": {
-                  "amountLimit": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "3456.78",
-                    },
-                  },
                   "frequency": {
                     "type": "enum",
                     "value": "once",
@@ -5434,33 +5406,6 @@ Note: This operation requires an identity challenge if the financial institution
                 },
                 "type": "object",
               },
-              "sourceAccount": {
-                "properties": {
-                  "id": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "e821ce54-c715",
-                    },
-                  },
-                  "label": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "Premiere Checking *6789",
-                    },
-                  },
-                  "location": {
-                    "type": "enum",
-                    "value": "internal",
-                  },
-                  "type": {
-                    "type": "enum",
-                    "value": "checking",
-                  },
-                },
-                "type": "object",
-              },
               "targetAccount": {
                 "properties": {
                   "id": {
@@ -5468,13 +5413,6 @@ Note: This operation requires an identity challenge if the financial institution
                     "value": {
                       "type": "string",
                       "value": "88b1ca3e-d0f3",
-                    },
-                  },
-                  "label": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "Checking *1008",
                     },
                   },
                 },
