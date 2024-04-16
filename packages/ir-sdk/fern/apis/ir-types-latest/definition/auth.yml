@@ -44,13 +44,13 @@ types:
   OauthAccessTokenFields:
     docs: The fields to map to the corresponding OAuth token primitive.
     properties:
-      accessToken: string
-      expiresIn: optional<string>
-      refreshToken: optional<string>
+      accessToken: http.ResponseProperty
+      expiresIn: optional<http.ResponseProperty>
+      refreshToken: optional<http.ResponseProperty>
   OauthRefreshTokenFields:
     docs: The fields to map to the corresponding OAuth token primitive.
     properties:
-      refreshToken: string
+      refreshToken: http.RequestProperty
   EndpointReference:
     properties:
       method: http.HttpMethod

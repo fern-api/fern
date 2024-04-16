@@ -7,7 +7,7 @@ import * as FernIr from "../../..";
 /**
  * A property associated with a paginated endpoint's request or response.
  */
-export interface PaginationProperty {
+export interface ResponseProperty {
     /**
      * If empty, the property is defined at the top-level.
      * Otherwise, the property is defined on the nested object identified

@@ -10,11 +10,11 @@ export const OauthRefreshTokenFields: core.serialization.ObjectSchema<
     serializers.OauthRefreshTokenFields.Raw,
     FernIr.OauthRefreshTokenFields
 > = core.serialization.objectWithoutOptionalProperties({
-    refreshToken: core.serialization.string(),
+    refreshToken: core.serialization.lazyObject(async () => (await import("../../..")).RequestProperty),
 });
 
 export declare namespace OauthRefreshTokenFields {
     interface Raw {
-        refreshToken: string;
+        refreshToken: serializers.RequestProperty.Raw;
     }
 }

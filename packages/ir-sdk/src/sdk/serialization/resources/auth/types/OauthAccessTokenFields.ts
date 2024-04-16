@@ -10,15 +10,15 @@ export const OauthAccessTokenFields: core.serialization.ObjectSchema<
     serializers.OauthAccessTokenFields.Raw,
     FernIr.OauthAccessTokenFields
 > = core.serialization.objectWithoutOptionalProperties({
-    accessToken: core.serialization.string(),
-    expiresIn: core.serialization.string().optional(),
-    refreshToken: core.serialization.string().optional(),
+    accessToken: core.serialization.lazyObject(async () => (await import("../../..")).ResponseProperty),
+    expiresIn: core.serialization.lazyObject(async () => (await import("../../..")).ResponseProperty).optional(),
+    refreshToken: core.serialization.lazyObject(async () => (await import("../../..")).ResponseProperty).optional(),
 });
 
 export declare namespace OauthAccessTokenFields {
     interface Raw {
-        accessToken: string;
-        expiresIn?: string | null;
-        refreshToken?: string | null;
+        accessToken: serializers.ResponseProperty.Raw;
+        expiresIn?: serializers.ResponseProperty.Raw | null;
+        refreshToken?: serializers.ResponseProperty.Raw | null;
     }
 }
