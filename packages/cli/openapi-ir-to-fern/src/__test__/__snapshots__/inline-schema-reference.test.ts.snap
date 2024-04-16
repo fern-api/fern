@@ -15,9 +15,7 @@ exports[`open api parser inline-schema-reference simple 1`] = `
           "examples": [
             {
               "response": {
-                "body": {
-                  "message": "message",
-                },
+                "body": {},
               },
             },
           ],

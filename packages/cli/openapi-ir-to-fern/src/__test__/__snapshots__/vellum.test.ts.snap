@@ -29,13 +29,11 @@ Used to retrieve a deployment given its ID or name.
                       "active_model_version_ids",
                     ],
                     "created": "2024-01-15T09:30:00Z",
-                    "environment": "DEVELOPMENT",
                     "id": "id",
                     "label": "label",
                     "last_deployed_on": "2024-01-15T09:30:00Z",
                     "model_type": "GENERATE",
                     "name": "name",
-                    "status": "ACTIVE",
                   },
                 },
               },
@@ -97,16 +95,70 @@ Creates a new document index.",
                 "response": {
                   "body": {
                     "created": "2024-01-15T09:30:00Z",
-                    "environment": "DEVELOPMENT",
                     "id": "id",
-                    "indexing_config": {
-                      "indexing_config": {
-                        "key": "value",
-                      },
-                    },
+                    "indexing_config": {},
                     "label": "label",
                     "name": "name",
-                    "status": "ACTIVE",
+                  },
+                },
+              },
+              {
+                "name": "Index Using a Sentence Transformers Model",
+                "request": {
+                  "indexing_config": {
+                    "chunking": {
+                      "chunker_config": {
+                        "character_limit": 1000,
+                        "min_overlap_ratio": 0.5,
+                      },
+                      "chunker_name": "sentence-chunker",
+                    },
+                    "vectorizer": {
+                      "config": {},
+                      "model_name": "sentence-transformers/multi-qa-mpnet-base-dot-v1",
+                    },
+                  },
+                  "label": "My Document Index",
+                  "name": "my-document-index",
+                },
+                "response": {
+                  "body": {
+                    "created": "2024-01-15T09:30:00Z",
+                    "id": "id",
+                    "indexing_config": {},
+                    "label": "label",
+                    "name": "name",
+                  },
+                },
+              },
+              {
+                "name": "Index Using OpenAI Model",
+                "request": {
+                  "indexing_config": {
+                    "chunking": {
+                      "chunker_config": {
+                        "character_limit": 1000,
+                        "min_overlap_ratio": 0.5,
+                      },
+                      "chunker_name": "sentence-chunker",
+                    },
+                    "vectorizer": {
+                      "config": {
+                        "add_openai_api_key": true,
+                      },
+                      "model_name": "text-embedding-ada-002",
+                    },
+                  },
+                  "label": "My Document Index",
+                  "name": "my-document-index",
+                },
+                "response": {
+                  "body": {
+                    "created": "2024-01-15T09:30:00Z",
+                    "id": "id",
+                    "indexing_config": {},
+                    "label": "label",
+                    "name": "name",
                   },
                 },
               },
@@ -182,28 +234,6 @@ Used to list documents. Optionally filter on supported fields.
                 "response": {
                   "body": {
                     "count": 123,
-                    "next": "http://api.example.org/accounts/?offset=400&limit=100",
-                    "previous": "http://api.example.org/accounts/?offset=200&limit=100",
-                    "results": [
-                      {
-                        "document_to_document_indexes": [
-                          {
-                            "document_index_id": "document_index_id",
-                            "id": "id",
-                          },
-                        ],
-                        "external_id": "external_id",
-                        "id": "id",
-                        "keywords": [
-                          "keywords",
-                        ],
-                        "label": "label",
-                        "last_uploaded_at": "2024-01-15T09:30:00Z",
-                        "processing_failure_reason": "EXCEEDED_CHARACTER_LIMIT",
-                        "processing_state": "QUEUED",
-                        "status": "ACTIVE",
-                      },
-                    ],
                   },
                 },
               },
@@ -373,12 +403,6 @@ Used to retrieve a model version given its ID.
                   "body": {
                     "build_config": {
                       "base_model": "base_model",
-                      "sandbox_snapshot": {
-                        "id": "id",
-                        "prompt_id": "prompt_id",
-                        "prompt_index": 1,
-                        "sandbox_id": "sandbox_id",
-                      },
                     },
                     "created": "2024-01-15T09:30:00Z",
                     "exec_config": {
@@ -391,32 +415,15 @@ Used to retrieve a model version given its ID.
                         "frequency_penalty": 1.1,
                         "max_tokens": 1,
                         "presence_penalty": 1.1,
-                        "stop": [
-                          "stop",
-                        ],
                         "temperature": 1.1,
-                        "top_k": 1.1,
                         "top_p": 1.1,
                       },
-                      "prompt_block_data": {
-                        "blocks": [
-                          {
-                            "block_type": "CHAT_MESSAGE",
-                            "id": "id",
-                            "properties": {},
-                          },
-                        ],
-                        "version": 1,
-                      },
-                      "prompt_syntax_version": 1,
-                      "prompt_template": "prompt_template",
                     },
                     "external_id": "external_id",
                     "id": "id",
                     "label": "label",
                     "model_type": "GENERATE",
                     "provider": "ANTHROPIC",
-                    "status": "CREATING",
                   },
                 },
               },
@@ -585,14 +592,6 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Deletes an existing scenario from a sandbox, keying off of the provided scenario id.",
-            "examples": [
-              {
-                "path-parameters": {
-                  "id": "id",
-                  "scenario_id": "scenario_id",
-                },
-              },
-            ],
             "method": "DELETE",
             "path": "/v1/sandboxes/{id}/scenarios/{scenario_id}",
             "path-parameters": {
@@ -644,23 +643,46 @@ or overwritten with default values.",
                     "id": "id",
                     "inputs": [
                       {
-                        "chat_history": [
-                          {
-                            "role": "SYSTEM",
-                            "text": "text",
-                          },
-                        ],
                         "key": "key",
-                        "type": "TEXT",
-                        "value": "value",
                       },
                     ],
-                    "label": "label",
-                    "metric_input_params": {
-                      "params": {
-                        "target": "target",
-                      },
+                    "metric_input_params": {},
+                  },
+                },
+              },
+              {
+                "name": "Chat History Example",
+                "path-parameters": {
+                  "id": "id",
+                },
+                "request": {
+                  "inputs": [
+                    {
+                      "chat_history": [
+                        {
+                          "role": "USER",
+                          "text": "What's your favorite color?",
+                        },
+                        {
+                          "role": "ASSISTANT",
+                          "text": "AI's don't have a favorite color.... Yet.",
+                        },
+                      ],
+                      "key": "chat_history",
+                      "type": "CHAT_HISTORY",
                     },
+                  ],
+                  "label": "Scenario 2",
+                },
+                "response": {
+                  "body": {
+                    "id": "id",
+                    "inputs": [
+                      {
+                        "key": "key",
+                      },
+                    ],
+                    "metric_input_params": {},
                   },
                 },
               },
@@ -714,14 +736,6 @@ or overwritten with default values.",
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Deletes an existing test case for a test suite, keying off of the test case id.",
-            "examples": [
-              {
-                "path-parameters": {
-                  "id": "id",
-                  "test_case_id": "test_case_id",
-                },
-              },
-            ],
             "method": "DELETE",
             "path": "/v1/test-suites/{id}/test-cases/{test_case_id}",
             "path-parameters": {
@@ -758,16 +772,8 @@ or overwritten with default values.",
                 },
                 "response": {
                   "body": {
-                    "evaluation_params": {
-                      "target": "target",
-                    },
-                    "input_values": {
-                      "input_values": {
-                        "key": "value",
-                      },
-                    },
-                    "label": "label",
-                    "test_case_id": "test_case_id",
+                    "evaluation_params": {},
+                    "input_values": {},
                   },
                 },
               },
@@ -847,13 +853,6 @@ or overwritten with default values.",
           "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Executes a deployed Workflow and streams back its results.",
-          "examples": [
-            {
-              "request": {
-                "inputs": [],
-              },
-            },
-          ],
           "method": "POST",
           "path": "/v1/execute-workflow-stream",
           "request": {
@@ -913,20 +912,7 @@ Generate a completion using a previously defined deployment.
               "response": {
                 "body": {
                   "results": [
-                    {
-                      "data": {
-                        "completions": [
-                          {
-                            "id": "id",
-                            "model_version_id": "model_version_id",
-                            "text": "text",
-                          },
-                        ],
-                      },
-                      "error": {
-                        "message": "message",
-                      },
-                    },
+                    {},
                   ],
                 },
               },
@@ -977,17 +963,6 @@ Generate a stream of completions using a previously defined deployment.
             "ForbiddenError",
             "NotFoundError",
             "InternalServerError",
-          ],
-          "examples": [
-            {
-              "request": {
-                "requests": [
-                  {
-                    "input_values": {},
-                  },
-                ],
-              },
-            },
           ],
           "method": "POST",
           "path": "/v1/generate-stream",
@@ -1102,15 +1077,6 @@ Used to submit feedback regarding the quality of previously generated completion
             "BadRequestError",
             "NotFoundError",
             "InternalServerError",
-          ],
-          "examples": [
-            {
-              "request": {
-                "actuals": [
-                  {},
-                ],
-              },
-            },
           ],
           "method": "POST",
           "path": "/v1/submit-completion-actuals",

@@ -32,7 +32,6 @@ exports[`open api parser devrev simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "expires_at": "2024-01-15T09:30:00Z",
                     "url": "url",
                   },
                 },
@@ -160,13 +159,6 @@ connections can not be deleted using this method.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
-            "examples": [
-              {
-                "request": {
-                  "id": "id",
-                },
-              },
-            ],
             "method": "POST",
             "path": "/dev-orgs.auth-connections.delete",
             "request": {
@@ -259,13 +251,6 @@ disabled.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
-            "examples": [
-              {
-                "request": {
-                  "id": "id",
-                },
-              },
-            ],
             "method": "POST",
             "path": "/dev-orgs.auth-connections.toggle",
             "request": {
@@ -337,10 +322,7 @@ authenticated user.
                 "response": {
                   "body": {
                     "access_token": "access_token",
-                    "client_id": "client_id",
                     "expires_in": 1,
-                    "refresh_token": "refresh_token",
-                    "scope": "scope",
                     "token_type": "bearer",
                   },
                 },
@@ -414,11 +396,6 @@ given Dev organization.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
-            "examples": [
-              {
-                "request": {},
-              },
-            ],
             "method": "POST",
             "path": "/auth-tokens.delete",
             "request": {
@@ -460,20 +437,7 @@ given Dev organization.
                 "response": {
                   "body": {
                     "token": {
-                      "client_id": "client_id",
-                      "created_date": "2024-01-15T09:30:00Z",
-                      "display_id": "display_id",
-                      "expires_at": "2024-01-15T09:30:00Z",
                       "id": "id",
-                      "issued_at": "2024-01-15T09:30:00Z",
-                      "modified_date": "2024-01-15T09:30:00Z",
-                      "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
-                      "scopes": [
-                        "scopes",
-                      ],
-                      "status": "active",
-                      "subject": "subject",
-                      "token_hint": "token_hint",
                     },
                   },
                 },
@@ -516,20 +480,7 @@ token type issued for a given subject.
                   "body": {
                     "tokens": [
                       {
-                        "client_id": "client_id",
-                        "created_date": "2024-01-15T09:30:00Z",
-                        "display_id": "display_id",
-                        "expires_at": "2024-01-15T09:30:00Z",
                         "id": "id",
-                        "issued_at": "2024-01-15T09:30:00Z",
-                        "modified_date": "2024-01-15T09:30:00Z",
-                        "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
-                        "scopes": [
-                          "scopes",
-                        ],
-                        "status": "active",
-                        "subject": "subject",
-                        "token_hint": "token_hint",
                       },
                     ],
                   },
@@ -581,11 +532,6 @@ authenticated user.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
-            "examples": [
-              {
-                "request": {},
-              },
-            ],
             "method": "POST",
             "path": "/auth-tokens.self.delete",
             "request": {
@@ -622,20 +568,7 @@ organization.
                 "response": {
                   "body": {
                     "token": {
-                      "client_id": "client_id",
-                      "created_date": "2024-01-15T09:30:00Z",
-                      "display_id": "display_id",
-                      "expires_at": "2024-01-15T09:30:00Z",
                       "id": "id",
-                      "issued_at": "2024-01-15T09:30:00Z",
-                      "modified_date": "2024-01-15T09:30:00Z",
-                      "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
-                      "scopes": [
-                        "scopes",
-                      ],
-                      "status": "active",
-                      "subject": "subject",
-                      "token_hint": "token_hint",
                     },
                   },
                 },
@@ -696,27 +629,9 @@ organization.
                   "body": {
                     "dev_users": [
                       {
-                        "created_date": "2024-01-15T09:30:00Z",
-                        "display_id": "display_id",
-                        "display_name": "display_name",
-                        "display_picture": {
-                          "id": "id",
-                        },
-                        "email": "email",
-                        "external_identities": [
-                          {},
-                        ],
-                        "full_name": "full_name",
                         "id": "id",
-                        "modified_date": "2024-01-15T09:30:00Z",
-                        "phone_numbers": [
-                          "phone_numbers",
-                        ],
-                        "state": "active",
                       },
                     ],
-                    "next_cursor": "next_cursor",
-                    "prev_cursor": "prev_cursor",
                   },
                 },
               },
@@ -782,24 +697,7 @@ used.
                 "response": {
                   "body": {
                     "dev_user": {
-                      "created_date": "2024-01-15T09:30:00Z",
-                      "display_id": "display_id",
-                      "display_name": "display_name",
-                      "display_picture": {
-                        "display_id": "display_id",
-                        "id": "id",
-                      },
-                      "email": "email",
-                      "external_identities": [
-                        {},
-                      ],
-                      "full_name": "full_name",
                       "id": "id",
-                      "modified_date": "2024-01-15T09:30:00Z",
-                      "phone_numbers": [
-                        "phone_numbers",
-                      ],
-                      "state": "active",
                     },
                   },
                 },
@@ -864,11 +762,7 @@ used.
                   "id": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                 },
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -937,9 +831,7 @@ used.
               {
                 "response": {
                   "body": {
-                    "next_cursor": "next_cursor",
                     "parts": [],
-                    "prev_cursor": "prev_cursor",
                   },
                 },
               },
@@ -1050,14 +942,7 @@ organization.
                 "response": {
                   "body": {
                     "rev_org": {
-                      "created_date": "2024-01-15T09:30:00Z",
-                      "description": "description",
-                      "display_id": "display_id",
-                      "display_name": "display_name",
-                      "domain": "domain",
-                      "external_ref": "external_ref",
                       "id": "id",
-                      "modified_date": "2024-01-15T09:30:00Z",
                     },
                   },
                 },
@@ -1121,11 +1006,7 @@ records.
                   "id": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
                 },
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -1169,14 +1050,7 @@ records.
                 "response": {
                   "body": {
                     "rev_org": {
-                      "created_date": "2024-01-15T09:30:00Z",
-                      "description": "description",
-                      "display_id": "display_id",
-                      "display_name": "display_name",
-                      "domain": "domain",
-                      "external_ref": "external_ref",
                       "id": "id",
-                      "modified_date": "2024-01-15T09:30:00Z",
                     },
                   },
                 },
@@ -1217,18 +1091,9 @@ to access.
               {
                 "response": {
                   "body": {
-                    "next_cursor": "next_cursor",
-                    "prev_cursor": "prev_cursor",
                     "rev_orgs": [
                       {
-                        "created_date": "2024-01-15T09:30:00Z",
-                        "description": "description",
-                        "display_id": "display_id",
-                        "display_name": "display_name",
-                        "domain": "domain",
-                        "external_ref": "external_ref",
                         "id": "id",
-                        "modified_date": "2024-01-15T09:30:00Z",
                       },
                     ],
                   },
@@ -1323,14 +1188,7 @@ them.
                 "response": {
                   "body": {
                     "rev_org": {
-                      "created_date": "2024-01-15T09:30:00Z",
-                      "description": "description",
-                      "display_id": "display_id",
-                      "display_name": "display_name",
-                      "domain": "domain",
-                      "external_ref": "external_ref",
                       "id": "id",
-                      "modified_date": "2024-01-15T09:30:00Z",
                     },
                   },
                 },
@@ -1414,14 +1272,7 @@ and a logical concept denoted by the tag's name.
                 "response": {
                   "body": {
                     "tag": {
-                      "allowed_values": [
-                        "allowed_values",
-                      ],
-                      "created_date": "2024-01-15T09:30:00Z",
-                      "description": "description",
-                      "display_id": "display_id",
                       "id": "id",
-                      "modified_date": "2024-01-15T09:30:00Z",
                       "name": "name",
                     },
                   },
@@ -1477,11 +1328,7 @@ permitted.
                   "id": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
                 },
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -1525,14 +1372,7 @@ permitted.
                 "response": {
                   "body": {
                     "tag": {
-                      "allowed_values": [
-                        "allowed_values",
-                      ],
-                      "created_date": "2024-01-15T09:30:00Z",
-                      "description": "description",
-                      "display_id": "display_id",
                       "id": "id",
-                      "modified_date": "2024-01-15T09:30:00Z",
                       "name": "name",
                     },
                   },
@@ -1570,18 +1410,9 @@ permitted.
               {
                 "response": {
                   "body": {
-                    "next_cursor": "next_cursor",
-                    "prev_cursor": "prev_cursor",
                     "tags": [
                       {
-                        "allowed_values": [
-                          "allowed_values",
-                        ],
-                        "created_date": "2024-01-15T09:30:00Z",
-                        "description": "description",
-                        "display_id": "display_id",
                         "id": "id",
-                        "modified_date": "2024-01-15T09:30:00Z",
                         "name": "name",
                       },
                     ],
@@ -1637,14 +1468,7 @@ used.
                 "response": {
                   "body": {
                     "tag": {
-                      "allowed_values": [
-                        "allowed_values",
-                      ],
-                      "created_date": "2024-01-15T09:30:00Z",
-                      "description": "description",
-                      "display_id": "display_id",
                       "id": "id",
-                      "modified_date": "2024-01-15T09:30:00Z",
                       "name": "name",
                     },
                   },
@@ -1763,8 +1587,6 @@ tags.
                 },
                 "response": {
                   "body": {
-                    "next_cursor": "next_cursor",
-                    "prev_cursor": "prev_cursor",
                     "timeline_entries": [],
                   },
                 },
@@ -1857,13 +1679,7 @@ used.
                 "response": {
                   "body": {
                     "webhook": {
-                      "created_date": "2024-01-15T09:30:00Z",
-                      "display_id": "display_id",
-                      "event_types": [
-                        "part_created",
-                      ],
                       "id": "id",
-                      "modified_date": "2024-01-15T09:30:00Z",
                       "secret": "secret",
                       "status": "active",
                       "url": "url",
@@ -1922,11 +1738,7 @@ response.
                   "id": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
                 },
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -1970,13 +1782,7 @@ response.
                 "response": {
                   "body": {
                     "webhook": {
-                      "created_date": "2024-01-15T09:30:00Z",
-                      "display_id": "display_id",
-                      "event_types": [
-                        "part_created",
-                      ],
                       "id": "id",
-                      "modified_date": "2024-01-15T09:30:00Z",
                       "secret": "secret",
                       "status": "active",
                       "url": "url",
@@ -2018,13 +1824,7 @@ response.
                   "body": {
                     "webhooks": [
                       {
-                        "created_date": "2024-01-15T09:30:00Z",
-                        "display_id": "display_id",
-                        "event_types": [
-                          "part_created",
-                        ],
                         "id": "id",
-                        "modified_date": "2024-01-15T09:30:00Z",
                         "secret": "secret",
                         "status": "active",
                         "url": "url",
@@ -2061,13 +1861,7 @@ response.
                 "response": {
                   "body": {
                     "webhook": {
-                      "created_date": "2024-01-15T09:30:00Z",
-                      "display_id": "display_id",
-                      "event_types": [
-                        "part_created",
-                      ],
                       "id": "id",
-                      "modified_date": "2024-01-15T09:30:00Z",
                       "secret": "secret",
                       "status": "active",
                       "url": "url",
@@ -2168,11 +1962,7 @@ won't receive any object events until successfully verified.
                   "id": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
                 },
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -2325,8 +2115,6 @@ organizations.
               {
                 "response": {
                   "body": {
-                    "next_cursor": "next_cursor",
-                    "prev_cursor": "prev_cursor",
                     "works": [],
                   },
                 },

@@ -23,11 +23,7 @@ exports[`open api parser aries simple 1`] = `
                   "conn_id": "conn_id",
                 },
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -103,11 +99,7 @@ exports[`open api parser aries simple 1`] = `
                   },
                 },
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -151,11 +143,7 @@ exports[`open api parser aries simple 1`] = `
                   "conn_id": "conn_id",
                 },
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -197,11 +185,7 @@ exports[`open api parser aries simple 1`] = `
                   },
                 },
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -254,11 +238,7 @@ exports[`open api parser aries simple 1`] = `
                   "content": "Hello",
                 },
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -630,11 +610,7 @@ exports[`open api parser aries simple 1`] = `
                   "conn_id": "conn_id",
                 },
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -1034,11 +1010,7 @@ exports[`open api parser aries simple 1`] = `
                   "ref_id": "ref_id",
                 },
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -1182,32 +1154,6 @@ exports[`open api parser aries simple 1`] = `
                       "id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                       "schemaId": "20",
                       "tag": "tag",
-                      "type": {
-                        "type": {
-                          "key": "value",
-                        },
-                      },
-                      "value": {
-                        "primary": {
-                          "n": "0",
-                          "rctxt": "0",
-                          "s": "0",
-                          "z": "0",
-                        },
-                        "revocation": {
-                          "g": "1 1F14F&ECB578F 2 095E45DDF417D",
-                          "g_dash": "1 1D64716fCDC00C 1 0C781960FA66E3D3 2 095E45DDF417D",
-                          "h": "1 16675DAE54BFAE8 2 095E45DD417D",
-                          "h0": "1 21E5EF9476EAF18 2 095E45DDF417D",
-                          "h1": "1 236D1D99236090 2 095E45DDF417D",
-                          "h2": "1 1C3AE8D1F1E277 2 095E45DDF417D",
-                          "h_cap": "1 1B2A32CF3167 1 2490FEBF6EE55 1 0000000000000000",
-                          "htilde": "1 1D8549E8C0F8 2 095E45DDF417D",
-                          "pk": "1 142CD5E5A7DC 1 153885BD903312 2 095E45DDF417D",
-                          "u": "1 0C430AAB2B4710 1 1CB3A0932EE7E 1 0000000000000000",
-                          "y": "1 153558BD903312 2 095E45DDF417D 1 0000000000000000",
-                        },
-                      },
                       "ver": "1.0",
                     },
                   },
@@ -1337,32 +1283,6 @@ exports[`open api parser aries simple 1`] = `
                       "id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                       "schemaId": "20",
                       "tag": "tag",
-                      "type": {
-                        "type": {
-                          "key": "value",
-                        },
-                      },
-                      "value": {
-                        "primary": {
-                          "n": "0",
-                          "rctxt": "0",
-                          "s": "0",
-                          "z": "0",
-                        },
-                        "revocation": {
-                          "g": "1 1F14F&ECB578F 2 095E45DDF417D",
-                          "g_dash": "1 1D64716fCDC00C 1 0C781960FA66E3D3 2 095E45DDF417D",
-                          "h": "1 16675DAE54BFAE8 2 095E45DD417D",
-                          "h0": "1 21E5EF9476EAF18 2 095E45DDF417D",
-                          "h1": "1 236D1D99236090 2 095E45DDF417D",
-                          "h2": "1 1C3AE8D1F1E277 2 095E45DDF417D",
-                          "h_cap": "1 1B2A32CF3167 1 2490FEBF6EE55 1 0000000000000000",
-                          "htilde": "1 1D8549E8C0F8 2 095E45DDF417D",
-                          "pk": "1 142CD5E5A7DC 1 153885BD903312 2 095E45DDF417D",
-                          "u": "1 0C430AAB2B4710 1 1CB3A0932EE7E 1 0000000000000000",
-                          "y": "1 153558BD903312 2 095E45DDF417D 1 0000000000000000",
-                        },
-                      },
                       "ver": "1.0",
                     },
                   },
@@ -1405,11 +1325,7 @@ exports[`open api parser aries simple 1`] = `
                   "credential_id": "credential_id",
                 },
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -1436,11 +1352,7 @@ exports[`open api parser aries simple 1`] = `
                   "credential_id": "credential_id",
                 },
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -2167,21 +2079,7 @@ exports[`open api parser aries simple 1`] = `
                       {
                         "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "created_at": "2021-12-31 23:59:59+00:00",
-                        "disclose": {
-                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                          "protocols": [
-                            {
-                              "pid": "pid",
-                            },
-                          ],
-                        },
                         "discovery_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "query_msg": {
-                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                          "query": "query",
-                        },
                         "state": "active",
                         "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "trace": true,
@@ -2190,21 +2088,7 @@ exports[`open api parser aries simple 1`] = `
                       {
                         "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "created_at": "2021-12-31 23:59:59+00:00",
-                        "disclose": {
-                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                          "protocols": [
-                            {
-                              "pid": "pid",
-                            },
-                          ],
-                        },
                         "discovery_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "query_msg": {
-                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                          "query": "query",
-                        },
                         "state": "active",
                         "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "trace": true,
@@ -2241,22 +2125,7 @@ exports[`open api parser aries simple 1`] = `
                   "body": {
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "created_at": "2021-12-31 23:59:59+00:00",
-                    "disclose": {
-                      "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "protocols": [
-                        {
-                          "pid": "pid",
-                        },
-                      ],
-                    },
                     "discovery_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "query_msg": {
-                      "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
-                      "query": "query",
-                    },
                     "state": "active",
                     "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "trace": true,
@@ -2314,41 +2183,17 @@ exports[`open api parser aries simple 1`] = `
                       {
                         "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "created_at": "2021-12-31 23:59:59+00:00",
-                        "disclosures": {
-                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                          "disclosures": [
-                            {},
-                          ],
-                        },
                         "discovery_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "queries_msg": {
-                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                        },
                         "state": "active",
                         "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "trace": true,
                         "updated_at": "2021-12-31 23:59:59+00:00",
                       },
                       {
                         "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "created_at": "2021-12-31 23:59:59+00:00",
-                        "disclosures": {
-                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                          "disclosures": [
-                            {},
-                          ],
-                        },
                         "discovery_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "queries_msg": {
-                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                        },
                         "state": "active",
                         "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "trace": true,
                         "updated_at": "2021-12-31 23:59:59+00:00",
                       },
                     ],
@@ -2379,34 +2224,7 @@ exports[`open api parser aries simple 1`] = `
             "examples": [
               {
                 "response": {
-                  "body": {
-                    "results": {
-                      "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "created_at": "2021-12-31 23:59:59+00:00",
-                      "disclosures": {
-                        "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                        "disclosures": [
-                          {},
-                        ],
-                      },
-                      "discovery_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "queries_msg": {
-                        "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                        "queries": [
-                          {
-                            "feature-type": "protocol",
-                            "match": "match",
-                          },
-                        ],
-                      },
-                      "state": "active",
-                      "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "trace": true,
-                      "updated_at": "2021-12-31 23:59:59+00:00",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -3027,11 +2845,7 @@ exports[`open api parser aries simple 1`] = `
                   "target_connection_id": "target_connection_id",
                 },
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -3143,7 +2957,6 @@ exports[`open api parser aries simple 1`] = `
                     "credential_offer_dict": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credential_preview": {
                         "@type": "issue-credential/1.0/credential-preview",
                         "attributes": [
@@ -3178,32 +2991,6 @@ exports[`open api parser aries simple 1`] = `
                         },
                       ],
                     },
-                    "credential_proposal_dict": {
-                      "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
-                      "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "credential_proposal": {
-                        "@type": "issue-credential/1.0/credential-preview",
-                        "attributes": [
-                          {
-                            "mime-type": "image/jpeg",
-                            "name": "favourite_drink",
-                            "value": "martini",
-                          },
-                          {
-                            "mime-type": "image/jpeg",
-                            "name": "favourite_drink",
-                            "value": "martini",
-                          },
-                        ],
-                      },
-                      "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                      "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                      "schema_issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                      "schema_name": "schema_name",
-                      "schema_version": "1.0",
-                    },
                     "credential_request": {
                       "blinded_ms": {},
                       "blinded_ms_correctness_proof": {},
@@ -3216,7 +3003,6 @@ exports[`open api parser aries simple 1`] = `
                     "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "raw_credential": {
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
                       "signature_correctness_proof": {},
@@ -3357,7 +3143,6 @@ exports[`open api parser aries simple 1`] = `
                     "credential_offer_dict": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credential_preview": {
                         "@type": "issue-credential/1.0/credential-preview",
                         "attributes": [
@@ -3392,32 +3177,6 @@ exports[`open api parser aries simple 1`] = `
                         },
                       ],
                     },
-                    "credential_proposal_dict": {
-                      "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
-                      "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "credential_proposal": {
-                        "@type": "issue-credential/1.0/credential-preview",
-                        "attributes": [
-                          {
-                            "mime-type": "image/jpeg",
-                            "name": "favourite_drink",
-                            "value": "martini",
-                          },
-                          {
-                            "mime-type": "image/jpeg",
-                            "name": "favourite_drink",
-                            "value": "martini",
-                          },
-                        ],
-                      },
-                      "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                      "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                      "schema_issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                      "schema_name": "schema_name",
-                      "schema_version": "1.0",
-                    },
                     "credential_request": {
                       "blinded_ms": {},
                       "blinded_ms_correctness_proof": {},
@@ -3430,7 +3189,6 @@ exports[`open api parser aries simple 1`] = `
                     "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "raw_credential": {
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
                       "signature_correctness_proof": {},
@@ -3500,11 +3258,7 @@ exports[`open api parser aries simple 1`] = `
                   "cred_ex_id": "cred_ex_id",
                 },
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -3567,7 +3321,6 @@ exports[`open api parser aries simple 1`] = `
                     "credential_offer_dict": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credential_preview": {
                         "@type": "issue-credential/1.0/credential-preview",
                         "attributes": [
@@ -3602,32 +3355,6 @@ exports[`open api parser aries simple 1`] = `
                         },
                       ],
                     },
-                    "credential_proposal_dict": {
-                      "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
-                      "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "credential_proposal": {
-                        "@type": "issue-credential/1.0/credential-preview",
-                        "attributes": [
-                          {
-                            "mime-type": "image/jpeg",
-                            "name": "favourite_drink",
-                            "value": "martini",
-                          },
-                          {
-                            "mime-type": "image/jpeg",
-                            "name": "favourite_drink",
-                            "value": "martini",
-                          },
-                        ],
-                      },
-                      "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                      "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                      "schema_issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                      "schema_name": "schema_name",
-                      "schema_version": "1.0",
-                    },
                     "credential_request": {
                       "blinded_ms": {},
                       "blinded_ms_correctness_proof": {},
@@ -3640,7 +3367,6 @@ exports[`open api parser aries simple 1`] = `
                     "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "raw_credential": {
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
                       "signature_correctness_proof": {},
@@ -3755,30 +3481,6 @@ exports[`open api parser aries simple 1`] = `
                             },
                           ],
                         },
-                        "credential_proposal_dict": {
-                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                          "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                          "credential_proposal": {
-                            "@type": "issue-credential/1.0/credential-preview",
-                            "attributes": [
-                              {
-                                "mime-type": "image/jpeg",
-                                "name": "favourite_drink",
-                                "value": "martini",
-                              },
-                              {
-                                "mime-type": "image/jpeg",
-                                "name": "favourite_drink",
-                                "value": "martini",
-                              },
-                            ],
-                          },
-                          "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                          "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                          "schema_issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                          "schema_version": "1.0",
-                        },
                         "credential_request": {
                           "blinded_ms": {},
                           "blinded_ms_correctness_proof": {},
@@ -3879,30 +3581,6 @@ exports[`open api parser aries simple 1`] = `
                               "mime-type": "image/png",
                             },
                           ],
-                        },
-                        "credential_proposal_dict": {
-                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                          "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                          "credential_proposal": {
-                            "@type": "issue-credential/1.0/credential-preview",
-                            "attributes": [
-                              {
-                                "mime-type": "image/jpeg",
-                                "name": "favourite_drink",
-                                "value": "martini",
-                              },
-                              {
-                                "mime-type": "image/jpeg",
-                                "name": "favourite_drink",
-                                "value": "martini",
-                              },
-                            ],
-                          },
-                          "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                          "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                          "schema_issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                          "schema_version": "1.0",
                         },
                         "credential_request": {
                           "blinded_ms": {},
@@ -4017,7 +3695,6 @@ exports[`open api parser aries simple 1`] = `
                     "credential_offer_dict": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credential_preview": {
                         "@type": "issue-credential/1.0/credential-preview",
                         "attributes": [
@@ -4052,32 +3729,6 @@ exports[`open api parser aries simple 1`] = `
                         },
                       ],
                     },
-                    "credential_proposal_dict": {
-                      "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
-                      "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "credential_proposal": {
-                        "@type": "issue-credential/1.0/credential-preview",
-                        "attributes": [
-                          {
-                            "mime-type": "image/jpeg",
-                            "name": "favourite_drink",
-                            "value": "martini",
-                          },
-                          {
-                            "mime-type": "image/jpeg",
-                            "name": "favourite_drink",
-                            "value": "martini",
-                          },
-                        ],
-                      },
-                      "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                      "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                      "schema_issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                      "schema_name": "schema_name",
-                      "schema_version": "1.0",
-                    },
                     "credential_request": {
                       "blinded_ms": {},
                       "blinded_ms_correctness_proof": {},
@@ -4090,7 +3741,6 @@ exports[`open api parser aries simple 1`] = `
                     "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "raw_credential": {
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
                       "signature_correctness_proof": {},
@@ -4152,11 +3802,7 @@ exports[`open api parser aries simple 1`] = `
                   "description": "description",
                 },
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -4230,7 +3876,6 @@ exports[`open api parser aries simple 1`] = `
                     "credential_offer_dict": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credential_preview": {
                         "@type": "issue-credential/1.0/credential-preview",
                         "attributes": [
@@ -4265,32 +3910,6 @@ exports[`open api parser aries simple 1`] = `
                         },
                       ],
                     },
-                    "credential_proposal_dict": {
-                      "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
-                      "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "credential_proposal": {
-                        "@type": "issue-credential/1.0/credential-preview",
-                        "attributes": [
-                          {
-                            "mime-type": "image/jpeg",
-                            "name": "favourite_drink",
-                            "value": "martini",
-                          },
-                          {
-                            "mime-type": "image/jpeg",
-                            "name": "favourite_drink",
-                            "value": "martini",
-                          },
-                        ],
-                      },
-                      "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                      "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                      "schema_issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                      "schema_name": "schema_name",
-                      "schema_version": "1.0",
-                    },
                     "credential_request": {
                       "blinded_ms": {},
                       "blinded_ms_correctness_proof": {},
@@ -4303,7 +3922,6 @@ exports[`open api parser aries simple 1`] = `
                     "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "raw_credential": {
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
                       "signature_correctness_proof": {},
@@ -4395,7 +4013,6 @@ exports[`open api parser aries simple 1`] = `
                     "credential_offer_dict": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credential_preview": {
                         "@type": "issue-credential/1.0/credential-preview",
                         "attributes": [
@@ -4430,32 +4047,6 @@ exports[`open api parser aries simple 1`] = `
                         },
                       ],
                     },
-                    "credential_proposal_dict": {
-                      "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
-                      "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "credential_proposal": {
-                        "@type": "issue-credential/1.0/credential-preview",
-                        "attributes": [
-                          {
-                            "mime-type": "image/jpeg",
-                            "name": "favourite_drink",
-                            "value": "martini",
-                          },
-                          {
-                            "mime-type": "image/jpeg",
-                            "name": "favourite_drink",
-                            "value": "martini",
-                          },
-                        ],
-                      },
-                      "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                      "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                      "schema_issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                      "schema_name": "schema_name",
-                      "schema_version": "1.0",
-                    },
                     "credential_request": {
                       "blinded_ms": {},
                       "blinded_ms_correctness_proof": {},
@@ -4468,7 +4059,6 @@ exports[`open api parser aries simple 1`] = `
                     "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "raw_credential": {
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
                       "signature_correctness_proof": {},
@@ -4574,7 +4164,6 @@ exports[`open api parser aries simple 1`] = `
                     "credential_offer_dict": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credential_preview": {
                         "@type": "issue-credential/1.0/credential-preview",
                         "attributes": [
@@ -4609,32 +4198,6 @@ exports[`open api parser aries simple 1`] = `
                         },
                       ],
                     },
-                    "credential_proposal_dict": {
-                      "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
-                      "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "credential_proposal": {
-                        "@type": "issue-credential/1.0/credential-preview",
-                        "attributes": [
-                          {
-                            "mime-type": "image/jpeg",
-                            "name": "favourite_drink",
-                            "value": "martini",
-                          },
-                          {
-                            "mime-type": "image/jpeg",
-                            "name": "favourite_drink",
-                            "value": "martini",
-                          },
-                        ],
-                      },
-                      "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                      "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                      "schema_issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                      "schema_name": "schema_name",
-                      "schema_version": "1.0",
-                    },
                     "credential_request": {
                       "blinded_ms": {},
                       "blinded_ms_correctness_proof": {},
@@ -4647,7 +4210,6 @@ exports[`open api parser aries simple 1`] = `
                     "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "raw_credential": {
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
                       "signature_correctness_proof": {},
@@ -4793,7 +4355,6 @@ exports[`open api parser aries simple 1`] = `
                     "credential_offer_dict": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credential_preview": {
                         "@type": "issue-credential/1.0/credential-preview",
                         "attributes": [
@@ -4828,32 +4389,6 @@ exports[`open api parser aries simple 1`] = `
                         },
                       ],
                     },
-                    "credential_proposal_dict": {
-                      "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
-                      "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "credential_proposal": {
-                        "@type": "issue-credential/1.0/credential-preview",
-                        "attributes": [
-                          {
-                            "mime-type": "image/jpeg",
-                            "name": "favourite_drink",
-                            "value": "martini",
-                          },
-                          {
-                            "mime-type": "image/jpeg",
-                            "name": "favourite_drink",
-                            "value": "martini",
-                          },
-                        ],
-                      },
-                      "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                      "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                      "schema_issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                      "schema_name": "schema_name",
-                      "schema_version": "1.0",
-                    },
                     "credential_request": {
                       "blinded_ms": {},
                       "blinded_ms_correctness_proof": {},
@@ -4866,7 +4401,6 @@ exports[`open api parser aries simple 1`] = `
                     "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "raw_credential": {
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
                       "signature_correctness_proof": {},
@@ -5000,7 +4534,6 @@ exports[`open api parser aries simple 1`] = `
                     "credential_offer_dict": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credential_preview": {
                         "@type": "issue-credential/1.0/credential-preview",
                         "attributes": [
@@ -5035,32 +4568,6 @@ exports[`open api parser aries simple 1`] = `
                         },
                       ],
                     },
-                    "credential_proposal_dict": {
-                      "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
-                      "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "credential_proposal": {
-                        "@type": "issue-credential/1.0/credential-preview",
-                        "attributes": [
-                          {
-                            "mime-type": "image/jpeg",
-                            "name": "favourite_drink",
-                            "value": "martini",
-                          },
-                          {
-                            "mime-type": "image/jpeg",
-                            "name": "favourite_drink",
-                            "value": "martini",
-                          },
-                        ],
-                      },
-                      "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                      "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                      "schema_issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                      "schema_name": "schema_name",
-                      "schema_version": "1.0",
-                    },
                     "credential_request": {
                       "blinded_ms": {},
                       "blinded_ms_correctness_proof": {},
@@ -5073,7 +4580,6 @@ exports[`open api parser aries simple 1`] = `
                     "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "raw_credential": {
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
                       "signature_correctness_proof": {},
@@ -5202,7 +4708,6 @@ exports[`open api parser aries simple 1`] = `
                     "credential_offer_dict": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credential_preview": {
                         "@type": "issue-credential/1.0/credential-preview",
                         "attributes": [
@@ -5237,32 +4742,6 @@ exports[`open api parser aries simple 1`] = `
                         },
                       ],
                     },
-                    "credential_proposal_dict": {
-                      "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
-                      "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "credential_proposal": {
-                        "@type": "issue-credential/1.0/credential-preview",
-                        "attributes": [
-                          {
-                            "mime-type": "image/jpeg",
-                            "name": "favourite_drink",
-                            "value": "martini",
-                          },
-                          {
-                            "mime-type": "image/jpeg",
-                            "name": "favourite_drink",
-                            "value": "martini",
-                          },
-                        ],
-                      },
-                      "issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                      "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                      "schema_issuer_did": "WgWxqztrNooG92RXvxSTWv",
-                      "schema_name": "schema_name",
-                      "schema_version": "1.0",
-                    },
                     "credential_request": {
                       "blinded_ms": {},
                       "blinded_ms_correctness_proof": {},
@@ -5275,7 +4754,6 @@ exports[`open api parser aries simple 1`] = `
                     "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "raw_credential": {
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
                       "signature_correctness_proof": {},
@@ -5432,7 +4910,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_issue": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credentials~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -5462,7 +4939,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_offer": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credential_preview": {
                         "@type": "issue-credential/2.0/credential-preview",
                         "attributes": [
@@ -5522,7 +4998,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_proposal": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credential_preview": {
                         "@type": "issue-credential/2.0/credential-preview",
                         "attributes": [
@@ -5566,7 +5041,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_request": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "formats": [
                         {
                           "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -5710,7 +5184,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_issue": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credentials~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -5740,7 +5213,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_offer": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credential_preview": {
                         "@type": "issue-credential/2.0/credential-preview",
                         "attributes": [
@@ -5800,7 +5272,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_proposal": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credential_preview": {
                         "@type": "issue-credential/2.0/credential-preview",
                         "attributes": [
@@ -5844,7 +5315,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_request": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "formats": [
                         {
                           "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -5926,11 +5396,7 @@ exports[`open api parser aries simple 1`] = `
                   "cred_ex_id": "cred_ex_id",
                 },
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -5968,7 +5434,6 @@ exports[`open api parser aries simple 1`] = `
                       "cred_issue": {
                         "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                        "comment": "comment",
                         "credentials~attach": [
                           {
                             "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -5998,7 +5463,6 @@ exports[`open api parser aries simple 1`] = `
                       "cred_offer": {
                         "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                        "comment": "comment",
                         "credential_preview": {
                           "@type": "issue-credential/2.0/credential-preview",
                           "attributes": [
@@ -6058,7 +5522,6 @@ exports[`open api parser aries simple 1`] = `
                       "cred_proposal": {
                         "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                        "comment": "comment",
                         "credential_preview": {
                           "@type": "issue-credential/2.0/credential-preview",
                           "attributes": [
@@ -6102,7 +5565,6 @@ exports[`open api parser aries simple 1`] = `
                       "cred_request": {
                         "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                        "comment": "comment",
                         "formats": [
                           {
                             "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -6628,7 +6090,6 @@ exports[`open api parser aries simple 1`] = `
                       "cred_issue": {
                         "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                        "comment": "comment",
                         "credentials~attach": [
                           {
                             "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -6658,7 +6119,6 @@ exports[`open api parser aries simple 1`] = `
                       "cred_offer": {
                         "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                        "comment": "comment",
                         "credential_preview": {
                           "@type": "issue-credential/2.0/credential-preview",
                           "attributes": [
@@ -6718,7 +6178,6 @@ exports[`open api parser aries simple 1`] = `
                       "cred_proposal": {
                         "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                        "comment": "comment",
                         "credential_preview": {
                           "@type": "issue-credential/2.0/credential-preview",
                           "attributes": [
@@ -6762,7 +6221,6 @@ exports[`open api parser aries simple 1`] = `
                       "cred_request": {
                         "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                        "comment": "comment",
                         "formats": [
                           {
                             "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -6858,11 +6316,7 @@ exports[`open api parser aries simple 1`] = `
                   "description": "description",
                 },
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -6926,7 +6380,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_issue": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credentials~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -6956,7 +6409,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_offer": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credential_preview": {
                         "@type": "issue-credential/2.0/credential-preview",
                         "attributes": [
@@ -7016,7 +6468,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_proposal": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credential_preview": {
                         "@type": "issue-credential/2.0/credential-preview",
                         "attributes": [
@@ -7060,7 +6511,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_request": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "formats": [
                         {
                           "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -7145,7 +6595,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_issue": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credentials~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -7175,7 +6624,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_offer": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credential_preview": {
                         "@type": "issue-credential/2.0/credential-preview",
                         "attributes": [
@@ -7235,7 +6683,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_proposal": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credential_preview": {
                         "@type": "issue-credential/2.0/credential-preview",
                         "attributes": [
@@ -7279,7 +6726,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_request": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "formats": [
                         {
                           "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -7420,7 +6866,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_issue": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credentials~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -7450,7 +6895,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_offer": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credential_preview": {
                         "@type": "issue-credential/2.0/credential-preview",
                         "attributes": [
@@ -7510,7 +6954,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_proposal": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credential_preview": {
                         "@type": "issue-credential/2.0/credential-preview",
                         "attributes": [
@@ -7554,7 +6997,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_request": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "formats": [
                         {
                           "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -7679,7 +7121,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_issue": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credentials~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -7709,7 +7150,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_offer": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credential_preview": {
                         "@type": "issue-credential/2.0/credential-preview",
                         "attributes": [
@@ -7769,7 +7209,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_proposal": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credential_preview": {
                         "@type": "issue-credential/2.0/credential-preview",
                         "attributes": [
@@ -7813,7 +7252,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_request": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "formats": [
                         {
                           "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -7966,7 +7404,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_issue": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credentials~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -7996,7 +7433,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_offer": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credential_preview": {
                         "@type": "issue-credential/2.0/credential-preview",
                         "attributes": [
@@ -8056,7 +7492,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_proposal": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credential_preview": {
                         "@type": "issue-credential/2.0/credential-preview",
                         "attributes": [
@@ -8100,7 +7535,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_request": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "formats": [
                         {
                           "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -8210,7 +7644,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_issue": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credentials~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -8240,7 +7673,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_offer": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credential_preview": {
                         "@type": "issue-credential/2.0/credential-preview",
                         "attributes": [
@@ -8300,7 +7732,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_proposal": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "credential_preview": {
                         "@type": "issue-credential/2.0/credential-preview",
                         "attributes": [
@@ -8344,7 +7775,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_request": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "formats": [
                         {
                           "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -8443,7 +7873,6 @@ exports[`open api parser aries simple 1`] = `
                       "cred_issue": {
                         "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                        "comment": "comment",
                         "credentials~attach": [
                           {
                             "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -8473,7 +7902,6 @@ exports[`open api parser aries simple 1`] = `
                       "cred_offer": {
                         "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                        "comment": "comment",
                         "credential_preview": {
                           "@type": "issue-credential/2.0/credential-preview",
                           "attributes": [
@@ -8533,7 +7961,6 @@ exports[`open api parser aries simple 1`] = `
                       "cred_proposal": {
                         "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                        "comment": "comment",
                         "credential_preview": {
                           "@type": "issue-credential/2.0/credential-preview",
                           "attributes": [
@@ -8577,7 +8004,6 @@ exports[`open api parser aries simple 1`] = `
                       "cred_request": {
                         "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                        "comment": "comment",
                         "formats": [
                           {
                             "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -8833,11 +8259,7 @@ exports[`open api parser aries simple 1`] = `
                   "version": "version",
                 },
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -9146,11 +8568,7 @@ exports[`open api parser aries simple 1`] = `
             "examples": [
               {
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -9690,10 +9108,6 @@ exports[`open api parser aries simple 1`] = `
                   "body": {
                     "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                    "paginate": {
-                      "limit": 30,
-                      "offset": 0,
-                    },
                   },
                 },
               },
@@ -10024,11 +9438,7 @@ exports[`open api parser aries simple 1`] = `
                   "wallet_key": "MySecretKey123",
                 },
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -10720,29 +10130,10 @@ exports[`open api parser aries simple 1`] = `
                     "created_at": "2021-12-31 23:59:59+00:00",
                     "error_msg": "Invalid structure",
                     "initiator": "self",
-                    "presentation": {
-                      "identifiers": [
-                        {
-                          "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                          "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                        },
-                      ],
-                      "proof": {
-                        "proofs": [
-                          {},
-                        ],
-                      },
-                      "requested_proof": {
-                        "predicates": {
-                          "predicates": {},
-                        },
-                      },
-                    },
                     "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "presentation_proposal_dict": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "presentation_proposal": {
                         "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/present-proof/1.0/presentation-preview",
                         "attributes": [
@@ -10779,10 +10170,6 @@ exports[`open api parser aries simple 1`] = `
                     },
                     "presentation_request": {
                       "name": "Proof request",
-                      "non_revoked": {
-                        "from": 1640995199,
-                        "to": 1640995199,
-                      },
                       "nonce": "1",
                       "requested_attributes": {
                         "key": {
@@ -10821,7 +10208,6 @@ exports[`open api parser aries simple 1`] = `
                     "presentation_request_dict": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "request_presentations~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -10891,11 +10277,7 @@ exports[`open api parser aries simple 1`] = `
                   "pres_ex_id": "pres_ex_id",
                 },
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -11206,10 +10588,6 @@ exports[`open api parser aries simple 1`] = `
                         "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                         "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       },
-                      "interval": {
-                        "from": 1640995199,
-                        "to": 1640995199,
-                      },
                       "presentation_referents": [
                         "1_age_uuid",
                         "1_age_uuid",
@@ -11270,29 +10648,10 @@ exports[`open api parser aries simple 1`] = `
                     "created_at": "2021-12-31 23:59:59+00:00",
                     "error_msg": "Invalid structure",
                     "initiator": "self",
-                    "presentation": {
-                      "identifiers": [
-                        {
-                          "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                          "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                        },
-                      ],
-                      "proof": {
-                        "proofs": [
-                          {},
-                        ],
-                      },
-                      "requested_proof": {
-                        "predicates": {
-                          "predicates": {},
-                        },
-                      },
-                    },
                     "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "presentation_proposal_dict": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "presentation_proposal": {
                         "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/present-proof/1.0/presentation-preview",
                         "attributes": [
@@ -11329,10 +10688,6 @@ exports[`open api parser aries simple 1`] = `
                     },
                     "presentation_request": {
                       "name": "Proof request",
-                      "non_revoked": {
-                        "from": 1640995199,
-                        "to": 1640995199,
-                      },
                       "nonce": "1",
                       "requested_attributes": {
                         "key": {
@@ -11371,7 +10726,6 @@ exports[`open api parser aries simple 1`] = `
                     "presentation_request_dict": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "request_presentations~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -11431,11 +10785,7 @@ exports[`open api parser aries simple 1`] = `
                   "description": "description",
                 },
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -11519,29 +10869,10 @@ exports[`open api parser aries simple 1`] = `
                     "created_at": "2021-12-31 23:59:59+00:00",
                     "error_msg": "Invalid structure",
                     "initiator": "self",
-                    "presentation": {
-                      "identifiers": [
-                        {
-                          "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                          "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                        },
-                      ],
-                      "proof": {
-                        "proofs": [
-                          {},
-                        ],
-                      },
-                      "requested_proof": {
-                        "predicates": {
-                          "predicates": {},
-                        },
-                      },
-                    },
                     "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "presentation_proposal_dict": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "presentation_proposal": {
                         "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/present-proof/1.0/presentation-preview",
                         "attributes": [
@@ -11578,10 +10909,6 @@ exports[`open api parser aries simple 1`] = `
                     },
                     "presentation_request": {
                       "name": "Proof request",
-                      "non_revoked": {
-                        "from": 1640995199,
-                        "to": 1640995199,
-                      },
                       "nonce": "1",
                       "requested_attributes": {
                         "key": {
@@ -11620,7 +10947,6 @@ exports[`open api parser aries simple 1`] = `
                     "presentation_request_dict": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "request_presentations~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -11737,29 +11063,10 @@ exports[`open api parser aries simple 1`] = `
                     "created_at": "2021-12-31 23:59:59+00:00",
                     "error_msg": "Invalid structure",
                     "initiator": "self",
-                    "presentation": {
-                      "identifiers": [
-                        {
-                          "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                          "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                        },
-                      ],
-                      "proof": {
-                        "proofs": [
-                          {},
-                        ],
-                      },
-                      "requested_proof": {
-                        "predicates": {
-                          "predicates": {},
-                        },
-                      },
-                    },
                     "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "presentation_proposal_dict": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "presentation_proposal": {
                         "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/present-proof/1.0/presentation-preview",
                         "attributes": [
@@ -11796,10 +11103,6 @@ exports[`open api parser aries simple 1`] = `
                     },
                     "presentation_request": {
                       "name": "Proof request",
-                      "non_revoked": {
-                        "from": 1640995199,
-                        "to": 1640995199,
-                      },
                       "nonce": "1",
                       "requested_attributes": {
                         "key": {
@@ -11838,7 +11141,6 @@ exports[`open api parser aries simple 1`] = `
                     "presentation_request_dict": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "request_presentations~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -11940,29 +11242,10 @@ exports[`open api parser aries simple 1`] = `
                     "created_at": "2021-12-31 23:59:59+00:00",
                     "error_msg": "Invalid structure",
                     "initiator": "self",
-                    "presentation": {
-                      "identifiers": [
-                        {
-                          "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                          "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                        },
-                      ],
-                      "proof": {
-                        "proofs": [
-                          {},
-                        ],
-                      },
-                      "requested_proof": {
-                        "predicates": {
-                          "predicates": {},
-                        },
-                      },
-                    },
                     "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "presentation_proposal_dict": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "presentation_proposal": {
                         "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/present-proof/1.0/presentation-preview",
                         "attributes": [
@@ -11999,10 +11282,6 @@ exports[`open api parser aries simple 1`] = `
                     },
                     "presentation_request": {
                       "name": "Proof request",
-                      "non_revoked": {
-                        "from": 1640995199,
-                        "to": 1640995199,
-                      },
                       "nonce": "1",
                       "requested_attributes": {
                         "key": {
@@ -12041,7 +11320,6 @@ exports[`open api parser aries simple 1`] = `
                     "presentation_request_dict": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "request_presentations~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -12112,29 +11390,10 @@ exports[`open api parser aries simple 1`] = `
                     "created_at": "2021-12-31 23:59:59+00:00",
                     "error_msg": "Invalid structure",
                     "initiator": "self",
-                    "presentation": {
-                      "identifiers": [
-                        {
-                          "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                          "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                        },
-                      ],
-                      "proof": {
-                        "proofs": [
-                          {},
-                        ],
-                      },
-                      "requested_proof": {
-                        "predicates": {
-                          "predicates": {},
-                        },
-                      },
-                    },
                     "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "presentation_proposal_dict": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "presentation_proposal": {
                         "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/present-proof/1.0/presentation-preview",
                         "attributes": [
@@ -12171,10 +11430,6 @@ exports[`open api parser aries simple 1`] = `
                     },
                     "presentation_request": {
                       "name": "Proof request",
-                      "non_revoked": {
-                        "from": 1640995199,
-                        "to": 1640995199,
-                      },
                       "nonce": "1",
                       "requested_attributes": {
                         "key": {
@@ -12213,7 +11468,6 @@ exports[`open api parser aries simple 1`] = `
                     "presentation_request_dict": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "request_presentations~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -12294,29 +11548,10 @@ exports[`open api parser aries simple 1`] = `
                     "created_at": "2021-12-31 23:59:59+00:00",
                     "error_msg": "Invalid structure",
                     "initiator": "self",
-                    "presentation": {
-                      "identifiers": [
-                        {
-                          "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                          "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
-                        },
-                      ],
-                      "proof": {
-                        "proofs": [
-                          {},
-                        ],
-                      },
-                      "requested_proof": {
-                        "predicates": {
-                          "predicates": {},
-                        },
-                      },
-                    },
                     "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "presentation_proposal_dict": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "presentation_proposal": {
                         "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/present-proof/1.0/presentation-preview",
                         "attributes": [
@@ -12353,10 +11588,6 @@ exports[`open api parser aries simple 1`] = `
                     },
                     "presentation_request": {
                       "name": "Proof request",
-                      "non_revoked": {
-                        "from": 1640995199,
-                        "to": 1640995199,
-                      },
                       "nonce": "1",
                       "requested_attributes": {
                         "key": {
@@ -12395,7 +11626,6 @@ exports[`open api parser aries simple 1`] = `
                     "presentation_request_dict": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "request_presentations~attach": [
                         {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -12537,7 +11767,6 @@ exports[`open api parser aries simple 1`] = `
                     "pres": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "formats": [
                         {
                           "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -12567,7 +11796,6 @@ exports[`open api parser aries simple 1`] = `
                     "pres_proposal": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "formats": [
                         {
                           "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -12596,7 +11824,6 @@ exports[`open api parser aries simple 1`] = `
                     "pres_request": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "formats": [
                         {
                           "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -12621,7 +11848,6 @@ exports[`open api parser aries simple 1`] = `
                           "mime-type": "image/png",
                         },
                       ],
-                      "will_confirm": true,
                     },
                     "role": "prover",
                     "state": "proposal-sent",
@@ -12673,11 +11899,7 @@ exports[`open api parser aries simple 1`] = `
                   "pres_ex_id": "pres_ex_id",
                 },
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -12964,10 +12186,6 @@ exports[`open api parser aries simple 1`] = `
                         "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                         "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       },
-                      "interval": {
-                        "from": 1640995199,
-                        "to": 1640995199,
-                      },
                       "presentation_referents": [
                         "1_age_uuid",
                         "1_age_uuid",
@@ -13031,7 +12249,6 @@ exports[`open api parser aries simple 1`] = `
                     "pres": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "formats": [
                         {
                           "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -13061,7 +12278,6 @@ exports[`open api parser aries simple 1`] = `
                     "pres_proposal": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "formats": [
                         {
                           "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -13090,7 +12306,6 @@ exports[`open api parser aries simple 1`] = `
                     "pres_request": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "formats": [
                         {
                           "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -13115,7 +12330,6 @@ exports[`open api parser aries simple 1`] = `
                           "mime-type": "image/png",
                         },
                       ],
-                      "will_confirm": true,
                     },
                     "role": "prover",
                     "state": "proposal-sent",
@@ -13157,11 +12371,7 @@ exports[`open api parser aries simple 1`] = `
                   "description": "description",
                 },
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -13250,7 +12460,6 @@ exports[`open api parser aries simple 1`] = `
                     "pres": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "formats": [
                         {
                           "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -13280,7 +12489,6 @@ exports[`open api parser aries simple 1`] = `
                     "pres_proposal": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "formats": [
                         {
                           "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -13309,7 +12517,6 @@ exports[`open api parser aries simple 1`] = `
                     "pres_request": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "formats": [
                         {
                           "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -13334,7 +12541,6 @@ exports[`open api parser aries simple 1`] = `
                           "mime-type": "image/png",
                         },
                       ],
-                      "will_confirm": true,
                     },
                     "role": "prover",
                     "state": "proposal-sent",
@@ -13442,7 +12648,6 @@ exports[`open api parser aries simple 1`] = `
                     "pres": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "formats": [
                         {
                           "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -13472,7 +12677,6 @@ exports[`open api parser aries simple 1`] = `
                     "pres_proposal": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "formats": [
                         {
                           "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -13501,7 +12705,6 @@ exports[`open api parser aries simple 1`] = `
                     "pres_request": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "formats": [
                         {
                           "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -13526,7 +12729,6 @@ exports[`open api parser aries simple 1`] = `
                           "mime-type": "image/png",
                         },
                       ],
-                      "will_confirm": true,
                     },
                     "role": "prover",
                     "state": "proposal-sent",
@@ -13616,7 +12818,6 @@ exports[`open api parser aries simple 1`] = `
                     "pres": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "formats": [
                         {
                           "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -13646,7 +12847,6 @@ exports[`open api parser aries simple 1`] = `
                     "pres_proposal": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "formats": [
                         {
                           "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -13675,7 +12875,6 @@ exports[`open api parser aries simple 1`] = `
                     "pres_request": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "formats": [
                         {
                           "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -13700,7 +12899,6 @@ exports[`open api parser aries simple 1`] = `
                           "mime-type": "image/png",
                         },
                       ],
-                      "will_confirm": true,
                     },
                     "role": "prover",
                     "state": "proposal-sent",
@@ -13768,7 +12966,6 @@ exports[`open api parser aries simple 1`] = `
                     "pres": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "formats": [
                         {
                           "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -13798,7 +12995,6 @@ exports[`open api parser aries simple 1`] = `
                     "pres_proposal": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "formats": [
                         {
                           "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -13827,7 +13023,6 @@ exports[`open api parser aries simple 1`] = `
                     "pres_request": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "formats": [
                         {
                           "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -13852,7 +13047,6 @@ exports[`open api parser aries simple 1`] = `
                           "mime-type": "image/png",
                         },
                       ],
-                      "will_confirm": true,
                     },
                     "role": "prover",
                     "state": "proposal-sent",
@@ -13918,7 +13112,6 @@ exports[`open api parser aries simple 1`] = `
                     "pres": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "formats": [
                         {
                           "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -13948,7 +13141,6 @@ exports[`open api parser aries simple 1`] = `
                     "pres_proposal": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "formats": [
                         {
                           "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -13977,7 +13169,6 @@ exports[`open api parser aries simple 1`] = `
                     "pres_request": {
                       "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                      "comment": "comment",
                       "formats": [
                         {
                           "attach_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -14002,7 +13193,6 @@ exports[`open api parser aries simple 1`] = `
                           "mime-type": "image/png",
                         },
                       ],
-                      "will_confirm": true,
                     },
                     "role": "prover",
                     "state": "proposal-sent",
@@ -14195,24 +13385,6 @@ exports[`open api parser aries simple 1`] = `
                       ],
                       "record_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "revoc_def_type": "CL_ACCUM",
-                      "revoc_reg_def": {
-                        "credDefId": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                        "id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                        "revocDefType": "CL_ACCUM",
-                        "tag": "tag",
-                        "value": {
-                          "maxCredNum": 10,
-                          "tailsHash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                        },
-                        "ver": "1.0",
-                      },
-                      "revoc_reg_entry": {
-                        "value": {
-                          "accum": "21 11792B036AED0AAA12A4 4 298B2571FFC63A737",
-                          "prevAccum": "21 137AC810975E4 6 76F0384B6F23",
-                        },
-                        "ver": "1.0",
-                      },
                       "revoc_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "state": "active",
                       "tag": "tag",
@@ -14286,13 +13458,6 @@ exports[`open api parser aries simple 1`] = `
             "auth": true,
             "display-name": "Download tails file",
             "docs": undefined,
-            "examples": [
-              {
-                "path-parameters": {
-                  "rev_reg_id": "rev_reg_id",
-                },
-              },
-            ],
             "method": "GET",
             "path": "/revocation/registry/{rev_reg_id}/tails-file",
             "path-parameters": {
@@ -14329,24 +13494,6 @@ exports[`open api parser aries simple 1`] = `
                       ],
                       "record_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "revoc_def_type": "CL_ACCUM",
-                      "revoc_reg_def": {
-                        "credDefId": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                        "id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                        "revocDefType": "CL_ACCUM",
-                        "tag": "tag",
-                        "value": {
-                          "maxCredNum": 10,
-                          "tailsHash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                        },
-                        "ver": "1.0",
-                      },
-                      "revoc_reg_entry": {
-                        "value": {
-                          "accum": "21 11792B036AED0AAA12A4 4 298B2571FFC63A737",
-                          "prevAccum": "21 137AC810975E4 6 76F0384B6F23",
-                        },
-                        "ver": "1.0",
-                      },
                       "revoc_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "state": "active",
                       "tag": "tag",
@@ -14586,24 +13733,6 @@ exports[`open api parser aries simple 1`] = `
                       ],
                       "record_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "revoc_def_type": "CL_ACCUM",
-                      "revoc_reg_def": {
-                        "credDefId": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                        "id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                        "revocDefType": "CL_ACCUM",
-                        "tag": "tag",
-                        "value": {
-                          "maxCredNum": 10,
-                          "tailsHash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                        },
-                        "ver": "1.0",
-                      },
-                      "revoc_reg_entry": {
-                        "value": {
-                          "accum": "21 11792B036AED0AAA12A4 4 298B2571FFC63A737",
-                          "prevAccum": "21 137AC810975E4 6 76F0384B6F23",
-                        },
-                        "ver": "1.0",
-                      },
                       "revoc_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "state": "active",
                       "tag": "tag",
@@ -14653,14 +13782,6 @@ exports[`open api parser aries simple 1`] = `
                         ],
                         "record_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "revoc_def_type": "CL_ACCUM",
-                        "revoc_reg_def": {
-                          "credDefId": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                          "id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                          "ver": "1.0",
-                        },
-                        "revoc_reg_entry": {
-                          "ver": "1.0",
-                        },
                         "revoc_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                         "state": "active",
                         "tag": "tag",
@@ -14756,24 +13877,6 @@ exports[`open api parser aries simple 1`] = `
                       ],
                       "record_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "revoc_def_type": "CL_ACCUM",
-                      "revoc_reg_def": {
-                        "credDefId": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                        "id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                        "revocDefType": "CL_ACCUM",
-                        "tag": "tag",
-                        "value": {
-                          "maxCredNum": 10,
-                          "tailsHash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                        },
-                        "ver": "1.0",
-                      },
-                      "revoc_reg_entry": {
-                        "value": {
-                          "accum": "21 11792B036AED0AAA12A4 4 298B2571FFC63A737",
-                          "prevAccum": "21 137AC810975E4 6 76F0384B6F23",
-                        },
-                        "ver": "1.0",
-                      },
                       "revoc_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "state": "active",
                       "tag": "tag",
@@ -14901,11 +14004,7 @@ exports[`open api parser aries simple 1`] = `
                   "thread_id": "thread_id",
                 },
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -14987,24 +14086,6 @@ exports[`open api parser aries simple 1`] = `
                       ],
                       "record_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "revoc_def_type": "CL_ACCUM",
-                      "revoc_reg_def": {
-                        "credDefId": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                        "id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                        "revocDefType": "CL_ACCUM",
-                        "tag": "tag",
-                        "value": {
-                          "maxCredNum": 10,
-                          "tailsHash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                        },
-                        "ver": "1.0",
-                      },
-                      "revoc_reg_entry": {
-                        "value": {
-                          "accum": "21 11792B036AED0AAA12A4 4 298B2571FFC63A737",
-                          "prevAccum": "21 137AC810975E4 6 76F0384B6F23",
-                        },
-                        "ver": "1.0",
-                      },
                       "revoc_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "state": "active",
                       "tag": "tag",
@@ -15104,24 +14185,6 @@ exports[`open api parser aries simple 1`] = `
                       ],
                       "record_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "revoc_def_type": "CL_ACCUM",
-                      "revoc_reg_def": {
-                        "credDefId": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                        "id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
-                        "revocDefType": "CL_ACCUM",
-                        "tag": "tag",
-                        "value": {
-                          "maxCredNum": 10,
-                          "tailsHash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
-                        },
-                        "ver": "1.0",
-                      },
-                      "revoc_reg_entry": {
-                        "value": {
-                          "accum": "21 11792B036AED0AAA12A4 4 298B2571FFC63A737",
-                          "prevAccum": "21 137AC810975E4 6 76F0384B6F23",
-                        },
-                        "ver": "1.0",
-                      },
                       "revoc_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "state": "active",
                       "tag": "tag",
@@ -15170,11 +14233,7 @@ exports[`open api parser aries simple 1`] = `
                   "rev_reg_id": "rev_reg_id",
                 },
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -15577,11 +14636,7 @@ exports[`open api parser aries simple 1`] = `
             "examples": [
               {
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -15599,11 +14654,7 @@ exports[`open api parser aries simple 1`] = `
             "examples": [
               {
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -15862,11 +14913,7 @@ exports[`open api parser aries simple 1`] = `
                   "did": "did",
                 },
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -15898,11 +14945,7 @@ exports[`open api parser aries simple 1`] = `
                   "endpoint_type": "Endpoint",
                 },
                 "response": {
-                  "body": {
-                    "string": {
-                      "key": "value",
-                    },
-                  },
+                  "body": {},
                 },
               },
             ],

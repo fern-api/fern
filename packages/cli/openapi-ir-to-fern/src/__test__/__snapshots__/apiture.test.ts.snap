@@ -196,35 +196,9 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
               {
                 "response": {
                   "body": {
-                    "count": 1,
-                    "items": [
-                      {
-                        "allows": {
-                          "billPay": true,
-                          "manageCards": true,
-                          "mobileCheckDeposit": true,
-                          "transferFrom": true,
-                          "transferTo": true,
-                          "view": true,
-                          "viewCards": true,
-                        },
-                        "id": "id",
-                        "label": "Checking *1008",
-                        "location": "internal",
-                        "maskedNumber": "maskedNumber",
-                        "nickname": "Payroll Checking",
-                        "product": {
-                          "code": "180D_CDA",
-                          "description": "Certificate of Deposit with a 180 day term",
-                          "label": "180 Day CD",
-                          "type": "cd",
-                        },
-                      },
-                    ],
+                    "items": [],
                     "limit": 1,
                     "nextPage_url": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
-                    "primaryAccountId": "primaryAccountId",
-                    "start": "start",
                   },
                 },
               },
@@ -682,7 +656,6 @@ This information provides hints to clients, allowing bank customers to select tr
                         "locality": "Andalasia",
                         "postalCode": "28407",
                         "regionCode": "NC",
-                        "regionName": "regionName",
                       },
                       "locator": "503000196",
                       "locatorType": "abaRoutingNumber",
@@ -779,7 +752,6 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                     "id": "db4f580290d3e07bf55d",
                     "lastName": "Jones",
                     "sharedSecret": "obsolete obese octopus",
-                    "taxId": "taxId",
                   },
                 },
               },
@@ -838,9 +810,6 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                 },
                 "response": {
                   "body": {
-                    "accounts": {
-                      "key": "value",
-                    },
                     "maximumOverdraftAccounts": 1,
                   },
                 },
@@ -896,7 +865,6 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
                     "limit": 100,
                     "maximumOverdraftAccounts": 1,
                     "nextPage_url": "https://production.api.apiture.com/banking/accounts/f204d292df9fb/eligibleOverdraftAccounts?start=641f62296ecbf1882c84?limit=100",
-                    "start": "start",
                   },
                 },
               },
@@ -948,9 +916,6 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
                 "request": {},
                 "response": {
                   "body": {
-                    "accounts": {
-                      "key": "value",
-                    },
                     "maximumOverdraftAccounts": 1,
                   },
                 },
@@ -1079,17 +1044,8 @@ The default response lists only recent transactions. Normally, this is transacti
                       {
                         "amount": "0.00",
                         "balance": "8509.38",
-                        "category": {
-                          "id": "id",
-                          "label": "label",
-                        },
-                        "check": {
-                          "number": 1,
-                        },
                         "createdOn": "2023-05-18",
-                        "description": "description",
                         "id": "d62c0701-0d74",
-                        "memo": "memo",
                         "occurredOn": "2023-06-18",
                         "posted": true,
                         "postedOn": "2023-05-18",
@@ -1109,7 +1065,6 @@ The default response lists only recent transactions. Normally, this is transacti
                           "number": 8412,
                         },
                         "createdOn": "2023-05-18",
-                        "description": "description",
                         "id": "88f5bf17-ecc4",
                         "memo": "Paid electric bill",
                         "merchant": {
@@ -1252,15 +1207,11 @@ Note: This operation requires an identity challenge if the financial institution
                     "createdAt": "2022-04-18T07:21:35Z",
                     "id": "0399abed-fd3d",
                     "memo": "Cover check for car repair",
-                    "processedAt": "2024-01-15T09:30:00Z",
                     "schedule": {
                       "amountLimit": "3456.78",
-                      "count": 1,
                       "creditsOn": "2026-06-26",
                       "debitsOn": "2026-06-24",
-                      "endsOn": "endsOn",
                       "frequency": "once",
-                      "recurrenceType": "fixed",
                       "scheduledOn": "2026-06-28",
                     },
                     "sourceAccount": {
@@ -1277,7 +1228,6 @@ Note: This operation requires an identity challenge if the financial institution
                       "type": "savings",
                     },
                     "updatedAt": "2022-04-18T07:21:35Z",
-                    "updatedBy": "updatedBy",
                   },
                 },
               },
@@ -1322,13 +1272,6 @@ Note: This operation requires an identity challenge if the financial institution
               "root.NotFoundError",
               "root.ConflictError",
             ],
-            "examples": [
-              {
-                "path-parameters": {
-                  "transferId": "transferId",
-                },
-              },
-            ],
             "method": "DELETE",
             "path": "/transfers/{transferId}",
             "path-parameters": {
@@ -1358,15 +1301,11 @@ Note: This operation requires an identity challenge if the financial institution
                     "createdAt": "2022-04-18T07:21:35Z",
                     "id": "0399abed-fd3d",
                     "memo": "Cover check for car repair",
-                    "processedAt": "2024-01-15T09:30:00Z",
                     "schedule": {
                       "amountLimit": "3456.78",
-                      "count": 1,
                       "creditsOn": "2026-06-26",
                       "debitsOn": "2026-06-24",
-                      "endsOn": "endsOn",
                       "frequency": "once",
-                      "recurrenceType": "fixed",
                       "scheduledOn": "2026-06-28",
                     },
                     "sourceAccount": {
@@ -1383,7 +1322,6 @@ Note: This operation requires an identity challenge if the financial institution
                       "type": "savings",
                     },
                     "updatedAt": "2022-04-18T07:21:35Z",
-                    "updatedBy": "updatedBy",
                   },
                 },
               },
@@ -1415,7 +1353,6 @@ Note: This operation requires an identity challenge if the financial institution
               {
                 "response": {
                   "body": {
-                    "count": 1,
                     "items": [
                       {
                         "amount": "275.00",
@@ -1444,14 +1381,12 @@ Note: This operation requires an identity challenge if the financial institution
                           "type": "savings",
                         },
                         "updatedAt": "2022-04-18T07:21:35Z",
-                        "updatedBy": "updatedBy",
                       },
                       {
                         "amount": "100.00",
                         "createdAt": "2022-04-18T07:21:35Z",
                         "id": "d62c0701-0d74",
                         "memo": "school expenses",
-                        "processedAt": "2024-01-15T09:30:00Z",
                         "schedule": {
                           "amountLimit": "3456.78",
                           "count": 9,
@@ -1474,7 +1409,6 @@ Note: This operation requires an identity challenge if the financial institution
                           "type": "checking",
                         },
                         "updatedAt": "2022-04-18T07:21:35Z",
-                        "updatedBy": "updatedBy",
                       },
                     ],
                     "limit": 10,
@@ -1562,15 +1496,11 @@ Note: This operation requires an identity challenge if the financial institution
                     "createdAt": "2022-04-18T07:21:35Z",
                     "id": "0399abed-fd3d",
                     "memo": "Cover check for car repair",
-                    "processedAt": "2024-01-15T09:30:00Z",
                     "schedule": {
                       "amountLimit": "3456.78",
-                      "count": 1,
                       "creditsOn": "2026-06-26",
                       "debitsOn": "2026-06-24",
-                      "endsOn": "endsOn",
                       "frequency": "once",
-                      "recurrenceType": "fixed",
                       "scheduledOn": "2026-06-28",
                     },
                     "sourceAccount": {
@@ -1587,7 +1517,6 @@ Note: This operation requires an identity challenge if the financial institution
                       "type": "savings",
                     },
                     "updatedAt": "2022-04-18T07:21:35Z",
-                    "updatedBy": "updatedBy",
                   },
                 },
               },

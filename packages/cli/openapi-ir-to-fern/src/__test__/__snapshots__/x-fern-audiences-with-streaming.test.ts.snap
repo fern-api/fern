@@ -23,10 +23,7 @@ exports[`x-fern-sdk-group-name-with-streaming x-fern-sdk-group-name-with-streami
                   "stream": false,
                 },
                 "response": {
-                  "body": {
-                    "id": "id",
-                    "streamed": false,
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -53,16 +50,6 @@ exports[`x-fern-sdk-group-name-with-streaming x-fern-sdk-group-name-with-streami
           "get_stream": {
             "auth": false,
             "docs": undefined,
-            "examples": [
-              {
-                "path-parameters": {
-                  "userId": "userId",
-                },
-                "request": {
-                  "stream": true,
-                },
-              },
-            ],
             "method": "GET",
             "path": "/user/{userId}",
             "path-parameters": {

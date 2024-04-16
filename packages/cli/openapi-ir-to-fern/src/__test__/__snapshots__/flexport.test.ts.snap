@@ -22,6 +22,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "f.consignee_entity_ref": "amazon-us",
                   "f.shipment.id": 123456,
@@ -250,7 +251,6 @@ exports[`open api parser flexport simple 1`] = `
                           "wants_import_customs_service": true,
                         },
                       ],
-                      "next": "https://api.flexport.com/bookings?page=3&per=10",
                       "prev": "https://api.flexport.com/bookings?page=12&per=10",
                     },
                     "self": "https://api.flexport.com/bookings?page=13&per=10",
@@ -358,6 +358,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "request": {
                   "air_booking": {
                     "incoterm": "EXW",
@@ -471,33 +472,6 @@ exports[`open api parser flexport simple 1`] = `
                     "_object": "/api/response",
                     "data": {
                       "_object": "/booking",
-                      "air_booking": {
-                        "_object": "/air/booking",
-                        "destination_port": {
-                          "_object": "/place",
-                          "name": "ORD - Chicago - IL",
-                        },
-                        "incoterm": "EXW",
-                        "origin_port": {
-                          "_object": "/place",
-                          "name": "ORD - Chicago - IL",
-                        },
-                        "product_descriptions": [
-                          {
-                            "_object": "/bookings/product_descriptions",
-                            "description": "Wristwatches",
-                            "description_for_export_customs": "手表",
-                            "description_for_export_customs_locale": "zh_CN",
-                          },
-                        ],
-                        "wants_delivery_service": false,
-                        "wants_pickup_service": true,
-                      },
-                      "booking_line_items": {
-                        "_object": "/api/refs/collection",
-                        "link": "https://api.flexport.com/booking_line_items?f.booking.id=123",
-                        "ref_type": "/purchase_orders/booking_line_item",
-                      },
                       "cargo": {
                         "_object": "/cargo",
                         "contains_hazmat": true,
@@ -606,7 +580,6 @@ exports[`open api parser flexport simple 1`] = `
                         },
                       },
                       "name": "PO 123",
-                      "notify_party": "John Doe | john@example.com | 905-555-1234",
                       "ocean_booking": {
                         "_object": "/ocean/booking",
                         "container_counts": {
@@ -708,13 +681,6 @@ exports[`open api parser flexport simple 1`] = `
                         "unlocode": "US AL2",
                         "zip": "56307",
                       },
-                      "quote_status": "pending_quote",
-                      "shipment": {
-                        "_object": "/api/refs/object",
-                        "id": 123,
-                        "link": "https://api.flexport.com/shipments/123",
-                        "ref_type": "/shipment",
-                      },
                       "shipper_entity": {
                         "_object": "/company_entity",
                         "id": 9281,
@@ -742,14 +708,7 @@ exports[`open api parser flexport simple 1`] = `
                         ],
                       },
                       "special_instructions": "Handle carefully",
-                      "status": "archived",
                       "transportation_mode": "ocean",
-                      "trucking_booking": {
-                        "_object": "/trucking/booking",
-                        "description_of_products": "Wristwatches",
-                        "is_ftl": false,
-                        "payment_terms": "collect",
-                      },
                       "wants_export_customs_service": true,
                       "wants_import_customs_service": true,
                     },
@@ -854,6 +813,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": 1,
                 },
@@ -862,33 +822,6 @@ exports[`open api parser flexport simple 1`] = `
                     "_object": "/api/response",
                     "data": {
                       "_object": "/booking",
-                      "air_booking": {
-                        "_object": "/air/booking",
-                        "destination_port": {
-                          "_object": "/place",
-                          "name": "ORD - Chicago - IL",
-                        },
-                        "incoterm": "EXW",
-                        "origin_port": {
-                          "_object": "/place",
-                          "name": "ORD - Chicago - IL",
-                        },
-                        "product_descriptions": [
-                          {
-                            "_object": "/bookings/product_descriptions",
-                            "description": "Wristwatches",
-                            "description_for_export_customs": "手表",
-                            "description_for_export_customs_locale": "zh_CN",
-                          },
-                        ],
-                        "wants_delivery_service": false,
-                        "wants_pickup_service": true,
-                      },
-                      "booking_line_items": {
-                        "_object": "/api/refs/collection",
-                        "link": "https://api.flexport.com/booking_line_items?f.booking.id=123",
-                        "ref_type": "/purchase_orders/booking_line_item",
-                      },
                       "cargo": {
                         "_object": "/cargo",
                         "contains_hazmat": false,
@@ -1069,14 +1002,6 @@ exports[`open api parser flexport simple 1`] = `
                           ],
                           "name": "Shanghai, China",
                         },
-                        "product_descriptions": [
-                          {
-                            "_object": "/bookings/product_descriptions",
-                            "description": "Wristwatches",
-                            "description_for_export_customs": "手表",
-                            "description_for_export_customs_locale": "zh_CN",
-                          },
-                        ],
                         "wants_delivery_service": false,
                         "wants_pickup_service": true,
                       },
@@ -1094,12 +1019,6 @@ exports[`open api parser flexport simple 1`] = `
                         "zip": "56307",
                       },
                       "quote_status": "accepted_quote",
-                      "shipment": {
-                        "_object": "/api/refs/object",
-                        "id": 123,
-                        "link": "https://api.flexport.com/shipments/123",
-                        "ref_type": "/shipment",
-                      },
                       "shipper_entity": {
                         "_object": "/company_entity",
                         "id": 9281,
@@ -1127,14 +1046,7 @@ exports[`open api parser flexport simple 1`] = `
                         ],
                       },
                       "special_instructions": "",
-                      "status": "archived",
                       "transportation_mode": "ocean",
-                      "trucking_booking": {
-                        "_object": "/trucking/booking",
-                        "description_of_products": "Wristwatches",
-                        "is_ftl": false,
-                        "payment_terms": "collect",
-                      },
                       "wants_export_customs_service": true,
                       "wants_import_customs_service": true,
                     },
@@ -1243,6 +1155,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "request": {
                   "amendment_note": "This is an amendment note with useful context to changes made to the booking.",
                   "booking_id": 12345,
@@ -1406,12 +1319,9 @@ exports[`open api parser flexport simple 1`] = `
                         "country": "China",
                         "country_code": "CN",
                         "ref": "my-shanghai-address-ref",
-                        "state": "MN",
                         "street_address": "123 Queen St",
-                        "street_address2": "STE 2918",
                         "timezone": "China/Shanghai",
                         "unlocode": "CNSHA",
-                        "zip": "56307",
                       },
                       "new_port_of_loading": {
                         "_object": "/address",
@@ -1419,12 +1329,9 @@ exports[`open api parser flexport simple 1`] = `
                         "country": "China",
                         "country_code": "CN",
                         "ref": "my-shanghai-address-ref",
-                        "state": "MN",
                         "street_address": "123 Queen St",
-                        "street_address2": "STE 2918",
                         "timezone": "China/Shanghai",
                         "unlocode": "CNSHA",
-                        "zip": "56307",
                       },
                       "new_port_of_unloading": {
                         "_object": "/address",
@@ -1439,13 +1346,6 @@ exports[`open api parser flexport simple 1`] = `
                         "unlocode": "US AL2",
                         "zip": "60666",
                       },
-                      "new_product_descriptions": [
-                        {
-                          "_object": "/booking_amendment_product_description",
-                          "description": "Wristwatches",
-                          "description_for_export_customs": "手表",
-                        },
-                      ],
                       "new_wants_bco": true,
                       "new_wants_flexport_freight": true,
                       "new_wants_import_customs_service": false,
@@ -1558,6 +1458,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "request": {
                   "booking_id": 9876,
                   "purchase_order_line_item_id": 112358,
@@ -1626,6 +1527,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "f.booking.id": 54321,
                   "f.purchase_order.id": 123,
@@ -1657,7 +1559,6 @@ exports[`open api parser flexport simple 1`] = `
                           "units": 200,
                         },
                       ],
-                      "next": "https://api.flexport.com/booking_line_items?page=3&per=10",
                       "prev": "https://api.flexport.com/booking_line_items?page=12&per=10",
                     },
                     "self": "https://api.flexport.com/booking_line_items?page=13&per=10",
@@ -1711,6 +1612,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": 1,
                 },
@@ -1819,6 +1721,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "response",
                 "request": {
                   "destination_port": "JFK",
                   "origin_coordinates": {
@@ -1987,6 +1890,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "request": {
                   "currency_code": "USD",
                   "invoice_number": "INVOICE-04-05-2020",
@@ -2027,15 +1931,7 @@ exports[`open api parser flexport simple 1`] = `
                       "currency": "USD",
                       "digitization_status": "complete",
                       "id": "abcxyz-23456-def",
-                      "invoice_date": "invoice_date",
                       "invoice_number": "ABCDEFGHIJKLMNOP",
-                      "involved_parties": [
-                        {
-                          "_object": "/customs/involved_party",
-                          "name": "The West Coast Company",
-                          "type": "consignee",
-                        },
-                      ],
                       "is_related_parties": false,
                       "line_items": [
                         {
@@ -2093,12 +1989,6 @@ exports[`open api parser flexport simple 1`] = `
                           "zip": "56307",
                         },
                       ],
-                      "metadata": {
-                        "metadata": {
-                          "key": "value",
-                        },
-                      },
-                      "order_number": "order_number",
                       "shipment": {
                         "_object": "/api/refs/object",
                         "id": 123456,
@@ -2177,6 +2067,7 @@ exports[`open api parser flexport simple 1`] = `
             "docs": "Returns a list of commercial invoices",
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "page": 1,
                   "per": 20,
@@ -2273,7 +2164,6 @@ exports[`open api parser flexport simple 1`] = `
                           },
                         },
                       ],
-                      "next": "https://api.flexport.com/commercial_invoices?page=3&per=10",
                       "prev": "https://api.flexport.com/commercial_invoices?page=1&per=10",
                     },
                     "self": "https://api.flexport.com/commercial_invoices?page=2&per=10",
@@ -2327,6 +2217,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": "id",
                 },
@@ -2338,15 +2229,7 @@ exports[`open api parser flexport simple 1`] = `
                       "currency": "USD",
                       "digitization_status": "complete",
                       "id": "abcxyz-23456-def",
-                      "invoice_date": "invoice_date",
                       "invoice_number": "ABCDEFGHIJKLMNOP",
-                      "involved_parties": [
-                        {
-                          "_object": "/customs/involved_party",
-                          "name": "The West Coast Company",
-                          "type": "consignee",
-                        },
-                      ],
                       "is_related_parties": false,
                       "line_items": [
                         {
@@ -2404,12 +2287,6 @@ exports[`open api parser flexport simple 1`] = `
                           "zip": "56307",
                         },
                       ],
-                      "metadata": {
-                        "metadata": {
-                          "key": "value",
-                        },
-                      },
-                      "order_number": "order_number",
                       "shipment": {
                         "_object": "/api/refs/object",
                         "id": 123456,
@@ -2460,6 +2337,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "request": {
                   "currency_code": "USD",
                   "invoice_number": "INVOICE-04-05-2020",
@@ -2494,15 +2372,7 @@ exports[`open api parser flexport simple 1`] = `
                       "currency": "USD",
                       "digitization_status": "complete",
                       "id": "abcxyz-23456-def",
-                      "invoice_date": "invoice_date",
                       "invoice_number": "ABCDEFGHIJKLMNOP",
-                      "involved_parties": [
-                        {
-                          "_object": "/customs/involved_party",
-                          "name": "The West Coast Company",
-                          "type": "consignee",
-                        },
-                      ],
                       "is_related_parties": false,
                       "line_items": [
                         {
@@ -2560,12 +2430,6 @@ exports[`open api parser flexport simple 1`] = `
                           "zip": "56307",
                         },
                       ],
-                      "metadata": {
-                        "metadata": {
-                          "key": "value",
-                        },
-                      },
-                      "order_number": "order_number",
                       "shipment": {
                         "_object": "/api/refs/object",
                         "id": 123456,
@@ -2695,6 +2559,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "response",
                 "request": {
                   "name": "Zoomit",
                   "ref": "zoomit-ref",
@@ -2744,11 +2609,6 @@ exports[`open api parser flexport simple 1`] = `
                         "link": "https://api.flexport.com/network/locations?f.company.id=K67EZV1K8cQ5afQErZwk1Q",
                         "ref_type": "/network/location",
                       },
-                      "metadata": {
-                        "metadata": {
-                          "key": "value",
-                        },
-                      },
                       "name": "Zoomit",
                       "ref": "zoomit_ref",
                     },
@@ -2791,6 +2651,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "page": 1,
                   "per": 20,
@@ -2847,7 +2708,6 @@ exports[`open api parser flexport simple 1`] = `
                           "ref": "ref_for_company",
                         },
                       ],
-                      "next": "https://api.flexport.com/network/companies?page=3&per=10",
                       "prev": "https://api.flexport.com/network/companies?page=12&per=10",
                       "total_count": 121,
                     },
@@ -2894,6 +2754,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -2939,11 +2800,6 @@ exports[`open api parser flexport simple 1`] = `
                         "link": "https://api.flexport.com/network/locations/123456",
                         "ref_type": "/network/location",
                       },
-                      "metadata": {
-                        "metadata": {
-                          "key": "value",
-                        },
-                      },
                       "name": "CompanyFoo",
                       "ref": "ref_for_company",
                     },
@@ -2966,6 +2822,7 @@ exports[`open api parser flexport simple 1`] = `
             "docs": "Retrieves the details of a single company.",
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": "id",
                 },
@@ -3014,11 +2871,6 @@ exports[`open api parser flexport simple 1`] = `
                         "link": "https://api.flexport.com/network/locations/123456",
                         "ref_type": "/network/location",
                       },
-                      "metadata": {
-                        "metadata": {
-                          "key": "value",
-                        },
-                      },
                       "name": "CompanyFoo",
                       "ref": "ref_for_company",
                     },
@@ -3050,6 +2902,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "response",
                 "path-parameters": {
                   "id": "id",
                 },
@@ -3101,11 +2954,6 @@ exports[`open api parser flexport simple 1`] = `
                         "_object": "/api/refs/collection",
                         "link": "https://api.flexport.com/network/locations?f.company.id=K67EZV1K8cQ5afQErZwk1Q",
                         "ref_type": "/network/location",
-                      },
-                      "metadata": {
-                        "metadata": {
-                          "key": "value",
-                        },
                       },
                       "name": "Updated Zoomit",
                       "ref": "zoomit_ref",
@@ -3225,6 +3073,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "page": 1,
                   "per": 20,
@@ -3262,7 +3111,6 @@ exports[`open api parser flexport simple 1`] = `
                           ],
                         },
                       ],
-                      "next": "https://api.flexport.com/network/company_entities?page=3&per=10",
                       "prev": "https://api.flexport.com/network/company_entities?page=12&per=10",
                       "total_count": 121,
                     },
@@ -3313,6 +3161,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "response",
                 "request": {
                   "company_id": "2UXaj4xcHoW8nwh9UVOMpw",
                   "company_ref": "Zoomit",
@@ -3418,6 +3267,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "response",
                 "path-parameters": {
                   "id": "id",
                 },
@@ -3478,6 +3328,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "response",
                 "path-parameters": {
                   "id": "id",
                 },
@@ -3631,6 +3482,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "response",
                 "request": {
                   "company_id": "2UXaj4xcHoW8nwh9UVOMpw",
                   "email": "john@example.com",
@@ -3705,6 +3557,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "page": 1,
                   "per": 20,
@@ -3734,7 +3587,6 @@ exports[`open api parser flexport simple 1`] = `
                           "phone_number": "6789998212",
                         },
                       ],
-                      "next": "https://api.flexport.com/network/contacts?page=3&per=10",
                       "prev": "https://api.flexport.com/network/contacts?page=12&per=10",
                       "total_count": 121,
                     },
@@ -3785,6 +3637,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": "id",
                 },
@@ -3837,6 +3690,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "response",
                 "path-parameters": {
                   "id": "id",
                 },
@@ -3976,6 +3830,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "page": 1,
                   "per": 20,
@@ -4098,6 +3953,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": "id",
                 },
@@ -4157,12 +4013,6 @@ exports[`open api parser flexport simple 1`] = `
                         },
                       ],
                       "last_free_day_date": "2019-02-16T00:00:00Z",
-                      "metadata": {
-                        "metadata": {
-                          "key": "value",
-                        },
-                      },
-                      "pickup_number": "ABCD1234",
                       "seal_number": "UE_WQ2934875",
                       "shipment": {
                         "_object": "/api/refs/object",
@@ -4241,6 +4091,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "page": 1,
                   "per": 20,
@@ -4322,6 +4173,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": 1,
                 },
@@ -4418,6 +4270,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "page": 1,
                   "per": 20,
@@ -4442,7 +4295,6 @@ exports[`open api parser flexport simple 1`] = `
                           },
                         },
                       ],
-                      "next": "https://api.flexport.com/customs_entries?page=3&per=10",
                       "prev": "https://api.flexport.com/customs_entries?page=12&per=10",
                     },
                     "self": "https://api.flexport.com/customs_entries?page=13&per=10",
@@ -4484,6 +4336,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": "id",
                 },
@@ -4573,6 +4426,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "request": {
                   "document": "SGVsbG8sIFdvcmxkIQ==",
                   "document_type": "packing_list",
@@ -4588,7 +4442,6 @@ exports[`open api parser flexport simple 1`] = `
                       "document": "SGVsbG8sIFdvcmxkIQ==",
                       "document_type": "packing_list",
                       "file_name": "Flexport-Booking.pdf",
-                      "memo": "memo",
                       "mime_type": "application/pdf",
                       "shipment_id": 1234567,
                       "user_email": "johndoe@flexport.com",
@@ -4613,13 +4466,6 @@ exports[`open api parser flexport simple 1`] = `
             "auth": false,
             "display-name": "Download a document",
             "docs": "Retrieves the contents of a specified file. Returns the file as a stream of bytes.",
-            "examples": [
-              {
-                "path-parameters": {
-                  "id": "id",
-                },
-              },
-            ],
             "method": "GET",
             "path": "/documents/{id}/download",
             "path-parameters": {
@@ -4642,6 +4488,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "page": 1,
                   "per": 20,
@@ -4671,7 +4518,6 @@ exports[`open api parser flexport simple 1`] = `
                           },
                         },
                       ],
-                      "next": "https://api.flexport.com/documents?page=3&per=10",
                       "prev": "https://api.flexport.com/documents?page=12&per=10",
                       "total_count": 121,
                     },
@@ -4738,6 +4584,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": "id",
                 },
@@ -4746,7 +4593,6 @@ exports[`open api parser flexport simple 1`] = `
                     "_object": "/api/response",
                     "data": {
                       "_object": "/document",
-                      "archived_at": "2024-01-15T09:30:00Z",
                       "document_type": "billing_packet",
                       "file_link": "https://api.flexport.com/documents/ABC123/download",
                       "file_metadata": {
@@ -4756,7 +4602,6 @@ exports[`open api parser flexport simple 1`] = `
                       },
                       "file_name": "readme.txt",
                       "id": "ABC123",
-                      "memo": "memo",
                       "shipment": {
                         "_object": "/api/refs/object",
                         "id": 123456,
@@ -4847,21 +4692,6 @@ exports[`open api parser flexport simple 1`] = `
                 "response": {
                   "body": {
                     "_object": "/api/response",
-                    "data": {
-                      "_object": "/api/collections/paginated",
-                      "data": [
-                        {
-                          "_object": "/event",
-                          "created_at": "2019-04-16T18:05:10.964Z",
-                          "id": 354987,
-                          "occurred_at": "2019-04-16T18:05:10.964Z",
-                          "type": "/shipment_leg#departed",
-                          "version": 2,
-                        },
-                      ],
-                      "next": "next",
-                      "prev": "prev",
-                    },
                     "self": "https://api.flexport.com/events",
                     "version": 2,
                   },
@@ -4915,68 +4745,6 @@ exports[`open api parser flexport simple 1`] = `
                 "response": {
                   "body": {
                     "_object": "/api/response",
-                    "data": {
-                      "_object": "/event",
-                      "created_at": "2019-04-16T18:05:10.964Z",
-                      "data": {
-                        "_object": "/shipment_event_data",
-                        "containers": [
-                          {
-                            "_object": "/ocean/shipment_container",
-                            "container_number": "BWSE3982156",
-                            "id": 283910,
-                          },
-                        ],
-                        "exception": {
-                          "message": "US Customs Hold",
-                          "root_cause_name": "Government Agency",
-                        },
-                        "location": {
-                          "_object": "/shipment_node",
-                          "tags": [
-                            "port_of_loading",
-                          ],
-                        },
-                        "resource": {
-                          "_object": "/shipments",
-                          "id": 2983,
-                          "it_number": "V12345678",
-                          "name": "ABC Shipment",
-                          "pieces": 8372,
-                          "visibility_only": true,
-                          "wants_commercial_invoice_transcription": true,
-                          "wants_delivery_service": true,
-                          "wants_export_customs_service": true,
-                          "wants_flexport_freight": true,
-                          "wants_flexport_insurance": true,
-                          "wants_freight_management_bco": true,
-                          "wants_import_customs_service": true,
-                          "wants_pickup_service": true,
-                          "wants_trade_declaration_service": true,
-                        },
-                        "shipment": {
-                          "_object": "/shipments",
-                          "id": 2983,
-                          "it_number": "V12345678",
-                          "name": "ABC Shipment",
-                          "pieces": 8372,
-                          "visibility_only": true,
-                          "wants_commercial_invoice_transcription": true,
-                          "wants_delivery_service": true,
-                          "wants_export_customs_service": true,
-                          "wants_flexport_freight": true,
-                          "wants_flexport_insurance": true,
-                          "wants_freight_management_bco": true,
-                          "wants_import_customs_service": true,
-                          "wants_pickup_service": true,
-                          "wants_trade_declaration_service": true,
-                        },
-                      },
-                      "id": 354987,
-                      "occurred_at": "2019-04-16T18:05:10.964Z",
-                      "type": "/shipment_leg#departed",
-                      "version": 2,
-                    },
                     "self": "https://api.flexport.com/events/123456",
                     "version": 2,
                   },
@@ -5075,6 +4843,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "f.client_id": 54321,
                   "f.entity.id": 12345,
@@ -5321,7 +5090,6 @@ Other details about this invoice",
                         },
                       ],
                       "next": "https://api.flexport.com/invoices?page=2&per=10",
-                      "prev": "https://api.flexport.com/invoices?page=1&per=10",
                     },
                     "self": "https://api.flexport.com/invoices",
                     "version": 2,
@@ -5416,6 +5184,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": "id",
                 },
@@ -5730,6 +5499,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "page": 1,
                   "per": 20,
@@ -5771,7 +5541,6 @@ Other details about this invoice",
                           "name": "Wayne Enterprises",
                         },
                       ],
-                      "next": "https://api.flexport.com/network/locations?page=3&per=10",
                       "prev": "https://api.flexport.com/network/locations?page=1&per=10",
                       "total_count": 11,
                     },
@@ -5830,6 +5599,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "response",
                 "request": {
                   "address": {
                     "city": "Albany",
@@ -5870,19 +5640,12 @@ Other details about this invoice",
                       },
                       "contacts": {
                         "_object": "/api/refs/collection",
-                        "id": "id",
                         "link": "https://api.flexport.com/network/contacts?f.location.id=abdef123",
                         "ref_type": "/network/contacts",
                       },
                       "editable": true,
                       "id": "abdef123",
-                      "metadata": {
-                        "metadata": {
-                          "key": "value",
-                        },
-                      },
                       "name": "Zoomit",
-                      "ref": "ref",
                     },
                     "self": "https://api.flexport.com/network/locations",
                     "version": 2,
@@ -5936,6 +5699,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "response",
                 "path-parameters": {
                   "id": "id",
                 },
@@ -5965,19 +5729,12 @@ Other details about this invoice",
                       },
                       "contacts": {
                         "_object": "/api/refs/collection",
-                        "id": "id",
                         "link": "https://api.flexport.com/network/contacts?f.location.id=abdef123",
                         "ref_type": "/network/contacts",
                       },
                       "editable": true,
                       "id": "abdef123",
-                      "metadata": {
-                        "metadata": {
-                          "key": "value",
-                        },
-                      },
                       "name": "Wayne Enterprises",
-                      "ref": "ref",
                     },
                     "self": "https://api.flexport.com/network/locations/abdef123",
                     "version": 2,
@@ -6007,6 +5764,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "response",
                 "path-parameters": {
                   "id": "id",
                 },
@@ -6027,7 +5785,6 @@ Other details about this invoice",
                         "ref": "zoomit-management-co",
                         "state": "CA",
                         "street_address": "2 World Way",
-                        "street_address2": "STE 2918",
                         "timezone": "America/Los_Angeles",
                         "unlocode": "USLAX",
                         "zip": "90045",
@@ -6040,19 +5797,12 @@ Other details about this invoice",
                       },
                       "contacts": {
                         "_object": "/api/refs/collection",
-                        "id": "id",
                         "link": "https://api.flexport.com/network/contacts?f.location.id=abdef123",
                         "ref_type": "/network/contacts",
                       },
                       "editable": true,
                       "id": "abdef123",
-                      "metadata": {
-                        "metadata": {
-                          "key": "value",
-                        },
-                      },
                       "name": "Zoomit V2",
-                      "ref": "ref",
                     },
                     "self": "https://api.flexport.com/network/locations/abdef123",
                     "version": 2,
@@ -6169,6 +5919,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "f.unlocode": "CATOR",
                   "page": 1,
@@ -6342,6 +6093,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "request": {
                   "classifications": [
                     {
@@ -6475,6 +6227,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -6558,6 +6311,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": "id",
                 },
@@ -6626,6 +6380,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": "id",
                 },
@@ -6828,6 +6583,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "request": {
                   "cargo_ready_date": "2019-06-30",
                   "currency_code": "USD",
@@ -6947,141 +6703,10 @@ Other details about this invoice",
                 "response": {
                   "body": {
                     "_object": "/api/response",
-                    "archived_at": "archived_at",
-                    "cargo_ready_date": "cargo_ready_date",
-                    "created_at": "created_at",
-                    "destination_addresses": [
-                      {
-                        "_object": "/address",
-                        "city": "Albany",
-                        "country": "United States of America",
-                        "country_code": "US",
-                        "ref": "address_ref_x",
-                        "state": "MN",
-                        "street_address": "1641 Settlers Lane",
-                        "street_address2": "STE 2918",
-                        "timezone": "America/Los_Angeles",
-                        "unlocode": "US AL2",
-                        "zip": "56307",
-                      },
-                    ],
-                    "destination_port": {
-                      "_object": "/place",
-                      "address": {
-                        "_object": "/address",
-                        "city": "Albany",
-                        "country": "United States of America",
-                        "country_code": "US",
-                        "ref": "address_ref_x",
-                        "state": "MN",
-                        "street_address": "1641 Settlers Lane",
-                        "street_address2": "STE 2918",
-                        "timezone": "America/Los_Angeles",
-                        "unlocode": "US AL2",
-                        "zip": "56307",
-                      },
-                      "details": [
-                        {
-                          "_object": "/air/port",
-                          "country_code": "US",
-                          "iata_code": "LAX",
-                          "icao_code": "KLAX",
-                          "port_code": "3901",
-                        },
-                      ],
-                      "name": "ORD - Chicago - IL",
-                    },
-                    "freight_paymnet_terms": "freight_collect",
                     "id": 2983,
-                    "incoterm": "EXW",
-                    "issue_date": "issue_date",
-                    "line_items": {
-                      "_object": "/api/refs/collection",
-                      "link": "https://api.flexport.com/purchase_order_line_items?f.purchase_order.id=123",
-                      "ref_type": "/purchase_orders/line_item",
-                    },
                     "memo": "This message is written in invisible ink",
-                    "metadata": {
-                      "metadata": {
-                        "key": "value",
-                      },
-                    },
-                    "must_arrive_date": "must_arrive_date",
                     "name": "PO 12345 - "shipment"",
-                    "order_class": "purchase_order",
                     "order_type": "Apparel",
-                    "origin_address": {
-                      "_object": "/address",
-                      "city": "Albany",
-                      "country": "United States of America",
-                      "country_code": "US",
-                      "ref": "address_ref_x",
-                      "state": "MN",
-                      "street_address": "1641 Settlers Lane",
-                      "street_address2": "STE 2918",
-                      "timezone": "America/Los_Angeles",
-                      "unlocode": "US AL2",
-                      "zip": "56307",
-                    },
-                    "origin_port": {
-                      "_object": "/place",
-                      "address": {
-                        "_object": "/address",
-                        "city": "Albany",
-                        "country": "United States of America",
-                        "country_code": "US",
-                        "ref": "address_ref_x",
-                        "state": "MN",
-                        "street_address": "1641 Settlers Lane",
-                        "street_address2": "STE 2918",
-                        "timezone": "America/Los_Angeles",
-                        "unlocode": "US AL2",
-                        "zip": "56307",
-                      },
-                      "details": [
-                        {
-                          "_object": "/air/port",
-                          "country_code": "US",
-                          "iata_code": "LAX",
-                          "icao_code": "KLAX",
-                          "port_code": "3901",
-                        },
-                      ],
-                      "name": "ORD - Chicago - IL",
-                    },
-                    "parties": [
-                      {
-                        "company_entity": {
-                          "_object": "/company_entity",
-                          "id": 9281,
-                          "name": "Zoomit",
-                          "ref": "zoomit_ref",
-                        },
-                        "contacts": [
-                          {
-                            "department": "marketing",
-                            "email": "John.Doe@example.com",
-                            "fax": "1 323 555 1234",
-                            "name": "John Doe",
-                            "phone": "767 878 8888",
-                          },
-                        ],
-                        "location": {
-                          "_object": "/address",
-                          "city": "Albany",
-                          "country": "United States of America",
-                          "country_code": "US",
-                          "ref": "address_ref_x",
-                          "street_address": "1641 Settlers Lane",
-                          "timezone": "America/Los_Angeles",
-                        },
-                        "role": "buyer",
-                      },
-                    ],
-                    "priority": "standard",
-                    "status": "open",
-                    "transportation_mode": "ocean",
-                    "updated_at": "updated_at",
                   },
                 },
               },
@@ -7105,6 +6730,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "f.buyer_entity_ref": "id-54321",
                   "f.buyer_ref": "amazon-us",
@@ -7438,112 +7064,13 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": 1,
                 },
                 "response": {
                   "body": {
                     "_object": "/purchase_order",
-                    "data": {
-                      "_object": "/booking",
-                      "archived_at": "archived_at",
-                      "cargo_ready_date": "cargo_ready_date",
-                      "created_at": "created_at",
-                      "destination_addresses": [
-                        {
-                          "_object": "/address",
-                          "city": "Albany",
-                          "country": "United States of America",
-                          "country_code": "US",
-                          "ref": "address_ref_x",
-                          "street_address": "1641 Settlers Lane",
-                          "timezone": "America/Los_Angeles",
-                        },
-                      ],
-                      "destination_port": {
-                        "_object": "/place",
-                        "address": {
-                          "_object": "/address",
-                          "city": "Albany",
-                          "country": "United States of America",
-                          "country_code": "US",
-                          "ref": "address_ref_x",
-                          "street_address": "1641 Settlers Lane",
-                          "timezone": "America/Los_Angeles",
-                        },
-                        "details": [
-                          {
-                            "_object": "/air/port",
-                            "country_code": "US",
-                            "iata_code": "LAX",
-                            "icao_code": "KLAX",
-                            "port_code": "3901",
-                          },
-                        ],
-                        "name": "ORD - Chicago - IL",
-                      },
-                      "freight_paymnet_terms": "freight_collect",
-                      "id": 2983,
-                      "incoterm": "EXW",
-                      "issue_date": "issue_date",
-                      "line_items": {
-                        "_object": "/api/refs/collection",
-                        "link": "https://api.flexport.com/purchase_order_line_items?f.purchase_order.id=123",
-                        "ref_type": "/purchase_orders/line_item",
-                      },
-                      "memo": "This message is written in invisible ink",
-                      "metadata": {
-                        "metadata": {
-                          "key": "value",
-                        },
-                      },
-                      "must_arrive_date": "must_arrive_date",
-                      "name": "PO 12345 - "shipment"",
-                      "order_class": "purchase_order",
-                      "order_type": "Apparel",
-                      "origin_address": {
-                        "_object": "/address",
-                        "city": "Albany",
-                        "country": "United States of America",
-                        "country_code": "US",
-                        "ref": "address_ref_x",
-                        "state": "MN",
-                        "street_address": "1641 Settlers Lane",
-                        "street_address2": "STE 2918",
-                        "timezone": "America/Los_Angeles",
-                        "unlocode": "US AL2",
-                        "zip": "56307",
-                      },
-                      "origin_port": {
-                        "_object": "/place",
-                        "address": {
-                          "_object": "/address",
-                          "city": "Albany",
-                          "country": "United States of America",
-                          "country_code": "US",
-                          "ref": "address_ref_x",
-                          "street_address": "1641 Settlers Lane",
-                          "timezone": "America/Los_Angeles",
-                        },
-                        "details": [
-                          {
-                            "_object": "/air/port",
-                            "country_code": "US",
-                            "iata_code": "LAX",
-                            "icao_code": "KLAX",
-                            "port_code": "3901",
-                          },
-                        ],
-                        "name": "ORD - Chicago - IL",
-                      },
-                      "parties": [
-                        {},
-                      ],
-                      "priority": "standard",
-                      "status": "open",
-                      "transportation_mode": "ocean",
-                      "updated_at": "updated_at",
-                    },
                     "self": "https://api.flexport.com/purchase_orders/1234",
                     "version": 3,
                   },
@@ -7581,6 +7108,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": 1,
                 },
@@ -7679,141 +7207,10 @@ Other details about this invoice",
                 "response": {
                   "body": {
                     "_object": "/api/response",
-                    "archived_at": "archived_at",
-                    "cargo_ready_date": "cargo_ready_date",
-                    "created_at": "created_at",
-                    "destination_addresses": [
-                      {
-                        "_object": "/address",
-                        "city": "Albany",
-                        "country": "United States of America",
-                        "country_code": "US",
-                        "ref": "address_ref_x",
-                        "state": "MN",
-                        "street_address": "1641 Settlers Lane",
-                        "street_address2": "STE 2918",
-                        "timezone": "America/Los_Angeles",
-                        "unlocode": "US AL2",
-                        "zip": "56307",
-                      },
-                    ],
-                    "destination_port": {
-                      "_object": "/place",
-                      "address": {
-                        "_object": "/address",
-                        "city": "Albany",
-                        "country": "United States of America",
-                        "country_code": "US",
-                        "ref": "address_ref_x",
-                        "state": "MN",
-                        "street_address": "1641 Settlers Lane",
-                        "street_address2": "STE 2918",
-                        "timezone": "America/Los_Angeles",
-                        "unlocode": "US AL2",
-                        "zip": "56307",
-                      },
-                      "details": [
-                        {
-                          "_object": "/air/port",
-                          "country_code": "US",
-                          "iata_code": "LAX",
-                          "icao_code": "KLAX",
-                          "port_code": "3901",
-                        },
-                      ],
-                      "name": "ORD - Chicago - IL",
-                    },
-                    "freight_paymnet_terms": "freight_collect",
                     "id": 2983,
-                    "incoterm": "EXW",
-                    "issue_date": "issue_date",
-                    "line_items": {
-                      "_object": "/api/refs/collection",
-                      "link": "https://api.flexport.com/purchase_order_line_items?f.purchase_order.id=123",
-                      "ref_type": "/purchase_orders/line_item",
-                    },
                     "memo": "This message is written in invisible ink",
-                    "metadata": {
-                      "metadata": {
-                        "key": "value",
-                      },
-                    },
-                    "must_arrive_date": "must_arrive_date",
                     "name": "PO 12345 - "shipment"",
-                    "order_class": "purchase_order",
                     "order_type": "Apparel",
-                    "origin_address": {
-                      "_object": "/address",
-                      "city": "Albany",
-                      "country": "United States of America",
-                      "country_code": "US",
-                      "ref": "address_ref_x",
-                      "state": "MN",
-                      "street_address": "1641 Settlers Lane",
-                      "street_address2": "STE 2918",
-                      "timezone": "America/Los_Angeles",
-                      "unlocode": "US AL2",
-                      "zip": "56307",
-                    },
-                    "origin_port": {
-                      "_object": "/place",
-                      "address": {
-                        "_object": "/address",
-                        "city": "Albany",
-                        "country": "United States of America",
-                        "country_code": "US",
-                        "ref": "address_ref_x",
-                        "state": "MN",
-                        "street_address": "1641 Settlers Lane",
-                        "street_address2": "STE 2918",
-                        "timezone": "America/Los_Angeles",
-                        "unlocode": "US AL2",
-                        "zip": "56307",
-                      },
-                      "details": [
-                        {
-                          "_object": "/air/port",
-                          "country_code": "US",
-                          "iata_code": "LAX",
-                          "icao_code": "KLAX",
-                          "port_code": "3901",
-                        },
-                      ],
-                      "name": "ORD - Chicago - IL",
-                    },
-                    "parties": [
-                      {
-                        "company_entity": {
-                          "_object": "/company_entity",
-                          "id": 9281,
-                          "name": "Zoomit",
-                          "ref": "zoomit_ref",
-                        },
-                        "contacts": [
-                          {
-                            "department": "marketing",
-                            "email": "John.Doe@example.com",
-                            "fax": "1 323 555 1234",
-                            "name": "John Doe",
-                            "phone": "767 878 8888",
-                          },
-                        ],
-                        "location": {
-                          "_object": "/address",
-                          "city": "Albany",
-                          "country": "United States of America",
-                          "country_code": "US",
-                          "ref": "address_ref_x",
-                          "street_address": "1641 Settlers Lane",
-                          "timezone": "America/Los_Angeles",
-                        },
-                        "role": "buyer",
-                      },
-                    ],
-                    "priority": "standard",
-                    "status": "open",
-                    "transportation_mode": "ocean",
-                    "updated_at": "updated_at",
                   },
                 },
               },
@@ -7914,6 +7311,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "f.item_key": "item1",
                   "f.purchase_order.id": 123,
@@ -8087,6 +7485,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": 1,
                 },
@@ -8132,28 +7531,6 @@ Other details about this invoice",
                           "units": 1,
                         },
                       ],
-                      "destination_port": {
-                        "_object": "/place",
-                        "address": {
-                          "_object": "/address",
-                          "city": "Albany",
-                          "country": "United States of America",
-                          "country_code": "US",
-                          "ref": "address_ref_x",
-                          "street_address": "1641 Settlers Lane",
-                          "timezone": "America/Los_Angeles",
-                        },
-                        "details": [
-                          {
-                            "_object": "/air/port",
-                            "country_code": "US",
-                            "iata_code": "LAX",
-                            "icao_code": "KLAX",
-                            "port_code": "3901",
-                          },
-                        ],
-                        "name": "ORD - Chicago - IL",
-                      },
                       "hs_codes": [
                         {
                           "_object": "/hs_code",
@@ -8187,34 +7564,8 @@ Other details about this invoice",
                         "ref": "sellingcoaddress",
                         "state": "44",
                         "street_address": "10th YouSong Industrial District",
-                        "street_address2": "STE 2918",
                         "timezone": "China/Shenzhen",
-                        "unlocode": "US AL2",
-                        "zip": "56307",
                       },
-                      "origin_port": {
-                        "_object": "/place",
-                        "address": {
-                          "_object": "/address",
-                          "city": "Albany",
-                          "country": "United States of America",
-                          "country_code": "US",
-                          "ref": "address_ref_x",
-                          "street_address": "1641 Settlers Lane",
-                          "timezone": "America/Los_Angeles",
-                        },
-                        "details": [
-                          {
-                            "_object": "/air/port",
-                            "country_code": "US",
-                            "iata_code": "LAX",
-                            "icao_code": "KLAX",
-                            "port_code": "3901",
-                          },
-                        ],
-                        "name": "ORD - Chicago - IL",
-                      },
-                      "parent_line_key": "parent_line_key",
                       "product": {
                         "color": "red",
                         "country_of_origin": "US",
@@ -8319,6 +7670,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "f.container_number": "BWSE3982156",
                   "f.purchase_order": "PO002811",
@@ -8595,8 +7947,6 @@ Other details about this invoice",
                           "wants_trade_declaration_service": false,
                         },
                       ],
-                      "next": "next",
-                      "prev": "prev",
                     },
                     "self": "https://api.flexport.com/shipments?page=1&per=20&sort=id&direction=desc",
                     "version": 2,
@@ -8750,6 +8100,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "request": {
                   "shipment_ids": [
                     123,
@@ -8810,6 +8161,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": "id",
                 },
@@ -8822,19 +8174,6 @@ Other details about this invoice",
                       "actual_delivered_in_full_date": "2019-02-06T19:28:25Z",
                       "actual_departure_date": "2019-02-06T19:28:25Z",
                       "actual_picked_up_in_full_date": "2019-02-06T19:28:25Z",
-                      "air_shipment": {
-                        "_object": "/air/shipment",
-                        "chargeable_volume": {
-                          "_object": "/quantity/volume",
-                          "value": 472.62,
-                        },
-                        "chargeable_weight": {
-                          "_object": "/quantity/weight",
-                          "value": 2300.4,
-                        },
-                        "house_airway_bill": "HWXJKE67732",
-                        "master_airway_bill": "22831046871",
-                      },
                       "arrival_date": "2019-02-06T19:28:25Z",
                       "belongs_to_a_buyers_consol": false,
                       "booking": {
@@ -8882,14 +8221,6 @@ Other details about this invoice",
                         "value": 2300.4,
                       },
                       "cargo_ready_date": "2019-02-06",
-                      "child_shipments": [
-                        {
-                          "_object": "/api/refs/object",
-                          "id": 123,
-                          "link": "https://api.flexport.com/shipments/123",
-                          "ref_type": "/shipment",
-                        },
-                      ],
                       "commercial_invoices": {
                         "_object": "/api/refs/collection",
                         "link": "https://api.flexport.com/commercial_invoices?f.shipment.id=2983",
@@ -9012,11 +8343,6 @@ Other details about this invoice",
                         "link": "https://api.flexport.com/shipment_legs?f.shipment.id=123",
                         "ref_type": "/shipment_leg",
                       },
-                      "metadata": {
-                        "metadata": {
-                          "key": "value",
-                        },
-                      },
                       "name": "ABC Shipment",
                       "ocean_shipment": {
                         "_object": "/ocean/shipment",
@@ -9030,12 +8356,6 @@ Other details about this invoice",
                         "house_bill_number": "TUWSANR18658",
                         "is_lcl": false,
                         "master_bill_number": "NEWO697216024",
-                      },
-                      "parent_shipment": {
-                        "_object": "/api/refs/object",
-                        "id": 123,
-                        "link": "https://api.flexport.com/shipments/123",
-                        "ref_type": "/shipment",
                       },
                       "picked_up_in_full_date": "2019-02-06T19:28:25Z",
                       "pieces": 8372,
@@ -9097,7 +8417,6 @@ Other details about this invoice",
                         },
                       ],
                       "status": "in_transit_to_arrival_port",
-                      "target_delivery_date": "target_delivery_date",
                       "transportation_mode": "ocean",
                       "updated_at": "2019-02-06T19:28:25Z",
                       "visibility_only": false,
@@ -9139,6 +8458,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "response",
                 "path-parameters": {
                   "id": 1,
                 },
@@ -9152,21 +8472,7 @@ Other details about this invoice",
                       "actual_delivered_in_full_date": "2019-02-06T19:28:25Z",
                       "actual_departure_date": "2019-02-06T19:28:25Z",
                       "actual_picked_up_in_full_date": "2019-02-06T19:28:25Z",
-                      "air_shipment": {
-                        "_object": "/air/shipment",
-                        "chargeable_volume": {
-                          "_object": "/quantity/volume",
-                          "value": 472.62,
-                        },
-                        "chargeable_weight": {
-                          "_object": "/quantity/weight",
-                          "value": 2300.4,
-                        },
-                        "house_airway_bill": "HWXJKE67732",
-                        "master_airway_bill": "22831046871",
-                      },
                       "arrival_date": "2019-02-06T19:28:25Z",
-                      "belongs_to_a_buyers_consol": true,
                       "booking": {
                         "_object": "api/refs/object",
                         "id": "id",
@@ -9212,14 +8518,6 @@ Other details about this invoice",
                         "value": 2300.4,
                       },
                       "cargo_ready_date": "2019-02-06",
-                      "child_shipments": [
-                        {
-                          "_object": "/api/refs/object",
-                          "id": 123,
-                          "link": "https://api.flexport.com/shipments/123",
-                          "ref_type": "/shipment",
-                        },
-                      ],
                       "commercial_invoices": {
                         "_object": "/api/refs/collection",
                         "link": "https://api.flexport.com/commercial_invoices?f.shipment.id=2983",
@@ -9361,12 +8659,6 @@ Other details about this invoice",
                         "is_lcl": false,
                         "master_bill_number": "NEWO697216024",
                       },
-                      "parent_shipment": {
-                        "_object": "/api/refs/object",
-                        "id": 123,
-                        "link": "https://api.flexport.com/shipments/123",
-                        "ref_type": "/shipment",
-                      },
                       "picked_up_in_full_date": "2019-02-06T19:28:25Z",
                       "pieces": 8372,
                       "priority": "high",
@@ -9427,7 +8719,6 @@ Other details about this invoice",
                         },
                       ],
                       "status": "in_transit_to_arrival_port",
-                      "target_delivery_date": "target_delivery_date",
                       "transportation_mode": "ocean",
                       "updated_at": "2019-02-06T19:28:25Z",
                       "visibility_only": false,
@@ -9572,6 +8863,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "query-parameters": {
                   "page": 1,
                   "per": 20,
@@ -9765,6 +9057,7 @@ Other details about this invoice",
             ],
             "examples": [
               {
+                "name": "Success",
                 "path-parameters": {
                   "id": 1,
                 },
@@ -9784,15 +9077,7 @@ Other details about this invoice",
                         "delivery_completed": "2019-07-14T04:00:00Z",
                         "loaded_on_truck_date": "2019-07-13T04:00:00Z",
                       },
-                      "air_leg": {
-                        "_object": "/air/shipment_leg",
-                        "flight_number": "Y8 1234",
-                        "iata_code": "2Q",
-                        "icao_code": "SNC",
-                      },
-                      "cargo_ready_date": "cargo_ready_date",
                       "carrier_name": "Liberty Carrier",
-                      "deleted_at": "2024-01-15T09:30:00Z",
                       "destination": {
                         "_object": "/shipment_node",
                         "place": {
@@ -9831,11 +9116,6 @@ Other details about this invoice",
                         "tags": [
                           "port_of_loading",
                         ],
-                        "terminal": {
-                          "_object": "/shipment_node/terminal",
-                          "firms_code": "I092",
-                          "name": "Terminal 3",
-                        },
                       },
                       "estimated_arrival_date": "2019-02-06T19:28:25Z",
                       "estimated_departure_date": "2019-02-06T19:28:25Z",
@@ -9908,14 +9188,6 @@ Other details about this invoice",
                           "name": "Terminal 3",
                         },
                       },
-                      "rail_leg": {
-                        "_object": "/rail/shipment_leg",
-                        "container_legs": {
-                          "_object": "/api/refs/collection",
-                          "link": "https://api.flexport.com/ocean/shipment_container_legs?f.shipment_container.id=123",
-                          "ref_type": "/ocean/shipment_container_leg",
-                        },
-                      },
                       "shipment": {
                         "_object": "/api/refs/object",
                         "id": 123,
@@ -9923,18 +9195,6 @@ Other details about this invoice",
                         "ref_type": "/shipment",
                       },
                       "transportation_mode": "ocean",
-                      "trucking_leg": {
-                        "_object": "/trucking/shipment_leg",
-                        "container_legs": {
-                          "_object": "/api/refs/collection",
-                          "link": "https://api.flexport.com/ocean/shipment_container_legs?f.shipment_container.id=123",
-                          "ref_type": "/ocean/shipment_container_leg",
-                        },
-                        "pieces": 32,
-                        "scac_code": "ABCD",
-                        "service_type": "ltl",
-                        "tracking_number": "FBA123456789",
-                      },
                     },
                     "self": "https://api.flexport.com/shipment_legs/948211",
                     "version": 2,
