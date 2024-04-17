@@ -9,8 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.19.0 - 2024-04-16]
 
-- Feature: Environment variables associated with auth schemes and global headers are
-  used whenever a value is not explicitly provided by the caller.
+- Feature: The Go generator now supports environment variable scanning.
 
   For example, consider the following `api.yml` definition:
 
