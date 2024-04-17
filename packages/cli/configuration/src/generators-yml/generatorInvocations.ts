@@ -16,7 +16,7 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         version: "0.5.7"
     },
     [GeneratorName.JAVA_SDK]: {
-        version: "0.5.7"
+        version: "0.8.7"
     },
     [GeneratorName.JAVA_SPRING]: {
         version: "0.5.7",
@@ -35,7 +35,7 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         version: "0.7.2"
     },
     [GeneratorName.TYPESCRIPT_NODE_SDK]: {
-        version: "0.9.5",
+        version: "0.12.9",
         output: {
             location: "local-file-system",
             path: "../sdks/typescript"
@@ -59,7 +59,7 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         }
     },
     [GeneratorName.PYTHON_SDK]: {
-        version: "0.8.1",
+        version: "1.0.1",
         output: {
             location: "local-file-system",
             path: "../sdks/python"
@@ -72,7 +72,7 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         version: "0.9.0"
     },
     [GeneratorName.GO_SDK]: {
-        version: "0.9.0",
+        version: "0.19.0",
         output: {
             location: "local-file-system",
             path: "../sdks/go"
@@ -85,7 +85,7 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         version: "0.0.1"
     },
     [GeneratorName.RUBY_SDK]: {
-        version: "0.0.1",
+        version: "0.4.0",
         output: {
             location: "local-file-system",
             path: "../sdks/ruby"
