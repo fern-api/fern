@@ -55,7 +55,7 @@ export const Mocks = {
             tolerateRepublish: false,
             retainOriginalCasing: false,
             allowExtraFields: false,
-            writeUnitTests: false,
+            writeUnitTests: true,
             ...partialConfig
         };
     }

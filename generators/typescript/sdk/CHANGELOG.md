@@ -5,15 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.14.0-rc1] - 2024-04-12
+## [0.14.1-rc0] - 2024-04-12
 
-- Fix: The test job in `ci.yml` works even if you have not configured Fern to 
-  generate integration tests. 
+- Fix: Import for `node-fetch` in `Fetcher.ts` uses a dynamic import instead of `require` which
+  so that the SDK works in ESM environments (that are using local file output). When the
+  `outputEsm` config flag is turned on, the dynamic import will be turned into an ESM specific import.
 
-  Without integration tests the test job will run `yarn && yarn test`. With the 
-  integration tests, the test job will delegate to the fern cli `fern yarn test`. 
+- Fix: The test job in `ci.yml` works even if you have not configured Fern to
+  generate integration tests.
 
-## [0.14.0-rc0] - 2024-04-12
+  Without integration tests the test job will run `yarn && yarn test`. With the
+  integration tests, the test job will delegate to the fern cli `fern yarn test`.
 
 - Feature: Add `allowExtraFields` option to permit extra fields in the serialized request.
 

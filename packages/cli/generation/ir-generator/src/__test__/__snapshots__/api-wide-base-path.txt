@@ -207,6 +207,34 @@ exports[`generate IR 1`] = `
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
+                  "safeName": "resourceParam",
+                  "unsafeName": "resourceParam",
+                },
+                "originalName": "resourceParam",
+                "pascalCase": {
+                  "safeName": "ResourceParam",
+                  "unsafeName": "ResourceParam",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "RESOURCE_PARAM",
+                  "unsafeName": "RESOURCE_PARAM",
+                },
+                "snakeCase": {
+                  "safeName": "resource_param",
+                  "unsafeName": "resource_param",
+                },
+              },
+              "valueType": {
+                "_type": "primitive",
+                "primitive": "STRING",
+              },
+              "variable": null,
+            },
+            {
+              "docs": null,
+              "location": "ENDPOINT",
+              "name": {
+                "camelCase": {
                   "safeName": "endpointParam",
                   "unsafeName": "endpointParam",
                 },
@@ -243,6 +271,39 @@ exports[`generate IR 1`] = `
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [
+                {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "resourceParam",
+                      "unsafeName": "resourceParam",
+                    },
+                    "originalName": "resourceParam",
+                    "pascalCase": {
+                      "safeName": "ResourceParam",
+                      "unsafeName": "ResourceParam",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "RESOURCE_PARAM",
+                      "unsafeName": "RESOURCE_PARAM",
+                    },
+                    "snakeCase": {
+                      "safeName": "resource_param",
+                      "unsafeName": "resource_param",
+                    },
+                  },
+                  "value": {
+                    "jsonExample": "string",
+                    "shape": {
+                      "primitive": {
+                        "string": {
+                          "original": "string",
+                        },
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                },
                 {
                   "name": {
                     "camelCase": {
@@ -370,6 +431,10 @@ exports[`generate IR 1`] = `
               },
               {
                 "pathParameter": "endpointParam",
+                "tail": "/",
+              },
+              {
+                "pathParameter": "resourceParam",
                 "tail": "",
               },
             ],
@@ -403,11 +468,43 @@ exports[`generate IR 1`] = `
             "parts": [
               {
                 "pathParameter": "endpointParam",
+                "tail": "/",
+              },
+              {
+                "pathParameter": "resourceParam",
                 "tail": "",
               },
             ],
           },
           "pathParameters": [
+            {
+              "docs": null,
+              "location": "ENDPOINT",
+              "name": {
+                "camelCase": {
+                  "safeName": "resourceParam",
+                  "unsafeName": "resourceParam",
+                },
+                "originalName": "resourceParam",
+                "pascalCase": {
+                  "safeName": "ResourceParam",
+                  "unsafeName": "ResourceParam",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "RESOURCE_PARAM",
+                  "unsafeName": "RESOURCE_PARAM",
+                },
+                "snakeCase": {
+                  "safeName": "resource_param",
+                  "unsafeName": "resource_param",
+                },
+              },
+              "valueType": {
+                "_type": "primitive",
+                "primitive": "STRING",
+              },
+              "variable": null,
+            },
             {
               "docs": null,
               "location": "ENDPOINT",
