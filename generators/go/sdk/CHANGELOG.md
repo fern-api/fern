@@ -7,10 +7,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## Unreleased -->
 
+## [0.19.0 - 2024-04-16]
+
+- Feature: The Go generator now supports environment variable scanning.
+
+  For example, consider the following `api.yml` definition:
+
+  ```yaml
+  name: api
+  auth: Bearer
+  auth-schemes:
+    Bearer:
+      scheme: bearer
+      token:
+        name: apiKey
+        env: ACME_API_KEY
+  ```
+
+  The client reads this environment variable and sets the value in the `Authorization` header
+  if the `APIKey` option is not explicitly specified like so:
+
+  ```go
+  func NewClient(opts ...option.RequestOption) *Client {
+    options := core.NewRequestOptions(opts...)
+    if options.APIKey == "" {
+      options.APIKey = os.Getenv("ACME_API_KEY")
+    }
+    return &Client{
+      baseURL: options.BaseURL,
+      caller: core.NewCaller(
+        &core.CallerParams{
+          Client:      options.HTTPClient,
+          MaxAttempts: options.MaxAttempts,
+        },
+      ),
+      // The header associated with the client will contain
+      // the ACME_API_KEY value.
+      //
+      // It can still be overridden by endpoint-level request
+      // options.
+      header:  options.ToHeader(),
+    }
+  }
+  ```
+
 ## [0.18.3 - 2024-04-15]
 
 - Fix: Path parameters are now applied in the correct order. This is relevant for endpoints
-  that specify more than one path parameter  (e.g. `/organizations/{orgId}/users/{userId}`).
+  that specify more than one path parameter (e.g. `/organizations/{orgId}/users/{userId}`).
   Function signatures remain unchanged, such that they preserve the path parameter order
   specified by the API definition like so:
 

@@ -1,0 +1,27 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "id": {
+                "path": "/basic-auth",
+                "method": "GET"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedBasicAuthEnvironmentVariables\n\nclient = SeedBasicAuthEnvironmentVariables(\n    username=\"YOUR_USERNAME\",\n    password=\"YOUR_PASSWORD\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.basic_auth.get_with_basic_auth()\n",
+                "async_client": "from seed.client import AsyncSeedBasicAuthEnvironmentVariables\n\nclient = AsyncSeedBasicAuthEnvironmentVariables(\n    username=\"YOUR_USERNAME\",\n    password=\"YOUR_PASSWORD\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.basic_auth.get_with_basic_auth()\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/basic-auth",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed.client import SeedBasicAuthEnvironmentVariables\n\nclient = SeedBasicAuthEnvironmentVariables(\n    username=\"YOUR_USERNAME\",\n    password=\"YOUR_PASSWORD\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.basic_auth.post_with_basic_auth(\n    request={\"key\": \"value\"},\n)\n",
+                "async_client": "from seed.client import AsyncSeedBasicAuthEnvironmentVariables\n\nclient = AsyncSeedBasicAuthEnvironmentVariables(\n    username=\"YOUR_USERNAME\",\n    password=\"YOUR_PASSWORD\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nawait client.basic_auth.post_with_basic_auth(\n    request={\"key\": \"value\"},\n)\n",
+                "type": "python"
+            }
+        }
+    ]
+}

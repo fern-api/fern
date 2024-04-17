@@ -1,0 +1,25 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/basic-auth",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedBasicAuthEnvironmentVariablesClient } from \"@fern/basic-auth-environment-variables\";\n\nconst seedBasicAuthEnvironmentVariables = new SeedBasicAuthEnvironmentVariablesClient({ username: \"YOUR_USERNAME\", password: \"YOUR_PASSWORD\" });\nawait seedBasicAuthEnvironmentVariables.basicAuth.getWithBasicAuth();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/basic-auth",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedBasicAuthEnvironmentVariablesClient } from \"@fern/basic-auth-environment-variables\";\n\nconst seedBasicAuthEnvironmentVariables = new SeedBasicAuthEnvironmentVariablesClient({ username: \"YOUR_USERNAME\", password: \"YOUR_PASSWORD\" });\nawait seedBasicAuthEnvironmentVariables.basicAuth.postWithBasicAuth({\n    \"key\": \"value\"\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

@@ -626,7 +626,9 @@ func (g *Generator) generateService(
 		g.coordinator,
 	)
 	generatedClient, err := writer.WriteClient(
+		ir.Auth,
 		irService.Endpoints,
+		ir.Headers,
 		ir.IdempotencyHeaders,
 		irSubpackages,
 		ir.Environments,
@@ -666,7 +668,9 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		g.coordinator,
 	)
 	if _, err := writer.WriteClient(
+		ir.Auth,
 		nil,
+		ir.Headers,
 		ir.IdempotencyHeaders,
 		irSubpackages,
 		nil,
@@ -700,7 +704,9 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		g.coordinator,
 	)
 	generatedClient, err := writer.WriteClient(
+		ir.Auth,
 		nil,
+		ir.Headers,
 		ir.IdempotencyHeaders,
 		irSubpackages,
 		nil,

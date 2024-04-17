@@ -560,7 +560,8 @@ func (f *fileWriter) writeOptionStruct(
 }
 
 type GeneratedAuth struct {
-	Option ast.Expr // e.g. acmeclient.WithAuthToken("<YOUR_AUTH_TOKEN>")
+	Option          ast.Expr // e.g. acmeclient.WithAuthToken("<YOUR_AUTH_TOKEN>")
+	EnvironmentVars []string // e.g. ACME_API_KEY
 }
 
 // WriteIdempotentRequestOptions writes the idempotent request options available to the
@@ -649,7 +650,10 @@ func (f *fileWriter) WriteRequestOptions(
 	// Generate the auth functional options.
 	includeCustomAuthDocs := auth.Docs != nil && len(*auth.Docs) > 0
 
-	var option ast.Expr
+	var (
+		option          ast.Expr
+		environmentVars []string
+	)
 	for i, authScheme := range auth.Schemes {
 		if authScheme.Bearer != nil {
 			var (
@@ -667,6 +671,9 @@ func (f *fileWriter) WriteRequestOptions(
 						ast.NewBasicLit(`"<YOUR_AUTH_TOKEN>"`),
 					},
 				)
+				if authScheme.Bearer.TokenEnvVar != nil {
+					environmentVars = append(environmentVars, *authScheme.Bearer.TokenEnvVar)
+				}
 			}
 			f.P("// ", optionName, " sets the 'Authorization: Bearer <", camelCase, ">' request header.")
 			if includeCustomAuthDocs {
@@ -693,6 +700,10 @@ func (f *fileWriter) WriteRequestOptions(
 						ast.NewBasicLit(`"<YOUR_PASSWORD>"`),
 					},
 				)
+				if authScheme.Basic.UsernameEnvVar != nil && authScheme.Basic.PasswordEnvVar != nil {
+					environmentVars = append(environmentVars, *authScheme.Basic.UsernameEnvVar)
+					environmentVars = append(environmentVars, *authScheme.Basic.PasswordEnvVar)
+				}
 			}
 			f.P("// WithBasicAuth sets the 'Authorization: Basic <base64>' request header.")
 			if includeCustomAuthDocs {
@@ -730,6 +741,9 @@ func (f *fileWriter) WriteRequestOptions(
 						ast.NewBasicLit(fmt.Sprintf(`"<YOUR_%s>"`, pascalCase)),
 					},
 				)
+				if authScheme.Header.HeaderEnvVar != nil {
+					environmentVars = append(environmentVars, *authScheme.Header.HeaderEnvVar)
+				}
 			}
 			f.P("// ", optionName, " sets the ", param, " auth request header.")
 			if includeCustomAuthDocs {
@@ -777,7 +791,8 @@ func (f *fileWriter) WriteRequestOptions(
 		return nil, nil
 	}
 	return &GeneratedAuth{
-		Option: option,
+		Option:          option,
+		EnvironmentVars: environmentVars,
 	}, nil
 }
 
@@ -793,7 +808,9 @@ type GeneratedEndpoint struct {
 
 // WriteClient writes a client for interacting with the given service.
 func (f *fileWriter) WriteClient(
+	irAuth *ir.ApiAuth,
 	irEndpoints []*ir.HttpEndpoint,
+	headers []*ir.HttpHeader,
 	idempotencyHeaders []*ir.HttpHeader,
 	subpackages []*ir.Subpackage,
 	environmentsConfig *ir.EnvironmentsConfig,
@@ -839,6 +856,37 @@ func (f *fileWriter) WriteClient(
 	// Generate the client constructor.
 	f.P("func New", clientName, "(opts ...option.RequestOption) *", clientName, " {")
 	f.P("options := core.NewRequestOptions(opts...)")
+	for _, authScheme := range irAuth.Schemes {
+		if authScheme.Bearer != nil && authScheme.Bearer.TokenEnvVar != nil {
+			f.P("if options.", authScheme.Bearer.Token.PascalCase.UnsafeName, ` == "" {`)
+			f.P("options. ", authScheme.Bearer.Token.PascalCase.UnsafeName, ` = os.Getenv("`, *authScheme.Bearer.TokenEnvVar, `")`)
+			f.P("}")
+			continue
+		}
+		if authScheme.Basic != nil && authScheme.Basic.UsernameEnvVar != nil && authScheme.Basic.PasswordEnvVar != nil {
+			f.P("if options.", authScheme.Basic.Username.PascalCase.UnsafeName, ` == "" {`)
+			f.P("options. ", authScheme.Basic.Username.PascalCase.UnsafeName, ` = os.Getenv("`, *authScheme.Basic.UsernameEnvVar, `")`)
+			f.P("}")
+			f.P("if options.", authScheme.Basic.Password.PascalCase.UnsafeName, ` == "" {`)
+			f.P("options. ", authScheme.Basic.Password.PascalCase.UnsafeName, ` = os.Getenv("`, *authScheme.Basic.PasswordEnvVar, `")`)
+			f.P("}")
+			continue
+		}
+		if header := authScheme.Header; header != nil && header.HeaderEnvVar != nil {
+			f.P("if options.", header.Name.Name.PascalCase.UnsafeName, ` == "" {`)
+			f.P("options. ", header.Name.Name.PascalCase.UnsafeName, ` = os.Getenv("`, *header.HeaderEnvVar, `")`)
+			f.P("}")
+			continue
+		}
+	}
+	for _, header := range headers {
+		if header.Env != nil {
+			f.P("if options.", header.Name.Name.PascalCase.UnsafeName, ` == "" {`)
+			f.P("options. ", header.Name.Name.PascalCase.UnsafeName, ` = os.Getenv("`, *header.Env, `")`)
+			f.P("}")
+			continue
+		}
+	}
 	f.P("return &", clientName, "{")
 	f.P(`baseURL: options.BaseURL,`)
 	f.P("caller: core.NewCaller(")

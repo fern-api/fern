@@ -1,0 +1,102 @@
+{
+  "info": {
+    "name": "Basic Auth Environment Variables",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "username",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "password",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{username}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{password}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Basic Auth",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Get With Basic Auth",
+          "request": {
+            "description": "GET request with basic auth scheme",
+            "url": {
+              "raw": "{{baseUrl}}/basic-auth",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "basic-auth"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": []
+        },
+        {
+          "_type": "endpoint",
+          "name": "Post With Basic Auth",
+          "request": {
+            "description": "POST request with basic auth scheme",
+            "url": {
+              "raw": "{{baseUrl}}/basic-auth",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "basic-auth"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "\"UNKNOWN\"",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
