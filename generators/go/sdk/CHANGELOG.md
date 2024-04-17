@@ -7,10 +7,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## Unreleased -->
 
+## [0.19.0 - 2024-04-16]
+
+- Feature: Environment variables associated with auth schemes and global headers are
+  used whenever a value is not explicitly provided by the caller.
+
+  For example, consider the following `api.yml` definition:
+
+  ```yaml
+  name: api
+  auth: Bearer
+  auth-schemes:
+    Bearer:
+      scheme: bearer
+      token:
+        name: apiKey
+        env: ACME_API_KEY
+  ```
+
+  The client reads this environment variable and sets the value in the `Authorization` header
+  if the `APIKey` option is not explicitly specified like so:
+
+  ```go
+  func (r *RequestOptions) ToHeader() http.Header {
+    header := r.cloneHeader()
+    bearer := os.Getenv("ACME_API_KEY")
+    if r.APIKey != "" {
+      bearer = r.APIKey
+    }
+    if bearer != "" {
+      header.Set("Authorization", "Bearer "+bearer)
+    }
+    return header
+  }
+  ```
+
 ## [0.18.3 - 2024-04-15]
 
 - Fix: Path parameters are now applied in the correct order. This is relevant for endpoints
-  that specify more than one path parameter  (e.g. `/organizations/{orgId}/users/{userId}`).
+  that specify more than one path parameter (e.g. `/organizations/{orgId}/users/{userId}`).
   Function signatures remain unchanged, such that they preserve the path parameter order
   specified by the API definition like so:
 

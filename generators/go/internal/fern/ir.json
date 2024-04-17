@@ -19,7 +19,7 @@
         }
     },
     "apiDisplayName": null,
-    "apiDocs": "Adds support for auto-paginated endpoints.",
+    "apiDocs": "Adds support for header-specific environment variables.",
     "auth": {
         "requirement": "ALL",
         "schemes": [],
@@ -9480,7 +9480,9 @@
                 "type_errors:DeclaredErrorName",
                 "type_commons:ErrorId",
                 "type_http:Pagination",
+                "type_http:CursorPagination",
                 "type_http:PaginationProperty",
+                "type_http:OffsetPagination",
                 "type_http:ExampleEndpointCall",
                 "type_http:ExamplePathParameter",
                 "type_types:ExampleTypeReference",
@@ -11512,7 +11514,9 @@
                 "type_errors:DeclaredErrorName",
                 "type_commons:ErrorId",
                 "type_http:Pagination",
+                "type_http:CursorPagination",
                 "type_http:PaginationProperty",
+                "type_http:OffsetPagination",
                 "type_http:ExampleEndpointCall",
                 "type_http:ExamplePathParameter",
                 "type_types:ExampleTypeReference",
@@ -12628,6 +12632,42 @@
                                 }
                             },
                             "typeId": "type_types:TypeReference"
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "env",
+                                "camelCase": {
+                                    "unsafeName": "env",
+                                    "safeName": "env"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "env",
+                                    "safeName": "env"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ENV",
+                                    "safeName": "ENV"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Env",
+                                    "safeName": "Env"
+                                }
+                            },
+                            "wireValue": "env"
+                        },
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "primitive",
+                                    "primitive": "STRING"
+                                }
+                            }
                         },
                         "availability": null,
                         "docs": null
@@ -20617,6 +20657,309 @@
                 "typeId": "type_http:Pagination"
             },
             "shape": {
+                "_type": "union",
+                "discriminant": {
+                    "name": {
+                        "originalName": "type",
+                        "camelCase": {
+                            "unsafeName": "type",
+                            "safeName": "type"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "type",
+                            "safeName": "type"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TYPE",
+                            "safeName": "TYPE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Type",
+                            "safeName": "Type"
+                        }
+                    },
+                    "wireValue": "type"
+                },
+                "extends": [],
+                "baseProperties": [],
+                "types": [
+                    {
+                        "discriminantValue": {
+                            "name": {
+                                "originalName": "cursor",
+                                "camelCase": {
+                                    "unsafeName": "cursor",
+                                    "safeName": "cursor"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "cursor",
+                                    "safeName": "cursor"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CURSOR",
+                                    "safeName": "CURSOR"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Cursor",
+                                    "safeName": "Cursor"
+                                }
+                            },
+                            "wireValue": "cursor"
+                        },
+                        "shape": {
+                            "_type": "samePropertiesAsObject",
+                            "name": {
+                                "originalName": "CursorPagination",
+                                "camelCase": {
+                                    "unsafeName": "cursorPagination",
+                                    "safeName": "cursorPagination"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "cursor_pagination",
+                                    "safeName": "cursor_pagination"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "CURSOR_PAGINATION",
+                                    "safeName": "CURSOR_PAGINATION"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "CursorPagination",
+                                    "safeName": "CursorPagination"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [
+                                    {
+                                        "originalName": "http",
+                                        "camelCase": {
+                                            "unsafeName": "http",
+                                            "safeName": "http"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "http",
+                                            "safeName": "http"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "HTTP",
+                                            "safeName": "HTTP"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Http",
+                                            "safeName": "Http"
+                                        }
+                                    }
+                                ],
+                                "packagePath": [],
+                                "file": {
+                                    "originalName": "http",
+                                    "camelCase": {
+                                        "unsafeName": "http",
+                                        "safeName": "http"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "http",
+                                        "safeName": "http"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "HTTP",
+                                        "safeName": "HTTP"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Http",
+                                        "safeName": "Http"
+                                    }
+                                }
+                            },
+                            "typeId": "type_http:CursorPagination"
+                        },
+                        "docs": null
+                    },
+                    {
+                        "discriminantValue": {
+                            "name": {
+                                "originalName": "offset",
+                                "camelCase": {
+                                    "unsafeName": "offset",
+                                    "safeName": "offset"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "offset",
+                                    "safeName": "offset"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "OFFSET",
+                                    "safeName": "OFFSET"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Offset",
+                                    "safeName": "Offset"
+                                }
+                            },
+                            "wireValue": "offset"
+                        },
+                        "shape": {
+                            "_type": "samePropertiesAsObject",
+                            "name": {
+                                "originalName": "OffsetPagination",
+                                "camelCase": {
+                                    "unsafeName": "offsetPagination",
+                                    "safeName": "offsetPagination"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "offset_pagination",
+                                    "safeName": "offset_pagination"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "OFFSET_PAGINATION",
+                                    "safeName": "OFFSET_PAGINATION"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "OffsetPagination",
+                                    "safeName": "OffsetPagination"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [
+                                    {
+                                        "originalName": "http",
+                                        "camelCase": {
+                                            "unsafeName": "http",
+                                            "safeName": "http"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "http",
+                                            "safeName": "http"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "HTTP",
+                                            "safeName": "HTTP"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Http",
+                                            "safeName": "Http"
+                                        }
+                                    }
+                                ],
+                                "packagePath": [],
+                                "file": {
+                                    "originalName": "http",
+                                    "camelCase": {
+                                        "unsafeName": "http",
+                                        "safeName": "http"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "http",
+                                        "safeName": "http"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "HTTP",
+                                        "safeName": "HTTP"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Http",
+                                        "safeName": "Http"
+                                    }
+                                }
+                            },
+                            "typeId": "type_http:OffsetPagination"
+                        },
+                        "docs": null
+                    }
+                ]
+            },
+            "referencedTypes": [
+                "type_http:CursorPagination",
+                "type_http:QueryParameter",
+                "type_commons:Declaration",
+                "type_commons:WithDocs",
+                "type_commons:Availability",
+                "type_commons:AvailabilityStatus",
+                "type_commons:NameAndWireValue",
+                "type_commons:Name",
+                "type_commons:SafeAndUnsafeString",
+                "type_types:TypeReference",
+                "type_types:ContainerType",
+                "type_types:MapType",
+                "type_types:Literal",
+                "type_types:DeclaredTypeName",
+                "type_commons:TypeId",
+                "type_commons:FernFilepath",
+                "type_types:PrimitiveType",
+                "type_http:PaginationProperty",
+                "type_types:ObjectProperty",
+                "type_http:OffsetPagination"
+            ],
+            "examples": [],
+            "availability": null,
+            "docs": "If set, the endpoint will be generated with auto-pagination features."
+        },
+        "type_http:CursorPagination": {
+            "name": {
+                "name": {
+                    "originalName": "CursorPagination",
+                    "camelCase": {
+                        "unsafeName": "cursorPagination",
+                        "safeName": "cursorPagination"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "cursor_pagination",
+                        "safeName": "cursor_pagination"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "CURSOR_PAGINATION",
+                        "safeName": "CURSOR_PAGINATION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "CursorPagination",
+                        "safeName": "CursorPagination"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "http",
+                            "camelCase": {
+                                "unsafeName": "http",
+                                "safeName": "http"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "http",
+                                "safeName": "http"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "HTTP",
+                                "safeName": "HTTP"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Http",
+                                "safeName": "Http"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "http",
+                        "camelCase": {
+                            "unsafeName": "http",
+                            "safeName": "http"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "http",
+                            "safeName": "http"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "HTTP",
+                            "safeName": "HTTP"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Http",
+                            "safeName": "Http"
+                        }
+                    }
+                },
+                "typeId": "type_http:CursorPagination"
+            },
+            "shape": {
                 "_type": "object",
                 "extends": [],
                 "properties": [
@@ -20921,6 +21264,286 @@
             "examples": [],
             "availability": null,
             "docs": "If set, the endpoint will be generated with auto-pagination features.\n\nThe page must be defined as a query parameter included in the request,\nwhereas the next page and results are resolved from properties defined\non the response."
+        },
+        "type_http:OffsetPagination": {
+            "name": {
+                "name": {
+                    "originalName": "OffsetPagination",
+                    "camelCase": {
+                        "unsafeName": "offsetPagination",
+                        "safeName": "offsetPagination"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "offset_pagination",
+                        "safeName": "offset_pagination"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "OFFSET_PAGINATION",
+                        "safeName": "OFFSET_PAGINATION"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "OffsetPagination",
+                        "safeName": "OffsetPagination"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "http",
+                            "camelCase": {
+                                "unsafeName": "http",
+                                "safeName": "http"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "http",
+                                "safeName": "http"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "HTTP",
+                                "safeName": "HTTP"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Http",
+                                "safeName": "Http"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "http",
+                        "camelCase": {
+                            "unsafeName": "http",
+                            "safeName": "http"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "http",
+                            "safeName": "http"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "HTTP",
+                            "safeName": "HTTP"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Http",
+                            "safeName": "Http"
+                        }
+                    }
+                },
+                "typeId": "type_http:OffsetPagination"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "page",
+                                "camelCase": {
+                                    "unsafeName": "page",
+                                    "safeName": "page"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "page",
+                                    "safeName": "page"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PAGE",
+                                    "safeName": "PAGE"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Page",
+                                    "safeName": "Page"
+                                }
+                            },
+                            "wireValue": "page"
+                        },
+                        "valueType": {
+                            "_type": "named",
+                            "name": {
+                                "originalName": "QueryParameter",
+                                "camelCase": {
+                                    "unsafeName": "queryParameter",
+                                    "safeName": "queryParameter"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "query_parameter",
+                                    "safeName": "query_parameter"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "QUERY_PARAMETER",
+                                    "safeName": "QUERY_PARAMETER"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "QueryParameter",
+                                    "safeName": "QueryParameter"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [
+                                    {
+                                        "originalName": "http",
+                                        "camelCase": {
+                                            "unsafeName": "http",
+                                            "safeName": "http"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "http",
+                                            "safeName": "http"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "HTTP",
+                                            "safeName": "HTTP"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Http",
+                                            "safeName": "Http"
+                                        }
+                                    }
+                                ],
+                                "packagePath": [],
+                                "file": {
+                                    "originalName": "http",
+                                    "camelCase": {
+                                        "unsafeName": "http",
+                                        "safeName": "http"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "http",
+                                        "safeName": "http"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "HTTP",
+                                        "safeName": "HTTP"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Http",
+                                        "safeName": "Http"
+                                    }
+                                }
+                            },
+                            "typeId": "type_http:QueryParameter"
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "results",
+                                "camelCase": {
+                                    "unsafeName": "results",
+                                    "safeName": "results"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "results",
+                                    "safeName": "results"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "RESULTS",
+                                    "safeName": "RESULTS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Results",
+                                    "safeName": "Results"
+                                }
+                            },
+                            "wireValue": "results"
+                        },
+                        "valueType": {
+                            "_type": "named",
+                            "name": {
+                                "originalName": "PaginationProperty",
+                                "camelCase": {
+                                    "unsafeName": "paginationProperty",
+                                    "safeName": "paginationProperty"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "pagination_property",
+                                    "safeName": "pagination_property"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "PAGINATION_PROPERTY",
+                                    "safeName": "PAGINATION_PROPERTY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "PaginationProperty",
+                                    "safeName": "PaginationProperty"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [
+                                    {
+                                        "originalName": "http",
+                                        "camelCase": {
+                                            "unsafeName": "http",
+                                            "safeName": "http"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "http",
+                                            "safeName": "http"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "HTTP",
+                                            "safeName": "HTTP"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Http",
+                                            "safeName": "Http"
+                                        }
+                                    }
+                                ],
+                                "packagePath": [],
+                                "file": {
+                                    "originalName": "http",
+                                    "camelCase": {
+                                        "unsafeName": "http",
+                                        "safeName": "http"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "http",
+                                        "safeName": "http"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "HTTP",
+                                        "safeName": "HTTP"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Http",
+                                        "safeName": "Http"
+                                    }
+                                }
+                            },
+                            "typeId": "type_http:PaginationProperty"
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ]
+            },
+            "referencedTypes": [
+                "type_http:QueryParameter",
+                "type_commons:Declaration",
+                "type_commons:WithDocs",
+                "type_commons:Availability",
+                "type_commons:AvailabilityStatus",
+                "type_commons:NameAndWireValue",
+                "type_commons:Name",
+                "type_commons:SafeAndUnsafeString",
+                "type_types:TypeReference",
+                "type_types:ContainerType",
+                "type_types:MapType",
+                "type_types:Literal",
+                "type_types:DeclaredTypeName",
+                "type_commons:TypeId",
+                "type_commons:FernFilepath",
+                "type_types:PrimitiveType",
+                "type_http:PaginationProperty",
+                "type_types:ObjectProperty"
+            ],
+            "examples": [],
+            "availability": null,
+            "docs": "The page must be defined as a query parameter included in the request,\nwhereas the results are resolved from properties defined on the response.\n\nThe page index is auto-incremented between every additional page request."
         },
         "type_http:PaginationProperty": {
             "name": {
@@ -28783,7 +29406,9 @@
                 "type_errors:DeclaredErrorName",
                 "type_commons:ErrorId",
                 "type_http:Pagination",
+                "type_http:CursorPagination",
                 "type_http:PaginationProperty",
+                "type_http:OffsetPagination",
                 "type_http:ExampleEndpointCall",
                 "type_http:ExamplePathParameter",
                 "type_http:ExampleHeader",
@@ -52384,6 +53009,8 @@
             "type_http:ResponseErrors",
             "type_http:ResponseError",
             "type_http:Pagination",
+            "type_http:CursorPagination",
+            "type_http:OffsetPagination",
             "type_http:PaginationProperty",
             "type_http:ExampleEndpointCall",
             "type_http:ExampleCodeSample",
@@ -52472,6 +53099,7 @@
         ]
     },
     "webhookGroups": {},
+    "websocketChannels": {},
     "subpackages": {
         "subpackage_auth": {
             "name": {
@@ -52550,6 +53178,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         },
@@ -52640,6 +53269,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         },
@@ -52714,6 +53344,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         },
@@ -52797,6 +53428,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         },
@@ -52873,6 +53505,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         },
@@ -52977,6 +53610,8 @@
                 "type_http:ResponseErrors",
                 "type_http:ResponseError",
                 "type_http:Pagination",
+                "type_http:CursorPagination",
+                "type_http:OffsetPagination",
                 "type_http:PaginationProperty",
                 "type_http:ExampleEndpointCall",
                 "type_http:ExampleCodeSample",
@@ -52997,6 +53632,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         },
@@ -53079,6 +53715,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         },
@@ -53191,6 +53828,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         },
@@ -53266,6 +53904,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         },
@@ -53347,6 +53986,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         },
@@ -53432,6 +54072,7 @@
             "subpackages": [],
             "navigationConfig": null,
             "webhooks": null,
+            "websocket": null,
             "hasEndpointsInTree": false,
             "docs": null
         }
@@ -53442,6 +54083,7 @@
             "packagePath": [],
             "file": null
         },
+        "websocket": null,
         "service": null,
         "types": [],
         "errors": [],

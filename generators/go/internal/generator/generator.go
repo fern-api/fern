@@ -273,7 +273,10 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	files = append(files, newStringerFile(g.coordinator))
 	files = append(files, newTimeFile(g.coordinator))
 	// Then handle mode-specific generation tasks.
-	var rootClientInstantiation *ast.AssignStmt
+	var (
+		rootClientInstantiation *ast.AssignStmt
+		generatedAuth           *GeneratedAuth
+	)
 	generatedRootClient := &GeneratedClient{
 		Instantiation: rootClientInstantiation,
 	}
@@ -281,10 +284,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	case ModeFiber:
 		break
 	case ModeClient:
-		var (
-			generatedAuth        *GeneratedAuth
-			generatedEnvironment *GeneratedEnvironment
-		)
+		var generatedEnvironment *GeneratedEnvironment
 		// Generate the core API files.
 		fileInfo := fileInfoForRequestOptionsDefinition()
 		writer := newFileWriter(
@@ -598,7 +598,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		files = append(files, file)
 
 		if g.config.IncludeReadme && generatedRootClient.Instantiation != nil {
-			if err := g.generateReadme(generatedRootClient, generatedGoVersion); err != nil {
+			if err := g.generateReadme(generatedAuth, generatedRootClient, generatedGoVersion); err != nil {
 				return nil, err
 			}
 			files = append(files, file)
@@ -780,6 +780,7 @@ func maybeWriteSnippets(
 //   - generatedClient: The generated client, if any.
 //   - generatedGoVersion: The Go version that the generated client supports.
 func (g *Generator) generateReadme(
+	generatedAuth *GeneratedAuth,
 	generatedClient *GeneratedClient,
 	generatedGoVersion string,
 ) (err error) {
@@ -793,11 +794,15 @@ func (g *Generator) generateReadme(
 
 	var usage string
 	if generatedClient != nil {
-		usage, err = ast.NewSourceCodeBuilder(generatedClient.Instantiation).BuildSnippet()
+		if generatedAuth.EnvironmentVars != nil {
+			usage += "> This client also supports setting the  " + strings.Join(generatedAuth.EnvironmentVars, ", ") + " environment variable\n"
+			usage += "> if you prefer that over the authorization option shown below.\n\n"
+		}
+		usageSnippet, err := ast.NewSourceCodeBuilder(generatedClient.Instantiation).BuildSnippet()
 		if err != nil {
 			return err
 		}
-		usage = "```go\n" + usage + "\n```\n"
+		usage = "```go\n" + usageSnippet + "\n```\n"
 	}
 
 	return g.coordinator.GenerateReadme(

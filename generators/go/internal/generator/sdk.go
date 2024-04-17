@@ -362,11 +362,37 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("header := r.cloneHeader()")
 	for _, authScheme := range auth.Schemes {
 		if authScheme.Bearer != nil {
+			if authScheme.Bearer.TokenEnvVar != nil {
+				f.P(`bearer := os.Getenv("`, *authScheme.Bearer.TokenEnvVar, `")`)
+				f.P("if r.", authScheme.Bearer.Token.PascalCase.UnsafeName, ` != "" {`)
+				f.P("bearer = r.", authScheme.Bearer.Token.PascalCase.UnsafeName)
+				f.P("}")
+				f.P(`if bearer != "" {`)
+				f.P(`header.Set("Authorization", `, `"Bearer " + bearer)`)
+				f.P("}")
+				continue
+			}
 			f.P("if r.", authScheme.Bearer.Token.PascalCase.UnsafeName, ` != "" { `)
 			f.P(`header.Set("Authorization", `, `"Bearer " + r.`, authScheme.Bearer.Token.PascalCase.UnsafeName, ")")
 			f.P("}")
 		}
 		if authScheme.Basic != nil {
+			if authScheme.Basic.UsernameEnvVar != nil && authScheme.Basic.PasswordEnvVar != nil {
+				f.P("var (")
+				f.P(`username = os.Getenv("`, *authScheme.Basic.UsernameEnvVar, `")`)
+				f.P(`password = os.Getenv("`, *authScheme.Basic.PasswordEnvVar, `")`)
+				f.P(")")
+				f.P(`if r.Username != "" {`)
+				f.P("username = r.Username")
+				f.P("}")
+				f.P(`if r.Password != "" {`)
+				f.P("password = r.Password")
+				f.P("}")
+				f.P(`if username != "" && password != "" {`)
+				f.P(`header.Set("Authorization", `, `"Basic " + base64.StdEncoding.EncodeToString([]byte(username + ": " + password)))`)
+				f.P("}")
+				continue
+			}
 			f.P(`if r.Username != "" && r.Password != "" {`)
 			f.P(`header.Set("Authorization", `, `"Basic " + base64.StdEncoding.EncodeToString([]byte(r.Username + ": " + r.Password)))`)
 			f.P("}")
@@ -382,9 +408,20 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			}
 			valueTypeFormat := formatForValueType(header.ValueType, f.types)
 			value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
-			f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
-			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("`, prefix, `%v",`, value, "))")
-			f.P("}")
+			variable := header.Name.Name.CamelCase.SafeName
+			if header.HeaderEnvVar != nil {
+				f.P(variable, ` := os.Getenv("`, *header.HeaderEnvVar, `")`)
+				f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
+				f.P(variable, ` = fmt.Sprintf("%v", `, value, ")")
+				f.P("}")
+				f.P("if ", variable, ` != "" {`)
+				f.P(`header.Set("`, header.Name.WireValue, `", `, variable, ")")
+				f.P("}")
+			} else {
+				f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
+				f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, value, "))")
+				f.P("}")
+			}
 		}
 	}
 	for _, header := range headers {
@@ -394,12 +431,31 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 		}
 		valueTypeFormat := formatForValueType(header.ValueType, f.types)
 		value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
+		variable := header.Name.Name.CamelCase.SafeName
 		if valueTypeFormat.IsOptional {
-			f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != nil {")
-			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, value, "))")
-			f.P("}")
+			if header.Env != nil {
+				f.P(variable, ` := os.Getenv("`, *header.Env, `")`)
+				f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != nil {")
+				f.P(variable, ` = fmt.Sprintf("%v", `, value, ")")
+				f.P("}")
+				f.P("if ", variable, ` != "" {`)
+				f.P(`header.Set("`, header.Name.WireValue, `", `, variable, ")")
+				f.P("}")
+			} else {
+				f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != nil {")
+				f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, value, "))")
+				f.P("}")
+			}
 		} else {
-			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, value, "))")
+			if header.Env != nil {
+				f.P(variable, ` := os.Getenv("`, *header.Env, `")`)
+				f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
+				f.P(variable, ` = fmt.Sprintf("%v", `, value, ")")
+				f.P("}")
+				f.P(`header.Set("`, header.Name.WireValue, `", `, variable, ")")
+			} else {
+				f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, value, "))")
+			}
 		}
 	}
 	f.P("return header")
@@ -560,7 +616,8 @@ func (f *fileWriter) writeOptionStruct(
 }
 
 type GeneratedAuth struct {
-	Option ast.Expr // e.g. acmeclient.WithAuthToken("<YOUR_AUTH_TOKEN>")
+	Option          ast.Expr // e.g. acmeclient.WithAuthToken("<YOUR_AUTH_TOKEN>")
+	EnvironmentVars []string // e.g. ACME_API_KEY
 }
 
 // WriteIdempotentRequestOptions writes the idempotent request options available to the
@@ -649,7 +706,10 @@ func (f *fileWriter) WriteRequestOptions(
 	// Generate the auth functional options.
 	includeCustomAuthDocs := auth.Docs != nil && len(*auth.Docs) > 0
 
-	var option ast.Expr
+	var (
+		option          ast.Expr
+		environmentVars []string
+	)
 	for i, authScheme := range auth.Schemes {
 		if authScheme.Bearer != nil {
 			var (
@@ -667,6 +727,9 @@ func (f *fileWriter) WriteRequestOptions(
 						ast.NewBasicLit(`"<YOUR_AUTH_TOKEN>"`),
 					},
 				)
+				if authScheme.Bearer.TokenEnvVar != nil {
+					environmentVars = append(environmentVars, *authScheme.Bearer.TokenEnvVar)
+				}
 			}
 			f.P("// ", optionName, " sets the 'Authorization: Bearer <", camelCase, ">' request header.")
 			if includeCustomAuthDocs {
@@ -693,6 +756,10 @@ func (f *fileWriter) WriteRequestOptions(
 						ast.NewBasicLit(`"<YOUR_PASSWORD>"`),
 					},
 				)
+				if authScheme.Basic.UsernameEnvVar != nil && authScheme.Basic.PasswordEnvVar != nil {
+					environmentVars = append(environmentVars, *authScheme.Basic.UsernameEnvVar)
+					environmentVars = append(environmentVars, *authScheme.Basic.PasswordEnvVar)
+				}
 			}
 			f.P("// WithBasicAuth sets the 'Authorization: Basic <base64>' request header.")
 			if includeCustomAuthDocs {
@@ -730,6 +797,9 @@ func (f *fileWriter) WriteRequestOptions(
 						ast.NewBasicLit(fmt.Sprintf(`"<YOUR_%s>"`, pascalCase)),
 					},
 				)
+				if authScheme.Header.HeaderEnvVar != nil {
+					environmentVars = append(environmentVars, *authScheme.Header.HeaderEnvVar)
+				}
 			}
 			f.P("// ", optionName, " sets the ", param, " auth request header.")
 			if includeCustomAuthDocs {
@@ -777,7 +847,8 @@ func (f *fileWriter) WriteRequestOptions(
 		return nil, nil
 	}
 	return &GeneratedAuth{
-		Option: option,
+		Option:          option,
+		EnvironmentVars: environmentVars,
 	}, nil
 }
 

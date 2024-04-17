@@ -4,6 +4,7 @@ package core
 
 import (
 	http "net/http"
+	os "os"
 )
 
 // RequestOption adapts the behavior of the client or an individual request.
@@ -41,8 +42,12 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 // for the request(s).
 func (r *RequestOptions) ToHeader() http.Header {
 	header := r.cloneHeader()
+	bearer := os.Getenv("COURIER_API_KEY")
 	if r.ApiKey != "" {
-		header.Set("Authorization", "Bearer "+r.ApiKey)
+		bearer = r.ApiKey
+	}
+	if bearer != "" {
+		header.Set("Authorization", "Bearer "+bearer)
 	}
 	return header
 }
