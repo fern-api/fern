@@ -362,37 +362,11 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("header := r.cloneHeader()")
 	for _, authScheme := range auth.Schemes {
 		if authScheme.Bearer != nil {
-			if authScheme.Bearer.TokenEnvVar != nil {
-				f.P(`bearer := os.Getenv("`, *authScheme.Bearer.TokenEnvVar, `")`)
-				f.P("if r.", authScheme.Bearer.Token.PascalCase.UnsafeName, ` != "" {`)
-				f.P("bearer = r.", authScheme.Bearer.Token.PascalCase.UnsafeName)
-				f.P("}")
-				f.P(`if bearer != "" {`)
-				f.P(`header.Set("Authorization", `, `"Bearer " + bearer)`)
-				f.P("}")
-				continue
-			}
 			f.P("if r.", authScheme.Bearer.Token.PascalCase.UnsafeName, ` != "" { `)
 			f.P(`header.Set("Authorization", `, `"Bearer " + r.`, authScheme.Bearer.Token.PascalCase.UnsafeName, ")")
 			f.P("}")
 		}
 		if authScheme.Basic != nil {
-			if authScheme.Basic.UsernameEnvVar != nil && authScheme.Basic.PasswordEnvVar != nil {
-				f.P("var (")
-				f.P(`username = os.Getenv("`, *authScheme.Basic.UsernameEnvVar, `")`)
-				f.P(`password = os.Getenv("`, *authScheme.Basic.PasswordEnvVar, `")`)
-				f.P(")")
-				f.P(`if r.Username != "" {`)
-				f.P("username = r.Username")
-				f.P("}")
-				f.P(`if r.Password != "" {`)
-				f.P("password = r.Password")
-				f.P("}")
-				f.P(`if username != "" && password != "" {`)
-				f.P(`header.Set("Authorization", `, `"Basic " + base64.StdEncoding.EncodeToString([]byte(username + ": " + password)))`)
-				f.P("}")
-				continue
-			}
 			f.P(`if r.Username != "" && r.Password != "" {`)
 			f.P(`header.Set("Authorization", `, `"Basic " + base64.StdEncoding.EncodeToString([]byte(r.Username + ": " + r.Password)))`)
 			f.P("}")
@@ -408,20 +382,9 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			}
 			valueTypeFormat := formatForValueType(header.ValueType, f.types)
 			value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
-			variable := header.Name.Name.CamelCase.SafeName
-			if header.HeaderEnvVar != nil {
-				f.P(variable, ` := os.Getenv("`, *header.HeaderEnvVar, `")`)
-				f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
-				f.P(variable, ` = fmt.Sprintf("%v", `, value, ")")
-				f.P("}")
-				f.P("if ", variable, ` != "" {`)
-				f.P(`header.Set("`, header.Name.WireValue, `", `, variable, ")")
-				f.P("}")
-			} else {
-				f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
-				f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, value, "))")
-				f.P("}")
-			}
+			f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
+			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("`, prefix, `%v",`, value, "))")
+			f.P("}")
 		}
 	}
 	for _, header := range headers {
@@ -431,31 +394,12 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 		}
 		valueTypeFormat := formatForValueType(header.ValueType, f.types)
 		value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
-		variable := header.Name.Name.CamelCase.SafeName
 		if valueTypeFormat.IsOptional {
-			if header.Env != nil {
-				f.P(variable, ` := os.Getenv("`, *header.Env, `")`)
-				f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != nil {")
-				f.P(variable, ` = fmt.Sprintf("%v", `, value, ")")
-				f.P("}")
-				f.P("if ", variable, ` != "" {`)
-				f.P(`header.Set("`, header.Name.WireValue, `", `, variable, ")")
-				f.P("}")
-			} else {
-				f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != nil {")
-				f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, value, "))")
-				f.P("}")
-			}
+			f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != nil {")
+			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, value, "))")
+			f.P("}")
 		} else {
-			if header.Env != nil {
-				f.P(variable, ` := os.Getenv("`, *header.Env, `")`)
-				f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
-				f.P(variable, ` = fmt.Sprintf("%v", `, value, ")")
-				f.P("}")
-				f.P(`header.Set("`, header.Name.WireValue, `", `, variable, ")")
-			} else {
-				f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, value, "))")
-			}
+			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, value, "))")
 		}
 	}
 	f.P("return header")
@@ -864,7 +808,9 @@ type GeneratedEndpoint struct {
 
 // WriteClient writes a client for interacting with the given service.
 func (f *fileWriter) WriteClient(
+	irAuth *ir.ApiAuth,
 	irEndpoints []*ir.HttpEndpoint,
+	headers []*ir.HttpHeader,
 	idempotencyHeaders []*ir.HttpHeader,
 	subpackages []*ir.Subpackage,
 	environmentsConfig *ir.EnvironmentsConfig,
@@ -910,6 +856,37 @@ func (f *fileWriter) WriteClient(
 	// Generate the client constructor.
 	f.P("func New", clientName, "(opts ...option.RequestOption) *", clientName, " {")
 	f.P("options := core.NewRequestOptions(opts...)")
+	for _, authScheme := range irAuth.Schemes {
+		if authScheme.Bearer != nil && authScheme.Bearer.TokenEnvVar != nil {
+			f.P("if options.", authScheme.Bearer.Token.PascalCase.UnsafeName, ` == "" {`)
+			f.P("options. ", authScheme.Bearer.Token.PascalCase.UnsafeName, ` = os.Getenv("`, *authScheme.Bearer.TokenEnvVar, `")`)
+			f.P("}")
+			continue
+		}
+		if authScheme.Basic != nil && authScheme.Basic.UsernameEnvVar != nil && authScheme.Basic.PasswordEnvVar != nil {
+			f.P("if options.", authScheme.Basic.Username.PascalCase.UnsafeName, ` == "" {`)
+			f.P("options. ", authScheme.Basic.Username.PascalCase.UnsafeName, ` = os.Getenv("`, *authScheme.Basic.UsernameEnvVar, `")`)
+			f.P("}")
+			f.P("if options.", authScheme.Basic.Password.PascalCase.UnsafeName, ` == "" {`)
+			f.P("options. ", authScheme.Basic.Password.PascalCase.UnsafeName, ` = os.Getenv("`, *authScheme.Basic.PasswordEnvVar, `")`)
+			f.P("}")
+			continue
+		}
+		if header := authScheme.Header; header != nil && header.HeaderEnvVar != nil {
+			f.P("if options.", header.Name.Name.PascalCase.UnsafeName, ` == "" {`)
+			f.P("options. ", header.Name.Name.PascalCase.UnsafeName, ` = os.Getenv("`, *header.HeaderEnvVar, `")`)
+			f.P("}")
+			continue
+		}
+	}
+	for _, header := range headers {
+		if header.Env != nil {
+			f.P("if options.", header.Name.Name.PascalCase.UnsafeName, ` == "" {`)
+			f.P("options. ", header.Name.Name.PascalCase.UnsafeName, ` = os.Getenv("`, *header.Env, `")`)
+			f.P("}")
+			continue
+		}
+	}
 	f.P("return &", clientName, "{")
 	f.P(`baseURL: options.BaseURL,`)
 	f.P("caller: core.NewCaller(")

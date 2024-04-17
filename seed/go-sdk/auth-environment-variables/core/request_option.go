@@ -5,7 +5,6 @@ package core
 import (
 	fmt "fmt"
 	http "net/http"
-	os "os"
 )
 
 // RequestOption adapts the behavior of the client or an individual request.
@@ -44,12 +43,8 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 // for the request(s).
 func (r *RequestOptions) ToHeader() http.Header {
 	header := r.cloneHeader()
-	apiKey := os.Getenv("FERN_API_KEY")
 	if r.ApiKey != "" {
-		apiKey = fmt.Sprintf("%v", r.ApiKey)
-	}
-	if apiKey != "" {
-		header.Set("X-FERN-API-KEY", apiKey)
+		header.Set("X-FERN-API-KEY", fmt.Sprintf("%v", r.ApiKey))
 	}
 	header.Set("X-Another-Header", fmt.Sprintf("%v", r.XAnotherHeader))
 	return header

@@ -273,10 +273,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	files = append(files, newStringerFile(g.coordinator))
 	files = append(files, newTimeFile(g.coordinator))
 	// Then handle mode-specific generation tasks.
-	var (
-		rootClientInstantiation *ast.AssignStmt
-		generatedAuth           *GeneratedAuth
-	)
+	var rootClientInstantiation *ast.AssignStmt
 	generatedRootClient := &GeneratedClient{
 		Instantiation: rootClientInstantiation,
 	}
@@ -284,7 +281,10 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	case ModeFiber:
 		break
 	case ModeClient:
-		var generatedEnvironment *GeneratedEnvironment
+		var (
+			generatedAuth        *GeneratedAuth
+			generatedEnvironment *GeneratedEnvironment
+		)
 		// Generate the core API files.
 		fileInfo := fileInfoForRequestOptionsDefinition()
 		writer := newFileWriter(
@@ -598,7 +598,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		files = append(files, file)
 
 		if g.config.IncludeReadme && generatedRootClient.Instantiation != nil {
-			if err := g.generateReadme(generatedAuth, generatedRootClient, generatedGoVersion); err != nil {
+			if err := g.generateReadme(generatedRootClient, generatedGoVersion); err != nil {
 				return nil, err
 			}
 			files = append(files, file)
@@ -626,7 +626,9 @@ func (g *Generator) generateService(
 		g.coordinator,
 	)
 	generatedClient, err := writer.WriteClient(
+		ir.Auth,
 		irService.Endpoints,
+		ir.Headers,
 		ir.IdempotencyHeaders,
 		irSubpackages,
 		ir.Environments,
@@ -666,7 +668,9 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		g.coordinator,
 	)
 	if _, err := writer.WriteClient(
+		ir.Auth,
 		nil,
+		ir.Headers,
 		ir.IdempotencyHeaders,
 		irSubpackages,
 		nil,
@@ -700,7 +704,9 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		g.coordinator,
 	)
 	generatedClient, err := writer.WriteClient(
+		ir.Auth,
 		nil,
+		ir.Headers,
 		ir.IdempotencyHeaders,
 		irSubpackages,
 		nil,
@@ -780,7 +786,6 @@ func maybeWriteSnippets(
 //   - generatedClient: The generated client, if any.
 //   - generatedGoVersion: The Go version that the generated client supports.
 func (g *Generator) generateReadme(
-	generatedAuth *GeneratedAuth,
 	generatedClient *GeneratedClient,
 	generatedGoVersion string,
 ) (err error) {
@@ -794,15 +799,11 @@ func (g *Generator) generateReadme(
 
 	var usage string
 	if generatedClient != nil {
-		if generatedAuth.EnvironmentVars != nil {
-			usage += "> This client also supports setting the  " + strings.Join(generatedAuth.EnvironmentVars, ", ") + " environment variable\n"
-			usage += "> if you prefer that over the authorization option shown below.\n\n"
-		}
-		usageSnippet, err := ast.NewSourceCodeBuilder(generatedClient.Instantiation).BuildSnippet()
+		usage, err = ast.NewSourceCodeBuilder(generatedClient.Instantiation).BuildSnippet()
 		if err != nil {
 			return err
 		}
-		usage = "```go\n" + usageSnippet + "\n```\n"
+		usage = "```go\n" + usage + "\n```\n"
 	}
 
 	return g.coordinator.GenerateReadme(

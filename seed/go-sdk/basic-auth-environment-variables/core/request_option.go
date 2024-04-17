@@ -5,7 +5,6 @@ package core
 import (
 	base64 "encoding/base64"
 	http "net/http"
-	os "os"
 )
 
 // RequestOption adapts the behavior of the client or an individual request.
@@ -44,18 +43,8 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 // for the request(s).
 func (r *RequestOptions) ToHeader() http.Header {
 	header := r.cloneHeader()
-	var (
-		username = os.Getenv("USERNAME")
-		password = os.Getenv("PASSWORD")
-	)
-	if r.Username != "" {
-		username = r.Username
-	}
-	if r.Password != "" {
-		password = r.Password
-	}
-	if username != "" && password != "" {
-		header.Set("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(username+": "+password)))
+	if r.Username != "" && r.Password != "" {
+		header.Set("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(r.Username+": "+r.Password)))
 	}
 	return header
 }

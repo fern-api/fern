@@ -28,16 +28,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   if the `APIKey` option is not explicitly specified like so:
 
   ```go
-  func (r *RequestOptions) ToHeader() http.Header {
-    header := r.cloneHeader()
-    bearer := os.Getenv("ACME_API_KEY")
-    if r.APIKey != "" {
-      bearer = r.APIKey
+  func NewClient(opts ...option.RequestOption) *Client {
+    options := core.NewRequestOptions(opts...)
+    if options.ApiKey == "" {
+      options.ApiKey = os.Getenv("FERN_API_KEY")
     }
-    if bearer != "" {
-      header.Set("Authorization", "Bearer "+bearer)
+    return &Client{
+      baseURL: options.BaseURL,
+      caller: core.NewCaller(
+        &core.CallerParams{
+          Client:      options.HTTPClient,
+          MaxAttempts: options.MaxAttempts,
+        },
+      ),
+      // The header associated with the client will contain
+      // the FERN_API_KEY value.
+      //
+      // It can still be overridden by endpoint-level request
+      // options.
+      header:  options.ToHeader(),
     }
-    return header
   }
   ```
 
