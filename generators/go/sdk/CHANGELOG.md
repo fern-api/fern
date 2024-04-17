@@ -30,8 +30,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   ```go
   func NewClient(opts ...option.RequestOption) *Client {
     options := core.NewRequestOptions(opts...)
-    if options.ApiKey == "" {
-      options.ApiKey = os.Getenv("FERN_API_KEY")
+    if options.APIKey == "" {
+      options.APIKey = os.Getenv("ACME_API_KEY")
     }
     return &Client{
       baseURL: options.BaseURL,
@@ -42,7 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         },
       ),
       // The header associated with the client will contain
-      // the FERN_API_KEY value.
+      // the ACME_API_KEY value.
       //
       // It can still be overridden by endpoint-level request
       // options.
