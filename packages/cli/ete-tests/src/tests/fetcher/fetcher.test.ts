@@ -1,7 +1,7 @@
 import { fetcher } from "@fern-typescript/fetcher";
 
-describe("...", () => {
-    it("Fails if API is not specified", async () => {
+describe("Fetcher Tests", () => {
+    it("Test if making a request works", async () => {
         const response = await fetcher({
             url: "https://google.com",
             method: "GET"
