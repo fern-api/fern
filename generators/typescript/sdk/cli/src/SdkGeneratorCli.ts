@@ -76,7 +76,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             intermediateRepresentation,
             context: generatorContext,
             npmPackage,
-            generateJestTests: config.output.mode.type === "github" && config.writeUnitTests,
+            generateJestTests: config.output.mode.type === "github",
             config: {
                 whitelabel: config.whitelabel,
                 snippetFilepath:
@@ -105,7 +105,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 noOptionalProperties: customConfig.noOptionalProperties,
                 includeApiReference: customConfig.includeApiReference ?? false,
                 tolerateRepublish: customConfig.tolerateRepublish,
-                allowExtraFields: customConfig.allowExtraFields ?? false
+                allowExtraFields: customConfig.allowExtraFields ?? false,
+                writeUnitTests: config.writeUnitTests
             }
         });
         const typescriptProject = await sdkGenerator.generate();

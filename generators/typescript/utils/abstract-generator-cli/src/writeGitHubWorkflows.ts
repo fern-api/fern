@@ -55,9 +55,7 @@ jobs:
 
       - name: Compile
         run: yarn && yarn build
-
-  ${getTestJob({ config })}
-
+${getTestJob({ config })}
   publish:
     needs: [ compile, test ]
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
