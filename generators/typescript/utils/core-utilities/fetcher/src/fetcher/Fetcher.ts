@@ -86,7 +86,7 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
               (await import("node-fetch")).default
             : typeof fetch == "function"
             ? fetch
-            : (await import("node-fetch")).default
+            : (await import("node-fetch")).default;
 
     const makeRequest = async (): Promise<Response> => {
         const controller = new AbortController();
