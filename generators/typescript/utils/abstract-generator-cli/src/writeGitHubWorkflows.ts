@@ -4,10 +4,12 @@ import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 
 export async function writeGitHubWorkflows({
+    config,
     githubOutputMode,
     isPackagePrivate,
     pathToProject
 }: {
+    config: FernGeneratorExec.GeneratorConfig;
     githubOutputMode: FernGeneratorExec.GithubOutputMode;
     isPackagePrivate: boolean;
     pathToProject: AbsoluteFilePath;
@@ -19,7 +21,8 @@ export async function writeGitHubWorkflows({
     }
     const workflowYaml = constructWorkflowYaml({
         publishInfo: githubOutputMode.publishInfo,
-        isPackagePrivate
+        isPackagePrivate,
+        config
     });
     const githubWorkflowsDir = path.join(pathToProject, ".github", "workflows");
     await mkdir(githubWorkflowsDir, { recursive: true });
@@ -27,9 +30,11 @@ export async function writeGitHubWorkflows({
 }
 
 function constructWorkflowYaml({
+    config,
     publishInfo,
     isPackagePrivate
 }: {
+    config: FernGeneratorExec.GeneratorConfig;
     publishInfo: FernGeneratorExec.NpmGithubPublishInfo | undefined;
     isPackagePrivate: boolean;
 }) {
@@ -51,21 +56,7 @@ jobs:
       - name: Compile
         run: yarn && yarn build
 
-  test:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-
-      - name: Set up node
-        uses: actions/setup-node@v3
-
-      - name: Test
-        run: |
-          yarn
-          yarn fern test --command='jest --env=node'
-          yarn fern test --command='jest --env=jsdom'
+  ${getTestJob({ config })}
 
   publish:
     needs: [ compile, test ]
@@ -97,4 +88,41 @@ jobs:
     }
 
     return workflowYaml;
+}
+
+function getTestJob({ config }: { config: FernGeneratorExec.GeneratorConfig }): string {
+    if (config.writeUnitTests) {
+        return `
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up node
+        uses: actions/setup-node@v3
+
+      - name: Test
+        run: |
+          yarn
+          yarn fern test --command='jest --env=node'
+          yarn fern test --command='jest --env=jsdom'
+`;
+    } else {
+        return `
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up node
+        uses: actions/setup-node@v3
+
+      - name: Compile
+        run: yarn && yarn test    
+`;
+    }
 }
