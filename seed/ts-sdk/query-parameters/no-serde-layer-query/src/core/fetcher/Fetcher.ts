@@ -83,10 +83,10 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
         RUNTIME.type === "node"
             ? // `.default` is required due to this issue:
               // https://github.com/node-fetch/node-fetch/issues/450#issuecomment-387045223
-              require("node-fetch").default
+              ((await import("node-fetch")).default as any)
             : typeof fetch == "function"
             ? fetch
-            : require("node-fetch").default;
+            : ((await import("node-fetch")).default as any);
 
     const makeRequest = async (): Promise<Response> => {
         const controller = new AbortController();

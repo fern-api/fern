@@ -3351,7 +3351,7 @@ __metadata:
     form-data: 4.0.0
     jest: ^29.7.0
     js-base64: ^3.7.6
-    node-fetch: ^3.3.2
+    node-fetch: 2.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     qs: 6.11.2
@@ -3608,15 +3608,17 @@ __metadata:
     "@fern-api/configuration": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
+    "@fern-typescript/fetcher": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
     "@types/node": ^18.7.18
+    "@types/node-fetch": 2.6.9
     depcheck: ^1.4.6
     eslint: ^8.56.0
     execa: ^5.1.1
     jest: ^29.7.0
     js-yaml: ^4.1.0
-    node-fetch: ^3.3.2
+    node-fetch: ^2.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     strip-ansi: ^7.1.0
@@ -17645,7 +17647,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:2.7.0":
+"node-fetch@npm:2.7.0, node-fetch@npm:^2.7.0":
   version: 2.7.0
   resolution: "node-fetch@npm:2.7.0"
   dependencies:
