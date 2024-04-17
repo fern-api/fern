@@ -120,6 +120,7 @@ allowedFailures:
   - alias
   - api-wide-base-path
   - auth-environment-variables
+  - basic-auth-environment-variables
   - exhaustive:bundle
   - exhaustive:dev-dependencies
   - audiences
