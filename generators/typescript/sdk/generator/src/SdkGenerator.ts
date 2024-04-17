@@ -94,6 +94,7 @@ export declare namespace SdkGenerator {
         tolerateRepublish: boolean;
         retainOriginalCasing: boolean;
         allowExtraFields: boolean;
+        writeUnitTests: boolean;
     }
 }
 
@@ -337,8 +338,10 @@ export class SdkGenerator {
         this.exportsManager.writeExportsToProject(this.rootDirectory);
         this.context.logger.debug("Generated exports");
 
-        if (this.generateJestTests) {
+        if (this.generateJestTests && this.config.writeUnitTests) {
             this.generateTestFiles();
+        }
+        if (this.generateJestTests) {
             this.jestTestGenerator.addExtras();
             this.extraScripts = {
                 ...this.extraScripts,

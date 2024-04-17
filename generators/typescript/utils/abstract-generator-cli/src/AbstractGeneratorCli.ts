@@ -97,7 +97,8 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         await writeGitHubWorkflows({
                             githubOutputMode,
                             isPackagePrivate: npmPackage != null && npmPackage.private,
-                            pathToProject
+                            pathToProject,
+                            config
                         });
                     });
 
