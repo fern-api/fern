@@ -1,0 +1,21 @@
+types:
+  StreamedCompletion: 
+    properties: 
+      delta: string
+      tokens: optional<integer>
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    stream:
+      method: POST
+      path: /stream
+      request: 
+        name: StreamCompletionRequest
+        properties: 
+          query: string
+      response-stream:
+        type: StreamedCompletion
+        format: sse
+        terminator: "[[DONE]]"

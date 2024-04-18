@@ -1,8 +1,8 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { createMigrationTester } from "../../../__test__/utils/createMigrationTester";
-import { V37_TO_V36_MIGRATION } from "../migrateFromV37ToV36";
+import { V38_TO_V37_MIGRATION } from "../migrateFromV38ToV37";
 
-const runMigration = createMigrationTester(V37_TO_V36_MIGRATION);
+const runMigration = createMigrationTester(V38_TO_V37_MIGRATION);
 
 describe("migrateFromV38ToV37", () => {
     it("snapshot", async () => {
