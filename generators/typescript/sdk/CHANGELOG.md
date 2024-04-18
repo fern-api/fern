@@ -5,13 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.14.1-rc3] - 2024-04-17
+## [0.14.1-rc4] - 2024-04-17
 
-- Improvement: In an effort to make the generated code JSR compatible, the generator now 
-  directly imports from files instead of using directory imports. 
+- Fix: If integration tests are not enabled, simple jest tests with a `yarn test`
+  script will be created.
+
+- Improvement: In an effort to make the generated code JSR compatible, the generator now
+  directly imports from files instead of using directory imports.
 
 - Improvement: In an effort to make the generated code JSR compatible, we make sure all methods
-  are strongly typed with return signatures (in this case `_getAuthorizationHeader()`). 
+  are strongly typed with return signatures (in this case `_getAuthorizationHeader()`).
 
 - Fix: Generate code snippet for FileDownload endpoint
 
