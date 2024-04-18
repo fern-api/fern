@@ -3,11 +3,11 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedStreaming from "../../..";
-import * as serializers from "../../../../serialization";
+import * as SeedStreaming from "../../../index";
+import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
 import * as stream from "stream";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Dummy {
     interface Options {

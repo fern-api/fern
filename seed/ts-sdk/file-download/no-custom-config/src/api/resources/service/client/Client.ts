@@ -4,7 +4,7 @@
 
 import * as core from "../../../../core";
 import * as stream from "stream";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Service {
     interface Options {

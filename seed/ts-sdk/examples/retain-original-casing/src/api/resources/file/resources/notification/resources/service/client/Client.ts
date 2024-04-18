@@ -4,10 +4,10 @@
 
 import * as environments from "../../../../../../../../environments";
 import * as core from "../../../../../../../../core";
-import * as SeedExamples from "../../../../../../..";
+import * as SeedExamples from "../../../../../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../../../../../serialization";
-import * as errors from "../../../../../../../../errors";
+import * as serializers from "../../../../../../../../serialization/index";
+import * as errors from "../../../../../../../../errors/index";
 
 export declare namespace Service {
     interface Options {

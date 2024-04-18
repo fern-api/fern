@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedExhaustive from "../../..";
+import * as SeedExhaustive from "../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace NoAuth {
     interface Options {

@@ -3,9 +3,9 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedEnum from "../../..";
+import * as SeedEnum from "../../../index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace QueryParam {
     interface Options {

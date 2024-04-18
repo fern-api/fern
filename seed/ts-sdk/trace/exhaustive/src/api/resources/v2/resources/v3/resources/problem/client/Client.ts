@@ -4,9 +4,9 @@
 
 import * as environments from "../../../../../../../../environments";
 import * as core from "../../../../../../../../core";
-import * as SeedTrace from "../../../../../../..";
+import * as SeedTrace from "../../../../../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../../../../../serialization";
+import * as serializers from "../../../../../../../../serialization/index";
 
 export declare namespace Problem {
     interface Options {

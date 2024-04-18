@@ -3,9 +3,9 @@
  */
 
 import * as core from "../../../../core";
-import * as Fiddle from "../../..";
+import * as Fiddle from "../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
+import * as serializers from "../../../../serialization/index";
 
 export declare namespace NoAuth {
     interface Options {

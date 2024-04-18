@@ -5,8 +5,8 @@
 import * as environments from "../../../../../../environments";
 import * as core from "../../../../../../core";
 import urlJoin from "url-join";
-import * as errors from "../../../../../../errors";
-import * as serializers from "../../../../../../serialization";
+import * as errors from "../../../../../../errors/index";
+import * as serializers from "../../../../../../serialization/index";
 
 export declare namespace Service {
     interface Options {
