@@ -6511,6 +6511,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/core", "workspace:packages/core"],\
             ["@fern-api/fdr-sdk", "npm:0.73.2-7a2b8d739"],\
             ["@fern-api/venus-api-sdk", "npm:0.0.38"],\
+            ["@fern-fern/fdr-test-sdk", "npm:0.0.5297"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.508"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
@@ -7395,6 +7396,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/register", "workspace:packages/cli/register"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
+            ["@fern-fern/fdr-test-sdk", "npm:0.0.5297"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.508"],\
             ["@types/decompress", "npm:4.2.7"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -7748,6 +7750,20 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@fern-fern-docs-config-npm-0.0.80-936bb80e98-8b3501c55b.zip/node_modules/@fern-fern/docs-config/",\
           "packageDependencies": [\
             ["@fern-fern/docs-config", "npm:0.0.80"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@fern-fern/fdr-test-sdk", [\
+        ["npm:0.0.5297", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-fdr-test-sdk-npm-0.0.5297-c46738c170-993246a0e7.zip/node_modules/@fern-fern/fdr-test-sdk/",\
+          "packageDependencies": [\
+            ["@fern-fern/fdr-test-sdk", "npm:0.0.5297"],\
+            ["form-data", "npm:4.0.0"],\
+            ["js-base64", "npm:3.7.2"],\
+            ["node-fetch", "virtual:eba7b125e9ef0be4ba7986cee714d09b00064af28d0c38584d822d811c86708dd0301c4d22305df7435dc4c73e71ea20443a8d422a46a3363bdd018ea0837c28#npm:2.7.0"],\
+            ["qs", "npm:6.11.2"],\
+            ["url-join", "npm:4.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\

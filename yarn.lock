@@ -3494,6 +3494,7 @@ __metadata:
   dependencies:
     "@fern-api/fdr-sdk": 0.73.2-7a2b8d739
     "@fern-api/venus-api-sdk": 0.0.38
+    "@fern-fern/fdr-test-sdk": ^0.0.5297
     "@fern-fern/fiddle-sdk": ^0.0.508
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -4307,6 +4308,7 @@ __metadata:
     "@fern-api/register": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
+    "@fern-fern/fdr-test-sdk": ^0.0.5297
     "@fern-fern/fiddle-sdk": ^0.0.508
     "@types/decompress": ^4.2.7
     "@types/jest": ^29.0.3
@@ -4639,6 +4641,19 @@ __metadata:
   version: 0.0.80
   resolution: "@fern-fern/docs-config@npm:0.0.80"
   checksum: 8b3501c55ba321c5e838c07364d68a9ad78114f7b11985c1fcc87bbb2de12bb8805f70fc2bef8a4e9ef375cd4d82f4e89462a33532cc7c22650f04ab7d810480
+  languageName: node
+  linkType: hard
+
+"@fern-fern/fdr-test-sdk@npm:^0.0.5297":
+  version: 0.0.5297
+  resolution: "@fern-fern/fdr-test-sdk@npm:0.0.5297"
+  dependencies:
+    form-data: 4.0.0
+    js-base64: 3.7.2
+    node-fetch: 2.7.0
+    qs: 6.11.2
+    url-join: 4.0.1
+  checksum: 993246a0e754a83342078bde8853c902b5237cc375738335c18a2cb23ba41a608e38cd7d8565703213353985f3098fe03bdb85cb81ab6a81c5d784b6b03d2c49
   languageName: node
   linkType: hard
 
