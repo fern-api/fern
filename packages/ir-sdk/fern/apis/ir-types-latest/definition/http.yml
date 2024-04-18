@@ -183,13 +183,9 @@ types:
 
   StreamingResponse:
     union: 
-      json:
-        type: JsonStreamChunk
-        key: json
+      json: JsonStreamChunk
       text: TextStreamChunk
-      sse: 
-        type: SseStreamChunk
-        key: sse
+      sse: SseStreamChunk
     
   TextStreamChunk: 
     extends: commons.WithDocs

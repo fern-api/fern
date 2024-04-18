@@ -9,23 +9,19 @@ import * as core from "../../../../core";
 export const StreamingResponse: core.serialization.Schema<serializers.StreamingResponse.Raw, FernIr.StreamingResponse> =
     core.serialization
         .union("type", {
-            json: core.serialization.object({
-                json: core.serialization.lazyObject(async () => (await import("../../..")).JsonStreamChunk),
-            }),
+            json: core.serialization.lazyObject(async () => (await import("../../..")).JsonStreamChunk),
             text: core.serialization.lazyObject(async () => (await import("../../..")).TextStreamChunk),
-            sse: core.serialization.object({
-                sse: core.serialization.lazyObject(async () => (await import("../../..")).SseStreamChunk),
-            }),
+            sse: core.serialization.lazyObject(async () => (await import("../../..")).SseStreamChunk),
         })
         .transform<FernIr.StreamingResponse>({
             transform: (value) => {
                 switch (value.type) {
                     case "json":
-                        return FernIr.StreamingResponse.json(value.json);
+                        return FernIr.StreamingResponse.json(value);
                     case "text":
                         return FernIr.StreamingResponse.text(value);
                     case "sse":
-                        return FernIr.StreamingResponse.sse(value.sse);
+                        return FernIr.StreamingResponse.sse(value);
                     default:
                         return value as FernIr.StreamingResponse;
                 }
@@ -36,17 +32,15 @@ export const StreamingResponse: core.serialization.Schema<serializers.StreamingR
 export declare namespace StreamingResponse {
     type Raw = StreamingResponse.Json | StreamingResponse.Text | StreamingResponse.Sse;
 
-    interface Json {
+    interface Json extends serializers.JsonStreamChunk.Raw {
         type: "json";
-        json: serializers.JsonStreamChunk.Raw;
     }
 
     interface Text extends serializers.TextStreamChunk.Raw {
         type: "text";
     }
 
-    interface Sse {
+    interface Sse extends serializers.SseStreamChunk.Raw {
         type: "sse";
-        sse: serializers.SseStreamChunk.Raw;
     }
 }

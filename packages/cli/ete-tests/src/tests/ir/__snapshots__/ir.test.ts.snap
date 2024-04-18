@@ -31444,7 +31444,20 @@ exports[`ir {"name":"streaming"} 1`] = `
                             }
                         }
                     },
-                    "response": null,
+                    "response": {
+                        "type": "streaming",
+                        "value": {
+                            "type": "json",
+                            "json": {
+                                "payload": {
+                                    "_type": "primitive",
+                                    "primitive": "STRING"
+                                },
+                                "terminator": "[DONE]",
+                                "docs": null
+                            }
+                        }
+                    },
                     "errors": [],
                     "examples": [
                         {
@@ -31503,7 +31516,18 @@ exports[`ir {"name":"streaming"} 1`] = `
                             "codeSamples": null,
                             "response": {
                                 "type": "ok",
-                                "body": null
+                                "body": {
+                                    "shape": {
+                                        "type": "primitive",
+                                        "primitive": {
+                                            "type": "string",
+                                            "string": {
+                                                "original": "string"
+                                            }
+                                        }
+                                    },
+                                    "jsonExample": "string"
+                                }
                             },
                             "docs": null
                         }

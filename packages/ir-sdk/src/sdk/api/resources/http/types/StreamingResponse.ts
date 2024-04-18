@@ -10,18 +10,16 @@ export type StreamingResponse =
     | FernIr.StreamingResponse.Sse;
 
 export declare namespace StreamingResponse {
-    interface Json extends _Utils {
+    interface Json extends FernIr.JsonStreamChunk, _Utils {
         type: "json";
-        json: FernIr.JsonStreamChunk;
     }
 
     interface Text extends FernIr.TextStreamChunk, _Utils {
         type: "text";
     }
 
-    interface Sse extends _Utils {
+    interface Sse extends FernIr.SseStreamChunk, _Utils {
         type: "sse";
-        sse: FernIr.SseStreamChunk;
     }
 
     interface _Utils {
@@ -39,7 +37,7 @@ export declare namespace StreamingResponse {
 export const StreamingResponse = {
     json: (value: FernIr.JsonStreamChunk): FernIr.StreamingResponse.Json => {
         return {
-            json: value,
+            ...value,
             type: "json",
             _visit: function <_Result>(
                 this: FernIr.StreamingResponse.Json,
@@ -65,7 +63,7 @@ export const StreamingResponse = {
 
     sse: (value: FernIr.SseStreamChunk): FernIr.StreamingResponse.Sse => {
         return {
-            sse: value,
+            ...value,
             type: "sse",
             _visit: function <_Result>(
                 this: FernIr.StreamingResponse.Sse,
@@ -82,11 +80,11 @@ export const StreamingResponse = {
     ): _Result => {
         switch (value.type) {
             case "json":
-                return visitor.json(value.json);
+                return visitor.json(value);
             case "text":
                 return visitor.text(value);
             case "sse":
-                return visitor.sse(value.sse);
+                return visitor.sse(value);
             default:
                 return visitor._other(value as any);
         }

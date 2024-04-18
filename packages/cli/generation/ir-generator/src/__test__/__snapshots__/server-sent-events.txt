@@ -548,33 +548,12 @@ exports[`generate IR 1`] = `
           "response": {
             "type": "streaming",
             "value": {
-              "sse": {
-                "docs": null,
-                "payload": {
-                  "_type": "named",
-                  "fernFilepath": {
-                    "allParts": [
-                      {
-                        "camelCase": {
-                          "safeName": "completions",
-                          "unsafeName": "completions",
-                        },
-                        "originalName": "completions",
-                        "pascalCase": {
-                          "safeName": "Completions",
-                          "unsafeName": "Completions",
-                        },
-                        "screamingSnakeCase": {
-                          "safeName": "COMPLETIONS",
-                          "unsafeName": "COMPLETIONS",
-                        },
-                        "snakeCase": {
-                          "safeName": "completions",
-                          "unsafeName": "completions",
-                        },
-                      },
-                    ],
-                    "file": {
+              "docs": null,
+              "payload": {
+                "_type": "named",
+                "fernFilepath": {
+                  "allParts": [
+                    {
                       "camelCase": {
                         "safeName": "completions",
                         "unsafeName": "completions",
@@ -593,31 +572,50 @@ exports[`generate IR 1`] = `
                         "unsafeName": "completions",
                       },
                     },
-                    "packagePath": [],
-                  },
-                  "name": {
+                  ],
+                  "file": {
                     "camelCase": {
-                      "safeName": "streamedCompletion",
-                      "unsafeName": "streamedCompletion",
+                      "safeName": "completions",
+                      "unsafeName": "completions",
                     },
-                    "originalName": "StreamedCompletion",
+                    "originalName": "completions",
                     "pascalCase": {
-                      "safeName": "StreamedCompletion",
-                      "unsafeName": "StreamedCompletion",
+                      "safeName": "Completions",
+                      "unsafeName": "Completions",
                     },
                     "screamingSnakeCase": {
-                      "safeName": "STREAMED_COMPLETION",
-                      "unsafeName": "STREAMED_COMPLETION",
+                      "safeName": "COMPLETIONS",
+                      "unsafeName": "COMPLETIONS",
                     },
                     "snakeCase": {
-                      "safeName": "streamed_completion",
-                      "unsafeName": "streamed_completion",
+                      "safeName": "completions",
+                      "unsafeName": "completions",
                     },
                   },
-                  "typeId": "type_completions:StreamedCompletion",
+                  "packagePath": [],
                 },
-                "terminator": "[[DONE]]",
+                "name": {
+                  "camelCase": {
+                    "safeName": "streamedCompletion",
+                    "unsafeName": "streamedCompletion",
+                  },
+                  "originalName": "StreamedCompletion",
+                  "pascalCase": {
+                    "safeName": "StreamedCompletion",
+                    "unsafeName": "StreamedCompletion",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "STREAMED_COMPLETION",
+                    "unsafeName": "STREAMED_COMPLETION",
+                  },
+                  "snakeCase": {
+                    "safeName": "streamed_completion",
+                    "unsafeName": "streamed_completion",
+                  },
+                },
+                "typeId": "type_completions:StreamedCompletion",
               },
+              "terminator": "[[DONE]]",
               "type": "sse",
             },
           },
