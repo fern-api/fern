@@ -35,23 +35,24 @@ export async function convertHttpResponse({
     if (responseStream != null) {
         const docs = typeof responseStream !== "string" ? responseStream.docs : undefined;
         const typeReference = typeof responseStream === "string" ? responseStream : responseStream.type;
+        const streamFormat = typeof responseStream === "string" ? "json" : responseStream.format ?? "json";
         if (isRawTextType(typeReference)) {
             return HttpResponse.streaming(
                 StreamingResponse.text({
                     docs
                 })
             );
-        } else if (typeof responseStream === "string" || responseStream.format === "json") {
+        } else if (typeof responseStream !== "string" && responseStream.format === "json") {
             return HttpResponse.streaming(
-                StreamingResponse.json({
+                StreamingResponse.sse({
                     docs,
                     payload: file.parseTypeReference(typeReference),
                     terminator: typeof responseStream !== "string" ? responseStream.terminator : undefined
                 })
             );
-        } else if (responseStream.format === "sse") {
+        } else {
             return HttpResponse.streaming(
-                StreamingResponse.sse({
+                StreamingResponse.json({
                     docs,
                     payload: file.parseTypeReference(typeReference),
                     terminator: typeof responseStream !== "string" ? responseStream.terminator : undefined
