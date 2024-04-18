@@ -7,7 +7,7 @@ import {
     getResponsePropertyComponents,
     maybeFileFromResolvedType,
     PropertyValidator,
-    resolvedTypeHasProperty,
+    resolvedTypeHasProperty
 } from "../../utils/propertyValidatorUtils";
 
 export function validateResultsProperty({

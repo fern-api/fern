@@ -144,7 +144,7 @@ function maybeGetOAuthScheme({ workspace }: { workspace: FernWorkspace }): OAuth
     };
 }
 
-function isRawOAuthSchemeSchema(rawOAuthSchemeSchema: any): rawOAuthSchemeSchema is RawSchemas.OAuthSchemeSchema {
+function isRawOAuthSchemeSchema(rawOAuthSchemeSchema: unknown): rawOAuthSchemeSchema is RawSchemas.OAuthSchemeSchema {
     return (
         (rawOAuthSchemeSchema as RawSchemas.OAuthSchemeSchema).scheme === "oauth" &&
         (rawOAuthSchemeSchema as RawSchemas.OAuthSchemeSchema).type != null &&
