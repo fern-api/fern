@@ -10,6 +10,7 @@ import {
     Fetcher,
     GetReferenceOpts,
     getTextOfTsNode,
+    ImportsManager,
     JavaScriptRuntime,
     PackageId,
     visitJavaScriptRuntime
@@ -36,12 +37,14 @@ export declare namespace GeneratedFileUploadEndpointRequest {
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         targetRuntime: JavaScriptRuntime;
         retainOriginalCasing: boolean;
+        importsManager: ImportsManager;
     }
 }
 
 export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequest {
     private static FORM_DATA_VARIABLE_NAME = "_request";
 
+    private importsManager: ImportsManager;
     private ir: IntermediateRepresentation;
     private requestParameter: FileUploadRequestParameter | undefined;
     private queryParams: GeneratedQueryParams | undefined;
@@ -60,7 +63,8 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         requestBody,
         generatedSdkClientClass,
         targetRuntime,
-        retainOriginalCasing
+        retainOriginalCasing,
+        importsManager
     }: GeneratedFileUploadEndpointRequest.Init) {
         this.ir = ir;
         this.service = service;
@@ -69,7 +73,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         this.generatedSdkClientClass = generatedSdkClientClass;
         this.targetRuntime = targetRuntime;
         this.retainOriginalCasing = retainOriginalCasing;
-
+        this.importsManager = importsManager;
         if (
             requestBody.properties.some((property) => property.type === "bodyProperty") ||
             endpoint.queryParameters.length > 0
@@ -116,6 +120,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                         [ts.factory.createStringLiteral("/path/to/your/file")]
                     )
                 );
+                context.externalDependencies.fs.ReadStream._getReferenceToType();
             }
         }
         for (const pathParameter of getPathParametersForEndpointSignature(this.service, this.endpoint)) {
