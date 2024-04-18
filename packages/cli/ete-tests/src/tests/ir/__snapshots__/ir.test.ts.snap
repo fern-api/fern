@@ -31241,15 +31241,15 @@ exports[`ir {"name":"streaming"} 1`] = `
                     "sdkRequest": null,
                     "response": {
                         "type": "streaming",
-                        "dataEventType": {
+                        "value": {
                             "type": "json",
-                            "json": {
+                            "payload": {
                                 "_type": "primitive",
                                 "primitive": "STRING"
-                            }
-                        },
-                        "terminator": null,
-                        "docs": null
+                            },
+                            "terminator": null,
+                            "docs": null
+                        }
                     },
                     "errors": [],
                     "examples": [
@@ -31444,15 +31444,15 @@ exports[`ir {"name":"streaming"} 1`] = `
                     },
                     "response": {
                         "type": "streaming",
-                        "dataEventType": {
+                        "value": {
                             "type": "json",
-                            "json": {
+                            "payload": {
                                 "_type": "primitive",
                                 "primitive": "STRING"
-                            }
-                        },
-                        "terminator": "[DONE]",
-                        "docs": null
+                            },
+                            "terminator": "[DONE]",
+                            "docs": null
+                        }
                     },
                     "errors": [],
                     "examples": [

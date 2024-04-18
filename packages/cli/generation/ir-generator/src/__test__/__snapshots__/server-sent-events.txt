@@ -6,21 +6,21 @@ exports[`generate IR 1`] = `
   "apiDocs": null,
   "apiName": {
     "camelCase": {
-      "safeName": "streaming",
-      "unsafeName": "streaming",
+      "safeName": "serverSentEvents",
+      "unsafeName": "serverSentEvents",
     },
-    "originalName": "streaming",
+    "originalName": "server-sent-events",
     "pascalCase": {
-      "safeName": "Streaming",
-      "unsafeName": "Streaming",
+      "safeName": "ServerSentEvents",
+      "unsafeName": "ServerSentEvents",
     },
     "screamingSnakeCase": {
-      "safeName": "STREAMING",
-      "unsafeName": "STREAMING",
+      "safeName": "SERVER_SENT_EVENTS",
+      "unsafeName": "SERVER_SENT_EVENTS",
     },
     "snakeCase": {
-      "safeName": "streaming",
-      "unsafeName": "streaming",
+      "safeName": "server_sent_events",
+      "unsafeName": "server_sent_events",
     },
   },
   "auth": {
@@ -73,7 +73,7 @@ exports[`generate IR 1`] = `
     "navigationConfig": null,
     "service": null,
     "subpackages": [
-      "subpackage_dummy",
+      "subpackage_completions",
     ],
     "types": [],
     "webhooks": null,
@@ -92,13 +92,13 @@ exports[`generate IR 1`] = `
   "serviceTypeReferenceInfo": {
     "sharedTypes": [],
     "typesReferencedOnlyByService": {
-      "service_dummy": [
-        "type_dummy:StreamResponse",
+      "service_completions": [
+        "type_completions:StreamedCompletion",
       ],
     },
   },
   "services": {
-    "service_dummy": {
+    "service_completions": {
       "availability": null,
       "basePath": {
         "head": "",
@@ -125,39 +125,41 @@ exports[`generate IR 1`] = `
               "queryParameters": [],
               "request": {
                 "jsonExample": {
-                  "num_events": 1,
+                  "query": "string",
                 },
                 "properties": [
                   {
                     "name": {
                       "name": {
                         "camelCase": {
-                          "safeName": "numEvents",
-                          "unsafeName": "numEvents",
+                          "safeName": "query",
+                          "unsafeName": "query",
                         },
-                        "originalName": "num_events",
+                        "originalName": "query",
                         "pascalCase": {
-                          "safeName": "NumEvents",
-                          "unsafeName": "NumEvents",
+                          "safeName": "Query",
+                          "unsafeName": "Query",
                         },
                         "screamingSnakeCase": {
-                          "safeName": "NUM_EVENTS",
-                          "unsafeName": "NUM_EVENTS",
+                          "safeName": "QUERY",
+                          "unsafeName": "QUERY",
                         },
                         "snakeCase": {
-                          "safeName": "num_events",
-                          "unsafeName": "num_events",
+                          "safeName": "query",
+                          "unsafeName": "query",
                         },
                       },
-                      "wireValue": "num_events",
+                      "wireValue": "query",
                     },
                     "originalTypeDeclaration": null,
                     "value": {
-                      "jsonExample": 1,
+                      "jsonExample": "string",
                       "shape": {
                         "primitive": {
-                          "integer": 1,
-                          "type": "integer",
+                          "string": {
+                            "original": "string",
+                          },
+                          "type": "string",
                         },
                         "type": "primitive",
                       },
@@ -169,8 +171,8 @@ exports[`generate IR 1`] = `
               "response": {
                 "body": {
                   "jsonExample": {
-                    "id": "string",
-                    "name": "string",
+                    "delta": "string",
+                    "tokens": 1,
                   },
                   "shape": {
                     "shape": {
@@ -179,89 +181,89 @@ exports[`generate IR 1`] = `
                           "name": {
                             "name": {
                               "camelCase": {
-                                "safeName": "id",
-                                "unsafeName": "id",
+                                "safeName": "delta",
+                                "unsafeName": "delta",
                               },
-                              "originalName": "id",
+                              "originalName": "delta",
                               "pascalCase": {
-                                "safeName": "ID",
-                                "unsafeName": "ID",
+                                "safeName": "Delta",
+                                "unsafeName": "Delta",
                               },
                               "screamingSnakeCase": {
-                                "safeName": "ID",
-                                "unsafeName": "ID",
+                                "safeName": "DELTA",
+                                "unsafeName": "DELTA",
                               },
                               "snakeCase": {
-                                "safeName": "id",
-                                "unsafeName": "id",
+                                "safeName": "delta",
+                                "unsafeName": "delta",
                               },
                             },
-                            "wireValue": "id",
+                            "wireValue": "delta",
                           },
                           "originalTypeDeclaration": {
                             "fernFilepath": {
                               "allParts": [
                                 {
                                   "camelCase": {
-                                    "safeName": "dummy",
-                                    "unsafeName": "dummy",
+                                    "safeName": "completions",
+                                    "unsafeName": "completions",
                                   },
-                                  "originalName": "dummy",
+                                  "originalName": "completions",
                                   "pascalCase": {
-                                    "safeName": "Dummy",
-                                    "unsafeName": "Dummy",
+                                    "safeName": "Completions",
+                                    "unsafeName": "Completions",
                                   },
                                   "screamingSnakeCase": {
-                                    "safeName": "DUMMY",
-                                    "unsafeName": "DUMMY",
+                                    "safeName": "COMPLETIONS",
+                                    "unsafeName": "COMPLETIONS",
                                   },
                                   "snakeCase": {
-                                    "safeName": "dummy",
-                                    "unsafeName": "dummy",
+                                    "safeName": "completions",
+                                    "unsafeName": "completions",
                                   },
                                 },
                               ],
                               "file": {
                                 "camelCase": {
-                                  "safeName": "dummy",
-                                  "unsafeName": "dummy",
+                                  "safeName": "completions",
+                                  "unsafeName": "completions",
                                 },
-                                "originalName": "dummy",
+                                "originalName": "completions",
                                 "pascalCase": {
-                                  "safeName": "Dummy",
-                                  "unsafeName": "Dummy",
+                                  "safeName": "Completions",
+                                  "unsafeName": "Completions",
                                 },
                                 "screamingSnakeCase": {
-                                  "safeName": "DUMMY",
-                                  "unsafeName": "DUMMY",
+                                  "safeName": "COMPLETIONS",
+                                  "unsafeName": "COMPLETIONS",
                                 },
                                 "snakeCase": {
-                                  "safeName": "dummy",
-                                  "unsafeName": "dummy",
+                                  "safeName": "completions",
+                                  "unsafeName": "completions",
                                 },
                               },
                               "packagePath": [],
                             },
                             "name": {
                               "camelCase": {
-                                "safeName": "streamResponse",
-                                "unsafeName": "streamResponse",
+                                "safeName": "streamedCompletion",
+                                "unsafeName": "streamedCompletion",
                               },
-                              "originalName": "StreamResponse",
+                              "originalName": "StreamedCompletion",
                               "pascalCase": {
-                                "safeName": "StreamResponse",
-                                "unsafeName": "StreamResponse",
+                                "safeName": "StreamedCompletion",
+                                "unsafeName": "StreamedCompletion",
                               },
                               "screamingSnakeCase": {
-                                "safeName": "STREAM_RESPONSE",
-                                "unsafeName": "STREAM_RESPONSE",
+                                "safeName": "STREAMED_COMPLETION",
+                                "unsafeName": "STREAMED_COMPLETION",
                               },
                               "snakeCase": {
-                                "safeName": "stream_response",
-                                "unsafeName": "stream_response",
+                                "safeName": "streamed_completion",
+                                "unsafeName": "streamed_completion",
                               },
                             },
-                            "typeId": "type_dummy:StreamResponse",
+                            "typeId": "type_completions:StreamedCompletion",
                           },
                           "value": {
                             "jsonExample": "string",
@@ -280,98 +282,96 @@ exports[`generate IR 1`] = `
                           "name": {
                             "name": {
                               "camelCase": {
-                                "safeName": "name",
-                                "unsafeName": "name",
+                                "safeName": "tokens",
+                                "unsafeName": "tokens",
                               },
-                              "originalName": "name",
+                              "originalName": "tokens",
                               "pascalCase": {
-                                "safeName": "Name",
-                                "unsafeName": "Name",
+                                "safeName": "Tokens",
+                                "unsafeName": "Tokens",
                               },
                               "screamingSnakeCase": {
-                                "safeName": "NAME",
-                                "unsafeName": "NAME",
+                                "safeName": "TOKENS",
+                                "unsafeName": "TOKENS",
                               },
                               "snakeCase": {
-                                "safeName": "name",
-                                "unsafeName": "name",
+                                "safeName": "tokens",
+                                "unsafeName": "tokens",
                               },
                             },
-                            "wireValue": "name",
+                            "wireValue": "tokens",
                           },
                           "originalTypeDeclaration": {
                             "fernFilepath": {
                               "allParts": [
                                 {
                                   "camelCase": {
-                                    "safeName": "dummy",
-                                    "unsafeName": "dummy",
+                                    "safeName": "completions",
+                                    "unsafeName": "completions",
                                   },
-                                  "originalName": "dummy",
+                                  "originalName": "completions",
                                   "pascalCase": {
-                                    "safeName": "Dummy",
-                                    "unsafeName": "Dummy",
+                                    "safeName": "Completions",
+                                    "unsafeName": "Completions",
                                   },
                                   "screamingSnakeCase": {
-                                    "safeName": "DUMMY",
-                                    "unsafeName": "DUMMY",
+                                    "safeName": "COMPLETIONS",
+                                    "unsafeName": "COMPLETIONS",
                                   },
                                   "snakeCase": {
-                                    "safeName": "dummy",
-                                    "unsafeName": "dummy",
+                                    "safeName": "completions",
+                                    "unsafeName": "completions",
                                   },
                                 },
                               ],
                               "file": {
                                 "camelCase": {
-                                  "safeName": "dummy",
-                                  "unsafeName": "dummy",
+                                  "safeName": "completions",
+                                  "unsafeName": "completions",
                                 },
-                                "originalName": "dummy",
+                                "originalName": "completions",
                                 "pascalCase": {
-                                  "safeName": "Dummy",
-                                  "unsafeName": "Dummy",
+                                  "safeName": "Completions",
+                                  "unsafeName": "Completions",
                                 },
                                 "screamingSnakeCase": {
-                                  "safeName": "DUMMY",
-                                  "unsafeName": "DUMMY",
+                                  "safeName": "COMPLETIONS",
+                                  "unsafeName": "COMPLETIONS",
                                 },
                                 "snakeCase": {
-                                  "safeName": "dummy",
-                                  "unsafeName": "dummy",
+                                  "safeName": "completions",
+                                  "unsafeName": "completions",
                                 },
                               },
                               "packagePath": [],
                             },
                             "name": {
                               "camelCase": {
-                                "safeName": "streamResponse",
-                                "unsafeName": "streamResponse",
+                                "safeName": "streamedCompletion",
+                                "unsafeName": "streamedCompletion",
                               },
-                              "originalName": "StreamResponse",
+                              "originalName": "StreamedCompletion",
                               "pascalCase": {
-                                "safeName": "StreamResponse",
-                                "unsafeName": "StreamResponse",
+                                "safeName": "StreamedCompletion",
+                                "unsafeName": "StreamedCompletion",
                               },
                               "screamingSnakeCase": {
-                                "safeName": "STREAM_RESPONSE",
-                                "unsafeName": "STREAM_RESPONSE",
+                                "safeName": "STREAMED_COMPLETION",
+                                "unsafeName": "STREAMED_COMPLETION",
                               },
                               "snakeCase": {
-                                "safeName": "stream_response",
-                                "unsafeName": "stream_response",
+                                "safeName": "streamed_completion",
+                                "unsafeName": "streamed_completion",
                               },
                             },
-                            "typeId": "type_dummy:StreamResponse",
+                            "typeId": "type_completions:StreamedCompletion",
                           },
                           "value": {
-                            "jsonExample": "string",
+                            "jsonExample": 1,
                             "shape": {
                               "primitive": {
-                                "string": {
-                                  "original": "string",
-                                },
-                                "type": "string",
+                                "integer": 1,
+                                "type": "integer",
                               },
                               "type": "primitive",
                             },
@@ -386,65 +386,65 @@ exports[`generate IR 1`] = `
                         "allParts": [
                           {
                             "camelCase": {
-                              "safeName": "dummy",
-                              "unsafeName": "dummy",
+                              "safeName": "completions",
+                              "unsafeName": "completions",
                             },
-                            "originalName": "dummy",
+                            "originalName": "completions",
                             "pascalCase": {
-                              "safeName": "Dummy",
-                              "unsafeName": "Dummy",
+                              "safeName": "Completions",
+                              "unsafeName": "Completions",
                             },
                             "screamingSnakeCase": {
-                              "safeName": "DUMMY",
-                              "unsafeName": "DUMMY",
+                              "safeName": "COMPLETIONS",
+                              "unsafeName": "COMPLETIONS",
                             },
                             "snakeCase": {
-                              "safeName": "dummy",
-                              "unsafeName": "dummy",
+                              "safeName": "completions",
+                              "unsafeName": "completions",
                             },
                           },
                         ],
                         "file": {
                           "camelCase": {
-                            "safeName": "dummy",
-                            "unsafeName": "dummy",
+                            "safeName": "completions",
+                            "unsafeName": "completions",
                           },
-                          "originalName": "dummy",
+                          "originalName": "completions",
                           "pascalCase": {
-                            "safeName": "Dummy",
-                            "unsafeName": "Dummy",
+                            "safeName": "Completions",
+                            "unsafeName": "Completions",
                           },
                           "screamingSnakeCase": {
-                            "safeName": "DUMMY",
-                            "unsafeName": "DUMMY",
+                            "safeName": "COMPLETIONS",
+                            "unsafeName": "COMPLETIONS",
                           },
                           "snakeCase": {
-                            "safeName": "dummy",
-                            "unsafeName": "dummy",
+                            "safeName": "completions",
+                            "unsafeName": "completions",
                           },
                         },
                         "packagePath": [],
                       },
                       "name": {
                         "camelCase": {
-                          "safeName": "streamResponse",
-                          "unsafeName": "streamResponse",
+                          "safeName": "streamedCompletion",
+                          "unsafeName": "streamedCompletion",
                         },
-                        "originalName": "StreamResponse",
+                        "originalName": "StreamedCompletion",
                         "pascalCase": {
-                          "safeName": "StreamResponse",
-                          "unsafeName": "StreamResponse",
+                          "safeName": "StreamedCompletion",
+                          "unsafeName": "StreamedCompletion",
                         },
                         "screamingSnakeCase": {
-                          "safeName": "STREAM_RESPONSE",
-                          "unsafeName": "STREAM_RESPONSE",
+                          "safeName": "STREAMED_COMPLETION",
+                          "unsafeName": "STREAMED_COMPLETION",
                         },
                         "snakeCase": {
-                          "safeName": "stream_response",
-                          "unsafeName": "stream_response",
+                          "safeName": "streamed_completion",
+                          "unsafeName": "streamed_completion",
                         },
                       },
-                      "typeId": "type_dummy:StreamResponse",
+                      "typeId": "type_completions:StreamedCompletion",
                     },
                   },
                 },
@@ -453,39 +453,39 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "url": "/generate-stream",
+              "url": "/stream",
             },
           ],
           "fullPath": {
-            "head": "generate-stream",
+            "head": "stream",
             "parts": [],
           },
           "headers": [],
-          "id": "endpoint_dummy.generate-stream",
+          "id": "endpoint_completions.stream",
           "idempotent": false,
           "method": "POST",
           "name": {
             "camelCase": {
-              "safeName": "generateStream",
-              "unsafeName": "generateStream",
+              "safeName": "stream",
+              "unsafeName": "stream",
             },
-            "originalName": "generate-stream",
+            "originalName": "stream",
             "pascalCase": {
-              "safeName": "GenerateStream",
-              "unsafeName": "GenerateStream",
+              "safeName": "Stream",
+              "unsafeName": "Stream",
             },
             "screamingSnakeCase": {
-              "safeName": "GENERATE_STREAM",
-              "unsafeName": "GENERATE_STREAM",
+              "safeName": "STREAM",
+              "unsafeName": "STREAM",
             },
             "snakeCase": {
-              "safeName": "generate_stream",
-              "unsafeName": "generate_stream",
+              "safeName": "stream",
+              "unsafeName": "stream",
             },
           },
           "pagination": null,
           "path": {
-            "head": "/generate-stream",
+            "head": "/stream",
             "parts": [],
           },
           "pathParameters": [],
@@ -495,21 +495,21 @@ exports[`generate IR 1`] = `
             "extends": [],
             "name": {
               "camelCase": {
-                "safeName": "generateStreamRequestzs",
-                "unsafeName": "generateStreamRequestzs",
+                "safeName": "streamCompletionRequest",
+                "unsafeName": "streamCompletionRequest",
               },
-              "originalName": "GenerateStreamRequestzs",
+              "originalName": "StreamCompletionRequest",
               "pascalCase": {
-                "safeName": "GenerateStreamRequestzs",
-                "unsafeName": "GenerateStreamRequestzs",
+                "safeName": "StreamCompletionRequest",
+                "unsafeName": "StreamCompletionRequest",
               },
               "screamingSnakeCase": {
-                "safeName": "GENERATE_STREAM_REQUESTZS",
-                "unsafeName": "GENERATE_STREAM_REQUESTZS",
+                "safeName": "STREAM_COMPLETION_REQUEST",
+                "unsafeName": "STREAM_COMPLETION_REQUEST",
               },
               "snakeCase": {
-                "safeName": "generate_stream_requestzs",
-                "unsafeName": "generate_stream_requestzs",
+                "safeName": "stream_completion_request",
+                "unsafeName": "stream_completion_request",
               },
             },
             "properties": [
@@ -518,28 +518,28 @@ exports[`generate IR 1`] = `
                 "name": {
                   "name": {
                     "camelCase": {
-                      "safeName": "numEvents",
-                      "unsafeName": "numEvents",
+                      "safeName": "query",
+                      "unsafeName": "query",
                     },
-                    "originalName": "num_events",
+                    "originalName": "query",
                     "pascalCase": {
-                      "safeName": "NumEvents",
-                      "unsafeName": "NumEvents",
+                      "safeName": "Query",
+                      "unsafeName": "Query",
                     },
                     "screamingSnakeCase": {
-                      "safeName": "NUM_EVENTS",
-                      "unsafeName": "NUM_EVENTS",
+                      "safeName": "QUERY",
+                      "unsafeName": "QUERY",
                     },
                     "snakeCase": {
-                      "safeName": "num_events",
-                      "unsafeName": "num_events",
+                      "safeName": "query",
+                      "unsafeName": "query",
                     },
                   },
-                  "wireValue": "num_events",
+                  "wireValue": "query",
                 },
                 "valueType": {
                   "_type": "primitive",
-                  "primitive": "INTEGER",
+                  "primitive": "STRING",
                 },
               },
             ],
@@ -555,68 +555,68 @@ exports[`generate IR 1`] = `
                   "allParts": [
                     {
                       "camelCase": {
-                        "safeName": "dummy",
-                        "unsafeName": "dummy",
+                        "safeName": "completions",
+                        "unsafeName": "completions",
                       },
-                      "originalName": "dummy",
+                      "originalName": "completions",
                       "pascalCase": {
-                        "safeName": "Dummy",
-                        "unsafeName": "Dummy",
+                        "safeName": "Completions",
+                        "unsafeName": "Completions",
                       },
                       "screamingSnakeCase": {
-                        "safeName": "DUMMY",
-                        "unsafeName": "DUMMY",
+                        "safeName": "COMPLETIONS",
+                        "unsafeName": "COMPLETIONS",
                       },
                       "snakeCase": {
-                        "safeName": "dummy",
-                        "unsafeName": "dummy",
+                        "safeName": "completions",
+                        "unsafeName": "completions",
                       },
                     },
                   ],
                   "file": {
                     "camelCase": {
-                      "safeName": "dummy",
-                      "unsafeName": "dummy",
+                      "safeName": "completions",
+                      "unsafeName": "completions",
                     },
-                    "originalName": "dummy",
+                    "originalName": "completions",
                     "pascalCase": {
-                      "safeName": "Dummy",
-                      "unsafeName": "Dummy",
+                      "safeName": "Completions",
+                      "unsafeName": "Completions",
                     },
                     "screamingSnakeCase": {
-                      "safeName": "DUMMY",
-                      "unsafeName": "DUMMY",
+                      "safeName": "COMPLETIONS",
+                      "unsafeName": "COMPLETIONS",
                     },
                     "snakeCase": {
-                      "safeName": "dummy",
-                      "unsafeName": "dummy",
+                      "safeName": "completions",
+                      "unsafeName": "completions",
                     },
                   },
                   "packagePath": [],
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "streamResponse",
-                    "unsafeName": "streamResponse",
+                    "safeName": "streamedCompletion",
+                    "unsafeName": "streamedCompletion",
                   },
-                  "originalName": "StreamResponse",
+                  "originalName": "StreamedCompletion",
                   "pascalCase": {
-                    "safeName": "StreamResponse",
-                    "unsafeName": "StreamResponse",
+                    "safeName": "StreamedCompletion",
+                    "unsafeName": "StreamedCompletion",
                   },
                   "screamingSnakeCase": {
-                    "safeName": "STREAM_RESPONSE",
-                    "unsafeName": "STREAM_RESPONSE",
+                    "safeName": "STREAMED_COMPLETION",
+                    "unsafeName": "STREAMED_COMPLETION",
                   },
                   "snakeCase": {
-                    "safeName": "stream_response",
-                    "unsafeName": "stream_response",
+                    "safeName": "streamed_completion",
+                    "unsafeName": "streamed_completion",
                   },
                 },
-                "typeId": "type_dummy:StreamResponse",
+                "typeId": "type_completions:StreamedCompletion",
               },
-              "terminator": null,
-              "type": "json",
+              "terminator": "[[DONE]]",
+              "type": "sse",
             },
           },
           "sdkRequest": {
@@ -662,21 +662,21 @@ exports[`generate IR 1`] = `
               "type": "wrapper",
               "wrapperName": {
                 "camelCase": {
-                  "safeName": "generateStreamRequestzs",
-                  "unsafeName": "generateStreamRequestzs",
+                  "safeName": "streamCompletionRequest",
+                  "unsafeName": "streamCompletionRequest",
                 },
-                "originalName": "GenerateStreamRequestzs",
+                "originalName": "StreamCompletionRequest",
                 "pascalCase": {
-                  "safeName": "GenerateStreamRequestzs",
-                  "unsafeName": "GenerateStreamRequestzs",
+                  "safeName": "StreamCompletionRequest",
+                  "unsafeName": "StreamCompletionRequest",
                 },
                 "screamingSnakeCase": {
-                  "safeName": "GENERATE_STREAM_REQUESTZS",
-                  "unsafeName": "GENERATE_STREAM_REQUESTZS",
+                  "safeName": "STREAM_COMPLETION_REQUEST",
+                  "unsafeName": "STREAM_COMPLETION_REQUEST",
                 },
                 "snakeCase": {
-                  "safeName": "generate_stream_requestzs",
-                  "unsafeName": "generate_stream_requestzs",
+                  "safeName": "stream_completion_request",
+                  "unsafeName": "stream_completion_request",
                 },
               },
             },
@@ -689,41 +689,41 @@ exports[`generate IR 1`] = `
           "allParts": [
             {
               "camelCase": {
-                "safeName": "dummy",
-                "unsafeName": "dummy",
+                "safeName": "completions",
+                "unsafeName": "completions",
               },
-              "originalName": "dummy",
+              "originalName": "completions",
               "pascalCase": {
-                "safeName": "Dummy",
-                "unsafeName": "Dummy",
+                "safeName": "Completions",
+                "unsafeName": "Completions",
               },
               "screamingSnakeCase": {
-                "safeName": "DUMMY",
-                "unsafeName": "DUMMY",
+                "safeName": "COMPLETIONS",
+                "unsafeName": "COMPLETIONS",
               },
               "snakeCase": {
-                "safeName": "dummy",
-                "unsafeName": "dummy",
+                "safeName": "completions",
+                "unsafeName": "completions",
               },
             },
           ],
           "file": {
             "camelCase": {
-              "safeName": "dummy",
-              "unsafeName": "dummy",
+              "safeName": "completions",
+              "unsafeName": "completions",
             },
-            "originalName": "dummy",
+            "originalName": "completions",
             "pascalCase": {
-              "safeName": "Dummy",
-              "unsafeName": "Dummy",
+              "safeName": "Completions",
+              "unsafeName": "Completions",
             },
             "screamingSnakeCase": {
-              "safeName": "DUMMY",
-              "unsafeName": "DUMMY",
+              "safeName": "COMPLETIONS",
+              "unsafeName": "COMPLETIONS",
             },
             "snakeCase": {
-              "safeName": "dummy",
-              "unsafeName": "dummy",
+              "safeName": "completions",
+              "unsafeName": "completions",
             },
           },
           "packagePath": [],
@@ -733,48 +733,48 @@ exports[`generate IR 1`] = `
     },
   },
   "subpackages": {
-    "subpackage_dummy": {
+    "subpackage_completions": {
       "docs": null,
       "errors": [],
       "fernFilepath": {
         "allParts": [
           {
             "camelCase": {
-              "safeName": "dummy",
-              "unsafeName": "dummy",
+              "safeName": "completions",
+              "unsafeName": "completions",
             },
-            "originalName": "dummy",
+            "originalName": "completions",
             "pascalCase": {
-              "safeName": "Dummy",
-              "unsafeName": "Dummy",
+              "safeName": "Completions",
+              "unsafeName": "Completions",
             },
             "screamingSnakeCase": {
-              "safeName": "DUMMY",
-              "unsafeName": "DUMMY",
+              "safeName": "COMPLETIONS",
+              "unsafeName": "COMPLETIONS",
             },
             "snakeCase": {
-              "safeName": "dummy",
-              "unsafeName": "dummy",
+              "safeName": "completions",
+              "unsafeName": "completions",
             },
           },
         ],
         "file": {
           "camelCase": {
-            "safeName": "dummy",
-            "unsafeName": "dummy",
+            "safeName": "completions",
+            "unsafeName": "completions",
           },
-          "originalName": "dummy",
+          "originalName": "completions",
           "pascalCase": {
-            "safeName": "Dummy",
-            "unsafeName": "Dummy",
+            "safeName": "Completions",
+            "unsafeName": "Completions",
           },
           "screamingSnakeCase": {
-            "safeName": "DUMMY",
-            "unsafeName": "DUMMY",
+            "safeName": "COMPLETIONS",
+            "unsafeName": "COMPLETIONS",
           },
           "snakeCase": {
-            "safeName": "dummy",
-            "unsafeName": "dummy",
+            "safeName": "completions",
+            "unsafeName": "completions",
           },
         },
         "packagePath": [],
@@ -782,35 +782,35 @@ exports[`generate IR 1`] = `
       "hasEndpointsInTree": true,
       "name": {
         "camelCase": {
-          "safeName": "dummy",
-          "unsafeName": "dummy",
+          "safeName": "completions",
+          "unsafeName": "completions",
         },
-        "originalName": "dummy",
+        "originalName": "completions",
         "pascalCase": {
-          "safeName": "Dummy",
-          "unsafeName": "Dummy",
+          "safeName": "Completions",
+          "unsafeName": "Completions",
         },
         "screamingSnakeCase": {
-          "safeName": "DUMMY",
-          "unsafeName": "DUMMY",
+          "safeName": "COMPLETIONS",
+          "unsafeName": "COMPLETIONS",
         },
         "snakeCase": {
-          "safeName": "dummy",
-          "unsafeName": "dummy",
+          "safeName": "completions",
+          "unsafeName": "completions",
         },
       },
       "navigationConfig": null,
-      "service": "service_dummy",
+      "service": "service_completions",
       "subpackages": [],
       "types": [
-        "type_dummy:StreamResponse",
+        "type_completions:StreamedCompletion",
       ],
       "webhooks": null,
       "websocket": null,
     },
   },
   "types": {
-    "type_dummy:StreamResponse": {
+    "type_completions:StreamedCompletion": {
       "availability": null,
       "docs": null,
       "examples": [],
@@ -819,65 +819,65 @@ exports[`generate IR 1`] = `
           "allParts": [
             {
               "camelCase": {
-                "safeName": "dummy",
-                "unsafeName": "dummy",
+                "safeName": "completions",
+                "unsafeName": "completions",
               },
-              "originalName": "dummy",
+              "originalName": "completions",
               "pascalCase": {
-                "safeName": "Dummy",
-                "unsafeName": "Dummy",
+                "safeName": "Completions",
+                "unsafeName": "Completions",
               },
               "screamingSnakeCase": {
-                "safeName": "DUMMY",
-                "unsafeName": "DUMMY",
+                "safeName": "COMPLETIONS",
+                "unsafeName": "COMPLETIONS",
               },
               "snakeCase": {
-                "safeName": "dummy",
-                "unsafeName": "dummy",
+                "safeName": "completions",
+                "unsafeName": "completions",
               },
             },
           ],
           "file": {
             "camelCase": {
-              "safeName": "dummy",
-              "unsafeName": "dummy",
+              "safeName": "completions",
+              "unsafeName": "completions",
             },
-            "originalName": "dummy",
+            "originalName": "completions",
             "pascalCase": {
-              "safeName": "Dummy",
-              "unsafeName": "Dummy",
+              "safeName": "Completions",
+              "unsafeName": "Completions",
             },
             "screamingSnakeCase": {
-              "safeName": "DUMMY",
-              "unsafeName": "DUMMY",
+              "safeName": "COMPLETIONS",
+              "unsafeName": "COMPLETIONS",
             },
             "snakeCase": {
-              "safeName": "dummy",
-              "unsafeName": "dummy",
+              "safeName": "completions",
+              "unsafeName": "completions",
             },
           },
           "packagePath": [],
         },
         "name": {
           "camelCase": {
-            "safeName": "streamResponse",
-            "unsafeName": "streamResponse",
+            "safeName": "streamedCompletion",
+            "unsafeName": "streamedCompletion",
           },
-          "originalName": "StreamResponse",
+          "originalName": "StreamedCompletion",
           "pascalCase": {
-            "safeName": "StreamResponse",
-            "unsafeName": "StreamResponse",
+            "safeName": "StreamedCompletion",
+            "unsafeName": "StreamedCompletion",
           },
           "screamingSnakeCase": {
-            "safeName": "STREAM_RESPONSE",
-            "unsafeName": "STREAM_RESPONSE",
+            "safeName": "STREAMED_COMPLETION",
+            "unsafeName": "STREAMED_COMPLETION",
           },
           "snakeCase": {
-            "safeName": "stream_response",
-            "unsafeName": "stream_response",
+            "safeName": "streamed_completion",
+            "unsafeName": "streamed_completion",
           },
         },
-        "typeId": "type_dummy:StreamResponse",
+        "typeId": "type_completions:StreamedCompletion",
       },
       "referencedTypes": [],
       "shape": {
@@ -890,24 +890,24 @@ exports[`generate IR 1`] = `
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "id",
-                  "unsafeName": "id",
+                  "safeName": "delta",
+                  "unsafeName": "delta",
                 },
-                "originalName": "id",
+                "originalName": "delta",
                 "pascalCase": {
-                  "safeName": "ID",
-                  "unsafeName": "ID",
+                  "safeName": "Delta",
+                  "unsafeName": "Delta",
                 },
                 "screamingSnakeCase": {
-                  "safeName": "ID",
-                  "unsafeName": "ID",
+                  "safeName": "DELTA",
+                  "unsafeName": "DELTA",
                 },
                 "snakeCase": {
-                  "safeName": "id",
-                  "unsafeName": "id",
+                  "safeName": "delta",
+                  "unsafeName": "delta",
                 },
               },
-              "wireValue": "id",
+              "wireValue": "delta",
             },
             "valueType": {
               "_type": "primitive",
@@ -920,24 +920,24 @@ exports[`generate IR 1`] = `
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "name",
-                  "unsafeName": "name",
+                  "safeName": "tokens",
+                  "unsafeName": "tokens",
                 },
-                "originalName": "name",
+                "originalName": "tokens",
                 "pascalCase": {
-                  "safeName": "Name",
-                  "unsafeName": "Name",
+                  "safeName": "Tokens",
+                  "unsafeName": "Tokens",
                 },
                 "screamingSnakeCase": {
-                  "safeName": "NAME",
-                  "unsafeName": "NAME",
+                  "safeName": "TOKENS",
+                  "unsafeName": "TOKENS",
                 },
                 "snakeCase": {
-                  "safeName": "name",
-                  "unsafeName": "name",
+                  "safeName": "tokens",
+                  "unsafeName": "tokens",
                 },
               },
-              "wireValue": "name",
+              "wireValue": "tokens",
             },
             "valueType": {
               "_type": "container",
@@ -945,7 +945,7 @@ exports[`generate IR 1`] = `
                 "_type": "optional",
                 "optional": {
                   "_type": "primitive",
-                  "primitive": "STRING",
+                  "primitive": "INTEGER",
                 },
               },
             },

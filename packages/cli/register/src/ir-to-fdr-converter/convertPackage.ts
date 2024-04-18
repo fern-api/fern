@@ -403,16 +403,18 @@ function convertResponse(irResponse: Ir.http.HttpResponse): APIV1Write.HttpRespo
         },
         text: () => undefined, // TODO: support text/plain in FDR
         streaming: (streamingResponse) => {
-            if (streamingResponse.dataEventType.type === "text") {
+            if (streamingResponse.type === "text") {
                 return {
                     type: "streamingText"
                 };
-            } else {
+            } else if (streamingResponse.type === "json") {
                 return {
                     type: "stream",
-                    shape: { type: "reference", value: convertTypeReference(streamingResponse.dataEventType.json) }
+                    shape: { type: "reference", value: convertTypeReference(streamingResponse.payload) }
                 };
             }
+            // TODO(dsinghvi): update FDR with SSE.
+            return undefined;
         },
         _other: () => {
             throw new Error("Unknown HttpResponse: " + irResponse.type);
