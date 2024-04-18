@@ -6,11 +6,9 @@ import {
     maybeFileFromResolvedType,
     maybePrimitiveType,
     resolvedTypeHasProperty,
-    resolveResponseType,
-    validateQueryParameterProperty,
-    validateResponseProperty,
-    validateResultsProperty
-} from "./validateUtils";
+    resolveResponseType
+} from "../../utils/propertyValidatorUtils";
+import { validateQueryParameterProperty, validateResponseProperty, validateResultsProperty } from "./validateUtils";
 
 export function validateCursorPagination({
     endpointId,

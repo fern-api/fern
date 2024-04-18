@@ -72,6 +72,41 @@ auth-schemes:
 ```
 </CodeBlock>
 
+Custom authentication schemes include custom `OAuth` integrations, too. Simply hook up
+your OAuth token endpoint and (optionally) configure token refresh like so:
+
+<CodeBlock title="api.yml">
+```yaml
+name: api
+imports:
+  auth: auth.yml
+auth: OAuthScheme
+auth-schemes:
+  OAuthScheme:
+    scheme: oauth
+    type: client-credentials
+    get-token:
+      endpoint: auth.getToken                 # Assumes the auth.yml file defines this endpoint.
+      response-properties:
+        access-token: $response.access_token
+        expires-in: $response.expires_in
+    refresh-token:
+      endpoint: auth.refreshToken             # Assumes the auth.yml file defines this endpoint.
+      request-properties:
+        refresh-token: $request.refresh_token
+      response-properties:
+        access-token: $response.access_token
+        expires-in: $response.expires_in
+        refresh-token: $response.refresh_token
+```
+</CodeBlock>
+
+The `request-properties` are the properties sent to the endpoint, whereas the `response-properties` are
+used to identify and extract the OAuth access token details from the endpoint's response.
+
+With this, all of the OAuth logic happens automatically in the generated SDKs. As long as you configure your
+`client-id` and `client-secret`, your client will automatcally retrieve an access token and refresh it as needed.
+
 ## Global headers
 
 You can specify headers that are meant to be included on every request:
@@ -98,7 +133,8 @@ path-parameters:
 
 ## Global query parameters
 
-You cannot yet specify query parameters that are meant to be included on every request. If you'd like to see this feature, please upvote [this issue](https://github.com/fern-api/fern/issues/2930).
+You cannot yet specify query parameters that are meant to be included on every request.
+If you'd like to see this feature, please upvote [this issue](https://github.com/fern-api/fern/issues/2930).
 
 ## Environments
 

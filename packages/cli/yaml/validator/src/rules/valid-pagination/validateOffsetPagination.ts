@@ -6,10 +6,9 @@ import {
     maybeFileFromResolvedType,
     maybePrimitiveType,
     resolvedTypeHasProperty,
-    resolveResponseType,
-    validateQueryParameterProperty,
-    validateResultsProperty
-} from "./validateUtils";
+    resolveResponseType
+} from "../../utils/propertyValidatorUtils";
+import { validateQueryParameterProperty, validateResultsProperty } from "./validateUtils";
 
 export function validateOffsetPagination({
     endpointId,

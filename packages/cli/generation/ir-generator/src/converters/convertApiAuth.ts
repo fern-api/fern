@@ -81,6 +81,12 @@ function convertSchemeReference({
                     file,
                     docs,
                     rawScheme
+                }),
+            oauth: (rawScheme) =>
+                generateOAuth({
+                    file,
+                    docs,
+                    rawScheme
                 })
         });
     };
@@ -103,6 +109,23 @@ function convertSchemeReference({
         default:
             return convertNamedAuthSchemeReference(scheme, typeof reference !== "string" ? reference.docs : undefined);
     }
+}
+
+function generateOAuth({
+    docs,
+    file,
+    rawScheme
+}: {
+    docs: string | undefined;
+    file: FernFileContext;
+    rawScheme: RawSchemas.OAuthSchemeSchema | undefined;
+}): AuthScheme.Bearer {
+    // TODO: OAuth is not implemented yet. Return the default bearer auth for now.
+    return AuthScheme.bearer({
+        docs,
+        token: file.casingsGenerator.generateName("token"),
+        tokenEnvVar: undefined
+    });
 }
 
 function generateBearerAuth({
