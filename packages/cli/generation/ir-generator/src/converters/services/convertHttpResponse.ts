@@ -42,7 +42,7 @@ export async function convertHttpResponse({
                     docs
                 })
             );
-        } else if (typeof responseStream !== "string" && responseStream.format === "sse") {
+        } else if (typeof responseStream !== "string" && streamFormat === "sse") {
             return HttpResponse.streaming(
                 StreamingResponse.sse({
                     docs,
