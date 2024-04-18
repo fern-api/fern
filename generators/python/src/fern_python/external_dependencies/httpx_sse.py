@@ -1,16 +1,15 @@
-from typing import Optional
-
 from fern_python.codegen import AST
 from fern_python.codegen.ast.dependency.dependency import DependencyCompatibility
 
 HTTPX_SSE = AST.Module.external(
-    module_path=("httpx-sse",),
+    module_path=("httpx_sse",),
     dependency=AST.Dependency(
-        name="httpx",
-        version="0.4.*",
+        name="httpx-sse",
+        version="0.4.0",
         compatibility=DependencyCompatibility.EXACT,
     ),
 )
+
 
 class HttpxSSE:
 

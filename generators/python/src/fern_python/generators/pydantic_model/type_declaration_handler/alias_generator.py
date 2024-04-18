@@ -69,9 +69,9 @@ class AliasGenerator(AbstractTypeGenerator):
     def _get_builder_name(self, alias_of: ir_types.TypeReference) -> str:
         return alias_of.visit(
             container=lambda container: container.visit(
-                list=lambda x: "from_list",
-                map=lambda x: "from_map",
-                set=lambda x: "from_set",
+                list_=lambda x: "from_list",
+                map_=lambda x: "from_map",
+                set_=lambda x: "from_set",
                 optional=self._get_getter_name,
                 literal=lambda x: "from_string",
             ),
@@ -81,7 +81,7 @@ class AliasGenerator(AbstractTypeGenerator):
                 double=lambda: "from_float",
                 string=lambda: "from_str",
                 boolean=lambda: "from_bool",
-                long=lambda: "from_int",
+                long_=lambda: "from_int",
                 date_time=lambda: "from_datetime",
                 date=lambda: "from_date",
                 uuid=lambda: "from_uuid",
@@ -93,9 +93,9 @@ class AliasGenerator(AbstractTypeGenerator):
     def _get_getter_name(self, alias_of: ir_types.TypeReference) -> str:
         return alias_of.visit(
             container=lambda container: container.visit(
-                list=lambda x: "get_as_list",
-                map=lambda x: "get_as_map",
-                set=lambda x: "get_as_set",
+                list_=lambda x: "get_as_list",
+                map_=lambda x: "get_as_map",
+                set_=lambda x: "get_as_set",
                 optional=self._get_getter_name,
                 literal=lambda x: "get_as_string",
             ),
@@ -105,7 +105,7 @@ class AliasGenerator(AbstractTypeGenerator):
                 double=lambda: "get_as_float",
                 string=lambda: "get_as_str",
                 boolean=lambda: "get_as_bool",
-                long=lambda: "get_as_int",
+                long_=lambda: "get_as_int",
                 date_time=lambda: "get_as_datetime",
                 date=lambda: "get_as_date",
                 uuid=lambda: "get_as_uuid",
