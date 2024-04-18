@@ -405,16 +405,17 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         }
 
         if (this.shouldGenerateAuthorizationHeaderHelperMethod()) {
-            const returnType = this.intermediateRepresentation.sdkConfig.isAuthMandatory
-                ? ts.factory.createTypeReferenceNode("Promise", [
-                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-                  ])
-                : ts.factory.createTypeReferenceNode("Promise", [
-                      ts.factory.createUnionTypeNode([
-                          ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                          ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+            const returnType =
+                this.intermediateRepresentation.sdkConfig.isAuthMandatory || this.basicAuthScheme == null
+                    ? ts.factory.createTypeReferenceNode("Promise", [
+                          ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
                       ])
-                  ]);
+                    : ts.factory.createTypeReferenceNode("Promise", [
+                          ts.factory.createUnionTypeNode([
+                              ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                              ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                          ])
+                      ]);
 
             serviceClass.addMethod({
                 scope: Scope.Protected,
