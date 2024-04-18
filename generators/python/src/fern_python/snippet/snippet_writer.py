@@ -132,7 +132,7 @@ class SnippetWriter:
             double=lambda double: AST.Expression(str(double)),
             string=lambda string: self._get_snippet_for_string_primitive(string),
             boolean=lambda boolean: AST.Expression(str(boolean)),
-            long=lambda long: AST.Expression(str(long)),
+            long_=lambda long: AST.Expression(str(long)),
             datetime=lambda datetime: AST.Expression(
                 AST.FunctionInvocation(
                     function_definition=AST.ClassReference(
@@ -165,7 +165,7 @@ class SnippetWriter:
                     args=[AST.Expression(f'"{str(date)}"')],
                 ),
             ),
-            uuid=lambda uuid: AST.Expression(
+            uuid_=lambda uuid: AST.Expression(
                 AST.FunctionInvocation(
                     function_definition=AST.ClassReference(
                         import_=AST.ReferenceImport(
@@ -192,14 +192,14 @@ class SnippetWriter:
         container: ir_types.ExampleContainer,
     ) -> Optional[AST.Expression]:
         return container.visit(
-            list=lambda list: self._get_snippet_for_list_or_set(example_type_references=list, is_list=True),
-            set=lambda set: self._get_snippet_for_list_or_set(example_type_references=set, is_list=False),
+            list_=lambda list: self._get_snippet_for_list_or_set(example_type_references=list, is_list=True),
+            set_=lambda set: self._get_snippet_for_list_or_set(example_type_references=set, is_list=False),
             optional=lambda optional: self.get_snippet_for_example_type_reference(
                 example_type_reference=optional,
             )
             if optional is not None
             else None,
-            map=lambda map: self._get_snippet_for_map(
+            map_=lambda map: self._get_snippet_for_map(
                 pairs=map,
             ),
         )

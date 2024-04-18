@@ -36,7 +36,7 @@ groups:
         output:
           location: pypi
           url: pypi.buildwithfern.com
-          package-name: fern_fern_ir_v37
+          package-name: fern_fern_ir_v38
         config:
           wrapped_aliases: true
           include_union_utils: true
