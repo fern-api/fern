@@ -31243,14 +31243,12 @@ exports[`ir {"name":"streaming"} 1`] = `
                         "type": "streaming",
                         "value": {
                             "type": "json",
-                            "json": {
-                                "payload": {
-                                    "_type": "primitive",
-                                    "primitive": "STRING"
-                                },
-                                "terminator": null,
-                                "docs": null
-                            }
+                            "payload": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "terminator": null,
+                            "docs": null
                         }
                     },
                     "errors": [],
@@ -31448,14 +31446,12 @@ exports[`ir {"name":"streaming"} 1`] = `
                         "type": "streaming",
                         "value": {
                             "type": "json",
-                            "json": {
-                                "payload": {
-                                    "_type": "primitive",
-                                    "primitive": "STRING"
-                                },
-                                "terminator": "[DONE]",
-                                "docs": null
-                            }
+                            "payload": {
+                                "_type": "primitive",
+                                "primitive": "STRING"
+                            },
+                            "terminator": "[DONE]",
+                            "docs": null
                         }
                     },
                     "errors": [],
