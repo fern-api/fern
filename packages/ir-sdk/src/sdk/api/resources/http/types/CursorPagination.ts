@@ -13,6 +13,6 @@ import * as FernIr from "../../..";
  */
 export interface CursorPagination {
     page: FernIr.QueryParameter;
-    next: FernIr.PaginationProperty;
-    results: FernIr.PaginationProperty;
+    next: FernIr.ResponseProperty;
+    results: FernIr.ResponseProperty;
 }

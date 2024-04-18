@@ -39,6 +39,7 @@ export { HttpResponseSchema } from "./HttpResponseSchema";
 export { HttpResponseStreamSchema } from "./HttpResponseStreamSchema";
 export { HttpServiceSchema } from "./HttpServiceSchema";
 export { MultipleBaseUrlsEnvironmentSchema } from "./MultipleBaseUrlsEnvironmentSchema";
+export { OAuthSchemeSchema } from "./OAuthSchemeSchema";
 export { ObjectPropertySchema } from "./ObjectPropertySchema";
 export { ObjectSchema } from "./ObjectSchema";
 export { OffsetPaginationSchema } from "./OffsetPaginationSchema";

@@ -44,8 +44,7 @@ types:
       query:
         type: QuerySecurityScheme
         docs: parameter sent as a security scheme
-      oauth:
-        type: OauthSecurityScheme
+      oauth: OauthSecurityScheme
 
   BearerSecurityScheme:
     properties:
@@ -71,8 +70,56 @@ types:
       queryParameterName: string
 
   OauthSecurityScheme:
+    docs: Note that for the oauth scheme we are currently assuming the resultant token is leveraged as a bearer token, e.g. "Authorization Bearer
     properties:
       scopesEnum: optional<finalIr.EnumSchema>
+      configuration: optional<OAuthConfiguration>
+  BaseOauthSecurityScheme:
+    properties:
+      defaultScopes: optional<list<string>>
+      tokenPrefix: optional<string>
+      clientIdEnvVar: optional<string>
+      clientSecretEnvVar: optional<string>
+      redirectUri: optional<string>
+  OAuthConfiguration:
+    union:
+      authorizationCode: AuthorizationCodeOAuthScheme
+      clientCredentials: ClientCredentialsOAuthScheme
+  OAuthAccessTokenFields:
+    properties:
+      accessToken: string
+      expiresIn: optional<string>
+      refreshToken: optional<string>
+  OAuthTokenEndpoint:
+    properties:
+      endpointReference: finalIr.Endpoint
+      responseFields: OAuthAccessTokenFields
+  OAuthRefreshTokenFields:
+    properties:
+      refreshToken: string
+  OAuthRefreshTokenEndpoint:
+    properties:
+      endpointReference: finalIr.Endpoint
+      requestFields: OAuthRefreshTokenFields
+      responseFields: OAuthAccessTokenFields
+  OAuthAuthorizationEndpoint:
+    properties:
+      path: string
+      # To avoid complexity, let's just enforce that these params are strings
+      # so here we're just taking in the parameters' names
+      parameters: list<string>
+  AuthorizationCodeOAuthScheme:
+    extends: BaseOauthSecurityScheme
+    properties:
+      authorizationCodeEnvVar: optional<string>
+      tokenEndpoint: OAuthTokenEndpoint
+      authorizationEndpoint: OAuthAuthorizationEndpoint
+      refreshEndpoint: optional<OAuthRefreshTokenEndpoint>
+  ClientCredentialsOAuthScheme:
+    extends: BaseOauthSecurityScheme
+    properties:
+      tokenEndpoint: OAuthTokenEndpoint
+      refreshEndpoint: optional<OAuthRefreshTokenEndpoint>
 
   StatusCode:
     type: integer

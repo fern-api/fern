@@ -1,0 +1,42 @@
+types:
+  User:
+    properties:
+      name: string
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    check:
+      method: GET
+      path: /check/{id}
+      path-parameters:
+        id: string
+      request:
+        name: CheckRequest
+        query-parameters:
+          id: uuid
+          limit: integer
+          user: User
+          map: map<string, string>
+          optionalString: optional<string>
+          multipleUser:
+            type: User
+            allow-multiple: true
+          filter:
+            type: string
+            allow-multiple: true
+          any: optional<unknown>
+      examples:
+        - path-parameters:
+            id: id-2sdx82h
+          query-parameters:
+            id: "4956d3f3-f4c6-43fc-a037-9ad991933993"
+            limit: 10
+            user:
+              name: username
+            map:
+              key: value
+            multipleUser:
+              name: multiUsername
+            filter: reverse

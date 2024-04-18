@@ -23,13 +23,13 @@ export const ERROR_DECLARATIONS_FILENAME = RelativeFilePath.of(FERN_PACKAGE_MARK
 export function buildFernDefinition(context: OpenApiIrConverterContext): FernDefinition {
     buildEnvironments(context);
     buildGlobalHeaders(context);
-    buildAuthSchemes(context);
     buildVariables(context);
     if (context.ir.hasEndpointsMarkedInternal) {
         context.builder.addAudience(EXTERNAL_AUDIENCE);
     }
     const { schemaIdsToExclude, sdkGroups } = buildServices(context);
     buildWebhooks(context);
+    buildAuthSchemes(context);
 
     // Add Channels
     for (const channel of context.ir.channel) {

@@ -12,5 +12,5 @@ import * as FernIr from "../../..";
  */
 export interface OffsetPagination {
     page: FernIr.QueryParameter;
-    results: FernIr.PaginationProperty;
+    results: FernIr.ResponseProperty;
 }

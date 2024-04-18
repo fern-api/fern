@@ -1,6 +1,7 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 imports:
+  http: http.yml
   types: types.yml
   commons: commons.yml
 types:
@@ -22,6 +23,7 @@ types:
       bearer: BearerAuthScheme
       basic: BasicAuthScheme
       header: HeaderAuthScheme
+      oauth: OAuthScheme
   BearerAuthScheme:
     extends: commons.WithDocs
     properties:
@@ -29,6 +31,75 @@ types:
       tokenEnvVar:
         type: optional<EnvironmentVariable>
         docs: The environment variable the SDK should use to read the token.
+  
+  OAuthScheme:
+    extends: commons.WithDocs
+    docs: Note that for the oauth scheme we are currently assuming the resultant token is leveraged as a bearer token, e.g. "Authorization Bearer
+    properties:
+      configuration: OAuthConfiguration
+  OAuthConfiguration:
+    union:
+      authorizationCode: AuthorizationCodeOAuthScheme
+      clientCredentials: ClientCredentialsOAuthScheme
+  OauthAccessTokenFields:
+    docs: The fields to map to the corresponding OAuth token primitive.
+    properties:
+      accessToken: http.ResponseProperty
+      expiresIn: optional<http.ResponseProperty>
+      refreshToken: optional<http.ResponseProperty>
+  OauthRefreshTokenFields:
+    docs: The fields to map to the corresponding OAuth token primitive.
+    properties:
+      refreshToken: http.RequestProperty
+  OauthTokenEndpoint:
+    properties:
+      endpointReference:
+        type: commons.EndpointId
+        docs: |
+          The refrence to the access token endpoint. This is specifically the endpoint ID without the `endpoint_` prefix.
+          This is gotten by following the path to the file the endpoint is defined in, so if the endpoint `get_token` is defined in foo/service.yml,
+          the endpoint ID would be `foo/service.get_token`.
+      responseFields: OauthAccessTokenFields
+  OauthRefreshEndpoint:
+    properties:
+      endpointReference:
+        type: commons.EndpointId
+        docs: |
+          The refrence to the refresh token endpoint. This is specifically the endpoint ID without the `endpoint_` prefix.
+          This is gotten by following the path to the file the endpoint is defined in, so if the endpoint `refresh_token` is defined in foo/service.yml,
+          the endpoint ID would be `foo/service.refresh_token`.
+      requestFields: OauthRefreshTokenFields
+      responseFields: OauthAccessTokenFields
+  OauthAuthorizationEndpointParameters:
+    properties:
+      name: commons.NameAndWireValue
+      type: types.TypeReference
+  OauthAuthorizationEndpoint:
+    properties:
+      path:
+        type: string
+        docs: The path to append to the base URL to get the authorization endpoint a user is meant to visit within the browser.
+      queryParameters: optional<list<OauthAuthorizationEndpointParameters>>
+  ClientCredentialsOAuthScheme:
+    extends: BaseOAuthScheme
+    properties:
+      tokenEndpoint: OauthTokenEndpoint
+      refreshEndpoint: optional<OauthRefreshEndpoint>
+  AuthorizationCodeOAuthScheme:
+    extends: BaseOAuthScheme
+    properties:
+      authorizationCodeEnvVar: optional<EnvironmentVariable>
+      authorizationEndpoint: OauthAuthorizationEndpoint
+      tokenEndpoint: OauthTokenEndpoint
+      refreshEndpoint: optional<OauthRefreshEndpoint>
+  BaseOAuthScheme:
+    properties:
+      clientIdEnvVar: optional<EnvironmentVariable>
+      clientSecretEnvVar: optional<EnvironmentVariable>
+      tokenPrefix: optional<string>
+      scopes: optional<list<string>>
+      redirectUri: optional<string>
+
   BasicAuthScheme:
     extends: commons.WithDocs
     properties:

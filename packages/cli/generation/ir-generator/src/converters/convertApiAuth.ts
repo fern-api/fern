@@ -1,4 +1,4 @@
-import { ApiAuth, AuthScheme, AuthSchemesRequirement } from "@fern-api/ir-sdk";
+import { ApiAuth, AuthScheme, AuthSchemesRequirement, OAuthConfiguration } from "@fern-api/ir-sdk";
 import { RawSchemas, visitRawApiAuth, visitRawAuthSchemeDeclaration } from "@fern-api/yaml-schema";
 import { FernFileContext } from "../FernFileContext";
 
@@ -81,6 +81,12 @@ function convertSchemeReference({
                     file,
                     docs,
                     rawScheme
+                }),
+            oauth: (rawScheme) =>
+                generateOAuth({
+                    docs,
+                    file,
+                    rawScheme
                 })
         });
     };
@@ -102,6 +108,106 @@ function convertSchemeReference({
             });
         default:
             return convertNamedAuthSchemeReference(scheme, typeof reference !== "string" ? reference.docs : undefined);
+    }
+}
+
+function generateOAuth({
+    docs,
+    file,
+    rawScheme
+}: {
+    docs: string | undefined;
+    file: FernFileContext;
+    rawScheme: RawSchemas.OAuthSchemeSchema | undefined;
+}): AuthScheme.Oauth {
+    if (rawScheme != null && rawScheme?.type === "authorization-code") {
+        return AuthScheme.oauth({
+            docs,
+            configuration: OAuthConfiguration.authorizationCode({
+                clientIdEnvVar: rawScheme["client-id-env"],
+                clientSecretEnvVar: rawScheme["client-secret-env"],
+                tokenPrefix: rawScheme["token-prefix"],
+                scopes: rawScheme.scopes,
+                authorizationCodeEnvVar: rawScheme["authorization-code-env"],
+                authorizationEndpoint: {
+                    path: rawScheme["authorization-endpoint"].path,
+                    queryParameters: Object.entries(rawScheme["authorization-endpoint"]["query-parameters"]).map(
+                        ([key, value]) => ({
+                            name: file.casingsGenerator.generateNameAndWireValue({
+                                name: key,
+                                wireValue: key
+                            }),
+                            type: file.parseTypeReference(value)
+                        })
+                    )
+                },
+                tokenEndpoint: {
+                    // openapi -> path + method -> import, TODO: resolve path + method to import
+                    // fern -> endpoint import
+                    // zod -> endpoint import
+                    // id -> endpoint ID, TODO: resolve import to ID
+                    // property validation requires the endpoint
+                    endpointReference: rawScheme["token-endpoint"].endpoint,
+                    // TODO: add in ResponseProperty conversion
+                    responseFields: {
+                        accessToken: rawScheme["token-endpoint"]["response-fields"]["access-token"],
+                        expiresIn: rawScheme["token-endpoint"]["response-fields"]["expires-in"],
+                        refreshToken: rawScheme["token-endpoint"]["response-fields"]["refresh-token"]
+                    }
+                },
+                refreshEndpoint:
+                    rawScheme["refresh-endpoint"] != null
+                        ? {
+                              endpointReference: rawScheme["refresh-endpoint"].endpoint,
+                              requestFields: {
+                                  refreshToken: rawScheme["refresh-endpoint"]["request-fields"]["refresh-token"]
+                              },
+                              // TODO: add in ResponseProperty conversion
+                              responseFields: {
+                                  accessToken: rawScheme["refresh-endpoint"]["response-fields"]["access-token"],
+                                  expiresIn: rawScheme["refresh-endpoint"]["response-fields"]["expires-in"],
+                                  refreshToken: rawScheme["refresh-endpoint"]["response-fields"]["refresh-token"]
+                              }
+                          }
+                        : undefined,
+                redirectUri: rawScheme["redirect-uri"]
+            })
+        });
+    } else if (rawScheme != null && rawScheme?.type === "client-credentials") {
+        return AuthScheme.oauth({
+            docs,
+            configuration: OAuthConfiguration.clientCredentials({
+                clientIdEnvVar: rawScheme["client-id-env"],
+                clientSecretEnvVar: rawScheme["client-secret-env"],
+                tokenPrefix: rawScheme["token-prefix"],
+                scopes: rawScheme.scopes,
+                tokenEndpoint: {
+                    endpointReference: rawScheme["token-endpoint"].endpoint,
+                    responseFields: {
+                        accessToken: rawScheme["token-endpoint"]["response-fields"]["access-token"],
+                        expiresIn: rawScheme["token-endpoint"]["response-fields"]["expires-in"],
+                        refreshToken: rawScheme["token-endpoint"]["response-fields"]["refresh-token"]
+                    }
+                },
+                refreshEndpoint:
+                    rawScheme["refresh-endpoint"] != null
+                        ? {
+                              endpointReference: rawScheme["refresh-endpoint"].endpoint,
+                              requestFields: {
+                                  refreshToken: rawScheme["refresh-endpoint"]["request-fields"]["refresh-token"]
+                              },
+                              responseFields: {
+                                  accessToken: rawScheme["refresh-endpoint"]["response-fields"]["access-token"],
+                                  expiresIn: rawScheme["refresh-endpoint"]["response-fields"]["expires-in"],
+                                  refreshToken: rawScheme["refresh-endpoint"]["response-fields"]["refresh-token"]
+                              }
+                          }
+                        : undefined,
+                redirectUri: rawScheme["redirect-uri"]
+            })
+        });
+    } else {
+        throw new Error("Unknown OAuth definition");
     }
 }
 

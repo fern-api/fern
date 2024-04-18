@@ -48450,6 +48450,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "bearer",
     },
     "oauth2": {
+      "configuration": null,
       "scopesEnum": {
         "description": null,
         "generatedName": "OauthScope",

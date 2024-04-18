@@ -24,6 +24,9 @@ export function convertAuth(auth: Ir.auth.ApiAuth): APIV1Write.ApiAuth | undefin
                     nameOverride: scheme.name.name.originalName,
                     prefix: scheme.prefix
                 };
+            case "oauth":
+                // TODO: Support oauth for FDR
+                return undefined;
             default:
                 assertNever(scheme);
         }

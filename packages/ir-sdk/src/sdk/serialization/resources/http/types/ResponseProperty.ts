@@ -6,9 +6,9 @@ import * as serializers from "../../..";
 import * as FernIr from "../../../../api";
 import * as core from "../../../../core";
 
-export const PaginationProperty: core.serialization.ObjectSchema<
-    serializers.PaginationProperty.Raw,
-    FernIr.PaginationProperty
+export const ResponseProperty: core.serialization.ObjectSchema<
+    serializers.ResponseProperty.Raw,
+    FernIr.ResponseProperty
 > = core.serialization.objectWithoutOptionalProperties({
     propertyPath: core.serialization
         .list(core.serialization.lazyObject(async () => (await import("../../..")).Name))
@@ -16,7 +16,7 @@ export const PaginationProperty: core.serialization.ObjectSchema<
     property: core.serialization.lazyObject(async () => (await import("../../..")).ObjectProperty),
 });
 
-export declare namespace PaginationProperty {
+export declare namespace ResponseProperty {
     interface Raw {
         propertyPath?: serializers.Name.Raw[] | null;
         property: serializers.ObjectProperty.Raw;

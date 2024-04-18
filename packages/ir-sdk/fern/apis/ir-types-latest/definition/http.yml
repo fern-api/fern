@@ -216,8 +216,8 @@ types:
       on the response.
     properties:
       page: QueryParameter
-      next: PaginationProperty
-      results: PaginationProperty
+      next: ResponseProperty
+      results: ResponseProperty
 
   OffsetPagination:
     docs: |
@@ -227,9 +227,27 @@ types:
       The page index is auto-incremented between every additional page request.
     properties:
       page: QueryParameter
-      results: PaginationProperty
+      results: ResponseProperty
 
-  PaginationProperty:
+  # shared properties
+  RequestPropertyValue:
+    union:
+      query: QueryParameter
+      body: types.ObjectProperty
+
+  RequestProperty:
+    docs: |
+      A property associated with an endpoint's request.
+    properties:
+      propertyPath:
+        docs: |
+          If empty, the property is defined at the top-level.
+          Otherwise, the property is defined on the nested object identified
+          by the path.
+        type: optional<list<commons.Name>>
+      property: RequestPropertyValue
+
+  ResponseProperty:
     docs: |
       A property associated with a paginated endpoint's request or response.
     properties:

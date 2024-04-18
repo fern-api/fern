@@ -10,6 +10,12 @@ export interface FernDefinitionBuilder {
 
     addAuthScheme({ name, schema }: { name: string; schema: RawSchemas.AuthSchemeDeclarationSchema }): void;
 
+    /**
+     * Adds an import to the root API file and returns the prefix for the import. Returns undefined if no prefix.
+     * @param fileToImport the file to import
+     */
+    addAuthSchemeImport(fileToImport: RelativeFilePath): string | undefined;
+
     setAuth(name: string): void;
 
     getGlobalHeaderNames(): Set<string>;
@@ -45,6 +51,8 @@ export interface FernDefinitionBuilder {
         { name, schema }: { name: string; schema: RawSchemas.HttpEndpointSchema }
     ): void;
 
+    getEndpointFile(endpoint: { path: string; method?: string }): { name: string; file: RelativeFilePath } | undefined;
+
     addWebhook(file: RelativeFilePath, { name, schema }: { name: string; schema: RawSchemas.WebhookSchema }): void;
 
     addChannel(file: RelativeFilePath, { channel }: { channel: RawSchemas.WebSocketChannelSchema }): void;
@@ -71,6 +79,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     private rootApiFile: RawSchemas.RootApiFileSchema;
     private packageMarkerFile: RawSchemas.PackageMarkerFileSchema = {};
     private definitionFiles: Record<RelativeFilePath, RawSchemas.DefinitionFileSchema> = {};
+    private endpointFiles: Map<{ path: string; method?: string }, { name: string; file: RelativeFilePath }> = new Map();
 
     public constructor(ir: OpenApiIntermediateRepresentation, private readonly modifyBasePaths: boolean) {
         this.rootApiFile = {
@@ -124,6 +133,13 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             this.rootApiFile["auth-schemes"] = {};
         }
         this.rootApiFile["auth-schemes"][name] = schema;
+    }
+
+    public addAuthSchemeImport(fileToImport: RelativeFilePath): string | undefined {
+        return this.addImport({
+            file: RelativeFilePath.of(ROOT_API_FILENAME),
+            fileToImport
+        });
     }
 
     public setDefaultEnvironment(name: string): void {
@@ -235,6 +251,14 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             };
         }
         fernFile.service.endpoints[name] = schema;
+        this.endpointFiles.set({ path: schema.path, method: schema.method }, { name, file });
+    }
+
+    public getEndpointFile(endpoint: {
+        path: string;
+        method?: string;
+    }): { name: string; file: RelativeFilePath } | undefined {
+        return this.endpointFiles.get(endpoint);
     }
 
     public addWebhook(

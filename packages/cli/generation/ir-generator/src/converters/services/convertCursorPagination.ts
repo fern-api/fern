@@ -2,13 +2,9 @@ import { Pagination } from "@fern-api/ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
-import {
-    CursorPaginationPropertyComponents,
-    getNestedObjectPropertyFromResolvedType,
-    maybeFileFromResolvedType,
-    resolveResponseType
-} from "./convertPaginationUtils";
+import { CursorPaginationPropertyComponents, resolveResponseType } from "./convertPaginationUtils";
 import { convertQueryParameter } from "./convertQueryParameter";
+import { getNestedObjectPropertyFromResolvedType, maybeFileFromResolvedType } from "./convertResponseProperties";
 
 export async function convertCursorPagination({
     typeResolver,
