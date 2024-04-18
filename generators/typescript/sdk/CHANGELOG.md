@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.14.1-rc2] - 2024-04-17
 
-- Improvement: Add method return type for `_getAuthorizationHeader()` for compatibility with JSR.
+- Improvement: In an effort to make the generated code JSR compatible, we make sure all methods
+  are strongly typed with return signatures (in this case `_getAuthorizationHeader()`). 
 
 ## [0.14.1-rc1] - 2024-04-17
 
