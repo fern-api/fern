@@ -182,7 +182,6 @@ types:
     extends: commons.WithDocs
 
   StreamingResponse:
-    extends: commons.WithDocs
     union: 
       json:
         type: JsonStreamChunk

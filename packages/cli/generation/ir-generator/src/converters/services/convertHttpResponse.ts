@@ -33,12 +33,16 @@ export async function convertHttpResponse({
     }
 
     if (responseStream != null) {
+        const docs = typeof responseStream !== "string" ? responseStream.docs : undefined;
         const typeReference = typeof responseStream === "string" ? responseStream : responseStream.type;
         if (isRawTextType(typeReference)) {
-            return HttpResponse.streaming(StreamingResponse.text());
+            return HttpResponse.streaming(StreamingResponse.text({
+                docs,
+            }));
         } else if (typeof responseStream === "string" || responseStream.format === "json") {
             return HttpResponse.streaming(
                 StreamingResponse.json({
+                    docs,
                     payload: file.parseTypeReference(typeReference),
                     terminator: typeof responseStream !== "string" ? responseStream.terminator : undefined
                 })
@@ -46,6 +50,7 @@ export async function convertHttpResponse({
         } else if (responseStream.format === "sse") {
             return HttpResponse.streaming(
                 StreamingResponse.sse({
+                    docs,
                     payload: file.parseTypeReference(typeReference),
                     terminator: typeof responseStream !== "string" ? responseStream.terminator : undefined
                 })
@@ -54,18 +59,6 @@ export async function convertHttpResponse({
     }
 
     return undefined;
-}
-
-function constructStreamingResponseChunkType(
-    responseStream: RawSchemas.HttpResponseStreamSchema | string,
-    file: FernFileContext
-): StreamingResponseChunkType {
-    const typeReference = typeof responseStream === "string" ? responseStream : responseStream.type;
-    if (isRawTextType(typeReference)) {
-        return StreamingResponseChunkType.text();
-    } else {
-        return StreamingResponseChunkType.json(file.parseTypeReference(typeReference));
-    }
 }
 
 async function convertJsonResponse(
