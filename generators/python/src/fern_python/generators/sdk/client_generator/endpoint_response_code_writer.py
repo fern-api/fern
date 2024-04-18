@@ -40,8 +40,6 @@ class EndpointResponseCodeWriter:
         return AST.CodeWriter(write)
 
     def _handle_success_stream(self, *, writer: AST.NodeWriter, stream_response: ir_types.StreamingResponse) -> None:
-        if self._is_async:
-            writer.write("async ")
         stream_response_union = stream_response.get_as_union()
         if stream_response_union.type == "sse":
             writer.write(f"{EndpointResponseCodeWriter.EVENT_SOURCE_VARIABLE} = ")
@@ -51,6 +49,8 @@ class EndpointResponseCodeWriter:
                 )
             )
             writer.write_newline_if_last_line_not()
+            if self._is_async:
+                writer.write("async ")
             writer.write_line(
                 f"for {EndpointResponseCodeWriter.SSE_VARIABLE} in {EndpointResponseCodeWriter.EVENT_SOURCE_VARIABLE}.{self._get_iter_sse_method(is_async=self._is_async)}():"
             )
@@ -63,19 +63,22 @@ class EndpointResponseCodeWriter:
                     ),
                 )
         else:
+            if self._is_async:
+                writer.write("async ")
             writer.write_line(
                 f"for {EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE} in {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.{self._get_iter_lines_method(is_async=self._is_async)}(): "
             )
-            writer.write_line(f"if len({EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE}) == 0:")
             with writer.indent():
-                writer.write_line("continue")
-            writer.write("yield ")
-            writer.write_node(
-                self._context.core_utilities.get_construct(
-                    self._get_streaming_response_data_type(stream_response),
-                    AST.Expression(Json.loads(AST.Expression(EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE))),
-                ),
-            )
+                writer.write_line(f"if len({EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE}) == 0:")
+                with writer.indent():
+                    writer.write_line("continue")
+                writer.write("yield ")
+                writer.write_node(
+                    self._context.core_utilities.get_construct(
+                        self._get_streaming_response_data_type(stream_response),
+                        AST.Expression(Json.loads(AST.Expression(EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE))),
+                    ),
+                )
 
         writer.write_line("return")
 

@@ -15,18 +15,23 @@ from .types.stream_response import StreamResponse
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
+
+
 class DummyClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
-    def generate_stream(self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None) -> typing.Iterator[StreamResponse]:
+
+    def generate_stream(
+        self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Iterator[StreamResponse]:
         """
         Parameters:
             - num_events: int.
-            
+
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from seed.client import SeedStreaming
-        
+
         client = SeedStreaming(
             base_url="https://yourhost.com/path/to/api",
         )
@@ -34,26 +39,37 @@ class DummyClient:
             num_events=1,
         )
         """
-        with self._client_wrapper.httpx_client.stream("POST", urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "generate-stream"), 
-            params=jsonable_encoder(request_options.get('additional_query_parameters') if request_options is not None else None),
-            json=jsonable_encoder({
-                "num_events": num_events,
-            }
-            ) if request_options is None or request_options.get('additional_body_parameters') is None else {**jsonable_encoder({
-                "num_events": num_events,
-            }
-            ), **(jsonable_encoder(remove_none_from_dict(request_options.get('additional_body_parameters', {}))))},
-            headers=jsonable_encoder(remove_none_from_dict({**self._client_wrapper.get_headers(),**(request_options.get('additional_headers', {}) if request_options is not None else {}),},
-            )),
-            timeout=request_options.get('timeout_in_seconds') if request_options is not None and request_options.get('timeout_in_seconds') is not None else self._client_wrapper.get_timeout(),
+        with self._client_wrapper.httpx_client.stream(
+            "POST",
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "generate-stream"),
+            params=jsonable_encoder(
+                request_options.get("additional_query_parameters") if request_options is not None else None
+            ),
+            json=jsonable_encoder({"num_events": num_events})
+            if request_options is None or request_options.get("additional_body_parameters") is None
+            else {
+                **jsonable_encoder({"num_events": num_events}),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
             retries=0,
-            max_retries=request_options.get('max_retries') if request_options is not None else 0,  # type: ignore
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         ) as _response:
             if 200 <= _response.status_code < 300:
-                for _text in _response.iter_lines(): 
-                if len(_text) == 0:
-                    continue
-                yield pydantic_v1.parse_obj_as(StreamResponse, json.loads(_text))# type: ignore
+                for _text in _response.iter_lines():
+                    if len(_text) == 0:
+                        continue
+                    yield pydantic_v1.parse_obj_as(StreamResponse, json.loads(_text))  # type: ignore
                 return
             _response.read()
             try:
@@ -61,18 +77,23 @@ class DummyClient:
             except JSONDecodeError:
                 raise ApiError(status_code=_response.status_code, body=_response.text)
             raise ApiError(status_code=_response.status_code, body=_response_json)
+
+
 class AsyncDummyClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
-    async def generate_stream(self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None) -> typing.AsyncIterator[StreamResponse]:
+
+    async def generate_stream(
+        self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.AsyncIterator[StreamResponse]:
         """
         Parameters:
             - num_events: int.
-            
+
             - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
         ---
         from seed.client import AsyncSeedStreaming
-        
+
         client = AsyncSeedStreaming(
             base_url="https://yourhost.com/path/to/api",
         )
@@ -80,26 +101,37 @@ class AsyncDummyClient:
             num_events=1,
         )
         """
-        async with self._client_wrapper.httpx_client.stream("POST", urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "generate-stream"), 
-            params=jsonable_encoder(request_options.get('additional_query_parameters') if request_options is not None else None),
-            json=jsonable_encoder({
-                "num_events": num_events,
-            }
-            ) if request_options is None or request_options.get('additional_body_parameters') is None else {**jsonable_encoder({
-                "num_events": num_events,
-            }
-            ), **(jsonable_encoder(remove_none_from_dict(request_options.get('additional_body_parameters', {}))))},
-            headers=jsonable_encoder(remove_none_from_dict({**self._client_wrapper.get_headers(),**(request_options.get('additional_headers', {}) if request_options is not None else {}),},
-            )),
-            timeout=request_options.get('timeout_in_seconds') if request_options is not None and request_options.get('timeout_in_seconds') is not None else self._client_wrapper.get_timeout(),
+        async with self._client_wrapper.httpx_client.stream(
+            "POST",
+            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "generate-stream"),
+            params=jsonable_encoder(
+                request_options.get("additional_query_parameters") if request_options is not None else None
+            ),
+            json=jsonable_encoder({"num_events": num_events})
+            if request_options is None or request_options.get("additional_body_parameters") is None
+            else {
+                **jsonable_encoder({"num_events": num_events}),
+                **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.get("additional_headers", {}) if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.get("timeout_in_seconds")
+            if request_options is not None and request_options.get("timeout_in_seconds") is not None
+            else self._client_wrapper.get_timeout(),
             retries=0,
-            max_retries=request_options.get('max_retries') if request_options is not None else 0,  # type: ignore
+            max_retries=request_options.get("max_retries") if request_options is not None else 0,  # type: ignore
         ) as _response:
             if 200 <= _response.status_code < 300:
-                async for _text in _response.aiter_lines(): 
-                if len(_text) == 0:
-                    continue
-                yield pydantic_v1.parse_obj_as(StreamResponse, json.loads(_text))# type: ignore
+                async for _text in _response.aiter_lines():
+                    if len(_text) == 0:
+                        continue
+                    yield pydantic_v1.parse_obj_as(StreamResponse, json.loads(_text))  # type: ignore
                 return
             await _response.aread()
             try:
