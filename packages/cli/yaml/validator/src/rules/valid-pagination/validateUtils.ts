@@ -1,27 +1,14 @@
 import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
-import { isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
+import { RawSchemas } from "@fern-api/yaml-schema";
 import chalk from "chalk";
 import { RuleViolation } from "../../Rule";
-
-const REQUEST_PREFIX = "$request.";
-const RESPONSE_PREFIX = "$response.";
-
-export interface PropertyValidator {
-    propertyID: string;
-    validate: PropertyValidatorFunc;
-}
-
-export type PropertyValidatorFunc = ({
-    typeResolver,
-    file,
-    resolvedType,
-    propertyComponents
-}: {
-    typeResolver: TypeResolver;
-    file: FernFileContext;
-    resolvedType: ResolvedType | undefined;
-    propertyComponents: string[];
-}) => boolean;
+import {
+    getRequestPropertyComponents,
+    getResponsePropertyComponents,
+    maybeFileFromResolvedType,
+    PropertyValidator,
+    resolvedTypeHasProperty,
+} from "../../utils/propertyValidatorUtils";
 
 export function validateResultsProperty({
     endpointId,
@@ -181,169 +168,6 @@ export function validateResponseProperty({
     return violations;
 }
 
-export function resolvedTypeHasProperty({
-    typeResolver,
-    file,
-    resolvedType,
-    propertyComponents,
-    validate
-}: {
-    typeResolver: TypeResolver;
-    file: FernFileContext;
-    resolvedType: ResolvedType | undefined;
-    propertyComponents: string[];
-    validate: (resolvedType: ResolvedType | undefined) => boolean;
-}): boolean {
-    if (propertyComponents.length === 0) {
-        return validate(resolvedType);
-    }
-    const objectSchema = maybeObjectSchema(resolvedType);
-    if (objectSchema == null) {
-        return false;
-    }
-    const property = getPropertyTypeFromObjectSchema({
-        typeResolver,
-        file,
-        objectSchema,
-        property: propertyComponents[0] ?? ""
-    });
-    if (property == null) {
-        return false;
-    }
-    const resolvedTypeProperty = typeResolver.resolveType({
-        type: property,
-        file
-    });
-    return resolvedTypeHasProperty({
-        typeResolver,
-        file: maybeFileFromResolvedType(resolvedTypeProperty) ?? file,
-        resolvedType: resolvedTypeProperty,
-        propertyComponents: propertyComponents.slice(1),
-        validate
-    });
-}
-
-export function resolveResponseType({
-    endpoint,
-    typeResolver,
-    file
-}: {
-    endpoint: RawSchemas.HttpEndpointSchema;
-    typeResolver: TypeResolver;
-    file: FernFileContext;
-}): ResolvedType | undefined {
-    const responseType = typeof endpoint.response !== "string" ? endpoint.response?.type : endpoint.response;
-    if (responseType == null) {
-        return undefined;
-    }
-    return typeResolver.resolveType({
-        type: responseType,
-        file
-    });
-}
-
-export function maybePrimitiveType(resolvedType: ResolvedType | undefined): string | undefined {
-    if (resolvedType?._type === "primitive") {
-        return resolvedType.primitive;
-    }
-    if (resolvedType?._type === "container" && resolvedType.container._type === "optional") {
-        return maybePrimitiveType(resolvedType.container.itemType);
-    }
-    return undefined;
-}
-
-export function maybeFileFromResolvedType(resolvedType: ResolvedType | undefined): FernFileContext | undefined {
-    if (resolvedType == null) {
-        return undefined;
-    }
-    if (resolvedType._type === "named") {
-        return resolvedType.file;
-    }
-    if (resolvedType._type === "container" && resolvedType.container._type === "optional") {
-        return maybeFileFromResolvedType(resolvedType.container.itemType);
-    }
-    return undefined;
-}
-
-function getPropertyTypeFromObjectSchema({
-    typeResolver,
-    file,
-    objectSchema,
-    property
-}: {
-    typeResolver: TypeResolver;
-    file: FernFileContext;
-    objectSchema: RawSchemas.ObjectSchema;
-    property: string;
-}): string | undefined {
-    const properties = getAllPropertiesForRawObjectSchema({
-        typeResolver,
-        file,
-        objectSchema
-    });
-    return properties[property];
-}
-
-function getAllPropertiesForRawObjectSchema({
-    typeResolver,
-    file,
-    objectSchema
-}: {
-    typeResolver: TypeResolver;
-    file: FernFileContext;
-    objectSchema: RawSchemas.ObjectSchema;
-}): Record<string, string> {
-    let extendedTypes: string[] = [];
-    if (typeof objectSchema.extends === "string") {
-        extendedTypes = [objectSchema.extends];
-    } else if (Array.isArray(objectSchema.extends)) {
-        extendedTypes = objectSchema.extends;
-    }
-
-    const properties: Record<string, string> = {};
-    for (const extendedType of extendedTypes) {
-        const extendedProperties = getAllPropertiesForExtendedType({
-            typeResolver,
-            file,
-            extendedType
-        });
-        Object.entries(extendedProperties).map(([propertyKey, propertyType]) => {
-            properties[propertyKey] = propertyType;
-        });
-    }
-
-    if (objectSchema.properties != null) {
-        Object.entries(objectSchema.properties).map(([propertyKey, propertyType]) => {
-            properties[propertyKey] = typeof propertyType === "string" ? propertyType : propertyType.type;
-        });
-    }
-
-    return properties;
-}
-
-function getAllPropertiesForExtendedType({
-    typeResolver,
-    file,
-    extendedType
-}: {
-    typeResolver: TypeResolver;
-    file: FernFileContext;
-    extendedType: string;
-}): Record<string, string> {
-    const resolvedType = typeResolver.resolveNamedTypeOrThrow({
-        referenceToNamedType: extendedType,
-        file
-    });
-    if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
-        return getAllPropertiesForRawObjectSchema({
-            typeResolver,
-            file: maybeFileFromResolvedType(resolvedType) ?? file,
-            objectSchema: resolvedType.declaration
-        });
-    }
-    return {};
-}
-
 function isValidResultsProperty({
     typeResolver,
     file,
@@ -366,34 +190,4 @@ function isValidResultsProperty({
 
 function isValidResultsType(resolvedType: ResolvedType | undefined): boolean {
     return true;
-}
-
-function maybeObjectSchema(resolvedType: ResolvedType | undefined): RawSchemas.ObjectSchema | undefined {
-    if (resolvedType == null) {
-        return undefined;
-    }
-    if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
-        return resolvedType.declaration;
-    }
-    if (resolvedType._type === "container" && resolvedType.container._type === "optional") {
-        return maybeObjectSchema(resolvedType.container.itemType);
-    }
-    return undefined;
-}
-
-function getRequestPropertyComponents(value: string): string[] | undefined {
-    const trimmed = trimPrefix(value, REQUEST_PREFIX);
-    return trimmed?.split(".");
-}
-
-function getResponsePropertyComponents(value: string): string[] | undefined {
-    const trimmed = trimPrefix(value, RESPONSE_PREFIX);
-    return trimmed?.split(".");
-}
-
-function trimPrefix(value: string, prefix: string): string | null {
-    if (value.startsWith(prefix)) {
-        return value.substring(prefix.length);
-    }
-    return null;
 }
