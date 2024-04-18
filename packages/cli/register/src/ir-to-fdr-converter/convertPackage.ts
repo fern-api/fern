@@ -410,7 +410,7 @@ function convertResponse(irResponse: Ir.http.HttpResponse): APIV1Write.HttpRespo
             } else if (streamingResponse.type === "json") {
                 return {
                     type: "stream",
-                    shape: { type: "reference", value: convertTypeReference(streamingResponse.json.payload) }
+                    shape: { type: "reference", value: convertTypeReference(streamingResponse.payload) }
                 };
             }
             // TODO(dsinghvi): update FDR with SSE.
