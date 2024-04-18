@@ -14,7 +14,14 @@ import {
     VariableDeclaration,
     VariableId
 } from "@fern-fern/ir-sdk/api";
-import { getTextOfTsNode, JavaScriptRuntime, maybeAddDocs, NpmPackage, PackageId } from "@fern-typescript/commons";
+import {
+    getTextOfTsNode,
+    ImportsManager,
+    JavaScriptRuntime,
+    maybeAddDocs,
+    NpmPackage,
+    PackageId
+} from "@fern-typescript/commons";
 import { GeneratedEndpointImplementation, GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, Scope, ts } from "ts-morph";
@@ -33,6 +40,7 @@ import { GeneratedWrappedService } from "./GeneratedWrappedService";
 
 export declare namespace GeneratedSdkClientClassImpl {
     export interface Init {
+        importsManager: ImportsManager;
         intermediateRepresentation: IntermediateRepresentation;
         packageId: PackageId;
         serviceClassName: string;
@@ -78,6 +86,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private targetRuntime: JavaScriptRuntime;
     private packageId: PackageId;
     private retainOriginalCasing: boolean;
+    private importsManager: ImportsManager;
 
     constructor({
         intermediateRepresentation,
@@ -94,7 +103,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         targetRuntime,
         includeContentHeadersOnFileDownloadResponse,
         includeSerdeLayer,
-        retainOriginalCasing
+        retainOriginalCasing,
+        importsManager
     }: GeneratedSdkClientClassImpl.Init) {
         this.packageId = packageId;
         this.serviceClassName = serviceClassName;
@@ -105,6 +115,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.npmPackage = npmPackage;
         this.targetRuntime = targetRuntime;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.importsManager = importsManager;
 
         const package_ = packageResolver.resolvePackage(packageId);
         this.package_ = package_;
@@ -123,6 +134,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     }
                     if (requestBody?.type === "fileUpload") {
                         return new GeneratedFileUploadEndpointRequest({
+                            importsManager,
                             ir: this.intermediateRepresentation,
                             packageId,
                             service,
