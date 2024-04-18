@@ -40,7 +40,7 @@ export const V38_TO_V37_MIGRATION: IrMigration<
             skipValidation: true
         }),
     migrateBackwards: (V38, _context): IrVersions.V37.ir.IntermediateRepresentation => {
-        const ir: IrVersions.V37.IntermediateRepresentation = {
+        return {
             ...V38,
             services: Object.fromEntries(
                 Object.entries(V38.services).map(([id, service]) => [
@@ -82,6 +82,5 @@ export const V38_TO_V37_MIGRATION: IrMigration<
                 ])
             )
         };
-        return ir;
     }
 };

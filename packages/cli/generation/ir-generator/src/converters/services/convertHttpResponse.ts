@@ -36,9 +36,11 @@ export async function convertHttpResponse({
         const docs = typeof responseStream !== "string" ? responseStream.docs : undefined;
         const typeReference = typeof responseStream === "string" ? responseStream : responseStream.type;
         if (isRawTextType(typeReference)) {
-            return HttpResponse.streaming(StreamingResponse.text({
-                docs,
-            }));
+            return HttpResponse.streaming(
+                StreamingResponse.text({
+                    docs
+                })
+            );
         } else if (typeof responseStream === "string" || responseStream.format === "json") {
             return HttpResponse.streaming(
                 StreamingResponse.json({

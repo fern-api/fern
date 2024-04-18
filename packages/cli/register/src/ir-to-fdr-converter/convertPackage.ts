@@ -412,8 +412,8 @@ function convertResponse(irResponse: Ir.http.HttpResponse): APIV1Write.HttpRespo
                     type: "stream",
                     shape: { type: "reference", value: convertTypeReference(streamingResponse.json.payload) }
                 };
-            } 
-            // TODO(dsinghvi): update FDR with SSE. 
+            }
+            // TODO(dsinghvi): update FDR with SSE.
             return undefined;
         },
         _other: () => {
