@@ -2,11 +2,11 @@
     "irFilepath": "./ir.json",
     "output": {
         "mode": {
-            "repoUrl": "https://github.com/trace/fern",
+            "repoUrl": "https://github.com/server-sent-events/fern",
             "version": "0.0.1",
             "publishInfo": {
                 "registryUrl": "",
-                "packageName": "fern_trace",
+                "packageName": "fern_server-sent-events",
                 "usernameEnvironmentVariable": "",
                 "passwordEnvironmentVariable": "",
                 "type": "pypi"
@@ -15,7 +15,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "trace",
+    "workspaceName": "server-sent-events",
     "organization": "seed",
     "environment": {
         "type": "local"

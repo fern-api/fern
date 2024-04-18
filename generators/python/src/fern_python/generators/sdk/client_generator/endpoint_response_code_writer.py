@@ -3,6 +3,7 @@ from typing_extensions import Never
 
 from fern_python.codegen import AST
 from fern_python.external_dependencies.json import Json
+from fern_python.external_dependencies.httpx_sse import HttpxSSE
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 
 
@@ -11,6 +12,8 @@ class EndpointResponseCodeWriter:
     RESPONSE_JSON_VARIABLE = "_response_json"
     STREAM_TEXT_VARIABLE = "_text"
     FILE_CHUNK_VARIABLE = "_chunk"
+    EVENT_SOURCE_VARIABLE = "_event_source"
+    SSE_VARIABLE = "_sse"
 
     def __init__(
         self,
@@ -43,16 +46,36 @@ class EndpointResponseCodeWriter:
             f"for {EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE} in {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.{self._get_iter_lines_method(is_async=self._is_async)}(): "
         )
         with writer.indent():
-            writer.write_line(f"if len({EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE}) == 0:")
-            with writer.indent():
-                writer.write_line("continue")
-            writer.write("yield ")
-            writer.write_node(
-                self._context.core_utilities.get_construct(
-                    self._get_streaming_response_data_type(stream_response),
-                    AST.Expression(Json.loads(AST.Expression(EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE))),
-                ),
-            )
+            stream_response_union = stream_response.get_as_union()
+            if stream_response_union.type == "sse": 
+                writer.write(f"{EndpointResponseCodeWriter.EVENT_SOURCE_VARIABLE} = ")
+                writer.write_node(AST.ClassInstantiation(HttpxSSE.EVENT_SOURCE, [AST.Expression(EndpointResponseCodeWriter.RESPONSE_VARIABLE)]))
+                writer.write_newline_if_last_line_not()
+                writer.write_line(
+                    f"for {EndpointResponseCodeWriter.SSE_VARIABLE} in {EndpointResponseCodeWriter.EVENT_SOURCE_VARIABLE}.iter_sse():"
+                )
+                with writer.indent():
+                    writer.write("yield ")
+                    writer.write_node(
+                        self._context.core_utilities.get_construct(
+                            self._get_streaming_response_data_type(stream_response),
+                            AST.Expression(
+                                f"json.loads({EndpointResponseCodeWriter.SSE_VARIABLE}.data)"
+                            ),
+                        ),
+                    )
+                
+            else: 
+                writer.write_line(f"if len({EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE}) == 0:")
+                with writer.indent():
+                    writer.write_line("continue")
+                writer.write("yield ")
+                writer.write_node(
+                    self._context.core_utilities.get_construct(
+                        self._get_streaming_response_data_type(stream_response),
+                        AST.Expression(Json.loads(AST.Expression(EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE))),
+                    ),
+                )
 
         writer.write_line("return")
 
