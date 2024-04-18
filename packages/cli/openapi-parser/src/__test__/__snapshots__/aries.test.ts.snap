@@ -10,7 +10,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -116,7 +116,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -276,7 +276,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -423,7 +423,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -529,7 +529,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -680,7 +680,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -1386,7 +1386,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -1704,7 +1704,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -1994,7 +1994,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -2339,7 +2339,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -2546,7 +2546,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -2652,7 +2652,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -2932,7 +2932,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -3164,7 +3164,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -3260,7 +3260,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -3393,7 +3393,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -3499,7 +3499,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -3600,7 +3600,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -3729,7 +3729,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -3841,7 +3841,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -4000,7 +4000,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -4330,7 +4330,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -4547,7 +4547,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -4811,7 +4811,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -5075,7 +5075,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -5175,7 +5175,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -5313,7 +5313,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -5529,7 +5529,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -5635,7 +5635,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -5770,7 +5770,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -5876,7 +5876,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -6123,7 +6123,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -6682,7 +6682,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -7007,7 +7007,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -7409,7 +7409,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -7665,7 +7665,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -7921,7 +7921,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -8169,7 +8169,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -8454,7 +8454,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -8698,7 +8698,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -9013,7 +9013,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -10046,7 +10046,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -11086,7 +11086,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -13311,7 +13311,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -14376,7 +14376,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -14482,7 +14482,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -15570,7 +15570,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -15699,7 +15699,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -16736,7 +16736,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -17711,7 +17711,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -18799,7 +18799,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -19846,7 +19846,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -20893,7 +20893,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -21940,7 +21940,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -22977,7 +22977,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -23845,7 +23845,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -24685,7 +24685,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -26278,7 +26278,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -27027,7 +27027,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -27133,7 +27133,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -27905,7 +27905,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -28034,7 +28034,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -28798,7 +28798,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -29547,7 +29547,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -30319,7 +30319,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -31194,7 +31194,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -32041,7 +32041,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -32916,7 +32916,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -33027,7 +33027,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -33141,7 +33141,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -33287,7 +33287,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -33376,7 +33376,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -33462,7 +33462,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -33600,7 +33600,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -33660,7 +33660,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -34101,7 +34101,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -34178,7 +34178,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -34325,7 +34325,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -34439,7 +34439,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -34598,7 +34598,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -34757,7 +34757,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -35007,7 +35007,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -35182,7 +35182,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -35368,7 +35368,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -35610,7 +35610,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -36034,7 +36034,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -36222,7 +36222,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -36410,7 +36410,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -36598,7 +36598,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -36720,7 +36720,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -36876,7 +36876,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -37064,7 +37064,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -37238,7 +37238,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -37352,7 +37352,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -37519,7 +37519,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -37648,7 +37648,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -37760,7 +37760,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -37917,7 +37917,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -38575,7 +38575,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -39602,7 +39602,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -39674,7 +39674,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -40478,7 +40478,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -41751,7 +41751,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -42358,7 +42358,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -42464,7 +42464,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -42751,7 +42751,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -42880,7 +42880,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -43600,7 +43600,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -44237,7 +44237,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -44844,7 +44844,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -45655,7 +45655,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -46466,7 +46466,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -47411,7 +47411,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -48852,7 +48852,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -49605,7 +49605,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -49711,7 +49711,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -49998,7 +49998,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -50127,7 +50127,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -50981,7 +50981,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -51764,7 +51764,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -52517,7 +52517,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -53447,7 +53447,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -54399,7 +54399,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -54489,7 +54489,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -54783,7 +54783,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -54912,7 +54912,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -55207,7 +55207,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -55401,7 +55401,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -55709,7 +55709,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -55887,7 +55887,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -55996,7 +55996,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -56290,7 +56290,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -56607,7 +56607,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -57075,7 +57075,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -57416,7 +57416,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -57524,7 +57524,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -57613,7 +57613,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -57836,7 +57836,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -57917,7 +57917,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -58294,7 +58294,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [],
       "generatedRequestName": "DownloadTailsFileRequest",
       "headers": [],
@@ -58340,7 +58340,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -58446,7 +58446,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -58599,7 +58599,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -58993,7 +58993,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -59162,7 +59162,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -59303,7 +59303,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -59444,7 +59444,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -59521,7 +59521,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -59588,7 +59588,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -59640,7 +59640,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -59700,7 +59700,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -59760,7 +59760,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -59837,7 +59837,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -60088,7 +60088,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -60494,7 +60494,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -60790,7 +60790,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -60939,7 +60939,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -61087,7 +61087,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -61338,7 +61338,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -61589,7 +61589,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -61865,7 +61865,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -62116,7 +62116,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -62367,7 +62367,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -62689,7 +62689,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -62806,7 +62806,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -62912,7 +62912,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -62999,7 +62999,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -63185,7 +63185,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -63281,7 +63281,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -63435,7 +63435,6 @@ exports[`open api parser aries parse open api 1`] = `
       ],
     },
   ],
-  "errors": {},
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,

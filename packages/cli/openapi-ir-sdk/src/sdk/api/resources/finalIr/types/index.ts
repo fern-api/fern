@@ -21,6 +21,7 @@ export * from "./FullEndpointExample";
 export * from "./PathParameterExample";
 export * from "./QueryParameterExample";
 export * from "./HeaderExample";
+export * from "./ErrorExample";
 export * from "./EndpointSdkName";
 export * from "./HttpMethod";
 export * from "./PathParameter";

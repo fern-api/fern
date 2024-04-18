@@ -16,7 +16,6 @@ export interface OpenApiIntermediateRepresentation {
     webhooks: FernOpenapiIr.Webhook[];
     channel: FernOpenapiIr.WebsocketChannel[];
     schemas: Record<FernOpenapiIr.SchemaId, FernOpenapiIr.Schema>;
-    errors: Record<FernOpenapiIr.StatusCode, FernOpenapiIr.HttpError>;
     variables: Record<string, FernOpenapiIr.PrimitiveSchema>;
     /** Whether the schema is directly referenced from a response, parameters, or other schemas */
     nonRequestReferencedSchemas: Set<FernOpenapiIr.SchemaId>;

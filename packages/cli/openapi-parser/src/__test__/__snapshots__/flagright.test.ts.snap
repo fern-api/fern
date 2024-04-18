@@ -30,207 +30,63 @@ Here are some of the most used payload fields explained (you can find the full p
 * \`destinationAmountDetails\` - Details of the amount being received at the destination
 * \`originPaymentDetails\` - Payment details (if any) used at the origin (ex: \`CARD\`, \`IBAN\`, \`WALLET\` etc). You can click on the dropdown next to the field in the schema below to view all supported payment types.
 * \`destinationPaymentDetails\` - Payment details (if any) used at the destination (ex: \`CARD\`, \`IBAN\`, \`WALLET\` etc). You can click on the dropdown next to the field in the schema below to view all supported payment types.",
-      "errorStatusCode": [
-        400,
-        401,
-        429,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": null,
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "four_hundred",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "401": {
+          "description": "Unauthorized",
+          "examples": null,
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "four_hundred_one",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "429": {
+          "description": "Too Many Requests",
+          "examples": null,
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "four_hundred_twenty_nine",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": "example-1",
+          "name": null,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
             "properties": {
-              "destinationAmountDetails": {
-                "properties": {
-                  "country": {
-                    "type": "enum",
-                    "value": "IN",
-                  },
-                  "transactionAmount": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 68351.34,
-                    },
-                  },
-                  "transactionCurrency": {
-                    "type": "enum",
-                    "value": "INR",
-                  },
-                },
-                "type": "object",
-              },
-              "destinationUserId": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "9350a2611e0771cba03310f74bf6",
-                },
-              },
-              "deviceData": {
-                "properties": {
-                  "appVersion": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "1.1.0",
-                    },
-                  },
-                  "batteryLevel": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 95,
-                    },
-                  },
-                  "deviceIdentifier": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "3c49f915d04485e34caba",
-                    },
-                  },
-                  "deviceLatitude": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 13.0033,
-                    },
-                  },
-                  "deviceLongitude": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 76.1004,
-                    },
-                  },
-                  "deviceMaker": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "ASUS",
-                    },
-                  },
-                  "deviceModel": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "Zenphone M2 Pro Max",
-                    },
-                  },
-                  "deviceYear": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "2018",
-                    },
-                  },
-                  "ipAddress": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "10.23.191.2",
-                    },
-                  },
-                  "operatingSystem": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "Android 11.2",
-                    },
-                  },
-                  "vpnUsed": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": false,
-                    },
-                  },
-                },
-                "type": "object",
-              },
-              "originAmountDetails": {
-                "properties": {
-                  "country": {
-                    "type": "enum",
-                    "value": "DE",
-                  },
-                  "transactionAmount": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 800,
-                    },
-                  },
-                  "transactionCurrency": {
-                    "type": "enum",
-                    "value": "EUR",
-                  },
-                },
-                "type": "object",
-              },
-              "originUserId": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "8650a2611d0771cba03310f74bf6",
-                },
-              },
-              "promotionCodeUsed": {
-                "type": "primitive",
-                "value": {
-                  "type": "boolean",
-                  "value": true,
-                },
-              },
-              "reference": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "loan repayment",
-                },
-              },
-              "tags": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "key": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "customKey",
-                        },
-                      },
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "customValue",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
               "timestamp": {
                 "type": "primitive",
                 "value": {
                   "type": "double",
-                  "value": 1641654664000,
+                  "value": 1.1,
                 },
               },
               "transactionId": {
                 "type": "primitive",
                 "value": {
                   "type": "string",
-                  "value": "7b80a539eea6e78acbd6d458e5971482",
+                  "value": "transactionId",
                 },
               },
             },
@@ -316,7 +172,7 @@ Here are some of the most used payload fields explained (you can find the full p
                       },
                       "nature": {
                         "type": "enum",
-                        "value": "AML",
+                        "value": "FRAUD",
                       },
                       "ruleAction": {
                         "type": "enum",
@@ -366,7 +222,7 @@ Here are some of the most used payload fields explained (you can find the full p
                 "type": "primitive",
                 "value": {
                   "type": "string",
-                  "value": "7b80a539eea6e78acbd6d458e5971482",
+                  "value": "transactionId",
                 },
               },
             },
@@ -509,16 +365,36 @@ Here are some of the most used payload fields explained (you can find the full p
 \`/transactions\` endpoint allows you to operate on the [Transaction entity](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#transaction).
 
 Calling \`GET /transactions/{transactionId}\` will return the entire transaction payload and rule execution results for the transaction with the corresponding \`transactionId\`",
-      "errorStatusCode": [
-        401,
-        429,
-      ],
+      "errors": {
+        "401": {
+          "description": "Unauthorized",
+          "examples": null,
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "four_hundred_one",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "429": {
+          "description": "Too Many Requests",
+          "examples": null,
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "four_hundred_twenty_nine",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": "example-1",
+          "name": null,
           "pathParameters": [
             {
               "name": "transactionId",
@@ -722,7 +598,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                       },
                       "nature": {
                         "type": "enum",
-                        "value": "AML",
+                        "value": "FRAUD",
                       },
                       "ruleAction": {
                         "type": "enum",
@@ -849,7 +725,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                 "type": "primitive",
                 "value": {
                   "type": "double",
-                  "value": 1641654664000,
+                  "value": 1641654664,
                 },
               },
               "transactionId": {
@@ -944,92 +820,68 @@ Each transaction event needs three mandatory fields:
 
 In order to make individual events retrievable, you also need to pass in a unique \`eventId\` to the request body.
 ",
-      "errorStatusCode": [
-        400,
-        401,
-        429,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": null,
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "four_hundred",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "401": {
+          "description": "Unauthorized",
+          "examples": null,
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "four_hundred_one",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "429": {
+          "description": "Too Many Requests",
+          "examples": null,
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "four_hundred_twenty_nine",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": "example-1",
+          "name": null,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
             "properties": {
-              "eventDescription": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "Transaction created",
-                },
-              },
-              "eventId": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "aaeeb166147a406b957dd9147a406b957",
-                },
-              },
-              "metaData": {
-                "properties": {
-                  "batteryLevel": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 76.3,
-                    },
-                  },
-                  "deviceLatitude": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 13.009711,
-                    },
-                  },
-                  "deviceLongitude": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "double",
-                      "value": 76.102898,
-                    },
-                  },
-                  "ipAddress": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "79.144.2.20",
-                    },
-                  },
-                  "vpnUsed": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": true,
-                    },
-                  },
-                },
-                "type": "object",
-              },
               "timestamp": {
                 "type": "primitive",
                 "value": {
                   "type": "double",
-                  "value": 1431231244001,
+                  "value": 1.1,
                 },
               },
               "transactionId": {
                 "type": "primitive",
                 "value": {
                   "type": "string",
-                  "value": "443dea26147a406b957d9ee3a1247b11",
+                  "value": "transactionId",
                 },
               },
               "transactionState": {
                 "type": "enum",
-                "value": "SUCCESSFUL",
+                "value": "CREATED",
               },
             },
             "type": "object",
@@ -1040,7 +892,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "type": "primitive",
                 "value": {
                   "type": "string",
-                  "value": "7b80a539eea6e78acbd6d458e5971482",
+                  "value": "eventId",
                 },
               },
               "executedRules": {
@@ -1121,7 +973,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       },
                       "nature": {
                         "type": "enum",
-                        "value": "AML",
+                        "value": "FRAUD",
                       },
                       "ruleAction": {
                         "type": "enum",
@@ -1166,18 +1018,18 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "properties": {
                       "country": {
                         "type": "enum",
-                        "value": "IN",
+                        "value": "DE",
                       },
                       "transactionAmount": {
                         "type": "primitive",
                         "value": {
                           "type": "double",
-                          "value": 68351.34,
+                          "value": 800,
                         },
                       },
                       "transactionCurrency": {
                         "type": "enum",
-                        "value": "INR",
+                        "value": "EUR",
                       },
                     },
                     "type": "object",
@@ -1186,7 +1038,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "9350a2611e0771cba03310f74bf6",
+                      "value": "destinationUserId",
                     },
                   },
                   "deviceData": {
@@ -1195,77 +1047,77 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "1.1.0",
+                          "value": "appVersion",
                         },
                       },
                       "batteryLevel": {
                         "type": "primitive",
                         "value": {
                           "type": "double",
-                          "value": 95,
+                          "value": 1.1,
                         },
                       },
                       "deviceIdentifier": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "3c49f915d04485e34caba",
+                          "value": "deviceIdentifier",
                         },
                       },
                       "deviceLatitude": {
                         "type": "primitive",
                         "value": {
                           "type": "double",
-                          "value": 13.0033,
+                          "value": 1.1,
                         },
                       },
                       "deviceLongitude": {
                         "type": "primitive",
                         "value": {
                           "type": "double",
-                          "value": 76.1004,
+                          "value": 1.1,
                         },
                       },
                       "deviceMaker": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "ASUS",
+                          "value": "deviceMaker",
                         },
                       },
                       "deviceModel": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "Zenphone M2 Pro Max",
+                          "value": "deviceModel",
                         },
                       },
                       "deviceYear": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "2018",
+                          "value": "deviceYear",
                         },
                       },
                       "ipAddress": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "10.23.191.2",
+                          "value": "ipAddress",
                         },
                       },
                       "operatingSystem": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "Android 11.2",
+                          "value": "operatingSystem",
                         },
                       },
                       "vpnUsed": {
                         "type": "primitive",
                         "value": {
                           "type": "boolean",
-                          "value": false,
+                          "value": true,
                         },
                       },
                     },
@@ -1295,7 +1147,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "8650a2611d0771cba03310f74bf6",
+                      "value": "originUserId",
                     },
                   },
                   "productType": {
@@ -1316,7 +1168,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "loan repayment",
+                      "value": "reference",
                     },
                   },
                   "relatedTransactionIds": {
@@ -1359,14 +1211,14 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "type": "primitive",
                     "value": {
                       "type": "double",
-                      "value": 1641654664000,
+                      "value": 1.1,
                     },
                   },
                   "transactionId": {
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "7b80a539eea6e78acbd6d458e5971482",
+                      "value": "transactionId",
                     },
                   },
                   "transactionState": {
@@ -1443,17 +1295,47 @@ Each consumer User entity needs three mandatory fields:
 * \`userId\` - Unique identifier for the user
 * \`createdTimestamp\` - UNIX timestamp in *milliseconds* for when the User is created in your system
 ",
-      "errorStatusCode": [
-        400,
-        401,
-        429,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": null,
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "four_hundred",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "401": {
+          "description": "Unauthorized",
+          "examples": null,
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "four_hundred_one",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "429": {
+          "description": "Too Many Requests",
+          "examples": null,
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "four_hundred_twenty_nine",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": "example-1",
+          "name": null,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -1859,7 +1741,7 @@ Each consumer User entity needs three mandatory fields:
                 "type": "primitive",
                 "value": {
                   "type": "string",
-                  "value": "96647cfd9e8fe66ee0f3362e011e34e8",
+                  "value": "userId",
                 },
               },
             },
@@ -1969,16 +1851,36 @@ Each consumer User entity needs three mandatory fields:
 \`/consumer/user\` endpoint allows you to operate on the [Consumer User entity](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#user).
 
 Calling \`GET /consumer/user/{userId}\` will return the entire user payload and rule execution results for the user with the corresponding \`userId\`",
-      "errorStatusCode": [
-        401,
-        429,
-      ],
+      "errors": {
+        "401": {
+          "description": "Unauthorized",
+          "examples": null,
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "four_hundred_one",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "429": {
+          "description": "Too Many Requests",
+          "examples": null,
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "four_hundred_twenty_nine",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": "example-1",
+          "name": null,
           "pathParameters": [
             {
               "name": "userId",
@@ -2563,17 +2465,47 @@ Each consumer Business entity needs three mandatory fields:
 * \`userId\` - Unique identifier for the user
 * \`legalEntity\` - Details of the business legal entity (CompanyGeneralDetails, FinancialDetails etc) - only \`legalName\`in \`CompanyGeneralDetails\` is mandatory
 * \`createdTimestamp\` - UNIX timestamp in *milliseconds* for when the User is created in your system",
-      "errorStatusCode": [
-        400,
-        401,
-        429,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": null,
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "four_hundred",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "401": {
+          "description": "Unauthorized",
+          "examples": null,
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "four_hundred_one",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "429": {
+          "description": "Too Many Requests",
+          "examples": null,
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "four_hundred_twenty_nine",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": "example-1",
+          "name": null,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -2725,7 +2657,7 @@ Each consumer Business entity needs three mandatory fields:
                 "type": "primitive",
                 "value": {
                   "type": "string",
-                  "value": "96647cfd9e8fe66ee0f3362e011e34e8",
+                  "value": "userId",
                 },
               },
             },
@@ -2835,16 +2767,36 @@ Each consumer Business entity needs three mandatory fields:
 \`/business/user\` endpoint allows you to operate on the [Business User entity](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#user).
 
 Calling \`GET /business/user/{userId}\` will return the entire User payload and rule execution results for the User with the corresponding \`userId\`",
-      "errorStatusCode": [
-        401,
-        429,
-      ],
+      "errors": {
+        "401": {
+          "description": "Unauthorized",
+          "examples": null,
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "four_hundred_one",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "429": {
+          "description": "Too Many Requests",
+          "examples": null,
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "four_hundred_twenty_nine",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": "example-2",
+          "name": null,
           "pathParameters": [
             {
               "name": "userId",
@@ -2878,7 +2830,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                 "type": "primitive",
                 "value": {
                   "type": "double",
-                  "value": 1641654664000,
+                  "value": 1.1,
                 },
               },
               "directors": {
@@ -3533,7 +3485,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "string",
+                          "value": "reasonForAccountOpening",
                         },
                       },
                     ],
@@ -4024,7 +3976,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                 "type": "primitive",
                 "value": {
                   "type": "string",
-                  "value": "96647cfd9e8fe66ee0f3362e011e34e8",
+                  "value": "userId",
                 },
               },
               "userStateDetails": {
@@ -4126,11 +4078,41 @@ Each user event needs three mandatory fields:
 
 In order to make individual events retrievable, you also need to pass in a unique \`eventId\` to the request body.
 ",
-      "errorStatusCode": [
-        400,
-        401,
-        429,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": null,
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "four_hundred",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "401": {
+          "description": "Unauthorized",
+          "examples": null,
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "four_hundred_one",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "429": {
+          "description": "Too Many Requests",
+          "examples": null,
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "four_hundred_twenty_nine",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -4845,11 +4827,41 @@ Each user event needs three mandatory fields:
 
 In order to make individual events retrievable, you also need to pass in a unique \`eventId\` to the request body.
 ",
-      "errorStatusCode": [
-        400,
-        401,
-        429,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": null,
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "four_hundred",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "401": {
+          "description": "Unauthorized",
+          "examples": null,
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "four_hundred_one",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "429": {
+          "description": "Too Many Requests",
+          "examples": null,
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "four_hundred_twenty_nine",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -6232,38 +6244,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "tags": [],
     },
   ],
-  "errors": {
-    "400": {
-      "description": null,
-      "generatedName": "BadRequestError",
-      "nameOverride": null,
-      "schema": {
-        "generatedName": "BadRequestErrorBody",
-        "nameOverride": null,
-        "type": "unknown",
-      },
-    },
-    "401": {
-      "description": null,
-      "generatedName": "UnauthorizedError",
-      "nameOverride": null,
-      "schema": {
-        "generatedName": "UnauthorizedErrorBody",
-        "nameOverride": null,
-        "type": "unknown",
-      },
-    },
-    "429": {
-      "description": null,
-      "generatedName": "TooManyRequestsError",
-      "nameOverride": null,
-      "schema": {
-        "generatedName": "TooManyRequestsErrorBody",
-        "nameOverride": null,
-        "type": "unknown",
-      },
-    },
-  },
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,

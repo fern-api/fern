@@ -10,13 +10,13 @@ exports[`examples examples parse open api 1`] = `
       "authed": false,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": "Example 1",
+          "name": null,
           "pathParameters": [],
           "queryParameters": [],
           "request": null,
@@ -29,7 +29,7 @@ exports[`examples examples parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "The Main Building",
+                      "value": "building_name",
                     },
                   },
                   "building_name_alias": {
@@ -39,7 +39,7 @@ exports[`examples examples parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "Main Building",
+                          "value": "building_name_alias",
                         },
                       },
                     ],
@@ -48,35 +48,35 @@ exports[`examples examples parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "San Francisco",
+                      "value": "city",
                     },
                   },
                   "id": {
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "123",
+                      "value": "id",
                     },
                   },
                   "lat": {
                     "type": "primitive",
                     "value": {
                       "type": "double",
-                      "value": 37.789,
+                      "value": 1.1,
                     },
                   },
                   "lon": {
                     "type": "primitive",
                     "value": {
                       "type": "double",
-                      "value": -122.395,
+                      "value": 1.1,
                     },
                   },
                   "number_units": {
                     "type": "primitive",
                     "value": {
                       "type": "double",
-                      "value": 100,
+                      "value": 1.1,
                     },
                   },
                   "score": {
@@ -90,14 +90,14 @@ exports[`examples examples parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "CA",
+                      "value": "state",
                     },
                   },
                   "street_address": {
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "123 Main St",
+                      "value": "street_address",
                     },
                   },
                   "street_address_alias": {
@@ -107,7 +107,7 @@ exports[`examples examples parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "123 Main Street",
+                          "value": "street_address_alias",
                         },
                       },
                     ],
@@ -116,14 +116,14 @@ exports[`examples examples parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "double",
-                      "value": 2010,
+                      "value": 1.1,
                     },
                   },
                   "zip_code": {
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "94105",
+                      "value": "zip_code",
                     },
                   },
                 },
@@ -170,7 +170,6 @@ exports[`examples examples parse open api 1`] = `
       "tags": [],
     },
   ],
-  "errors": {},
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,

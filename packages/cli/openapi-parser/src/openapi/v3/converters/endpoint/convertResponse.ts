@@ -1,5 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
-import { ResponseWithExample, StatusCode } from "@fern-api/openapi-ir-sdk";
+import { FernOpenapiIr, ResponseWithExample } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../../getExtension";
 import { convertSchema } from "../../../../schema/convertSchemas";
@@ -8,6 +8,7 @@ import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
 import { OperationContext } from "../contexts";
+import { ERROR_NAMES_BY_STATUS_CODE } from "../convertToHttpError";
 import { getApplicationJsonSchemaMediaObject } from "./getApplicationJsonSchema";
 
 const APPLICATION_OCTET_STREAM_CONTENT = "application/octet-stream";
@@ -21,7 +22,7 @@ const SUCCESSFUL_STATUS_CODES = ["200", "201", "204"];
 
 export interface ConvertedResponse {
     value: ResponseWithExample | undefined;
-    errorStatusCodes: StatusCode[];
+    errors: Record<FernOpenapiIr.StatusCode, FernOpenapiIr.HttpErrorWithExample>;
 }
 
 export function convertResponse({
@@ -41,9 +42,9 @@ export function convertResponse({
 }): ConvertedResponse {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (responses == null) {
-        return { value: undefined, errorStatusCodes: [] };
+        return { value: undefined, errors: {} };
     }
-    const errorStatusCodes = markErrorSchemas({ responses, context });
+    const errors = markErrorSchemas({ responses, context });
     for (const statusCode of responseStatusCode != null ? [responseStatusCode] : SUCCESSFUL_STATUS_CODES) {
         const response = responses[statusCode];
         if (response == null) {
@@ -62,19 +63,19 @@ export function convertResponse({
                 case "json":
                     return {
                         value: convertedResponse,
-                        errorStatusCodes
+                        errors
                     };
                 case "streamingJson":
                     return {
                         value: convertedResponse,
-                        errorStatusCodes
+                        errors
                     };
                 case "file":
                 case "text":
                 case "streamingText":
                     return {
                         value: convertedResponse,
-                        errorStatusCodes: []
+                        errors
                     };
                 default:
                     assertNever(convertedResponse);
@@ -84,7 +85,7 @@ export function convertResponse({
 
     return {
         value: undefined,
-        errorStatusCodes
+        errors
     };
 }
 
@@ -172,8 +173,8 @@ function markErrorSchemas({
 }: {
     responses: OpenAPIV3.ResponsesObject;
     context: AbstractOpenAPIV3ParserContext;
-}): StatusCode[] {
-    const errorStatusCodes: StatusCode[] = [];
+}): Record<FernOpenapiIr.StatusCode, FernOpenapiIr.HttpErrorWithExample> {
+    const errors: Record<FernOpenapiIr.StatusCode, FernOpenapiIr.HttpErrorWithExample> = {};
     for (const [statusCode, response] of Object.entries(responses)) {
         if (statusCode === "default") {
             continue;
@@ -183,10 +184,17 @@ function markErrorSchemas({
             // if status code is not between [400, 600], then it won't count as an error
             continue;
         }
-        errorStatusCodes.push(parsedStatusCode);
         const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
         const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedResponse.content ?? {}, context);
         context.markSchemaForStatusCode(parsedStatusCode, jsonMediaObject?.schema ?? {}); // defaults to unknown schema
+        errors[parsedStatusCode] = {
+            statusCode: parsedStatusCode,
+            nameOverride: undefined,
+            generatedName: ERROR_NAMES_BY_STATUS_CODE[parsedStatusCode] ?? "UnknownError",
+            description: resolvedResponse.description,
+            schema: convertSchema(jsonMediaObject?.schema ?? {}, false, context, [statusCode]),
+            fullExamples: jsonMediaObject?.examples
+        };
     }
-    return errorStatusCodes;
+    return errors;
 }

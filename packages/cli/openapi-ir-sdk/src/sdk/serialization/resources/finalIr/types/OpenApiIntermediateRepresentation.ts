@@ -28,10 +28,6 @@ export const OpenApiIntermediateRepresentation: core.serialization.ObjectSchema<
         core.serialization.lazy(async () => (await import("../../..")).SchemaId),
         core.serialization.lazy(async () => (await import("../../..")).Schema)
     ),
-    errors: core.serialization.record(
-        core.serialization.lazy(async () => (await import("../../..")).StatusCode),
-        core.serialization.lazyObject(async () => (await import("../../..")).HttpError)
-    ),
     variables: core.serialization.record(
         core.serialization.string(),
         core.serialization.lazyObject(async () => (await import("../../..")).PrimitiveSchema)
@@ -60,7 +56,6 @@ export declare namespace OpenApiIntermediateRepresentation {
         webhooks: serializers.Webhook.Raw[];
         channel: serializers.WebsocketChannel.Raw[];
         schemas: Record<serializers.SchemaId.Raw, serializers.Schema.Raw>;
-        errors: Record<serializers.StatusCode.Raw, serializers.HttpError.Raw>;
         variables: Record<string, serializers.PrimitiveSchema.Raw>;
         nonRequestReferencedSchemas: serializers.SchemaId.Raw[];
         securitySchemes: Record<serializers.SecuritySchemeId.Raw, serializers.SecurityScheme.Raw>;

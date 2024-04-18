@@ -1,6 +1,7 @@
 export * from "./NamedFullExample";
 export * from "./WebsocketHandshakeWithExample";
 export * from "./EndpointWithExample";
+export * from "./HttpErrorWithExample";
 export * from "./RequestWithExample";
 export * from "./JsonRequestWithExample";
 export * from "./ResponseWithExample";

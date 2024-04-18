@@ -1,8 +1,10 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, isNonNullish } from "@fern-api/core-utils";
 import {
     Endpoint,
     EndpointExample,
     EndpointWithExample,
+    ErrorExample,
+    HttpError,
     ObjectSchema,
     OpenApiIntermediateRepresentation,
     Schema,
@@ -12,9 +14,11 @@ import {
     Webhook
 } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
+import { mapValues } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../getExtension";
 import { convertSchema } from "../../schema/convertSchemas";
+import { convertToFullExample } from "../../schema/examples/convertToFullExample";
 import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "./AbstractOpenAPIV3ParserContext";
@@ -196,7 +200,30 @@ export function generateIr({
                     env: header.env
                 };
             }),
-            examples
+            examples,
+            errors: mapValues(endpointWithExample.errors, (error): HttpError => {
+                return {
+                    generatedName: error.generatedName,
+                    nameOverride: error.nameOverride,
+                    schema: convertSchemaWithExampleToSchema(error.schema),
+                    description: error.description,
+                    examples: error.fullExamples
+                        ?.map((example): ErrorExample | undefined => {
+                            const fullExample = convertToFullExample(example.value);
+
+                            if (fullExample == null) {
+                                return undefined;
+                            }
+
+                            return {
+                                name: example.name,
+                                description: undefined,
+                                example: fullExample
+                            };
+                        })
+                        .filter(isNonNullish)
+                };
+            })
         };
     });
 
@@ -225,7 +252,6 @@ export function generateIr({
         schemas,
         securitySchemes,
         hasEndpointsMarkedInternal: endpoints.some((endpoint) => endpoint.internal),
-        errors: context.getErrors(),
         nonRequestReferencedSchemas: context.getReferencedSchemas(),
         variables,
         globalHeaders

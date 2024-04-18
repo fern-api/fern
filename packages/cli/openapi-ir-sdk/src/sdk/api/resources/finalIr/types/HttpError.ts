@@ -6,4 +6,5 @@ import * as FernOpenapiIr from "../../..";
 
 export interface HttpError extends FernOpenapiIr.WithDescription, FernOpenapiIr.WithName {
     schema: FernOpenapiIr.Schema | undefined;
+    examples: FernOpenapiIr.ErrorExample[] | undefined;
 }

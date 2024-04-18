@@ -20,9 +20,22 @@ exports[`open api parser vocode parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        422,
-      ],
+      "errors": {
+        "422": {
+          "description": "Validation Error",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "four_hundred_twenty_two",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "HTTPValidationError",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -193,9 +206,22 @@ exports[`open api parser vocode parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        422,
-      ],
+      "errors": {
+        "422": {
+          "description": "Validation Error",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "four_hundred_twenty_two",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "HTTPValidationError",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [],
       "generatedRequestName": "GetNumberRequest",
       "headers": [],
@@ -250,7 +276,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [],
       "generatedRequestName": "BuyNumberRequest",
       "headers": [],
@@ -287,9 +313,22 @@ exports[`open api parser vocode parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        422,
-      ],
+      "errors": {
+        "422": {
+          "description": "Validation Error",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "four_hundred_twenty_two",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "HTTPValidationError",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [],
       "generatedRequestName": "UpdateNumberRequest",
       "headers": [],
@@ -356,9 +395,22 @@ exports[`open api parser vocode parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        422,
-      ],
+      "errors": {
+        "422": {
+          "description": "Validation Error",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "four_hundred_twenty_two",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "HTTPValidationError",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [],
       "generatedRequestName": "CancelNumberRequest",
       "headers": [],
@@ -413,9 +465,22 @@ exports[`open api parser vocode parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        422,
-      ],
+      "errors": {
+        "422": {
+          "description": "Validation Error",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "four_hundred_twenty_two",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "HTTPValidationError",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -625,9 +690,22 @@ exports[`open api parser vocode parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        422,
-      ],
+      "errors": {
+        "422": {
+          "description": "Validation Error",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "four_hundred_twenty_two",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "HTTPValidationError",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [],
       "generatedRequestName": "GetCallRequest",
       "headers": [],
@@ -682,9 +760,22 @@ exports[`open api parser vocode parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        422,
-      ],
+      "errors": {
+        "422": {
+          "description": "Validation Error",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "four_hundred_twenty_two",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "HTTPValidationError",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [],
       "generatedRequestName": "EndCallRequest",
       "headers": [],
@@ -739,9 +830,22 @@ exports[`open api parser vocode parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        422,
-      ],
+      "errors": {
+        "422": {
+          "description": "Validation Error",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "four_hundred_twenty_two",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "HTTPValidationError",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [],
       "generatedRequestName": "CreateCallRequest",
       "headers": [],
@@ -790,9 +894,22 @@ exports[`open api parser vocode parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        422,
-      ],
+      "errors": {
+        "422": {
+          "description": "Validation Error",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "four_hundred_twenty_two",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "HTTPValidationError",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -884,7 +1001,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -962,9 +1079,22 @@ exports[`open api parser vocode parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        422,
-      ],
+      "errors": {
+        "422": {
+          "description": "Validation Error",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "four_hundred_twenty_two",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "HTTPValidationError",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [],
       "generatedRequestName": "GetActionRequest",
       "headers": [],
@@ -1049,9 +1179,22 @@ exports[`open api parser vocode parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        422,
-      ],
+      "errors": {
+        "422": {
+          "description": "Validation Error",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "four_hundred_twenty_two",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "HTTPValidationError",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -1174,9 +1317,22 @@ exports[`open api parser vocode parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        422,
-      ],
+      "errors": {
+        "422": {
+          "description": "Validation Error",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "four_hundred_twenty_two",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "HTTPValidationError",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [],
       "generatedRequestName": "CreateActionRequest",
       "headers": [],
@@ -1255,9 +1411,22 @@ exports[`open api parser vocode parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        422,
-      ],
+      "errors": {
+        "422": {
+          "description": "Validation Error",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "four_hundred_twenty_two",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "HTTPValidationError",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [],
       "generatedRequestName": "UpdateActionRequest",
       "headers": [],
@@ -1354,9 +1523,22 @@ exports[`open api parser vocode parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        422,
-      ],
+      "errors": {
+        "422": {
+          "description": "Validation Error",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "four_hundred_twenty_two",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "HTTPValidationError",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [],
       "generatedRequestName": "GetAgentRequest",
       "headers": [],
@@ -1411,9 +1593,22 @@ exports[`open api parser vocode parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        422,
-      ],
+      "errors": {
+        "422": {
+          "description": "Validation Error",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "four_hundred_twenty_two",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "HTTPValidationError",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -1611,9 +1806,22 @@ exports[`open api parser vocode parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        422,
-      ],
+      "errors": {
+        "422": {
+          "description": "Validation Error",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "four_hundred_twenty_two",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "HTTPValidationError",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [],
       "generatedRequestName": "CreateAgentRequest",
       "headers": [],
@@ -1662,9 +1870,22 @@ exports[`open api parser vocode parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        422,
-      ],
+      "errors": {
+        "422": {
+          "description": "Validation Error",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "four_hundred_twenty_two",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "HTTPValidationError",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [],
       "generatedRequestName": "UpdateAgentRequest",
       "headers": [],
@@ -1731,9 +1952,22 @@ exports[`open api parser vocode parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        422,
-      ],
+      "errors": {
+        "422": {
+          "description": "Validation Error",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "four_hundred_twenty_two",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "HTTPValidationError",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [],
       "generatedRequestName": "GetVoiceRequest",
       "headers": [],
@@ -1826,9 +2060,22 @@ exports[`open api parser vocode parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        422,
-      ],
+      "errors": {
+        "422": {
+          "description": "Validation Error",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "four_hundred_twenty_two",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "HTTPValidationError",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -1951,9 +2198,22 @@ exports[`open api parser vocode parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        422,
-      ],
+      "errors": {
+        "422": {
+          "description": "Validation Error",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "four_hundred_twenty_two",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "HTTPValidationError",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [],
       "generatedRequestName": "CreateVoiceRequest",
       "headers": [],
@@ -2040,9 +2300,22 @@ exports[`open api parser vocode parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        422,
-      ],
+      "errors": {
+        "422": {
+          "description": "Validation Error",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "four_hundred_twenty_two",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "HTTPValidationError",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [],
       "generatedRequestName": "UpdateVoiceRequest",
       "headers": [],
@@ -2147,9 +2420,22 @@ exports[`open api parser vocode parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        422,
-      ],
+      "errors": {
+        "422": {
+          "description": "Validation Error",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "four_hundred_twenty_two",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "HTTPValidationError",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -2265,9 +2551,22 @@ exports[`open api parser vocode parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        422,
-      ],
+      "errors": {
+        "422": {
+          "description": "Validation Error",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "four_hundred_twenty_two",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "HTTPValidationError",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -2430,9 +2729,22 @@ exports[`open api parser vocode parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        422,
-      ],
+      "errors": {
+        "422": {
+          "description": "Validation Error",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "four_hundred_twenty_two",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "HTTPValidationError",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -2551,9 +2863,22 @@ exports[`open api parser vocode parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        422,
-      ],
+      "errors": {
+        "422": {
+          "description": "Validation Error",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "four_hundred_twenty_two",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "HTTPValidationError",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -2680,25 +3005,11 @@ exports[`open api parser vocode parse open api 1`] = `
       ],
     },
   ],
-  "errors": {
-    "422": {
-      "description": null,
-      "generatedName": "UnprocessableEntityError",
-      "nameOverride": null,
-      "schema": {
-        "description": null,
-        "generatedName": "UnprocessableEntityErrorBody",
-        "groupName": null,
-        "nameOverride": null,
-        "schema": "HTTPValidationError",
-        "type": "reference",
-      },
-    },
-  },
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
+    "HTTPValidationError",
     "PhoneNumberPage",
     "PhoneNumber",
     "CallPage",
@@ -2730,7 +3041,6 @@ exports[`open api parser vocode parse open api 1`] = `
     "PlanType",
     "EventType",
     "HTTPMethod",
-    "HTTPValidationError",
   ],
   "schemas": {
     "ActionPage": {

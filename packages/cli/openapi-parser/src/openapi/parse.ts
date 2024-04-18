@@ -48,7 +48,6 @@ export async function parse({
         webhooks: [],
         channel: [],
         schemas: {},
-        errors: {},
         variables: {},
         nonRequestReferencedSchemas: new Set(),
         securitySchemes: {},
@@ -129,10 +128,6 @@ function merge(
         schemas: {
             ...ir1.schemas,
             ...ir2.schemas
-        },
-        errors: {
-            ...ir1.errors,
-            ...ir2.errors
         },
         variables: {
             ...ir1.variables,

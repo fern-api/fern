@@ -10,7 +10,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Get details for a linked account.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -160,7 +160,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns the account token for the end user with the provided public token.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -334,7 +334,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a list of models and actions available for an account.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -562,7 +562,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a list of \`BankInfo\` objects.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -1166,7 +1166,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a \`BankInfo\` object with the given \`id\`.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -1483,7 +1483,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a list of \`Benefit\` objects.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -1934,7 +1934,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a \`Benefit\` object with the given \`id\`.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -2215,7 +2215,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a list of \`Company\` objects.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -2584,7 +2584,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a \`Company\` object with the given \`id\`.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -2819,7 +2819,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Delete a linked account.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -2886,7 +2886,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a list of \`EmployeePayrollRun\` objects.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -3555,7 +3555,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns an \`EmployeePayrollRun\` object with the given \`id\`.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -4109,7 +4109,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a list of \`Employee\` objects.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -8545,7 +8545,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Creates an \`Employee\` object with the given values.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -9124,7 +9124,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns an \`Employee\` object with the given \`id\`.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -13054,7 +13054,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Ignores a specific row based on the \`model_id\` in the url. These records will have their properties set to null, and will not be updated in future syncs. The "reason" and "message" fields in the request body will be stored for audit purposes.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -13170,7 +13170,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns metadata for \`Employee\` POSTs.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -13344,7 +13344,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a list of \`Employment\` objects.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -14282,7 +14282,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns an \`Employment\` object with the given \`id\`.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -15005,7 +15005,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Create a remote key.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -15095,7 +15095,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a list of \`Group\` objects.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -15538,7 +15538,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a \`Group\` object with the given \`id\`.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -15811,7 +15811,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Gets issues.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -16266,7 +16266,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Get a specific issue.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -16428,7 +16428,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Creates a link token to be used when linking a new end user.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -16548,7 +16548,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "List linked accounts for your organization.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -17175,7 +17175,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a list of \`Location\` objects.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -17633,7 +17633,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a \`Location\` object with the given \`id\`.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -17945,7 +17945,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Pull data from an endpoint not currently supported by Merge.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -18156,7 +18156,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a list of \`PayGroup\` objects.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -18518,7 +18518,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a \`PayGroup\` object with the given \`id\`.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -18734,7 +18734,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a list of \`PayrollRun\` objects.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -19407,7 +19407,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a \`PayrollRun\` object with the given \`id\`.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -19759,7 +19759,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Exchange remote keys.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -19849,7 +19849,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Get a linked account's selective syncs.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -19866,7 +19866,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
-          "name": "Employees that started on or after January 1st, 2022",
+          "name": null,
           "pathParameters": [],
           "queryParameters": [],
           "request": null,
@@ -19880,49 +19880,18 @@ exports[`open api parser merge parse open api 1`] = `
                     "value": [
                       {
                         "properties": {
-                          "common_model": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "hris.Employee",
-                            },
-                          },
                           "condition_schema_id": {
                             "type": "primitive",
                             "value": {
                               "type": "string",
-                              "value": "123e4567-e89b-12d3-a456-426655440000",
-                            },
-                          },
-                          "field_name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "start_date",
-                            },
-                          },
-                          "native_name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Started At",
+                              "value": "condition_schema_id",
                             },
                           },
                           "operator": {
                             "type": "primitive",
                             "value": {
                               "type": "string",
-                              "value": "GREATER_THAN_OR_EQUAL",
-                            },
-                          },
-                          "value": {
-                            "type": "unknown",
-                            "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string",
-                                "value": "2022-01-01T00:00:00Z",
-                              },
+                              "value": "operator",
                             },
                           },
                         },
@@ -19999,7 +19968,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Replace a linked account's selective syncs.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -20016,7 +19985,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
-          "name": "Employees that started on or after January 1st, 2022",
+          "name": null,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -20048,49 +20017,18 @@ exports[`open api parser merge parse open api 1`] = `
                     "value": [
                       {
                         "properties": {
-                          "common_model": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "hris.Employee",
-                            },
-                          },
                           "condition_schema_id": {
                             "type": "primitive",
                             "value": {
                               "type": "string",
-                              "value": "123e4567-e89b-12d3-a456-426655440000",
-                            },
-                          },
-                          "field_name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "start_date",
-                            },
-                          },
-                          "native_name": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Started At",
+                              "value": "condition_schema_id",
                             },
                           },
                           "operator": {
                             "type": "primitive",
                             "value": {
                               "type": "string",
-                              "value": "GREATER_THAN_OR_EQUAL",
-                            },
-                          },
-                          "value": {
-                            "type": "unknown",
-                            "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string",
-                                "value": "2022-01-01T00:00:00Z",
-                              },
+                              "value": "operator",
                             },
                           },
                         },
@@ -20179,7 +20117,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Get metadata for the conditions available to a linked account.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -20196,7 +20134,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
-          "name": "Employees that started on or after January 1st, 2022",
+          "name": null,
           "pathParameters": [],
           "queryParameters": [],
           "request": null,
@@ -20225,25 +20163,25 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "hris.Employee",
+                          "value": "common_model",
                         },
                       },
                       "condition_type": {
                         "type": "enum",
-                        "value": "DATE_TIME",
+                        "value": "BOOLEAN",
                       },
                       "field_name": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "start_date",
+                          "value": "field_name",
                         },
                       },
                       "id": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "123e4567-e89b-12d3-a456-426655440000",
+                          "value": "id",
                         },
                       },
                       "is_unique": {
@@ -20257,48 +20195,14 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "Started At",
+                          "value": "native_name",
                         },
                       },
                       "operators": {
                         "type": "array",
                         "value": [
                           {
-                            "properties": {
-                              "is_unique": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "boolean",
-                                  "value": true,
-                                },
-                              },
-                              "operator": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "GREATER_THAN_OR_EQUAL",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                          {
-                            "properties": {
-                              "is_unique": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "boolean",
-                                  "value": true,
-                                },
-                              },
-                              "operator": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "LESS_THAN_OR_EQUAL",
-                                },
-                              },
-                            },
+                            "properties": {},
                             "type": "object",
                           },
                         ],
@@ -20439,7 +20343,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Get syncing status. Possible values: \`DISABLED\`, \`DONE\`, \`FAILED\`, \`PARTIALLY_SYNCED\`, \`PAUSED\`, \`SYNCING\`",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -20636,7 +20540,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Force re-sync of all models. This is available for all organizations via the dashboard. Force re-sync is also available programmatically via API for monthly, quarterly, and highest sync frequency customers on the Core, Professional, or Enterprise plans. Doing so will consume a sync credit for the relevant linked account.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -20774,7 +20678,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a list of \`Team\` objects.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -21190,7 +21094,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a \`Team\` object with the given \`id\`.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -21436,7 +21340,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a list of \`TimeOff\` objects.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -22347,7 +22251,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Creates a \`TimeOff\` object with the given values.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -22764,7 +22668,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a list of \`TimeOffBalance\` objects.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -23337,7 +23241,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a \`TimeOffBalance\` object with the given \`id\`.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -23640,7 +23544,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a \`TimeOff\` object with the given \`id\`.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -24170,7 +24074,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns metadata for \`TimeOff\` POSTs.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -24344,7 +24248,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a list of \`WebhookReceiver\` objects.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -24460,7 +24364,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Creates a \`WebhookReceiver\` object with the given values.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -24590,7 +24494,6 @@ exports[`open api parser merge parse open api 1`] = `
       ],
     },
   ],
-  "errors": {},
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,

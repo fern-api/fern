@@ -10,7 +10,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       "authed": false,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [],
       "generatedRequestName": "UserGetStreamRequest",
       "headers": [],
@@ -102,7 +102,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       "authed": false,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -242,7 +242,6 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       "tags": [],
     },
   ],
-  "errors": {},
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,

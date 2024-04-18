@@ -10,7 +10,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       "authed": false,
       "availability": null,
       "description": "speech",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [],
       "generatedRequestName": "SpeechOperationRequest",
       "headers": [
@@ -170,7 +170,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       "authed": false,
       "availability": null,
       "description": "speech_stream",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -418,7 +418,6 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
       "tags": [],
     },
   ],
-  "errors": {},
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,

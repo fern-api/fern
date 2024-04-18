@@ -122,7 +122,7 @@ export function convertHttpOperation({
         generatedRequestName: getGeneratedTypeName(requestBreadcrumbs),
         request: convertedRequest,
         response: convertedResponse.value,
-        errorStatusCode: convertedResponse.errorStatusCodes,
+        errors: convertedResponse.errors,
         server: (operation.servers ?? []).map((server) => convertServer(server)),
         description: operation.description,
         authed: isEndpointAuthed(operation, document),

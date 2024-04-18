@@ -10,7 +10,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "authed": false,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [],
       "generatedRequestName": "UserStreamRequest",
       "headers": [],
@@ -102,7 +102,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "authed": false,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -228,7 +228,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "authed": false,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [],
       "generatedRequestName": "UserV2StreamRequest",
       "headers": [],
@@ -320,7 +320,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "authed": false,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -460,7 +460,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "authed": false,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [],
       "generatedRequestName": "UserV3StreamRequest",
       "headers": [],
@@ -626,7 +626,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "authed": false,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -806,7 +806,6 @@ exports[`open api parser streaming parse open api 1`] = `
       "tags": [],
     },
   ],
-  "errors": {},
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,

@@ -7,9 +7,9 @@ types:
     properties:
       name: optional<string>
       value: unknown
-    
-  WebsocketHandshakeWithExample: 
-    properties: 
+
+  WebsocketHandshakeWithExample:
+    properties:
       queryParameters: list<QueryParameterWithExample>
       headers: list<HeaderWithExample>
 
@@ -43,13 +43,26 @@ types:
           Populated by `x-request-name` on a path object.
       request: optional<RequestWithExample>
       response: optional<ResponseWithExample>
-      errorStatusCode: list<commons.StatusCode>
+      errors:
+        type: map<commons.StatusCode, HttpErrorWithExample>
+        docs: |
+          Expected error status codes for this endpoint, and their corresponding schema and examples.
+          SDK generators will only read the StatusCodes. Docs generators will read the HttpError schema.
       server: list<commons.Server>
       examples:
         type: list<finalIr.EndpointExample>
         docs: |
           Populated by `x-fern-examples` on a path object.
           Also migrated from `x-readme.code-samples` if present.
+
+  HttpErrorWithExample:
+    extends:
+      - commons.WithDescription
+      - commons.WithName
+    properties:
+      statusCode: commons.StatusCode
+      schema: SchemaWithExample
+      fullExamples: optional<list<NamedFullExample>>
 
   RequestWithExample:
     union:

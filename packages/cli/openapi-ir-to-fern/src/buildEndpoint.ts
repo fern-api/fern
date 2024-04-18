@@ -185,8 +185,8 @@ export function buildEndpoint({
         convertedEndpoint.availability = "deprecated";
     }
 
-    endpoint.errorStatusCode.forEach((statusCode) => {
-        const errorName = errors[statusCode]?.generatedName;
+    Object.keys(endpoint.errors).forEach((statusCode) => {
+        const errorName = errors[parseInt(statusCode)]?.generatedName;
         if (errorName != null) {
             if (convertedEndpoint.errors == null) {
                 convertedEndpoint.errors = [];

@@ -34,8 +34,9 @@ export const Endpoint: core.serialization.ObjectSchema<serializers.Endpoint.Raw,
             requestNameOverride: core.serialization.string().optional(),
             request: core.serialization.lazy(async () => (await import("../../..")).Request).optional(),
             response: core.serialization.lazy(async () => (await import("../../..")).Response).optional(),
-            errorStatusCode: core.serialization.list(
-                core.serialization.lazy(async () => (await import("../../..")).StatusCode)
+            errors: core.serialization.record(
+                core.serialization.lazy(async () => (await import("../../..")).StatusCode),
+                core.serialization.lazyObject(async () => (await import("../../..")).HttpError)
             ),
             server: core.serialization.list(
                 core.serialization.lazyObject(async () => (await import("../../..")).Server)
@@ -65,7 +66,7 @@ export declare namespace Endpoint {
         requestNameOverride?: string | null;
         request?: serializers.Request.Raw | null;
         response?: serializers.Response.Raw | null;
-        errorStatusCode: serializers.StatusCode.Raw[];
+        errors: Record<serializers.StatusCode.Raw, serializers.HttpError.Raw>;
         server: serializers.Server.Raw[];
         examples: serializers.EndpointExample.Raw[];
     }

@@ -10,7 +10,7 @@ exports[`open api parser hume parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Sort and filter jobs.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -201,7 +201,7 @@ exports[`open api parser hume parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Start a new batch job.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -276,7 +276,7 @@ exports[`open api parser hume parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Get the JSON predictions of a completed job.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -364,7 +364,7 @@ exports[`open api parser hume parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Get the artifacts ZIP of a completed job.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [],
       "generatedRequestName": "GetJobArtifactsRequest",
       "headers": [],
@@ -410,7 +410,7 @@ exports[`open api parser hume parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Get the request details and state of a given job.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [],
       "generatedRequestName": "GetJobRequest",
       "headers": [],
@@ -461,7 +461,6 @@ exports[`open api parser hume parse open api 1`] = `
       ],
     },
   ],
-  "errors": {},
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,

@@ -10,7 +10,7 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
       "authed": false,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -156,7 +156,6 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
       "tags": [],
     },
   ],
-  "errors": {},
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,

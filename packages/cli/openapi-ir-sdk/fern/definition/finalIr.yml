@@ -8,9 +8,9 @@ types:
       title: optional<string>
       description: optional<string>
       servers: list<commons.Server>
-      groups: 
+      groups:
         docs: |
-          Top level group information populated through `x-fern-groups`. 
+          Top level group information populated through `x-fern-groups`.
         type: map<string, SdkGroupInfo>
       tags: Tags
       hasEndpointsMarkedInternal: boolean
@@ -18,7 +18,6 @@ types:
       webhooks: list<Webhook>
       channel: list<WebsocketChannel>
       schemas: map<commons.SchemaId, Schema>
-      errors: map<commons.StatusCode, HttpError>
       variables: map<string, PrimitiveSchema>
       nonRequestReferencedSchemas:
         type: set<commons.SchemaId>
@@ -26,8 +25,8 @@ types:
       securitySchemes: map<commons.SecuritySchemeId, commons.SecurityScheme>
       globalHeaders: optional<list<GlobalHeader>>
 
-  SdkGroupInfo: 
-    properties: 
+  SdkGroupInfo:
+    properties:
       summary: optional<string>
       description: optional<string>
 
@@ -50,6 +49,7 @@ types:
       - commons.WithName
     properties:
       schema: optional<Schema>
+      examples: optional<list<ErrorExample>>
 
   Webhook:
     extends: commons.WithDescription
@@ -139,7 +139,11 @@ types:
           Populated by `x-request-name` on a path object.
       request: optional<Request>
       response: optional<Response>
-      errorStatusCode: list<commons.StatusCode>
+      errors:
+        type: map<commons.StatusCode, HttpError>
+        docs: |
+          Expected error status codes for this endpoint, and their corresponding schema and examples.
+          SDK generators will only read the StatusCodes. Docs generators will read the HttpError schema.
       server: list<commons.Server>
       examples: list<EndpointExample>
 
@@ -231,6 +235,12 @@ types:
     properties:
       name: string
       value: example.FullExample
+
+  ErrorExample:
+    properties:
+      name: optional<string>
+      description: optional<string>
+      example: example.FullExample
 
   EndpointSdkName:
     properties:
