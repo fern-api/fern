@@ -1,4 +1,4 @@
 name: ir
 docs: |
- Adds the concept of a text-response example, this is meant to reflect responses of form text or `text/plain`
- as opposed to JSON strings.
+ Adds the concept of an OAuth scheme (starting with the client-credentials flow)
+ to the API definition.

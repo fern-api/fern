@@ -11,6 +11,7 @@ export const AuthScheme: core.serialization.Schema<serializers.AuthScheme.Raw, F
         bearer: core.serialization.lazyObject(async () => (await import("../../..")).BearerAuthScheme),
         basic: core.serialization.lazyObject(async () => (await import("../../..")).BasicAuthScheme),
         header: core.serialization.lazyObject(async () => (await import("../../..")).HeaderAuthScheme),
+        oauth: core.serialization.lazyObject(async () => (await import("../../..")).OAuthScheme),
     })
     .transform<FernIr.AuthScheme>({
         transform: (value) => {
@@ -21,6 +22,8 @@ export const AuthScheme: core.serialization.Schema<serializers.AuthScheme.Raw, F
                     return FernIr.AuthScheme.basic(value);
                 case "header":
                     return FernIr.AuthScheme.header(value);
+                case "oauth":
+                    return FernIr.AuthScheme.oauth(value);
                 default:
                     return value as FernIr.AuthScheme;
             }
@@ -29,7 +32,7 @@ export const AuthScheme: core.serialization.Schema<serializers.AuthScheme.Raw, F
     });
 
 export declare namespace AuthScheme {
-    type Raw = AuthScheme.Bearer | AuthScheme.Basic | AuthScheme.Header;
+    type Raw = AuthScheme.Bearer | AuthScheme.Basic | AuthScheme.Header | AuthScheme.Oauth;
 
     interface Bearer extends serializers.BearerAuthScheme.Raw {
         _type: "bearer";
@@ -41,5 +44,9 @@ export declare namespace AuthScheme {
 
     interface Header extends serializers.HeaderAuthScheme.Raw {
         _type: "header";
+    }
+
+    interface Oauth extends serializers.OAuthScheme.Raw {
+        _type: "oauth";
     }
 }

@@ -11,12 +11,12 @@ export const OffsetPagination: core.serialization.ObjectSchema<
     FernIr.OffsetPagination
 > = core.serialization.objectWithoutOptionalProperties({
     page: core.serialization.lazyObject(async () => (await import("../../..")).QueryParameter),
-    results: core.serialization.lazyObject(async () => (await import("../../..")).PaginationProperty),
+    results: core.serialization.lazyObject(async () => (await import("../../..")).ResponseProperty),
 });
 
 export declare namespace OffsetPagination {
     interface Raw {
         page: serializers.QueryParameter.Raw;
-        results: serializers.PaginationProperty.Raw;
+        results: serializers.ResponseProperty.Raw;
     }
 }
