@@ -4,9 +4,9 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as SeedTrace from "../../..";
+import * as SeedTrace from "../../../index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Homepage {
     interface Options {

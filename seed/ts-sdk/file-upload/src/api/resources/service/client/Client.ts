@@ -4,9 +4,9 @@
 
 import * as core from "../../../../core";
 import * as fs from "fs";
-import * as SeedFileUpload from "../../..";
+import * as SeedFileUpload from "../../../index";
 import { default as FormData } from "form-data";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 import urlJoin from "url-join";
 
 export declare namespace Service {

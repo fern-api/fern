@@ -4,7 +4,7 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as SeedTrace from "../../..";
+import * as SeedTrace from "../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Submission {

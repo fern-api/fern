@@ -3,9 +3,9 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedAudiences from "../../..";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as SeedAudiences from "../../../index";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Foo {
     interface Options {

@@ -3,8 +3,8 @@
  */
 
 import * as core from "../../../../core";
-import * as serializers from "../../..";
-import * as SeedExamples from "../../../../api";
+import * as serializers from "../../../index";
+import * as SeedExamples from "../../../../api/index";
 
 const _Base = core.serialization.object({
     extra: core.serialization.record(core.serialization.string(), core.serialization.string()),

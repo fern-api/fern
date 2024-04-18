@@ -3,8 +3,8 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedNurseryApi from "../../..";
-import * as errors from "../../../../errors";
+import * as SeedNurseryApi from "../../../index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Package {
     interface Options {

@@ -4,7 +4,7 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as SeedTrace from "../../..";
+import * as SeedTrace from "../../../index";
 import { Problem } from "../resources/problem/client/Client";
 import { V3 } from "../resources/v3/client/Client";
 

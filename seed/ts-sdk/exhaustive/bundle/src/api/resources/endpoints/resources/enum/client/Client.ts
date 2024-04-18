@@ -3,8 +3,8 @@
  */
 
 import * as core from "../../../../../../core";
-import * as Fiddle from "../../../../..";
-import * as serializers from "../../../../../../serialization";
+import * as Fiddle from "../../../../../index";
+import * as serializers from "../../../../../../serialization/index";
 import urlJoin from "url-join";
 
 export declare namespace Enum {

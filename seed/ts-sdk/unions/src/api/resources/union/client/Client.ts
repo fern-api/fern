@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedUnions from "../../..";
+import * as SeedUnions from "../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Union {
     interface Options {

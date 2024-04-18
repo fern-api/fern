@@ -3,7 +3,7 @@
  */
 
 import * as core from "./core";
-import * as errors from "./errors";
+import * as errors from "./errors/index";
 import { A } from "./api/resources/a/client/Client";
 import { Folder } from "./api/resources/folder/client/Client";
 
