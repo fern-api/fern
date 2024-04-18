@@ -1,4 +1,5 @@
 import {
+    ExampleEndpointCall,
     FileProperty,
     HttpEndpoint,
     HttpRequestBody,
@@ -7,6 +8,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import {
     Fetcher,
+    GetReferenceOpts,
     getTextOfTsNode,
     JavaScriptRuntime,
     PackageId,
@@ -91,8 +93,57 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         }
     }
 
-    public getExampleEndpointParameters(): ts.Expression[] | undefined {
-        return undefined;
+    public getExampleEndpointParameters({
+        context,
+        example,
+        opts
+    }: {
+        context: SdkContext;
+        example: ExampleEndpointCall;
+        opts: GetReferenceOpts;
+    }): ts.Expression[] | undefined {
+        const exampleParameters = [...example.servicePathParameters, ...example.endpointPathParameters];
+        const result: ts.Expression[] = [];
+        for (const property of this.requestBody.properties) {
+            if (property.type === "file") {
+                result.push(
+                    ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier("fs"),
+                            ts.factory.createIdentifier("createReadStream")
+                        ),
+                        undefined,
+                        [ts.factory.createStringLiteral("/path/to/your/file")]
+                    )
+                );
+            }
+        }
+        for (const pathParameter of getPathParametersForEndpointSignature(this.service, this.endpoint)) {
+            const exampleParameter = exampleParameters.find(
+                (param) => param.name.originalName === pathParameter.name.originalName
+            );
+            if (exampleParameter == null) {
+                result.push(ts.factory.createIdentifier("undefined"));
+            } else {
+                const generatedExample = context.type.getGeneratedExample(exampleParameter.value);
+                result.push(generatedExample.build(context, opts));
+            }
+        }
+        if (this.requestParameter != null) {
+            const requestParameterExample = this.requestParameter.generateExample({ context, example, opts });
+            if (
+                requestParameterExample != null &&
+                getTextOfTsNode(requestParameterExample) === "{}" &&
+                this.requestParameter.isOptional({ context })
+            ) {
+                // pass
+            } else if (requestParameterExample != null) {
+                result.push(requestParameterExample);
+            } else if (!this.requestParameter.isOptional({ context })) {
+                return undefined;
+            }
+        }
+        return result;
     }
 
     public getEndpointParameters(context: SdkContext): OptionalKind<ParameterDeclarationStructure>[] {
