@@ -162,7 +162,7 @@ export class BasicAuth {
         }
     }
 
-    protected async _getAuthorizationHeader(): Promise<string> {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         return core.BasicAuth.toAuthorizationHeader({
             username: (await core.Supplier.get(this._options.username)) ?? process?.env["USERNAME"],
             password: (await core.Supplier.get(this._options.password)) ?? process?.env["PASSWORD"],
