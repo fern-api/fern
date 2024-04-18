@@ -14,7 +14,7 @@ export const HttpResponse: core.serialization.Schema<serializers.HttpResponse.Ra
             }),
             fileDownload: core.serialization.lazyObject(async () => (await import("../../..")).FileDownloadResponse),
             text: core.serialization.lazyObject(async () => (await import("../../..")).TextResponse),
-            streaming: core.serialization.lazyObject(async () => (await import("../../..")).StreamingResponse),
+            streaming: core.serialization.lazy(async () => (await import("../../..")).StreamingResponse),
         })
         .transform<FernIr.HttpResponse>({
             transform: (value) => {
