@@ -405,11 +405,23 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         }
 
         if (this.shouldGenerateAuthorizationHeaderHelperMethod()) {
+            const returnType = this.intermediateRepresentation.sdkConfig.isAuthMandatory
+                ? ts.factory.createTypeReferenceNode("Promise", [
+                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                  ])
+                : ts.factory.createTypeReferenceNode("Promise", [
+                      ts.factory.createUnionTypeNode([
+                          ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                          ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                      ])
+                  ]);
+
             serviceClass.addMethod({
                 scope: Scope.Protected,
                 isAsync: true,
                 name: GeneratedSdkClientClassImpl.AUTHORIZATION_HEADER_HELPER_METHOD_NAME,
-                statements: this.getAuthorizationHeaderStatements(context).map(getTextOfTsNode)
+                statements: this.getAuthorizationHeaderStatements(context).map(getTextOfTsNode),
+                returnType: getTextOfTsNode(returnType)
             });
         }
 
