@@ -326,7 +326,7 @@ The parameter should map to a JSON encoded list of strings.
         "503": {
           "description": "Service Unavailable",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_three",
@@ -337,7 +337,7 @@ The parameter should map to a JSON encoded list of strings.
         "504": {
           "description": "Gateway Timeout",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_four",
@@ -464,7 +464,7 @@ The parameter should map to a JSON encoded list of strings.
         "503": {
           "description": "Service Unavailable",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_three",
@@ -475,7 +475,7 @@ The parameter should map to a JSON encoded list of strings.
         "504": {
           "description": "Gateway Timeout",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_four",
@@ -932,7 +932,7 @@ The parameter should map to a JSON encoded list of strings.
         "503": {
           "description": "Service Unavailable",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_three",
@@ -943,7 +943,7 @@ The parameter should map to a JSON encoded list of strings.
         "504": {
           "description": "Gateway Timeout",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_four",
@@ -1966,7 +1966,7 @@ The parameter should map to a JSON encoded list of strings.
         "503": {
           "description": "Service Unavailable",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_three",
@@ -1977,7 +1977,7 @@ The parameter should map to a JSON encoded list of strings.
         "504": {
           "description": "Gateway Timeout",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_four",
@@ -3006,7 +3006,7 @@ The parameter should map to a JSON encoded list of strings.
         "503": {
           "description": "Service Unavailable",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_three",
@@ -3017,7 +3017,7 @@ The parameter should map to a JSON encoded list of strings.
         "504": {
           "description": "Gateway Timeout",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_four",
@@ -4046,7 +4046,7 @@ The parameter should map to a JSON encoded list of strings.
         "503": {
           "description": "Service Unavailable",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_three",
@@ -4057,7 +4057,7 @@ The parameter should map to a JSON encoded list of strings.
         "504": {
           "description": "Gateway Timeout",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_four",
@@ -4282,7 +4282,7 @@ size of the lower 48 States has shrunk by 40% but this understates
         "503": {
           "description": "Service Unavailable",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_three",
@@ -4293,7 +4293,7 @@ size of the lower 48 States has shrunk by 40% but this understates
         "504": {
           "description": "Gateway Timeout",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_four",
@@ -4559,7 +4559,7 @@ size of the lower 48 States has shrunk by 40% but this understates
         "503": {
           "description": "Service Unavailable",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_three",
@@ -4570,7 +4570,7 @@ size of the lower 48 States has shrunk by 40% but this understates
         "504": {
           "description": "Gateway Timeout",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_four",
@@ -4836,7 +4836,7 @@ size of the lower 48 States has shrunk by 40% but this understates
         "503": {
           "description": "Service Unavailable",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_three",
@@ -4847,7 +4847,7 @@ size of the lower 48 States has shrunk by 40% but this understates
         "504": {
           "description": "Gateway Timeout",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_four",
@@ -5014,7 +5014,7 @@ size of the lower 48 States has shrunk by 40% but this understates
         "503": {
           "description": "Service Unavailable",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_three",
@@ -5025,7 +5025,7 @@ size of the lower 48 States has shrunk by 40% but this understates
         "504": {
           "description": "Gateway Timeout",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_four",
@@ -5208,7 +5208,7 @@ size of the lower 48 States has shrunk by 40% but this understates
         "503": {
           "description": "Service Unavailable",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_three",
@@ -5219,7 +5219,7 @@ size of the lower 48 States has shrunk by 40% but this understates
         "504": {
           "description": "Gateway Timeout",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_four",
@@ -5389,7 +5389,7 @@ size of the lower 48 States has shrunk by 40% but this understates
         "503": {
           "description": "Service Unavailable",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_three",
@@ -5400,7 +5400,7 @@ size of the lower 48 States has shrunk by 40% but this understates
         "504": {
           "description": "Gateway Timeout",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_four",
@@ -5582,7 +5582,7 @@ size of the lower 48 States has shrunk by 40% but this understates
         "503": {
           "description": "Service Unavailable",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_three",
@@ -5593,7 +5593,7 @@ size of the lower 48 States has shrunk by 40% but this understates
         "504": {
           "description": "Gateway Timeout",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_four",
@@ -5809,7 +5809,7 @@ size of the lower 48 States has shrunk by 40% but this understates
         "503": {
           "description": "Service Unavailable",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_three",
@@ -5820,7 +5820,7 @@ size of the lower 48 States has shrunk by 40% but this understates
         "504": {
           "description": "Gateway Timeout",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_four",
@@ -6002,7 +6002,7 @@ size of the lower 48 States has shrunk by 40% but this understates
         "503": {
           "description": "Service Unavailable",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_three",
@@ -6013,7 +6013,7 @@ size of the lower 48 States has shrunk by 40% but this understates
         "504": {
           "description": "Gateway Timeout",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_four",
@@ -6204,7 +6204,7 @@ The LLM response data, as well as any context provided in the original request w
         "503": {
           "description": "Service Unavailable",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_three",
@@ -6215,7 +6215,7 @@ The LLM response data, as well as any context provided in the original request w
         "504": {
           "description": "Gateway Timeout",
           "examples": null,
-          "generatedName": "UnknownError",
+          "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
             "generatedName": "five_hundred_four",

@@ -1003,7 +1003,7 @@ This error response may have one of the following \`type\` values:
         "503": {
           "description": "Service Unavailable. Could not fetch the account balance from the banking core.",
           "examples": [],
-          "generatedName": "UnknownError",
+          "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
             "description": null,
@@ -5218,7 +5218,7 @@ This error response may have one of the following \`type\` values:
   Remediation: Wait a few minutes and try again, or gracefully fail the client request.
 ",
           "examples": [],
-          "generatedName": "UnknownError",
+          "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
             "description": null,
