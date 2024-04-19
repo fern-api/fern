@@ -1,0 +1,127 @@
+[
+    {
+        "sdk": {
+            "package": "fern_unions",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/{id}",
+            "method": "GET"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedUnions\n\nclient = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.union.get(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "id=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "PATH",
+                                    "path": "id"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_unions",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/",
+            "method": "PATCH"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedUnions\n\nclient = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.union.update(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "request=$FERN_INPUT",
+                            "discriminantField": "type",
+                            "members": {
+                                "circle": {
+                                    "imports": [
+                                        "from .shape import Shape"
+                                    ],
+                                    "isOptional": true,
+                                    "templateString": "request=from seed import Shape_Circle\n\nShape_Circle($FERN_INPUT, )\n",
+                                    "templateInputs": [
+                                        {
+                                            "type": "template",
+                                            "value": {
+                                                "imports": [],
+                                                "isOptional": true,
+                                                "templateString": "radius=$FERN_INPUT",
+                                                "templateInputs": [
+                                                    {
+                                                        "location": "BODY",
+                                                        "path": "radius"
+                                                    }
+                                                ],
+                                                "type": "generic"
+                                            }
+                                        }
+                                    ],
+                                    "type": "generic"
+                                },
+                                "square": {
+                                    "imports": [
+                                        "from .shape import Shape"
+                                    ],
+                                    "isOptional": true,
+                                    "templateString": "request=from seed import Shape_Square\n\nShape_Square($FERN_INPUT, )\n",
+                                    "templateInputs": [
+                                        {
+                                            "type": "template",
+                                            "value": {
+                                                "imports": [],
+                                                "isOptional": true,
+                                                "templateString": "length=$FERN_INPUT",
+                                                "templateInputs": [
+                                                    {
+                                                        "location": "BODY",
+                                                        "path": "length"
+                                                    }
+                                                ],
+                                                "type": "generic"
+                                            }
+                                        }
+                                    ],
+                                    "type": "generic"
+                                }
+                            },
+                            "type": "discriminatedUnion"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

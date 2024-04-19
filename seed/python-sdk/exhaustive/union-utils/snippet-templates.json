@@ -1,0 +1,3407 @@
+[
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/container/list-of-primitives",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.container.get_and_return_list_of_primitives(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "containerTemplateString": "request=[$FERN_INPUT]",
+                            "delimiter": ", ",
+                            "innerTemplate": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "BODY",
+                                        "path": null
+                                    }
+                                ],
+                                "type": "generic"
+                            },
+                            "templateInput": {
+                                "location": "BODY",
+                                "path": null
+                            },
+                            "type": "iterable"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/container/list-of-objects",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.container.get_and_return_list_of_objects(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "containerTemplateString": "request=[$FERN_INPUT]",
+                            "delimiter": ", ",
+                            "innerTemplate": {
+                                "imports": [
+                                    "from .object_with_required_field import ObjectWithRequiredField"
+                                ],
+                                "isOptional": true,
+                                "templateString": "ObjectWithRequiredField($FERN_INPUT)",
+                                "templateInputs": [
+                                    {
+                                        "type": "template",
+                                        "value": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "string=$FERN_INPUT",
+                                            "templateInputs": [
+                                                {
+                                                    "location": "BODY",
+                                                    "path": "string"
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        }
+                                    }
+                                ],
+                                "inputDelimiter": ",\n",
+                                "type": "generic"
+                            },
+                            "templateInput": {
+                                "location": "BODY",
+                                "path": null
+                            },
+                            "type": "iterable"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/container/set-of-primitives",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.container.get_and_return_set_of_primitives(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "containerTemplateString": "request={$FERN_INPUT}",
+                            "delimiter": ", ",
+                            "innerTemplate": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "BODY",
+                                        "path": null
+                                    }
+                                ],
+                                "type": "generic"
+                            },
+                            "templateInput": {
+                                "location": "BODY",
+                                "path": null
+                            },
+                            "type": "iterable"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/container/set-of-objects",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.container.get_and_return_set_of_objects(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "containerTemplateString": "request={$FERN_INPUT}",
+                            "delimiter": ", ",
+                            "innerTemplate": {
+                                "imports": [
+                                    "from .object_with_required_field import ObjectWithRequiredField"
+                                ],
+                                "isOptional": true,
+                                "templateString": "ObjectWithRequiredField($FERN_INPUT)",
+                                "templateInputs": [
+                                    {
+                                        "type": "template",
+                                        "value": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "string=$FERN_INPUT",
+                                            "templateInputs": [
+                                                {
+                                                    "location": "BODY",
+                                                    "path": "string"
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        }
+                                    }
+                                ],
+                                "inputDelimiter": ",\n",
+                                "type": "generic"
+                            },
+                            "templateInput": {
+                                "location": "BODY",
+                                "path": null
+                            },
+                            "type": "iterable"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/container/map-prim-to-prim",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.container.get_and_return_map_prim_to_prim(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "containerTemplateString": "request={$FERN_INPUT}",
+                            "delimiter": ", ",
+                            "keyTemplate": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "BODY",
+                                        "path": null
+                                    }
+                                ],
+                                "type": "generic"
+                            },
+                            "valueTemplate": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "BODY",
+                                        "path": null
+                                    }
+                                ],
+                                "type": "generic"
+                            },
+                            "keyValueSeparator": ": ",
+                            "templateInput": {
+                                "location": "BODY",
+                                "path": null
+                            },
+                            "type": "dict"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/container/map-prim-to-object",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.container.get_and_return_map_of_prim_to_object(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "containerTemplateString": "request={$FERN_INPUT}",
+                            "delimiter": ", ",
+                            "keyTemplate": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "BODY",
+                                        "path": null
+                                    }
+                                ],
+                                "type": "generic"
+                            },
+                            "valueTemplate": {
+                                "imports": [
+                                    "from .object_with_required_field import ObjectWithRequiredField"
+                                ],
+                                "isOptional": true,
+                                "templateString": "ObjectWithRequiredField($FERN_INPUT)",
+                                "templateInputs": [
+                                    {
+                                        "type": "template",
+                                        "value": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "string=$FERN_INPUT",
+                                            "templateInputs": [
+                                                {
+                                                    "location": "BODY",
+                                                    "path": "string"
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        }
+                                    }
+                                ],
+                                "inputDelimiter": ",\n",
+                                "type": "generic"
+                            },
+                            "keyValueSeparator": ": ",
+                            "templateInput": {
+                                "location": "BODY",
+                                "path": null
+                            },
+                            "type": "dict"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/container/opt-objects",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.container.get_and_return_optional(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [
+                                "from .object_with_required_field import ObjectWithRequiredField"
+                            ],
+                            "isOptional": true,
+                            "templateString": "request=ObjectWithRequiredField(\n$FERN_INPUT\n)",
+                            "templateInputs": [
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "string=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "string"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                }
+                            ],
+                            "inputDelimiter": ",\n",
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/enum",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.enum.get_and_return_enum(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "request=$FERN_INPUT",
+                            "values": {
+                                "SUNNY": "\"SUNNY\"\n",
+                                "CLOUDY": "\"CLOUDY\"\n",
+                                "RAINING": "\"RAINING\"\n",
+                                "SNOWING": "\"SNOWING\"\n"
+                            },
+                            "templateInput": {
+                                "location": "BODY",
+                                "path": null
+                            },
+                            "type": "enum"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/http-methods/{id}",
+            "method": "GET"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.http_methods.test_get(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "id=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "PATH",
+                                    "path": "id"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/http-methods",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.http_methods.test_post(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [
+                                "from .object_with_required_field import ObjectWithRequiredField"
+                            ],
+                            "isOptional": true,
+                            "templateString": "request=ObjectWithRequiredField(\n$FERN_INPUT\n)",
+                            "templateInputs": [
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "string=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "string"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                }
+                            ],
+                            "inputDelimiter": ",\n",
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/http-methods/{id}",
+            "method": "PUT"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.http_methods.test_put(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "id=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "PATH",
+                                    "path": "id"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [
+                                "from .object_with_required_field import ObjectWithRequiredField"
+                            ],
+                            "isOptional": true,
+                            "templateString": "request=ObjectWithRequiredField(\n$FERN_INPUT\n)",
+                            "templateInputs": [
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "string=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "string"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                }
+                            ],
+                            "inputDelimiter": ",\n",
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/http-methods/{id}",
+            "method": "PATCH"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.http_methods.test_patch(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "id=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "PATH",
+                                    "path": "id"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [
+                                "from .object_with_optional_field import ObjectWithOptionalField"
+                            ],
+                            "isOptional": true,
+                            "templateString": "request=ObjectWithOptionalField(\n$FERN_INPUT\n)",
+                            "templateInputs": [
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "string=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "string"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "integer=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "integer"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "long_=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "long"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "double=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "double"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "bool_=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "bool"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "datetime=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "datetime"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "date=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "date"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "uuid_=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "uuid"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "base_64=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "base64"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "containerTemplateString": "list_=[$FERN_INPUT]",
+                                        "delimiter": ", ",
+                                        "innerTemplate": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "templateInputs": [
+                                                {
+                                                    "location": "BODY",
+                                                    "path": null
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        },
+                                        "templateInput": {
+                                            "location": "BODY",
+                                            "path": "list"
+                                        },
+                                        "type": "iterable"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "containerTemplateString": "set_={$FERN_INPUT}",
+                                        "delimiter": ", ",
+                                        "innerTemplate": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "templateInputs": [
+                                                {
+                                                    "location": "BODY",
+                                                    "path": null
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        },
+                                        "templateInput": {
+                                            "location": "BODY",
+                                            "path": "set"
+                                        },
+                                        "type": "iterable"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "containerTemplateString": "map_={$FERN_INPUT}",
+                                        "delimiter": ", ",
+                                        "keyTemplate": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "templateInputs": [
+                                                {
+                                                    "location": "BODY",
+                                                    "path": null
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        },
+                                        "valueTemplate": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "templateInputs": [
+                                                {
+                                                    "location": "BODY",
+                                                    "path": null
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        },
+                                        "keyValueSeparator": ": ",
+                                        "templateInput": {
+                                            "location": "BODY",
+                                            "path": "map"
+                                        },
+                                        "type": "dict"
+                                    }
+                                }
+                            ],
+                            "inputDelimiter": ",\n",
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/http-methods/{id}",
+            "method": "DELETE"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.http_methods.test_delete(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "id=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "PATH",
+                                    "path": "id"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/object/get-and-return-with-optional-field",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.object.get_and_return_with_optional_field(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [
+                                "from .object_with_optional_field import ObjectWithOptionalField"
+                            ],
+                            "isOptional": true,
+                            "templateString": "request=ObjectWithOptionalField(\n$FERN_INPUT\n)",
+                            "templateInputs": [
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "string=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "string"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "integer=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "integer"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "long_=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "long"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "double=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "double"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "bool_=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "bool"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "datetime=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "datetime"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "date=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "date"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "uuid_=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "uuid"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "base_64=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "base64"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "containerTemplateString": "list_=[$FERN_INPUT]",
+                                        "delimiter": ", ",
+                                        "innerTemplate": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "templateInputs": [
+                                                {
+                                                    "location": "BODY",
+                                                    "path": null
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        },
+                                        "templateInput": {
+                                            "location": "BODY",
+                                            "path": "list"
+                                        },
+                                        "type": "iterable"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "containerTemplateString": "set_={$FERN_INPUT}",
+                                        "delimiter": ", ",
+                                        "innerTemplate": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "templateInputs": [
+                                                {
+                                                    "location": "BODY",
+                                                    "path": null
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        },
+                                        "templateInput": {
+                                            "location": "BODY",
+                                            "path": "set"
+                                        },
+                                        "type": "iterable"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "containerTemplateString": "map_={$FERN_INPUT}",
+                                        "delimiter": ", ",
+                                        "keyTemplate": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "templateInputs": [
+                                                {
+                                                    "location": "BODY",
+                                                    "path": null
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        },
+                                        "valueTemplate": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "templateInputs": [
+                                                {
+                                                    "location": "BODY",
+                                                    "path": null
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        },
+                                        "keyValueSeparator": ": ",
+                                        "templateInput": {
+                                            "location": "BODY",
+                                            "path": "map"
+                                        },
+                                        "type": "dict"
+                                    }
+                                }
+                            ],
+                            "inputDelimiter": ",\n",
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/object/get-and-return-with-required-field",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.object.get_and_return_with_required_field(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [
+                                "from .object_with_required_field import ObjectWithRequiredField"
+                            ],
+                            "isOptional": true,
+                            "templateString": "request=ObjectWithRequiredField(\n$FERN_INPUT\n)",
+                            "templateInputs": [
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "string=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "string"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                }
+                            ],
+                            "inputDelimiter": ",\n",
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/object/get-and-return-with-map-of-map",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.object.get_and_return_with_map_of_map(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [
+                                "from .object_with_map_of_map import ObjectWithMapOfMap"
+                            ],
+                            "isOptional": true,
+                            "templateString": "request=ObjectWithMapOfMap(\n$FERN_INPUT\n)",
+                            "templateInputs": [
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "containerTemplateString": "map_={$FERN_INPUT}",
+                                        "delimiter": ", ",
+                                        "keyTemplate": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "templateInputs": [
+                                                {
+                                                    "location": "BODY",
+                                                    "path": null
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        },
+                                        "valueTemplate": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "containerTemplateString": "{$FERN_INPUT}",
+                                            "delimiter": ", ",
+                                            "keyTemplate": {
+                                                "imports": [],
+                                                "isOptional": true,
+                                                "templateString": "$FERN_INPUT",
+                                                "templateInputs": [
+                                                    {
+                                                        "location": "BODY",
+                                                        "path": null
+                                                    }
+                                                ],
+                                                "type": "generic"
+                                            },
+                                            "valueTemplate": {
+                                                "imports": [],
+                                                "isOptional": true,
+                                                "templateString": "$FERN_INPUT",
+                                                "templateInputs": [
+                                                    {
+                                                        "location": "BODY",
+                                                        "path": null
+                                                    }
+                                                ],
+                                                "type": "generic"
+                                            },
+                                            "keyValueSeparator": ": ",
+                                            "templateInput": {
+                                                "location": "BODY",
+                                                "path": null
+                                            },
+                                            "type": "dict"
+                                        },
+                                        "keyValueSeparator": ": ",
+                                        "templateInput": {
+                                            "location": "BODY",
+                                            "path": "map"
+                                        },
+                                        "type": "dict"
+                                    }
+                                }
+                            ],
+                            "inputDelimiter": ",\n",
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/object/get-and-return-nested-with-optional-field",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.object.get_and_return_nested_with_optional_field(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [
+                                "from .nested_object_with_optional_field import NestedObjectWithOptionalField"
+                            ],
+                            "isOptional": true,
+                            "templateString": "request=NestedObjectWithOptionalField(\n$FERN_INPUT\n)",
+                            "templateInputs": [
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "string=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "string"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [
+                                            "from .object_with_optional_field import ObjectWithOptionalField"
+                                        ],
+                                        "isOptional": true,
+                                        "templateString": "nested_object=ObjectWithOptionalField(\n$FERN_INPUT\n)",
+                                        "templateInputs": [
+                                            {
+                                                "type": "template",
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "templateString": "string=$FERN_INPUT",
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "string"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                }
+                                            },
+                                            {
+                                                "type": "template",
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "templateString": "integer=$FERN_INPUT",
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "integer"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                }
+                                            },
+                                            {
+                                                "type": "template",
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "templateString": "long_=$FERN_INPUT",
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "long"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                }
+                                            },
+                                            {
+                                                "type": "template",
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "templateString": "double=$FERN_INPUT",
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "double"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                }
+                                            },
+                                            {
+                                                "type": "template",
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "templateString": "bool_=$FERN_INPUT",
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "bool"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                }
+                                            },
+                                            {
+                                                "type": "template",
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "templateString": "datetime=$FERN_INPUT",
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "datetime"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                }
+                                            },
+                                            {
+                                                "type": "template",
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "templateString": "date=$FERN_INPUT",
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "date"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                }
+                                            },
+                                            {
+                                                "type": "template",
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "templateString": "uuid_=$FERN_INPUT",
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "uuid"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                }
+                                            },
+                                            {
+                                                "type": "template",
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "templateString": "base_64=$FERN_INPUT",
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "base64"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                }
+                                            },
+                                            {
+                                                "type": "template",
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "containerTemplateString": "list_=[$FERN_INPUT]",
+                                                    "delimiter": ", ",
+                                                    "innerTemplate": {
+                                                        "imports": [],
+                                                        "isOptional": true,
+                                                        "templateString": "$FERN_INPUT",
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "BODY",
+                                                                "path": null
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    },
+                                                    "templateInput": {
+                                                        "location": "BODY",
+                                                        "path": "list"
+                                                    },
+                                                    "type": "iterable"
+                                                }
+                                            },
+                                            {
+                                                "type": "template",
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "containerTemplateString": "set_={$FERN_INPUT}",
+                                                    "delimiter": ", ",
+                                                    "innerTemplate": {
+                                                        "imports": [],
+                                                        "isOptional": true,
+                                                        "templateString": "$FERN_INPUT",
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "BODY",
+                                                                "path": null
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    },
+                                                    "templateInput": {
+                                                        "location": "BODY",
+                                                        "path": "set"
+                                                    },
+                                                    "type": "iterable"
+                                                }
+                                            },
+                                            {
+                                                "type": "template",
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "containerTemplateString": "map_={$FERN_INPUT}",
+                                                    "delimiter": ", ",
+                                                    "keyTemplate": {
+                                                        "imports": [],
+                                                        "isOptional": true,
+                                                        "templateString": "$FERN_INPUT",
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "BODY",
+                                                                "path": null
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    },
+                                                    "valueTemplate": {
+                                                        "imports": [],
+                                                        "isOptional": true,
+                                                        "templateString": "$FERN_INPUT",
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "BODY",
+                                                                "path": null
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    },
+                                                    "keyValueSeparator": ": ",
+                                                    "templateInput": {
+                                                        "location": "BODY",
+                                                        "path": "map"
+                                                    },
+                                                    "type": "dict"
+                                                }
+                                            }
+                                        ],
+                                        "inputDelimiter": ",\n",
+                                        "type": "generic"
+                                    }
+                                }
+                            ],
+                            "inputDelimiter": ",\n",
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/object/get-and-return-nested-with-required-field",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.object.get_and_return_nested_with_required_field(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [
+                                "from .nested_object_with_required_field import NestedObjectWithRequiredField"
+                            ],
+                            "isOptional": true,
+                            "templateString": "request=NestedObjectWithRequiredField(\n$FERN_INPUT\n)",
+                            "templateInputs": [
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "string=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "string"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [
+                                            "from .object_with_optional_field import ObjectWithOptionalField"
+                                        ],
+                                        "isOptional": true,
+                                        "templateString": "nested_object=ObjectWithOptionalField(\n$FERN_INPUT\n)",
+                                        "templateInputs": [
+                                            {
+                                                "type": "template",
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "templateString": "string=$FERN_INPUT",
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "string"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                }
+                                            },
+                                            {
+                                                "type": "template",
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "templateString": "integer=$FERN_INPUT",
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "integer"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                }
+                                            },
+                                            {
+                                                "type": "template",
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "templateString": "long_=$FERN_INPUT",
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "long"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                }
+                                            },
+                                            {
+                                                "type": "template",
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "templateString": "double=$FERN_INPUT",
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "double"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                }
+                                            },
+                                            {
+                                                "type": "template",
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "templateString": "bool_=$FERN_INPUT",
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "bool"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                }
+                                            },
+                                            {
+                                                "type": "template",
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "templateString": "datetime=$FERN_INPUT",
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "datetime"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                }
+                                            },
+                                            {
+                                                "type": "template",
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "templateString": "date=$FERN_INPUT",
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "date"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                }
+                                            },
+                                            {
+                                                "type": "template",
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "templateString": "uuid_=$FERN_INPUT",
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "uuid"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                }
+                                            },
+                                            {
+                                                "type": "template",
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "templateString": "base_64=$FERN_INPUT",
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "base64"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                }
+                                            },
+                                            {
+                                                "type": "template",
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "containerTemplateString": "list_=[$FERN_INPUT]",
+                                                    "delimiter": ", ",
+                                                    "innerTemplate": {
+                                                        "imports": [],
+                                                        "isOptional": true,
+                                                        "templateString": "$FERN_INPUT",
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "BODY",
+                                                                "path": null
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    },
+                                                    "templateInput": {
+                                                        "location": "BODY",
+                                                        "path": "list"
+                                                    },
+                                                    "type": "iterable"
+                                                }
+                                            },
+                                            {
+                                                "type": "template",
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "containerTemplateString": "set_={$FERN_INPUT}",
+                                                    "delimiter": ", ",
+                                                    "innerTemplate": {
+                                                        "imports": [],
+                                                        "isOptional": true,
+                                                        "templateString": "$FERN_INPUT",
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "BODY",
+                                                                "path": null
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    },
+                                                    "templateInput": {
+                                                        "location": "BODY",
+                                                        "path": "set"
+                                                    },
+                                                    "type": "iterable"
+                                                }
+                                            },
+                                            {
+                                                "type": "template",
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "containerTemplateString": "map_={$FERN_INPUT}",
+                                                    "delimiter": ", ",
+                                                    "keyTemplate": {
+                                                        "imports": [],
+                                                        "isOptional": true,
+                                                        "templateString": "$FERN_INPUT",
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "BODY",
+                                                                "path": null
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    },
+                                                    "valueTemplate": {
+                                                        "imports": [],
+                                                        "isOptional": true,
+                                                        "templateString": "$FERN_INPUT",
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "BODY",
+                                                                "path": null
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    },
+                                                    "keyValueSeparator": ": ",
+                                                    "templateInput": {
+                                                        "location": "BODY",
+                                                        "path": "map"
+                                                    },
+                                                    "type": "dict"
+                                                }
+                                            }
+                                        ],
+                                        "inputDelimiter": ",\n",
+                                        "type": "generic"
+                                    }
+                                }
+                            ],
+                            "inputDelimiter": ",\n",
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/object/get-and-return-nested-with-required-field-list",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.object.get_and_return_nested_with_required_field_as_list(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "containerTemplateString": "request=[$FERN_INPUT]",
+                            "delimiter": ", ",
+                            "innerTemplate": {
+                                "imports": [
+                                    "from .nested_object_with_required_field import NestedObjectWithRequiredField"
+                                ],
+                                "isOptional": true,
+                                "templateString": "NestedObjectWithRequiredField($FERN_INPUT)",
+                                "templateInputs": [
+                                    {
+                                        "type": "template",
+                                        "value": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "string=$FERN_INPUT",
+                                            "templateInputs": [
+                                                {
+                                                    "location": "BODY",
+                                                    "path": "string"
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        }
+                                    },
+                                    {
+                                        "type": "template",
+                                        "value": {
+                                            "imports": [
+                                                "from .object_with_optional_field import ObjectWithOptionalField"
+                                            ],
+                                            "isOptional": true,
+                                            "templateString": "nested_object=ObjectWithOptionalField(\n$FERN_INPUT\n)",
+                                            "templateInputs": [
+                                                {
+                                                    "type": "template",
+                                                    "value": {
+                                                        "imports": [],
+                                                        "isOptional": true,
+                                                        "templateString": "string=$FERN_INPUT",
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "BODY",
+                                                                "path": "string"
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "value": {
+                                                        "imports": [],
+                                                        "isOptional": true,
+                                                        "templateString": "integer=$FERN_INPUT",
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "BODY",
+                                                                "path": "integer"
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "value": {
+                                                        "imports": [],
+                                                        "isOptional": true,
+                                                        "templateString": "long_=$FERN_INPUT",
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "BODY",
+                                                                "path": "long"
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "value": {
+                                                        "imports": [],
+                                                        "isOptional": true,
+                                                        "templateString": "double=$FERN_INPUT",
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "BODY",
+                                                                "path": "double"
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "value": {
+                                                        "imports": [],
+                                                        "isOptional": true,
+                                                        "templateString": "bool_=$FERN_INPUT",
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "BODY",
+                                                                "path": "bool"
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "value": {
+                                                        "imports": [],
+                                                        "isOptional": true,
+                                                        "templateString": "datetime=$FERN_INPUT",
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "BODY",
+                                                                "path": "datetime"
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "value": {
+                                                        "imports": [],
+                                                        "isOptional": true,
+                                                        "templateString": "date=$FERN_INPUT",
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "BODY",
+                                                                "path": "date"
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "value": {
+                                                        "imports": [],
+                                                        "isOptional": true,
+                                                        "templateString": "uuid_=$FERN_INPUT",
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "BODY",
+                                                                "path": "uuid"
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "value": {
+                                                        "imports": [],
+                                                        "isOptional": true,
+                                                        "templateString": "base_64=$FERN_INPUT",
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "BODY",
+                                                                "path": "base64"
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "value": {
+                                                        "imports": [],
+                                                        "isOptional": true,
+                                                        "containerTemplateString": "list_=[$FERN_INPUT]",
+                                                        "delimiter": ", ",
+                                                        "innerTemplate": {
+                                                            "imports": [],
+                                                            "isOptional": true,
+                                                            "templateString": "$FERN_INPUT",
+                                                            "templateInputs": [
+                                                                {
+                                                                    "location": "BODY",
+                                                                    "path": null
+                                                                }
+                                                            ],
+                                                            "type": "generic"
+                                                        },
+                                                        "templateInput": {
+                                                            "location": "BODY",
+                                                            "path": "list"
+                                                        },
+                                                        "type": "iterable"
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "value": {
+                                                        "imports": [],
+                                                        "isOptional": true,
+                                                        "containerTemplateString": "set_={$FERN_INPUT}",
+                                                        "delimiter": ", ",
+                                                        "innerTemplate": {
+                                                            "imports": [],
+                                                            "isOptional": true,
+                                                            "templateString": "$FERN_INPUT",
+                                                            "templateInputs": [
+                                                                {
+                                                                    "location": "BODY",
+                                                                    "path": null
+                                                                }
+                                                            ],
+                                                            "type": "generic"
+                                                        },
+                                                        "templateInput": {
+                                                            "location": "BODY",
+                                                            "path": "set"
+                                                        },
+                                                        "type": "iterable"
+                                                    }
+                                                },
+                                                {
+                                                    "type": "template",
+                                                    "value": {
+                                                        "imports": [],
+                                                        "isOptional": true,
+                                                        "containerTemplateString": "map_={$FERN_INPUT}",
+                                                        "delimiter": ", ",
+                                                        "keyTemplate": {
+                                                            "imports": [],
+                                                            "isOptional": true,
+                                                            "templateString": "$FERN_INPUT",
+                                                            "templateInputs": [
+                                                                {
+                                                                    "location": "BODY",
+                                                                    "path": null
+                                                                }
+                                                            ],
+                                                            "type": "generic"
+                                                        },
+                                                        "valueTemplate": {
+                                                            "imports": [],
+                                                            "isOptional": true,
+                                                            "templateString": "$FERN_INPUT",
+                                                            "templateInputs": [
+                                                                {
+                                                                    "location": "BODY",
+                                                                    "path": null
+                                                                }
+                                                            ],
+                                                            "type": "generic"
+                                                        },
+                                                        "keyValueSeparator": ": ",
+                                                        "templateInput": {
+                                                            "location": "BODY",
+                                                            "path": "map"
+                                                        },
+                                                        "type": "dict"
+                                                    }
+                                                }
+                                            ],
+                                            "inputDelimiter": ",\n",
+                                            "type": "generic"
+                                        }
+                                    }
+                                ],
+                                "inputDelimiter": ",\n",
+                                "type": "generic"
+                            },
+                            "templateInput": {
+                                "location": "BODY",
+                                "path": null
+                            },
+                            "type": "iterable"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/params/path/{param}",
+            "method": "GET"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.params.get_with_path(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "param=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "PATH",
+                                    "path": "param"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/params",
+            "method": "GET"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.params.get_with_query(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "query=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "QUERY",
+                                    "path": "query"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "number=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "QUERY",
+                                    "path": "number"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/params",
+            "method": "GET"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.params.get_with_allow_multiple_query(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "query=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "QUERY",
+                                    "path": "query"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "numer=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "QUERY",
+                                    "path": "numer"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/params/path-query/{param}",
+            "method": "GET"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.params.get_with_path_and_query(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "param=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "PATH",
+                                    "path": "param"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "query=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "QUERY",
+                                    "path": "query"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/params/path/{param}",
+            "method": "PUT"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.params.modify_with_path(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "param=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "PATH",
+                                    "path": "param"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "request=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": null
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/primitive/string",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.primitive.get_and_return_string(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "request=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": null
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/primitive/integer",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.primitive.get_and_return_int(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "request=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": null
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/primitive/long",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.primitive.get_and_return_long(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "request=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": null
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/primitive/double",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.primitive.get_and_return_double(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "request=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": null
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/primitive/boolean",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.primitive.get_and_return_bool(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "request=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": null
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/primitive/datetime",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.primitive.get_and_return_datetime(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "request=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": null
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/primitive/date",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.primitive.get_and_return_date(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "request=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": null
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/primitive/uuid",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.primitive.get_and_return_uuid(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "request=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": null
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/primitive/base64",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.primitive.get_and_return_base_64(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "request=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": null
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/union",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.endpoints.union.get_and_return_union(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "request=$FERN_INPUT",
+                            "discriminantField": "animal",
+                            "members": {
+                                "dog": {
+                                    "imports": [
+                                        "from .animal import Animal"
+                                    ],
+                                    "isOptional": true,
+                                    "templateString": "request=from seed.types import Animal_Dog\n\nAnimal_Dog($FERN_INPUT, )\n",
+                                    "templateInputs": [
+                                        {
+                                            "type": "template",
+                                            "value": {
+                                                "imports": [],
+                                                "isOptional": true,
+                                                "templateString": "name=$FERN_INPUT",
+                                                "templateInputs": [
+                                                    {
+                                                        "location": "BODY",
+                                                        "path": "name"
+                                                    }
+                                                ],
+                                                "type": "generic"
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "value": {
+                                                "imports": [],
+                                                "isOptional": true,
+                                                "templateString": "likes_to_woof=$FERN_INPUT",
+                                                "templateInputs": [
+                                                    {
+                                                        "location": "BODY",
+                                                        "path": "likesToWoof"
+                                                    }
+                                                ],
+                                                "type": "generic"
+                                            }
+                                        }
+                                    ],
+                                    "type": "generic"
+                                },
+                                "cat": {
+                                    "imports": [
+                                        "from .animal import Animal"
+                                    ],
+                                    "isOptional": true,
+                                    "templateString": "request=from seed.types import Animal_Cat\n\nAnimal_Cat($FERN_INPUT, )\n",
+                                    "templateInputs": [
+                                        {
+                                            "type": "template",
+                                            "value": {
+                                                "imports": [],
+                                                "isOptional": true,
+                                                "templateString": "name=$FERN_INPUT",
+                                                "templateInputs": [
+                                                    {
+                                                        "location": "BODY",
+                                                        "path": "name"
+                                                    }
+                                                ],
+                                                "type": "generic"
+                                            }
+                                        },
+                                        {
+                                            "type": "template",
+                                            "value": {
+                                                "imports": [],
+                                                "isOptional": true,
+                                                "templateString": "likes_to_meow=$FERN_INPUT",
+                                                "templateInputs": [
+                                                    {
+                                                        "location": "BODY",
+                                                        "path": "likesToMeow"
+                                                    }
+                                                ],
+                                                "type": "generic"
+                                            }
+                                        }
+                                    ],
+                                    "type": "generic"
+                                }
+                            },
+                            "type": "discriminatedUnion"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/req-bodies/object",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.inlined_requests.post_with_object_bodyand_response(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "string=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": "string"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "integer=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": "integer"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [
+                                "from .object_with_optional_field import ObjectWithOptionalField"
+                            ],
+                            "isOptional": true,
+                            "templateString": "nested_object=ObjectWithOptionalField(\n$FERN_INPUT\n)",
+                            "templateInputs": [
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "string=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "string"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "integer=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "integer"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "long_=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "long"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "double=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "double"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "bool_=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "bool"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "datetime=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "datetime"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "date=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "date"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "uuid_=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "uuid"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "base_64=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "base64"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "containerTemplateString": "list_=[$FERN_INPUT]",
+                                        "delimiter": ", ",
+                                        "innerTemplate": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "templateInputs": [
+                                                {
+                                                    "location": "BODY",
+                                                    "path": null
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        },
+                                        "templateInput": {
+                                            "location": "BODY",
+                                            "path": "list"
+                                        },
+                                        "type": "iterable"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "containerTemplateString": "set_={$FERN_INPUT}",
+                                        "delimiter": ", ",
+                                        "innerTemplate": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "templateInputs": [
+                                                {
+                                                    "location": "BODY",
+                                                    "path": null
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        },
+                                        "templateInput": {
+                                            "location": "BODY",
+                                            "path": "set"
+                                        },
+                                        "type": "iterable"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "containerTemplateString": "map_={$FERN_INPUT}",
+                                        "delimiter": ", ",
+                                        "keyTemplate": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "templateInputs": [
+                                                {
+                                                    "location": "BODY",
+                                                    "path": null
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        },
+                                        "valueTemplate": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "templateInputs": [
+                                                {
+                                                    "location": "BODY",
+                                                    "path": null
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        },
+                                        "keyValueSeparator": ": ",
+                                        "templateInput": {
+                                            "location": "BODY",
+                                            "path": "map"
+                                        },
+                                        "type": "dict"
+                                    }
+                                }
+                            ],
+                            "inputDelimiter": ",\n",
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/no-auth",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.no_auth.post_with_no_auth(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "request=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": null
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/no-req-body",
+            "method": "GET"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.no_req_body.get_with_no_request_body(\n$FERN_INPUT\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/no-req-body",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.no_req_body.post_with_no_request_body(\n$FERN_INPUT\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_exhaustive",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/test-headers/custom-header",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedExhaustive\n\nclient = AsyncSeedExhaustive(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.req_with_headers.get_with_custom_header(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "x_test_endpoint_header=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "HEADERS",
+                                    "path": "X-TEST-ENDPOINT-HEADER"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "request=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": null
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

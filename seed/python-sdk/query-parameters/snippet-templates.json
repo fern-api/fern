@@ -1,0 +1,419 @@
+[
+    {
+        "sdk": {
+            "package": "fern_query-parameters",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/user",
+            "method": "GET"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedQueryParameters\n\nclient = AsyncSeedQueryParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.user.get_username(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "limit=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "QUERY",
+                                    "path": "limit"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "id=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "QUERY",
+                                    "path": "id"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "date=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "QUERY",
+                                    "path": "date"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "deadline=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "QUERY",
+                                    "path": "deadline"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "bytes=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "QUERY",
+                                    "path": "bytes"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [
+                                "from .user import User"
+                            ],
+                            "isOptional": true,
+                            "templateString": "user=User(\n$FERN_INPUT\n)",
+                            "templateInputs": [
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "name=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "QUERY",
+                                                "path": "name"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "containerTemplateString": "tags=[$FERN_INPUT]",
+                                        "delimiter": ", ",
+                                        "innerTemplate": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "templateInputs": [
+                                                {
+                                                    "location": "QUERY",
+                                                    "path": null
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        },
+                                        "templateInput": {
+                                            "location": "QUERY",
+                                            "path": "tags"
+                                        },
+                                        "type": "iterable"
+                                    }
+                                }
+                            ],
+                            "inputDelimiter": ",\n",
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "containerTemplateString": "key_value={$FERN_INPUT}",
+                            "delimiter": ", ",
+                            "keyTemplate": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "QUERY",
+                                        "path": null
+                                    }
+                                ],
+                                "type": "generic"
+                            },
+                            "valueTemplate": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "QUERY",
+                                        "path": null
+                                    }
+                                ],
+                                "type": "generic"
+                            },
+                            "keyValueSeparator": ": ",
+                            "templateInput": {
+                                "location": "QUERY",
+                                "path": "keyValue"
+                            },
+                            "type": "dict"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "optional_string=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "QUERY",
+                                    "path": "optionalString"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [
+                                "from .nested_user import NestedUser"
+                            ],
+                            "isOptional": true,
+                            "templateString": "nested_user=NestedUser(\n$FERN_INPUT\n)",
+                            "templateInputs": [
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "name=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "QUERY",
+                                                "path": "name"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [
+                                            "from .user import User"
+                                        ],
+                                        "isOptional": true,
+                                        "templateString": "user=User(\n$FERN_INPUT\n)",
+                                        "templateInputs": [
+                                            {
+                                                "type": "template",
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "templateString": "name=$FERN_INPUT",
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "QUERY",
+                                                            "path": "name"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                }
+                                            },
+                                            {
+                                                "type": "template",
+                                                "value": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "containerTemplateString": "tags=[$FERN_INPUT]",
+                                                    "delimiter": ", ",
+                                                    "innerTemplate": {
+                                                        "imports": [],
+                                                        "isOptional": true,
+                                                        "templateString": "$FERN_INPUT",
+                                                        "templateInputs": [
+                                                            {
+                                                                "location": "QUERY",
+                                                                "path": null
+                                                            }
+                                                        ],
+                                                        "type": "generic"
+                                                    },
+                                                    "templateInput": {
+                                                        "location": "QUERY",
+                                                        "path": "tags"
+                                                    },
+                                                    "type": "iterable"
+                                                }
+                                            }
+                                        ],
+                                        "inputDelimiter": ",\n",
+                                        "type": "generic"
+                                    }
+                                }
+                            ],
+                            "inputDelimiter": ",\n",
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [
+                                "from .user import User"
+                            ],
+                            "isOptional": true,
+                            "templateString": "optional_user=User(\n$FERN_INPUT\n)",
+                            "templateInputs": [
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "name=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "QUERY",
+                                                "path": "name"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "containerTemplateString": "tags=[$FERN_INPUT]",
+                                        "delimiter": ", ",
+                                        "innerTemplate": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "templateInputs": [
+                                                {
+                                                    "location": "QUERY",
+                                                    "path": null
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        },
+                                        "templateInput": {
+                                            "location": "QUERY",
+                                            "path": "tags"
+                                        },
+                                        "type": "iterable"
+                                    }
+                                }
+                            ],
+                            "inputDelimiter": ",\n",
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [
+                                "from .user import User"
+                            ],
+                            "isOptional": true,
+                            "templateString": "exclude_user=User(\n$FERN_INPUT\n)",
+                            "templateInputs": [
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "name=$FERN_INPUT",
+                                        "templateInputs": [
+                                            {
+                                                "location": "QUERY",
+                                                "path": "name"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    }
+                                },
+                                {
+                                    "type": "template",
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "containerTemplateString": "tags=[$FERN_INPUT]",
+                                        "delimiter": ", ",
+                                        "innerTemplate": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "templateInputs": [
+                                                {
+                                                    "location": "QUERY",
+                                                    "path": null
+                                                }
+                                            ],
+                                            "type": "generic"
+                                        },
+                                        "templateInput": {
+                                            "location": "QUERY",
+                                            "path": "tags"
+                                        },
+                                        "type": "iterable"
+                                    }
+                                }
+                            ],
+                            "inputDelimiter": ",\n",
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "filter=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "QUERY",
+                                    "path": "filter"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

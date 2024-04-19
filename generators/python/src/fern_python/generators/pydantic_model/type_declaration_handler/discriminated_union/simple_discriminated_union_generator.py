@@ -227,14 +227,14 @@ class DiscriminatedUnionSnippetGenerator:
 
     def generate_snippet_template(self) -> Union[AST.Expression, None]:
         return self.sut.shape.visit(
-            same_properties_as_object=lambda: self._get_snippet_for_union_with_same_properties_as_object(
+            same_properties_as_object=lambda _: self._get_snippet_for_union_with_same_properties_as_object(
                 name=self.name,
-                wire_discriminant_value=self.sut.discriminant_value.wire_value,
+                wire_discriminant_value=self.sut.discriminant_value,
                 example=self.example,
             ),
-            single_property=lambda: self._get_snippet_for_union_with_single_property(
+            single_property=lambda _: self._get_snippet_for_union_with_single_property(
                 name=self.name,
-                wire_discriminant_value=self.sut.discriminant_value.wire_value,
+                wire_discriminant_value=self.sut.discriminant_value,
                 example=self.example,
             ),
             no_properties=lambda: self._get_snippet_for_union_with_no_properties(
