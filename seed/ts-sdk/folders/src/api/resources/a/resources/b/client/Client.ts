@@ -3,7 +3,7 @@
  */
 
 import * as core from "../../../../../../core";
-import * as errors from "../../../../../../errors";
+import * as errors from "../../../../../../errors/index";
 
 export declare namespace B {
     interface Options {

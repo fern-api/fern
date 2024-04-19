@@ -11,7 +11,6 @@ import {
     HttpRequestBody,
     HttpResponse,
     HttpService,
-    StreamingResponseChunkType,
     TypeReference
 } from "@fern-api/ir-sdk";
 import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
@@ -187,14 +186,14 @@ export class IrGraph {
                     );
                 },
                 streaming: (streamingResponse) => {
-                    StreamingResponseChunkType._visit(streamingResponse.dataEventType, {
-                        json: (typeReference) =>
-                            populateReferencesFromTypeReference(typeReference, referencedTypes, referencedSubpackages),
+                    streamingResponse._visit({
+                        sse: (sse) =>
+                            populateReferencesFromTypeReference(sse.payload, referencedTypes, referencedSubpackages),
+                        json: (json) =>
+                            populateReferencesFromTypeReference(json.payload, referencedTypes, referencedSubpackages),
                         text: noop,
                         _other: () => {
-                            throw new Error(
-                                "Unknown StreamingResponseChunkType: " + streamingResponse.dataEventType.type
-                            );
+                            throw new Error("Unknown streamingResponse type: " + streamingResponse.type);
                         }
                     });
                 },

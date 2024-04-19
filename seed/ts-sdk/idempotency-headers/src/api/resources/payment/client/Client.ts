@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedIdempotencyHeaders from "../../..";
-import * as serializers from "../../../../serialization";
+import * as SeedIdempotencyHeaders from "../../../index";
+import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Payment {
     interface Options {
@@ -123,7 +123,7 @@ export class Payment {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string> {
         return `Bearer ${await core.Supplier.get(this._options.token)}`;
     }
 }

@@ -4,8 +4,8 @@
 
 import * as environments from "./environments";
 import * as core from "./core";
-import * as serializers from "./serialization";
-import * as errors from "./errors";
+import * as serializers from "./serialization/index";
+import * as errors from "./errors/index";
 import { File_ } from "./api/resources/file/client/Client";
 import { Health } from "./api/resources/health/client/Client";
 import { Service } from "./api/resources/service/client/Client";
@@ -91,7 +91,7 @@ export class SeedExamplesClient {
         return (this._service ??= new Service(this._options));
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

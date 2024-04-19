@@ -3,9 +3,9 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedUndiscriminatedUnions from "../../..";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as SeedUndiscriminatedUnions from "../../../index";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Union {
     interface Options {

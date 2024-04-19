@@ -1,5 +1,5 @@
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { JavaScriptRuntime, NpmPackage, PackageId } from "@fern-typescript/commons";
+import { ImportsManager, JavaScriptRuntime, NpmPackage, PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkClientClass } from "@fern-typescript/contexts";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl";
@@ -25,6 +25,7 @@ export declare namespace SdkClientClassGenerator {
         export interface Args {
             packageId: PackageId;
             serviceClassName: string;
+            importsManager: ImportsManager;
         }
     }
 }
@@ -76,9 +77,11 @@ export class SdkClientClassGenerator {
 
     public generateService({
         packageId,
-        serviceClassName
+        serviceClassName,
+        importsManager
     }: SdkClientClassGenerator.generateService.Args): GeneratedSdkClientClass {
         return new GeneratedSdkClientClassImpl({
+            importsManager,
             intermediateRepresentation: this.intermediateRepresentation,
             packageId,
             packageResolver: this.packageResolver,

@@ -232,13 +232,13 @@ class SnippetTestFactory:
                 double=lambda _: None,
                 string=lambda _: None,
                 boolean=lambda _: None,
-                long=lambda _: None,
+                long_=lambda _: None,
                 datetime=lambda _: "datetime",
                 date=lambda _: "date",
-                uuid=lambda _: "uuid",
+                uuid_=lambda _: "uuid",
             ),
             container=lambda container: container.visit(
-                list=lambda item_type: (
+                list_=lambda item_type: (
                     "list",
                     dict(
                         [
@@ -247,7 +247,7 @@ class SnippetTestFactory:
                         ]
                     ),
                 ),
-                set=lambda item_type: (
+                set_=lambda item_type: (
                     "set",
                     dict(
                         [
@@ -259,7 +259,7 @@ class SnippetTestFactory:
                 optional=lambda item_type: self._generate_type_expectations_for_type_reference(item_type)
                 if item_type is not None
                 else None,
-                map=lambda map_type: (
+                map_=lambda map_type: (
                     "dict",
                     dict(
                         [

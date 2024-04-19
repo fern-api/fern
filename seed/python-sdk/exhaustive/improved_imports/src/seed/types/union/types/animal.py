@@ -4,12 +4,13 @@ from __future__ import annotations
 
 import typing
 
-from .cat import Cat
-from .dog import Dog
+from ....core.pydantic_utilities import pydantic_v1
 
 
-class Animal_Dog(Dog):
+class Animal_Dog(pydantic_v1.BaseModel):
     animal: typing.Literal["dog"] = "dog"
+    name: str
+    likes_to_woof: bool = pydantic_v1.Field(alias="likesToWoof")
 
     class Config:
         frozen = True
@@ -18,8 +19,10 @@ class Animal_Dog(Dog):
         populate_by_name = True
 
 
-class Animal_Cat(Cat):
+class Animal_Cat(pydantic_v1.BaseModel):
     animal: typing.Literal["cat"] = "cat"
+    name: str
+    likes_to_meow: bool = pydantic_v1.Field(alias="likesToMeow")
 
     class Config:
         frozen = True

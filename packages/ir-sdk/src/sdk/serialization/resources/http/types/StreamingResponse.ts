@@ -6,19 +6,41 @@ import * as serializers from "../../..";
 import * as FernIr from "../../../../api";
 import * as core from "../../../../core";
 
-export const StreamingResponse: core.serialization.ObjectSchema<
-    serializers.StreamingResponse.Raw,
-    FernIr.StreamingResponse
-> = core.serialization
-    .objectWithoutOptionalProperties({
-        dataEventType: core.serialization.lazy(async () => (await import("../../..")).StreamingResponseChunkType),
-        terminator: core.serialization.string().optional(),
-    })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDocs));
+export const StreamingResponse: core.serialization.Schema<serializers.StreamingResponse.Raw, FernIr.StreamingResponse> =
+    core.serialization
+        .union("type", {
+            json: core.serialization.lazyObject(async () => (await import("../../..")).JsonStreamChunk),
+            text: core.serialization.lazyObject(async () => (await import("../../..")).TextStreamChunk),
+            sse: core.serialization.lazyObject(async () => (await import("../../..")).SseStreamChunk),
+        })
+        .transform<FernIr.StreamingResponse>({
+            transform: (value) => {
+                switch (value.type) {
+                    case "json":
+                        return FernIr.StreamingResponse.json(value);
+                    case "text":
+                        return FernIr.StreamingResponse.text(value);
+                    case "sse":
+                        return FernIr.StreamingResponse.sse(value);
+                    default:
+                        return value as FernIr.StreamingResponse;
+                }
+            },
+            untransform: ({ _visit, ...value }) => value as any,
+        });
 
 export declare namespace StreamingResponse {
-    interface Raw extends serializers.WithDocs.Raw {
-        dataEventType: serializers.StreamingResponseChunkType.Raw;
-        terminator?: string | null;
+    type Raw = StreamingResponse.Json | StreamingResponse.Text | StreamingResponse.Sse;
+
+    interface Json extends serializers.JsonStreamChunk.Raw {
+        type: "json";
+    }
+
+    interface Text extends serializers.TextStreamChunk.Raw {
+        type: "text";
+    }
+
+    interface Sse extends serializers.SseStreamChunk.Raw {
+        type: "sse";
     }
 }

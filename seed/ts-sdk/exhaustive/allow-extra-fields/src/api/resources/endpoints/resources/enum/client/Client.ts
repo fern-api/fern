@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../../../core";
-import * as SeedExhaustive from "../../../../..";
-import * as serializers from "../../../../../../serialization";
+import * as SeedExhaustive from "../../../../../index";
+import * as serializers from "../../../../../../serialization/index";
 import urlJoin from "url-join";
-import * as errors from "../../../../../../errors";
+import * as errors from "../../../../../../errors/index";
 
 export declare namespace Enum {
     interface Options {
@@ -78,7 +78,7 @@ export class Enum {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

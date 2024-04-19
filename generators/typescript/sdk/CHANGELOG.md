@@ -5,11 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.14.1-rc1] - 2024-04-12
+## [0.14.1-rc5] - 2024-04-17
+
+- Fix: Code snippets are generated for file upload endpoints using `fs.readStream`. Previously, 
+  generation for these endpoints was being skipped. 
+
+- Fix: If integration tests are not enabled, simple jest tests with a `yarn test`
+  script will be created.
+
+- Improvement: In an effort to make the generated code JSR compatible, the generator now
+  directly imports from files instead of using directory imports.
+
+- Improvement: In an effort to make the generated code JSR compatible, we make sure all methods
+  are strongly typed with return signatures (in this case `_getAuthorizationHeader()`).
 
 - Fix: Generate code snippet for FileDownload endpoint
-
-## [0.14.1-rc0] - 2024-04-12
 
 - Fix: Import for `node-fetch` in `Fetcher.ts` uses a dynamic import instead of `require` which
   so that the SDK works in ESM environments (that are using local file output). When the

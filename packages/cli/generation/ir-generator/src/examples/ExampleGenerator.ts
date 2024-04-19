@@ -379,8 +379,9 @@ export class ExampleGenerator {
                     fileDownload: () => this.generateExamplePrimitive({ primitiveType: PrimitiveType.Base64 }),
                     text: () => this.generateExamplePrimitive({ primitiveType: PrimitiveType.String }),
                     streaming: (streamingResponse: StreamingResponse) =>
-                        streamingResponse.dataEventType._visit<ExampleTypeReference>({
-                            json: (type: TypeReference) => this.generateExampleTypeReference(type, 0),
+                        streamingResponse._visit<ExampleTypeReference>({
+                            sse: (sse) => this.generateExampleTypeReference(sse.payload, 0),
+                            json: (json) => this.generateExampleTypeReference(json.payload, 0),
                             text: () => this.generateExamplePrimitive({ primitiveType: PrimitiveType.String }),
                             _other: () => this.generateExampleUnknown({})
                         }),

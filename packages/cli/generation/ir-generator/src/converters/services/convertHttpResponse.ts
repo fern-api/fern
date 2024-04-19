@@ -1,4 +1,4 @@
-import { HttpResponse, JsonResponse, StreamingResponseChunkType } from "@fern-api/ir-sdk";
+import { HttpResponse, JsonResponse, StreamingResponse } from "@fern-api/ir-sdk";
 import { isRawTextType, parseRawFileType, parseRawTextType, RawSchemas } from "@fern-api/yaml-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
@@ -33,26 +33,35 @@ export async function convertHttpResponse({
     }
 
     if (responseStream != null) {
-        return HttpResponse.streaming({
-            docs: typeof responseStream !== "string" ? responseStream.docs : undefined,
-            dataEventType: constructStreamingResponseChunkType(responseStream, file),
-            terminator: typeof responseStream !== "string" ? responseStream.terminator : undefined
-        });
+        const docs = typeof responseStream !== "string" ? responseStream.docs : undefined;
+        const typeReference = typeof responseStream === "string" ? responseStream : responseStream.type;
+        const streamFormat = typeof responseStream === "string" ? "json" : responseStream.format ?? "json";
+        if (isRawTextType(typeReference)) {
+            return HttpResponse.streaming(
+                StreamingResponse.text({
+                    docs
+                })
+            );
+        } else if (typeof responseStream !== "string" && streamFormat === "sse") {
+            return HttpResponse.streaming(
+                StreamingResponse.sse({
+                    docs,
+                    payload: file.parseTypeReference(typeReference),
+                    terminator: typeof responseStream !== "string" ? responseStream.terminator : undefined
+                })
+            );
+        } else {
+            return HttpResponse.streaming(
+                StreamingResponse.json({
+                    docs,
+                    payload: file.parseTypeReference(typeReference),
+                    terminator: typeof responseStream !== "string" ? responseStream.terminator : undefined
+                })
+            );
+        }
     }
 
     return undefined;
-}
-
-function constructStreamingResponseChunkType(
-    responseStream: RawSchemas.HttpResponseStreamSchema | string,
-    file: FernFileContext
-): StreamingResponseChunkType {
-    const typeReference = typeof responseStream === "string" ? responseStream : responseStream.type;
-    if (isRawTextType(typeReference)) {
-        return StreamingResponseChunkType.text();
-    } else {
-        return StreamingResponseChunkType.json(file.parseTypeReference(typeReference));
-    }
 }
 
 async function convertJsonResponse(

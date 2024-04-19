@@ -24,8 +24,9 @@ export declare namespace HttpResponse {
         type: "text";
     }
 
-    interface Streaming extends FernIr.StreamingResponse, _Utils {
+    interface Streaming extends _Utils {
         type: "streaming";
+        value: FernIr.StreamingResponse;
     }
 
     interface _Utils {
@@ -77,7 +78,7 @@ export const HttpResponse = {
 
     streaming: (value: FernIr.StreamingResponse): FernIr.HttpResponse.Streaming => {
         return {
-            ...value,
+            value: value,
             type: "streaming",
             _visit: function <_Result>(
                 this: FernIr.HttpResponse.Streaming,
@@ -97,7 +98,7 @@ export const HttpResponse = {
             case "text":
                 return visitor.text(value);
             case "streaming":
-                return visitor.streaming(value);
+                return visitor.streaming(value.value);
             default:
                 return visitor._other(value as any);
         }

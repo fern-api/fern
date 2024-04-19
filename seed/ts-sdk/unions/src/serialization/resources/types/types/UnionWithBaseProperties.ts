@@ -3,8 +3,8 @@
  */
 
 import * as core from "../../../../core";
-import * as serializers from "../../..";
-import * as SeedUnions from "../../../../api";
+import * as serializers from "../../../index";
+import * as SeedUnions from "../../../../api/index";
 import { Foo } from "./Foo";
 
 const _Base = core.serialization.object({

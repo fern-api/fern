@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedPagination from "../../..";
+import * as SeedPagination from "../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Users {
     interface Options {
@@ -332,7 +332,7 @@ export class Users {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

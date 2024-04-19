@@ -182,17 +182,26 @@ types:
     extends: commons.WithDocs
 
   StreamingResponse:
+    union: 
+      json: JsonStreamChunk
+      text: TextStreamChunk
+      sse: SseStreamChunk
+    
+  TextStreamChunk: 
+    extends: commons.WithDocs
+    properties: {}
+    
+  JsonStreamChunk:
     extends: commons.WithDocs
     properties:
-      dataEventType: StreamingResponseChunkType
+      payload: types.TypeReference
       terminator: optional<string>
-
-  StreamingResponseChunkType:
-    union:
-      json:
-        type: types.TypeReference
-        key: json
-      text: {}
+  
+  SseStreamChunk:
+    extends: commons.WithDocs
+    properties:
+      payload: types.TypeReference
+      terminator: optional<string>
 
   ResponseErrors: list<ResponseError>
   ResponseError:

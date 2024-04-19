@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedBasicAuth from "../../..";
+import * as SeedBasicAuth from "../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace BasicAuth {
     interface Options {
@@ -162,7 +162,7 @@ export class BasicAuth {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         return core.BasicAuth.toAuthorizationHeader({
             username: await core.Supplier.get(this._options.username),
             password: await core.Supplier.get(this._options.password),

@@ -3,9 +3,9 @@
  */
 
 import * as core from "./core";
-import * as serializers from "./serialization";
+import * as serializers from "./serialization/index";
 import urlJoin from "url-join";
-import * as errors from "./errors";
+import * as errors from "./errors/index";
 import { Service } from "./api/resources/service/client/Client";
 
 export declare namespace SeedPackageYmlClient {

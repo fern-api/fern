@@ -4,9 +4,9 @@
 
 import * as core from "../../../../core";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
-import * as SeedAuthEnvironmentVariables from "../../..";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
+import * as SeedAuthEnvironmentVariables from "../../../index";
 
 export declare namespace Service {
     interface Options {

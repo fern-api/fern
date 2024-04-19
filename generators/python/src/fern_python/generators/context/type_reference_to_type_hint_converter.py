@@ -69,7 +69,7 @@ class TypeReferenceToTypeHintConverter:
         in_endpoint: Optional[bool],
     ) -> AST.TypeHint:
         return container.visit(
-            list=lambda wrapped_type: AST.TypeHint.sequence(
+            list_=lambda wrapped_type: AST.TypeHint.sequence(
                 self.get_type_hint_for_type_reference(
                     type_reference=wrapped_type,
                     must_import_after_current_declaration=must_import_after_current_declaration,
@@ -84,7 +84,7 @@ class TypeReferenceToTypeHintConverter:
                     in_endpoint=in_endpoint,
                 )
             ),
-            map=lambda map_type: AST.TypeHint.dict(
+            map_=lambda map_type: AST.TypeHint.dict(
                 key_type=self.get_type_hint_for_type_reference(
                     type_reference=map_type.key_type,
                     must_import_after_current_declaration=must_import_after_current_declaration,
@@ -97,7 +97,7 @@ class TypeReferenceToTypeHintConverter:
                 ),
             ),
             # Fern sets become Pydanic lists, since Pydantic models aren't hashable
-            set=lambda wrapped_type: wrapped_type.visit(
+            set_=lambda wrapped_type: wrapped_type.visit(
                 container=lambda type_reference: AST.TypeHint.sequence(
                     self._get_type_hint_for_container(
                         container=type_reference,
@@ -158,9 +158,9 @@ class TypeReferenceToTypeHintConverter:
             double=AST.TypeHint.float_,
             string=AST.TypeHint.str_,
             boolean=AST.TypeHint.bool_,
-            long=AST.TypeHint.int_,
+            long_=AST.TypeHint.int_,
             date_time=AST.TypeHint.datetime,
-            uuid=AST.TypeHint.uuid,
+            uuid_=AST.TypeHint.uuid,
             date=AST.TypeHint.date,
             base_64=AST.TypeHint.str_,
         )

@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedEnum from "../../..";
-import * as serializers from "../../../../serialization";
+import * as SeedEnum from "../../../index";
+import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace InlinedRequest {
     interface Options {

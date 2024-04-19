@@ -9,7 +9,8 @@ export class JestTestGenerator {
     constructor(
         private ir: IR.IntermediateRepresentation,
         private dependencyManager: DependencyManager,
-        private rootDirectory: Directory
+        private rootDirectory: Directory,
+        private writeUnitTests: boolean
     ) {}
 
     private addJestConfig(): void {
@@ -85,9 +86,15 @@ export class JestTestGenerator {
     }
 
     public get scripts(): Record<string, string> {
-        return {
-            test: "fern test --command='jest'"
-        };
+        if (this.writeUnitTests) {
+            return {
+                test: "fern test --command='jest'"
+            };
+        } else {
+            return {
+                test: "jest"
+            };
+        }
     }
 
     public get extraFiles(): Record<string, string> {

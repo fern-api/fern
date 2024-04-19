@@ -5,7 +5,6 @@ from __future__ import annotations
 import typing
 
 from ...core.pydantic_utilities import pydantic_v1
-from .exception_info import ExceptionInfo
 from .exception_v_2 import ExceptionV2
 
 
@@ -18,8 +17,11 @@ class ActualResult_Value(pydantic_v1.BaseModel):
         smart_union = True
 
 
-class ActualResult_Exception(ExceptionInfo):
+class ActualResult_Exception(pydantic_v1.BaseModel):
     type: typing.Literal["exception"] = "exception"
+    exception_type: str = pydantic_v1.Field(alias="exceptionType")
+    exception_message: str = pydantic_v1.Field(alias="exceptionMessage")
+    exception_stacktrace: str = pydantic_v1.Field(alias="exceptionStacktrace")
 
     class Config:
         frozen = True

@@ -14,7 +14,9 @@ export const HttpResponse: core.serialization.Schema<serializers.HttpResponse.Ra
             }),
             fileDownload: core.serialization.lazyObject(async () => (await import("../../..")).FileDownloadResponse),
             text: core.serialization.lazyObject(async () => (await import("../../..")).TextResponse),
-            streaming: core.serialization.lazyObject(async () => (await import("../../..")).StreamingResponse),
+            streaming: core.serialization.object({
+                value: core.serialization.lazy(async () => (await import("../../..")).StreamingResponse),
+            }),
         })
         .transform<FernIr.HttpResponse>({
             transform: (value) => {
@@ -26,7 +28,7 @@ export const HttpResponse: core.serialization.Schema<serializers.HttpResponse.Ra
                     case "text":
                         return FernIr.HttpResponse.text(value);
                     case "streaming":
-                        return FernIr.HttpResponse.streaming(value);
+                        return FernIr.HttpResponse.streaming(value.value);
                     default:
                         return value as FernIr.HttpResponse;
                 }
@@ -50,7 +52,8 @@ export declare namespace HttpResponse {
         type: "text";
     }
 
-    interface Streaming extends serializers.StreamingResponse.Raw {
+    interface Streaming {
         type: "streaming";
+        value: serializers.StreamingResponse.Raw;
     }
 }
