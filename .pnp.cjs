@@ -208,10 +208,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:generators/typescript/utils/core-utilities/form-data-utils"\
       },\
       {\
-        "name": "@fern-typescript/stream-utils",\
-        "reference": "workspace:generators/typescript/utils/core-utilities/stream-utils"\
-      },\
-      {\
         "name": "@fern-typescript/zurg",\
         "reference": "workspace:generators/typescript/utils/core-utilities/zurg"\
       },\
@@ -451,7 +447,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-typescript/sdk-generator", ["workspace:generators/typescript/sdk/generator"]],\
       ["@fern-typescript/sdk-generator-cli", ["workspace:generators/typescript/sdk/cli"]],\
       ["@fern-typescript/sdk-inlined-request-schema-generator", ["workspace:generators/typescript/sdk/sdk-inlined-request-body-schema-generator"]],\
-      ["@fern-typescript/stream-utils", ["workspace:generators/typescript/utils/core-utilities/stream-utils"]],\
       ["@fern-typescript/type-generator", ["workspace:generators/typescript/model/type-generator"]],\
       ["@fern-typescript/type-reference-converters", ["workspace:generators/typescript/model/type-reference-converters"]],\
       ["@fern-typescript/type-reference-example-generator", ["workspace:generators/typescript/model/type-reference-example-generator"]],\
@@ -8938,23 +8933,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
             ["ts-morph", "npm:15.1.0"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
-      ["@fern-typescript/stream-utils", [\
-        ["workspace:generators/typescript/utils/core-utilities/stream-utils", {\
-          "packageLocation": "./generators/typescript/utils/core-utilities/stream-utils/",\
-          "packageDependencies": [\
-            ["@fern-typescript/stream-utils", "workspace:generators/typescript/utils/core-utilities/stream-utils"],\
-            ["@types/jest", "npm:29.0.3"],\
-            ["@types/node", "npm:18.7.18"],\
-            ["depcheck", "npm:1.4.6"],\
-            ["eslint", "npm:8.56.0"],\
-            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
-            ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
