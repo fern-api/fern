@@ -7808,10 +7808,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["npm:37.0.0", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-ir-sdk-npm-37.0.0-abc7692f6a-a7fcb30284.zip/node_modules/@fern-fern/ir-sdk/",\
+        ["npm:38.0.1", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-ir-sdk-npm-38.0.1-b7dc699255-f3787eb663.zip/node_modules/@fern-fern/ir-sdk/",\
           "packageDependencies": [\
-            ["@fern-fern/ir-sdk", "npm:37.0.0"]\
+            ["@fern-fern/ir-sdk", "npm:38.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -8208,7 +8208,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/generator-commons", "workspace:generators/commons"],\
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.730"],\
-            ["@fern-fern/ir-sdk", "npm:37.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -8305,7 +8305,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
-            ["@fern-fern/ir-sdk", "npm:37.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/fetcher", "workspace:generators/typescript/utils/core-utilities/fetcher"],\
             ["@fern-typescript/zurg", "workspace:generators/typescript/utils/core-utilities/zurg"],\
             ["@types/decompress", "npm:4.2.7"],\
@@ -8341,7 +8341,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
-            ["@fern-fern/ir-sdk", "npm:37.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
@@ -8361,7 +8361,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/typescript/sdk/endpoint-error-union-generator/",\
           "packageDependencies": [\
             ["@fern-typescript/endpoint-error-union-generator", "workspace:generators/typescript/sdk/endpoint-error-union-generator"],\
-            ["@fern-fern/ir-sdk", "npm:37.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
             ["@fern-typescript/resolvers", "workspace:generators/typescript/utils/resolvers"],\
@@ -8384,7 +8384,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/typescript/sdk/environments-generator/",\
           "packageDependencies": [\
             ["@fern-typescript/environments-generator", "workspace:generators/typescript/sdk/environments-generator"],\
-            ["@fern-fern/ir-sdk", "npm:37.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -8406,7 +8406,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-typescript/express-endpoint-type-schemas-generator", "workspace:generators/typescript/express/express-endpoint-type-schemas-generator"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-fern/ir-sdk", "npm:37.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/abstract-schema-generator", "workspace:generators/typescript/utils/abstract-schema-generator"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
@@ -8428,7 +8428,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/typescript/express/express-error-generator/",\
           "packageDependencies": [\
             ["@fern-typescript/express-error-generator", "workspace:generators/typescript/express/express-error-generator"],\
-            ["@fern-fern/ir-sdk", "npm:37.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/abstract-error-class-generator", "workspace:generators/typescript/utils/abstract-error-class-generator"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
@@ -8451,7 +8451,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-typescript/express-error-schema-generator", "workspace:generators/typescript/express/express-error-schema-generator"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-fern/ir-sdk", "npm:37.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/abstract-schema-generator", "workspace:generators/typescript/utils/abstract-schema-generator"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
@@ -8475,7 +8475,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/express-generator", "workspace:generators/typescript/express/generator"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
-            ["@fern-fern/ir-sdk", "npm:37.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
             ["@fern-typescript/express-endpoint-type-schemas-generator", "workspace:generators/typescript/express/express-endpoint-type-schemas-generator"],\
@@ -8510,7 +8510,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-typescript/express-generator-cli", "workspace:generators/typescript/express/cli"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.730"],\
-            ["@fern-fern/ir-sdk", "npm:37.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/abstract-generator-cli", "workspace:generators/typescript/utils/abstract-generator-cli"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
@@ -8539,7 +8539,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/typescript/express/express-inlined-request-body-generator/",\
           "packageDependencies": [\
             ["@fern-typescript/express-inlined-request-body-generator", "workspace:generators/typescript/express/express-inlined-request-body-generator"],\
-            ["@fern-fern/ir-sdk", "npm:37.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -8559,7 +8559,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/typescript/express/express-inlined-request-body-schema-generator/",\
           "packageDependencies": [\
             ["@fern-typescript/express-inlined-request-schema-generator", "workspace:generators/typescript/express/express-inlined-request-body-schema-generator"],\
-            ["@fern-fern/ir-sdk", "npm:37.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/abstract-schema-generator", "workspace:generators/typescript/utils/abstract-schema-generator"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
@@ -8581,7 +8581,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/typescript/express/express-register-generator/",\
           "packageDependencies": [\
             ["@fern-typescript/express-register-generator", "workspace:generators/typescript/express/express-register-generator"],\
-            ["@fern-fern/ir-sdk", "npm:37.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
             ["@fern-typescript/resolvers", "workspace:generators/typescript/utils/resolvers"],\
@@ -8605,7 +8605,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/typescript/express/express-service-generator/",\
           "packageDependencies": [\
             ["@fern-typescript/express-service-generator", "workspace:generators/typescript/express/express-service-generator"],\
-            ["@fern-fern/ir-sdk", "npm:37.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
             ["@fern-typescript/resolvers", "workspace:generators/typescript/utils/resolvers"],\
@@ -8710,7 +8710,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-typescript/request-wrapper-generator", "workspace:generators/typescript/sdk/request-wrapper-generator"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-fern/ir-sdk", "npm:37.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -8731,7 +8731,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/typescript/utils/resolvers/",\
           "packageDependencies": [\
             ["@fern-typescript/resolvers", "workspace:generators/typescript/utils/resolvers"],\
-            ["@fern-fern/ir-sdk", "npm:37.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
@@ -8751,7 +8751,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-typescript/sdk-client-class-generator", "workspace:generators/typescript/sdk/client-class-generator"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-fern/ir-sdk", "npm:37.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
             ["@fern-typescript/resolvers", "workspace:generators/typescript/utils/resolvers"],\
@@ -8774,7 +8774,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-typescript/sdk-endpoint-type-schemas-generator", "workspace:generators/typescript/sdk/sdk-endpoint-type-schemas-generator"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-fern/ir-sdk", "npm:37.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/abstract-schema-generator", "workspace:generators/typescript/utils/abstract-schema-generator"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
@@ -8798,7 +8798,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/typescript/sdk/sdk-error-generator/",\
           "packageDependencies": [\
             ["@fern-typescript/sdk-error-generator", "workspace:generators/typescript/sdk/sdk-error-generator"],\
-            ["@fern-fern/ir-sdk", "npm:37.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/abstract-error-class-generator", "workspace:generators/typescript/utils/abstract-error-class-generator"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
@@ -8821,7 +8821,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-typescript/sdk-error-schema-generator", "workspace:generators/typescript/sdk/sdk-error-schema-generator"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-fern/ir-sdk", "npm:37.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/abstract-schema-generator", "workspace:generators/typescript/utils/abstract-schema-generator"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
@@ -8848,7 +8848,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.730"],\
-            ["@fern-fern/ir-sdk", "npm:37.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
             ["@fern-typescript/endpoint-error-union-generator", "workspace:generators/typescript/sdk/endpoint-error-union-generator"],\
@@ -8892,7 +8892,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-typescript/sdk-generator-cli", "workspace:generators/typescript/sdk/cli"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/generator-commons", "workspace:generators/commons"],\
-            ["@fern-fern/ir-sdk", "npm:37.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/abstract-generator-cli", "workspace:generators/typescript/utils/abstract-generator-cli"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
@@ -8921,7 +8921,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/typescript/sdk/sdk-inlined-request-body-schema-generator/",\
           "packageDependencies": [\
             ["@fern-typescript/sdk-inlined-request-schema-generator", "workspace:generators/typescript/sdk/sdk-inlined-request-body-schema-generator"],\
-            ["@fern-fern/ir-sdk", "npm:37.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/abstract-schema-generator", "workspace:generators/typescript/utils/abstract-schema-generator"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
@@ -8943,7 +8943,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/typescript/model/type-generator/",\
           "packageDependencies": [\
             ["@fern-typescript/type-generator", "workspace:generators/typescript/model/type-generator"],\
-            ["@fern-fern/ir-sdk", "npm:37.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
             ["@fern-typescript/union-generator", "workspace:generators/typescript/model/union-generator"],\
@@ -8965,7 +8965,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/typescript/model/type-reference-converters/",\
           "packageDependencies": [\
             ["@fern-typescript/type-reference-converters", "workspace:generators/typescript/model/type-reference-converters"],\
-            ["@fern-fern/ir-sdk", "npm:37.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/resolvers", "workspace:generators/typescript/utils/resolvers"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -8987,7 +8987,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-typescript/type-reference-example-generator", "workspace:generators/typescript/model/type-reference-example-generator"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-fern/ir-sdk", "npm:37.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -9008,7 +9008,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/typescript/model/type-schema-generator/",\
           "packageDependencies": [\
             ["@fern-typescript/type-schema-generator", "workspace:generators/typescript/model/type-schema-generator"],\
-            ["@fern-fern/ir-sdk", "npm:37.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/abstract-schema-generator", "workspace:generators/typescript/utils/abstract-schema-generator"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
@@ -9032,7 +9032,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-typescript/union-generator", "workspace:generators/typescript/model/union-generator"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-fern/ir-sdk", "npm:37.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -9053,7 +9053,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/typescript/model/union-schema-generator/",\
           "packageDependencies": [\
             ["@fern-typescript/union-schema-generator", "workspace:generators/typescript/model/union-schema-generator"],\
-            ["@fern-fern/ir-sdk", "npm:37.0.0"],\
+            ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/abstract-schema-generator", "workspace:generators/typescript/utils/abstract-schema-generator"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\

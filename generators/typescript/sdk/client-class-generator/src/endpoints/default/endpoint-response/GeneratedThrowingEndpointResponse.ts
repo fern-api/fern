@@ -5,7 +5,7 @@ import {
     HttpResponse,
     ResponseError
 } from "@fern-fern/ir-sdk/api";
-import { getTextOfTsNode, PackageId } from "@fern-typescript/commons";
+import { getTextOfTsNode, PackageId, StreamingFetcher } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
@@ -148,6 +148,22 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                 )
             ];
         } else if (this.response?.type === "streaming") {
+            const eventShape = this.response.value._visit<
+                StreamingFetcher.MessageEventShape | StreamingFetcher.SSEEventShape
+            >({
+                sse: () => ({ type: "sse" }),
+                json: (json) => ({
+                    type: "json",
+                    messageTerminator: ts.factory.createStringLiteral(json.terminator ?? "\n")
+                }),
+
+                text: () => {
+                    throw new Error("Text response type is not supported for streaming responses");
+                },
+                _other: ({ type }) => {
+                    throw new Error(`Unknown response type: ${type}`);
+                }
+            });
             return [
                 ts.factory.createReturnStatement(
                     context.coreUtilities.streamUtils.Stream._construct({
@@ -158,7 +174,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                 context.coreUtilities.fetcher.APIResponse.SuccessfulResponse.body
                             )
                         ),
-                        terminator: this.response.terminator ?? "\n",
+                        eventShape,
                         parse: ts.factory.createArrowFunction(
                             [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
                             undefined,

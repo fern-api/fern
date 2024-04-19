@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "@fern-api/logger": "workspace:*",
-    "@fern-fern/ir-sdk": "^37.0.0",
+    "@fern-fern/ir-sdk": "^38.0.0",
     "@fern-typescript/commons": "workspace:*",
     "ts-morph": "^15.1.0"
   },
