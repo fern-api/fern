@@ -81,7 +81,7 @@ export function convertHttpOperation({
 
     const convertedResponse = convertResponse({
         operationContext,
-        isStreaming: streamingResponse ?? false,
+        streamFormat,
         responses: operation.responses,
         context,
         responseBreadcrumbs,

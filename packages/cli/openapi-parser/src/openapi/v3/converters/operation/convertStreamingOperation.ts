@@ -30,7 +30,7 @@ export function convertStreamingOperation({
             const streamingOperation = convertHttpOperation({
                 operationContext,
                 context,
-                streamingResponse: true
+                streamFormat: streamingExtension.format
             });
             return {
                 streaming: streamingOperation,
@@ -72,7 +72,7 @@ export function convertStreamingOperation({
                     baseBreadcrumbs: [...operationContext.baseBreadcrumbs, STREAM_SUFFIX]
                 },
                 context,
-                streamingResponse: true,
+                streamFormat: streamingExtension.format,
                 suffix: STREAM_SUFFIX
             });
 
@@ -87,6 +87,7 @@ export function convertStreamingOperation({
                 response: streamingExtension.response
             });
             const nonStreamingOperation = convertHttpOperation({
+                streamFormat: undefined,
                 operationContext: {
                     ...operationContext,
                     operation: {
