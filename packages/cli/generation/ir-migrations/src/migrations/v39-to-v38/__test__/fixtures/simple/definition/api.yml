@@ -20,7 +20,7 @@ auth-schemes:
     refresh-token:
       endpoint: auth.refreshToken
       request-properties:
-        refresh-token: $response.refresh_token
+        refresh-token: $request.refresh_token
       response-properties:
         access-token: $response.access_token
         expires-in: $response.expires_in
