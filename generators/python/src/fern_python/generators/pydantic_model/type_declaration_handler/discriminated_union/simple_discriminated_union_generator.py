@@ -125,7 +125,9 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                                 name=object_property.name.name.snake_case.unsafe_name,
                                 pascal_case_field_name=object_property.name.name.pascal_case.unsafe_name,
                                 json_field_name=object_property.name.wire_value,
-                                type_hint=self._context.get_type_hint_for_type_reference(type_reference=object_property.value_type),
+                                type_hint=self._context.get_type_hint_for_type_reference(
+                                    type_reference=object_property.value_type
+                                ),
                             )
                         )
 
