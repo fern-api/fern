@@ -5,15 +5,17 @@ from __future__ import annotations
 import typing
 
 from ...core.pydantic_utilities import pydantic_v1
+from .foo import Foo
 
 
-class UnionWithUnknown_Foo(pydantic_v1.BaseModel):
+class UnionWithUnknown_Foo(Foo):
     type: typing.Literal["foo"] = "foo"
-    name: str
 
     class Config:
         frozen = True
         smart_union = True
+        allow_population_by_field_name = True
+        populate_by_name = True
 
 
 class UnionWithUnknown_Unknown(pydantic_v1.BaseModel):

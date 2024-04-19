@@ -5,10 +5,10 @@ from __future__ import annotations
 import typing
 
 from ...core.pydantic_utilities import pydantic_v1
-from ...v_2.problem.types.test_case_id import TestCaseId
 from .error_info import ErrorInfo
+from .graded_test_case_update import GradedTestCaseUpdate
+from .recorded_test_case_update import RecordedTestCaseUpdate
 from .running_submission_state import RunningSubmissionState
-from .test_case_grade import TestCaseGrade
 
 
 class TestSubmissionUpdateInfo_Running(pydantic_v1.BaseModel):
@@ -37,10 +37,8 @@ class TestSubmissionUpdateInfo_Errored(pydantic_v1.BaseModel):
         smart_union = True
 
 
-class TestSubmissionUpdateInfo_GradedTestCase(pydantic_v1.BaseModel):
+class TestSubmissionUpdateInfo_GradedTestCase(GradedTestCaseUpdate):
     type: typing.Literal["gradedTestCase"] = "gradedTestCase"
-    test_case_id: TestCaseId = pydantic_v1.Field(alias="testCaseId")
-    grade: TestCaseGrade
 
     class Config:
         frozen = True
@@ -49,10 +47,8 @@ class TestSubmissionUpdateInfo_GradedTestCase(pydantic_v1.BaseModel):
         populate_by_name = True
 
 
-class TestSubmissionUpdateInfo_RecordedTestCase(pydantic_v1.BaseModel):
+class TestSubmissionUpdateInfo_RecordedTestCase(RecordedTestCaseUpdate):
     type: typing.Literal["recordedTestCase"] = "recordedTestCase"
-    test_case_id: TestCaseId = pydantic_v1.Field(alias="testCaseId")
-    trace_responses_size: int = pydantic_v1.Field(alias="traceResponsesSize")
 
     class Config:
         frozen = True

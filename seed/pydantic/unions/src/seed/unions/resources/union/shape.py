@@ -7,6 +7,8 @@ import typing
 
 from ...core.datetime_utils import serialize_datetime
 from ...core.pydantic_utilities import pydantic_v1
+from .circle import Circle
+from .square import Square
 
 
 class Base(pydantic_v1.BaseModel):
@@ -25,18 +27,16 @@ class Base(pydantic_v1.BaseModel):
         json_encoders = {dt.datetime: serialize_datetime}
 
 
-class Shape_Circle(Base):
+class Shape_Circle(Circle, Base):
     type: typing.Literal["circle"] = "circle"
-    radius: float
 
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
 
 
-class Shape_Square(Base):
+class Shape_Square(Square, Base):
     type: typing.Literal["square"] = "square"
-    length: float
 
     class Config:
         allow_population_by_field_name = True

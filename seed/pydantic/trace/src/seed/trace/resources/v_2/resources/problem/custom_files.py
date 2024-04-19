@@ -6,18 +6,13 @@ import typing
 
 from .....core.pydantic_utilities import pydantic_v1
 from ....commons.language import Language
-from .basic_test_case_template import BasicTestCaseTemplate
+from .basic_custom_files import BasicCustomFiles
 from .file_info_v_2 import FileInfoV2
 from .files import Files
-from .non_void_function_signature import NonVoidFunctionSignature
 
 
-class CustomFiles_Basic(pydantic_v1.BaseModel):
+class CustomFiles_Basic(BasicCustomFiles):
     type: typing.Literal["basic"] = "basic"
-    method_name: str = pydantic_v1.Field(alias="methodName")
-    signature: NonVoidFunctionSignature
-    additional_files: typing.Dict[Language, Files] = pydantic_v1.Field(alias="additionalFiles")
-    basic_test_case_template: BasicTestCaseTemplate = pydantic_v1.Field(alias="basicTestCaseTemplate")
 
     class Config:
         allow_population_by_field_name = True

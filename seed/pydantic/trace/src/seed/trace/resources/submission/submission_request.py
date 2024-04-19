@@ -5,16 +5,14 @@ from __future__ import annotations
 import typing
 
 from ...core.pydantic_utilities import pydantic_v1
-from ..commons.language import Language
-from ..commons.problem_id import ProblemId
-from .submission_file_info import SubmissionFileInfo
-from .submission_id import SubmissionId
+from .initialize_problem_request import InitializeProblemRequest
+from .stop_request import StopRequest
+from .submit_request_v_2 import SubmitRequestV2
+from .workspace_submit_request import WorkspaceSubmitRequest
 
 
-class SubmissionRequest_InitializeProblemRequest(pydantic_v1.BaseModel):
+class SubmissionRequest_InitializeProblemRequest(InitializeProblemRequest):
     type: typing.Literal["initializeProblemRequest"] = "initializeProblemRequest"
-    problem_id: ProblemId = pydantic_v1.Field(alias="problemId")
-    problem_version: typing.Optional[int] = pydantic_v1.Field(alias="problemVersion")
 
     class Config:
         allow_population_by_field_name = True
@@ -25,35 +23,24 @@ class SubmissionRequest_InitializeWorkspaceRequest(pydantic_v1.BaseModel):
     type: typing.Literal["initializeWorkspaceRequest"] = "initializeWorkspaceRequest"
 
 
-class SubmissionRequest_SubmitV2(pydantic_v1.BaseModel):
+class SubmissionRequest_SubmitV2(SubmitRequestV2):
     type: typing.Literal["submitV2"] = "submitV2"
-    submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
-    language: Language
-    submission_files: typing.List[SubmissionFileInfo] = pydantic_v1.Field(alias="submissionFiles")
-    problem_id: ProblemId = pydantic_v1.Field(alias="problemId")
-    problem_version: typing.Optional[int] = pydantic_v1.Field(alias="problemVersion")
-    user_id: typing.Optional[str] = pydantic_v1.Field(alias="userId")
 
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
 
 
-class SubmissionRequest_WorkspaceSubmit(pydantic_v1.BaseModel):
+class SubmissionRequest_WorkspaceSubmit(WorkspaceSubmitRequest):
     type: typing.Literal["workspaceSubmit"] = "workspaceSubmit"
-    submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
-    language: Language
-    submission_files: typing.List[SubmissionFileInfo] = pydantic_v1.Field(alias="submissionFiles")
-    user_id: typing.Optional[str] = pydantic_v1.Field(alias="userId")
 
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
 
 
-class SubmissionRequest_Stop(pydantic_v1.BaseModel):
+class SubmissionRequest_Stop(StopRequest):
     type: typing.Literal["stop"] = "stop"
-    submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
 
     class Config:
         allow_population_by_field_name = True

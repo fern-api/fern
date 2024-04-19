@@ -4,24 +4,13 @@ from __future__ import annotations
 
 import typing
 
-from ....commons.types.variable_type import VariableType
-from ....core.pydantic_utilities import pydantic_v1
-from .parameter import Parameter
+from .non_void_function_signature import NonVoidFunctionSignature
+from .void_function_signature import VoidFunctionSignature
+from .void_function_signature_that_takes_actual_result import VoidFunctionSignatureThatTakesActualResult
 
 
-class FunctionSignature_Void(pydantic_v1.BaseModel):
+class FunctionSignature_Void(VoidFunctionSignature):
     type: typing.Literal["void"] = "void"
-    parameters: typing.List[Parameter]
-
-    class Config:
-        frozen = True
-        smart_union = True
-
-
-class FunctionSignature_NonVoid(pydantic_v1.BaseModel):
-    type: typing.Literal["nonVoid"] = "nonVoid"
-    parameters: typing.List[Parameter]
-    return_type: VariableType = pydantic_v1.Field(alias="returnType")
 
     class Config:
         frozen = True
@@ -30,10 +19,18 @@ class FunctionSignature_NonVoid(pydantic_v1.BaseModel):
         populate_by_name = True
 
 
-class FunctionSignature_VoidThatTakesActualResult(pydantic_v1.BaseModel):
+class FunctionSignature_NonVoid(NonVoidFunctionSignature):
+    type: typing.Literal["nonVoid"] = "nonVoid"
+
+    class Config:
+        frozen = True
+        smart_union = True
+        allow_population_by_field_name = True
+        populate_by_name = True
+
+
+class FunctionSignature_VoidThatTakesActualResult(VoidFunctionSignatureThatTakesActualResult):
     type: typing.Literal["voidThatTakesActualResult"] = "voidThatTakesActualResult"
-    parameters: typing.List[Parameter]
-    actual_result_type: VariableType = pydantic_v1.Field(alias="actualResultType")
 
     class Config:
         frozen = True

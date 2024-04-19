@@ -5,8 +5,6 @@ from __future__ import annotations
 import typing
 
 from ...core.pydantic_utilities import pydantic_v1
-from .list_type import ListType
-from .map_type import MapType
 
 
 class VariableType_IntegerType(pydantic_v1.BaseModel):
@@ -49,10 +47,8 @@ class VariableType_CharType(pydantic_v1.BaseModel):
         smart_union = True
 
 
-class VariableType_ListType(pydantic_v1.BaseModel):
+class VariableType_ListType(ListType):
     type: typing.Literal["listType"] = "listType"
-    value_type: VariableType = pydantic_v1.Field(alias="valueType")
-    is_fixed_length: typing.Optional[bool] = pydantic_v1.Field(alias="isFixedLength")
 
     class Config:
         frozen = True
@@ -61,10 +57,8 @@ class VariableType_ListType(pydantic_v1.BaseModel):
         populate_by_name = True
 
 
-class VariableType_MapType(pydantic_v1.BaseModel):
+class VariableType_MapType(MapType):
     type: typing.Literal["mapType"] = "mapType"
-    key_type: VariableType = pydantic_v1.Field(alias="keyType")
-    value_type: VariableType = pydantic_v1.Field(alias="valueType")
 
     class Config:
         frozen = True
@@ -109,5 +103,8 @@ VariableType = typing.Union[
     VariableType_SinglyLinkedListType,
     VariableType_DoublyLinkedListType,
 ]
+from .list_type import ListType  # noqa: E402
+from .map_type import MapType  # noqa: E402
+
 VariableType_ListType.update_forward_refs(ListType=ListType, MapType=MapType, VariableType=VariableType)
 VariableType_MapType.update_forward_refs(ListType=ListType, MapType=MapType, VariableType=VariableType)

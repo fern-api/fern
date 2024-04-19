@@ -386,9 +386,9 @@
                     },
                     "response": {
                         "type": "streaming",
-                        "value": {
+                        "dataEventType": {
                             "type": "json",
-                            "payload": {
+                            "json": {
                                 "_type": "named",
                                 "name": {
                                     "originalName": "StreamResponse",
@@ -453,10 +453,10 @@
                                     }
                                 },
                                 "typeId": "type_dummy:StreamResponse"
-                            },
-                            "terminator": null,
-                            "docs": null
-                        }
+                            }
+                        },
+                        "terminator": null,
+                        "docs": null
                     },
                     "errors": [],
                     "examples": [
