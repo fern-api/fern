@@ -1,3 +1,4 @@
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Endpoint, EndpointAvailability, EndpointExample, Request, Schema, SchemaId } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
@@ -25,7 +26,7 @@ export function buildEndpoint({
     declarationFile: RelativeFilePath;
     endpoint: Endpoint;
 }): ConvertedEndpoint {
-    const { errors, nonRequestReferencedSchemas } = context.ir;
+    const { nonRequestReferencedSchemas } = context.ir;
 
     let schemaIdsToExclude: string[] = [];
 
@@ -185,18 +186,38 @@ export function buildEndpoint({
         convertedEndpoint.availability = "deprecated";
     }
 
-    Object.keys(endpoint.errors).forEach((statusCode) => {
-        const errorName = errors[parseInt(statusCode)]?.generatedName;
-        if (errorName != null) {
-            if (convertedEndpoint.errors == null) {
-                convertedEndpoint.errors = [];
-            }
-            const prefix = context.builder.addImport({
-                file: declarationFile,
-                fileToImport: ERROR_DECLARATIONS_FILENAME
-            });
-            convertedEndpoint.errors.push(prefix != null ? `${prefix}.${errorName}` : errorName);
+    Object.entries(endpoint.errors).forEach(([statusCode, httpError]) => {
+        let errorName = httpError.generatedName;
+        if (context.builder.enableUniqueErrorsPerEndpoint) {
+            errorName = `${endpoint.generatedRequestName}${httpError.generatedName}`;
         }
+
+        const errorDeclaration: RawSchemas.ErrorDeclarationSchema = {
+            "status-code": parseInt(statusCode)
+        };
+
+        if (httpError.schema != null) {
+            const typeReference = buildTypeReference({
+                schema: httpError.schema,
+                context,
+                fileContainingReference: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)
+            });
+            errorDeclaration.type = getTypeFromTypeReference(typeReference);
+        }
+
+        context.builder.addError(ERROR_DECLARATIONS_FILENAME, {
+            name: errorName,
+            schema: errorDeclaration
+        });
+
+        if (convertedEndpoint.errors == null) {
+            convertedEndpoint.errors = [];
+        }
+        const prefix = context.builder.addImport({
+            file: declarationFile,
+            fileToImport: ERROR_DECLARATIONS_FILENAME
+        });
+        convertedEndpoint.errors.push(prefix != null ? `${prefix}.${errorName}` : errorName);
     });
 
     if (endpoint.examples.length > 0) {

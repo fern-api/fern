@@ -59,6 +59,8 @@ export interface FernDefinitionBuilder {
     setServiceInfo(file: RelativeFilePath, { displayName, docs }: { displayName?: string; docs?: string }): void;
 
     build(): FernDefinition;
+
+    readonly enableUniqueErrorsPerEndpoint: boolean;
 }
 
 export interface FernDefinition {
@@ -72,7 +74,11 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     private packageMarkerFile: RawSchemas.PackageMarkerFileSchema = {};
     private definitionFiles: Record<RelativeFilePath, RawSchemas.DefinitionFileSchema> = {};
 
-    public constructor(ir: OpenApiIntermediateRepresentation, private readonly modifyBasePaths: boolean) {
+    public constructor(
+        ir: OpenApiIntermediateRepresentation,
+        private readonly modifyBasePaths: boolean,
+        public readonly enableUniqueErrorsPerEndpoint: boolean
+    ) {
         this.rootApiFile = {
             name: "api",
             "error-discrimination": {
@@ -219,7 +225,14 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         if (fernFile.errors == null) {
             fernFile.errors = {};
         }
-        fernFile.errors[name] = schema;
+        if (fernFile.errors[name] == null) {
+            fernFile.errors[name] = schema;
+        } else if (fernFile.errors[name]?.type !== schema.type) {
+            fernFile.errors[name] = {
+                "status-code": schema["status-code"],
+                type: "unknown"
+            };
+        }
     }
 
     public addEndpoint(

@@ -340,6 +340,7 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
               "root.UnauthorizedError",
               "root.ForbiddenError",
               "root.NotFoundError",
+              "root.PreconditionFailedError",
               "root.UnprocessableEntityError",
             ],
             "examples": [
@@ -1066,6 +1067,7 @@ The default response lists only recent transactions. Normally, this is transacti
               "root.NotFoundError",
               "root.UnprocessableEntityError",
               "root.TooManyRequestsError",
+              "root.GatewayTimeoutError",
             ],
             "examples": [
               {
@@ -1635,8 +1637,16 @@ Note: This operation requires an identity challenge if the financial institution
         "status-code": 403,
         "type": "ProblemResponse",
       },
+      "GatewayTimeoutError": {
+        "status-code": 504,
+        "type": "ProblemResponse",
+      },
       "NotFoundError": {
         "status-code": 404,
+        "type": "ProblemResponse",
+      },
+      "PreconditionFailedError": {
+        "status-code": 412,
         "type": "ProblemResponse",
       },
       "ServiceUnavailableError": {

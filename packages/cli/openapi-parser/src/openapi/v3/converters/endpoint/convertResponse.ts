@@ -186,7 +186,6 @@ function markErrorSchemas({
         }
         const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
         const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedResponse.content ?? {}, context);
-        context.markSchemaForStatusCode(parsedStatusCode, jsonMediaObject?.schema ?? {}); // defaults to unknown schema
         errors[parsedStatusCode] = {
             statusCode: parsedStatusCode,
             nameOverride: undefined,

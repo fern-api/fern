@@ -38,7 +38,11 @@ export function testConvertOpenAPI(fixtureName: string, filename: string, asyncA
                 },
                 taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER })
             });
-            const fernDefinition = convert({ openApiIr, taskContext: mockTaskContext });
+            const fernDefinition = convert({
+                ir: openApiIr,
+                taskContext: mockTaskContext,
+                enableUniqueErrorsPerEndpoint: false
+            });
             expect(fernDefinition).toMatchSnapshot();
         });
     });

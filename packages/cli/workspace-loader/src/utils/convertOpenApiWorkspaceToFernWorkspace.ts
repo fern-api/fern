@@ -17,7 +17,8 @@ export async function convertToFernWorkspace(
     });
     const definition = convert({
         taskContext: context,
-        openApiIr
+        ir: openApiIr,
+        enableUniqueErrorsPerEndpoint: false
     });
 
     return {
