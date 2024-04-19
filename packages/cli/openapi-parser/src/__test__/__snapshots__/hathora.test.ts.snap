@@ -2308,49 +2308,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
       },
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [
-            {
-              "name": "appId",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "appId",
-                },
-              },
-            },
-            {
-              "name": "buildId",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "double",
-                  "value": 1.1,
-                },
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": {
-            "properties": {},
-            "type": "object",
-          },
-          "response": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "value": "string",
-            },
-          },
-          "type": "full",
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "RunBuildRequest",
       "headers": [],
       "internal": null,
@@ -2405,20 +2363,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": null,
       "response": {
         "description": "Ok",
-        "responseProperty": null,
-        "schema": {
-          "description": null,
-          "generatedName": "RunBuildResponse",
-          "groupName": null,
-          "nameOverride": null,
-          "schema": {
-            "maxLength": null,
-            "minLength": null,
-            "type": "string",
-          },
-          "type": "primitive",
-        },
-        "type": "json",
+        "type": "file",
       },
       "sdkName": null,
       "server": [],
@@ -6532,36 +6477,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
       },
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [
-            {
-              "name": "appId",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "appId",
-                },
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": null,
-          "response": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "value": "string",
-            },
-          },
-          "type": "full",
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetLogsForAppRequest",
       "headers": [],
       "internal": null,
@@ -6653,20 +6569,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": null,
       "response": {
         "description": "Ok",
-        "responseProperty": null,
-        "schema": {
-          "description": null,
-          "generatedName": "GetLogsForAppResponse",
-          "groupName": null,
-          "nameOverride": null,
-          "schema": {
-            "maxLength": null,
-            "minLength": null,
-            "type": "string",
-          },
-          "type": "primitive",
-        },
-        "type": "json",
+        "type": "file",
       },
       "sdkName": null,
       "server": [],
@@ -6700,46 +6603,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
       },
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [
-            {
-              "name": "appId",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "appId",
-                },
-              },
-            },
-            {
-              "name": "processId",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "processId",
-                },
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": null,
-          "response": {
-            "type": "primitive",
-            "value": {
-              "type": "string",
-              "value": "string",
-            },
-          },
-          "type": "full",
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetLogsForProcessRequest",
       "headers": [],
       "internal": null,
@@ -6824,20 +6688,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": null,
       "response": {
         "description": "Ok",
-        "responseProperty": null,
-        "schema": {
-          "description": null,
-          "generatedName": "GetLogsForProcessResponse",
-          "groupName": null,
-          "nameOverride": null,
-          "schema": {
-            "maxLength": null,
-            "minLength": null,
-            "type": "string",
-          },
-          "type": "primitive",
-        },
-        "type": "json",
+        "type": "file",
       },
       "sdkName": null,
       "server": [],
@@ -6871,57 +6722,7 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
       },
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [
-            {
-              "name": "appId",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "appId",
-                },
-              },
-            },
-            {
-              "name": "deploymentId",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "double",
-                  "value": 1.1,
-                },
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": null,
-          "response": {
-            "type": "map",
-            "value": [
-              {
-                "key": {
-                  "type": "string",
-                  "value": "key",
-                },
-                "value": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string",
-                    "value": "value",
-                  },
-                },
-              },
-            ],
-          },
-          "type": "full",
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "GetLogsForDeploymentRequest",
       "headers": [],
       "internal": null,
@@ -7006,13 +6807,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": null,
       "response": {
         "description": "Ok",
-        "responseProperty": null,
-        "schema": {
-          "generatedName": "GetLogsForDeploymentResponse",
-          "nameOverride": null,
-          "type": "unknown",
-        },
-        "type": "json",
+        "type": "text",
       },
       "sdkName": null,
       "server": [],

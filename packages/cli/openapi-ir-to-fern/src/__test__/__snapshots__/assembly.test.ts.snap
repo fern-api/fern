@@ -1243,24 +1243,6 @@ The parameter should map to a JSON encoded list of strings.
               "root.ServiceUnavailableError",
               "root.GatewayTimeoutError",
             ],
-            "examples": [
-              {
-                "path-parameters": {
-                  "subtitle_format": "srt",
-                  "transcript_id": "transcript_id",
-                },
-                "response": {
-                  "body": "WEBVTT
-00:12.340 --> 00:16.220
-Last year I showed these two slides said that demonstrate
-00:16.200 --> 00:20.040
-that the Arctic ice cap which for most of the last 3,000,000 years has been the
-00:20.020 --> 00:25.040
-size of the lower 48 States has shrunk by 40% but this understates
-",
-                },
-              },
-            ],
             "method": "GET",
             "path": "/v2/transcript/{transcript_id}/{subtitle_format}",
             "path-parameters": {
@@ -1284,7 +1266,7 @@ size of the lower 48 States has shrunk by 40% but this understates
             },
             "response": {
               "docs": "The exported captions as text",
-              "type": "string",
+              "type": "text",
             },
           },
           "list": {

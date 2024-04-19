@@ -9,7 +9,7 @@ import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserCon
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
 import { OperationContext } from "../contexts";
 import { ERROR_NAMES_BY_STATUS_CODE } from "../convertToHttpError";
-import { getApplicationJsonSchemaMediaObject } from "./getApplicationJsonSchema";
+import { getApplicationJsonSchemaMediaObject, getSchemaMediaObject } from "./getApplicationJsonSchema";
 
 const APPLICATION_OCTET_STREAM_CONTENT = "application/octet-stream";
 const APPLICATION_PDF = "application/pdf";
@@ -155,7 +155,7 @@ function convertResolvedResponse({
             ? context.resolveSchemaReference(textPlainSchema)
             : textPlainSchema;
         if (resolvedTextPlainSchema.type === "string" && resolvedTextPlainSchema.format === "byte") {
-            return;
+            return ResponseWithExample.file({ description: resolvedResponse.description });
         }
         return ResponseWithExample.text({ description: resolvedResponse.description });
     }
@@ -185,7 +185,7 @@ function markErrorSchemas({
             continue;
         }
         const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
-        const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedResponse.content ?? {}, context);
+        const mediaObject = getSchemaMediaObject(resolvedResponse.content ?? {}, context);
         const errorName = ERROR_NAMES_BY_STATUS_CODE[parsedStatusCode];
         if (errorName == null) {
             context.logger.warn(`No error name found for status code ${statusCode}`);
@@ -196,8 +196,8 @@ function markErrorSchemas({
             nameOverride: undefined,
             generatedName: errorName,
             description: resolvedResponse.description,
-            schema: convertSchema(jsonMediaObject?.schema ?? {}, false, context, [errorName, "Body"]),
-            fullExamples: jsonMediaObject?.examples
+            schema: convertSchema(mediaObject?.schema ?? {}, false, context, [errorName, "Body"]),
+            fullExamples: mediaObject?.examples
         };
     }
     return errors;

@@ -22,30 +22,33 @@ export function getApplicationJsonSchemaMediaObject(
             }
             const schema = mediaObject.schema;
 
-            if (schema != null) {
-                return {
-                    schema,
-                    examples: getExamples(media, context)
-                };
-            }
-        }
-    }
-
-    // prefer json before text/plain
-    for (const contentType of Object.keys(media)) {
-        if (contentType.includes("text/plain")) {
-            const mediaObject = media[contentType];
-            if (mediaObject == null) {
-                continue;
-            }
-            const schema = mediaObject.schema;
-
             return {
-                schema: schema ?? { type: "string" },
-                examples: getExamples(mediaObject, context)
+                schema: schema ?? {},
+                examples: getExamples(media, context)
             };
         }
     }
+
+    return undefined;
+}
+
+export function getSchemaMediaObject(
+    media: Record<string, OpenAPIV3.MediaTypeObject>,
+    context: AbstractOpenAPIV3ParserContext
+): ApplicationJsonMediaObject | undefined {
+    for (const contentType of Object.keys(media)) {
+        const mediaObject = media[contentType];
+        if (mediaObject == null) {
+            continue;
+        }
+        const schema = mediaObject.schema;
+
+        return {
+            schema: schema ?? {},
+            examples: getExamples(mediaObject, context)
+        };
+    }
+
     return undefined;
 }
 

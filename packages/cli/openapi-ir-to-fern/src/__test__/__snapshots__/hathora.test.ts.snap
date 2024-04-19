@@ -528,18 +528,6 @@ exports[`open api parser hathora simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "path-parameters": {
-                  "appId": "appId",
-                  "buildId": 1.1,
-                },
-                "request": {},
-                "response": {
-                  "body": "string",
-                },
-              },
-            ],
             "method": "POST",
             "path": "/builds/v1/{appId}/run/{buildId}",
             "path-parameters": {
@@ -559,7 +547,7 @@ exports[`open api parser hathora simple 1`] = `
             },
             "response": {
               "docs": "Ok",
-              "type": "string",
+              "type": "file",
             },
           },
         },
@@ -1420,16 +1408,6 @@ exports[`open api parser hathora simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "path-parameters": {
-                  "appId": "appId",
-                },
-                "response": {
-                  "body": "string",
-                },
-              },
-            ],
             "method": "GET",
             "path": "/logs/v1/{appId}/all",
             "path-parameters": {
@@ -1445,7 +1423,7 @@ exports[`open api parser hathora simple 1`] = `
             },
             "response": {
               "docs": "Ok",
-              "type": "string",
+              "type": "file",
             },
           },
           "GetLogsForDeployment": {
@@ -1453,19 +1431,6 @@ exports[`open api parser hathora simple 1`] = `
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
-            ],
-            "examples": [
-              {
-                "path-parameters": {
-                  "appId": "appId",
-                  "deploymentId": 1.1,
-                },
-                "response": {
-                  "body": {
-                    "key": "value",
-                  },
-                },
-              },
             ],
             "method": "GET",
             "path": "/logs/v1/{appId}/deployment/{deploymentId}",
@@ -1482,7 +1447,7 @@ exports[`open api parser hathora simple 1`] = `
             },
             "response": {
               "docs": "Ok",
-              "type": "unknown",
+              "type": "text",
             },
           },
           "GetLogsForProcess": {
@@ -1490,17 +1455,6 @@ exports[`open api parser hathora simple 1`] = `
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
-            ],
-            "examples": [
-              {
-                "path-parameters": {
-                  "appId": "appId",
-                  "processId": "processId",
-                },
-                "response": {
-                  "body": "string",
-                },
-              },
             ],
             "method": "GET",
             "path": "/logs/v1/{appId}/process/{processId}",
@@ -1517,7 +1471,7 @@ exports[`open api parser hathora simple 1`] = `
             },
             "response": {
               "docs": "Ok",
-              "type": "string",
+              "type": "file",
             },
           },
         },

@@ -968,7 +968,108 @@ This error response may have one of the following \`type\` values:
   The named \`accountId\` does not exist or the user is not entitled to access the account.
   Remediation: Pass the \`id\` of an existing account the caller has access to.
 ",
-          "examples": [],
+          "examples": [
+            {
+              "description": null,
+              "example": {
+                "type": "map",
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "id",
+                    },
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "value": "3fbad566-be86-4b22-9ba6-3ca99fdc0799",
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "type",
+                    },
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "value": "https://production.api.apiture.com/errors/invalidAccountId/v1.0.0",
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "title",
+                    },
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "value": "Unprocessable Entity",
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "status",
+                    },
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "int",
+                        "value": 422,
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "occurredAt",
+                    },
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "value": "2022-04-25T12:42:21.375Z",
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "detail",
+                    },
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "value": "No such account exists for the given account ID.",
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "instance",
+                    },
+                    "value": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "value": "https://production.api.apiture.com/banking/accountBalances?accounts=bb709151-575041fcd617",
+                      },
+                    },
+                  },
+                ],
+              },
+              "name": null,
+            },
+          ],
           "generatedName": "UnprocessableEntityError",
           "nameOverride": null,
           "schema": {
