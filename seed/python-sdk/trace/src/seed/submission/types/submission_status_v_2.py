@@ -4,12 +4,19 @@ from __future__ import annotations
 
 import typing
 
-from .test_submission_status_v_2 import TestSubmissionStatusV2
-from .workspace_submission_status_v_2 import WorkspaceSubmissionStatusV2
+from ...commons.types.problem_id import ProblemId
+from ...core.pydantic_utilities import pydantic_v1
+from ...v_2.problem.types.problem_info_v_2 import ProblemInfoV2
+from .test_submission_update import TestSubmissionUpdate
+from .workspace_submission_update import WorkspaceSubmissionUpdate
 
 
-class SubmissionStatusV2_Test(TestSubmissionStatusV2):
+class SubmissionStatusV2_Test(pydantic_v1.BaseModel):
     type: typing.Literal["test"] = "test"
+    updates: typing.List[TestSubmissionUpdate]
+    problem_id: ProblemId = pydantic_v1.Field(alias="problemId")
+    problem_version: int = pydantic_v1.Field(alias="problemVersion")
+    problem_info: ProblemInfoV2 = pydantic_v1.Field(alias="problemInfo")
 
     class Config:
         frozen = True
@@ -18,14 +25,13 @@ class SubmissionStatusV2_Test(TestSubmissionStatusV2):
         populate_by_name = True
 
 
-class SubmissionStatusV2_Workspace(WorkspaceSubmissionStatusV2):
+class SubmissionStatusV2_Workspace(pydantic_v1.BaseModel):
     type: typing.Literal["workspace"] = "workspace"
+    updates: typing.List[WorkspaceSubmissionUpdate]
 
     class Config:
         frozen = True
         smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
 
 
 SubmissionStatusV2 = typing.Union[SubmissionStatusV2_Test, SubmissionStatusV2_Workspace]
