@@ -217,7 +217,7 @@ export function generateIr({
 
                             return {
                                 name: example.name,
-                                description: undefined,
+                                description: example.description,
                                 example: fullExample
                             };
                         })

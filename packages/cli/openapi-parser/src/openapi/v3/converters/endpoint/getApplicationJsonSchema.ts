@@ -52,23 +52,27 @@ export function getApplicationJsonSchemaMediaObject(
 function getExamples(mediaObject: OpenAPIV3.MediaTypeObject, context: AbstractOpenAPIV3ParserContext) {
     const fullExamples: NamedFullExample[] = [];
     if (mediaObject.example != null) {
-        fullExamples.push({ name: undefined, value: mediaObject.example });
+        fullExamples.push({ name: undefined, value: mediaObject.example, description: undefined });
     }
     const examples = getExtension<Record<string, OpenAPIV3.ExampleObject>>(mediaObject, OpenAPIExtension.EXAMPLES);
     if (examples != null && Object.keys(examples).length > 0) {
         fullExamples.push(
             ...Object.entries(examples).map(([name, value]) => {
-                return { name: value.summary ?? name, value: value.value };
+                return { name: value.summary ?? name, value: value.value, description: value.description };
             })
         );
     }
     if (mediaObject.examples != null && Object.keys(mediaObject.examples).length > 0) {
         fullExamples.push(
-            ...Object.entries(mediaObject.examples).map(([name, example]) => {
+            ...Object.entries(mediaObject.examples).map(([name, example]): NamedFullExample => {
                 const resolvedExample: OpenAPIV3.ExampleObject = isReferenceObject(example)
                     ? context.resolveExampleReference(example)
                     : example;
-                return { name: resolvedExample.summary ?? name, value: resolvedExample.value };
+                return {
+                    name: resolvedExample.summary ?? name,
+                    value: resolvedExample.value,
+                    description: resolvedExample.description
+                };
             })
         );
     }

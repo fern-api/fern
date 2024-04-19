@@ -4,6 +4,7 @@ imports:
 
 types:
   NamedFullExample:
+    extends: commons.WithDescription
     properties:
       name: optional<string>
       value: unknown
