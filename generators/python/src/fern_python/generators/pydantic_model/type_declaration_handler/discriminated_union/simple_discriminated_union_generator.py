@@ -107,27 +107,19 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                 internal_pydantic_model_for_single_union_type.add_field(discriminant_field)
 
                 shape = single_union_type.shape.get_as_union()
-                if shape.properties_type == "singleProperty":
-                    internal_pydantic_model_for_single_union_type.add_field(
-                        PydanticField(
-                            name=shape.name.name.snake_case.unsafe_name,
-                            pascal_case_field_name=shape.name.name.pascal_case.unsafe_name,
-                            json_field_name=shape.name.wire_value,
-                            type_hint=self._context.get_type_hint_for_type_reference(type_reference=shape.type),
-                        )
-                    )
-                    all_referenced_types.append(shape.type)
-                elif shape.properties_type == "samePropertiesAsObject":
+                object_properties = []
+                if shape.properties_type == "samePropertiesAsObject":
                     object_properties = self._context.get_all_properties_including_extensions(shape.type_id)
                     for object_property in object_properties:
                         internal_pydantic_model_for_single_union_type.add_field(
                             PydanticField(
-                                name=object_property.name.name.snake_case.unsafe_name,
+                                name=object_property.name.name.snake_case.safe_name,
                                 pascal_case_field_name=object_property.name.name.pascal_case.unsafe_name,
                                 json_field_name=object_property.name.wire_value,
                                 type_hint=self._context.get_type_hint_for_type_reference(
                                     type_reference=object_property.value_type
                                 ),
+                                description=object_property.docs
                             )
                         )
 
@@ -137,7 +129,8 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                 # we assume that the forward-refed types are the ones
                 # that circularly reference this union type
                 referenced_type_ids: Set[ir_types.TypeId] = single_union_type.shape.visit(
-                    same_properties_as_object=lambda type_name: self._context.get_referenced_types(type_name.type_id),
+                    same_properties_as_object=lambda type_name: self._get_referenced_types_from_properties(
+                        object_properties),
                     single_property=lambda single_property: self._context.get_referenced_types_of_type_reference(
                         single_property.type
                     ),
@@ -146,7 +139,7 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                 forward_refed_types = [
                     referenced_type_id
                     for referenced_type_id in referenced_type_ids
-                    if self._context.does_type_reference_other_type(referenced_type_id, self._name.type_id)
+                    if referenced_type_id !=  self._name.type_id and self._context.does_type_reference_other_type(referenced_type_id, self._name.type_id)
                 ]
                 if len(forward_refed_types) > 0:
                     # when calling update_forward_refs, Pydantic will throw
@@ -215,6 +208,17 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
         single_union_type: ir_types.SingleUnionType,
     ) -> AST.Expression:
         return AST.Expression(f'"{single_union_type.discriminant_value.wire_value}"')
+
+    def _get_referenced_types_from_properties(
+            self, properties: List[ir_types.ObjectProperty]) -> Set[ir_types.TypeId]:
+        referenced_type_ids: Set[ir_types.TypeId] = set()
+        for object_property in properties:
+            type_reference = object_property.value_type
+            referenced_types = self._context.get_referenced_types_of_type_reference(
+                type_reference
+            )
+            referenced_type_ids.update(referenced_types)
+        return referenced_type_ids
 
 
 class DiscriminatedUnionSnippetGenerator:
