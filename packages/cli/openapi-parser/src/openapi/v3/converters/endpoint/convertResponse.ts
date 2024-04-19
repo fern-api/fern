@@ -30,10 +30,10 @@ export function convertResponse({
     context,
     responseBreadcrumbs,
     responseStatusCode,
-    isStreaming
+    streamFormat
 }: {
     operationContext: OperationContext;
-    isStreaming: boolean;
+    streamFormat: "sse" | "json" | undefined;
     responses: OpenAPIV3.ResponsesObject;
     context: AbstractOpenAPIV3ParserContext;
     responseBreadcrumbs: string[];
@@ -55,7 +55,7 @@ export function convertResponse({
             response,
             context,
             responseBreadcrumbs,
-            isStreaming
+            streamFormat
         });
         if (convertedResponse != null) {
             switch (convertedResponse.type) {
@@ -65,6 +65,7 @@ export function convertResponse({
                         errorStatusCodes
                     };
                 case "streamingJson":
+                case "streamingSse":
                     return {
                         value: convertedResponse,
                         errorStatusCodes
@@ -131,7 +132,7 @@ function convertResolvedResponse({
                         )
                     });
                 case "sse":
-                    return ResponseWithExample.sse({
+                    return ResponseWithExample.streamingSse({
                         description: resolvedResponse.description,
                         responseProperty: undefined,
                         schema: convertSchemaWithExampleToSchema(

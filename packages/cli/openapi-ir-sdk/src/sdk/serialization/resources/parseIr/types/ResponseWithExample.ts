@@ -14,6 +14,7 @@ export const ResponseWithExample: core.serialization.Schema<
         file: core.serialization.lazyObject(async () => (await import("../../..")).FileResponse),
         json: core.serialization.lazyObject(async () => (await import("../../..")).JsonResponseWithExample),
         text: core.serialization.lazyObject(async () => (await import("../../..")).TextResponse),
+        streamingSse: core.serialization.lazyObject(async () => (await import("../../..")).JsonResponse),
         streamingText: core.serialization.lazyObject(async () => (await import("../../..")).TextResponse),
         streamingJson: core.serialization.lazyObject(async () => (await import("../../..")).JsonResponse),
     })
@@ -26,6 +27,8 @@ export const ResponseWithExample: core.serialization.Schema<
                     return FernOpenapiIr.ResponseWithExample.json(value);
                 case "text":
                     return FernOpenapiIr.ResponseWithExample.text(value);
+                case "streamingSse":
+                    return FernOpenapiIr.ResponseWithExample.streamingSse(value);
                 case "streamingText":
                     return FernOpenapiIr.ResponseWithExample.streamingText(value);
                 case "streamingJson":
@@ -42,6 +45,7 @@ export declare namespace ResponseWithExample {
         | ResponseWithExample.File
         | ResponseWithExample.Json
         | ResponseWithExample.Text
+        | ResponseWithExample.StreamingSse
         | ResponseWithExample.StreamingText
         | ResponseWithExample.StreamingJson;
 
@@ -55,6 +59,10 @@ export declare namespace ResponseWithExample {
 
     interface Text extends serializers.TextResponse.Raw {
         type: "text";
+    }
+
+    interface StreamingSse extends serializers.JsonResponse.Raw {
+        type: "streamingSse";
     }
 
     interface StreamingText extends serializers.TextResponse.Raw {

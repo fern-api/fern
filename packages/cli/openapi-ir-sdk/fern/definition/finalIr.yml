@@ -325,7 +325,7 @@ types:
       file: FileResponse
       json: JsonResponse
       text: TextResponse
-      streamingSse: finalIr.TextResponse
+      streamingSse: JsonResponse
       streamingText: TextResponse
       streamingJson:
         type: JsonResponse
