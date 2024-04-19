@@ -155,7 +155,8 @@ export async function writeInputs({
         organization: DUMMY_ORGANIZATION,
         absolutePathToSnippet: undefined,
         absolutePathToSnippetTemplates: undefined,
-        writeUnitTests: true
+        writeUnitTests: true,
+        generateOauthClients: true
     }).config;
     const absolutePathToInputsDirectory = AbsoluteFilePath.of(
         join(absolutePathToOutput, RelativeFilePath.of(INPUTS_DIRECTORY_NAME))

@@ -135,6 +135,14 @@ class CoreUtilities:
                 module=AST.Module.local(*self._module_path, "api_error"), named_import="ApiError"
             ),
         )
+    
+    def get_oauth_token_provider(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "oauth_token_provider"), named_import="OAuthTokenProvider"
+            ),
+        )
 
     def instantiate_api_error(
         self, *, status_code: Optional[AST.Expression], body: Optional[AST.Expression]

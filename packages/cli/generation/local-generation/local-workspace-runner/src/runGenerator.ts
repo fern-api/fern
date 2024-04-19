@@ -32,7 +32,8 @@ export async function writeFilesToDiskAndRunGenerator({
     context,
     irVersionOverride,
     outputVersionOverride,
-    writeUnitTests
+    writeUnitTests,
+    generateOauthClients
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -48,6 +49,7 @@ export async function writeFilesToDiskAndRunGenerator({
     irVersionOverride: string | undefined;
     outputVersionOverride: string | undefined;
     writeUnitTests: boolean;
+    generateOauthClients: boolean;
 }): Promise<GeneratorRunResponse> {
     const absolutePathToIr = await writeIrToFile({
         workspace,
@@ -103,7 +105,8 @@ export async function writeFilesToDiskAndRunGenerator({
         keepDocker,
         generatorInvocation,
         context,
-        writeUnitTests
+        writeUnitTests,
+        generateOauthClients
     });
 
     const taskHandler = new LocalTaskHandler({
@@ -208,6 +211,7 @@ export declare namespace runGenerator {
         context: TaskContext;
         generatorInvocation: generatorsYml.GeneratorInvocation;
         writeUnitTests: boolean;
+        generateOauthClients: boolean;
     }
 }
 
@@ -222,7 +226,8 @@ export async function runGenerator({
     absolutePathToWriteConfigJson,
     keepDocker,
     generatorInvocation,
-    writeUnitTests
+    writeUnitTests,
+    generateOauthClients
 }: runGenerator.Args): Promise<void> {
     const { name, version, config: customConfig } = generatorInvocation;
     const imageName = `${name}:${version}`;
@@ -240,7 +245,8 @@ export async function runGenerator({
         organization,
         absolutePathToSnippet,
         absolutePathToSnippetTemplates,
-        writeUnitTests
+        writeUnitTests,
+        generateOauthClients
     });
     binds.push(...bindsForGenerators);
 

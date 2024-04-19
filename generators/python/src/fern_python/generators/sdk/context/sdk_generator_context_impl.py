@@ -12,6 +12,7 @@ from ..custom_config import SDKCustomConfig
 from ..declaration_referencers import (
     EnvironmentsEnumDeclarationReferencer,
     ErrorDeclarationReferencer,
+    OAuthTokenProviderDeclarationReferencer,
     RootClientDeclarationReferencer,
     SubpackageAsyncClientDeclarationReferencer,
     SubpackageClientDeclarationReferencer,
@@ -52,6 +53,11 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
         )
         self._subpackage_async_client_declaration_referencer = SubpackageAsyncClientDeclarationReferencer(
             skip_resources_module=custom_config.improved_imports
+        )
+        self._oauth_generated_client_declaration_referencer = OAuthTokenProviderDeclarationReferencer(
+            client_class_name=client_class_name,
+            client_filename=client_filename,
+            skip_resources_module=custom_config.improved_imports,
         )
         self._root_generated_client_declaration_referencer = RootClientDeclarationReferencer(
             client_class_name=client_class_name,
@@ -98,6 +104,9 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
     def get_reference_to_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> AST.ClassReference:
         subpackage = self.ir.subpackages[subpackage_id]
         return self._subpackage_client_declaration_referencer.get_class_reference(name=subpackage)
+
+    def get_filepath_for_generated_oauth_token_provider(self) -> Filepath:
+        return self._oauth_generated_client_declaration_referencer.get_filepath(name=None)
 
     def get_filepath_for_generated_root_client(self) -> Filepath:
         return self._root_generated_client_declaration_referencer.get_filepath(name=None)

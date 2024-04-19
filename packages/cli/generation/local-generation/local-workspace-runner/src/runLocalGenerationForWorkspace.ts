@@ -44,7 +44,8 @@ export async function runLocalGenerationForWorkspace({
                         context: interactiveTaskContext,
                         irVersionOverride: generatorInvocation.irVersionOverride,
                         outputVersionOverride: undefined,
-                        writeUnitTests: false
+                        writeUnitTests: false,
+                        generateOauthClients: false
                     });
                     interactiveTaskContext.logger.info(
                         chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)

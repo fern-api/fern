@@ -63,6 +63,7 @@ class SecurityFileGenerator:
             bearer=lambda x: BearerAuthGenerator(context=self._context),
             basic=lambda x: BasicAuthGenerator(context=self._context),
             header=lambda header: HeaderAuthGenerator(context=self._context, http_header=header),
+            oauth=lambda x: BearerAuthGenerator(context=self._context),
         )
         parsed_auth_type = auth_generator.get_parsed_auth_type()
 

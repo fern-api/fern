@@ -10,6 +10,7 @@ from .subpackage_client_declaration_referencer import (
     SubpackageClientDeclarationReferencer,
 )
 from .type_declaration_referencer import TypeDeclarationReferencer
+from .oauth_token_provider_declaration_referencer import OAuthTokenProviderDeclarationReferencer
 
 __all__ = [
     "EnvironmentsEnumDeclarationReferencer",
@@ -18,4 +19,5 @@ __all__ = [
     "TypeDeclarationReferencer",
     "RootClientDeclarationReferencer",
     "SubpackageAsyncClientDeclarationReferencer",
+    "OAuthTokenProviderDeclarationReferencer",
 ]
