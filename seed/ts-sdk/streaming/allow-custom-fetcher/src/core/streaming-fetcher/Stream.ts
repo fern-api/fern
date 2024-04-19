@@ -1,46 +1,78 @@
-import { Readable } from "node:stream";
-import { ReadableStream } from "stream/web";
+import { Readable } from "stream";
+import { RUNTIME } from "../runtime";
+
+export declare namespace Stream {
+    interface Args {
+        /**
+         * The HTTP response stream to read from.
+         */
+        stream: Readable | ReadableStream;
+        /**
+         * The event shape to use for parsing the stream data.
+         */
+        eventShape: JsonEvent | SseEvent;
+    }
+
+    interface JsonEvent {
+        type: "json";
+        messageTerminator: string;
+    }
+
+    interface SseEvent {
+        type: "sse";
+        streamTerminator?: string;
+    }
+}
+
+const DATA_PREFIX = "data:";
 
 export class Stream<T> implements AsyncIterable<T> {
     private stream: Readable | ReadableStream;
     private parse: (val: unknown) => Promise<T>;
-    private terminator: string;
+    /**
+     * The prefix to use for each message. For example,
+     * for SSE, the prefix is "data: ".
+     */
+    private prefix: string | undefined;
+    private messageTerminator: string;
 
-    constructor({
-        stream,
-        parse,
-        terminator,
-    }: {
-        stream: Readable | ReadableStream;
-        parse: (val: unknown) => Promise<T>;
-        terminator: string;
-    }) {
+    constructor({ stream, parse, eventShape }: Stream.Args & { parse: (val: unknown) => Promise<T> }) {
         this.stream = stream;
         this.parse = parse;
-        this.terminator = terminator;
+        if (eventShape.type === "sse") {
+            this.prefix = DATA_PREFIX;
+            this.messageTerminator = "\n";
+        } else {
+            this.messageTerminator = eventShape.messageTerminator;
+        }
     }
 
     private async *iterMessages(): AsyncGenerator<T, void> {
-        const decoder = new TextDecoder("utf8");
         const stream = readableStreamAsyncIterable<any>(this.stream);
-        let previous = "";
+        let buf = "";
+        let prefixSeen = false;
         for await (const chunk of stream) {
-            let bufferChunk = "";
-            // Buffer is present in Node.js environment
-            if (typeof Buffer !== "undefined") {
-                bufferChunk += Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
-            }
-            // TextDecoder is present in Browser environment
-            else if (typeof TextDecoder !== "undefined") {
-                bufferChunk += decoder.decode(chunk);
-            }
-            previous += bufferChunk;
+            buf += this.decodeChunk(chunk);
             let terminatorIndex: number;
-            while ((terminatorIndex = previous.indexOf(this.terminator)) >= 0) {
-                const line = previous.slice(0, terminatorIndex).trimEnd();
-                const message = await this.parse(JSON.parse(line));
+            // Parse the chunk into as many messages as possible
+            while ((terminatorIndex = buf.indexOf(this.messageTerminator)) > 0) {
+                // Skip the chunk until the prefix is found
+                if (!prefixSeen && this.prefix != null) {
+                    const prefixIndex = buf.indexOf(this.prefix);
+                    if (prefixIndex === -1) {
+                        buf = "";
+                        break;
+                    }
+                    prefixSeen = true;
+                    buf = buf.slice(prefixIndex + this.prefix.length);
+                }
+                // Yield message from the prefix to the terminator
+                const line = buf.slice(0, terminatorIndex).trimEnd();
+                console.log(line);
+                const message = await this.parse(line);
                 yield message;
-                previous = previous.slice(terminatorIndex + 1);
+                buf = buf.slice(terminatorIndex + 1);
+                prefixSeen = false;
             }
         }
     }
@@ -49,6 +81,20 @@ export class Stream<T> implements AsyncIterable<T> {
         for await (const message of this.iterMessages()) {
             yield message;
         }
+    }
+
+    private decodeChunk(chunk: any): string {
+        let decoded = "";
+        // Buffer is present in Node.js environment
+        if (RUNTIME.type === "node" && typeof chunk != "undefined") {
+            decoded += Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
+        }
+        // TextDecoder is present in Browser environment
+        else if (RUNTIME.type === "browser" && typeof TextDecoder !== "undefined") {
+            const decoder = new TextDecoder("utf8");
+            decoded += decoder.decode(chunk);
+        }
+        return decoded;
     }
 }
 
