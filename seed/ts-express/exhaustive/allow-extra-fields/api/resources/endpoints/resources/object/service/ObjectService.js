@@ -40,8 +40,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ObjectService = void 0;
 const express_1 = __importDefault(require("express"));
-const serializers = __importStar(require("../../../../../../serialization"));
-const errors = __importStar(require("../../../../../../errors"));
+const serializers = __importStar(require("../../../../../../serialization/index"));
+const errors = __importStar(require("../../../../../../errors/index"));
 class ObjectService {
     constructor(methods, middleware = []) {
         this.methods = methods;

@@ -36,7 +36,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BadRequest = void 0;
-const errors = __importStar(require("../../../../errors"));
+const errors = __importStar(require("../../../../errors/index"));
 class BadRequest extends errors.SeedBasicAuthEnvironmentVariablesError {
     constructor() {
         super("BadRequest");
