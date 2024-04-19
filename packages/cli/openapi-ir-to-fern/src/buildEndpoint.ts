@@ -141,7 +141,20 @@ export function buildEndpoint({
                 });
                 convertedEndpoint["response-stream"] = {
                     docs: jsonResponse.description ?? undefined,
-                    type: getTypeFromTypeReference(responseTypeReference)
+                    type: getTypeFromTypeReference(responseTypeReference),
+                    format: "json"
+                };
+            },
+            streamingSse: (jsonResponse) => {
+                const responseTypeReference = buildTypeReference({
+                    schema: jsonResponse.schema,
+                    context,
+                    fileContainingReference: declarationFile
+                });
+                convertedEndpoint["response-stream"] = {
+                    docs: jsonResponse.description ?? undefined,
+                    type: getTypeFromTypeReference(responseTypeReference),
+                    format: "sse"
                 };
             },
             file: (fileResponse) => {

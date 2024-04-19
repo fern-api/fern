@@ -46,9 +46,16 @@ export function getFernStreamingExtension(operation: OpenAPIV3.OperationObject):
             : undefined;
     }
 
+    if (streaming["stream-condition"] == null && streaming.format != null) {
+        return {
+            type: "stream",
+            format: streaming.format
+        };
+    }
+
     return {
         type: "streamCondition",
-        format: streaming.format ?? "json", // Default to "json
+        format: streaming.format ?? "json", // Default to "json"
         streamConditionProperty: maybeTrimRequestPrefix(streaming["stream-condition"]),
         responseStream: streaming["response-stream"],
         response: streaming.response
