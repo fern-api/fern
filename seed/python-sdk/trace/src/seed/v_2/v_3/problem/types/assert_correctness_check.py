@@ -4,15 +4,12 @@ from __future__ import annotations
 
 import typing
 
-from .....core.pydantic_utilities import pydantic_v1
-from .function_implementation_for_multiple_languages import FunctionImplementationForMultipleLanguages
-from .parameter import Parameter
-from .parameter_id import ParameterId
+from .deep_equality_correctness_check import DeepEqualityCorrectnessCheck
+from .void_function_definition_that_takes_actual_result import VoidFunctionDefinitionThatTakesActualResult
 
 
-class AssertCorrectnessCheck_DeepEquality(pydantic_v1.BaseModel):
+class AssertCorrectnessCheck_DeepEquality(DeepEqualityCorrectnessCheck):
     type: typing.Literal["deepEquality"] = "deepEquality"
-    expected_value_parameter_id: ParameterId = pydantic_v1.Field(alias="expectedValueParameterId")
 
     class Config:
         frozen = True
@@ -21,10 +18,8 @@ class AssertCorrectnessCheck_DeepEquality(pydantic_v1.BaseModel):
         populate_by_name = True
 
 
-class AssertCorrectnessCheck_Custom(pydantic_v1.BaseModel):
+class AssertCorrectnessCheck_Custom(VoidFunctionDefinitionThatTakesActualResult):
     type: typing.Literal["custom"] = "custom"
-    additional_parameters: typing.List[Parameter] = pydantic_v1.Field(alias="additionalParameters")
-    code: FunctionImplementationForMultipleLanguages
 
     class Config:
         frozen = True

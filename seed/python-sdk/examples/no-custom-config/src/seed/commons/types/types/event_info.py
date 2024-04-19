@@ -5,14 +5,12 @@ from __future__ import annotations
 import typing
 
 from ....core.pydantic_utilities import pydantic_v1
+from .metadata import Metadata
 from .tag import Tag
 
 
-class EventInfo_Metadata(pydantic_v1.BaseModel):
+class EventInfo_Metadata(Metadata):
     type: typing.Literal["metadata"] = "metadata"
-    id: str
-    data: typing.Optional[typing.Dict[str, str]]
-    json_string: typing.Optional[str] = pydantic_v1.Field(alias="jsonString")
 
     class Config:
         frozen = True

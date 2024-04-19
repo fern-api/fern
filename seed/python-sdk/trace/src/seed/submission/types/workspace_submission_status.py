@@ -6,9 +6,8 @@ import typing
 
 from ...core.pydantic_utilities import pydantic_v1
 from .error_info import ErrorInfo
-from .exception_info import ExceptionInfo
-from .exception_v_2 import ExceptionV2
 from .running_submission_state import RunningSubmissionState
+from .workspace_run_details import WorkspaceRunDetails
 
 
 class WorkspaceSubmissionStatus_Stopped(pydantic_v1.BaseModel):
@@ -37,11 +36,8 @@ class WorkspaceSubmissionStatus_Running(pydantic_v1.BaseModel):
         smart_union = True
 
 
-class WorkspaceSubmissionStatus_Ran(pydantic_v1.BaseModel):
+class WorkspaceSubmissionStatus_Ran(WorkspaceRunDetails):
     type: typing.Literal["ran"] = "ran"
-    exception_v_2: typing.Optional[ExceptionV2] = pydantic_v1.Field(alias="exceptionV2")
-    exception: typing.Optional[ExceptionInfo]
-    stdout: str
 
     class Config:
         frozen = True
@@ -50,11 +46,8 @@ class WorkspaceSubmissionStatus_Ran(pydantic_v1.BaseModel):
         populate_by_name = True
 
 
-class WorkspaceSubmissionStatus_Traced(pydantic_v1.BaseModel):
+class WorkspaceSubmissionStatus_Traced(WorkspaceRunDetails):
     type: typing.Literal["traced"] = "traced"
-    exception_v_2: typing.Optional[ExceptionV2] = pydantic_v1.Field(alias="exceptionV2")
-    exception: typing.Optional[ExceptionInfo]
-    stdout: str
 
     class Config:
         frozen = True

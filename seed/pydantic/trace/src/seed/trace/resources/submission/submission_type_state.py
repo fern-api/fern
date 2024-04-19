@@ -4,28 +4,24 @@ from __future__ import annotations
 
 import typing
 
-from ...core.pydantic_utilities import pydantic_v1
-from ..commons.problem_id import ProblemId
-from ..commons.test_case import TestCase
-from .test_submission_status import TestSubmissionStatus
-from .workspace_submission_status import WorkspaceSubmissionStatus
+from .test_submission_state import TestSubmissionState
+from .workspace_submission_state import WorkspaceSubmissionState
 
 
-class SubmissionTypeState_Test(pydantic_v1.BaseModel):
+class SubmissionTypeState_Test(TestSubmissionState):
     type: typing.Literal["test"] = "test"
-    problem_id: ProblemId = pydantic_v1.Field(alias="problemId")
-    default_test_cases: typing.List[TestCase] = pydantic_v1.Field(alias="defaultTestCases")
-    custom_test_cases: typing.List[TestCase] = pydantic_v1.Field(alias="customTestCases")
-    status: TestSubmissionStatus
 
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
 
 
-class SubmissionTypeState_Workspace(pydantic_v1.BaseModel):
+class SubmissionTypeState_Workspace(WorkspaceSubmissionState):
     type: typing.Literal["workspace"] = "workspace"
-    status: WorkspaceSubmissionStatus
+
+    class Config:
+        allow_population_by_field_name = True
+        populate_by_name = True
 
 
 SubmissionTypeState = typing.Union[SubmissionTypeState_Test, SubmissionTypeState_Workspace]

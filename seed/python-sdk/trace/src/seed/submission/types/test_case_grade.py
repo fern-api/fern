@@ -4,26 +4,22 @@ from __future__ import annotations
 
 import typing
 
-from ...commons.types.variable_value import VariableValue
-from ...core.pydantic_utilities import pydantic_v1
-from .exception_v_2 import ExceptionV2
+from .test_case_hidden_grade import TestCaseHiddenGrade
+from .test_case_non_hidden_grade import TestCaseNonHiddenGrade
 
 
-class TestCaseGrade_Hidden(pydantic_v1.BaseModel):
+class TestCaseGrade_Hidden(TestCaseHiddenGrade):
     type: typing.Literal["hidden"] = "hidden"
-    passed: bool
 
     class Config:
         frozen = True
         smart_union = True
+        allow_population_by_field_name = True
+        populate_by_name = True
 
 
-class TestCaseGrade_NonHidden(pydantic_v1.BaseModel):
+class TestCaseGrade_NonHidden(TestCaseNonHiddenGrade):
     type: typing.Literal["nonHidden"] = "nonHidden"
-    passed: bool
-    actual_result: typing.Optional[VariableValue] = pydantic_v1.Field(alias="actualResult")
-    exception: typing.Optional[ExceptionV2]
-    stdout: str
 
     class Config:
         frozen = True

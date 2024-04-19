@@ -6,9 +6,9 @@ import typing
 
 from ...core.pydantic_utilities import pydantic_v1
 from .error_info import ErrorInfo
-from .exception_info import ExceptionInfo
-from .exception_v_2 import ExceptionV2
 from .running_submission_state import RunningSubmissionState
+from .workspace_run_details import WorkspaceRunDetails
+from .workspace_traced_update import WorkspaceTracedUpdate
 
 
 class WorkspaceSubmissionUpdateInfo_Running(pydantic_v1.BaseModel):
@@ -16,11 +16,8 @@ class WorkspaceSubmissionUpdateInfo_Running(pydantic_v1.BaseModel):
     value: RunningSubmissionState
 
 
-class WorkspaceSubmissionUpdateInfo_Ran(pydantic_v1.BaseModel):
+class WorkspaceSubmissionUpdateInfo_Ran(WorkspaceRunDetails):
     type: typing.Literal["ran"] = "ran"
-    exception_v_2: typing.Optional[ExceptionV2] = pydantic_v1.Field(alias="exceptionV2")
-    exception: typing.Optional[ExceptionInfo]
-    stdout: str
 
     class Config:
         allow_population_by_field_name = True
@@ -35,9 +32,8 @@ class WorkspaceSubmissionUpdateInfo_Traced(pydantic_v1.BaseModel):
     type: typing.Literal["traced"] = "traced"
 
 
-class WorkspaceSubmissionUpdateInfo_TracedV2(pydantic_v1.BaseModel):
+class WorkspaceSubmissionUpdateInfo_TracedV2(WorkspaceTracedUpdate):
     type: typing.Literal["tracedV2"] = "tracedV2"
-    trace_responses_size: int = pydantic_v1.Field(alias="traceResponsesSize")
 
     class Config:
         allow_population_by_field_name = True

@@ -63,9 +63,8 @@ class DebugVariableValue_CharValue(pydantic_v1.BaseModel):
         smart_union = True
 
 
-class DebugVariableValue_MapValue(pydantic_v1.BaseModel):
+class DebugVariableValue_MapValue(DebugMapValue):
     type: typing.Literal["mapValue"] = "mapValue"
-    key_value_pairs: typing.List[DebugKeyValuePairs] = pydantic_v1.Field(alias="keyValuePairs")
 
     class Config:
         frozen = True
@@ -83,10 +82,8 @@ class DebugVariableValue_ListValue(pydantic_v1.BaseModel):
         smart_union = True
 
 
-class DebugVariableValue_BinaryTreeNodeValue(pydantic_v1.BaseModel):
+class DebugVariableValue_BinaryTreeNodeValue(BinaryTreeNodeAndTreeValue):
     type: typing.Literal["binaryTreeNodeValue"] = "binaryTreeNodeValue"
-    node_id: NodeId = pydantic_v1.Field(alias="nodeId")
-    full_tree: BinaryTreeValue = pydantic_v1.Field(alias="fullTree")
 
     class Config:
         frozen = True
@@ -95,10 +92,8 @@ class DebugVariableValue_BinaryTreeNodeValue(pydantic_v1.BaseModel):
         populate_by_name = True
 
 
-class DebugVariableValue_SinglyLinkedListNodeValue(pydantic_v1.BaseModel):
+class DebugVariableValue_SinglyLinkedListNodeValue(SinglyLinkedListNodeAndListValue):
     type: typing.Literal["singlyLinkedListNodeValue"] = "singlyLinkedListNodeValue"
-    node_id: NodeId = pydantic_v1.Field(alias="nodeId")
-    full_list: SinglyLinkedListValue = pydantic_v1.Field(alias="fullList")
 
     class Config:
         frozen = True
@@ -107,10 +102,8 @@ class DebugVariableValue_SinglyLinkedListNodeValue(pydantic_v1.BaseModel):
         populate_by_name = True
 
 
-class DebugVariableValue_DoublyLinkedListNodeValue(pydantic_v1.BaseModel):
+class DebugVariableValue_DoublyLinkedListNodeValue(DoublyLinkedListNodeAndListValue):
     type: typing.Literal["doublyLinkedListNodeValue"] = "doublyLinkedListNodeValue"
-    node_id: NodeId = pydantic_v1.Field(alias="nodeId")
-    full_list: DoublyLinkedListValue = pydantic_v1.Field(alias="fullList")
 
     class Config:
         frozen = True
@@ -135,10 +128,8 @@ class DebugVariableValue_NullValue(pydantic_v1.BaseModel):
         smart_union = True
 
 
-class DebugVariableValue_GenericValue(pydantic_v1.BaseModel):
+class DebugVariableValue_GenericValue(GenericValue):
     type: typing.Literal["genericValue"] = "genericValue"
-    stringified_type: typing.Optional[str] = pydantic_v1.Field(alias="stringifiedType")
-    stringified_value: str = pydantic_v1.Field(alias="stringifiedValue")
 
     class Config:
         frozen = True

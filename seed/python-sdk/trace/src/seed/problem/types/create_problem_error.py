@@ -5,13 +5,11 @@ from __future__ import annotations
 import typing
 
 from ...core.pydantic_utilities import pydantic_v1
+from .generic_create_problem_error import GenericCreateProblemError
 
 
-class CreateProblemError_Generic(pydantic_v1.BaseModel):
+class CreateProblemError_Generic(GenericCreateProblemError):
     error_type: typing.Literal["generic"] = pydantic_v1.Field(alias="_type", default="generic")
-    message: str
-    type: str
-    stacktrace: str
 
     class Config:
         frozen = True

@@ -7,6 +7,7 @@ import typing
 
 from ...core.datetime_utils import serialize_datetime
 from ...core.pydantic_utilities import pydantic_v1
+from .foo import Foo
 
 
 class Base(pydantic_v1.BaseModel):
@@ -43,9 +44,8 @@ class UnionWithBaseProperties_String(Base):
         populate_by_name = True
 
 
-class UnionWithBaseProperties_Foo(Base):
+class UnionWithBaseProperties_Foo(Foo, Base):
     type: typing.Literal["foo"] = "foo"
-    name: str
 
     class Config:
         allow_population_by_field_name = True

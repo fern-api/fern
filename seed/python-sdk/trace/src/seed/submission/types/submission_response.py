@@ -7,6 +7,8 @@ import typing
 from ...commons.types.problem_id import ProblemId
 from ...core.pydantic_utilities import pydantic_v1
 from .code_execution_update import CodeExecutionUpdate
+from .exception_info import ExceptionInfo
+from .terminated_response import TerminatedResponse
 
 
 class SubmissionResponse_ServerInitialized(pydantic_v1.BaseModel):
@@ -34,11 +36,8 @@ class SubmissionResponse_WorkspaceInitialized(pydantic_v1.BaseModel):
         smart_union = True
 
 
-class SubmissionResponse_ServerErrored(pydantic_v1.BaseModel):
+class SubmissionResponse_ServerErrored(ExceptionInfo):
     type: typing.Literal["serverErrored"] = "serverErrored"
-    exception_type: str = pydantic_v1.Field(alias="exceptionType")
-    exception_message: str = pydantic_v1.Field(alias="exceptionMessage")
-    exception_stacktrace: str = pydantic_v1.Field(alias="exceptionStacktrace")
 
     class Config:
         frozen = True
@@ -56,12 +55,14 @@ class SubmissionResponse_CodeExecutionUpdate(pydantic_v1.BaseModel):
         smart_union = True
 
 
-class SubmissionResponse_Terminated(pydantic_v1.BaseModel):
+class SubmissionResponse_Terminated(TerminatedResponse):
     type: typing.Literal["terminated"] = "terminated"
 
     class Config:
         frozen = True
         smart_union = True
+        allow_population_by_field_name = True
+        populate_by_name = True
 
 
 SubmissionResponse = typing.Union[
