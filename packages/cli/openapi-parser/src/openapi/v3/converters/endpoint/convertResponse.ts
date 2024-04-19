@@ -90,13 +90,13 @@ export function convertResponse({
 
 function convertResolvedResponse({
     operationContext,
-    isStreaming,
+    streamFormat,
     response,
     context,
     responseBreadcrumbs
 }: {
     operationContext: OperationContext;
-    isStreaming: boolean;
+    streamFormat: "sse" | "json" | undefined;
     response: OpenAPIV3.ReferenceObject | OpenAPIV3.ResponseObject;
     context: AbstractOpenAPIV3ParserContext;
     responseBreadcrumbs: string[];
@@ -120,14 +120,25 @@ function convertResolvedResponse({
 
     const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedResponse.content ?? {}, context);
     if (jsonMediaObject != null) {
-        if (isStreaming) {
-            return ResponseWithExample.streamingJson({
-                description: resolvedResponse.description,
-                responseProperty: undefined,
-                schema: convertSchemaWithExampleToSchema(
-                    convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs)
-                )
-            });
+        if (streamFormat != null) {
+            switch (streamFormat) {
+                case "json":
+                    return ResponseWithExample.streamingJson({
+                        description: resolvedResponse.description,
+                        responseProperty: undefined,
+                        schema: convertSchemaWithExampleToSchema(
+                            convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs)
+                        )
+                    });
+                case "sse":
+                    return ResponseWithExample.sse({
+                        description: resolvedResponse.description,
+                        responseProperty: undefined,
+                        schema: convertSchemaWithExampleToSchema(
+                            convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs)
+                        )
+                    });
+            }
         }
         return ResponseWithExample.json({
             description: resolvedResponse.description,

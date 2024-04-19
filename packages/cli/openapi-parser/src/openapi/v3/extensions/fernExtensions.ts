@@ -60,6 +60,15 @@ export const FernOpenAPIExtension = {
      *     /path/to/my/endpoint:
      *       x-fern-streaming: true
      *
+     * Used to specify if an endpoint should be generated
+     * as a streaming endpoint with sever-sent0events.
+     *
+     * Example usage:
+     *   paths:
+     *     /path/to/my/endpoint:
+     *       x-fern-streaming:
+     *          format: sse
+     *
      * Alternatively, you can annotate the endpoint so that
      * it generates both a traditional unary endpoint,
      * as well as its streaming equivalent. The stream
@@ -71,6 +80,7 @@ export const FernOpenAPIExtension = {
      *   paths:
      *     /path/to/my/endpoint:
      *       x-fern-streaming:
+     *         format: sse # or json
      *         stream-condition: $request.stream
      *         response:
      *           $ref: ./path/to/response/type.yaml
