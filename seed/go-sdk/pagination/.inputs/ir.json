@@ -2433,25 +2433,6 @@
                                         "unsafeName": "Next",
                                         "safeName": "Next"
                                     }
-                                },
-                                {
-                                    "originalName": "starting_after",
-                                    "camelCase": {
-                                        "unsafeName": "startingAfter",
-                                        "safeName": "startingAfter"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "starting_after",
-                                        "safeName": "starting_after"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "STARTING_AFTER",
-                                        "safeName": "STARTING_AFTER"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "StartingAfter",
-                                        "safeName": "StartingAfter"
-                                    }
                                 }
                             ],
                             "property": {
@@ -2486,27 +2467,7 @@
                             }
                         },
                         "results": {
-                            "propertyPath": [
-                                {
-                                    "originalName": "data",
-                                    "camelCase": {
-                                        "unsafeName": "data",
-                                        "safeName": "data"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "data",
-                                        "safeName": "data"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "DATA",
-                                        "safeName": "DATA"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Data",
-                                        "safeName": "Data"
-                                    }
-                                }
-                            ],
+                            "propertyPath": [],
                             "property": {
                                 "name": {
                                     "name": {
@@ -3037,27 +2998,7 @@
                             "docs": "Defaults to first page"
                         },
                         "results": {
-                            "propertyPath": [
-                                {
-                                    "originalName": "data",
-                                    "camelCase": {
-                                        "unsafeName": "data",
-                                        "safeName": "data"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "data",
-                                        "safeName": "data"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "DATA",
-                                        "safeName": "DATA"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Data",
-                                        "safeName": "Data"
-                                    }
-                                }
-                            ],
+                            "propertyPath": [],
                             "property": {
                                 "name": {
                                     "name": {
@@ -3415,27 +3356,7 @@
                             "docs": null
                         },
                         "next": {
-                            "propertyPath": [
-                                {
-                                    "originalName": "next",
-                                    "camelCase": {
-                                        "unsafeName": "next",
-                                        "safeName": "next"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "next",
-                                        "safeName": "next"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "NEXT",
-                                        "safeName": "NEXT"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Next",
-                                        "safeName": "Next"
-                                    }
-                                }
-                            ],
+                            "propertyPath": [],
                             "property": {
                                 "name": {
                                     "name": {
@@ -3492,25 +3413,6 @@
                                     "pascalCase": {
                                         "unsafeName": "Data",
                                         "safeName": "Data"
-                                    }
-                                },
-                                {
-                                    "originalName": "users",
-                                    "camelCase": {
-                                        "unsafeName": "users",
-                                        "safeName": "users"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "users",
-                                        "safeName": "users"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "USERS",
-                                        "safeName": "USERS"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Users",
-                                        "safeName": "Users"
                                     }
                                 }
                             ],
@@ -3852,25 +3754,6 @@
                                         "unsafeName": "Cursor",
                                         "safeName": "Cursor"
                                     }
-                                },
-                                {
-                                    "originalName": "after",
-                                    "camelCase": {
-                                        "unsafeName": "after",
-                                        "safeName": "after"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "after",
-                                        "safeName": "after"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "AFTER",
-                                        "safeName": "AFTER"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "After",
-                                        "safeName": "After"
-                                    }
                                 }
                             ],
                             "property": {
@@ -3929,25 +3812,6 @@
                                     "pascalCase": {
                                         "unsafeName": "Cursor",
                                         "safeName": "Cursor"
-                                    }
-                                },
-                                {
-                                    "originalName": "data",
-                                    "camelCase": {
-                                        "unsafeName": "data",
-                                        "safeName": "data"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "data",
-                                        "safeName": "data"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "DATA",
-                                        "safeName": "DATA"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Data",
-                                        "safeName": "Data"
                                     }
                                 }
                             ],
@@ -4246,27 +4110,7 @@
                             "docs": null
                         },
                         "results": {
-                            "propertyPath": [
-                                {
-                                    "originalName": "results",
-                                    "camelCase": {
-                                        "unsafeName": "results",
-                                        "safeName": "results"
-                                    },
-                                    "snakeCase": {
-                                        "unsafeName": "results",
-                                        "safeName": "results"
-                                    },
-                                    "screamingSnakeCase": {
-                                        "unsafeName": "RESULTS",
-                                        "safeName": "RESULTS"
-                                    },
-                                    "pascalCase": {
-                                        "unsafeName": "Results",
-                                        "safeName": "Results"
-                                    }
-                                }
-                            ],
+                            "propertyPath": [],
                             "property": {
                                 "name": {
                                     "name": {

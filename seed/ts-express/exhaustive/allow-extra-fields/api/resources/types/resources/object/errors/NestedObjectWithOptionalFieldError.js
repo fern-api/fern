@@ -36,8 +36,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.NestedObjectWithOptionalFieldError = void 0;
-const errors = __importStar(require("../../../../../../errors"));
-const serializers = __importStar(require("../../../../../../serialization"));
+const errors = __importStar(require("../../../../../../errors/index"));
+const serializers = __importStar(require("../../../../../../serialization/index"));
 class NestedObjectWithOptionalFieldError extends errors.SeedExhaustiveError {
     constructor(body) {
         super("NestedObjectWithOptionalFieldError");

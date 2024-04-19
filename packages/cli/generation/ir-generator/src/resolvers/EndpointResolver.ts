@@ -1,16 +1,11 @@
 import { FernWorkspace, getDefinitionFile } from "@fern-api/workspace-loader";
-import { RawSchemas } from "@fern-api/yaml-schema";
 import { constructFernFileContext, FernFileContext } from "../FernFileContext";
 import { parseReferenceToEndpointName } from "../utils/parseReferenceToEndpointName";
+import { ResolvedEndpoint } from "./ResolvedEndpoint";
 
 export interface EndpointResolver {
     resolveEndpoint: (args: { endpoint: string; file: FernFileContext }) => ResolvedEndpoint | undefined;
     resolveEndpointOrThrow: (args: { endpoint: string; file: FernFileContext }) => ResolvedEndpoint;
-}
-
-export interface ResolvedEndpoint {
-    endpointId: string;
-    endpoint: RawSchemas.HttpEndpointSchema;
 }
 
 interface RawEndpointInfo {
@@ -49,7 +44,8 @@ export class EndpointResolverImpl implements EndpointResolver {
         }
         return {
             endpointId: maybeDeclaration.endpointName,
-            endpoint: maybeEndpoint
+            endpoint: maybeEndpoint,
+            file: maybeDeclaration.file
         };
     }
 

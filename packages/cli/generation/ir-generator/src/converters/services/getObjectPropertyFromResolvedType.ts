@@ -47,7 +47,7 @@ export async function getObjectPropertyFromResolvedType({
     throw new Error("Internal error; response must be an object in order to return a property as a response");
 }
 
-async function getObjectPropertyFromObjectSchema({
+export async function getObjectPropertyFromObjectSchema({
     typeResolver,
     file,
     objectSchema,
@@ -61,7 +61,7 @@ async function getObjectPropertyFromObjectSchema({
     const properties = await getAllPropertiesForRawObjectSchema(objectSchema, file, typeResolver);
     const objectProperty = properties[property];
     if (objectProperty == null) {
-        throw new Error(`Response does not have a property named ${property}.`);
+        throw new Error(`Object does not have a property named ${property}.`);
     }
     return objectProperty;
 }

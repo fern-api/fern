@@ -314,27 +314,7 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
                   "type": "container",
                 },
               },
-              "propertyPath": [
-                {
-                  "camelCase": {
-                    "safeName": "users",
-                    "unsafeName": "users",
-                  },
-                  "originalName": "users",
-                  "pascalCase": {
-                    "safeName": "Users",
-                    "unsafeName": "Users",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "USERS",
-                    "unsafeName": "USERS",
-                  },
-                  "snakeCase": {
-                    "safeName": "users",
-                    "unsafeName": "users",
-                  },
-                },
-              ],
+              "propertyPath": [],
             },
             "type": "offset",
           },

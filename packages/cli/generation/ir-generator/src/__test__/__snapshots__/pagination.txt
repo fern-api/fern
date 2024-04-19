@@ -1017,25 +1017,6 @@ exports[`generate IR 1`] = `
                     "unsafeName": "next",
                   },
                 },
-                {
-                  "camelCase": {
-                    "safeName": "startingAfter",
-                    "unsafeName": "startingAfter",
-                  },
-                  "originalName": "starting_after",
-                  "pascalCase": {
-                    "safeName": "StartingAfter",
-                    "unsafeName": "StartingAfter",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "STARTING_AFTER",
-                    "unsafeName": "STARTING_AFTER",
-                  },
-                  "snakeCase": {
-                    "safeName": "starting_after",
-                    "unsafeName": "starting_after",
-                  },
-                },
               ],
             },
             "page": {
@@ -1175,27 +1156,7 @@ the next page of results.",
                   },
                 },
               },
-              "propertyPath": [
-                {
-                  "camelCase": {
-                    "safeName": "data",
-                    "unsafeName": "data",
-                  },
-                  "originalName": "data",
-                  "pascalCase": {
-                    "safeName": "Data",
-                    "unsafeName": "Data",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "DATA",
-                    "unsafeName": "DATA",
-                  },
-                  "snakeCase": {
-                    "safeName": "data",
-                    "unsafeName": "data",
-                  },
-                },
-              ],
+              "propertyPath": [],
             },
             "type": "cursor",
           },
@@ -2492,27 +2453,7 @@ the next page of results.",
                   },
                 },
               },
-              "propertyPath": [
-                {
-                  "camelCase": {
-                    "safeName": "data",
-                    "unsafeName": "data",
-                  },
-                  "originalName": "data",
-                  "pascalCase": {
-                    "safeName": "Data",
-                    "unsafeName": "Data",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "DATA",
-                    "unsafeName": "DATA",
-                  },
-                  "snakeCase": {
-                    "safeName": "data",
-                    "unsafeName": "data",
-                  },
-                },
-              ],
+              "propertyPath": [],
             },
             "type": "offset",
           },
@@ -3626,27 +3567,7 @@ the next page of results.",
                   },
                 },
               },
-              "propertyPath": [
-                {
-                  "camelCase": {
-                    "safeName": "next",
-                    "unsafeName": "next",
-                  },
-                  "originalName": "next",
-                  "pascalCase": {
-                    "safeName": "Next",
-                    "unsafeName": "Next",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "NEXT",
-                    "unsafeName": "NEXT",
-                  },
-                  "snakeCase": {
-                    "safeName": "next",
-                    "unsafeName": "next",
-                  },
-                },
-              ],
+              "propertyPath": [],
             },
             "page": {
               "allowMultiple": false,
@@ -3802,25 +3723,6 @@ the next page of results.",
                   "snakeCase": {
                     "safeName": "data",
                     "unsafeName": "data",
-                  },
-                },
-                {
-                  "camelCase": {
-                    "safeName": "users",
-                    "unsafeName": "users",
-                  },
-                  "originalName": "users",
-                  "pascalCase": {
-                    "safeName": "Users",
-                    "unsafeName": "Users",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "USERS",
-                    "unsafeName": "USERS",
-                  },
-                  "snakeCase": {
-                    "safeName": "users",
-                    "unsafeName": "users",
                   },
                 },
               ],
@@ -4285,25 +4187,6 @@ the next page of results.",
                     "unsafeName": "cursor",
                   },
                 },
-                {
-                  "camelCase": {
-                    "safeName": "after",
-                    "unsafeName": "after",
-                  },
-                  "originalName": "after",
-                  "pascalCase": {
-                    "safeName": "After",
-                    "unsafeName": "After",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "AFTER",
-                    "unsafeName": "AFTER",
-                  },
-                  "snakeCase": {
-                    "safeName": "after",
-                    "unsafeName": "after",
-                  },
-                },
               ],
             },
             "page": {
@@ -4399,25 +4282,6 @@ the next page of results.",
                   "snakeCase": {
                     "safeName": "cursor",
                     "unsafeName": "cursor",
-                  },
-                },
-                {
-                  "camelCase": {
-                    "safeName": "data",
-                    "unsafeName": "data",
-                  },
-                  "originalName": "data",
-                  "pascalCase": {
-                    "safeName": "Data",
-                    "unsafeName": "Data",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "DATA",
-                    "unsafeName": "DATA",
-                  },
-                  "snakeCase": {
-                    "safeName": "data",
-                    "unsafeName": "data",
                   },
                 },
               ],
@@ -4926,27 +4790,7 @@ the next page of results.",
                   },
                 },
               },
-              "propertyPath": [
-                {
-                  "camelCase": {
-                    "safeName": "results",
-                    "unsafeName": "results",
-                  },
-                  "originalName": "results",
-                  "pascalCase": {
-                    "safeName": "Results",
-                    "unsafeName": "Results",
-                  },
-                  "screamingSnakeCase": {
-                    "safeName": "RESULTS",
-                    "unsafeName": "RESULTS",
-                  },
-                  "snakeCase": {
-                    "safeName": "results",
-                    "unsafeName": "results",
-                  },
-                },
-              ],
+              "propertyPath": [],
             },
             "type": "offset",
           },

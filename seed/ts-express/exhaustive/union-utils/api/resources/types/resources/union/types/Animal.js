@@ -27,7 +27,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Animal = void 0;
-const SeedExhaustive = __importStar(require("../../../../.."));
+const SeedExhaustive = __importStar(require("../../../../../index"));
 exports.Animal = {
     dog: (value) => {
         return Object.assign(Object.assign({}, value), { animal: "dog", _visit: function (visitor) {

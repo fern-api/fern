@@ -40,7 +40,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SubmissionService = void 0;
 const express_1 = __importDefault(require("express"));
-const errors = __importStar(require("../../../../errors"));
+const errors = __importStar(require("../../../../errors/index"));
 /**
  * Responsible for spinning up and spinning down execution.
  */

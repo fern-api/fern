@@ -1,23 +1,20 @@
 import { Pagination } from "@fern-api/ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { FernFileContext } from "../../FernFileContext";
-import { TypeResolver } from "../../resolvers/TypeResolver";
-import {
-    getNestedObjectPropertyFromResolvedType,
-    maybeFileFromResolvedType,
-    OffsetPaginationPropertyComponents,
-    resolveResponseType
-} from "./convertPaginationUtils";
+import { PropertyResolver } from "../../resolvers/PropertyResolver";
+import { OffsetPaginationPropertyComponents } from "./convertPaginationUtils";
 import { convertQueryParameter } from "./convertQueryParameter";
 
 export async function convertOffsetPagination({
-    typeResolver,
+    propertyResolver,
     file,
+    endpointName,
     endpointSchema,
     paginationPropertyComponents
 }: {
-    typeResolver: TypeResolver;
+    propertyResolver: PropertyResolver;
     file: FernFileContext;
+    endpointName: string;
     endpointSchema: RawSchemas.HttpEndpointSchema;
     paginationPropertyComponents: OffsetPaginationPropertyComponents;
 }): Promise<Pagination | undefined> {
@@ -28,31 +25,16 @@ export async function convertOffsetPagination({
     if (queryParameterSchema == null) {
         return undefined;
     }
-    const resolvedResponseType = resolveResponseType({
-        typeResolver,
-        file,
-        endpoint: endpointSchema
-    });
-    const resultsObjectProperty = await getNestedObjectPropertyFromResolvedType({
-        typeResolver,
-        file: maybeFileFromResolvedType(resolvedResponseType) ?? file,
-        resolvedType: resolvedResponseType,
-        propertyComponents: paginationPropertyComponents.results
-    });
-    if (resultsObjectProperty == null) {
-        return undefined;
-    }
     return Pagination.offset({
         page: await convertQueryParameter({
             file,
             queryParameterKey: paginationPropertyComponents.offset,
             queryParameter: queryParameterSchema
         }),
-        results: {
-            propertyPath: paginationPropertyComponents.results.map((property) =>
-                file.casingsGenerator.generateName(property)
-            ),
-            property: resultsObjectProperty
-        }
+        results: await propertyResolver.resolveResponsePropertyOrThrow({
+            file,
+            endpoint: endpointName,
+            propertyComponents: paginationPropertyComponents.results
+        })
     });
 }

@@ -16,6 +16,7 @@ import { FernFileContext } from "../../FernFileContext";
 import { IdGenerator } from "../../IdGenerator";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
+import { PropertyResolver } from "../../resolvers/PropertyResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { VariableResolver } from "../../resolvers/VariableResolver";
 import { convertAvailability, convertDeclaration } from "../convertDeclaration";
@@ -34,6 +35,7 @@ export async function convertHttpService({
     file,
     errorResolver,
     typeResolver,
+    propertyResolver,
     exampleResolver,
     variableResolver,
     globalErrors,
@@ -44,6 +46,7 @@ export async function convertHttpService({
     file: FernFileContext;
     errorResolver: ErrorResolver;
     typeResolver: TypeResolver;
+    propertyResolver: PropertyResolver;
     exampleResolver: ExampleResolver;
     variableResolver: VariableResolver;
     globalErrors: ResponseErrors;
@@ -144,8 +147,9 @@ export async function convertHttpService({
                               )
                             : [],
                     pagination: await convertPagination({
-                        typeResolver,
+                        propertyResolver,
                         file,
+                        endpointName: endpointKey,
                         endpointSchema: endpoint
                     })
                 };
