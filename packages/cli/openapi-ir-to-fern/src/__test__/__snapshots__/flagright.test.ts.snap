@@ -39,6 +39,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
           ],
           "examples": [
             {
+              "name": "example-2",
               "path-parameters": {
                 "userId": "userId",
               },
@@ -48,7 +49,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                   "allowedPaymentMethods": [
                     "ACH",
                   ],
-                  "createdTimestamp": 1.1,
+                  "createdTimestamp": 1641654664000,
                   "directors": [
                     {
                       "contactDetails": {
@@ -205,7 +206,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                       ],
                     },
                     "reasonForAccountOpening": [
-                      "reasonForAccountOpening",
+                      "string",
                     ],
                   },
                   "linkedEntities": {
@@ -324,7 +325,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                       "amountValue": 800,
                     },
                   },
-                  "userId": "userId",
+                  "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
                   "userStateDetails": {
                     "reason": "reason",
                     "state": "UNACCEPTABLE",
@@ -361,6 +362,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
           ],
           "examples": [
             {
+              "name": "example-1",
               "path-parameters": {
                 "transactionId": "transactionId",
               },
@@ -404,7 +406,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                       "labels": [
                         "UNEXPECTED_BEHAVIOR",
                       ],
-                      "nature": "FRAUD",
+                      "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleId": "R-1a",
@@ -430,7 +432,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                       "value": "customValue",
                     },
                   ],
-                  "timestamp": 1641654664,
+                  "timestamp": 1641654664000,
                   "transactionId": "7b80a539eea6e78acbd6d458e5971482",
                   "transactionState": "CREATED",
                   "type": "DEPOSIT",
@@ -465,6 +467,7 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
           ],
           "examples": [
             {
+              "name": "example-1",
               "path-parameters": {
                 "userId": "userId",
               },
@@ -628,6 +631,7 @@ Each consumer Business entity needs three mandatory fields:
           ],
           "examples": [
             {
+              "name": "example-1",
               "request": {
                 "createdTimestamp": 1.1,
                 "userId": "userId",
@@ -662,7 +666,7 @@ Each consumer Business entity needs three mandatory fields:
                     },
                   ],
                   "message": "message",
-                  "userId": "userId",
+                  "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
                 },
               },
             },
@@ -1098,9 +1102,43 @@ Here are some of the most used payload fields explained (you can find the full p
           ],
           "examples": [
             {
+              "name": "example-1",
               "request": {
-                "timestamp": 1.1,
-                "transactionId": "transactionId",
+                "destinationAmountDetails": {
+                  "country": "IN",
+                  "transactionAmount": 68351.34,
+                  "transactionCurrency": "INR",
+                },
+                "destinationUserId": "9350a2611e0771cba03310f74bf6",
+                "deviceData": {
+                  "appVersion": "1.1.0",
+                  "batteryLevel": 95,
+                  "deviceIdentifier": "3c49f915d04485e34caba",
+                  "deviceLatitude": 13.0033,
+                  "deviceLongitude": 76.1004,
+                  "deviceMaker": "ASUS",
+                  "deviceModel": "Zenphone M2 Pro Max",
+                  "deviceYear": "2018",
+                  "ipAddress": "10.23.191.2",
+                  "operatingSystem": "Android 11.2",
+                  "vpnUsed": false,
+                },
+                "originAmountDetails": {
+                  "country": "DE",
+                  "transactionAmount": 800,
+                  "transactionCurrency": "EUR",
+                },
+                "originUserId": "8650a2611d0771cba03310f74bf6",
+                "promotionCodeUsed": true,
+                "reference": "loan repayment",
+                "tags": [
+                  {
+                    "key": "customKey",
+                    "value": "customValue",
+                  },
+                ],
+                "timestamp": 1641654664000,
+                "transactionId": "7b80a539eea6e78acbd6d458e5971482",
               },
               "response": {
                 "body": {
@@ -1123,7 +1161,7 @@ Here are some of the most used payload fields explained (you can find the full p
                       "labels": [
                         "UNEXPECTED_BEHAVIOR",
                       ],
-                      "nature": "FRAUD",
+                      "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleId": "R-1a",
@@ -1132,7 +1170,7 @@ Here are some of the most used payload fields explained (you can find the full p
                     },
                   ],
                   "message": "message",
-                  "transactionId": "transactionId",
+                  "transactionId": "7b80a539eea6e78acbd6d458e5971482",
                 },
               },
             },
@@ -1181,6 +1219,7 @@ Each consumer User entity needs three mandatory fields:
           ],
           "examples": [
             {
+              "name": "example-1",
               "request": {
                 "contactDetails": {
                   "addresses": [
@@ -1274,7 +1313,7 @@ Each consumer User entity needs three mandatory fields:
                     },
                   ],
                   "message": "message",
-                  "userId": "userId",
+                  "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
                 },
               },
             },
@@ -1320,14 +1359,24 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           ],
           "examples": [
             {
+              "name": "example-1",
               "request": {
-                "timestamp": 1.1,
-                "transactionId": "transactionId",
-                "transactionState": "CREATED",
+                "eventDescription": "Transaction created",
+                "eventId": "aaeeb166147a406b957dd9147a406b957",
+                "metaData": {
+                  "batteryLevel": 76.3,
+                  "deviceLatitude": 13.009711,
+                  "deviceLongitude": 76.102898,
+                  "ipAddress": "79.144.2.20",
+                  "vpnUsed": true,
+                },
+                "timestamp": 1431231244001,
+                "transactionId": "443dea26147a406b957d9ee3a1247b11",
+                "transactionState": "SUCCESSFUL",
               },
               "response": {
                 "body": {
-                  "eventId": "eventId",
+                  "eventId": "7b80a539eea6e78acbd6d458e5971482",
                   "executedRules": [
                     {
                       "labels": [
@@ -1347,7 +1396,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "labels": [
                         "UNEXPECTED_BEHAVIOR",
                       ],
-                      "nature": "FRAUD",
+                      "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleId": "R-1a",
@@ -1357,33 +1406,33 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   ],
                   "transaction": {
                     "destinationAmountDetails": {
-                      "country": "DE",
-                      "transactionAmount": 800,
-                      "transactionCurrency": "EUR",
+                      "country": "IN",
+                      "transactionAmount": 68351.34,
+                      "transactionCurrency": "INR",
                     },
-                    "destinationUserId": "destinationUserId",
+                    "destinationUserId": "9350a2611e0771cba03310f74bf6",
                     "deviceData": {
-                      "appVersion": "appVersion",
-                      "batteryLevel": 1.1,
-                      "deviceIdentifier": "deviceIdentifier",
-                      "deviceLatitude": 1.1,
-                      "deviceLongitude": 1.1,
-                      "deviceMaker": "deviceMaker",
-                      "deviceModel": "deviceModel",
-                      "deviceYear": "deviceYear",
-                      "ipAddress": "ipAddress",
-                      "operatingSystem": "operatingSystem",
-                      "vpnUsed": true,
+                      "appVersion": "1.1.0",
+                      "batteryLevel": 95,
+                      "deviceIdentifier": "3c49f915d04485e34caba",
+                      "deviceLatitude": 13.0033,
+                      "deviceLongitude": 76.1004,
+                      "deviceMaker": "ASUS",
+                      "deviceModel": "Zenphone M2 Pro Max",
+                      "deviceYear": "2018",
+                      "ipAddress": "10.23.191.2",
+                      "operatingSystem": "Android 11.2",
+                      "vpnUsed": false,
                     },
                     "originAmountDetails": {
                       "country": "DE",
                       "transactionAmount": 800,
                       "transactionCurrency": "EUR",
                     },
-                    "originUserId": "originUserId",
+                    "originUserId": "8650a2611d0771cba03310f74bf6",
                     "productType": "productType",
                     "promotionCodeUsed": true,
-                    "reference": "reference",
+                    "reference": "loan repayment",
                     "relatedTransactionIds": [
                       "relatedTransactionIds",
                     ],
@@ -1393,8 +1442,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                         "value": "customValue",
                       },
                     ],
-                    "timestamp": 1.1,
-                    "transactionId": "transactionId",
+                    "timestamp": 1641654664000,
+                    "transactionId": "7b80a539eea6e78acbd6d458e5971482",
                     "transactionState": "CREATED",
                     "type": "DEPOSIT",
                   },

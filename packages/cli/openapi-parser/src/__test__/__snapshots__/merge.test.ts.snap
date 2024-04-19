@@ -19866,7 +19866,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
-          "name": null,
+          "name": "Employees that started on or after January 1st, 2022",
           "pathParameters": [],
           "queryParameters": [],
           "request": null,
@@ -19880,18 +19880,49 @@ exports[`open api parser merge parse open api 1`] = `
                     "value": [
                       {
                         "properties": {
+                          "common_model": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "hris.Employee",
+                            },
+                          },
                           "condition_schema_id": {
                             "type": "primitive",
                             "value": {
                               "type": "string",
-                              "value": "condition_schema_id",
+                              "value": "123e4567-e89b-12d3-a456-426655440000",
+                            },
+                          },
+                          "field_name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "start_date",
+                            },
+                          },
+                          "native_name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "Started At",
                             },
                           },
                           "operator": {
                             "type": "primitive",
                             "value": {
                               "type": "string",
-                              "value": "operator",
+                              "value": "GREATER_THAN_OR_EQUAL",
+                            },
+                          },
+                          "value": {
+                            "type": "unknown",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "2022-01-01T00:00:00Z",
+                              },
                             },
                           },
                         },
@@ -19985,7 +20016,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
-          "name": null,
+          "name": "Employees that started on or after January 1st, 2022",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -20017,18 +20048,49 @@ exports[`open api parser merge parse open api 1`] = `
                     "value": [
                       {
                         "properties": {
+                          "common_model": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "hris.Employee",
+                            },
+                          },
                           "condition_schema_id": {
                             "type": "primitive",
                             "value": {
                               "type": "string",
-                              "value": "condition_schema_id",
+                              "value": "123e4567-e89b-12d3-a456-426655440000",
+                            },
+                          },
+                          "field_name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "start_date",
+                            },
+                          },
+                          "native_name": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "Started At",
                             },
                           },
                           "operator": {
                             "type": "primitive",
                             "value": {
                               "type": "string",
-                              "value": "operator",
+                              "value": "GREATER_THAN_OR_EQUAL",
+                            },
+                          },
+                          "value": {
+                            "type": "unknown",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "2022-01-01T00:00:00Z",
+                              },
                             },
                           },
                         },
@@ -20134,7 +20196,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
-          "name": null,
+          "name": "Employees that started on or after January 1st, 2022",
           "pathParameters": [],
           "queryParameters": [],
           "request": null,
@@ -20163,25 +20225,25 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "common_model",
+                          "value": "hris.Employee",
                         },
                       },
                       "condition_type": {
                         "type": "enum",
-                        "value": "BOOLEAN",
+                        "value": "DATE_TIME",
                       },
                       "field_name": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "field_name",
+                          "value": "start_date",
                         },
                       },
                       "id": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "id",
+                          "value": "123e4567-e89b-12d3-a456-426655440000",
                         },
                       },
                       "is_unique": {
@@ -20195,14 +20257,48 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "native_name",
+                          "value": "Started At",
                         },
                       },
                       "operators": {
                         "type": "array",
                         "value": [
                           {
-                            "properties": {},
+                            "properties": {
+                              "is_unique": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "boolean",
+                                  "value": true,
+                                },
+                              },
+                              "operator": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "GREATER_THAN_OR_EQUAL",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                          {
+                            "properties": {
+                              "is_unique": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "boolean",
+                                  "value": true,
+                                },
+                              },
+                              "operator": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "LESS_THAN_OR_EQUAL",
+                                },
+                              },
+                            },
                             "type": "object",
                           },
                         ],

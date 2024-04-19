@@ -250,12 +250,15 @@ exports[`open api parser axle simple 1`] = `
             "examples": [
               {
                 "headers": {},
-                "request": {},
+                "request": {
+                  "redirectUri": "https://example.com/redirect",
+                  "webhookUri": "https://example.com/webhook",
+                },
                 "response": {
                   "body": {
                     "data": {
-                      "ignitionToken": "ignitionToken",
-                      "ignitionUri": "ignitionUri",
+                      "ignitionToken": "ur7EPeAa0km4wRlDrPJ4Z",
+                      "ignitionUri": "https://ignition.dev.axle.insure/?token=ur7EPeAa0km4wRlDrPJ4Z",
                     },
                     "success": true,
                   },

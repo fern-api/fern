@@ -16,7 +16,7 @@ exports[`examples examples parse open api 1`] = `
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Example 1",
           "pathParameters": [],
           "queryParameters": [],
           "request": null,
@@ -29,7 +29,7 @@ exports[`examples examples parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "building_name",
+                      "value": "The Main Building",
                     },
                   },
                   "building_name_alias": {
@@ -39,7 +39,7 @@ exports[`examples examples parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "building_name_alias",
+                          "value": "Main Building",
                         },
                       },
                     ],
@@ -48,35 +48,35 @@ exports[`examples examples parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "city",
+                      "value": "San Francisco",
                     },
                   },
                   "id": {
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "id",
+                      "value": "123",
                     },
                   },
                   "lat": {
                     "type": "primitive",
                     "value": {
                       "type": "double",
-                      "value": 1.1,
+                      "value": 37.789,
                     },
                   },
                   "lon": {
                     "type": "primitive",
                     "value": {
                       "type": "double",
-                      "value": 1.1,
+                      "value": -122.395,
                     },
                   },
                   "number_units": {
                     "type": "primitive",
                     "value": {
                       "type": "double",
-                      "value": 1.1,
+                      "value": 100,
                     },
                   },
                   "score": {
@@ -90,14 +90,14 @@ exports[`examples examples parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "state",
+                      "value": "CA",
                     },
                   },
                   "street_address": {
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "street_address",
+                      "value": "123 Main St",
                     },
                   },
                   "street_address_alias": {
@@ -107,7 +107,7 @@ exports[`examples examples parse open api 1`] = `
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "street_address_alias",
+                          "value": "123 Main Street",
                         },
                       },
                     ],
@@ -116,14 +116,14 @@ exports[`examples examples parse open api 1`] = `
                     "type": "primitive",
                     "value": {
                       "type": "double",
-                      "value": 1.1,
+                      "value": 2010,
                     },
                   },
                   "zip_code": {
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "zip_code",
+                      "value": "94105",
                     },
                   },
                 },

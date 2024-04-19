@@ -4209,7 +4209,7 @@ Log.d("TAG", file.toString())
           ],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "type-token",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -4246,6 +4246,691 @@ Log.d("TAG", file.toString())
                   "type": "string",
                   "value": "token",
                 },
+              },
+            },
+            "type": "object",
+          },
+          "type": "full",
+        },
+        {
+          "codeSamples": [
+            {
+              "code": "import { fromUrl } from '@uploadcare/upload-client'
+
+const result = await fromUrl(
+  'https://source.unsplash.com/featured',
+  {
+    publicKey: 'YOUR_PUBLIC_KEY',
+    metadata: {
+      subsystem: 'uploader',
+      pet: 'cat'
+    }
+  }
+)
+",
+              "description": null,
+              "install": null,
+              "language": "JavaScript",
+              "name": "JS",
+              "type": "language",
+            },
+            {
+              "code": "<?php
+$configuration = Uploadcare\\Configuration::create((string) $_ENV['UPLOADCARE_PUBLIC_KEY'], (string) $_ENV['UPLOADCARE_SECRET_KEY']);
+
+$uploader = new Uploadcare\\Uploader\\Uploader($configuration);
+$url = 'https://source.unsplash.com/featured';
+$token = $uploader->fromUrl($url, null, null, 'auto', [
+    'action' => 'upload from URL', // The "Action" is the metadata key
+    'checkDuplicates' => true,
+    'storeDuplicates' => false,
+]);
+echo \\sprintf('Upload from URL \\'%s\\' has been started. Token is %s', $url, $token);
+",
+              "description": null,
+              "install": null,
+              "language": "PHP",
+              "name": "PHP",
+              "type": "language",
+            },
+            {
+              "code": "from pyuploadcare import Uploadcare
+
+uploadcare = Uploadcare(public_key='YOUR_PUBLIC_KEY', secret_key='YOUR_SECRET_KEY')
+ucare_file = uploadcare.upload_from_url_sync(
+    "https://source.unsplash.com/featured",
+    check_duplicates=True,
+    save_duplicates=False
+)
+",
+              "description": null,
+              "install": null,
+              "language": "Python",
+              "name": "Python",
+              "type": "language",
+            },
+            {
+              "code": "require 'uploadcare'
+Uploadcare.config.public_key = "YOUR_PUBLIC_KEY"
+
+source_url = "https://source.unsplash.com/featured"
+uploaded_file = Uploadcare::Uploader.upload(source_url, store: auto)
+",
+              "description": null,
+              "install": null,
+              "language": "Ruby",
+              "name": "Ruby",
+              "type": "language",
+            },
+            {
+              "code": "import Uploadcare
+
+let uploadcare = Uploadcare(withPublicKey: "YOUR_PUBLIC_KEY", secretKey: "YOUR_SECRET_KEY")
+
+let url = URL(string: "https://source.unsplash.com/featured")!
+let task = UploadFromURLTask(sourceUrl: url)
+  .store(.auto)
+  .setMetadata("uploader", forKey: "subsystem")
+  .setMetadata("cat", forKey: "pet")
+
+let file = try await uploadcare.uploadAPI.uploadAndWaitForCompletion(task: task)
+print(file)
+",
+              "description": null,
+              "install": null,
+              "language": "Swift",
+              "name": "Swift",
+              "type": "language",
+            },
+            {
+              "code": "import com.uploadcare.android.library.api.UploadcareClient
+
+val uploadcare = UploadcareClient(publicKey = "YOUR_PUBLIC_KEY", secretKey = "YOUR_SECRET_KEY")
+
+val uploader = UrlUploader(
+    client = uploadcare,
+    sourceUrl = "https://source.unsplash.com/featured"
+)
+val file = uploader.upload()
+Log.d("TAG", file.toString())
+",
+              "description": null,
+              "install": null,
+              "language": "Kotlin",
+              "name": "Kotlin",
+              "type": "language",
+            },
+          ],
+          "description": null,
+          "headers": [],
+          "name": "type-file-info",
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "pub_key": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "caa9d29da887ee88ffe6",
+                },
+              },
+              "source_url": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "source_url",
+                },
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "content_info": {
+                "properties": {
+                  "image": {
+                    "properties": {
+                      "color_mode": {
+                        "type": "enum",
+                        "value": "RGB",
+                      },
+                      "datetime_original": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "datetime",
+                          "value": "2018-08-20T08:59:50",
+                        },
+                      },
+                      "dpi": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "double",
+                              "value": 72,
+                            },
+                          },
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "double",
+                              "value": 72,
+                            },
+                          },
+                        ],
+                      },
+                      "format": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "JPEG",
+                        },
+                      },
+                      "geo_location": {
+                        "properties": {
+                          "latitude": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "double",
+                              "value": 55.62013611111111,
+                            },
+                          },
+                          "longitude": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "double",
+                              "value": 37.66299166666666,
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "height": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 4032,
+                        },
+                      },
+                      "orientation": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 6,
+                        },
+                      },
+                      "sequence": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean",
+                          "value": false,
+                        },
+                      },
+                      "width": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 3024,
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "mime": {
+                    "properties": {
+                      "mime": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "image/jpeg",
+                        },
+                      },
+                      "subtype": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "jpeg",
+                        },
+                      },
+                      "type": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "image",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "video": {
+                    "properties": {
+                      "audio": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "bitrate": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "int",
+                                  "value": 78,
+                                },
+                              },
+                              "channels": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "int",
+                                  "value": 2,
+                                },
+                              },
+                              "codec": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "aac",
+                                },
+                              },
+                              "sample_rate": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "int",
+                                  "value": 44100,
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "bitrate": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 393,
+                        },
+                      },
+                      "duration": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 261827,
+                        },
+                      },
+                      "format": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "mp4",
+                        },
+                      },
+                      "video": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "bitrate": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "int",
+                                  "value": 315,
+                                },
+                              },
+                              "codec": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "h264",
+                                },
+                              },
+                              "frame_rate": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "double",
+                                  "value": 30,
+                                },
+                              },
+                              "height": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "int",
+                                  "value": 360,
+                                },
+                              },
+                              "width": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "int",
+                                  "value": 640,
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+              "done": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 2667636,
+                },
+              },
+              "file_id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
+                },
+              },
+              "filename": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "IMG0412_123.JPG",
+                },
+              },
+              "image_info": {
+                "properties": {
+                  "color_mode": {
+                    "type": "enum",
+                    "value": "RGB",
+                  },
+                  "datetime_original": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime",
+                      "value": "2018-08-20T08:59:50",
+                    },
+                  },
+                  "dpi": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 72,
+                        },
+                      },
+                      {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 72,
+                        },
+                      },
+                    ],
+                  },
+                  "format": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "JPEG",
+                    },
+                  },
+                  "geo_location": {
+                    "properties": {
+                      "latitude": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 55.62013611111111,
+                        },
+                      },
+                      "longitude": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 37.66299166666666,
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "height": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "int",
+                      "value": 4032,
+                    },
+                  },
+                  "orientation": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "int",
+                      "value": 6,
+                    },
+                  },
+                  "sequence": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean",
+                      "value": false,
+                    },
+                  },
+                  "width": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "int",
+                      "value": 3024,
+                    },
+                  },
+                },
+                "type": "object",
+              },
+              "is_image": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "is_ready": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "is_stored": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "metadata": {
+                "type": "map",
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "subsystem",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "uploader",
+                        },
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "pet",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "cat",
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
+              "mime_type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "image/jpeg",
+                },
+              },
+              "original_filename": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "IMG-0412_123.JPG",
+                },
+              },
+              "s3_bucket": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "custom-s3-bucket-name",
+                },
+              },
+              "size": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 2667636,
+                },
+              },
+              "total": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 2667636,
+                },
+              },
+              "type": {
+                "type": "literal",
+                "value": {
+                  "type": "string",
+                  "value": "file_info",
+                },
+              },
+              "uuid": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
+                },
+              },
+              "video_info": {
+                "properties": {
+                  "audio": {
+                    "properties": {
+                      "bitrate": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 78,
+                        },
+                      },
+                      "channels": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "2",
+                        },
+                      },
+                      "codec": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "aac",
+                        },
+                      },
+                      "sample_rate": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 44100,
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "bitrate": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 393,
+                    },
+                  },
+                  "duration": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 261827,
+                    },
+                  },
+                  "format": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "mp4",
+                    },
+                  },
+                  "video": {
+                    "properties": {
+                      "bitrate": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 315,
+                        },
+                      },
+                      "codec": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "h264",
+                        },
+                      },
+                      "frame_rate": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 30,
+                        },
+                      },
+                      "height": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 360,
+                        },
+                      },
+                      "width": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 640,
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
               },
             },
             "type": "object",
@@ -4709,7 +5394,7 @@ Log.d("TAG", status.toString())
           ],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "status-waiting",
           "pathParameters": [],
           "queryParameters": [
             {
@@ -4731,6 +5416,1048 @@ Log.d("TAG", status.toString())
                 "value": {
                   "type": "string",
                   "value": "waiting",
+                },
+              },
+            },
+            "type": "object",
+          },
+          "type": "full",
+        },
+        {
+          "codeSamples": [
+            {
+              "code": "import { fromUrlStatus } from '@uploadcare/upload-client'
+
+const result = await fromUrlStatus(
+  '945ebb27-1fd6-46c6-a859-b9893712d650',
+  {
+    publicKey: 'YOUR_PUBLIC_KEY'
+  }
+)
+",
+              "description": null,
+              "install": null,
+              "language": "JavaScript",
+              "name": "JS",
+              "type": "language",
+            },
+            {
+              "code": "<?php
+$configuration = Uploadcare\\Configuration::create((string) $_ENV['UPLOADCARE_PUBLIC_KEY'], (string) $_ENV['UPLOADCARE_SECRET_KEY']);
+
+$uploader = new Uploadcare\\Uploader\\Uploader($configuration);
+$status = $uploader->checkStatus('945ebb27-1fd6-46c6-a859-b9893712d650');
+echo \\sprintf('Upload status is %s', $status);
+",
+              "description": null,
+              "install": null,
+              "language": "PHP",
+              "name": "PHP",
+              "type": "language",
+            },
+            {
+              "code": "from pyuploadcare import Uploadcare, File
+
+uploadcare = Uploadcare(public_key='YOUR_PUBLIC_KEY', secret_key='YOUR_SECRET_KEY')
+file = uploadcare.file_from_url('945ebb27-1fd6-46c6-a859-b9893712d650')
+print(file.info)
+",
+              "description": null,
+              "install": null,
+              "language": "Python",
+              "name": "Python",
+              "type": "language",
+            },
+            {
+              "code": "require 'uploadcare'
+Uploadcare.config.public_key = "YOUR_PUBLIC_KEY"
+Uploadcare.config.secret_key = "YOUR_SECRET_KEY"
+
+token = '945ebb27-1fd6-46c6-a859-b9893712d650'
+puts Uploadcare::Uploader.get_upload_from_url_status(token)
+",
+              "description": null,
+              "install": null,
+              "language": "Ruby",
+              "name": "Ruby",
+              "type": "language",
+            },
+            {
+              "code": "import Uploadcare
+
+let uploadcare = Uploadcare(withPublicKey: "YOUR_PUBLIC_KEY", secretKey: "YOUR_SECRET_KEY")
+
+let status = try await uploadcare.uploadAPI.uploadStatus(forToken: "945ebb27-1fd6-46c6-a859-b9893712d650")
+print(status)
+",
+              "description": null,
+              "install": null,
+              "language": "Swift",
+              "name": "Swift",
+              "type": "language",
+            },
+            {
+              "code": "import com.uploadcare.android.library.api.UploadcareClient
+
+val uploadcare = UploadcareClient(publicKey = "YOUR_PUBLIC_KEY", secretKey = "YOUR_SECRET_KEY")
+
+val status = uploadcare.getFromUrlStatus(token = "945ebb27-1fd6-46c6-a859-b9893712d650")
+Log.d("TAG", status.toString())
+",
+              "description": null,
+              "install": null,
+              "language": "Kotlin",
+              "name": "Kotlin",
+              "type": "language",
+            },
+          ],
+          "description": null,
+          "headers": [],
+          "name": "status-progress",
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "token",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "token",
+                },
+              },
+            },
+          ],
+          "request": null,
+          "response": {
+            "properties": {
+              "done": {
+                "type": "primitive",
+                "value": {
+                  "type": "double",
+                  "value": 134427,
+                },
+              },
+              "status": {
+                "type": "literal",
+                "value": {
+                  "type": "string",
+                  "value": "progress",
+                },
+              },
+              "total": {
+                "type": "primitive",
+                "value": {
+                  "type": "double",
+                  "value": 732434,
+                },
+              },
+            },
+            "type": "object",
+          },
+          "type": "full",
+        },
+        {
+          "codeSamples": [
+            {
+              "code": "import { fromUrlStatus } from '@uploadcare/upload-client'
+
+const result = await fromUrlStatus(
+  '945ebb27-1fd6-46c6-a859-b9893712d650',
+  {
+    publicKey: 'YOUR_PUBLIC_KEY'
+  }
+)
+",
+              "description": null,
+              "install": null,
+              "language": "JavaScript",
+              "name": "JS",
+              "type": "language",
+            },
+            {
+              "code": "<?php
+$configuration = Uploadcare\\Configuration::create((string) $_ENV['UPLOADCARE_PUBLIC_KEY'], (string) $_ENV['UPLOADCARE_SECRET_KEY']);
+
+$uploader = new Uploadcare\\Uploader\\Uploader($configuration);
+$status = $uploader->checkStatus('945ebb27-1fd6-46c6-a859-b9893712d650');
+echo \\sprintf('Upload status is %s', $status);
+",
+              "description": null,
+              "install": null,
+              "language": "PHP",
+              "name": "PHP",
+              "type": "language",
+            },
+            {
+              "code": "from pyuploadcare import Uploadcare, File
+
+uploadcare = Uploadcare(public_key='YOUR_PUBLIC_KEY', secret_key='YOUR_SECRET_KEY')
+file = uploadcare.file_from_url('945ebb27-1fd6-46c6-a859-b9893712d650')
+print(file.info)
+",
+              "description": null,
+              "install": null,
+              "language": "Python",
+              "name": "Python",
+              "type": "language",
+            },
+            {
+              "code": "require 'uploadcare'
+Uploadcare.config.public_key = "YOUR_PUBLIC_KEY"
+Uploadcare.config.secret_key = "YOUR_SECRET_KEY"
+
+token = '945ebb27-1fd6-46c6-a859-b9893712d650'
+puts Uploadcare::Uploader.get_upload_from_url_status(token)
+",
+              "description": null,
+              "install": null,
+              "language": "Ruby",
+              "name": "Ruby",
+              "type": "language",
+            },
+            {
+              "code": "import Uploadcare
+
+let uploadcare = Uploadcare(withPublicKey: "YOUR_PUBLIC_KEY", secretKey: "YOUR_SECRET_KEY")
+
+let status = try await uploadcare.uploadAPI.uploadStatus(forToken: "945ebb27-1fd6-46c6-a859-b9893712d650")
+print(status)
+",
+              "description": null,
+              "install": null,
+              "language": "Swift",
+              "name": "Swift",
+              "type": "language",
+            },
+            {
+              "code": "import com.uploadcare.android.library.api.UploadcareClient
+
+val uploadcare = UploadcareClient(publicKey = "YOUR_PUBLIC_KEY", secretKey = "YOUR_SECRET_KEY")
+
+val status = uploadcare.getFromUrlStatus(token = "945ebb27-1fd6-46c6-a859-b9893712d650")
+Log.d("TAG", status.toString())
+",
+              "description": null,
+              "install": null,
+              "language": "Kotlin",
+              "name": "Kotlin",
+              "type": "language",
+            },
+          ],
+          "description": null,
+          "headers": [],
+          "name": "status-success",
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "token",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "token",
+                },
+              },
+            },
+          ],
+          "request": null,
+          "response": {
+            "properties": {
+              "content_info": {
+                "properties": {
+                  "image": {
+                    "properties": {
+                      "color_mode": {
+                        "type": "enum",
+                        "value": "RGB",
+                      },
+                      "datetime_original": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "datetime",
+                          "value": "2018-08-20T08:59:50",
+                        },
+                      },
+                      "dpi": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "double",
+                              "value": 72,
+                            },
+                          },
+                          {
+                            "type": "primitive",
+                            "value": {
+                              "type": "double",
+                              "value": 72,
+                            },
+                          },
+                        ],
+                      },
+                      "format": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "JPEG",
+                        },
+                      },
+                      "geo_location": {
+                        "properties": {
+                          "latitude": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "double",
+                              "value": 55.62013611111111,
+                            },
+                          },
+                          "longitude": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "double",
+                              "value": 37.66299166666666,
+                            },
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "height": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 4032,
+                        },
+                      },
+                      "orientation": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 6,
+                        },
+                      },
+                      "sequence": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "boolean",
+                          "value": false,
+                        },
+                      },
+                      "width": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 3024,
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "mime": {
+                    "properties": {
+                      "mime": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "image/jpeg",
+                        },
+                      },
+                      "subtype": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "jpeg",
+                        },
+                      },
+                      "type": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "image",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "video": {
+                    "properties": {
+                      "audio": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "bitrate": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "int",
+                                  "value": 78,
+                                },
+                              },
+                              "channels": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "int",
+                                  "value": 2,
+                                },
+                              },
+                              "codec": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "aac",
+                                },
+                              },
+                              "sample_rate": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "int",
+                                  "value": 44100,
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "bitrate": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 393,
+                        },
+                      },
+                      "duration": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "int",
+                          "value": 261827,
+                        },
+                      },
+                      "format": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "mp4",
+                        },
+                      },
+                      "video": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "bitrate": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "int",
+                                  "value": 315,
+                                },
+                              },
+                              "codec": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "h264",
+                                },
+                              },
+                              "frame_rate": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "double",
+                                  "value": 30,
+                                },
+                              },
+                              "height": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "int",
+                                  "value": 360,
+                                },
+                              },
+                              "width": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "int",
+                                  "value": 640,
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+              "done": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 2667636,
+                },
+              },
+              "file_id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
+                },
+              },
+              "filename": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "IMG0412_123.JPG",
+                },
+              },
+              "image_info": {
+                "properties": {
+                  "color_mode": {
+                    "type": "enum",
+                    "value": "RGB",
+                  },
+                  "datetime_original": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "datetime",
+                      "value": "2018-08-20T08:59:50",
+                    },
+                  },
+                  "dpi": {
+                    "type": "array",
+                    "value": [
+                      {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 72,
+                        },
+                      },
+                      {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 72,
+                        },
+                      },
+                    ],
+                  },
+                  "format": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "JPEG",
+                    },
+                  },
+                  "geo_location": {
+                    "properties": {
+                      "latitude": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 55.62013611111111,
+                        },
+                      },
+                      "longitude": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 37.66299166666666,
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "height": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "int",
+                      "value": 4032,
+                    },
+                  },
+                  "orientation": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "int",
+                      "value": 6,
+                    },
+                  },
+                  "sequence": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean",
+                      "value": false,
+                    },
+                  },
+                  "width": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "int",
+                      "value": 3024,
+                    },
+                  },
+                },
+                "type": "object",
+              },
+              "is_image": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "is_ready": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "is_stored": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "metadata": {
+                "type": "map",
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "subsystem",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "uploader",
+                        },
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "pet",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "cat",
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
+              "mime_type": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "image/jpeg",
+                },
+              },
+              "original_filename": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "IMG-0412_123.JPG",
+                },
+              },
+              "s3_bucket": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "custom-s3-bucket-name",
+                },
+              },
+              "size": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 2667636,
+                },
+              },
+              "status": {
+                "type": "literal",
+                "value": {
+                  "type": "string",
+                  "value": "success",
+                },
+              },
+              "total": {
+                "type": "primitive",
+                "value": {
+                  "type": "int",
+                  "value": 2667636,
+                },
+              },
+              "uuid": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "be3b4d5e-179d-460e-8a5d-69112ac86cbb",
+                },
+              },
+              "video_info": {
+                "properties": {
+                  "audio": {
+                    "properties": {
+                      "bitrate": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 78,
+                        },
+                      },
+                      "channels": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "2",
+                        },
+                      },
+                      "codec": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "aac",
+                        },
+                      },
+                      "sample_rate": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 44100,
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "bitrate": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 393,
+                    },
+                  },
+                  "duration": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 261827,
+                    },
+                  },
+                  "format": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "mp4",
+                    },
+                  },
+                  "video": {
+                    "properties": {
+                      "bitrate": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 315,
+                        },
+                      },
+                      "codec": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "h264",
+                        },
+                      },
+                      "frame_rate": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 30,
+                        },
+                      },
+                      "height": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 360,
+                        },
+                      },
+                      "width": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "double",
+                          "value": 640,
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+          "type": "full",
+        },
+        {
+          "codeSamples": [
+            {
+              "code": "import { fromUrlStatus } from '@uploadcare/upload-client'
+
+const result = await fromUrlStatus(
+  '945ebb27-1fd6-46c6-a859-b9893712d650',
+  {
+    publicKey: 'YOUR_PUBLIC_KEY'
+  }
+)
+",
+              "description": null,
+              "install": null,
+              "language": "JavaScript",
+              "name": "JS",
+              "type": "language",
+            },
+            {
+              "code": "<?php
+$configuration = Uploadcare\\Configuration::create((string) $_ENV['UPLOADCARE_PUBLIC_KEY'], (string) $_ENV['UPLOADCARE_SECRET_KEY']);
+
+$uploader = new Uploadcare\\Uploader\\Uploader($configuration);
+$status = $uploader->checkStatus('945ebb27-1fd6-46c6-a859-b9893712d650');
+echo \\sprintf('Upload status is %s', $status);
+",
+              "description": null,
+              "install": null,
+              "language": "PHP",
+              "name": "PHP",
+              "type": "language",
+            },
+            {
+              "code": "from pyuploadcare import Uploadcare, File
+
+uploadcare = Uploadcare(public_key='YOUR_PUBLIC_KEY', secret_key='YOUR_SECRET_KEY')
+file = uploadcare.file_from_url('945ebb27-1fd6-46c6-a859-b9893712d650')
+print(file.info)
+",
+              "description": null,
+              "install": null,
+              "language": "Python",
+              "name": "Python",
+              "type": "language",
+            },
+            {
+              "code": "require 'uploadcare'
+Uploadcare.config.public_key = "YOUR_PUBLIC_KEY"
+Uploadcare.config.secret_key = "YOUR_SECRET_KEY"
+
+token = '945ebb27-1fd6-46c6-a859-b9893712d650'
+puts Uploadcare::Uploader.get_upload_from_url_status(token)
+",
+              "description": null,
+              "install": null,
+              "language": "Ruby",
+              "name": "Ruby",
+              "type": "language",
+            },
+            {
+              "code": "import Uploadcare
+
+let uploadcare = Uploadcare(withPublicKey: "YOUR_PUBLIC_KEY", secretKey: "YOUR_SECRET_KEY")
+
+let status = try await uploadcare.uploadAPI.uploadStatus(forToken: "945ebb27-1fd6-46c6-a859-b9893712d650")
+print(status)
+",
+              "description": null,
+              "install": null,
+              "language": "Swift",
+              "name": "Swift",
+              "type": "language",
+            },
+            {
+              "code": "import com.uploadcare.android.library.api.UploadcareClient
+
+val uploadcare = UploadcareClient(publicKey = "YOUR_PUBLIC_KEY", secretKey = "YOUR_SECRET_KEY")
+
+val status = uploadcare.getFromUrlStatus(token = "945ebb27-1fd6-46c6-a859-b9893712d650")
+Log.d("TAG", status.toString())
+",
+              "description": null,
+              "install": null,
+              "language": "Kotlin",
+              "name": "Kotlin",
+              "type": "language",
+            },
+          ],
+          "description": null,
+          "headers": [],
+          "name": "status-error",
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "token",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "token",
+                },
+              },
+            },
+          ],
+          "request": null,
+          "response": {
+            "properties": {
+              "error": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "HTTP client error: 404.",
+                },
+              },
+              "error_code": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "DownloadFileHTTPClientError",
+                },
+              },
+              "status": {
+                "type": "literal",
+                "value": {
+                  "type": "string",
+                  "value": "error",
+                },
+              },
+            },
+            "type": "object",
+          },
+          "type": "full",
+        },
+        {
+          "codeSamples": [
+            {
+              "code": "import { fromUrlStatus } from '@uploadcare/upload-client'
+
+const result = await fromUrlStatus(
+  '945ebb27-1fd6-46c6-a859-b9893712d650',
+  {
+    publicKey: 'YOUR_PUBLIC_KEY'
+  }
+)
+",
+              "description": null,
+              "install": null,
+              "language": "JavaScript",
+              "name": "JS",
+              "type": "language",
+            },
+            {
+              "code": "<?php
+$configuration = Uploadcare\\Configuration::create((string) $_ENV['UPLOADCARE_PUBLIC_KEY'], (string) $_ENV['UPLOADCARE_SECRET_KEY']);
+
+$uploader = new Uploadcare\\Uploader\\Uploader($configuration);
+$status = $uploader->checkStatus('945ebb27-1fd6-46c6-a859-b9893712d650');
+echo \\sprintf('Upload status is %s', $status);
+",
+              "description": null,
+              "install": null,
+              "language": "PHP",
+              "name": "PHP",
+              "type": "language",
+            },
+            {
+              "code": "from pyuploadcare import Uploadcare, File
+
+uploadcare = Uploadcare(public_key='YOUR_PUBLIC_KEY', secret_key='YOUR_SECRET_KEY')
+file = uploadcare.file_from_url('945ebb27-1fd6-46c6-a859-b9893712d650')
+print(file.info)
+",
+              "description": null,
+              "install": null,
+              "language": "Python",
+              "name": "Python",
+              "type": "language",
+            },
+            {
+              "code": "require 'uploadcare'
+Uploadcare.config.public_key = "YOUR_PUBLIC_KEY"
+Uploadcare.config.secret_key = "YOUR_SECRET_KEY"
+
+token = '945ebb27-1fd6-46c6-a859-b9893712d650'
+puts Uploadcare::Uploader.get_upload_from_url_status(token)
+",
+              "description": null,
+              "install": null,
+              "language": "Ruby",
+              "name": "Ruby",
+              "type": "language",
+            },
+            {
+              "code": "import Uploadcare
+
+let uploadcare = Uploadcare(withPublicKey: "YOUR_PUBLIC_KEY", secretKey: "YOUR_SECRET_KEY")
+
+let status = try await uploadcare.uploadAPI.uploadStatus(forToken: "945ebb27-1fd6-46c6-a859-b9893712d650")
+print(status)
+",
+              "description": null,
+              "install": null,
+              "language": "Swift",
+              "name": "Swift",
+              "type": "language",
+            },
+            {
+              "code": "import com.uploadcare.android.library.api.UploadcareClient
+
+val uploadcare = UploadcareClient(publicKey = "YOUR_PUBLIC_KEY", secretKey = "YOUR_SECRET_KEY")
+
+val status = uploadcare.getFromUrlStatus(token = "945ebb27-1fd6-46c6-a859-b9893712d650")
+Log.d("TAG", status.toString())
+",
+              "description": null,
+              "install": null,
+              "language": "Kotlin",
+              "name": "Kotlin",
+              "type": "language",
+            },
+          ],
+          "description": null,
+          "headers": [],
+          "name": "status-unknown",
+          "pathParameters": [],
+          "queryParameters": [
+            {
+              "name": "token",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "token",
+                },
+              },
+            },
+          ],
+          "request": null,
+          "response": {
+            "properties": {
+              "status": {
+                "type": "literal",
+                "value": {
+                  "type": "string",
+                  "value": "unknown",
                 },
               },
             },

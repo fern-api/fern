@@ -24,7 +24,7 @@ export function getApplicationJsonSchemaMediaObject(
 
             return {
                 schema: schema ?? {},
-                examples: getExamples(media, context)
+                examples: getExamples(mediaObject, context)
             };
         }
     }

@@ -70,23 +70,197 @@ Here are some of the most used payload fields explained (you can find the full p
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "example-1",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
             "properties": {
+              "destinationAmountDetails": {
+                "properties": {
+                  "country": {
+                    "type": "enum",
+                    "value": "IN",
+                  },
+                  "transactionAmount": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 68351.34,
+                    },
+                  },
+                  "transactionCurrency": {
+                    "type": "enum",
+                    "value": "INR",
+                  },
+                },
+                "type": "object",
+              },
+              "destinationUserId": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "9350a2611e0771cba03310f74bf6",
+                },
+              },
+              "deviceData": {
+                "properties": {
+                  "appVersion": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "1.1.0",
+                    },
+                  },
+                  "batteryLevel": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 95,
+                    },
+                  },
+                  "deviceIdentifier": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "3c49f915d04485e34caba",
+                    },
+                  },
+                  "deviceLatitude": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 13.0033,
+                    },
+                  },
+                  "deviceLongitude": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 76.1004,
+                    },
+                  },
+                  "deviceMaker": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "ASUS",
+                    },
+                  },
+                  "deviceModel": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "Zenphone M2 Pro Max",
+                    },
+                  },
+                  "deviceYear": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "2018",
+                    },
+                  },
+                  "ipAddress": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "10.23.191.2",
+                    },
+                  },
+                  "operatingSystem": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "Android 11.2",
+                    },
+                  },
+                  "vpnUsed": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean",
+                      "value": false,
+                    },
+                  },
+                },
+                "type": "object",
+              },
+              "originAmountDetails": {
+                "properties": {
+                  "country": {
+                    "type": "enum",
+                    "value": "DE",
+                  },
+                  "transactionAmount": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 800,
+                    },
+                  },
+                  "transactionCurrency": {
+                    "type": "enum",
+                    "value": "EUR",
+                  },
+                },
+                "type": "object",
+              },
+              "originUserId": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "8650a2611d0771cba03310f74bf6",
+                },
+              },
+              "promotionCodeUsed": {
+                "type": "primitive",
+                "value": {
+                  "type": "boolean",
+                  "value": true,
+                },
+              },
+              "reference": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "loan repayment",
+                },
+              },
+              "tags": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "key": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "customKey",
+                        },
+                      },
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "customValue",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
               "timestamp": {
                 "type": "primitive",
                 "value": {
                   "type": "double",
-                  "value": 1.1,
+                  "value": 1641654664000,
                 },
               },
               "transactionId": {
                 "type": "primitive",
                 "value": {
                   "type": "string",
-                  "value": "transactionId",
+                  "value": "7b80a539eea6e78acbd6d458e5971482",
                 },
               },
             },
@@ -172,7 +346,7 @@ Here are some of the most used payload fields explained (you can find the full p
                       },
                       "nature": {
                         "type": "enum",
-                        "value": "FRAUD",
+                        "value": "AML",
                       },
                       "ruleAction": {
                         "type": "enum",
@@ -222,7 +396,7 @@ Here are some of the most used payload fields explained (you can find the full p
                 "type": "primitive",
                 "value": {
                   "type": "string",
-                  "value": "transactionId",
+                  "value": "7b80a539eea6e78acbd6d458e5971482",
                 },
               },
             },
@@ -394,7 +568,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "example-1",
           "pathParameters": [
             {
               "name": "transactionId",
@@ -598,7 +772,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                       },
                       "nature": {
                         "type": "enum",
-                        "value": "FRAUD",
+                        "value": "AML",
                       },
                       "ruleAction": {
                         "type": "enum",
@@ -725,7 +899,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                 "type": "primitive",
                 "value": {
                   "type": "double",
-                  "value": 1641654664,
+                  "value": 1641654664000,
                 },
               },
               "transactionId": {
@@ -860,28 +1034,82 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "example-1",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
             "properties": {
+              "eventDescription": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Transaction created",
+                },
+              },
+              "eventId": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "aaeeb166147a406b957dd9147a406b957",
+                },
+              },
+              "metaData": {
+                "properties": {
+                  "batteryLevel": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 76.3,
+                    },
+                  },
+                  "deviceLatitude": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 13.009711,
+                    },
+                  },
+                  "deviceLongitude": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "double",
+                      "value": 76.102898,
+                    },
+                  },
+                  "ipAddress": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "string",
+                      "value": "79.144.2.20",
+                    },
+                  },
+                  "vpnUsed": {
+                    "type": "primitive",
+                    "value": {
+                      "type": "boolean",
+                      "value": true,
+                    },
+                  },
+                },
+                "type": "object",
+              },
               "timestamp": {
                 "type": "primitive",
                 "value": {
                   "type": "double",
-                  "value": 1.1,
+                  "value": 1431231244001,
                 },
               },
               "transactionId": {
                 "type": "primitive",
                 "value": {
                   "type": "string",
-                  "value": "transactionId",
+                  "value": "443dea26147a406b957d9ee3a1247b11",
                 },
               },
               "transactionState": {
                 "type": "enum",
-                "value": "CREATED",
+                "value": "SUCCESSFUL",
               },
             },
             "type": "object",
@@ -892,7 +1120,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "type": "primitive",
                 "value": {
                   "type": "string",
-                  "value": "eventId",
+                  "value": "7b80a539eea6e78acbd6d458e5971482",
                 },
               },
               "executedRules": {
@@ -973,7 +1201,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       },
                       "nature": {
                         "type": "enum",
-                        "value": "FRAUD",
+                        "value": "AML",
                       },
                       "ruleAction": {
                         "type": "enum",
@@ -1018,18 +1246,18 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "properties": {
                       "country": {
                         "type": "enum",
-                        "value": "DE",
+                        "value": "IN",
                       },
                       "transactionAmount": {
                         "type": "primitive",
                         "value": {
                           "type": "double",
-                          "value": 800,
+                          "value": 68351.34,
                         },
                       },
                       "transactionCurrency": {
                         "type": "enum",
-                        "value": "EUR",
+                        "value": "INR",
                       },
                     },
                     "type": "object",
@@ -1038,7 +1266,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "destinationUserId",
+                      "value": "9350a2611e0771cba03310f74bf6",
                     },
                   },
                   "deviceData": {
@@ -1047,77 +1275,77 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "appVersion",
+                          "value": "1.1.0",
                         },
                       },
                       "batteryLevel": {
                         "type": "primitive",
                         "value": {
                           "type": "double",
-                          "value": 1.1,
+                          "value": 95,
                         },
                       },
                       "deviceIdentifier": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "deviceIdentifier",
+                          "value": "3c49f915d04485e34caba",
                         },
                       },
                       "deviceLatitude": {
                         "type": "primitive",
                         "value": {
                           "type": "double",
-                          "value": 1.1,
+                          "value": 13.0033,
                         },
                       },
                       "deviceLongitude": {
                         "type": "primitive",
                         "value": {
                           "type": "double",
-                          "value": 1.1,
+                          "value": 76.1004,
                         },
                       },
                       "deviceMaker": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "deviceMaker",
+                          "value": "ASUS",
                         },
                       },
                       "deviceModel": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "deviceModel",
+                          "value": "Zenphone M2 Pro Max",
                         },
                       },
                       "deviceYear": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "deviceYear",
+                          "value": "2018",
                         },
                       },
                       "ipAddress": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "ipAddress",
+                          "value": "10.23.191.2",
                         },
                       },
                       "operatingSystem": {
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "operatingSystem",
+                          "value": "Android 11.2",
                         },
                       },
                       "vpnUsed": {
                         "type": "primitive",
                         "value": {
                           "type": "boolean",
-                          "value": true,
+                          "value": false,
                         },
                       },
                     },
@@ -1147,7 +1375,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "originUserId",
+                      "value": "8650a2611d0771cba03310f74bf6",
                     },
                   },
                   "productType": {
@@ -1168,7 +1396,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "reference",
+                      "value": "loan repayment",
                     },
                   },
                   "relatedTransactionIds": {
@@ -1211,14 +1439,14 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "type": "primitive",
                     "value": {
                       "type": "double",
-                      "value": 1.1,
+                      "value": 1641654664000,
                     },
                   },
                   "transactionId": {
                     "type": "primitive",
                     "value": {
                       "type": "string",
-                      "value": "transactionId",
+                      "value": "7b80a539eea6e78acbd6d458e5971482",
                     },
                   },
                   "transactionState": {
@@ -1335,7 +1563,7 @@ Each consumer User entity needs three mandatory fields:
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "example-1",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -1741,7 +1969,7 @@ Each consumer User entity needs three mandatory fields:
                 "type": "primitive",
                 "value": {
                   "type": "string",
-                  "value": "userId",
+                  "value": "96647cfd9e8fe66ee0f3362e011e34e8",
                 },
               },
             },
@@ -1880,7 +2108,7 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "example-1",
           "pathParameters": [
             {
               "name": "userId",
@@ -2505,7 +2733,7 @@ Each consumer Business entity needs three mandatory fields:
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "example-1",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -2657,7 +2885,7 @@ Each consumer Business entity needs three mandatory fields:
                 "type": "primitive",
                 "value": {
                   "type": "string",
-                  "value": "userId",
+                  "value": "96647cfd9e8fe66ee0f3362e011e34e8",
                 },
               },
             },
@@ -2796,7 +3024,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "example-2",
           "pathParameters": [
             {
               "name": "userId",
@@ -2830,7 +3058,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                 "type": "primitive",
                 "value": {
                   "type": "double",
-                  "value": 1.1,
+                  "value": 1641654664000,
                 },
               },
               "directors": {
@@ -3485,7 +3713,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                         "type": "primitive",
                         "value": {
                           "type": "string",
-                          "value": "reasonForAccountOpening",
+                          "value": "string",
                         },
                       },
                     ],
@@ -3976,7 +4204,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                 "type": "primitive",
                 "value": {
                   "type": "string",
-                  "value": "userId",
+                  "value": "96647cfd9e8fe66ee0f3362e011e34e8",
                 },
               },
               "userStateDetails": {
