@@ -69,6 +69,7 @@ types:
       file: finalIr.FileResponse
       json: JsonResponseWithExample
       text: finalIr.TextResponse
+      streamingSse: finalIr.JsonResponse
       streamingText: finalIr.TextResponse
       streamingJson:
         type: finalIr.JsonResponse

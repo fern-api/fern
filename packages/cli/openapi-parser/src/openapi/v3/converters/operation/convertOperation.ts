@@ -112,7 +112,8 @@ export function convertOperation({
 
     const convertedHttpOperation = convertHttpOperation({
         context,
-        operationContext
+        operationContext,
+        streamFormat: undefined
     });
     return { type: "http", value: convertedHttpOperation };
 }

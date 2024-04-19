@@ -30,10 +30,10 @@ export function convertResponse({
     context,
     responseBreadcrumbs,
     responseStatusCode,
-    isStreaming
+    streamFormat
 }: {
     operationContext: OperationContext;
-    isStreaming: boolean;
+    streamFormat: "sse" | "json" | undefined;
     responses: OpenAPIV3.ResponsesObject;
     context: AbstractOpenAPIV3ParserContext;
     responseBreadcrumbs: string[];
@@ -55,7 +55,7 @@ export function convertResponse({
             response,
             context,
             responseBreadcrumbs,
-            isStreaming
+            streamFormat
         });
         if (convertedResponse != null) {
             switch (convertedResponse.type) {
@@ -65,6 +65,7 @@ export function convertResponse({
                         errorStatusCodes
                     };
                 case "streamingJson":
+                case "streamingSse":
                     return {
                         value: convertedResponse,
                         errorStatusCodes
@@ -90,13 +91,13 @@ export function convertResponse({
 
 function convertResolvedResponse({
     operationContext,
-    isStreaming,
+    streamFormat,
     response,
     context,
     responseBreadcrumbs
 }: {
     operationContext: OperationContext;
-    isStreaming: boolean;
+    streamFormat: "sse" | "json" | undefined;
     response: OpenAPIV3.ReferenceObject | OpenAPIV3.ResponseObject;
     context: AbstractOpenAPIV3ParserContext;
     responseBreadcrumbs: string[];
@@ -120,14 +121,25 @@ function convertResolvedResponse({
 
     const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedResponse.content ?? {}, context);
     if (jsonMediaObject != null) {
-        if (isStreaming) {
-            return ResponseWithExample.streamingJson({
-                description: resolvedResponse.description,
-                responseProperty: undefined,
-                schema: convertSchemaWithExampleToSchema(
-                    convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs)
-                )
-            });
+        if (streamFormat != null) {
+            switch (streamFormat) {
+                case "json":
+                    return ResponseWithExample.streamingJson({
+                        description: resolvedResponse.description,
+                        responseProperty: undefined,
+                        schema: convertSchemaWithExampleToSchema(
+                            convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs)
+                        )
+                    });
+                case "sse":
+                    return ResponseWithExample.streamingSse({
+                        description: resolvedResponse.description,
+                        responseProperty: undefined,
+                        schema: convertSchemaWithExampleToSchema(
+                            convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs)
+                        )
+                    });
+            }
         }
         return ResponseWithExample.json({
             description: resolvedResponse.description,

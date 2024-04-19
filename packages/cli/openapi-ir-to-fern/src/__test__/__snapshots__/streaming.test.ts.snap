@@ -65,6 +65,7 @@ exports[`open api parser streaming simple 1`] = `
           },
           "response-stream": {
             "docs": "",
+            "format": "json",
             "type": "StreamUser",
           },
         },
@@ -127,6 +128,7 @@ exports[`open api parser streaming simple 1`] = `
           },
           "response-stream": {
             "docs": "",
+            "format": "json",
             "type": "StreamUser2",
           },
         },
@@ -188,6 +190,7 @@ exports[`open api parser streaming simple 1`] = `
           },
           "response-stream": {
             "docs": "",
+            "format": "json",
             "type": "UserV3StreamResponse",
           },
         },

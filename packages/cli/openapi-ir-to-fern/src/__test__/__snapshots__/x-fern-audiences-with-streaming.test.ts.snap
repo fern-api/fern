@@ -70,6 +70,7 @@ exports[`x-fern-sdk-group-name-with-streaming x-fern-sdk-group-name-with-streami
             },
             "response-stream": {
               "docs": "",
+              "format": "json",
               "type": "root.StreamUser",
             },
           },

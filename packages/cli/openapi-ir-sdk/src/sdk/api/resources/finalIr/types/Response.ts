@@ -8,6 +8,7 @@ export type Response =
     | FernOpenapiIr.Response.File_
     | FernOpenapiIr.Response.Json
     | FernOpenapiIr.Response.Text
+    | FernOpenapiIr.Response.StreamingSse
     | FernOpenapiIr.Response.StreamingText
     /**
      * Checks if `x-fern-streaming` is present and is true. */
@@ -26,6 +27,10 @@ export declare namespace Response {
         type: "text";
     }
 
+    interface StreamingSse extends FernOpenapiIr.JsonResponse, _Utils {
+        type: "streamingSse";
+    }
+
     interface StreamingText extends FernOpenapiIr.TextResponse, _Utils {
         type: "streamingText";
     }
@@ -42,6 +47,7 @@ export declare namespace Response {
         file: (value: FernOpenapiIr.FileResponse) => _Result;
         json: (value: FernOpenapiIr.JsonResponse) => _Result;
         text: (value: FernOpenapiIr.TextResponse) => _Result;
+        streamingSse: (value: FernOpenapiIr.JsonResponse) => _Result;
         streamingText: (value: FernOpenapiIr.TextResponse) => _Result;
         streamingJson: (value: FernOpenapiIr.JsonResponse) => _Result;
         _other: (value: { type: string }) => _Result;
@@ -88,6 +94,19 @@ export const Response = {
         };
     },
 
+    streamingSse: (value: FernOpenapiIr.JsonResponse): FernOpenapiIr.Response.StreamingSse => {
+        return {
+            ...value,
+            type: "streamingSse",
+            _visit: function <_Result>(
+                this: FernOpenapiIr.Response.StreamingSse,
+                visitor: FernOpenapiIr.Response._Visitor<_Result>
+            ) {
+                return FernOpenapiIr.Response._visit(this, visitor);
+            },
+        };
+    },
+
     streamingText: (value: FernOpenapiIr.TextResponse): FernOpenapiIr.Response.StreamingText => {
         return {
             ...value,
@@ -122,6 +141,8 @@ export const Response = {
                 return visitor.json(value);
             case "text":
                 return visitor.text(value);
+            case "streamingSse":
+                return visitor.streamingSse(value);
             case "streamingText":
                 return visitor.streamingText(value);
             case "streamingJson":

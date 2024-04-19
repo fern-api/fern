@@ -998,6 +998,7 @@ Executes a deployed Workflow and streams back its results.",
           },
           "response-stream": {
             "docs": "",
+            "format": "json",
             "type": "WorkflowStreamEvent",
           },
           "url": "Predict",
@@ -1121,6 +1122,7 @@ Generate a stream of completions using a previously defined deployment.
           },
           "response-stream": {
             "docs": "",
+            "format": "json",
             "type": "GenerateStreamResponse",
           },
           "url": "Predict",
