@@ -9,7 +9,6 @@ import * as FdrSerialization from "@fern-fern/fdr-test-sdk/serialization";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { existsSync } from "fs";
 import { readFile } from "fs/promises";
-import { parse } from "path";
 import { downloadSnippetsForTask } from "./downloadSnippetsForTask";
 import { runRemoteGenerationForGenerator } from "./runRemoteGenerationForGenerator";
 
@@ -74,14 +73,6 @@ export async function runRemoteGenerationForAPIWorkspace({
                             absolutePathToLocalSnippetJSON: generatorInvocation.absolutePathToLocalSnippets,
                             context: interactiveTaskContext
                         });
-
-                        await registerSnippetTemplatesToFdr({
-                            token,
-                            organization,
-                            workspace,
-                            context,
-                            snippetsPath: generatorInvocation.absolutePathToLocalSnippets
-                        });
                     }
                 }
             })
@@ -103,25 +94,24 @@ async function registerSnippetTemplatesToFdr({
     organization,
     workspace,
     context,
-    snippetsPath
+    snippetTemplatesPath
 }: {
     token: FernToken;
     organization: string;
     workspace: FernWorkspace;
     context: TaskContext;
-    snippetsPath: AbsoluteFilePath;
+    snippetTemplatesPath: AbsoluteFilePath;
 }) {
     // Process snippet templates here:
     const fdr = createFdrTestService({ token: token.value });
     try {
         // TODO: This should live in generator exec, beside the snippets.json path
-        const pathToSnippetTemplates = parse(snippetsPath).dir + "/snippet-templates.json";
         // Read in snippet templates from disk and submit to FDR for registration
-        if (!existsSync(pathToSnippetTemplates)) {
+        if (!existsSync(snippetTemplatesPath)) {
             context.logger.warn("Snippet templates file not found, no templates registered.");
             return;
         }
-        const templatesString = (await readFile(pathToSnippetTemplates)).toString();
+        const templatesString = (await readFile(snippetTemplatesPath)).toString();
         const templatesJson = JSON.parse(templatesString);
         if (!Array.isArray(templatesJson)) {
             context.logger.error("Snippet templates were malformed, continuing.");
@@ -132,7 +122,7 @@ async function registerSnippetTemplatesToFdr({
                 unrecognizedObjectKeys: "passthrough"
             })
         );
-        fdr.template.registerBatch({
+        await fdr.template.registerBatch({
             orgId: organization,
             apiId: workspace.name,
             snippets: snippetTemplates,

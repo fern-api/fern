@@ -37,6 +37,7 @@ export async function runLocalGenerationForWorkspace({
                         generatorInvocation,
                         absolutePathToLocalOutput: generatorInvocation.absolutePathToLocalOutput,
                         absolutePathToLocalSnippetJSON: undefined,
+                        absolutePathToLocalSnippetTemplateJSON: undefined,
                         audiences: generatorGroup.audiences,
                         workspaceTempDir,
                         keepDocker,

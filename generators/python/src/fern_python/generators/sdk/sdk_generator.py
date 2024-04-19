@@ -1,3 +1,4 @@
+import json
 from typing import Optional, Sequence, Tuple, Union, cast
 
 import fern.ir.resources as ir_types
@@ -5,7 +6,7 @@ from fern.generator_exec.resources.config import GeneratorConfig
 from fern.generator_exec.resources.readme import BadgeType, GenerateReadmeRequest
 
 from fern_python.cli.abstract_generator import AbstractGenerator
-from fern_python.codegen import AST, Project, filepath
+from fern_python.codegen import AST, Project
 from fern_python.codegen.filepath import Filepath
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model import PydanticModelGenerator
@@ -17,6 +18,7 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
 )
 from fern_python.snippet import SnippetRegistry, SnippetWriter
+from fern_python.snippet.snippet_template_factory import SnippetTemplateFactory
 from fern_python.snippet.snippet_test_factory import SnippetTestFactory
 from fern_python.source_file_factory import SourceFileFactory
 from fern_python.utils import build_snippet_writer
@@ -174,6 +176,20 @@ class SdkGenerator(AbstractGenerator):
         self._maybe_write_snippets(
             context=context,
             snippet_registry=snippet_registry,
+            project=project,
+        )
+
+        snippet_template_source_file = SourceFileFactory.create_snippet()
+        self._maybe_write_snippet_templates(
+            context=context,
+            snippet_template_factory=SnippetTemplateFactory(
+                project=project,
+                context=context,
+                snippet_writer=snippet_writer,
+                imports_manager=snippet_template_source_file.get_imports_manager(),
+                ir=ir,
+                generated_root_client=generated_root_client,
+            ),
             project=project,
         )
 
@@ -387,6 +403,18 @@ pip install --upgrade {project._project_config.package_name}
             async_usage=async_usage,
             requirements=[],
         )
+    
+    def _maybe_write_snippet_templates(
+        self,
+        context: SdkGeneratorContext,
+        snippet_template_factory: SnippetTemplateFactory,
+        project: Project,
+    ) -> None:
+        if context.generator_config.output.snippet_template_filepath is not None:
+            snippets = snippet_template_factory.generate_templates()
+            if snippets is None:
+                return
+            project.add_file(context.generator_config.output.snippet_template_filepath, json.dumps(list(map(lambda template: template.dict(by_alias=True), snippets)), indent=4))
 
     def _maybe_write_snippets(
         self,

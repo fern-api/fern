@@ -24,6 +24,7 @@ export async function writeFilesToDiskAndRunGenerator({
     generatorInvocation,
     absolutePathToLocalOutput,
     absolutePathToLocalSnippetJSON,
+    absolutePathToLocalSnippetTemplateJSON,
     absolutePathToFernConfig,
     audiences,
     workspaceTempDir,
@@ -38,6 +39,7 @@ export async function writeFilesToDiskAndRunGenerator({
     generatorInvocation: generatorsYml.GeneratorInvocation;
     absolutePathToLocalOutput: AbsoluteFilePath;
     absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
+    absolutePathToLocalSnippetTemplateJSON: AbsoluteFilePath | undefined;
     absolutePathToFernConfig: AbsoluteFilePath | undefined;
     audiences: Audiences;
     workspaceTempDir: DirectoryResult;
@@ -80,9 +82,19 @@ export async function writeFilesToDiskAndRunGenerator({
         context.logger.debug("Will write snippet.json to: " + absolutePathToTmpSnippetJSON);
     }
 
+    let absolutePathToTmpSnippetTemplatesJSON = undefined;
+    if (absolutePathToLocalSnippetTemplateJSON != null) {
+        const snippetTemplatesJsonFile = await tmp.file({
+            tmpdir: workspaceTempDir.path
+        });
+        absolutePathToTmpSnippetTemplatesJSON = AbsoluteFilePath.of(snippetTemplatesJsonFile.path);
+        context.logger.debug("Will write snippet-templates.json to: " + absolutePathToTmpSnippetTemplatesJSON);
+    }
+
     await runGenerator({
         absolutePathToOutput: absolutePathToTmpOutputDirectory,
         absolutePathToSnippet: absolutePathToTmpSnippetJSON,
+        absolutePathToSnippetTemplates: absolutePathToTmpSnippetTemplatesJSON,
         absolutePathToIr,
         absolutePathToWriteConfigJson,
         workspaceName: workspace.name,
@@ -99,7 +111,9 @@ export async function writeFilesToDiskAndRunGenerator({
         absolutePathToLocalOutput,
         absolutePathToTmpOutputDirectory,
         absolutePathToLocalSnippetJSON,
-        absolutePathToTmpSnippetJSON
+        absolutePathToLocalSnippetTemplateJSON,
+        absolutePathToTmpSnippetJSON,
+        absolutePathToTmpSnippetTemplatesJSON
     });
     await taskHandler.copyGeneratedFiles();
 
@@ -188,6 +202,7 @@ export declare namespace runGenerator {
         absolutePathToIr: AbsoluteFilePath;
         absolutePathToOutput: AbsoluteFilePath;
         absolutePathToSnippet: AbsoluteFilePath | undefined;
+        absolutePathToSnippetTemplates: AbsoluteFilePath | undefined;
         absolutePathToWriteConfigJson: AbsoluteFilePath;
         keepDocker: boolean;
         context: TaskContext;
@@ -202,6 +217,7 @@ export async function runGenerator({
     outputVersion,
     absolutePathToOutput,
     absolutePathToSnippet,
+    absolutePathToSnippetTemplates,
     absolutePathToIr,
     absolutePathToWriteConfigJson,
     keepDocker,
@@ -223,6 +239,7 @@ export async function runGenerator({
         outputVersion,
         organization,
         absolutePathToSnippet,
+        absolutePathToSnippetTemplates,
         writeUnitTests
     });
     binds.push(...bindsForGenerators);

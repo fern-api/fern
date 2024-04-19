@@ -3987,7 +3987,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.508
-    "@fern-fern/generator-exec-sdk": ^0.0.730
+    "@fern-fern/generator-exec-sdk": ^0.0.748
     "@types/decompress": ^4.2.7
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -4679,6 +4679,18 @@ __metadata:
     qs: 6.11.2
     url-join: 4.0.1
   checksum: c870d1a5a5b1b1bfcbe11d51c22002e99bc44dec9ba3e8482def1efbef8c3746c886c24c88b98166778d897007719ab452d179dc943720fe1499a8df9549a1fa
+  languageName: node
+  linkType: hard
+
+"@fern-fern/generator-exec-sdk@npm:^0.0.748":
+  version: 0.0.748
+  resolution: "@fern-fern/generator-exec-sdk@npm:0.0.748"
+  dependencies:
+    form-data: 4.0.0
+    node-fetch: 2.7.0
+    qs: 6.11.2
+    url-join: 4.0.1
+  checksum: 6c2f86504cdf797585b8f6c03a4ea6ed8f8b9538a33dbc6534e3d8f721d6348cb2ab1e922a993c703bd117286bdc05407c186114b6c5a544e667d45cbc1c3fbf
   languageName: node
   linkType: hard
 

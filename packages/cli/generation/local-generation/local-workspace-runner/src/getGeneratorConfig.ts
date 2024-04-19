@@ -12,7 +12,12 @@ import {
 } from "@fern-fern/fiddle-sdk/api";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { EnvironmentVariable } from "@fern-fern/generator-exec-sdk/api";
-import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_PATH_TO_IR, DOCKER_PATH_TO_SNIPPET } from "./constants";
+import {
+    DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+    DOCKER_PATH_TO_IR,
+    DOCKER_PATH_TO_SNIPPET,
+    DOCKER_PATH_TO_SNIPPET_TEMPLATES
+} from "./constants";
 
 const DEFAULT_OUTPUT_VERSION = "0.0.1";
 
@@ -24,6 +29,7 @@ export declare namespace getGeneratorConfig {
         customConfig: unknown;
         generatorInvocation: generatorsYml.GeneratorInvocation;
         absolutePathToSnippet: AbsoluteFilePath | undefined;
+        absolutePathToSnippetTemplates: AbsoluteFilePath | undefined;
         writeUnitTests: boolean;
     }
 
@@ -89,6 +95,7 @@ export function getGeneratorConfig({
     organization,
     outputVersion = DEFAULT_OUTPUT_VERSION,
     absolutePathToSnippet,
+    absolutePathToSnippetTemplates,
     writeUnitTests
 }: getGeneratorConfig.Args): getGeneratorConfig.Return {
     const binds: string[] = [];
@@ -126,6 +133,10 @@ export function getGeneratorConfig({
                 binds.push(`${absolutePathToSnippet}:${DOCKER_PATH_TO_SNIPPET}`);
                 outputConfig.snippetFilepath = DOCKER_PATH_TO_SNIPPET;
             }
+            if (absolutePathToSnippetTemplates !== undefined) {
+                binds.push(`${absolutePathToSnippetTemplates}:${DOCKER_PATH_TO_SNIPPET_TEMPLATES}`);
+                outputConfig.snippetTemplateFilepath = DOCKER_PATH_TO_SNIPPET_TEMPLATES;
+            }
             return outputConfig;
         },
         githubV2: (value) => {
@@ -150,6 +161,10 @@ export function getGeneratorConfig({
                 binds.push(`${absolutePathToSnippet}:${DOCKER_PATH_TO_SNIPPET}`);
                 outputConfig.snippetFilepath = DOCKER_PATH_TO_SNIPPET;
             }
+            if (absolutePathToSnippetTemplates !== undefined) {
+                binds.push(`${absolutePathToSnippetTemplates}:${DOCKER_PATH_TO_SNIPPET_TEMPLATES}`);
+                outputConfig.snippetTemplateFilepath = DOCKER_PATH_TO_SNIPPET_TEMPLATES;
+            }
             return outputConfig;
         },
         _other: () => {
@@ -168,7 +183,8 @@ export function getGeneratorConfig({
             environment: FernGeneratorExec.GeneratorEnvironment.local(),
             dryRun: false,
             whitelabel: false,
-            writeUnitTests
+            writeUnitTests,
+            generateOauthClients: false
         }
     };
 }

@@ -1,4 +1,4 @@
-from typing import List, Optional, Set
+from typing import List, Optional, Set, Union
 
 import fern.ir.resources as ir_types
 
@@ -217,7 +217,7 @@ class DiscriminatedUnionSnippetGenerator:
         self,
         snippet_writer: SnippetWriter,
         name: ir_types.DeclaredTypeName,
-        example: ir_types.ExampleUnionType | AST.Expression,
+        example: Union[ir_types.ExampleUnionType, AST.Expression],
         single_union_type: Optional[ir_types.SingleUnionType] = None,
     ):
         self.snippet_writer = snippet_writer
@@ -225,7 +225,7 @@ class DiscriminatedUnionSnippetGenerator:
         self.example = example
         self.sut = single_union_type
 
-    def generate_snippet_template(self) -> AST.Expression | None:
+    def generate_snippet_template(self) -> Union[AST.Expression, None]:
         return self.sut.shape.visit(
             same_properties_as_object=lambda: self._get_snippet_for_union_with_same_properties_as_object(
                 name=self.name,
@@ -267,7 +267,7 @@ class DiscriminatedUnionSnippetGenerator:
         self,
         name: ir_types.DeclaredTypeName,
         wire_discriminant_value: ir_types.NameAndWireValue,
-        example: ir_types.ExampleObjectTypeWithTypeId | AST.Expression,
+        example: Union[ir_types.ExampleObjectTypeWithTypeId, AST.Expression],
     ) -> AST.Expression:
         args: List[AST.Expression] = []
         if isinstance(example, ir_types.ExampleObjectTypeWithTypeId):
@@ -295,7 +295,7 @@ class DiscriminatedUnionSnippetGenerator:
         self,
         name: ir_types.DeclaredTypeName,
         wire_discriminant_value: ir_types.NameAndWireValue,
-        example: ir_types.ExampleTypeReference | AST.Expression,
+        example: Union[ir_types.ExampleTypeReference, AST.Expression],
     ) -> AST.Expression:
         union_class_reference = self._get_union_class_reference(
             name=name,

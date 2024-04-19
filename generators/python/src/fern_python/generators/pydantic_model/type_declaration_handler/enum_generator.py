@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Union
 
 import fern.ir.resources as ir_types
 
@@ -97,7 +97,7 @@ class EnumSnippetGenerator:
         self,
         snippet_writer: SnippetWriter,
         name: ir_types.DeclaredTypeName,
-        example: ir_types.ExampleEnumType | str,
+        example: Union[ir_types.ExampleEnumType, str],
         use_str_enums: bool,
     ):
         self._use_str_enums = use_str_enums
