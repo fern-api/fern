@@ -1418,7 +1418,7 @@
                                                     "templateInputs": [
                                                         {
                                                             "location": "BODY",
-                                                            "path": "string"
+                                                            "path": "NestedObject.string"
                                                         }
                                                     ],
                                                     "type": "generic"
@@ -1433,7 +1433,7 @@
                                                     "templateInputs": [
                                                         {
                                                             "location": "BODY",
-                                                            "path": "integer"
+                                                            "path": "NestedObject.integer"
                                                         }
                                                     ],
                                                     "type": "generic"
@@ -1448,7 +1448,7 @@
                                                     "templateInputs": [
                                                         {
                                                             "location": "BODY",
-                                                            "path": "long"
+                                                            "path": "NestedObject.long"
                                                         }
                                                     ],
                                                     "type": "generic"
@@ -1463,7 +1463,7 @@
                                                     "templateInputs": [
                                                         {
                                                             "location": "BODY",
-                                                            "path": "double"
+                                                            "path": "NestedObject.double"
                                                         }
                                                     ],
                                                     "type": "generic"
@@ -1478,7 +1478,7 @@
                                                     "templateInputs": [
                                                         {
                                                             "location": "BODY",
-                                                            "path": "bool"
+                                                            "path": "NestedObject.bool"
                                                         }
                                                     ],
                                                     "type": "generic"
@@ -1493,7 +1493,7 @@
                                                     "templateInputs": [
                                                         {
                                                             "location": "BODY",
-                                                            "path": "datetime"
+                                                            "path": "NestedObject.datetime"
                                                         }
                                                     ],
                                                     "type": "generic"
@@ -1508,7 +1508,7 @@
                                                     "templateInputs": [
                                                         {
                                                             "location": "BODY",
-                                                            "path": "date"
+                                                            "path": "NestedObject.date"
                                                         }
                                                     ],
                                                     "type": "generic"
@@ -1523,7 +1523,7 @@
                                                     "templateInputs": [
                                                         {
                                                             "location": "BODY",
-                                                            "path": "uuid"
+                                                            "path": "NestedObject.uuid"
                                                         }
                                                     ],
                                                     "type": "generic"
@@ -1538,7 +1538,7 @@
                                                     "templateInputs": [
                                                         {
                                                             "location": "BODY",
-                                                            "path": "base64"
+                                                            "path": "NestedObject.base64"
                                                         }
                                                     ],
                                                     "type": "generic"
@@ -1565,7 +1565,7 @@
                                                     },
                                                     "templateInput": {
                                                         "location": "BODY",
-                                                        "path": "list"
+                                                        "path": "NestedObject.list"
                                                     },
                                                     "type": "iterable"
                                                 }
@@ -1591,7 +1591,7 @@
                                                     },
                                                     "templateInput": {
                                                         "location": "BODY",
-                                                        "path": "set"
+                                                        "path": "NestedObject.set"
                                                     },
                                                     "type": "iterable"
                                                 }
@@ -1630,7 +1630,7 @@
                                                     "keyValueSeparator": ": ",
                                                     "templateInput": {
                                                         "location": "BODY",
-                                                        "path": "map"
+                                                        "path": "NestedObject.map"
                                                     },
                                                     "type": "dict"
                                                 }
@@ -1711,7 +1711,7 @@
                                                     "templateInputs": [
                                                         {
                                                             "location": "BODY",
-                                                            "path": "string"
+                                                            "path": "NestedObject.string"
                                                         }
                                                     ],
                                                     "type": "generic"
@@ -1726,7 +1726,7 @@
                                                     "templateInputs": [
                                                         {
                                                             "location": "BODY",
-                                                            "path": "integer"
+                                                            "path": "NestedObject.integer"
                                                         }
                                                     ],
                                                     "type": "generic"
@@ -1741,7 +1741,7 @@
                                                     "templateInputs": [
                                                         {
                                                             "location": "BODY",
-                                                            "path": "long"
+                                                            "path": "NestedObject.long"
                                                         }
                                                     ],
                                                     "type": "generic"
@@ -1756,7 +1756,7 @@
                                                     "templateInputs": [
                                                         {
                                                             "location": "BODY",
-                                                            "path": "double"
+                                                            "path": "NestedObject.double"
                                                         }
                                                     ],
                                                     "type": "generic"
@@ -1771,7 +1771,7 @@
                                                     "templateInputs": [
                                                         {
                                                             "location": "BODY",
-                                                            "path": "bool"
+                                                            "path": "NestedObject.bool"
                                                         }
                                                     ],
                                                     "type": "generic"
@@ -1786,7 +1786,7 @@
                                                     "templateInputs": [
                                                         {
                                                             "location": "BODY",
-                                                            "path": "datetime"
+                                                            "path": "NestedObject.datetime"
                                                         }
                                                     ],
                                                     "type": "generic"
@@ -1801,7 +1801,7 @@
                                                     "templateInputs": [
                                                         {
                                                             "location": "BODY",
-                                                            "path": "date"
+                                                            "path": "NestedObject.date"
                                                         }
                                                     ],
                                                     "type": "generic"
@@ -1816,7 +1816,7 @@
                                                     "templateInputs": [
                                                         {
                                                             "location": "BODY",
-                                                            "path": "uuid"
+                                                            "path": "NestedObject.uuid"
                                                         }
                                                     ],
                                                     "type": "generic"
@@ -1831,7 +1831,7 @@
                                                     "templateInputs": [
                                                         {
                                                             "location": "BODY",
-                                                            "path": "base64"
+                                                            "path": "NestedObject.base64"
                                                         }
                                                     ],
                                                     "type": "generic"
@@ -1858,7 +1858,7 @@
                                                     },
                                                     "templateInput": {
                                                         "location": "BODY",
-                                                        "path": "list"
+                                                        "path": "NestedObject.list"
                                                     },
                                                     "type": "iterable"
                                                 }
@@ -1884,7 +1884,7 @@
                                                     },
                                                     "templateInput": {
                                                         "location": "BODY",
-                                                        "path": "set"
+                                                        "path": "NestedObject.set"
                                                     },
                                                     "type": "iterable"
                                                 }
@@ -1923,7 +1923,7 @@
                                                     "keyValueSeparator": ": ",
                                                     "templateInput": {
                                                         "location": "BODY",
-                                                        "path": "map"
+                                                        "path": "NestedObject.map"
                                                     },
                                                     "type": "dict"
                                                 }
@@ -2009,7 +2009,7 @@
                                                         "templateInputs": [
                                                             {
                                                                 "location": "BODY",
-                                                                "path": "string"
+                                                                "path": "NestedObject.string"
                                                             }
                                                         ],
                                                         "type": "generic"
@@ -2024,7 +2024,7 @@
                                                         "templateInputs": [
                                                             {
                                                                 "location": "BODY",
-                                                                "path": "integer"
+                                                                "path": "NestedObject.integer"
                                                             }
                                                         ],
                                                         "type": "generic"
@@ -2039,7 +2039,7 @@
                                                         "templateInputs": [
                                                             {
                                                                 "location": "BODY",
-                                                                "path": "long"
+                                                                "path": "NestedObject.long"
                                                             }
                                                         ],
                                                         "type": "generic"
@@ -2054,7 +2054,7 @@
                                                         "templateInputs": [
                                                             {
                                                                 "location": "BODY",
-                                                                "path": "double"
+                                                                "path": "NestedObject.double"
                                                             }
                                                         ],
                                                         "type": "generic"
@@ -2069,7 +2069,7 @@
                                                         "templateInputs": [
                                                             {
                                                                 "location": "BODY",
-                                                                "path": "bool"
+                                                                "path": "NestedObject.bool"
                                                             }
                                                         ],
                                                         "type": "generic"
@@ -2084,7 +2084,7 @@
                                                         "templateInputs": [
                                                             {
                                                                 "location": "BODY",
-                                                                "path": "datetime"
+                                                                "path": "NestedObject.datetime"
                                                             }
                                                         ],
                                                         "type": "generic"
@@ -2099,7 +2099,7 @@
                                                         "templateInputs": [
                                                             {
                                                                 "location": "BODY",
-                                                                "path": "date"
+                                                                "path": "NestedObject.date"
                                                             }
                                                         ],
                                                         "type": "generic"
@@ -2114,7 +2114,7 @@
                                                         "templateInputs": [
                                                             {
                                                                 "location": "BODY",
-                                                                "path": "uuid"
+                                                                "path": "NestedObject.uuid"
                                                             }
                                                         ],
                                                         "type": "generic"
@@ -2129,7 +2129,7 @@
                                                         "templateInputs": [
                                                             {
                                                                 "location": "BODY",
-                                                                "path": "base64"
+                                                                "path": "NestedObject.base64"
                                                             }
                                                         ],
                                                         "type": "generic"
@@ -2156,7 +2156,7 @@
                                                         },
                                                         "templateInput": {
                                                             "location": "BODY",
-                                                            "path": "list"
+                                                            "path": "NestedObject.list"
                                                         },
                                                         "type": "iterable"
                                                     }
@@ -2182,7 +2182,7 @@
                                                         },
                                                         "templateInput": {
                                                             "location": "BODY",
-                                                            "path": "set"
+                                                            "path": "NestedObject.set"
                                                         },
                                                         "type": "iterable"
                                                     }
@@ -2221,7 +2221,7 @@
                                                         "keyValueSeparator": ": ",
                                                         "templateInput": {
                                                             "location": "BODY",
-                                                            "path": "map"
+                                                            "path": "NestedObject.map"
                                                         },
                                                         "type": "dict"
                                                     }
@@ -3036,7 +3036,7 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "string"
+                                                "path": "NestedObject.string"
                                             }
                                         ],
                                         "type": "generic"
@@ -3051,7 +3051,7 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "integer"
+                                                "path": "NestedObject.integer"
                                             }
                                         ],
                                         "type": "generic"
@@ -3066,7 +3066,7 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "long"
+                                                "path": "NestedObject.long"
                                             }
                                         ],
                                         "type": "generic"
@@ -3081,7 +3081,7 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "double"
+                                                "path": "NestedObject.double"
                                             }
                                         ],
                                         "type": "generic"
@@ -3096,7 +3096,7 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "bool"
+                                                "path": "NestedObject.bool"
                                             }
                                         ],
                                         "type": "generic"
@@ -3111,7 +3111,7 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "datetime"
+                                                "path": "NestedObject.datetime"
                                             }
                                         ],
                                         "type": "generic"
@@ -3126,7 +3126,7 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "date"
+                                                "path": "NestedObject.date"
                                             }
                                         ],
                                         "type": "generic"
@@ -3141,7 +3141,7 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "uuid"
+                                                "path": "NestedObject.uuid"
                                             }
                                         ],
                                         "type": "generic"
@@ -3156,7 +3156,7 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "base64"
+                                                "path": "NestedObject.base64"
                                             }
                                         ],
                                         "type": "generic"
@@ -3183,7 +3183,7 @@
                                         },
                                         "templateInput": {
                                             "location": "BODY",
-                                            "path": "list"
+                                            "path": "NestedObject.list"
                                         },
                                         "type": "iterable"
                                     }
@@ -3209,7 +3209,7 @@
                                         },
                                         "templateInput": {
                                             "location": "BODY",
-                                            "path": "set"
+                                            "path": "NestedObject.set"
                                         },
                                         "type": "iterable"
                                     }
@@ -3248,7 +3248,7 @@
                                         "keyValueSeparator": ": ",
                                         "templateInput": {
                                             "location": "BODY",
-                                            "path": "map"
+                                            "path": "NestedObject.map"
                                         },
                                         "type": "dict"
                                     }

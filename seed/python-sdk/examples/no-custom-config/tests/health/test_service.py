@@ -14,7 +14,6 @@ async def test_check(client: SeedExamples, async_client: AsyncSeedExamples) -> N
 
 async def test_ping(client: SeedExamples, async_client: AsyncSeedExamples) -> None:
     expected_response = True
-    expected_types = None
     response = client.health.service.ping()
     validate_response(response, expected_response, expected_types)
 

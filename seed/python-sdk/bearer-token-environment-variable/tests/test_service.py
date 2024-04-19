@@ -9,7 +9,6 @@ async def test_get_with_bearer_token(
     client: SeedBearerTokenEnvironmentVariable, async_client: AsyncSeedBearerTokenEnvironmentVariable
 ) -> None:
     expected_response = "string"
-    expected_types = None
     response = client.service.get_with_bearer_token()
     validate_response(response, expected_response, expected_types)
 

@@ -217,51 +217,60 @@ class DiscriminatedUnionSnippetGenerator:
         self,
         snippet_writer: SnippetWriter,
         name: ir_types.DeclaredTypeName,
-        example: Union[ir_types.ExampleUnionType, AST.Expression],
+        example: Optional[ir_types.ExampleUnionType],
+        example_expression: Optional[AST.Expression] = None,
         single_union_type: Optional[ir_types.SingleUnionType] = None,
     ):
         self.snippet_writer = snippet_writer
         self.name = name
         self.example = example
+        self.example_expression = example_expression
         self.sut = single_union_type
 
     def generate_snippet_template(self) -> Union[AST.Expression, None]:
-        return self.sut.shape.visit(
-            same_properties_as_object=lambda _: self._get_snippet_for_union_with_same_properties_as_object(
-                name=self.name,
-                wire_discriminant_value=self.sut.discriminant_value,
-                example=self.example,
-            ),
-            single_property=lambda _: self._get_snippet_for_union_with_single_property(
-                name=self.name,
-                wire_discriminant_value=self.sut.discriminant_value,
-                example=self.example,
-            ),
-            no_properties=lambda: self._get_snippet_for_union_with_no_properties(
-                name=self.name,
-            ),
-        )
-
-    def generate_snippet(self) -> AST.Expression:
-        return (
-            self.example.single_union_type.shape.visit(
-                same_properties_as_object=lambda object: self._get_snippet_for_union_with_same_properties_as_object(
+        sut = self.sut
+        ex = self.example_expression
+        if sut is None or ex is None:
+            raise ValueError("Example must be be present to generate snippet.")
+        else:
+            return sut.shape.visit(
+                same_properties_as_object=lambda _: self._get_snippet_for_union_with_same_properties_as_object(
                     name=self.name,
-                    wire_discriminant_value=self.example.single_union_type.wire_discriminant_value,
-                    example=object,
+                    wire_discriminant_value=sut.discriminant_value,  # type: ignore
+                    example=ex,  # type: ignore
                 ),
-                single_property=lambda example_type_reference: self._get_snippet_for_union_with_single_property(
+                single_property=lambda _: self._get_snippet_for_union_with_single_property(
                     name=self.name,
-                    wire_discriminant_value=self.example.single_union_type.wire_discriminant_value,
-                    example=example_type_reference,
+                    wire_discriminant_value=sut.discriminant_value,  # type: ignore
+                    example=ex,  # type: ignore
                 ),
                 no_properties=lambda: self._get_snippet_for_union_with_no_properties(
                     name=self.name,
                 ),
             )
-            if self.example is not None
-            else None
-        )
+
+    def generate_snippet(self) -> AST.Expression:
+        ex = self.example
+        if ex is None:
+            raise ValueError("Example must be be present to generate snippet.")
+        else:
+            return (
+                ex.single_union_type.shape.visit(
+                    same_properties_as_object=lambda object: self._get_snippet_for_union_with_same_properties_as_object(
+                        name=self.name,
+                        wire_discriminant_value=ex.single_union_type.wire_discriminant_value,  # type: ignore
+                        example=object,
+                    ),
+                    single_property=lambda example_type_reference: self._get_snippet_for_union_with_single_property(
+                        name=self.name,
+                        wire_discriminant_value=ex.single_union_type.wire_discriminant_value,  # type: ignore
+                        example=example_type_reference,
+                    ),
+                    no_properties=lambda: self._get_snippet_for_union_with_no_properties(
+                        name=self.name,
+                    ),
+                )
+            )
 
     def _get_snippet_for_union_with_same_properties_as_object(
         self,

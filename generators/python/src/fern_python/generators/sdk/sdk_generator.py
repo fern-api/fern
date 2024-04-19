@@ -1,5 +1,6 @@
 import json
 from typing import Optional, Sequence, Tuple, Union, cast
+from uuid import uuid4
 
 from fdr.client import FdrClient
 import fern.ir.resources as ir_types
@@ -428,7 +429,7 @@ pip install --upgrade {project._project_config.package_name}
                 org_id = generator_config.organization
                 api_name = ir.api_name.original_name
                 # API Definition ID doesn't matter right now
-                fdr_client.template.register_batch(org_id=org_id, api_id=api_name, api_definition_id=f"{org_id}_{api_name}", snippets=snippets)
+                fdr_client.template.register_batch(org_id=org_id, api_id=api_name, api_definition_id=uuid4(), snippets=snippets)
             else:
                 # Otherwise write them for local
                 project.add_file(context.generator_config.output.snippet_template_filepath, json.dumps(list(map(lambda template: template.dict(by_alias=True), snippets)), indent=4))

@@ -109,7 +109,7 @@
                                         "templateInputs": [
                                             {
                                                 "location": "QUERY",
-                                                "path": "name"
+                                                "path": "user.name"
                                             }
                                         ],
                                         "type": "generic"
@@ -136,7 +136,7 @@
                                         },
                                         "templateInput": {
                                             "location": "QUERY",
-                                            "path": "tags"
+                                            "path": "user.tags"
                                         },
                                         "type": "iterable"
                                     }
@@ -218,7 +218,7 @@
                                         "templateInputs": [
                                             {
                                                 "location": "QUERY",
-                                                "path": "name"
+                                                "path": "nestedUser.name"
                                             }
                                         ],
                                         "type": "generic"
@@ -242,7 +242,7 @@
                                                     "templateInputs": [
                                                         {
                                                             "location": "QUERY",
-                                                            "path": "name"
+                                                            "path": "nestedUser.user.name"
                                                         }
                                                     ],
                                                     "type": "generic"
@@ -269,7 +269,7 @@
                                                     },
                                                     "templateInput": {
                                                         "location": "QUERY",
-                                                        "path": "tags"
+                                                        "path": "nestedUser.user.name.user.tags"
                                                     },
                                                     "type": "iterable"
                                                 }
@@ -302,7 +302,7 @@
                                         "templateInputs": [
                                             {
                                                 "location": "QUERY",
-                                                "path": "name"
+                                                "path": "optionalUser.name"
                                             }
                                         ],
                                         "type": "generic"
@@ -329,7 +329,7 @@
                                         },
                                         "templateInput": {
                                             "location": "QUERY",
-                                            "path": "tags"
+                                            "path": "optionalUser.tags"
                                         },
                                         "type": "iterable"
                                     }
@@ -357,7 +357,7 @@
                                         "templateInputs": [
                                             {
                                                 "location": "QUERY",
-                                                "path": "name"
+                                                "path": "excludeUser.name"
                                             }
                                         ],
                                         "type": "generic"
@@ -384,7 +384,7 @@
                                         },
                                         "templateInput": {
                                             "location": "QUERY",
-                                            "path": "tags"
+                                            "path": "excludeUser.tags"
                                         },
                                         "type": "iterable"
                                     }

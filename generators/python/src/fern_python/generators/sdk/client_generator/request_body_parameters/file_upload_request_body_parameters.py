@@ -52,7 +52,7 @@ class FileUploadRequestBodyParameters(AbstractRequestBodyParameters):
 
     def _get_raw_file_property_type(self, prop: ir_types.FileProperty) -> ir_types.TypeReference:
         return (
-            ir_types.TypeReference.factory.container(ir_types.ContainerType.factory.list(ir_types.TypeReference.factory.primitive(ir_types.PrimitiveType.STRING)))
+            ir_types.TypeReference.factory.container(ir_types.ContainerType.factory.list_(ir_types.TypeReference.factory.primitive(ir_types.PrimitiveType.STRING)))
             if prop.get_as_union().type == "fileArray"
             else ir_types.TypeReference.factory.primitive(ir_types.PrimitiveType.STRING)
         )

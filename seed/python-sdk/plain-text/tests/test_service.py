@@ -7,7 +7,6 @@ from .utilities import validate_response
 
 async def test_get_text(client: SeedPlainText, async_client: AsyncSeedPlainText) -> None:
     expected_response = "string"
-    expected_types = None
     response = client.service.get_text()
     validate_response(response, expected_response, expected_types)
 

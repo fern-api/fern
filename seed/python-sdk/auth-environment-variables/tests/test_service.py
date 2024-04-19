@@ -9,7 +9,6 @@ async def test_get_with_api_key(
     client: SeedAuthEnvironmentVariables, async_client: AsyncSeedAuthEnvironmentVariables
 ) -> None:
     expected_response = "string"
-    expected_types = None
     response = client.service.get_with_api_key()
     validate_response(response, expected_response, expected_types)
 
@@ -21,7 +20,6 @@ async def test_get_with_header(
     client: SeedAuthEnvironmentVariables, async_client: AsyncSeedAuthEnvironmentVariables
 ) -> None:
     expected_response = "string"
-    expected_types = None
     response = client.service.get_with_header(x_endpoint_header="string")
     validate_response(response, expected_response, expected_types)
 

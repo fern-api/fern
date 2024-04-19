@@ -7,7 +7,6 @@ from .utilities import validate_response
 
 async def test_throw_error(client: SeedErrorProperty, async_client: AsyncSeedErrorProperty) -> None:
     expected_response = "string"
-    expected_types = None
     response = client.property_based_error.throw_error()
     validate_response(response, expected_response, expected_types)
 

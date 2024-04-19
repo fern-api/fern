@@ -18,7 +18,6 @@ async def test_get(client: SeedUnions, async_client: AsyncSeedUnions) -> None:
 
 async def test_update(client: SeedUnions, async_client: AsyncSeedUnions) -> None:
     expected_response = True
-    expected_types = None
     response = client.union.update(request=Shape_Circle(id="string", radius=1.1))
     validate_response(response, expected_response, expected_types)
 
