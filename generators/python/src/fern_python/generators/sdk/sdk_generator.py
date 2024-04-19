@@ -1,6 +1,7 @@
 import json
 from typing import Optional, Sequence, Tuple, Union, cast
 
+from fdr.client import FdrClient
 import fern.ir.resources as ir_types
 from fern.generator_exec.resources.config import GeneratorConfig
 from fern.generator_exec.resources.readme import BadgeType, GenerateReadmeRequest
@@ -191,6 +192,9 @@ class SdkGenerator(AbstractGenerator):
                 generated_root_client=generated_root_client,
             ),
             project=project,
+            generator_exec_wrapper=generator_exec_wrapper,
+            generator_config=generator_config,
+            ir=ir,
         )
 
         test_fac = SnippetTestFactory(
@@ -409,12 +413,25 @@ pip install --upgrade {project._project_config.package_name}
         context: SdkGeneratorContext,
         snippet_template_factory: SnippetTemplateFactory,
         project: Project,
+        generator_config: GeneratorConfig,
+        ir: ir_types.IntermediateRepresentation,
+        generator_exec_wrapper: GeneratorExecWrapper,
     ) -> None:
         if context.generator_config.output.snippet_template_filepath is not None:
             snippets = snippet_template_factory.generate_templates()
             if snippets is None:
                 return
-            project.add_file(context.generator_config.output.snippet_template_filepath, json.dumps(list(map(lambda template: template.dict(by_alias=True), snippets)), indent=4))
+            
+            # Send snippets to FDR
+            fdr_client = generator_exec_wrapper.fdr_client
+            if fdr_client is not None:
+                org_id = generator_config.organization
+                api_name = ir.api_name.original_name
+                # API Definition ID doesn't matter right now
+                fdr_client.template.register_batch(org_id=org_id, api_id=api_name, api_definition_id=f"{org_id}_{api_name}", snippets=snippets)
+            else:
+                # Otherwise write them for local
+                project.add_file(context.generator_config.output.snippet_template_filepath, json.dumps(list(map(lambda template: template.dict(by_alias=True), snippets)), indent=4))
 
     def _maybe_write_snippets(
         self,

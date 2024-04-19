@@ -171,13 +171,13 @@ wasmer-compiler-cranelift = ">=1.0.0"
 
 [[package]]
 name = "fern-fern-fdr-sdk"
-version = "0.0.5320"
+version = "0.0.5321"
 description = ""
 optional = false
 python-versions = ">=3.8,<4.0"
 files = [
-    {file = "fern_fern_fdr_sdk-0.0.5320-py3-none-any.whl", hash = "sha256:1c69dad319a080a5069c6faa0faaf3b8e96ec30193e4646cc065967f581afce7"},
-    {file = "fern_fern_fdr_sdk-0.0.5320.tar.gz", hash = "sha256:9b30716acd5a7edfd872a24ed1bcb607860eab06fba5e7800868eae34935e5d0"},
+    {file = "fern_fern_fdr_sdk-0.0.5321-py3-none-any.whl", hash = "sha256:10d5af19b1e9cca18a04d5916d7e6a9b7ddc2199ba85808a6e178609833e4ad2"},
+    {file = "fern_fern_fdr_sdk-0.0.5321.tar.gz", hash = "sha256:7f0b4610c747b91228e40948a7b01d693bf894b58de17333b282c9124cbe3d5e"},
 ]
 
 [package.dependencies]
@@ -960,4 +960,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "813bcf25cfa5b9f1b601ab3be2f3450dc91e1f1c057fd6ae012aca7498ad95be"
+content-hash = "87a3333a2f6d5d70f87a6f72e175b6af01f388fd116012431180eea0371c55a7"
