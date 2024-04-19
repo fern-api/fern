@@ -45,5 +45,40 @@ export function testConvertOpenAPI(fixtureName: string, filename: string, asyncA
             });
             expect(fernDefinition).toMatchSnapshot();
         });
+
+        it("docs", async () => {
+            const openApiPath = path.join(FIXTURES_PATH, fixtureName, filename);
+            const mockTaskContext = createMockTaskContext({ logger: CONSOLE_LOGGER });
+
+            const absolutePathToAsyncAPI =
+                asyncApiFilename != null
+                    ? join(FIXTURES_PATH, RelativeFilePath.of(fixtureName), RelativeFilePath.of(asyncApiFilename))
+                    : undefined;
+
+            const specs = [];
+            specs.push({
+                absoluteFilepath: AbsoluteFilePath.of(openApiPath),
+                absoluteFilepathToOverrides: undefined
+            });
+            if (absolutePathToAsyncAPI != null) {
+                specs.push({
+                    absoluteFilepath: absolutePathToAsyncAPI,
+                    absoluteFilepathToOverrides: undefined
+                });
+            }
+
+            const openApiIr = await parse({
+                workspace: {
+                    specs
+                },
+                taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER })
+            });
+            const fernDefinition = convert({
+                ir: openApiIr,
+                taskContext: mockTaskContext,
+                enableUniqueErrorsPerEndpoint: true
+            });
+            expect(fernDefinition).toMatchSnapshot();
+        });
     });
 }
