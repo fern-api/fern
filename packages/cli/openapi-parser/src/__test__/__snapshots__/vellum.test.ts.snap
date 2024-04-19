@@ -669,7 +669,7 @@ Generate a completion using a previously defined deployment.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "GenerateErrorResponse",
@@ -683,7 +683,7 @@ Generate a completion using a previously defined deployment.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "GenerateErrorResponse",
@@ -697,7 +697,7 @@ Generate a completion using a previously defined deployment.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "GenerateErrorResponse",
@@ -711,7 +711,7 @@ Generate a completion using a previously defined deployment.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "GenerateErrorResponse",
@@ -877,7 +877,7 @@ Generate a stream of completions using a previously defined deployment.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "GenerateErrorResponse",
@@ -891,7 +891,7 @@ Generate a stream of completions using a previously defined deployment.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "GenerateErrorResponse",
@@ -905,7 +905,7 @@ Generate a stream of completions using a previously defined deployment.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "GenerateErrorResponse",
@@ -919,7 +919,7 @@ Generate a stream of completions using a previously defined deployment.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "GenerateErrorResponse",
@@ -1420,7 +1420,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_nine",
+            "generatedName": "ConflictErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "RegisterPromptErrorResponse",
@@ -2025,7 +2025,7 @@ Perform a search against a document index.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "SearchErrorResponse",
@@ -2039,7 +2039,7 @@ Perform a search against a document index.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "SearchErrorResponse",
@@ -2053,7 +2053,7 @@ Perform a search against a document index.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "SearchErrorResponse",
@@ -2209,7 +2209,7 @@ Used to submit feedback regarding the quality of previously generated completion
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "SubmitCompletionActualsErrorResponse",
@@ -2223,7 +2223,7 @@ Used to submit feedback regarding the quality of previously generated completion
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "SubmitCompletionActualsErrorResponse",
@@ -2237,7 +2237,7 @@ Used to submit feedback regarding the quality of previously generated completion
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "SubmitCompletionActualsErrorResponse",
@@ -2588,7 +2588,7 @@ Upload a document to be indexed and used for search.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "UploadDocumentErrorResponse",
@@ -2602,7 +2602,7 @@ Upload a document to be indexed and used for search.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "UploadDocumentErrorResponse",
@@ -2616,7 +2616,7 @@ Upload a document to be indexed and used for search.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "UploadDocumentErrorResponse",

@@ -37,7 +37,7 @@ Here are some of the most used payload fields explained (you can find the full p
           "generatedName": "BadRequestError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -48,7 +48,7 @@ Here are some of the most used payload fields explained (you can find the full p
           "generatedName": "UnauthorizedError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -59,7 +59,7 @@ Here are some of the most used payload fields explained (you can find the full p
           "generatedName": "TooManyRequestsError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -372,7 +372,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
           "generatedName": "UnauthorizedError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -383,7 +383,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
           "generatedName": "TooManyRequestsError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -827,7 +827,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "generatedName": "BadRequestError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -838,7 +838,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "generatedName": "UnauthorizedError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -849,7 +849,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "generatedName": "TooManyRequestsError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -1302,7 +1302,7 @@ Each consumer User entity needs three mandatory fields:
           "generatedName": "BadRequestError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -1313,7 +1313,7 @@ Each consumer User entity needs three mandatory fields:
           "generatedName": "UnauthorizedError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -1324,7 +1324,7 @@ Each consumer User entity needs three mandatory fields:
           "generatedName": "TooManyRequestsError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -1858,7 +1858,7 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
           "generatedName": "UnauthorizedError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -1869,7 +1869,7 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
           "generatedName": "TooManyRequestsError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -2472,7 +2472,7 @@ Each consumer Business entity needs three mandatory fields:
           "generatedName": "BadRequestError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -2483,7 +2483,7 @@ Each consumer Business entity needs three mandatory fields:
           "generatedName": "UnauthorizedError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -2494,7 +2494,7 @@ Each consumer Business entity needs three mandatory fields:
           "generatedName": "TooManyRequestsError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -2774,7 +2774,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
           "generatedName": "UnauthorizedError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -2785,7 +2785,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
           "generatedName": "TooManyRequestsError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -4085,7 +4085,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "generatedName": "BadRequestError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -4096,7 +4096,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "generatedName": "UnauthorizedError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -4107,7 +4107,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "generatedName": "TooManyRequestsError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -4834,7 +4834,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "generatedName": "BadRequestError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -4845,7 +4845,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "generatedName": "UnauthorizedError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -4856,7 +4856,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "generatedName": "TooManyRequestsError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },

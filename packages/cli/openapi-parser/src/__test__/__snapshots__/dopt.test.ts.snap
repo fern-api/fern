@@ -20,18 +20,18 @@ exports[`open api parser dopt parse open api 1`] = `
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": "BadRequestErrorResponseBody",
             "properties": [
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "400Code",
+                "generatedName": "badRequestErrorBodyCode",
                 "key": "code",
                 "schema": {
                   "description": null,
-                  "generatedName": "four_hundred_Code",
+                  "generatedName": "BadRequestErrorBodyCode",
                   "groupName": null,
                   "nameOverride": null,
                   "type": "enum",
@@ -66,11 +66,11 @@ exports[`open api parser dopt parse open api 1`] = `
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "400Details",
+                "generatedName": "badRequestErrorBodyDetails",
                 "key": "details",
                 "schema": {
                   "description": null,
-                  "generatedName": "four_hundred_Details",
+                  "generatedName": "BadRequestErrorBodyDetails",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
@@ -94,18 +94,18 @@ exports[`open api parser dopt parse open api 1`] = `
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": "UnauthorizedErrorResponseBody",
             "properties": [
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "401Code",
+                "generatedName": "unauthorizedErrorBodyCode",
                 "key": "code",
                 "schema": {
                   "description": null,
-                  "generatedName": "four_hundred_one_Code",
+                  "generatedName": "UnauthorizedErrorBodyCode",
                   "groupName": null,
                   "nameOverride": null,
                   "type": "literal",
@@ -118,11 +118,11 @@ exports[`open api parser dopt parse open api 1`] = `
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "401Details",
+                "generatedName": "unauthorizedErrorBodyDetails",
                 "key": "details",
                 "schema": {
                   "description": null,
-                  "generatedName": "four_hundred_one_Details",
+                  "generatedName": "UnauthorizedErrorBodyDetails",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
@@ -146,18 +146,18 @@ exports[`open api parser dopt parse open api 1`] = `
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": "NotFoundErrorResponseBody",
             "properties": [
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "404Code",
+                "generatedName": "notFoundErrorBodyCode",
                 "key": "code",
                 "schema": {
                   "description": null,
-                  "generatedName": "four_hundred_four_Code",
+                  "generatedName": "NotFoundErrorBodyCode",
                   "groupName": null,
                   "nameOverride": null,
                   "type": "literal",
@@ -170,11 +170,11 @@ exports[`open api parser dopt parse open api 1`] = `
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "404Details",
+                "generatedName": "notFoundErrorBodyDetails",
                 "key": "details",
                 "schema": {
                   "description": null,
-                  "generatedName": "four_hundred_four_Details",
+                  "generatedName": "NotFoundErrorBodyDetails",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
@@ -198,18 +198,18 @@ exports[`open api parser dopt parse open api 1`] = `
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": "InternalServerErrorResponseBody",
             "properties": [
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "500Code",
+                "generatedName": "internalServerErrorBodyCode",
                 "key": "code",
                 "schema": {
                   "description": null,
-                  "generatedName": "five_hundred_Code",
+                  "generatedName": "InternalServerErrorBodyCode",
                   "groupName": null,
                   "nameOverride": null,
                   "type": "literal",
@@ -222,11 +222,11 @@ exports[`open api parser dopt parse open api 1`] = `
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "500Details",
+                "generatedName": "internalServerErrorBodyDetails",
                 "key": "details",
                 "schema": {
                   "description": null,
-                  "generatedName": "five_hundred_Details",
+                  "generatedName": "InternalServerErrorBodyDetails",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
@@ -972,18 +972,18 @@ exports[`open api parser dopt parse open api 1`] = `
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": "BadRequestErrorResponseBody",
             "properties": [
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "400Code",
+                "generatedName": "badRequestErrorBodyCode",
                 "key": "code",
                 "schema": {
                   "description": null,
-                  "generatedName": "four_hundred_Code",
+                  "generatedName": "BadRequestErrorBodyCode",
                   "groupName": null,
                   "nameOverride": null,
                   "type": "enum",
@@ -1018,11 +1018,11 @@ exports[`open api parser dopt parse open api 1`] = `
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "400Details",
+                "generatedName": "badRequestErrorBodyDetails",
                 "key": "details",
                 "schema": {
                   "description": null,
-                  "generatedName": "four_hundred_Details",
+                  "generatedName": "BadRequestErrorBodyDetails",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
@@ -1046,18 +1046,18 @@ exports[`open api parser dopt parse open api 1`] = `
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": "UnauthorizedErrorResponseBody",
             "properties": [
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "401Code",
+                "generatedName": "unauthorizedErrorBodyCode",
                 "key": "code",
                 "schema": {
                   "description": null,
-                  "generatedName": "four_hundred_one_Code",
+                  "generatedName": "UnauthorizedErrorBodyCode",
                   "groupName": null,
                   "nameOverride": null,
                   "type": "literal",
@@ -1070,11 +1070,11 @@ exports[`open api parser dopt parse open api 1`] = `
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "401Details",
+                "generatedName": "unauthorizedErrorBodyDetails",
                 "key": "details",
                 "schema": {
                   "description": null,
-                  "generatedName": "four_hundred_one_Details",
+                  "generatedName": "UnauthorizedErrorBodyDetails",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
@@ -1098,18 +1098,18 @@ exports[`open api parser dopt parse open api 1`] = `
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": "NotFoundErrorResponseBody",
             "properties": [
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "404Code",
+                "generatedName": "notFoundErrorBodyCode",
                 "key": "code",
                 "schema": {
                   "description": null,
-                  "generatedName": "four_hundred_four_Code",
+                  "generatedName": "NotFoundErrorBodyCode",
                   "groupName": null,
                   "nameOverride": null,
                   "type": "literal",
@@ -1122,11 +1122,11 @@ exports[`open api parser dopt parse open api 1`] = `
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "404Details",
+                "generatedName": "notFoundErrorBodyDetails",
                 "key": "details",
                 "schema": {
                   "description": null,
-                  "generatedName": "four_hundred_four_Details",
+                  "generatedName": "NotFoundErrorBodyDetails",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
@@ -1150,18 +1150,18 @@ exports[`open api parser dopt parse open api 1`] = `
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": "InternalServerErrorResponseBody",
             "properties": [
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "500Code",
+                "generatedName": "internalServerErrorBodyCode",
                 "key": "code",
                 "schema": {
                   "description": null,
-                  "generatedName": "five_hundred_Code",
+                  "generatedName": "InternalServerErrorBodyCode",
                   "groupName": null,
                   "nameOverride": null,
                   "type": "literal",
@@ -1174,11 +1174,11 @@ exports[`open api parser dopt parse open api 1`] = `
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "500Details",
+                "generatedName": "internalServerErrorBodyDetails",
                 "key": "details",
                 "schema": {
                   "description": null,
-                  "generatedName": "five_hundred_Details",
+                  "generatedName": "InternalServerErrorBodyDetails",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
@@ -1327,18 +1327,18 @@ exports[`open api parser dopt parse open api 1`] = `
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": "BadRequestErrorResponseBody",
             "properties": [
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "400Code",
+                "generatedName": "badRequestErrorBodyCode",
                 "key": "code",
                 "schema": {
                   "description": null,
-                  "generatedName": "four_hundred_Code",
+                  "generatedName": "BadRequestErrorBodyCode",
                   "groupName": null,
                   "nameOverride": null,
                   "type": "enum",
@@ -1373,11 +1373,11 @@ exports[`open api parser dopt parse open api 1`] = `
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "400Details",
+                "generatedName": "badRequestErrorBodyDetails",
                 "key": "details",
                 "schema": {
                   "description": null,
-                  "generatedName": "four_hundred_Details",
+                  "generatedName": "BadRequestErrorBodyDetails",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
@@ -1401,18 +1401,18 @@ exports[`open api parser dopt parse open api 1`] = `
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": "UnauthorizedErrorResponseBody",
             "properties": [
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "401Code",
+                "generatedName": "unauthorizedErrorBodyCode",
                 "key": "code",
                 "schema": {
                   "description": null,
-                  "generatedName": "four_hundred_one_Code",
+                  "generatedName": "UnauthorizedErrorBodyCode",
                   "groupName": null,
                   "nameOverride": null,
                   "type": "literal",
@@ -1425,11 +1425,11 @@ exports[`open api parser dopt parse open api 1`] = `
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "401Details",
+                "generatedName": "unauthorizedErrorBodyDetails",
                 "key": "details",
                 "schema": {
                   "description": null,
-                  "generatedName": "four_hundred_one_Details",
+                  "generatedName": "UnauthorizedErrorBodyDetails",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
@@ -1453,18 +1453,18 @@ exports[`open api parser dopt parse open api 1`] = `
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": "NotFoundErrorResponseBody",
             "properties": [
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "404Code",
+                "generatedName": "notFoundErrorBodyCode",
                 "key": "code",
                 "schema": {
                   "description": null,
-                  "generatedName": "four_hundred_four_Code",
+                  "generatedName": "NotFoundErrorBodyCode",
                   "groupName": null,
                   "nameOverride": null,
                   "type": "literal",
@@ -1477,11 +1477,11 @@ exports[`open api parser dopt parse open api 1`] = `
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "404Details",
+                "generatedName": "notFoundErrorBodyDetails",
                 "key": "details",
                 "schema": {
                   "description": null,
-                  "generatedName": "four_hundred_four_Details",
+                  "generatedName": "NotFoundErrorBodyDetails",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
@@ -1505,18 +1505,18 @@ exports[`open api parser dopt parse open api 1`] = `
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": "InternalServerErrorResponseBody",
             "properties": [
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "500Code",
+                "generatedName": "internalServerErrorBodyCode",
                 "key": "code",
                 "schema": {
                   "description": null,
-                  "generatedName": "five_hundred_Code",
+                  "generatedName": "InternalServerErrorBodyCode",
                   "groupName": null,
                   "nameOverride": null,
                   "type": "literal",
@@ -1529,11 +1529,11 @@ exports[`open api parser dopt parse open api 1`] = `
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "500Details",
+                "generatedName": "internalServerErrorBodyDetails",
                 "key": "details",
                 "schema": {
                   "description": null,
-                  "generatedName": "five_hundred_Details",
+                  "generatedName": "InternalServerErrorBodyDetails",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
@@ -2572,18 +2572,18 @@ exports[`open api parser dopt parse open api 1`] = `
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": "BadRequestErrorResponseBody",
             "properties": [
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "400Code",
+                "generatedName": "badRequestErrorBodyCode",
                 "key": "code",
                 "schema": {
                   "description": null,
-                  "generatedName": "four_hundred_Code",
+                  "generatedName": "BadRequestErrorBodyCode",
                   "groupName": null,
                   "nameOverride": null,
                   "type": "enum",
@@ -2618,11 +2618,11 @@ exports[`open api parser dopt parse open api 1`] = `
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "400Details",
+                "generatedName": "badRequestErrorBodyDetails",
                 "key": "details",
                 "schema": {
                   "description": null,
-                  "generatedName": "four_hundred_Details",
+                  "generatedName": "BadRequestErrorBodyDetails",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
@@ -2646,18 +2646,18 @@ exports[`open api parser dopt parse open api 1`] = `
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": "UnauthorizedErrorResponseBody",
             "properties": [
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "401Code",
+                "generatedName": "unauthorizedErrorBodyCode",
                 "key": "code",
                 "schema": {
                   "description": null,
-                  "generatedName": "four_hundred_one_Code",
+                  "generatedName": "UnauthorizedErrorBodyCode",
                   "groupName": null,
                   "nameOverride": null,
                   "type": "literal",
@@ -2670,11 +2670,11 @@ exports[`open api parser dopt parse open api 1`] = `
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "401Details",
+                "generatedName": "unauthorizedErrorBodyDetails",
                 "key": "details",
                 "schema": {
                   "description": null,
-                  "generatedName": "four_hundred_one_Details",
+                  "generatedName": "UnauthorizedErrorBodyDetails",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
@@ -2698,18 +2698,18 @@ exports[`open api parser dopt parse open api 1`] = `
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": "NotFoundErrorResponseBody",
             "properties": [
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "404Code",
+                "generatedName": "notFoundErrorBodyCode",
                 "key": "code",
                 "schema": {
                   "description": null,
-                  "generatedName": "four_hundred_four_Code",
+                  "generatedName": "NotFoundErrorBodyCode",
                   "groupName": null,
                   "nameOverride": null,
                   "type": "literal",
@@ -2722,11 +2722,11 @@ exports[`open api parser dopt parse open api 1`] = `
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "404Details",
+                "generatedName": "notFoundErrorBodyDetails",
                 "key": "details",
                 "schema": {
                   "description": null,
-                  "generatedName": "four_hundred_four_Details",
+                  "generatedName": "NotFoundErrorBodyDetails",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {
@@ -2750,18 +2750,18 @@ exports[`open api parser dopt parse open api 1`] = `
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": "InternalServerErrorResponseBody",
             "properties": [
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "500Code",
+                "generatedName": "internalServerErrorBodyCode",
                 "key": "code",
                 "schema": {
                   "description": null,
-                  "generatedName": "five_hundred_Code",
+                  "generatedName": "InternalServerErrorBodyCode",
                   "groupName": null,
                   "nameOverride": null,
                   "type": "literal",
@@ -2774,11 +2774,11 @@ exports[`open api parser dopt parse open api 1`] = `
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "500Details",
+                "generatedName": "internalServerErrorBodyDetails",
                 "key": "details",
                 "schema": {
                   "description": null,
-                  "generatedName": "five_hundred_Details",
+                  "generatedName": "InternalServerErrorBodyDetails",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": {

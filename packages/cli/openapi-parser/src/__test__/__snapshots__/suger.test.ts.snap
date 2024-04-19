@@ -17,7 +17,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -202,7 +202,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -526,7 +526,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -865,7 +865,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -1260,7 +1260,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "BadRequestError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -1271,7 +1271,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -1933,7 +1933,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -2301,7 +2301,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -2685,7 +2685,7 @@ exports[`open api parser suger parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": {
@@ -2703,7 +2703,7 @@ exports[`open api parser suger parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": {
@@ -2902,7 +2902,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -3300,7 +3300,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -3686,7 +3686,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -4087,7 +4087,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "BadRequestError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -4098,7 +4098,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -4404,7 +4404,7 @@ exports[`open api parser suger parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": {
@@ -4422,7 +4422,7 @@ exports[`open api parser suger parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_nine",
+            "generatedName": "ConflictErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": {
@@ -4440,7 +4440,7 @@ exports[`open api parser suger parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": {
@@ -4712,7 +4712,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "BadRequestError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -4723,7 +4723,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -5020,7 +5020,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -5177,7 +5177,7 @@ exports[`open api parser suger parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": {
@@ -5195,7 +5195,7 @@ exports[`open api parser suger parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": {
@@ -5744,7 +5744,7 @@ exports[`open api parser suger parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": {
@@ -5761,7 +5761,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -6367,7 +6367,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -6570,7 +6570,7 @@ exports[`open api parser suger parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": {
@@ -6588,7 +6588,7 @@ exports[`open api parser suger parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": {
@@ -7238,7 +7238,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -7438,7 +7438,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -7805,7 +7805,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "BadRequestError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -7816,7 +7816,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -8478,7 +8478,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -9152,7 +9152,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -9279,7 +9279,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "BadRequestError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -9290,7 +9290,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -9417,7 +9417,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -9812,7 +9812,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -10064,7 +10064,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -10489,7 +10489,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -10943,7 +10943,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -11270,7 +11270,7 @@ exports[`open api parser suger parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": {
@@ -11288,7 +11288,7 @@ exports[`open api parser suger parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": {
@@ -11768,7 +11768,7 @@ exports[`open api parser suger parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": {
@@ -11786,7 +11786,7 @@ exports[`open api parser suger parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": {
@@ -12124,7 +12124,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -12393,7 +12393,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -12859,7 +12859,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -12986,7 +12986,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -13489,7 +13489,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -13662,7 +13662,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -14057,7 +14057,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -14451,7 +14451,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "BadRequestError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -14462,7 +14462,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -14767,7 +14767,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "BadRequestError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -14778,7 +14778,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -15052,7 +15052,7 @@ exports[`open api parser suger parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": {
@@ -15070,7 +15070,7 @@ exports[`open api parser suger parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": {
@@ -15411,7 +15411,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "BadRequestError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -15422,7 +15422,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -15700,7 +15700,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -15918,7 +15918,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "BadRequestError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -15929,7 +15929,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -16175,7 +16175,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -16556,7 +16556,7 @@ exports[`open api parser suger parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": {
@@ -16574,7 +16574,7 @@ exports[`open api parser suger parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": {
@@ -16778,7 +16778,7 @@ exports[`open api parser suger parse open api 1`] = `
           "generatedName": "InternalServerError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },

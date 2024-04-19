@@ -260,7 +260,7 @@ The parameter should map to a JSON encoded list of strings.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -274,7 +274,7 @@ The parameter should map to a JSON encoded list of strings.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -288,7 +288,7 @@ The parameter should map to a JSON encoded list of strings.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -302,7 +302,7 @@ The parameter should map to a JSON encoded list of strings.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -316,7 +316,7 @@ The parameter should map to a JSON encoded list of strings.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -329,7 +329,7 @@ The parameter should map to a JSON encoded list of strings.
           "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -340,7 +340,7 @@ The parameter should map to a JSON encoded list of strings.
           "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_four",
+            "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -398,7 +398,7 @@ The parameter should map to a JSON encoded list of strings.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -412,7 +412,7 @@ The parameter should map to a JSON encoded list of strings.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -426,7 +426,7 @@ The parameter should map to a JSON encoded list of strings.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -440,7 +440,7 @@ The parameter should map to a JSON encoded list of strings.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -454,7 +454,7 @@ The parameter should map to a JSON encoded list of strings.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -467,7 +467,7 @@ The parameter should map to a JSON encoded list of strings.
           "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -478,7 +478,7 @@ The parameter should map to a JSON encoded list of strings.
           "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_four",
+            "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -866,7 +866,7 @@ The parameter should map to a JSON encoded list of strings.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -880,7 +880,7 @@ The parameter should map to a JSON encoded list of strings.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -894,7 +894,7 @@ The parameter should map to a JSON encoded list of strings.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -908,7 +908,7 @@ The parameter should map to a JSON encoded list of strings.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -922,7 +922,7 @@ The parameter should map to a JSON encoded list of strings.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -935,7 +935,7 @@ The parameter should map to a JSON encoded list of strings.
           "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -946,7 +946,7 @@ The parameter should map to a JSON encoded list of strings.
           "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_four",
+            "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -1900,7 +1900,7 @@ The parameter should map to a JSON encoded list of strings.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -1914,7 +1914,7 @@ The parameter should map to a JSON encoded list of strings.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -1928,7 +1928,7 @@ The parameter should map to a JSON encoded list of strings.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -1942,7 +1942,7 @@ The parameter should map to a JSON encoded list of strings.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -1956,7 +1956,7 @@ The parameter should map to a JSON encoded list of strings.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -1969,7 +1969,7 @@ The parameter should map to a JSON encoded list of strings.
           "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -1980,7 +1980,7 @@ The parameter should map to a JSON encoded list of strings.
           "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_four",
+            "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -2940,7 +2940,7 @@ The parameter should map to a JSON encoded list of strings.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -2954,7 +2954,7 @@ The parameter should map to a JSON encoded list of strings.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -2968,7 +2968,7 @@ The parameter should map to a JSON encoded list of strings.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -2982,7 +2982,7 @@ The parameter should map to a JSON encoded list of strings.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -2996,7 +2996,7 @@ The parameter should map to a JSON encoded list of strings.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -3009,7 +3009,7 @@ The parameter should map to a JSON encoded list of strings.
           "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -3020,7 +3020,7 @@ The parameter should map to a JSON encoded list of strings.
           "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_four",
+            "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -3980,7 +3980,7 @@ The parameter should map to a JSON encoded list of strings.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -3994,7 +3994,7 @@ The parameter should map to a JSON encoded list of strings.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -4008,7 +4008,7 @@ The parameter should map to a JSON encoded list of strings.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -4022,7 +4022,7 @@ The parameter should map to a JSON encoded list of strings.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -4036,7 +4036,7 @@ The parameter should map to a JSON encoded list of strings.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -4049,7 +4049,7 @@ The parameter should map to a JSON encoded list of strings.
           "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -4060,7 +4060,7 @@ The parameter should map to a JSON encoded list of strings.
           "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_four",
+            "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -4216,7 +4216,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -4230,7 +4230,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -4244,7 +4244,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -4258,7 +4258,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -4272,7 +4272,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -4285,7 +4285,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -4296,7 +4296,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_four",
+            "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -4493,7 +4493,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -4507,7 +4507,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -4521,7 +4521,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -4535,7 +4535,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -4549,7 +4549,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -4562,7 +4562,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -4573,7 +4573,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_four",
+            "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -4770,7 +4770,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -4784,7 +4784,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -4798,7 +4798,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -4812,7 +4812,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -4826,7 +4826,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -4839,7 +4839,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -4850,7 +4850,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_four",
+            "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -4948,7 +4948,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -4962,7 +4962,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -4976,7 +4976,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -4990,7 +4990,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -5004,7 +5004,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -5017,7 +5017,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -5028,7 +5028,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_four",
+            "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -5142,7 +5142,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -5156,7 +5156,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -5170,7 +5170,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -5184,7 +5184,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -5198,7 +5198,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -5211,7 +5211,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -5222,7 +5222,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_four",
+            "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -5323,7 +5323,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -5337,7 +5337,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -5351,7 +5351,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -5365,7 +5365,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -5379,7 +5379,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -5392,7 +5392,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -5403,7 +5403,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_four",
+            "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -5516,7 +5516,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -5530,7 +5530,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -5544,7 +5544,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -5558,7 +5558,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -5572,7 +5572,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -5585,7 +5585,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -5596,7 +5596,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_four",
+            "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -5743,7 +5743,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -5757,7 +5757,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -5771,7 +5771,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -5785,7 +5785,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -5799,7 +5799,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -5812,7 +5812,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -5823,7 +5823,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_four",
+            "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -5936,7 +5936,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -5950,7 +5950,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -5964,7 +5964,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -5978,7 +5978,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -5992,7 +5992,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -6005,7 +6005,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -6016,7 +6016,7 @@ size of the lower 48 States has shrunk by 40% but this understates
           "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_four",
+            "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -6138,7 +6138,7 @@ The LLM response data, as well as any context provided in the original request w
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -6152,7 +6152,7 @@ The LLM response data, as well as any context provided in the original request w
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -6166,7 +6166,7 @@ The LLM response data, as well as any context provided in the original request w
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -6180,7 +6180,7 @@ The LLM response data, as well as any context provided in the original request w
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -6194,7 +6194,7 @@ The LLM response data, as well as any context provided in the original request w
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
@@ -6207,7 +6207,7 @@ The LLM response data, as well as any context provided in the original request w
           "generatedName": "ServiceUnavailableError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },
@@ -6218,7 +6218,7 @@ The LLM response data, as well as any context provided in the original request w
           "generatedName": "GatewayTimeoutError",
           "nameOverride": null,
           "schema": {
-            "generatedName": "five_hundred_four",
+            "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
           },

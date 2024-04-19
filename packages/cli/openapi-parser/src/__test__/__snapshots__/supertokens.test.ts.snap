@@ -19,7 +19,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -33,7 +33,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -47,7 +47,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -61,7 +61,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -386,7 +386,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -400,7 +400,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -414,7 +414,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -428,7 +428,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -719,7 +719,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -733,7 +733,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -747,7 +747,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -761,7 +761,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -1135,7 +1135,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -1149,7 +1149,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -1163,7 +1163,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -1177,7 +1177,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -1454,7 +1454,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -1468,7 +1468,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -1482,7 +1482,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -1496,7 +1496,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -1809,7 +1809,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -1823,7 +1823,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -1837,7 +1837,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -1851,7 +1851,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -2207,7 +2207,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -2221,7 +2221,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -2235,7 +2235,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -2249,7 +2249,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -2595,7 +2595,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -2609,7 +2609,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -2623,7 +2623,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -2637,7 +2637,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -2988,7 +2988,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -3002,7 +3002,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -3016,7 +3016,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -3030,7 +3030,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -3357,7 +3357,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -3371,7 +3371,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -3385,7 +3385,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -3399,7 +3399,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -3703,7 +3703,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -3717,7 +3717,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -3731,7 +3731,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -3745,7 +3745,7 @@ exports[`open api parser supertokens parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -4282,7 +4282,7 @@ Passing the optional deviceId signifies a resend code flow.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -4296,7 +4296,7 @@ Passing the optional deviceId signifies a resend code flow.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -4310,7 +4310,7 @@ Passing the optional deviceId signifies a resend code flow.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -4324,7 +4324,7 @@ Passing the optional deviceId signifies a resend code flow.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -4930,7 +4930,7 @@ Passing the optional deviceId signifies a resend code flow.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -4944,7 +4944,7 @@ Passing the optional deviceId signifies a resend code flow.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -4958,7 +4958,7 @@ Passing the optional deviceId signifies a resend code flow.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -4972,7 +4972,7 @@ Passing the optional deviceId signifies a resend code flow.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -5188,7 +5188,7 @@ Passing the optional deviceId signifies a resend code flow.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -5202,7 +5202,7 @@ Passing the optional deviceId signifies a resend code flow.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -5216,7 +5216,7 @@ Passing the optional deviceId signifies a resend code flow.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -5230,7 +5230,7 @@ Passing the optional deviceId signifies a resend code flow.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -5802,7 +5802,7 @@ Passing the optional deviceId signifies a resend code flow.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -5816,7 +5816,7 @@ Passing the optional deviceId signifies a resend code flow.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -5830,7 +5830,7 @@ Passing the optional deviceId signifies a resend code flow.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -5844,7 +5844,7 @@ Passing the optional deviceId signifies a resend code flow.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -6098,7 +6098,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -6112,7 +6112,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -6126,7 +6126,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -6140,7 +6140,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -6548,7 +6548,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -6562,7 +6562,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -6576,7 +6576,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -6590,7 +6590,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -6914,7 +6914,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -6928,7 +6928,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -6942,7 +6942,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -6956,7 +6956,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -7243,7 +7243,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -7257,7 +7257,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -7271,7 +7271,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -7285,7 +7285,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -7574,7 +7574,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -7588,7 +7588,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -7602,7 +7602,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -7616,7 +7616,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -7970,7 +7970,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -7984,7 +7984,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -7998,7 +7998,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -8012,7 +8012,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -8303,7 +8303,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -8317,7 +8317,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -8331,7 +8331,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -8345,7 +8345,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -8592,7 +8592,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -8606,7 +8606,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -8620,7 +8620,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -8634,7 +8634,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -8989,7 +8989,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -9003,7 +9003,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -9017,7 +9017,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -9031,7 +9031,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -9329,7 +9329,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -9343,7 +9343,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -9357,7 +9357,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -9371,7 +9371,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -9577,7 +9577,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -9591,7 +9591,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -9605,7 +9605,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -9619,7 +9619,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -9994,7 +9994,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -10008,7 +10008,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -10022,7 +10022,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -10036,7 +10036,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -10390,7 +10390,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -10404,7 +10404,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -10418,7 +10418,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -10432,7 +10432,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -10829,7 +10829,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -10843,7 +10843,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -10857,7 +10857,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -11134,7 +11134,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -11148,7 +11148,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -11162,7 +11162,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -11176,7 +11176,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -11544,7 +11544,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -11558,7 +11558,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -11572,7 +11572,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -11586,7 +11586,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -11792,7 +11792,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -11806,7 +11806,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -11820,7 +11820,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -11834,7 +11834,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -12059,7 +12059,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -12073,7 +12073,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -12087,7 +12087,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -12101,7 +12101,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -12295,7 +12295,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -12309,7 +12309,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -12323,7 +12323,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -12337,7 +12337,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -12611,7 +12611,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -12625,7 +12625,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -12639,7 +12639,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -12653,7 +12653,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -12954,7 +12954,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -12968,7 +12968,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -12982,7 +12982,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -12996,7 +12996,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -13190,7 +13190,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -13204,7 +13204,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -13218,7 +13218,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -13232,7 +13232,7 @@ Note that there is an invisible character at the end of the path, this was to av
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -13495,7 +13495,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -13509,7 +13509,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -13523,7 +13523,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -13537,7 +13537,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -13823,7 +13823,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -13837,7 +13837,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -13851,7 +13851,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -13865,7 +13865,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -14080,7 +14080,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -14094,7 +14094,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -14108,7 +14108,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -14122,7 +14122,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -14393,7 +14393,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -14407,7 +14407,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -14421,7 +14421,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -14435,7 +14435,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -14706,7 +14706,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -14720,7 +14720,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -14734,7 +14734,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -14748,7 +14748,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -14993,7 +14993,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -15007,7 +15007,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -15021,7 +15021,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -15035,7 +15035,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -15284,7 +15284,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -15298,7 +15298,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -15312,7 +15312,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -15326,7 +15326,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -15604,7 +15604,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -15618,7 +15618,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -15632,7 +15632,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -15646,7 +15646,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -15899,7 +15899,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -15913,7 +15913,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -15927,7 +15927,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -15941,7 +15941,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -16192,7 +16192,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -16206,7 +16206,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -16220,7 +16220,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -16234,7 +16234,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -16483,7 +16483,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -16497,7 +16497,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -16511,7 +16511,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -16525,7 +16525,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -16771,7 +16771,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -16785,7 +16785,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -16799,7 +16799,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -16813,7 +16813,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -17033,7 +17033,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -17047,7 +17047,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -17061,7 +17061,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -17075,7 +17075,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -17499,7 +17499,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -17513,7 +17513,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -17527,7 +17527,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -17541,7 +17541,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -18033,7 +18033,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -18047,7 +18047,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -18061,7 +18061,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -18075,7 +18075,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -18367,7 +18367,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -18381,7 +18381,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -18395,7 +18395,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -18409,7 +18409,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -18864,7 +18864,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -18878,7 +18878,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -18892,7 +18892,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -18906,7 +18906,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -19436,7 +19436,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -19450,7 +19450,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -19464,7 +19464,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -19478,7 +19478,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -19723,7 +19723,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -19737,7 +19737,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -19751,7 +19751,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -19765,7 +19765,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -20121,7 +20121,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -20135,7 +20135,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -20149,7 +20149,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -20163,7 +20163,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -20425,7 +20425,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -20439,7 +20439,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -20453,7 +20453,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -20467,7 +20467,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -20675,7 +20675,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -20689,7 +20689,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -20703,7 +20703,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -21042,7 +21042,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -21056,7 +21056,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -21070,7 +21070,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -21220,7 +21220,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -21234,7 +21234,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -21248,7 +21248,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -21262,7 +21262,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -21524,7 +21524,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -21538,7 +21538,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -21552,7 +21552,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -21566,7 +21566,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -21774,7 +21774,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -21788,7 +21788,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -21804,24 +21804,24 @@ e.g.:
             "allOf": [],
             "allOfPropertyConflicts": [],
             "description": null,
-            "generatedName": "four_hundred_two",
+            "generatedName": "PaymentRequiredErrorBody",
             "groupName": null,
             "nameOverride": null,
             "properties": [
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "402Status",
+                "generatedName": "paymentRequiredErrorBodyStatus",
                 "key": "status",
                 "schema": {
                   "description": null,
-                  "generatedName": "402Status",
+                  "generatedName": "paymentRequiredErrorBodyStatus",
                   "groupName": null,
                   "nameOverride": null,
                   "type": "optional",
                   "value": {
                     "description": null,
-                    "generatedName": "four_hundred_two_Status",
+                    "generatedName": "PaymentRequiredErrorBodyStatus",
                     "groupName": null,
                     "nameOverride": null,
                     "type": "literal",
@@ -21835,17 +21835,17 @@ e.g.:
               {
                 "audiences": [],
                 "conflict": {},
-                "generatedName": "402Message",
+                "generatedName": "paymentRequiredErrorBodyMessage",
                 "key": "message",
                 "schema": {
                   "description": null,
-                  "generatedName": "402Message",
+                  "generatedName": "paymentRequiredErrorBodyMessage",
                   "groupName": null,
                   "nameOverride": null,
                   "type": "optional",
                   "value": {
                     "description": null,
-                    "generatedName": "four_hundred_two_Message",
+                    "generatedName": "PaymentRequiredErrorBodyMessage",
                     "groupName": null,
                     "nameOverride": null,
                     "schema": {
@@ -21868,7 +21868,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -21882,7 +21882,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -22301,7 +22301,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -22315,7 +22315,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -22329,7 +22329,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -22343,7 +22343,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -22895,7 +22895,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -22909,7 +22909,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -22923,7 +22923,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -22937,7 +22937,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -23213,7 +23213,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -23227,7 +23227,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -23241,7 +23241,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -23255,7 +23255,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -23599,7 +23599,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -23613,7 +23613,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -23627,7 +23627,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -23641,7 +23641,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -23901,7 +23901,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -23915,7 +23915,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -23929,7 +23929,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -23943,7 +23943,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -24155,7 +24155,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -24169,7 +24169,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -24183,7 +24183,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -24197,7 +24197,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -24515,7 +24515,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -24529,7 +24529,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -24543,7 +24543,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -24557,7 +24557,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -24902,7 +24902,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -24916,7 +24916,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -24930,7 +24930,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -24944,7 +24944,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -25086,7 +25086,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -25100,7 +25100,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -25114,7 +25114,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -25128,7 +25128,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -25342,7 +25342,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -25413,7 +25413,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -25484,7 +25484,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -25555,7 +25555,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -25626,7 +25626,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -25697,7 +25697,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -25711,7 +25711,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -25725,7 +25725,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -25739,7 +25739,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -25970,7 +25970,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -25984,7 +25984,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -25998,7 +25998,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -26012,7 +26012,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -26229,7 +26229,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -26243,7 +26243,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -26257,7 +26257,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -26271,7 +26271,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -26479,7 +26479,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -26493,7 +26493,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -26507,7 +26507,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -26521,7 +26521,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -27125,7 +27125,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -27139,7 +27139,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -27153,7 +27153,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -27343,7 +27343,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -27357,7 +27357,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -27371,7 +27371,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -27385,7 +27385,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -27580,7 +27580,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -27594,7 +27594,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -27608,7 +27608,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "notFound",
@@ -27622,7 +27622,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -27882,7 +27882,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -27896,7 +27896,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -27910,7 +27910,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -28099,7 +28099,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -28113,7 +28113,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -28127,7 +28127,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",
@@ -28336,7 +28336,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "invalidJSON",
@@ -28350,7 +28350,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "requestUnauthorised",
@@ -28364,7 +28364,7 @@ e.g.:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "internalError",

@@ -78,7 +78,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -130,7 +130,7 @@ The \`attributes\` object in the error may have the properties defined by the [\
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -162,7 +162,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -182,7 +182,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -600,7 +600,7 @@ The \`attributes\` object in the error may have the properties defined by the [\
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -632,7 +632,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -646,7 +646,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -921,7 +921,7 @@ The \`attributes\` object in the error may have the properties defined by the [\
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -953,7 +953,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -973,7 +973,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -993,7 +993,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -1007,7 +1007,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -1228,7 +1228,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -1280,7 +1280,7 @@ The \`attributes\` object in the error may have the properties defined by the [\
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -1312,7 +1312,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -1332,7 +1332,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -1462,7 +1462,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -1514,7 +1514,7 @@ The \`attributes\` object in the error may have the properties defined by the [\
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -1546,7 +1546,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -1566,7 +1566,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -1733,7 +1733,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -1785,7 +1785,7 @@ The \`attributes\` object in the error may have the properties defined by the [\
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -1817,7 +1817,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -1831,7 +1831,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -1851,7 +1851,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -2170,7 +2170,7 @@ The \`attributes\` object in the error may have the properties defined by the [\
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -2202,7 +2202,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -2222,7 +2222,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -2353,7 +2353,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -2405,7 +2405,7 @@ The \`attributes\` object in the error may have the properties defined by the [\
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -2437,7 +2437,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -2451,7 +2451,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -2483,7 +2483,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -2629,7 +2629,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -2681,7 +2681,7 @@ The \`attributes\` object in the error may have the properties defined by the [\
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -2713,7 +2713,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -2727,7 +2727,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -2747,7 +2747,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -2951,7 +2951,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -3003,7 +3003,7 @@ The \`attributes\` object in the error may have the properties defined by the [\
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -3035,7 +3035,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -3055,7 +3055,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -3391,7 +3391,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -3443,7 +3443,7 @@ The \`attributes\` object in the error may have the properties defined by the [\
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -3475,7 +3475,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -3495,7 +3495,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -3509,7 +3509,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -3859,7 +3859,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -3911,7 +3911,7 @@ The \`attributes\` object in the error may have the properties defined by the [\
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -3943,7 +3943,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -3963,7 +3963,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -3983,7 +3983,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twelve",
+            "generatedName": "PreconditionFailedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -3997,7 +3997,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -4226,7 +4226,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -4278,7 +4278,7 @@ The \`attributes\` object in the error may have the properties defined by the [\
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -4310,7 +4310,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -4330,7 +4330,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -4354,7 +4354,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -5064,7 +5064,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -5116,7 +5116,7 @@ The \`attributes\` object in the error may have the properties defined by the [\
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -5148,7 +5148,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -5162,7 +5162,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -5182,7 +5182,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -5202,7 +5202,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -5222,7 +5222,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_four",
+            "generatedName": "GatewayTimeoutErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -5891,7 +5891,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -5943,7 +5943,7 @@ The \`attributes\` object in the error may have the properties defined by the [\
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -5975,7 +5975,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -5989,7 +5989,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -6122,7 +6122,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -6174,7 +6174,7 @@ The \`attributes\` object in the error may have the properties defined by the [\
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -6206,7 +6206,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -6220,7 +6220,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -6768,7 +6768,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -6820,7 +6820,7 @@ The \`attributes\` object in the error may have the properties defined by the [\
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -6844,7 +6844,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -6888,7 +6888,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -7261,7 +7261,7 @@ The \`attributes\` object in the error may have the properties defined by the [\
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -7293,7 +7293,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -7307,7 +7307,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -7605,7 +7605,7 @@ The \`attributes\` object in the error may have the properties defined by the [\
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -7637,7 +7637,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -7651,7 +7651,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -7671,7 +7671,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_nine",
+            "generatedName": "ConflictErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -7761,7 +7761,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -7813,7 +7813,7 @@ The \`attributes\` object in the error may have the properties defined by the [\
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -7837,7 +7837,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -7851,7 +7851,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",
@@ -7895,7 +7895,7 @@ This error response may have one of the following \`type\` values:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "problemResponse",

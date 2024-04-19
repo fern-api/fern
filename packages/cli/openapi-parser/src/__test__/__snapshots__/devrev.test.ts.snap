@@ -18,7 +18,7 @@ exports[`open api parser devrev parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -32,7 +32,7 @@ exports[`open api parser devrev parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -46,7 +46,7 @@ exports[`open api parser devrev parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -60,7 +60,7 @@ exports[`open api parser devrev parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-not-found",
@@ -74,7 +74,7 @@ exports[`open api parser devrev parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -88,7 +88,7 @@ exports[`open api parser devrev parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -102,7 +102,7 @@ exports[`open api parser devrev parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -214,7 +214,7 @@ exports[`open api parser devrev parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -228,7 +228,7 @@ exports[`open api parser devrev parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -242,7 +242,7 @@ exports[`open api parser devrev parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -256,7 +256,7 @@ exports[`open api parser devrev parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -270,7 +270,7 @@ exports[`open api parser devrev parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -284,7 +284,7 @@ exports[`open api parser devrev parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -415,7 +415,7 @@ authenticated user.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -429,7 +429,7 @@ authenticated user.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -443,7 +443,7 @@ authenticated user.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -457,7 +457,7 @@ authenticated user.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -471,7 +471,7 @@ authenticated user.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -485,7 +485,7 @@ authenticated user.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -612,7 +612,7 @@ given Dev organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -626,7 +626,7 @@ given Dev organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -640,7 +640,7 @@ given Dev organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -654,7 +654,7 @@ given Dev organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-not-found",
@@ -668,7 +668,7 @@ given Dev organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -682,7 +682,7 @@ given Dev organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -696,7 +696,7 @@ given Dev organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -765,7 +765,7 @@ given Dev organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -779,7 +779,7 @@ given Dev organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -793,7 +793,7 @@ given Dev organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -807,7 +807,7 @@ given Dev organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-not-found",
@@ -821,7 +821,7 @@ given Dev organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -835,7 +835,7 @@ given Dev organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -849,7 +849,7 @@ given Dev organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -1037,7 +1037,7 @@ token type issued for a given subject.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -1051,7 +1051,7 @@ token type issued for a given subject.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -1065,7 +1065,7 @@ token type issued for a given subject.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -1079,7 +1079,7 @@ token type issued for a given subject.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-not-found",
@@ -1093,7 +1093,7 @@ token type issued for a given subject.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -1107,7 +1107,7 @@ token type issued for a given subject.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -1121,7 +1121,7 @@ token type issued for a given subject.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -1360,7 +1360,7 @@ authenticated user.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -1374,7 +1374,7 @@ authenticated user.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -1388,7 +1388,7 @@ authenticated user.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -1402,7 +1402,7 @@ authenticated user.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-not-found",
@@ -1416,7 +1416,7 @@ authenticated user.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -1430,7 +1430,7 @@ authenticated user.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -1444,7 +1444,7 @@ authenticated user.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -1513,7 +1513,7 @@ organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -1527,7 +1527,7 @@ organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -1541,7 +1541,7 @@ organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -1555,7 +1555,7 @@ organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-not-found",
@@ -1569,7 +1569,7 @@ organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -1583,7 +1583,7 @@ organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -1597,7 +1597,7 @@ organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -1789,7 +1789,7 @@ enterprise connections can be created by an organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -1803,7 +1803,7 @@ enterprise connections can be created by an organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -1817,7 +1817,7 @@ enterprise connections can be created by an organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -1831,7 +1831,7 @@ enterprise connections can be created by an organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -1845,7 +1845,7 @@ enterprise connections can be created by an organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -1859,7 +1859,7 @@ enterprise connections can be created by an organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -1927,7 +1927,7 @@ connections can not be deleted using this method.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -1941,7 +1941,7 @@ connections can not be deleted using this method.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -1955,7 +1955,7 @@ connections can not be deleted using this method.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -1969,7 +1969,7 @@ connections can not be deleted using this method.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-not-found",
@@ -1983,7 +1983,7 @@ connections can not be deleted using this method.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -1997,7 +1997,7 @@ connections can not be deleted using this method.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -2011,7 +2011,7 @@ connections can not be deleted using this method.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -2087,7 +2087,7 @@ connections can not be deleted using this method.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -2101,7 +2101,7 @@ connections can not be deleted using this method.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -2115,7 +2115,7 @@ connections can not be deleted using this method.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -2129,7 +2129,7 @@ connections can not be deleted using this method.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-not-found",
@@ -2143,7 +2143,7 @@ connections can not be deleted using this method.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -2157,7 +2157,7 @@ connections can not be deleted using this method.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -2171,7 +2171,7 @@ connections can not be deleted using this method.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -2246,7 +2246,7 @@ created by the user.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -2260,7 +2260,7 @@ created by the user.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -2274,7 +2274,7 @@ created by the user.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -2288,7 +2288,7 @@ created by the user.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -2302,7 +2302,7 @@ created by the user.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -2316,7 +2316,7 @@ created by the user.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -2394,7 +2394,7 @@ disabled.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -2408,7 +2408,7 @@ disabled.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -2422,7 +2422,7 @@ disabled.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -2436,7 +2436,7 @@ disabled.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-not-found",
@@ -2450,7 +2450,7 @@ disabled.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -2464,7 +2464,7 @@ disabled.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -2478,7 +2478,7 @@ disabled.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -2554,7 +2554,7 @@ disabled.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -2568,7 +2568,7 @@ disabled.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -2582,7 +2582,7 @@ disabled.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -2596,7 +2596,7 @@ disabled.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-not-found",
@@ -2610,7 +2610,7 @@ disabled.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -2624,7 +2624,7 @@ disabled.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -2638,7 +2638,7 @@ disabled.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -2703,7 +2703,7 @@ disabled.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -2717,7 +2717,7 @@ disabled.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -2731,7 +2731,7 @@ disabled.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -2745,7 +2745,7 @@ disabled.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -2759,7 +2759,7 @@ disabled.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -2773,7 +2773,7 @@ disabled.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -3113,7 +3113,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -3127,7 +3127,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -3141,7 +3141,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -3155,7 +3155,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -3169,7 +3169,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -3183,7 +3183,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -3349,7 +3349,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -3363,7 +3363,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -3377,7 +3377,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -3391,7 +3391,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -3405,7 +3405,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -3419,7 +3419,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -3483,7 +3483,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -3497,7 +3497,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -3511,7 +3511,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -3525,7 +3525,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-not-found",
@@ -3539,7 +3539,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -3553,7 +3553,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -3567,7 +3567,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -3683,7 +3683,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -3697,7 +3697,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -3711,7 +3711,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -3725,7 +3725,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-not-found",
@@ -3739,7 +3739,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -3753,7 +3753,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -3767,7 +3767,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -3838,7 +3838,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -3852,7 +3852,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -3866,7 +3866,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -3880,7 +3880,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -3894,7 +3894,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -3908,7 +3908,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -4187,7 +4187,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -4201,7 +4201,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -4215,7 +4215,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -4229,7 +4229,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-not-found",
@@ -4243,7 +4243,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -4257,7 +4257,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -4271,7 +4271,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -4337,7 +4337,7 @@ organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -4351,7 +4351,7 @@ organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -4365,7 +4365,7 @@ organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -4379,7 +4379,7 @@ organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -4393,7 +4393,7 @@ organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -4407,7 +4407,7 @@ organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -4559,7 +4559,7 @@ organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -4573,7 +4573,7 @@ organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -4587,7 +4587,7 @@ organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -4601,7 +4601,7 @@ organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-not-found",
@@ -4615,7 +4615,7 @@ organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -4629,7 +4629,7 @@ organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -4643,7 +4643,7 @@ organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -4758,7 +4758,7 @@ organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -4772,7 +4772,7 @@ organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -4786,7 +4786,7 @@ organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -4800,7 +4800,7 @@ organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-not-found",
@@ -4814,7 +4814,7 @@ organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -4828,7 +4828,7 @@ organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -4842,7 +4842,7 @@ organization.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -5003,7 +5003,7 @@ to access.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -5017,7 +5017,7 @@ to access.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -5031,7 +5031,7 @@ to access.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -5045,7 +5045,7 @@ to access.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-not-found",
@@ -5059,7 +5059,7 @@ to access.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -5073,7 +5073,7 @@ to access.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -5087,7 +5087,7 @@ to access.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -5496,7 +5496,7 @@ them.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -5510,7 +5510,7 @@ them.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -5524,7 +5524,7 @@ them.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -5538,7 +5538,7 @@ them.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-not-found",
@@ -5552,7 +5552,7 @@ them.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -5566,7 +5566,7 @@ them.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -5580,7 +5580,7 @@ them.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -5734,7 +5734,7 @@ and a logical concept denoted by the tag's name.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -5748,7 +5748,7 @@ and a logical concept denoted by the tag's name.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -5762,7 +5762,7 @@ and a logical concept denoted by the tag's name.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -5776,7 +5776,7 @@ and a logical concept denoted by the tag's name.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -5790,7 +5790,7 @@ and a logical concept denoted by the tag's name.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -5804,7 +5804,7 @@ and a logical concept denoted by the tag's name.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -5954,7 +5954,7 @@ and a logical concept denoted by the tag's name.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -5968,7 +5968,7 @@ and a logical concept denoted by the tag's name.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -5982,7 +5982,7 @@ and a logical concept denoted by the tag's name.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -5996,7 +5996,7 @@ and a logical concept denoted by the tag's name.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-not-found",
@@ -6010,7 +6010,7 @@ and a logical concept denoted by the tag's name.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -6024,7 +6024,7 @@ and a logical concept denoted by the tag's name.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -6038,7 +6038,7 @@ and a logical concept denoted by the tag's name.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -6153,7 +6153,7 @@ and a logical concept denoted by the tag's name.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -6167,7 +6167,7 @@ and a logical concept denoted by the tag's name.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -6181,7 +6181,7 @@ and a logical concept denoted by the tag's name.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -6195,7 +6195,7 @@ and a logical concept denoted by the tag's name.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-not-found",
@@ -6209,7 +6209,7 @@ and a logical concept denoted by the tag's name.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -6223,7 +6223,7 @@ and a logical concept denoted by the tag's name.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -6237,7 +6237,7 @@ and a logical concept denoted by the tag's name.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -6393,7 +6393,7 @@ and a logical concept denoted by the tag's name.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -6407,7 +6407,7 @@ and a logical concept denoted by the tag's name.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -6421,7 +6421,7 @@ and a logical concept denoted by the tag's name.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -6435,7 +6435,7 @@ and a logical concept denoted by the tag's name.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -6449,7 +6449,7 @@ and a logical concept denoted by the tag's name.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -6463,7 +6463,7 @@ and a logical concept denoted by the tag's name.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -6680,7 +6680,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -6694,7 +6694,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -6708,7 +6708,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -6722,7 +6722,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-not-found",
@@ -6736,7 +6736,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -6750,7 +6750,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -6764,7 +6764,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -6914,7 +6914,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -6928,7 +6928,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -6942,7 +6942,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -6956,7 +6956,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -6970,7 +6970,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -6984,7 +6984,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -7048,7 +7048,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -7062,7 +7062,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -7076,7 +7076,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -7090,7 +7090,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-not-found",
@@ -7104,7 +7104,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -7118,7 +7118,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -7132,7 +7132,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -7202,7 +7202,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -7216,7 +7216,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -7230,7 +7230,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -7244,7 +7244,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-not-found",
@@ -7258,7 +7258,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -7272,7 +7272,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -7286,7 +7286,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -7473,7 +7473,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -7487,7 +7487,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -7501,7 +7501,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -7515,7 +7515,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -7529,7 +7529,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -7543,7 +7543,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -7607,7 +7607,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -7621,7 +7621,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -7635,7 +7635,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -7649,7 +7649,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -7663,7 +7663,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -7677,7 +7677,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -7828,7 +7828,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -7842,7 +7842,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -7856,7 +7856,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -7870,7 +7870,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-not-found",
@@ -7884,7 +7884,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -7898,7 +7898,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -7912,7 +7912,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -8027,7 +8027,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -8041,7 +8041,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -8055,7 +8055,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -8069,7 +8069,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-not-found",
@@ -8083,7 +8083,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -8097,7 +8097,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -8111,7 +8111,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -8268,7 +8268,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -8282,7 +8282,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -8296,7 +8296,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -8310,7 +8310,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -8324,7 +8324,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -8338,7 +8338,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -8471,7 +8471,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -8485,7 +8485,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -8499,7 +8499,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -8513,7 +8513,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-not-found",
@@ -8527,7 +8527,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -8541,7 +8541,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -8555,7 +8555,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -8708,7 +8708,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -8722,7 +8722,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -8736,7 +8736,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -8750,7 +8750,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -8764,7 +8764,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -8778,7 +8778,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -8842,7 +8842,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -8856,7 +8856,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -8870,7 +8870,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -8884,7 +8884,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-not-found",
@@ -8898,7 +8898,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -8912,7 +8912,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -8926,7 +8926,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -9041,7 +9041,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -9055,7 +9055,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -9069,7 +9069,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -9083,7 +9083,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -9097,7 +9097,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -9111,7 +9111,7 @@ used.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -9478,7 +9478,7 @@ organizations.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -9492,7 +9492,7 @@ organizations.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -9506,7 +9506,7 @@ organizations.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -9520,7 +9520,7 @@ organizations.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-not-found",
@@ -9534,7 +9534,7 @@ organizations.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -9548,7 +9548,7 @@ organizations.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -9562,7 +9562,7 @@ organizations.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -9632,7 +9632,7 @@ organizations.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -9646,7 +9646,7 @@ organizations.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -9660,7 +9660,7 @@ organizations.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -9674,7 +9674,7 @@ organizations.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -9688,7 +9688,7 @@ organizations.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -9702,7 +9702,7 @@ organizations.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",
@@ -10130,7 +10130,7 @@ organizations.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-bad-request",
@@ -10144,7 +10144,7 @@ organizations.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_one",
+            "generatedName": "UnauthorizedErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-unauthorized",
@@ -10158,7 +10158,7 @@ organizations.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_three",
+            "generatedName": "ForbiddenErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-forbidden",
@@ -10172,7 +10172,7 @@ organizations.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-not-found",
@@ -10186,7 +10186,7 @@ organizations.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-too-many-requests",
@@ -10200,7 +10200,7 @@ organizations.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred",
+            "generatedName": "InternalServerErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-internal-server-error",
@@ -10214,7 +10214,7 @@ organizations.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "five_hundred_three",
+            "generatedName": "ServiceUnavailableErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "error-service-unavailable",

@@ -260,13 +260,13 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
             "type": "oneOf",
             "value": {
               "description": null,
-              "generatedName": "four_hundred",
+              "generatedName": "BadRequestErrorBody",
               "groupName": null,
               "nameOverride": null,
               "schemas": [
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Zero",
+                  "generatedName": "BadRequestErrorBodyZero",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "requestFiledsNumberLimitExceededError",
@@ -274,7 +274,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_One",
+                  "generatedName": "BadRequestErrorBodyOne",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "postRequestParserFailedError",
@@ -282,7 +282,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Two",
+                  "generatedName": "BadRequestErrorBodyTwo",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "nullCharactersForbiddenError",
@@ -290,7 +290,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Three",
+                  "generatedName": "BadRequestErrorBodyThree",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataKeyDuplicatedError",
@@ -298,7 +298,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Four",
+                  "generatedName": "BadRequestErrorBodyFour",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataKeyEmptyError",
@@ -306,7 +306,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Five",
+                  "generatedName": "BadRequestErrorBodyFive",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataKeyForbiddenError",
@@ -314,7 +314,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Six",
+                  "generatedName": "BadRequestErrorBodySix",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataKeyLengthTooBigError",
@@ -322,7 +322,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Seven",
+                  "generatedName": "BadRequestErrorBodySeven",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataValueEmptyError",
@@ -330,7 +330,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Eight",
+                  "generatedName": "BadRequestErrorBodyEight",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataValueForbiddenError",
@@ -338,7 +338,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Nine",
+                  "generatedName": "BadRequestErrorBodyNine",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataValueLengthTooBigError",
@@ -346,7 +346,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Ten",
+                  "generatedName": "BadRequestErrorBodyTen",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataKeysNumberTooBigError",
@@ -354,7 +354,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Eleven",
+                  "generatedName": "BadRequestErrorBodyEleven",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureRequiredError",
@@ -362,7 +362,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Twelve",
+                  "generatedName": "BadRequestErrorBodyTwelve",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureExpirationRequiredError",
@@ -370,7 +370,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Thirteen",
+                  "generatedName": "BadRequestErrorBodyThirteen",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureExpirationInvalidError",
@@ -378,7 +378,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Fourteen",
+                  "generatedName": "BadRequestErrorBodyFourteen",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "filesRequiredError",
@@ -386,7 +386,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Fifteen",
+                  "generatedName": "BadRequestErrorBodyFifteen",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileSizeLimitExceededError",
@@ -394,7 +394,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Sixteen",
+                  "generatedName": "BadRequestErrorBodySixteen",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileTypeForbiddenError",
@@ -402,7 +402,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Seventeen",
+                  "generatedName": "BadRequestErrorBodySeventeen",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileInfectedError",
@@ -533,13 +533,13 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
             "type": "oneOf",
             "value": {
               "description": null,
-              "generatedName": "four_hundred_three",
+              "generatedName": "ForbiddenErrorBody",
               "groupName": null,
               "nameOverride": null,
               "schemas": [
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Zero",
+                  "generatedName": "ForbiddenErrorBodyZero",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "uploadcarePublicKeyRequiredError",
@@ -547,7 +547,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_One",
+                  "generatedName": "ForbiddenErrorBodyOne",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "uploadcarePublicKeyInvalidError",
@@ -555,7 +555,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Two",
+                  "generatedName": "ForbiddenErrorBodyTwo",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "autoStoreDisabledError",
@@ -563,7 +563,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Three",
+                  "generatedName": "ForbiddenErrorBodyThree",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "projectPublicKeyRemovedError",
@@ -571,7 +571,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Four",
+                  "generatedName": "ForbiddenErrorBodyFour",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "accountBlockedError",
@@ -579,7 +579,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Five",
+                  "generatedName": "ForbiddenErrorBodyFive",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "accountUnpaidError",
@@ -587,7 +587,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Six",
+                  "generatedName": "ForbiddenErrorBodySix",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "uploadFailedError",
@@ -595,7 +595,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Seven",
+                  "generatedName": "ForbiddenErrorBodySeven",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "accountLimitsExceededError",
@@ -603,7 +603,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Eight",
+                  "generatedName": "ForbiddenErrorBodyEight",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureExpirationError",
@@ -611,7 +611,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Nine",
+                  "generatedName": "ForbiddenErrorBodyNine",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureInvalidError",
@@ -641,7 +641,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_thirteen",
+            "generatedName": "ContentTooLargeErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": {
@@ -671,7 +671,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": {
@@ -1258,13 +1258,13 @@ To upload large files, 3 requests are sent in sequence:
             "type": "oneOf",
             "value": {
               "description": null,
-              "generatedName": "four_hundred",
+              "generatedName": "BadRequestErrorBody",
               "groupName": null,
               "nameOverride": null,
               "schemas": [
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Zero",
+                  "generatedName": "BadRequestErrorBodyZero",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "requestFiledsNumberLimitExceededError",
@@ -1272,7 +1272,7 @@ To upload large files, 3 requests are sent in sequence:
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_One",
+                  "generatedName": "BadRequestErrorBodyOne",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "postRequestParserFailedError",
@@ -1280,7 +1280,7 @@ To upload large files, 3 requests are sent in sequence:
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Two",
+                  "generatedName": "BadRequestErrorBodyTwo",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "nullCharactersForbiddenError",
@@ -1288,7 +1288,7 @@ To upload large files, 3 requests are sent in sequence:
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Three",
+                  "generatedName": "BadRequestErrorBodyThree",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataKeyDuplicatedError",
@@ -1296,7 +1296,7 @@ To upload large files, 3 requests are sent in sequence:
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Four",
+                  "generatedName": "BadRequestErrorBodyFour",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataKeyEmptyError",
@@ -1304,7 +1304,7 @@ To upload large files, 3 requests are sent in sequence:
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Five",
+                  "generatedName": "BadRequestErrorBodyFive",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataKeyForbiddenError",
@@ -1312,7 +1312,7 @@ To upload large files, 3 requests are sent in sequence:
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Six",
+                  "generatedName": "BadRequestErrorBodySix",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataKeyLengthTooBigError",
@@ -1320,7 +1320,7 @@ To upload large files, 3 requests are sent in sequence:
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Seven",
+                  "generatedName": "BadRequestErrorBodySeven",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataValueEmptyError",
@@ -1328,7 +1328,7 @@ To upload large files, 3 requests are sent in sequence:
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Eight",
+                  "generatedName": "BadRequestErrorBodyEight",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataValueForbiddenError",
@@ -1336,7 +1336,7 @@ To upload large files, 3 requests are sent in sequence:
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Nine",
+                  "generatedName": "BadRequestErrorBodyNine",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataValueLengthTooBigError",
@@ -1344,7 +1344,7 @@ To upload large files, 3 requests are sent in sequence:
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Ten",
+                  "generatedName": "BadRequestErrorBodyTen",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataKeysNumberTooBigError",
@@ -1352,7 +1352,7 @@ To upload large files, 3 requests are sent in sequence:
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Eleven",
+                  "generatedName": "BadRequestErrorBodyEleven",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureRequiredError",
@@ -1360,7 +1360,7 @@ To upload large files, 3 requests are sent in sequence:
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Twelve",
+                  "generatedName": "BadRequestErrorBodyTwelve",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureExpirationRequiredError",
@@ -1368,7 +1368,7 @@ To upload large files, 3 requests are sent in sequence:
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Thirteen",
+                  "generatedName": "BadRequestErrorBodyThirteen",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureExpirationInvalidError",
@@ -1376,7 +1376,7 @@ To upload large files, 3 requests are sent in sequence:
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Fourteen",
+                  "generatedName": "BadRequestErrorBodyFourteen",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "requestParamRequiredError",
@@ -1384,7 +1384,7 @@ To upload large files, 3 requests are sent in sequence:
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Fifteen",
+                  "generatedName": "BadRequestErrorBodyFifteen",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "multipartSizeInvalidError",
@@ -1392,7 +1392,7 @@ To upload large files, 3 requests are sent in sequence:
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Sixteen",
+                  "generatedName": "BadRequestErrorBodySixteen",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "multipartFileSizeLimitExceededError",
@@ -1400,7 +1400,7 @@ To upload large files, 3 requests are sent in sequence:
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Seventeen",
+                  "generatedName": "BadRequestErrorBodySeventeen",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "multipartFileSizeTooSmallError",
@@ -1408,7 +1408,7 @@ To upload large files, 3 requests are sent in sequence:
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Eighteen",
+                  "generatedName": "BadRequestErrorBodyEighteen",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "multipartPartSizeInvalidError",
@@ -1416,7 +1416,7 @@ To upload large files, 3 requests are sent in sequence:
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Nineteen",
+                  "generatedName": "BadRequestErrorBodyNineteen",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "multipartPartSizeTooSmallError",
@@ -1424,7 +1424,7 @@ To upload large files, 3 requests are sent in sequence:
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Twenty",
+                  "generatedName": "BadRequestErrorBodyTwenty",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "multipartPartSizeTooBigError",
@@ -1555,13 +1555,13 @@ To upload large files, 3 requests are sent in sequence:
             "type": "oneOf",
             "value": {
               "description": null,
-              "generatedName": "four_hundred_three",
+              "generatedName": "ForbiddenErrorBody",
               "groupName": null,
               "nameOverride": null,
               "schemas": [
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Zero",
+                  "generatedName": "ForbiddenErrorBodyZero",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "uploadcarePublicKeyRequiredError",
@@ -1569,7 +1569,7 @@ To upload large files, 3 requests are sent in sequence:
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_One",
+                  "generatedName": "ForbiddenErrorBodyOne",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "uploadcarePublicKeyInvalidError",
@@ -1577,7 +1577,7 @@ To upload large files, 3 requests are sent in sequence:
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Two",
+                  "generatedName": "ForbiddenErrorBodyTwo",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "autoStoreDisabledError",
@@ -1585,7 +1585,7 @@ To upload large files, 3 requests are sent in sequence:
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Three",
+                  "generatedName": "ForbiddenErrorBodyThree",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "projectPublicKeyRemovedError",
@@ -1593,7 +1593,7 @@ To upload large files, 3 requests are sent in sequence:
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Four",
+                  "generatedName": "ForbiddenErrorBodyFour",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "accountBlockedError",
@@ -1601,7 +1601,7 @@ To upload large files, 3 requests are sent in sequence:
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Five",
+                  "generatedName": "ForbiddenErrorBodyFive",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "accountUnpaidError",
@@ -1609,7 +1609,7 @@ To upload large files, 3 requests are sent in sequence:
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Six",
+                  "generatedName": "ForbiddenErrorBodySix",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "uploadFailedError",
@@ -1617,7 +1617,7 @@ To upload large files, 3 requests are sent in sequence:
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Seven",
+                  "generatedName": "ForbiddenErrorBodySeven",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "accountLimitsExceededError",
@@ -1625,7 +1625,7 @@ To upload large files, 3 requests are sent in sequence:
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Eight",
+                  "generatedName": "ForbiddenErrorBodyEight",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureExpirationError",
@@ -1633,7 +1633,7 @@ To upload large files, 3 requests are sent in sequence:
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Nine",
+                  "generatedName": "ForbiddenErrorBodyNine",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureInvalidError",
@@ -1663,7 +1663,7 @@ To upload large files, 3 requests are sent in sequence:
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": {
@@ -2447,13 +2447,13 @@ upload session to assemble all the file parts into a single resulting file.
             "type": "oneOf",
             "value": {
               "description": null,
-              "generatedName": "four_hundred",
+              "generatedName": "BadRequestErrorBody",
               "groupName": null,
               "nameOverride": null,
               "schemas": [
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Zero",
+                  "generatedName": "BadRequestErrorBodyZero",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "requestFiledsNumberLimitExceededError",
@@ -2461,7 +2461,7 @@ upload session to assemble all the file parts into a single resulting file.
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_One",
+                  "generatedName": "BadRequestErrorBodyOne",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "postRequestParserFailedError",
@@ -2469,7 +2469,7 @@ upload session to assemble all the file parts into a single resulting file.
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Two",
+                  "generatedName": "BadRequestErrorBodyTwo",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "nullCharactersForbiddenError",
@@ -2477,7 +2477,7 @@ upload session to assemble all the file parts into a single resulting file.
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Three",
+                  "generatedName": "BadRequestErrorBodyThree",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "multipartFileIdRequiredError",
@@ -2485,7 +2485,7 @@ upload session to assemble all the file parts into a single resulting file.
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Four",
+                  "generatedName": "BadRequestErrorBodyFour",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "uuidInvalidError",
@@ -2493,7 +2493,7 @@ upload session to assemble all the file parts into a single resulting file.
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Five",
+                  "generatedName": "BadRequestErrorBodyFive",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "multipartFileAlreadyUploadedError",
@@ -2501,7 +2501,7 @@ upload session to assemble all the file parts into a single resulting file.
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Six",
+                  "generatedName": "BadRequestErrorBodySix",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "multipartUploadSizeTooLargeError",
@@ -2509,7 +2509,7 @@ upload session to assemble all the file parts into a single resulting file.
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Seven",
+                  "generatedName": "BadRequestErrorBodySeven",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "multipartUploadSizeTooSmallError",
@@ -2517,7 +2517,7 @@ upload session to assemble all the file parts into a single resulting file.
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Eight",
+                  "generatedName": "BadRequestErrorBodyEight",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "multipartFileCompletionFailedError",
@@ -2525,7 +2525,7 @@ upload session to assemble all the file parts into a single resulting file.
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Nine",
+                  "generatedName": "BadRequestErrorBodyNine",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileTypeForbiddenError",
@@ -2533,7 +2533,7 @@ upload session to assemble all the file parts into a single resulting file.
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Ten",
+                  "generatedName": "BadRequestErrorBodyTen",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileInfectedError",
@@ -2576,13 +2576,13 @@ upload session to assemble all the file parts into a single resulting file.
             "type": "oneOf",
             "value": {
               "description": null,
-              "generatedName": "four_hundred_three",
+              "generatedName": "ForbiddenErrorBody",
               "groupName": null,
               "nameOverride": null,
               "schemas": [
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Zero",
+                  "generatedName": "ForbiddenErrorBodyZero",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "uploadcarePublicKeyRequiredError",
@@ -2590,7 +2590,7 @@ upload session to assemble all the file parts into a single resulting file.
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_One",
+                  "generatedName": "ForbiddenErrorBodyOne",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "uploadcarePublicKeyInvalidError",
@@ -2620,7 +2620,7 @@ upload session to assemble all the file parts into a single resulting file.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "fileNotFoundError",
@@ -3664,13 +3664,13 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
             "type": "oneOf",
             "value": {
               "description": null,
-              "generatedName": "four_hundred",
+              "generatedName": "BadRequestErrorBody",
               "groupName": null,
               "nameOverride": null,
               "schemas": [
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Zero",
+                  "generatedName": "BadRequestErrorBodyZero",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "requestFiledsNumberLimitExceededError",
@@ -3678,7 +3678,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_One",
+                  "generatedName": "BadRequestErrorBodyOne",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "postRequestParserFailedError",
@@ -3686,7 +3686,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Two",
+                  "generatedName": "BadRequestErrorBodyTwo",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "nullCharactersForbiddenError",
@@ -3694,7 +3694,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Three",
+                  "generatedName": "BadRequestErrorBodyThree",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataKeyDuplicatedError",
@@ -3702,7 +3702,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Four",
+                  "generatedName": "BadRequestErrorBodyFour",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataKeyEmptyError",
@@ -3710,7 +3710,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Five",
+                  "generatedName": "BadRequestErrorBodyFive",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataKeyForbiddenError",
@@ -3718,7 +3718,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Six",
+                  "generatedName": "BadRequestErrorBodySix",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataKeyLengthTooBigError",
@@ -3726,7 +3726,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Seven",
+                  "generatedName": "BadRequestErrorBodySeven",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataValueEmptyError",
@@ -3734,7 +3734,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Eight",
+                  "generatedName": "BadRequestErrorBodyEight",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataValueForbiddenError",
@@ -3742,7 +3742,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Nine",
+                  "generatedName": "BadRequestErrorBodyNine",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataValueLengthTooBigError",
@@ -3750,7 +3750,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Ten",
+                  "generatedName": "BadRequestErrorBodyTen",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataKeysNumberTooBigError",
@@ -3758,7 +3758,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Eleven",
+                  "generatedName": "BadRequestErrorBodyEleven",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureRequiredError",
@@ -3766,7 +3766,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Twelve",
+                  "generatedName": "BadRequestErrorBodyTwelve",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureExpirationRequiredError",
@@ -3774,7 +3774,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Thirteen",
+                  "generatedName": "BadRequestErrorBodyThirteen",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureExpirationInvalidError",
@@ -3782,7 +3782,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Fourteen",
+                  "generatedName": "BadRequestErrorBodyFourteen",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "sourceURLRequiredError",
@@ -3790,7 +3790,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Fifteen",
+                  "generatedName": "BadRequestErrorBodyFifteen",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "urlParsingFailedError",
@@ -3798,7 +3798,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Sixteen",
+                  "generatedName": "BadRequestErrorBodySixteen",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "urlSchemeRequiredError",
@@ -3806,7 +3806,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Seventeen",
+                  "generatedName": "BadRequestErrorBodySeventeen",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "urlSchemeInvalidError",
@@ -3814,7 +3814,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Eighteen",
+                  "generatedName": "BadRequestErrorBodyEighteen",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "urlHostRequiredError",
@@ -3822,7 +3822,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Nineteen",
+                  "generatedName": "BadRequestErrorBodyNineteen",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "urlBlacklistedError",
@@ -3830,7 +3830,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Twenty",
+                  "generatedName": "BadRequestErrorBodyTwenty",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "hostnameNotFoundError",
@@ -3838,7 +3838,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_TwentyOne",
+                  "generatedName": "BadRequestErrorBodyTwentyOne",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "urlHostMalformedError",
@@ -3846,7 +3846,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_TwentyTwo",
+                  "generatedName": "BadRequestErrorBodyTwentyTwo",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "urlHostPrivateIPForbiddenError",
@@ -3977,13 +3977,13 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
             "type": "oneOf",
             "value": {
               "description": null,
-              "generatedName": "four_hundred_three",
+              "generatedName": "ForbiddenErrorBody",
               "groupName": null,
               "nameOverride": null,
               "schemas": [
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Zero",
+                  "generatedName": "ForbiddenErrorBodyZero",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "publicKeyRequiredError",
@@ -3991,7 +3991,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_One",
+                  "generatedName": "ForbiddenErrorBodyOne",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "publicKeyInvalidError",
@@ -3999,7 +3999,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Two",
+                  "generatedName": "ForbiddenErrorBodyTwo",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "autoStoreDisabledError",
@@ -4007,7 +4007,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Three",
+                  "generatedName": "ForbiddenErrorBodyThree",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "projectPublicKeyRemovedError",
@@ -4015,7 +4015,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Four",
+                  "generatedName": "ForbiddenErrorBodyFour",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "accountBlockedError",
@@ -4023,7 +4023,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Five",
+                  "generatedName": "ForbiddenErrorBodyFive",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "accountUnpaidError",
@@ -4031,7 +4031,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Six",
+                  "generatedName": "ForbiddenErrorBodySix",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "uploadFailedError",
@@ -4039,7 +4039,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Seven",
+                  "generatedName": "ForbiddenErrorBodySeven",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "accountLimitsExceededError",
@@ -4047,7 +4047,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Eight",
+                  "generatedName": "ForbiddenErrorBodyEight",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureExpirationError",
@@ -4055,7 +4055,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Nine",
+                  "generatedName": "ForbiddenErrorBodyNine",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureInvalidError",
@@ -4085,7 +4085,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_nine",
+            "generatedName": "TooManyRequestsErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": {
@@ -4610,7 +4610,7 @@ to the value of the \`check_URL_duplicates\` parameter.
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "tokenRequiredError",
@@ -4882,13 +4882,13 @@ Log.d("TAG", status.toString())
             "type": "oneOf",
             "value": {
               "description": null,
-              "generatedName": "four_hundred",
+              "generatedName": "BadRequestErrorBody",
               "groupName": null,
               "nameOverride": null,
               "schemas": [
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Zero",
+                  "generatedName": "BadRequestErrorBodyZero",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "nullCharactersForbiddenError",
@@ -4896,7 +4896,7 @@ Log.d("TAG", status.toString())
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_One",
+                  "generatedName": "BadRequestErrorBodyOne",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileIdRequiredError",
@@ -4904,7 +4904,7 @@ Log.d("TAG", status.toString())
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Two",
+                  "generatedName": "BadRequestErrorBodyTwo",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileIdInvalidError",
@@ -4947,13 +4947,13 @@ Log.d("TAG", status.toString())
             "type": "oneOf",
             "value": {
               "description": null,
-              "generatedName": "four_hundred_three",
+              "generatedName": "ForbiddenErrorBody",
               "groupName": null,
               "nameOverride": null,
               "schemas": [
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Zero",
+                  "generatedName": "ForbiddenErrorBodyZero",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "publicKeyRequiredError",
@@ -4961,7 +4961,7 @@ Log.d("TAG", status.toString())
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_One",
+                  "generatedName": "ForbiddenErrorBodyOne",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "publicKeyInvalidError",
@@ -4991,7 +4991,7 @@ Log.d("TAG", status.toString())
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "fileNotFoundError",
@@ -5846,13 +5846,13 @@ is to create a new one.
             "type": "oneOf",
             "value": {
               "description": null,
-              "generatedName": "four_hundred",
+              "generatedName": "BadRequestErrorBody",
               "groupName": null,
               "nameOverride": null,
               "schemas": [
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Zero",
+                  "generatedName": "BadRequestErrorBodyZero",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "requestFiledsNumberLimitExceededError",
@@ -5860,7 +5860,7 @@ is to create a new one.
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_One",
+                  "generatedName": "BadRequestErrorBodyOne",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "postRequestParserFailedError",
@@ -5868,7 +5868,7 @@ is to create a new one.
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Two",
+                  "generatedName": "BadRequestErrorBodyTwo",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "nullCharactersForbiddenError",
@@ -5876,7 +5876,7 @@ is to create a new one.
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Three",
+                  "generatedName": "BadRequestErrorBodyThree",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureRequiredError",
@@ -5884,7 +5884,7 @@ is to create a new one.
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Four",
+                  "generatedName": "BadRequestErrorBodyFour",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureExpirationRequiredError",
@@ -5892,7 +5892,7 @@ is to create a new one.
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Five",
+                  "generatedName": "BadRequestErrorBodyFive",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureExpirationInvalidError",
@@ -5900,7 +5900,7 @@ is to create a new one.
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Six",
+                  "generatedName": "BadRequestErrorBodySix",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "groupFilesInvalidError",
@@ -5908,7 +5908,7 @@ is to create a new one.
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Seven",
+                  "generatedName": "BadRequestErrorBodySeven",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "groupFileURLParsingFailedError",
@@ -5916,7 +5916,7 @@ is to create a new one.
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Eight",
+                  "generatedName": "BadRequestErrorBodyEight",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "groupFilesNotFoundError",
@@ -6036,13 +6036,13 @@ is to create a new one.
             "type": "oneOf",
             "value": {
               "description": null,
-              "generatedName": "four_hundred_three",
+              "generatedName": "ForbiddenErrorBody",
               "groupName": null,
               "nameOverride": null,
               "schemas": [
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Zero",
+                  "generatedName": "ForbiddenErrorBodyZero",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "publicKeyRequiredError",
@@ -6050,7 +6050,7 @@ is to create a new one.
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_One",
+                  "generatedName": "ForbiddenErrorBodyOne",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "publicKeyInvalidError",
@@ -6058,7 +6058,7 @@ is to create a new one.
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Two",
+                  "generatedName": "ForbiddenErrorBodyTwo",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "projectPublicKeyRemovedError",
@@ -6066,7 +6066,7 @@ is to create a new one.
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Three",
+                  "generatedName": "ForbiddenErrorBodyThree",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "accountBlockedError",
@@ -6074,7 +6074,7 @@ is to create a new one.
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Four",
+                  "generatedName": "ForbiddenErrorBodyFour",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "accountUnpaidError",
@@ -6082,7 +6082,7 @@ is to create a new one.
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Five",
+                  "generatedName": "ForbiddenErrorBodyFive",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "uploadFailedError",
@@ -6090,7 +6090,7 @@ is to create a new one.
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Six",
+                  "generatedName": "ForbiddenErrorBodySix",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "accountLimitsExceededError",
@@ -6098,7 +6098,7 @@ is to create a new one.
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Seven",
+                  "generatedName": "ForbiddenErrorBodySeven",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureExpirationError",
@@ -6106,7 +6106,7 @@ is to create a new one.
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Eight",
+                  "generatedName": "ForbiddenErrorBodyEight",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureInvalidError",
@@ -7080,13 +7080,13 @@ number of the files in the group, etc).
             "type": "oneOf",
             "value": {
               "description": null,
-              "generatedName": "four_hundred",
+              "generatedName": "BadRequestErrorBody",
               "groupName": null,
               "nameOverride": null,
               "schemas": [
                 {
                   "description": null,
-                  "generatedName": "four_hundred_Zero",
+                  "generatedName": "BadRequestErrorBodyZero",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "nullCharactersForbiddenError",
@@ -7094,7 +7094,7 @@ number of the files in the group, etc).
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_One",
+                  "generatedName": "BadRequestErrorBodyOne",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "groupIdRequiredError",
@@ -7137,13 +7137,13 @@ number of the files in the group, etc).
             "type": "oneOf",
             "value": {
               "description": null,
-              "generatedName": "four_hundred_three",
+              "generatedName": "ForbiddenErrorBody",
               "groupName": null,
               "nameOverride": null,
               "schemas": [
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_Zero",
+                  "generatedName": "ForbiddenErrorBodyZero",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "publicKeyRequiredError",
@@ -7151,7 +7151,7 @@ number of the files in the group, etc).
                 },
                 {
                   "description": null,
-                  "generatedName": "four_hundred_three_One",
+                  "generatedName": "ForbiddenErrorBodyOne",
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "publicKeyInvalidError",
@@ -7181,7 +7181,7 @@ number of the files in the group, etc).
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "groupNotFoundError",

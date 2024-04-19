@@ -18,7 +18,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -32,7 +32,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -705,7 +705,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -719,7 +719,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -998,7 +998,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -1012,7 +1012,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -1291,7 +1291,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -1474,7 +1474,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -1488,7 +1488,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -1814,7 +1814,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -1918,7 +1918,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -2101,7 +2101,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -2284,7 +2284,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -2298,7 +2298,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -2813,7 +2813,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -3038,7 +3038,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -3052,7 +3052,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -3929,7 +3929,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -3943,7 +3943,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -4240,7 +4240,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -4447,7 +4447,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -4461,7 +4461,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -4475,7 +4475,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -4800,7 +4800,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -4904,7 +4904,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -4918,7 +4918,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -4932,7 +4932,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -5268,7 +5268,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -5282,7 +5282,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -6299,7 +6299,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -6313,7 +6313,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -6674,7 +6674,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -6688,7 +6688,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -7049,7 +7049,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -7220,7 +7220,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -7234,7 +7234,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -7248,7 +7248,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -7668,7 +7668,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -7839,7 +7839,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -8010,7 +8010,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -8024,7 +8024,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -10226,7 +10226,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -10493,7 +10493,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -10597,7 +10597,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -11002,7 +11002,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -11269,7 +11269,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -11283,7 +11283,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -14425,7 +14425,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -14439,7 +14439,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -16387,7 +16387,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -16401,7 +16401,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -18225,7 +18225,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -18449,7 +18449,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -18673,7 +18673,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -18687,7 +18687,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -19961,7 +19961,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -19975,7 +19975,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -20349,7 +20349,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -20363,7 +20363,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -20613,7 +20613,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -20837,7 +20837,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -21061,7 +21061,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -21075,7 +21075,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -21329,7 +21329,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -21343,7 +21343,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -21675,7 +21675,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -21859,7 +21859,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -21873,7 +21873,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -21887,7 +21887,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -22228,7 +22228,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -22332,7 +22332,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -22346,7 +22346,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -22477,7 +22477,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -22491,7 +22491,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -22614,7 +22614,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -22628,7 +22628,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -24448,7 +24448,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -26231,7 +26231,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -26301,7 +26301,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -26315,7 +26315,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -26463,7 +26463,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -26533,7 +26533,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -26547,7 +26547,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -28353,7 +28353,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -28603,7 +28603,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -28707,7 +28707,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -28721,7 +28721,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -28735,7 +28735,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -29191,7 +29191,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -29205,7 +29205,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -29219,7 +29219,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -31450,7 +31450,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -31464,7 +31464,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -31478,7 +31478,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -31944,7 +31944,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -31958,7 +31958,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -34687,7 +34687,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -34701,7 +34701,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -36259,7 +36259,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -36273,7 +36273,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -37707,7 +37707,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -37931,7 +37931,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -38155,7 +38155,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -38169,7 +38169,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -39308,7 +39308,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -39322,7 +39322,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -39569,7 +39569,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -39583,7 +39583,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -39830,7 +39830,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -40011,7 +40011,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -40025,7 +40025,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -40039,7 +40039,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -40344,7 +40344,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -40525,7 +40525,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -40706,7 +40706,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -40720,7 +40720,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -41684,7 +41684,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -41698,7 +41698,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -41898,7 +41898,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -41912,7 +41912,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -42112,7 +42112,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -42297,7 +42297,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -42311,7 +42311,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -42325,7 +42325,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -42583,7 +42583,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -42768,7 +42768,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -43123,7 +43123,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -43137,7 +43137,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -43649,7 +43649,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -43663,7 +43663,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -43939,7 +43939,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -43953,7 +43953,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -44229,7 +44229,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -44400,7 +44400,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -44414,7 +44414,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -44428,7 +44428,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -44732,7 +44732,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -44746,7 +44746,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -45228,7 +45228,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -45242,7 +45242,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -46147,7 +46147,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -46453,7 +46453,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -46467,7 +46467,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -47841,7 +47841,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -47855,7 +47855,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -48809,7 +48809,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -48823,7 +48823,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -49777,7 +49777,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -50240,7 +50240,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred",
+            "generatedName": "BadRequestErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -50254,7 +50254,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -50268,7 +50268,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_twenty_two",
+            "generatedName": "UnprocessableEntityErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -50927,7 +50927,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -51390,7 +51390,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -51853,7 +51853,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",
@@ -52316,7 +52316,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "description": null,
-            "generatedName": "four_hundred_four",
+            "generatedName": "NotFoundErrorBody",
             "groupName": null,
             "nameOverride": null,
             "schema": "APIErrorResponse",

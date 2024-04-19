@@ -7130,7 +7130,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
       "BadRequestError": {
         "docs": "error",
         "status-code": 400,
-        "type": "four_hundred",
+        "type": "BadRequestErrorBody",
       },
     },
     "types": {
@@ -7262,6 +7262,16 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "iata_code": "optional<string>",
           "icao_code": "optional<string>",
           "port_code": "optional<string>",
+        },
+      },
+      "BadRequestErrorBody": {
+        "docs": undefined,
+        "properties": {
+          "_object": "optional<string>",
+          "data": "optional<map<string, unknown>>",
+          "error": "optional<Error>",
+          "self": "optional<string>",
+          "version": "optional<integer>",
         },
       },
       "Booking": {
@@ -10577,16 +10587,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             "docs": "Full VAT number, including the country code",
             "type": "string",
           },
-        },
-      },
-      "four_hundred": {
-        "docs": undefined,
-        "properties": {
-          "_object": "optional<string>",
-          "data": "optional<map<string, unknown>>",
-          "error": "optional<Error>",
-          "self": "optional<string>",
-          "version": "optional<integer>",
         },
       },
     },

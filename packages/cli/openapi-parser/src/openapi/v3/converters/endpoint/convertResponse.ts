@@ -186,12 +186,17 @@ function markErrorSchemas({
         }
         const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
         const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedResponse.content ?? {}, context);
+        const errorName = ERROR_NAMES_BY_STATUS_CODE[parsedStatusCode];
+        if (errorName == null) {
+            context.logger.warn(`No error name found for status code ${statusCode}`);
+            continue;
+        }
         errors[parsedStatusCode] = {
             statusCode: parsedStatusCode,
             nameOverride: undefined,
-            generatedName: ERROR_NAMES_BY_STATUS_CODE[parsedStatusCode] ?? "UnknownError",
+            generatedName: errorName,
             description: resolvedResponse.description,
-            schema: convertSchema(jsonMediaObject?.schema ?? {}, false, context, [statusCode]),
+            schema: convertSchema(jsonMediaObject?.schema ?? {}, false, context, [errorName, "Body"]),
             fullExamples: jsonMediaObject?.examples
         };
     }

@@ -12315,7 +12315,7 @@ If you try to access older information than what we can access, we will return a
       "BadRequestError": {
         "docs": "400 Bad Request.",
         "status-code": 400,
-        "type": "list<four_hundred_Item>",
+        "type": "list<BadRequestErrorBodyItem>",
       },
       "ForbiddenError": {
         "docs": "Access to Belvo API denied",
@@ -12885,6 +12885,23 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "properties": {
           "open_finance": "PaymentIntentPaymentMethodDetailsBodyBusinessOfpi",
         },
+      },
+      "BadRequestErrorBodyItem": {
+        "discriminated": false,
+        "docs": undefined,
+        "union": [
+          "InvalidAccessMode",
+          "TooManySessionsError",
+          "LoginError",
+          "SessionExpiredError",
+          "ValidationError",
+          "InstitutionDownError",
+          "InstitutionUnavailableError",
+          "InstitutionInactiveError",
+          "UnsupportedOperationError",
+          "InvalidLinkError",
+          "UnconfirmedLinkError",
+        ],
       },
       "Balance": {
         "docs": undefined,
@@ -21036,23 +21053,6 @@ For \`session_expired\` errors, the description can be (among others):
             "type": "optional<string>",
           },
         },
-      },
-      "four_hundred_Item": {
-        "discriminated": false,
-        "docs": undefined,
-        "union": [
-          "InvalidAccessMode",
-          "TooManySessionsError",
-          "LoginError",
-          "SessionExpiredError",
-          "ValidationError",
-          "InstitutionDownError",
-          "InstitutionUnavailableError",
-          "InstitutionInactiveError",
-          "UnsupportedOperationError",
-          "InvalidLinkError",
-          "UnconfirmedLinkError",
-        ],
       },
     },
   },
