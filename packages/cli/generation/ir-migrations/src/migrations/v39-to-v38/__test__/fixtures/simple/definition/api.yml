@@ -12,13 +12,13 @@ auth-schemes:
     scopes:
       - user:read
     get-token:
-      endpoint: auth.get_token
+      endpoint: auth.getToken
       response-properties:
         access-token: $response.access_token
         expires-in: $response.expires_in
         refresh-token: $response.refresh_token
     refresh-token:
-      endpoint: auth.refresh_token
+      endpoint: auth.refreshToken
       request-properties:
         refresh-token: $response.refresh_token
       response-properties:
