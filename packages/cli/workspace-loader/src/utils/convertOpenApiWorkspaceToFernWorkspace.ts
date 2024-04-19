@@ -9,7 +9,8 @@ import { FernWorkspace, OSSWorkspace } from "../types/Workspace";
 
 export async function convertToFernWorkspace(
     openapiWorkspace: OSSWorkspace,
-    context: TaskContext
+    context: TaskContext,
+    enableUniqueErrorsPerEndpoint = false
 ): Promise<FernWorkspace> {
     const openApiIr = await parse({
         workspace: openapiWorkspace,
@@ -18,7 +19,7 @@ export async function convertToFernWorkspace(
     const definition = convert({
         taskContext: context,
         ir: openApiIr,
-        enableUniqueErrorsPerEndpoint: false
+        enableUniqueErrorsPerEndpoint
     });
 
     return {
