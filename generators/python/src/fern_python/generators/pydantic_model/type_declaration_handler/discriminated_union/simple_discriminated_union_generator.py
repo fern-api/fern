@@ -217,41 +217,67 @@ class DiscriminatedUnionSnippetGenerator:
         self,
         snippet_writer: SnippetWriter,
         name: ir_types.DeclaredTypeName,
-        example: ir_types.ExampleUnionType,
+        example: ir_types.ExampleUnionType | AST.Expression,
+        single_union_type: Optional[ir_types.SingleUnionType] = None,
     ):
         self.snippet_writer = snippet_writer
         self.name = name
         self.example = example
+        self.sut = single_union_type
 
-    def generate_snippet(self) -> AST.Expression:
-        return self.example.single_union_type.shape.visit(
-            same_properties_as_object=lambda object: self._get_snippet_for_union_with_same_properties_as_object(
+    def generate_snippet_template(self) -> AST.Expression | None:
+        return self.sut.shape.visit(
+            same_properties_as_object=lambda: self._get_snippet_for_union_with_same_properties_as_object(
                 name=self.name,
-                wire_discriminant_value=self.example.single_union_type.wire_discriminant_value,
-                example=object,
+                wire_discriminant_value=self.sut.discriminant_value.wire_value,
+                example=self.example,
             ),
-            single_property=lambda example_type_reference: self._get_snippet_for_union_with_single_property(
+            single_property=lambda: self._get_snippet_for_union_with_single_property(
                 name=self.name,
-                wire_discriminant_value=self.example.single_union_type.wire_discriminant_value,
-                example=example_type_reference,
+                wire_discriminant_value=self.sut.discriminant_value.wire_value,
+                example=self.example,
             ),
             no_properties=lambda: self._get_snippet_for_union_with_no_properties(
                 name=self.name,
             ),
         )
 
+    def generate_snippet(self) -> AST.Expression:
+        return (
+            self.example.single_union_type.shape.visit(
+                same_properties_as_object=lambda object: self._get_snippet_for_union_with_same_properties_as_object(
+                    name=self.name,
+                    wire_discriminant_value=self.example.single_union_type.wire_discriminant_value,
+                    example=object,
+                ),
+                single_property=lambda example_type_reference: self._get_snippet_for_union_with_single_property(
+                    name=self.name,
+                    wire_discriminant_value=self.example.single_union_type.wire_discriminant_value,
+                    example=example_type_reference,
+                ),
+                no_properties=lambda: self._get_snippet_for_union_with_no_properties(
+                    name=self.name,
+                ),
+            )
+            if self.example is not None
+            else None
+        )
+
     def _get_snippet_for_union_with_same_properties_as_object(
         self,
         name: ir_types.DeclaredTypeName,
         wire_discriminant_value: ir_types.NameAndWireValue,
-        example: ir_types.ExampleObjectTypeWithTypeId,
+        example: ir_types.ExampleObjectTypeWithTypeId | AST.Expression,
     ) -> AST.Expression:
         args: List[AST.Expression] = []
-        args.extend(
-            self.snippet_writer.get_snippet_for_object_properties(
-                example=example.object,
-            ),
-        )
+        if isinstance(example, ir_types.ExampleObjectTypeWithTypeId):
+            args.extend(
+                self.snippet_writer.get_snippet_for_object_properties(
+                    example=example.object,
+                ),
+            )
+        else:
+            args.append(example)
 
         union_class_reference = self._get_union_class_reference(
             name=name,
@@ -269,14 +295,18 @@ class DiscriminatedUnionSnippetGenerator:
         self,
         name: ir_types.DeclaredTypeName,
         wire_discriminant_value: ir_types.NameAndWireValue,
-        example: ir_types.ExampleTypeReference,
+        example: ir_types.ExampleTypeReference | AST.Expression,
     ) -> AST.Expression:
         union_class_reference = self._get_union_class_reference(
             name=name,
             wire_discriminant_value=wire_discriminant_value,
         )
-        union_value = self.snippet_writer.get_snippet_for_example_type_reference(
-            example_type_reference=example,
+        union_value = (
+            self.snippet_writer.get_snippet_for_example_type_reference(
+                example_type_reference=example,
+            )
+            if isinstance(example, ir_types.ExampleTypeReference)
+            else example
         )
 
         def write_union(writer: AST.NodeWriter) -> None:

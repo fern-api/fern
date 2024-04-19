@@ -97,7 +97,7 @@ class EnumSnippetGenerator:
         self,
         snippet_writer: SnippetWriter,
         name: ir_types.DeclaredTypeName,
-        example: ir_types.ExampleEnumType,
+        example: ir_types.ExampleEnumType | str,
         use_str_enums: bool,
     ):
         self._use_str_enums = use_str_enums
@@ -114,8 +114,11 @@ class EnumSnippetGenerator:
             if self._use_str_enums:
                 writer.write(f'"{self.example.value.wire_value}"')
             else:
+                enum_wire_value = (
+                    self.example.value.name if isinstance(self.example, ir_types.ExampleEnumType) else self.example
+                )
                 writer.write_node(AST.Expression(class_reference))
-                writer.write(f".{_get_class_var_name(self.example.value.name)}")
+                writer.write(f".{_get_class_var_name(enum_wire_value)}")
 
         return AST.Expression(AST.CodeWriter(write_enum))
 

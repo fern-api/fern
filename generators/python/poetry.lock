@@ -170,6 +170,27 @@ wasmer = ">=1.0.0"
 wasmer-compiler-cranelift = ">=1.0.0"
 
 [[package]]
+name = "fern-fern-fdr-sdk"
+version = "0.0.5303"
+description = ""
+optional = false
+python-versions = ">=3.8,<4.0"
+files = [
+    {file = "fern_fern_fdr_sdk-0.0.5303-py3-none-any.whl", hash = "sha256:21cbcc83b337e148e58b05788ec8973195d9fa6ac2fcf22764c3fd8155b4d6c9"},
+    {file = "fern_fern_fdr_sdk-0.0.5303.tar.gz", hash = "sha256:52d1aaec803c9c6cbcd1c8c5671da20985fec935c9ac7b4d14764cbb01a6a4c3"},
+]
+
+[package.dependencies]
+httpx = ">=0.21.2"
+pydantic = ">=1.9.2"
+typing_extensions = ">=4.0.0"
+
+[package.source]
+type = "legacy"
+url = "https://pypi.buildwithfern.com"
+reference = "fern-prod"
+
+[[package]]
 name = "fern-fern-generator-exec-sdk"
 version = "0.0.618"
 description = ""
@@ -939,4 +960,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "583af4f44c8f91ab0570bdc4cb0a6fc43927b1b238deb813017ddc5f8671203d"
+content-hash = "a5bb9724bc76b7dda4952d6b761e625f637fe05eb10c1be3ec5e6e5dc1bd298e"
