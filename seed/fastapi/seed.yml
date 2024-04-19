@@ -30,4 +30,4 @@ allowedFailures:
   - literal
   - websocket
   - enum
-  - server-sent-events.
+  - server-sent-events

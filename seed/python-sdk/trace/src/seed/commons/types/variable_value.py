@@ -59,8 +59,9 @@ class VariableValue_CharValue(pydantic_v1.BaseModel):
         smart_union = True
 
 
-class VariableValue_MapValue(MapValue):
+class VariableValue_MapValue(pydantic_v1.BaseModel):
     type: typing.Literal["mapValue"] = "mapValue"
+    key_value_pairs: typing.List[KeyValuePair] = pydantic_v1.Field(alias="keyValuePairs")
 
     class Config:
         frozen = True
@@ -78,34 +79,34 @@ class VariableValue_ListValue(pydantic_v1.BaseModel):
         smart_union = True
 
 
-class VariableValue_BinaryTreeValue(BinaryTreeValue):
+class VariableValue_BinaryTreeValue(pydantic_v1.BaseModel):
     type: typing.Literal["binaryTreeValue"] = "binaryTreeValue"
+    root: typing.Optional[NodeId]
+    nodes: typing.Dict[NodeId, BinaryTreeNodeValue]
 
     class Config:
         frozen = True
         smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
 
 
-class VariableValue_SinglyLinkedListValue(SinglyLinkedListValue):
+class VariableValue_SinglyLinkedListValue(pydantic_v1.BaseModel):
     type: typing.Literal["singlyLinkedListValue"] = "singlyLinkedListValue"
+    head: typing.Optional[NodeId]
+    nodes: typing.Dict[NodeId, SinglyLinkedListNodeValue]
 
     class Config:
         frozen = True
         smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
 
 
-class VariableValue_DoublyLinkedListValue(DoublyLinkedListValue):
+class VariableValue_DoublyLinkedListValue(pydantic_v1.BaseModel):
     type: typing.Literal["doublyLinkedListValue"] = "doublyLinkedListValue"
+    head: typing.Optional[NodeId]
+    nodes: typing.Dict[NodeId, DoublyLinkedListNodeValue]
 
     class Config:
         frozen = True
         smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
 
 
 class VariableValue_NullValue(pydantic_v1.BaseModel):

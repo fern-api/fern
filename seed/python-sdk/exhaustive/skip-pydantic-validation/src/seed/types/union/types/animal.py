@@ -6,13 +6,14 @@ import typing
 
 import typing_extensions
 
-from ....core.unchecked_base_model import UnionMetadata
-from .cat import Cat
-from .dog import Dog
+from ....core.pydantic_utilities import pydantic_v1
+from ....core.unchecked_base_model import UncheckedBaseModel, UnionMetadata
 
 
-class Animal_Dog(Dog):
+class Animal_Dog(UncheckedBaseModel):
     animal: typing.Literal["dog"] = "dog"
+    name: str
+    likes_to_woof: bool = pydantic_v1.Field(alias="likesToWoof")
 
     class Config:
         frozen = True
@@ -21,8 +22,10 @@ class Animal_Dog(Dog):
         populate_by_name = True
 
 
-class Animal_Cat(Cat):
+class Animal_Cat(UncheckedBaseModel):
     animal: typing.Literal["cat"] = "cat"
+    name: str
+    likes_to_meow: bool = pydantic_v1.Field(alias="likesToMeow")
 
     class Config:
         frozen = True

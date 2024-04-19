@@ -80,15 +80,7 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                 )
 
         for single_union_type in self._union.types:
-            single_union_type_base = single_union_type.shape.visit(
-                same_properties_as_object=lambda type_name: type_name,
-                single_property=lambda property_: None,
-                no_properties=lambda: None,
-            )
             base_models = []
-            if single_union_type_base is not None:
-                base_models.append(self._context.get_class_reference_for_type_id(single_union_type_base.type_id))
-                all_referenced_types.append(ir_types.TypeReference.factory.named(single_union_type_base))
 
             if class_reference_for_base is not None:
                 base_models.append(class_reference_for_base)
@@ -125,6 +117,19 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
                         )
                     )
                     all_referenced_types.append(shape.type)
+                elif shape.properties_type == "samePropertiesAsObject":
+                    object_properties = self._context.get_all_properties_including_extensions(shape.type_id)
+                    for object_property in object_properties:
+                        internal_pydantic_model_for_single_union_type.add_field(
+                            PydanticField(
+                                name=object_property.name.name.snake_case.unsafe_name,
+                                pascal_case_field_name=object_property.name.name.pascal_case.unsafe_name,
+                                json_field_name=object_property.name.wire_value,
+                                type_hint=self._context.get_type_hint_for_type_reference(
+                                    type_reference=object_property.value_type
+                                ),
+                            )
+                        )
 
                 # if any of our fields are forward refs, we need to call
                 # update_forwards_refs()

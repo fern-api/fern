@@ -4,28 +4,25 @@ from __future__ import annotations
 
 import typing
 
-from .bar import Bar
-from .foo import Foo
+from ...core.pydantic_utilities import pydantic_v1
 
 
-class UnionWithoutKey_Foo(Foo):
+class UnionWithoutKey_Foo(pydantic_v1.BaseModel):
     type: typing.Literal["foo"] = "foo"
+    name: str
 
     class Config:
         frozen = True
         smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
 
 
-class UnionWithoutKey_Bar(Bar):
+class UnionWithoutKey_Bar(pydantic_v1.BaseModel):
     type: typing.Literal["bar"] = "bar"
+    name: str
 
     class Config:
         frozen = True
         smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
 
 
 UnionWithoutKey = typing.Union[UnionWithoutKey_Foo, UnionWithoutKey_Bar]
