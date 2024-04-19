@@ -130,7 +130,7 @@ function convertHeaderExamples({
     return result;
 }
 
-function convertFullExample(fullExample: FullExample): RawSchemas.ExampleTypeReferenceSchema {
+export function convertFullExample(fullExample: FullExample): RawSchemas.ExampleTypeReferenceSchema {
     switch (fullExample.type) {
         case "primitive":
             return convertPrimitive(fullExample.value);

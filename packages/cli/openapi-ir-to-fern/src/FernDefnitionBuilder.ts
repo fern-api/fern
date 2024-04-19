@@ -58,6 +58,8 @@ export interface FernDefinitionBuilder {
 
     setServiceInfo(file: RelativeFilePath, { displayName, docs }: { displayName?: string; docs?: string }): void;
 
+    addTypeExample(file: RelativeFilePath, name: string, convertedExample: RawSchemas.ExampleTypeSchema): void;
+
     build(): FernDefinition;
 
     readonly enableUniqueErrorsPerEndpoint: boolean;
@@ -215,6 +217,27 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             fernFile.types = {};
         }
         fernFile.types[name] = schema;
+    }
+
+    public addTypeExample(file: RelativeFilePath, name: string, convertedExample: RawSchemas.ExampleTypeSchema): void {
+        const fernFile = this.getOrCreateFile(file);
+        if (fernFile.types == null) {
+            fernFile.types = {};
+        }
+        const type = fernFile.types[name];
+        if (type != null) {
+            if (typeof type === "string") {
+                fernFile.types[name] = {
+                    type,
+                    examples: [convertedExample]
+                };
+            } else {
+                if (type.examples == null) {
+                    type.examples = [];
+                }
+                type.examples.push(convertedExample);
+            }
+        }
     }
 
     public addError(
