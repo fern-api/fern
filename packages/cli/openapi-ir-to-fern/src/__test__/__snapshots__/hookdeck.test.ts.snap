@@ -6825,14 +6825,17 @@ exports[`open api parser hookdeck simple 1`] = `
   "packageMarkerFile": {
     "errors": {
       "BadRequestError": {
+        "docs": "Bad Request",
         "status-code": 400,
         "type": "ApiErrorResponse",
       },
       "NotFoundError": {
+        "docs": "Not Found",
         "status-code": 404,
         "type": "ApiErrorResponse",
       },
       "UnprocessableEntityError": {
+        "docs": "Unprocessable Entity",
         "status-code": 422,
         "type": "ApiErrorResponse",
       },

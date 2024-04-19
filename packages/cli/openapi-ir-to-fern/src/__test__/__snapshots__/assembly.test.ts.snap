@@ -22,6 +22,7 @@ exports[`open api parser assembly simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+              "root.GatewayTimeoutError",
             ],
             "method": "POST",
             "path": "/v2/upload",
@@ -58,6 +59,7 @@ exports[`open api parser assembly simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+              "root.GatewayTimeoutError",
             ],
             "examples": [
               {
@@ -97,6 +99,7 @@ The LLM response data, as well as any context provided in the original request w
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+              "root.GatewayTimeoutError",
             ],
             "examples": [
               {
@@ -136,6 +139,7 @@ The LLM response data, as well as any context provided in the original request w
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+              "root.GatewayTimeoutError",
             ],
             "examples": [
               {
@@ -196,6 +200,7 @@ The LLM response data, as well as any context provided in the original request w
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+              "root.GatewayTimeoutError",
             ],
             "examples": [
               {
@@ -247,6 +252,7 @@ The LLM response data, as well as any context provided in the original request w
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+              "root.GatewayTimeoutError",
             ],
             "examples": [
               {
@@ -374,6 +380,7 @@ The parameter should map to a JSON encoded list of strings.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+              "root.GatewayTimeoutError",
             ],
             "examples": [
               {
@@ -452,6 +459,7 @@ The parameter should map to a JSON encoded list of strings.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+              "root.GatewayTimeoutError",
             ],
             "examples": [
               {
@@ -668,6 +676,7 @@ The parameter should map to a JSON encoded list of strings.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+              "root.GatewayTimeoutError",
             ],
             "examples": [
               {
@@ -874,6 +883,7 @@ The parameter should map to a JSON encoded list of strings.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+              "root.GatewayTimeoutError",
             ],
             "examples": [
               {
@@ -1080,6 +1090,7 @@ The parameter should map to a JSON encoded list of strings.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+              "root.GatewayTimeoutError",
             ],
             "examples": [
               {
@@ -1135,6 +1146,7 @@ The parameter should map to a JSON encoded list of strings.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+              "root.GatewayTimeoutError",
             ],
             "examples": [
               {
@@ -1173,6 +1185,7 @@ The parameter should map to a JSON encoded list of strings.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+              "root.GatewayTimeoutError",
             ],
             "examples": [
               {
@@ -1221,6 +1234,33 @@ The parameter should map to a JSON encoded list of strings.
             "auth": true,
             "display-name": "Export transcript as SRT or VTT captions.",
             "docs": "Export your transcript in SRT or VTT format, to be plugged into a video player for subtitles and closed captions.",
+            "errors": [
+              "root.BadRequestError",
+              "root.UnauthorizedError",
+              "root.NotFoundError",
+              "root.TooManyRequestsError",
+              "root.InternalServerError",
+              "root.ServiceUnavailableError",
+              "root.GatewayTimeoutError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "subtitle_format": "srt",
+                  "transcript_id": "transcript_id",
+                },
+                "response": {
+                  "body": "WEBVTT
+00:12.340 --> 00:16.220
+Last year I showed these two slides said that demonstrate
+00:16.200 --> 00:20.040
+that the Arctic ice cap which for most of the last 3,000,000 years has been the
+00:20.020 --> 00:25.040
+size of the lower 48 States has shrunk by 40% but this understates
+",
+                },
+              },
+            ],
             "method": "GET",
             "path": "/v2/transcript/{transcript_id}/{subtitle_format}",
             "path-parameters": {
@@ -1244,7 +1284,7 @@ The parameter should map to a JSON encoded list of strings.
             },
             "response": {
               "docs": "The exported captions as text",
-              "type": "text",
+              "type": "string",
             },
           },
           "list": {
@@ -1258,6 +1298,7 @@ The parameter should map to a JSON encoded list of strings.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+              "root.GatewayTimeoutError",
             ],
             "examples": [
               {
@@ -1331,6 +1372,7 @@ The parameter should map to a JSON encoded list of strings.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+              "root.GatewayTimeoutError",
             ],
             "method": "GET",
             "path": "/v2/transcript/{transcript_id}/word-search",
@@ -1385,26 +1427,37 @@ The parameter should map to a JSON encoded list of strings.
   "packageMarkerFile": {
     "errors": {
       "BadRequestError": {
+        "docs": "Bad Request",
         "status-code": 400,
         "type": "Error",
       },
+      "GatewayTimeoutError": {
+        "docs": "Gateway Timeout",
+        "status-code": 504,
+        "type": "unknown",
+      },
       "InternalServerError": {
+        "docs": "An error occurred while processing the request",
         "status-code": 500,
         "type": "Error",
       },
       "NotFoundError": {
+        "docs": "Not found",
         "status-code": 404,
         "type": "Error",
       },
       "ServiceUnavailableError": {
+        "docs": "Service Unavailable",
         "status-code": 503,
         "type": "unknown",
       },
       "TooManyRequestsError": {
+        "docs": "Too Many Requests",
         "status-code": 429,
         "type": "Error",
       },
       "UnauthorizedError": {
+        "docs": "Unauthorized",
         "status-code": 401,
         "type": "Error",
       },

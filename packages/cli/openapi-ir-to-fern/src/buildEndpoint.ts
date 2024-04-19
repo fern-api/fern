@@ -203,6 +203,7 @@ export function buildEndpoint({
                 fileContainingReference: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)
             });
             errorDeclaration.type = getTypeFromTypeReference(typeReference);
+            errorDeclaration.docs = httpError.description;
         }
 
         context.builder.addError(ERROR_DECLARATIONS_FILENAME, {

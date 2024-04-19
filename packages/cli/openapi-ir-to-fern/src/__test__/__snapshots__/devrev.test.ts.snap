@@ -2438,30 +2438,37 @@ organizations.
   "packageMarkerFile": {
     "errors": {
       "BadRequestError": {
+        "docs": "400 Bad Request.",
         "status-code": 400,
         "type": "ErrorBadRequest",
       },
       "ForbiddenError": {
+        "docs": "403 Forbidden.",
         "status-code": 403,
         "type": "ErrorForbidden",
       },
       "InternalServerError": {
+        "docs": "500 Internal Server Error.",
         "status-code": 500,
         "type": "ErrorInternalServerError",
       },
       "NotFoundError": {
+        "docs": "404 Not Found.",
         "status-code": 404,
         "type": "ErrorNotFound",
       },
       "ServiceUnavailableError": {
+        "docs": "503 Service Unavailable.",
         "status-code": 503,
         "type": "ErrorServiceUnavailable",
       },
       "TooManyRequestsError": {
+        "docs": "429 Too Many Requests.",
         "status-code": 429,
         "type": "ErrorTooManyRequests",
       },
       "UnauthorizedError": {
+        "docs": "401 Unauthorized.",
         "status-code": 401,
         "type": "ErrorUnauthorized",
       },

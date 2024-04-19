@@ -11688,30 +11688,37 @@ You will be assigned as owner of the new team automatically.",
   "packageMarkerFile": {
     "errors": {
       "BadRequestError": {
+        "docs": "User request not valid.",
         "status-code": 400,
         "type": "ErrorDto",
       },
       "ConflictError": {
+        "docs": "Team name is already in use.",
         "status-code": 409,
         "type": "ErrorDto",
       },
       "ContentTooLargeError": {
+        "docs": "Asset exceeds the maximum upload size.",
         "status-code": 413,
         "type": "ErrorDto",
       },
       "ForbiddenError": {
+        "docs": "User is the current user.",
         "status-code": 403,
         "type": "ErrorDto",
       },
       "InternalServerError": {
+        "docs": "Operation failed.",
         "status-code": 500,
         "type": "ErrorDto",
       },
       "NotFoundError": {
+        "docs": "User not found.",
         "status-code": 404,
         "type": "unknown",
       },
       "NotImplementedError": {
+        "docs": "Not configured.",
         "status-code": 501,
         "type": "ErrorDto",
       },

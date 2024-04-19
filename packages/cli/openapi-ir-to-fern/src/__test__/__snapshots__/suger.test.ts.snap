@@ -4210,6 +4210,7 @@ exports[`open api parser suger simple 1`] = `
         "type": "unknown",
       },
       "ConflictError": {
+        "docs": "Conflict request error description",
         "status-code": 409,
         "type": "string",
       },
@@ -4218,6 +4219,7 @@ exports[`open api parser suger simple 1`] = `
         "type": "unknown",
       },
       "NotFoundError": {
+        "docs": "Integration not found",
         "status-code": 404,
         "type": "string",
       },

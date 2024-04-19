@@ -535,6 +535,9 @@ exports[`open api parser hathora simple 1`] = `
                   "buildId": 1.1,
                 },
                 "request": {},
+                "response": {
+                  "body": "string",
+                },
               },
             ],
             "method": "POST",
@@ -553,6 +556,10 @@ exports[`open api parser hathora simple 1`] = `
               "headers": undefined,
               "name": "RunBuildRequest",
               "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "string",
             },
           },
         },
@@ -1418,6 +1425,9 @@ exports[`open api parser hathora simple 1`] = `
                 "path-parameters": {
                   "appId": "appId",
                 },
+                "response": {
+                  "body": "string",
+                },
               },
             ],
             "method": "GET",
@@ -1433,10 +1443,30 @@ exports[`open api parser hathora simple 1`] = `
                 "tailLines": "optional<root.TailLines>",
               },
             },
+            "response": {
+              "docs": "Ok",
+              "type": "string",
+            },
           },
           "GetLogsForDeployment": {
             "auth": true,
             "docs": undefined,
+            "errors": [
+              "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                  "deploymentId": 1.1,
+                },
+                "response": {
+                  "body": {
+                    "key": "value",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/logs/v1/{appId}/deployment/{deploymentId}",
             "path-parameters": {
@@ -1452,7 +1482,7 @@ exports[`open api parser hathora simple 1`] = `
             },
             "response": {
               "docs": "Ok",
-              "type": "text",
+              "type": "unknown",
             },
           },
           "GetLogsForProcess": {
@@ -1466,6 +1496,9 @@ exports[`open api parser hathora simple 1`] = `
                 "path-parameters": {
                   "appId": "appId",
                   "processId": "processId",
+                },
+                "response": {
+                  "body": "string",
                 },
               },
             ],
@@ -1481,6 +1514,10 @@ exports[`open api parser hathora simple 1`] = `
                 "follow": "optional<boolean>",
                 "tailLines": "optional<root.TailLines>",
               },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "string",
             },
           },
         },
@@ -1973,26 +2010,32 @@ exports[`open api parser hathora simple 1`] = `
   "packageMarkerFile": {
     "errors": {
       "BadRequestError": {
+        "docs": "",
         "status-code": 400,
         "type": "string",
       },
       "InternalServerError": {
+        "docs": "",
         "status-code": 500,
         "type": "string",
       },
       "NotFoundError": {
+        "docs": "",
         "status-code": 404,
         "type": "string",
       },
       "TooManyRequestsError": {
+        "docs": "",
         "status-code": 429,
         "type": "string",
       },
       "UnauthorizedError": {
+        "docs": "",
         "status-code": 401,
         "type": "string",
       },
       "UnprocessableEntityError": {
+        "docs": "",
         "status-code": 422,
         "type": "string",
       },

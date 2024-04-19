@@ -6170,34 +6170,42 @@ exports[`open api parser deel simple 1`] = `
   "packageMarkerFile": {
     "errors": {
       "BadRequestError": {
+        "docs": "Operation failed.",
         "status-code": 400,
         "type": "ApiErrorContainer",
       },
       "ConflictError": {
+        "docs": "A matching profile already exists",
         "status-code": 409,
         "type": "unknown",
       },
       "ForbiddenError": {
+        "docs": "Operation failed.",
         "status-code": 403,
         "type": "ApiErrorContainer",
       },
       "InternalServerError": {
+        "docs": "Operation failed.",
         "status-code": 500,
         "type": "ApiErrorContainer",
       },
       "MethodNotAllowedError": {
+        "docs": "Operation failed.",
         "status-code": 405,
         "type": "ApiErrorContainer",
       },
       "NotFoundError": {
+        "docs": "Operation failed.",
         "status-code": 404,
         "type": "ApiErrorContainer",
       },
       "TooManyRequestsError": {
+        "docs": "Operation failed.",
         "status-code": 429,
         "type": "ApiErrorContainer",
       },
       "UnauthorizedError": {
+        "docs": "Operation failed.",
         "status-code": 401,
         "type": "ApiErrorContainer",
       },

@@ -940,6 +940,7 @@ exports[`open api parser superagent simple 1`] = `
   "packageMarkerFile": {
     "errors": {
       "UnprocessableEntityError": {
+        "docs": "Validation Error",
         "status-code": 422,
         "type": "HTTPValidationError",
       },

@@ -1626,42 +1626,144 @@ Note: This operation requires an identity challenge if the financial institution
   "packageMarkerFile": {
     "errors": {
       "BadRequestError": {
+        "docs": "Bad Request. The request body, request headers, and/or query parameters are not well-formed.
+
+This error response may have one of the following \`type\` values:
+* [\`https://production.api.apiture.com/errors/badRequest/v1.0.0\`](https://production.api.apiture.com/errors/badRequest/v1.0.0)<br>
+  The request body and/or parameters was not well-formed.
+  Remediation: Correct any syntax or schema errors in the request body or parameters.
+",
         "status-code": 400,
         "type": "ProblemResponse",
       },
       "ConflictError": {
+        "docs": "Conflict.
+
+This error response may have one of the following \`type\` values:
+* [\`https://production.api.apiture.com/errors/cannotDeleteProcessedTransfers/v1.0.0\`](https://production.api.apiture.com/errors/cannotDeleteProcessedTransfers/v1.0.0)<br>
+  The delete operation is only allowed for transfers which have not begun processing.
+  Remediation: Select a pending or scheduled transfer.
+",
         "status-code": 409,
         "type": "ProblemResponse",
       },
       "ForbiddenError": {
+        "docs": "Forbidden. The authenticated caller is not authorized to perform the requested operation.
+
+This error response may have one of the following \`type\` values:
+* [\`https://production.api.apiture.com/errors/forbidden/v1.0.0\`](https://production.api.apiture.com/errors/forbidden/v1.0.0)<br>
+  The user or agent is not allowed to perform this operation; authentication credentials were provided in the request, but the server considers them insufficient to grant access.
+  Remediation: Check the user's permissions and entitlements before attempting the operation.
+
+* [\`https://production.api.apiture.com/errors/customerDisabled/v1.0.0\`](https://production.api.apiture.com/errors/customerDisabled/v1.0.0)<br>
+  The customer is disabled.
+  Remediation: Have the customer contact the financial institution for support.
+
+* [\`https://production.api.apiture.com/errors/antiMalwareRequired/v1.0.0\`](https://production.api.apiture.com/errors/antiMalwareRequired/v1.0.0)<br>
+  The financial institution requires the customer to have anti-malware software installed.
+  Remediation: Direct the user to the software requirements guide to install the correct anti-malware software.
+
+* [\`https://production.api.apiture.com/errors/modificationForbidden/v1.0.0\`](https://production.api.apiture.com/errors/modificationForbidden/v1.0.0)<br>
+  The customer is properly authenticated but not authorized to create, modify, or delete resources.
+  Remediation: Avoid modification operation for customers with read-only authorization.
+",
         "status-code": 403,
         "type": "ProblemResponse",
       },
       "GatewayTimeoutError": {
+        "docs": "Gateway Timeout. The server did not receive a timely response from an upstream server it needed to access in order to complete the request.
+
+This error response may have one of the following \`type\` values:
+* [\`https://production.api.apiture.com/errors/gatewayTimeout/v1.0.0\`](https://production.api.apiture.com/errors/gatewayTimeout/v1.0.0)<br>
+  The server did not receive a timely response from an upstream server it needed to access in order to complete the request.
+  Remediation: Wait a few minutes and try again, or gracefully fail the client request.
+",
         "status-code": 504,
         "type": "ProblemResponse",
       },
       "NotFoundError": {
+        "docs": "Not Found. There is no such banking account resource at the specified \`{accountId}\`. The response body contains details about the request error.",
         "status-code": 404,
         "type": "ProblemResponse",
       },
       "PreconditionFailedError": {
+        "docs": "Precondition Failed. One or more conditions given in the request header fields evaluated to false when tested on the server.
+
+This error response may have one of the following \`type\` values:
+* [\`https://production.api.apiture.com/errors/preconditionFailed/v1.0.0\`](https://production.api.apiture.com/errors/preconditionFailed/v1.0.0)<br>
+  One or more conditions given in the request header fields evaluated to false when tested on the server.
+  Remediation: Update resources and use it's most recent ETag or modification time stamp.
+",
         "status-code": 412,
         "type": "ProblemResponse",
       },
       "ServiceUnavailableError": {
+        "docs": "Service Unavailable. Could not fetch the account balance from the banking core.",
         "status-code": 503,
         "type": "ProblemResponse",
       },
       "TooManyRequestsError": {
+        "docs": "Too Many Requests. The client has sent too many requests in a given amount of time.
+
+This error response may have one of the following \`type\` values:
+* [\`https://production.api.apiture.com/errors/tooManyRequests/v1.0.0\`](https://production.api.apiture.com/errors/tooManyRequests/v1.0.0)<br>
+  The client has sent too many requests in a given amount of time, exceeding rate limiting.
+  Remediation: Slow down the rate of API calls.
+",
         "status-code": 429,
         "type": "ProblemResponse",
       },
       "UnauthorizedError": {
+        "docs": "Unauthorized. The operation requires authentication but no authentication or insufficient authentication was given.
+
+This error response may have one of the following \`type\` values:
+* [\`https://production.api.apiture.com/errors/unauthorized/v1.0.0\`](https://production.api.apiture.com/errors/unauthorized/v1.0.0)<br>
+  The request lacks valid authentication credentials for the target resource or operation.
+  Remediation: Authenticate the user and pass the required authorization with the request.
+
+* [\`https://production.api.apiture.com/errors/sessionExpired/v1.0.0\`](https://production.api.apiture.com/errors/sessionExpired/v1.0.0)<br>
+  The user's session has expired.
+  Remediation: Re-authenticate the user to get a new access token or other authorization.
+
+* [\`https://production.api.apiture.com/errors/challengeRequired/v1.0.0\`](https://production.api.apiture.com/errors/challengeRequired/v1.0.0)<br>
+  The operation requires a the customer to complete an identity challenge.
+  Remediation: Complete the challenge as per the problem response, and add an additional \`Challenge\` header to the call.
+The \`attributes\` object in the error may have the properties defined by the [\`requiredIdentityChallenge\` schema](#schema-requiredIdentityChallenge).
+* [\`https://production.api.apiture.com/errors/loginIncomplete/v1.0.0\`](https://production.api.apiture.com/errors/loginIncomplete/v1.0.0)<br>
+  The user is correctly authenticated but additional actions are required for activating their login session.
+  Remediation: Instruct the user to complete the additional actions to activate their login session.
+
+* [\`https://production.api.apiture.com/errors/passwordChangeRequired/v1.0.0\`](https://production.api.apiture.com/errors/passwordChangeRequired/v1.0.0)<br>
+  The user must change their password.
+  Remediation: Instruct the user to change their password or other login credentials.
+
+* [\`https://production.api.apiture.com/errors/invalidCsrfToken/v1.0.0\`](https://production.api.apiture.com/errors/invalidCsrfToken/v1.0.0)<br>
+  The CSRF token is invalid.
+  Remediation: The client application is not correctly configured to send CSRF.
+
+* [\`https://production.api.apiture.com/errors/challengeBlocked/v1.0.0\`](https://production.api.apiture.com/errors/challengeBlocked/v1.0.0)<br>
+  The user has failed challenges too many times and is blocked from attempting more or performing operations which require additional authentication.
+  Remediation: Have the user end their login session and login again.
+
+* [\`https://production.api.apiture.com/errors/noIdentityChallengeFactors/v1.0.0\`](https://production.api.apiture.com/errors/noIdentityChallengeFactors/v1.0.0)<br>
+  This operation requires challenge, but the user does not have the necessary registered authentication factors.
+  Remediation: Have the user register one or more challenge security code delivery factors.
+
+* [\`https://production.api.apiture.com/errors/invalidIdentityChallengeHeader/v1.0.0\`](https://production.api.apiture.com/errors/invalidIdentityChallengeHeader/v1.0.0)<br>
+  The additional on-time \`Challenge\` header in this request is expired, already used, or otherwise invalid.
+  Remediation: Supply a valid, unexpired, unclaimed \`Challenge\` header in the request.
+",
         "status-code": 401,
         "type": "ProblemResponse",
       },
       "UnprocessableEntityError": {
+        "docs": "Unprocessable Entity. The request body and/or query parameters were well-formed but otherwise invalid.
+
+This error response may have one of the following \`type\` values:
+* [\`https://production.api.apiture.com/errors/unprocessableEntity/v1.0.0\`](https://production.api.apiture.com/errors/unprocessableEntity/v1.0.0)<br>
+  The syntax of the request entity is correct but was unable to process the contained instructions.
+  Remediation: Provide a semantically correct request.
+",
         "status-code": 422,
         "type": "ProblemResponse",
       },

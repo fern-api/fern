@@ -7767,6 +7767,7 @@ Fields that will be provided will be completely overwritten.",
   "packageMarkerFile": {
     "errors": {
       "UnprocessableEntityError": {
+        "docs": "Validation Error",
         "status-code": 422,
         "type": "HTTPValidationError",
       },
