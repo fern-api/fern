@@ -47,7 +47,6 @@ export class Dummy {
         if (_response.ok) {
             return new core.Stream({
                 stream: _response.body,
-                terminator: "\n",
                 parse: async (data) => {
                     return await serializers.StreamResponse.parseOrThrow(data, {
                         unrecognizedObjectKeys: "passthrough",
@@ -55,6 +54,10 @@ export class Dummy {
                         allowUnrecognizedEnumValues: true,
                         breadcrumbsPrefix: ["response"],
                     });
+                },
+                eventShape: {
+                    type: "json",
+                    messageTerminator: "\n",
                 },
             });
         }

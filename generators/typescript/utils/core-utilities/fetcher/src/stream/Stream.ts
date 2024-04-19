@@ -129,6 +129,6 @@ export function readableStreamAsyncIterable<T>(stream: any): AsyncIterableIterat
         },
         [Symbol.asyncIterator]() {
             return this;
-        },
+        }
     };
 }

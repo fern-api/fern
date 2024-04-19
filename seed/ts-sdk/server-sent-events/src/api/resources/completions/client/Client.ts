@@ -6,6 +6,7 @@ import * as core from "../../../../core";
 import * as SeedServerSentEvents from "../../../index";
 import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
+import * as stream from "stream";
 import * as errors from "../../../../errors/index";
 
 export declare namespace Completions {
@@ -25,8 +26,8 @@ export class Completions {
     public async stream(
         request: SeedServerSentEvents.StreamCompletionRequest,
         requestOptions?: Completions.RequestOptions
-    ): Promise<void> {
-        const _response = await core.fetcher({
+    ): Promise<core.Stream<SeedServerSentEvents.StreamedCompletion>> {
+        const _response = await core.fetcher<stream.Readable>({
             url: urlJoin(await core.Supplier.get(this._options.environment), "stream"),
             method: "POST",
             headers: {
@@ -38,11 +39,25 @@ export class Completions {
             },
             contentType: "application/json",
             body: await serializers.StreamCompletionRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            responseType: "streaming",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return;
+            return new core.Stream({
+                stream: _response.body,
+                parse: async (data) => {
+                    return await serializers.StreamedCompletion.parseOrThrow(data, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["response"],
+                    });
+                },
+                eventShape: {
+                    type: "sse",
+                },
+            });
         }
 
         if (_response.error.reason === "status-code") {
