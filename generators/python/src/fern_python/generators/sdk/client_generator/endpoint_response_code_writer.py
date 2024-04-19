@@ -59,7 +59,7 @@ class EndpointResponseCodeWriter:
                 writer.write_node(
                     self._context.core_utilities.get_construct(
                         self._get_streaming_response_data_type(stream_response),
-                        AST.Expression(f"json.loads({EndpointResponseCodeWriter.SSE_VARIABLE}.data)"),
+                        AST.Expression(Json.loads(AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.data"))),
                     ),
                 )
         else:
