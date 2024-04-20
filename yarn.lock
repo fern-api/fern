@@ -4308,7 +4308,6 @@ __metadata:
     "@fern-api/register": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/fdr-test-sdk": ^0.0.5297
     "@fern-fern/fiddle-sdk": ^0.0.508
     "@types/decompress": ^4.2.7
     "@types/jest": ^29.0.3

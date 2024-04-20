@@ -7396,7 +7396,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/register", "workspace:packages/cli/register"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
-            ["@fern-fern/fdr-test-sdk", "npm:0.0.5297"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.508"],\
             ["@types/decompress", "npm:4.2.7"],\
             ["@types/jest", "npm:29.0.3"],\
