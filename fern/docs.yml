@@ -14,20 +14,18 @@ tabs:
   home:
     display-name: Home
     slug: home
-  overview:
-    display-name: Overview
+  api-definition:
+    display-name: API Definition
+    slug: api-definition
   docs:
     display-name: Docs
     slug: docs
   sdks:
     display-name: SDKs
     slug: sdks
-  api:
+  api: 
     display-name: API Reference
     slug: api
-  configure:
-    display-name: Configuration
-    slug: configure
 
 css: ./assets/styles.css
 
@@ -36,6 +34,51 @@ navigation:
     layout:
       - page: Welcome
         path: pages/welcome.mdx
+  - tab: api-definition
+    layout:
+      - section: Introduction
+        contents: 
+          - page: What is an API Definition?
+            path: ./pages/api-definition/introduction/what-is-an-api-definition.mdx
+      - section: OpenAPI
+        slug: openapi
+        contents:
+          - page: Overview
+            path: ./pages/api-definition/openapi/openapi-overview.mdx
+          - page: OpenAPI Extensions
+            path: ./pages/api-definition/openapi/extensions.mdx
+            slug: extensions
+          - page: OpenAPI Examples
+            path: ./pages/api-definition/openapi/examples.mdx
+            slug: examples
+      - section: Fern Definition
+        slug: fern
+        contents:
+          - page: Overview
+            path: ./pages/api-definition/fern-definition/ferndef-overview.mdx
+          - page: Export to OpenAPI
+            slug: export-openapi
+            path: ./pages/api-definition/fern-definition/export-openapi.mdx
+          - page: Types
+            path: ./pages/api-definition/fern-definition/types.mdx
+          - page: Endpoints
+            path: ./pages/api-definition/fern-definition/endpoints.mdx
+          - page: Errors
+            path: ./pages/api-definition/fern-definition/errors.mdx
+          - page: Imports
+            path: ./pages/api-definition/fern-definition/imports.mdx
+          - page: Examples
+            path: ./pages/api-definition/fern-definition/examples.mdx
+          - page: Audiences
+            path: ./pages/api-definition/fern-definition/audiences.mdx
+          - page: Availability
+            path: ./pages/api-definition/fern-definition/availability.mdx
+          - page: api.yml reference
+            path: ./pages/api-definition/fern-definition/api-yml.mdx
+          - page: Packages
+            path: ./pages/api-definition/fern-definition/packages.mdx
+          - page: Comparison with OpenAPI
+            path: ./pages/api-definition/fern-definition/comparison.mdx
   - tab: sdks
     layout:
       - section: Introduction
@@ -214,85 +257,14 @@ navigation:
           - page: Tabs
             path: ./pages/fern-docs/components/tabs.mdx
   - tab: api
-    layout:
+    layout: 
       - api: API Reference
         api-name: public-api
         # audiences:
         #   - external
-        snippets:
-          python: fern-api
-          typescript: "@fern-api/node-sdk"
-  - tab: configure
-    layout:
-      - section: OpenAPI
-        slug: openapi
-        contents:
-          - page: Overview
-            path: ./pages/overview/define-your-api/openapi/openapi-overview.mdx
-          - page: OpenAPI Extensions
-            path: ./pages/overview/define-your-api/openapi/extensions.mdx
-            slug: extensions
-          - page: OpenAPI Examples
-            path: ./pages/overview/define-your-api/openapi/examples.mdx
-            slug: examples
-      - section: Fern Definition
-        slug: ferndef
-        contents:
-          - page: Overview
-            path: ./pages/overview/define-your-api/ferndef/ferndef-overview.mdx
-          - page: Export to OpenAPI
-            slug: export-openapi
-            path: ./pages/overview/define-your-api/ferndef/export-openapi.mdx
-          - page: Types
-            path: ./pages/overview/define-your-api/ferndef/types.mdx
-          - page: Endpoints
-            path: ./pages/overview/define-your-api/ferndef/endpoints.mdx
-          - page: Errors
-            path: ./pages/overview/define-your-api/ferndef/errors.mdx
-          - page: Imports
-            path: ./pages/overview/define-your-api/ferndef/imports.mdx
-          - page: Examples
-            path: ./pages/overview/define-your-api/ferndef/examples.mdx
-          - page: Audiences
-            path: ./pages/overview/define-your-api/ferndef/audiences.mdx
-          - page: Availability
-            path: ./pages/overview/define-your-api/ferndef/availability.mdx
-          - page: api.yml reference
-            path: ./pages/overview/define-your-api/ferndef/api-yml.mdx
-          - page: Packages
-            path: ./pages/overview/define-your-api/ferndef/packages.mdx
-          - page: Comparison with OpenAPI
-            path: ./pages/overview/define-your-api/ferndef/comparison.mdx
-      - section: Fern CLI tool
-        slug: cli
-        contents:
-          - page: Overview
-            path: ./pages/overview/cli/cli-overview.mdx
-          - section: CLI commands
-            slug: commands
-            contents:
-              - page: fern generate
-                path: ./pages/overview/cli/cli-commands/fern-generate.mdx
-              - page: fern check
-                path: ./pages/overview/cli/cli-commands/fern-check.mdx
-              - page: fern add
-                path: ./pages/overview/cli/cli-commands/fern-add.mdx
-              - page: fern init
-                path: ./pages/overview/cli/cli-commands/fern-init.mdx
-              - page: fern write-definition
-                path: ./pages/overview/cli/cli-commands/fern-write-definition.mdx
-              - page: fern upgrade
-                path: ./pages/overview/cli/cli-commands/fern-upgrade.mdx
-              - page: fern token
-                path: ./pages/overview/cli/cli-commands/fern-token.mdx
-              - page: fern login
-                path: ./pages/overview/cli/cli-commands/fern-login.mdx
-              - page: fern format
-                path: ./pages/overview/cli/cli-commands/fern-format.mdx
-              - page: fern help
-                path: ./pages/overview/cli/cli-commands/fern-help.mdx
-              - page: fern version
-                path: ./pages/overview/cli/cli-commands/fern-version.mdx
+        # snippets:
+        #   python: fern-api
+        #   typescript: "@fern-api/node-sdk"
 
 navbar-links:
   - type: filled
