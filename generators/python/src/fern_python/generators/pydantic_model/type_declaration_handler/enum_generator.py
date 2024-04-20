@@ -114,7 +114,7 @@ class EnumSnippetGenerator:
             if self._use_str_enums:
                 writer.write(f'"{self.example.wire_value}"')
             else:
-                enum_wire_value = (self.example.name)
+                enum_wire_value = self.example.name
                 writer.write_node(AST.Expression(class_reference))
                 writer.write(f".{_get_class_var_name(enum_wire_value)}")
 

@@ -254,22 +254,20 @@ class DiscriminatedUnionSnippetGenerator:
         if ex is None:
             raise ValueError("Example must be be present to generate snippet.")
         else:
-            return (
-                ex.single_union_type.shape.visit(
-                    same_properties_as_object=lambda object: self._get_snippet_for_union_with_same_properties_as_object(
-                        name=self.name,
-                        wire_discriminant_value=ex.single_union_type.wire_discriminant_value,  # type: ignore
-                        example=object,
-                    ),
-                    single_property=lambda example_type_reference: self._get_snippet_for_union_with_single_property(
-                        name=self.name,
-                        wire_discriminant_value=ex.single_union_type.wire_discriminant_value,  # type: ignore
-                        example=example_type_reference,
-                    ),
-                    no_properties=lambda: self._get_snippet_for_union_with_no_properties(
-                        name=self.name,
-                    ),
-                )
+            return ex.single_union_type.shape.visit(
+                same_properties_as_object=lambda object: self._get_snippet_for_union_with_same_properties_as_object(
+                    name=self.name,
+                    wire_discriminant_value=ex.single_union_type.wire_discriminant_value,  # type: ignore
+                    example=object,
+                ),
+                single_property=lambda example_type_reference: self._get_snippet_for_union_with_single_property(
+                    name=self.name,
+                    wire_discriminant_value=ex.single_union_type.wire_discriminant_value,  # type: ignore
+                    example=example_type_reference,
+                ),
+                no_properties=lambda: self._get_snippet_for_union_with_no_properties(
+                    name=self.name,
+                ),
             )
 
     def _get_snippet_for_union_with_same_properties_as_object(

@@ -1,8 +1,8 @@
 import typing
 
 from fdr import FdrClientEnvironment
-from fern.generator_exec.client import FernGeneratorExec
 from fdr.client import FdrClient
+from fern.generator_exec.client import FernGeneratorExec
 from fern.generator_exec.resources.config import (
     GeneratorConfig,
     RemoteGeneratorEnvironment,

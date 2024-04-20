@@ -306,17 +306,18 @@ class SnippetTestFactory:
         async_response_name = "async_response"
 
         response_body = example_response.get_as_union().body if example_response is not None else None
-        response_json = (
-            response_body.json_example if response_body is not None
-            else None
-        )
+        response_json = response_body.json_example if response_body is not None else None
         response_body = example_response.get_as_union().body if example_response is not None else None
 
         def writer(writer: AST.NodeWriter) -> None:
             if response_json is not None:
                 maybe_stringify_response_json = repr(response_json) if type(response_json) is str else response_json
                 writer.write_line(f"{expectation_name} = {maybe_stringify_response_json}")
-                expectations = self._generate_type_expectations_for_type_reference(response_body) if response_body is not None else None
+                expectations = (
+                    self._generate_type_expectations_for_type_reference(response_body)
+                    if response_body is not None
+                    else None
+                )
                 if expectations is not None:
                     maybe_stringify_expectations = f"'{expectations}'" if type(expectations) is str else expectations
                     writer.write_line(f"{type_expectation_name} = {maybe_stringify_expectations}")

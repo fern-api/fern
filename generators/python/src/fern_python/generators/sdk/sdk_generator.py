@@ -2,7 +2,6 @@ import json
 from typing import Optional, Sequence, Tuple, Union, cast
 from uuid import uuid4
 
-from fdr.client import FdrClient
 import fern.ir.resources as ir_types
 from fern.generator_exec.resources.config import GeneratorConfig
 from fern.generator_exec.resources.readme import BadgeType, GenerateReadmeRequest
@@ -408,7 +407,7 @@ pip install --upgrade {project._project_config.package_name}
             async_usage=async_usage,
             requirements=[],
         )
-    
+
     def _maybe_write_snippet_templates(
         self,
         context: SdkGeneratorContext,
@@ -422,17 +421,22 @@ pip install --upgrade {project._project_config.package_name}
             snippets = snippet_template_factory.generate_templates()
             if snippets is None:
                 return
-            
+
             # Send snippets to FDR
             fdr_client = generator_exec_wrapper.fdr_client
             if fdr_client is not None:
                 org_id = generator_config.organization
                 api_name = ir.api_name.original_name
                 # API Definition ID doesn't matter right now
-                fdr_client.template.register_batch(org_id=org_id, api_id=api_name, api_definition_id=uuid4(), snippets=snippets)
+                fdr_client.template.register_batch(
+                    org_id=org_id, api_id=api_name, api_definition_id=uuid4(), snippets=snippets
+                )
             else:
                 # Otherwise write them for local
-                project.add_file(context.generator_config.output.snippet_template_filepath, json.dumps(list(map(lambda template: template.dict(by_alias=True), snippets)), indent=4))
+                project.add_file(
+                    context.generator_config.output.snippet_template_filepath,
+                    json.dumps(list(map(lambda template: template.dict(by_alias=True), snippets)), indent=4),
+                )
 
     def _maybe_write_snippets(
         self,

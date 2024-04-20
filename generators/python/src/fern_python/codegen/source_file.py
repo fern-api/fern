@@ -76,7 +76,7 @@ class SourceFileImpl(SourceFile):
 
     def get_imports_manager(self) -> ImportsManager:
         return self._imports_manager
-    
+
     def add_declaration(
         self,
         declaration: AST.Declaration,
