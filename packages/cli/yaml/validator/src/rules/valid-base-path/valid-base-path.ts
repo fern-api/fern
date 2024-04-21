@@ -36,12 +36,5 @@ function validateBasePath(basePath: string): RuleViolation[] {
         });
     }
 
-    if (basePath.endsWith("/")) {
-        violations.push({
-            severity: "error",
-            message: "base-path cannot end with a slash."
-        });
-    }
-
     return violations;
 }
