@@ -111,6 +111,14 @@ export abstract class TestRunner {
         );
         const taskContext = this.taskContextFactory.create(`${this.generator.workspaceName}:${id}`);
         const outputFolder = configuration?.outputFolder ?? fixture;
+        const outputDir =
+            configuration == null
+                ? join(this.generator.absolutePathToWorkspace, RelativeFilePath.of(fixture))
+                : join(
+                      this.generator.absolutePathToWorkspace,
+                      RelativeFilePath.of(fixture),
+                      RelativeFilePath.of(configuration.outputFolder)
+                  );
         const fernWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
             absolutePathToAPIDefinition,
             taskContext,
@@ -145,14 +153,7 @@ export abstract class TestRunner {
                     customConfig: configuration?.customConfig,
                     publishConfig: configuration?.publishConfig ?? undefined,
                     taskContext,
-                    outputDir:
-                        configuration == null
-                            ? join(this.generator.absolutePathToWorkspace, RelativeFilePath.of(fixture))
-                            : join(
-                                  this.generator.absolutePathToWorkspace,
-                                  RelativeFilePath.of(fixture),
-                                  RelativeFilePath.of(configuration.outputFolder)
-                              ),
+                    outputDir,
                     outputMode: configuration?.outputMode ?? this.generator.workspaceConfig.defaultOutputMode,
                     outputFolder,
                     keepDocker: this.keepDocker,
@@ -180,7 +181,7 @@ export abstract class TestRunner {
             const scriptStopwatch = new Stopwatch();
             scriptStopwatch.start();
 
-            const scriptResponse = await this.scriptRunner.run({ taskContext, fixture, outputFolder });
+            const scriptResponse = await this.scriptRunner.run({ taskContext, fixture, outputDir, outputFolder });
 
             scriptStopwatch.stop();
             metrics.compileTime = scriptStopwatch.duration();

@@ -10,6 +10,7 @@ export declare namespace ScriptRunner {
     interface RunArgs {
         taskContext: TaskContext;
         fixture: string;
+        outputDir: AbsoluteFilePath;
         outputFolder: string;
     }
 
@@ -38,13 +39,13 @@ export class ScriptRunner {
 
     constructor(private readonly workspace: GeneratorWorkspace) {}
 
-    public async run({ taskContext, fixture }: ScriptRunner.RunArgs): Promise<ScriptRunner.RunResponse> {
+    public async run({ taskContext, fixture, outputDir }: ScriptRunner.RunArgs): Promise<ScriptRunner.RunResponse> {
         await this.startContainers();
         for (const script of this.scripts) {
             const result = await this.runScript({
                 taskContext,
                 containerId: script.containerId,
-                outputDirectory: this.workspace.absolutePathToWorkspace,
+                outputDir,
                 script,
                 fixture,
                 outputFolder: "generated"
@@ -59,21 +60,24 @@ export class ScriptRunner {
     private async runScript({
         taskContext,
         containerId,
-        outputDirectory,
+        outputDir,
         script,
         fixture,
         outputFolder
     }: {
         fixture: string;
-        outputDirectory: AbsoluteFilePath;
+        outputDir: AbsoluteFilePath;
         outputFolder: string;
         taskContext: TaskContext;
         containerId: string;
         script: ScriptConfig;
     }): Promise<ScriptRunner.RunResponse> {
+        taskContext.logger.info(`Running script ${script.commands[0] ?? ""} on ${fixture}`);
+
         const workDir = `${fixture}_${outputFolder}`;
         const scriptFile = await tmp.file();
         await writeFile(scriptFile.path, [`cd /${workDir}/generated`, ...script.commands].join("\n"));
+
         // Move scripts and generated files into the container
         const mkdirCommand = await loggingExeca(
             taskContext.logger,
@@ -108,7 +112,7 @@ export class ScriptRunner {
         const copyCommand = await loggingExeca(
             taskContext.logger,
             "docker",
-            ["cp", `${outputDirectory}/.`, `${containerId}:/${workDir}/generated/`],
+            ["cp", `${outputDir}/.`, `${containerId}:/${workDir}/generated/`],
             {
                 doNotPipeOutput: true,
                 reject: false
@@ -131,7 +135,6 @@ export class ScriptRunner {
                 reject: false
             }
         );
-
         if (command.failed) {
             taskContext.logger.error("Failed to run script. See ouptut below");
             taskContext.logger.error(command.stdout);
