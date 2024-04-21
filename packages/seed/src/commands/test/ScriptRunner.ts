@@ -4,7 +4,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 import { ScriptConfig } from "../../config/api";
-import { SeedWorkspace } from "../../loadSeedWorkspaces";
+import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
 
 export declare namespace ScriptRunner {
     interface RunArgs {
@@ -36,7 +36,7 @@ export class ScriptRunner {
     private started: boolean = false;
     private scripts: RunningScriptConfig[] = [];
 
-    constructor(private readonly workspace: SeedWorkspace) {}
+    constructor(private readonly workspace: GeneratorWorkspace) {}
 
     public async run({ taskContext, fixture }: ScriptRunner.RunArgs): Promise<ScriptRunner.RunResponse> {
         await this.startContainers();
