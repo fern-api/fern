@@ -181,7 +181,7 @@ export abstract class TestRunner {
             const scriptStopwatch = new Stopwatch();
             scriptStopwatch.start();
 
-            const scriptResponse = await this.scriptRunner.run({ taskContext, fixture, outputDir, outputFolder });
+            const scriptResponse = await this.scriptRunner.run({ taskContext, outputDir, id });
 
             scriptStopwatch.stop();
             metrics.compileTime = scriptStopwatch.duration();

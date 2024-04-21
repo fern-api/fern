@@ -9,9 +9,8 @@ import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
 export declare namespace ScriptRunner {
     interface RunArgs {
         taskContext: TaskContext;
-        fixture: string;
         outputDir: AbsoluteFilePath;
-        outputFolder: string;
+        id: string;
     }
 
     type RunResponse = ScriptSuccessResponse | ScriptFailureResponse;
@@ -39,7 +38,7 @@ export class ScriptRunner {
 
     constructor(private readonly workspace: GeneratorWorkspace) {}
 
-    public async run({ taskContext, fixture, outputDir }: ScriptRunner.RunArgs): Promise<ScriptRunner.RunResponse> {
+    public async run({ taskContext, id, outputDir }: ScriptRunner.RunArgs): Promise<ScriptRunner.RunResponse> {
         await this.startContainers();
         for (const script of this.scripts) {
             const result = await this.runScript({
@@ -47,8 +46,7 @@ export class ScriptRunner {
                 containerId: script.containerId,
                 outputDir,
                 script,
-                fixture,
-                outputFolder: "generated"
+                id,
             });
             if (result.type === "failure") {
                 return result;
@@ -62,19 +60,17 @@ export class ScriptRunner {
         containerId,
         outputDir,
         script,
-        fixture,
-        outputFolder
+        id
     }: {
-        fixture: string;
+        id: string;
         outputDir: AbsoluteFilePath;
-        outputFolder: string;
         taskContext: TaskContext;
         containerId: string;
         script: ScriptConfig;
     }): Promise<ScriptRunner.RunResponse> {
-        taskContext.logger.info(`Running script ${script.commands[0] ?? ""} on ${fixture}`);
+        taskContext.logger.info(`Running script ${script.commands[0] ?? ""} on ${id}`);
 
-        const workDir = `${fixture}_${outputFolder}`;
+        const workDir = id.replace(":", "_");
         const scriptFile = await tmp.file();
         await writeFile(scriptFile.path, [`cd /${workDir}/generated`, ...script.commands].join("\n"));
 

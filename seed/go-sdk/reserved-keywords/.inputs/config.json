@@ -8,7 +8,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "reserved-keywords",
+    "workspaceName": "nursery-api",
     "organization": "seed",
     "environment": {
         "type": "local"

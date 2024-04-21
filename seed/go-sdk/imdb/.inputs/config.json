@@ -8,7 +8,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "imdb",
+    "workspaceName": "api",
     "organization": "seed",
     "environment": {
         "type": "local"
