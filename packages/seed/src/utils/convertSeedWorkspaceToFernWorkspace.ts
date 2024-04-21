@@ -4,15 +4,15 @@ import { convertOpenApiWorkspaceToFernWorkspace, FernWorkspace, loadAPIWorkspace
 
 export async function convertGeneratorWorkspaceToFernWorkspace({
     fixture,
-    absolutePathToWorkspace,
+    absolutePathToAPIDefinition,
     taskContext
 }: {
     fixture: string;
-    absolutePathToWorkspace: AbsoluteFilePath;
+    absolutePathToAPIDefinition: AbsoluteFilePath;
     taskContext: TaskContext;
 }): Promise<FernWorkspace | undefined> {
     const workspace = await loadAPIWorkspace({
-        absolutePathToWorkspace,
+        absolutePathToWorkspace: absolutePathToAPIDefinition,
         context: taskContext,
         cliVersion: "DUMMY",
         workspaceName: fixture

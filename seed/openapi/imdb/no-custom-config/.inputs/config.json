@@ -7,7 +7,7 @@
         "path": "../"
     },
     "customConfig": null,
-    "workspaceName": "api",
+    "workspaceName": "imdb",
     "organization": "seed",
     "environment": {
         "type": "local"

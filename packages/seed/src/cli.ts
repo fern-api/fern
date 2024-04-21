@@ -73,7 +73,7 @@ function addTestCommand(cli: Argv) {
             const tests: Promise<boolean>[] = [];
 
             for (const generator of generators) {
-                if (argv.workspace != null && !argv.generator?.includes(generator.workspaceName)) {
+                if (argv.generator != null && !argv.generator.includes(generator.workspaceName)) {
                     continue;
                 }
                 const testRunner = new DockerTestRunner({

@@ -9,7 +9,7 @@
     "customConfig": {
         "format": "json"
     },
-    "workspaceName": "api",
+    "workspaceName": "imdb",
     "organization": "seed",
     "environment": {
         "type": "local"

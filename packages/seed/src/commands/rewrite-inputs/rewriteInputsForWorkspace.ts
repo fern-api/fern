@@ -31,7 +31,7 @@ export async function rewriteInputsForWorkspace({
     for (const fixture of fixtures) {
         const fixtureConfig = generator.workspaceConfig.fixtures?.[fixture];
         const docker = parseDockerOrThrow(generator.workspaceConfig.docker);
-        const absolutePathToFernDefinition = AbsoluteFilePath.of(
+        const absolutePathToAPIDefinition = AbsoluteFilePath.of(
             path.join(__dirname, FERN_DIRECTORY, APIS_DIRECTORY, fixture)
         );
         const absolutePathToOutput = join(generator.absolutePathToWorkspace, RelativeFilePath.of(fixture));
@@ -41,7 +41,7 @@ export async function rewriteInputsForWorkspace({
                     `${generator.workspaceName}:${fixture} - ${fixtureConfigInstance.outputFolder}`
                 );
                 const fernWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
-                    absolutePathToWorkspace: absolutePathToFernDefinition,
+                    absolutePathToAPIDefinition,
                     taskContext,
                     fixture
                 });
@@ -71,7 +71,7 @@ export async function rewriteInputsForWorkspace({
         } else {
             const taskContext = taskContextFactory.create(`${generator.workspaceName}:${fixture}`);
             const fernWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
-                absolutePathToWorkspace: absolutePathToFernDefinition,
+                absolutePathToAPIDefinition,
                 taskContext,
                 fixture
             });

@@ -72,6 +72,7 @@ export declare namespace TestRunner {
 }
 
 export abstract class TestRunner {
+    private built: boolean = false;
     protected readonly generator: GeneratorWorkspace;
     protected readonly lock: Semaphore;
     protected readonly taskContextFactory: TaskContextFactory;
@@ -97,6 +98,11 @@ export abstract class TestRunner {
      * Runs the generator.
      */
     public async run({ fixture, configuration }: TestRunner.RunArgs): Promise<TestRunner.TestResult> {
+        if (!this.built) {
+            await this.build();
+            this.built = true;
+        }
+
         const metrics: TestRunner.TestCaseMetrics = {};
 
         const fixtureConfig = this.generator.workspaceConfig.fixtures?.[fixture];
@@ -110,13 +116,14 @@ export abstract class TestRunner {
             };
         }
 
-        const absolutePathToWorkspace = AbsoluteFilePath.of(
+        const id = configuration != null ? `${fixture}:${configuration.outputFolder}` : `${fixture}`;
+        const absolutePathToAPIDefinition = AbsoluteFilePath.of(
             path.join(__dirname, FERN_DIRECTORY, APIS_DIRECTORY, fixture)
         );
-        const taskContext = this.taskContextFactory.create(`${this.generator.workspaceName}:${fixture}`);
+        const taskContext = this.taskContextFactory.create(`${this.generator.workspaceName}:${id}`);
         const outputFolder = configuration?.outputFolder ?? fixture;
         const fernWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
-            absolutePathToWorkspace,
+            absolutePathToAPIDefinition,
             taskContext,
             fixture
         });
@@ -137,9 +144,9 @@ export abstract class TestRunner {
             const generationStopwatch = new Stopwatch();
             generationStopwatch.start();
             await this.runGenerator({
-                id: configuration != null ? `${fixture}:${configuration.outputFolder}` : `${fixture}`,
+                id,
                 fernWorkspace,
-                absolutePathToWorkspace,
+                absolutePathToWorkspace: this.generator.absolutePathToWorkspace,
                 irVersion: this.generator.workspaceConfig.irVersion,
                 outputVersion: configuration?.outputVersion,
                 language: this.generator.workspaceConfig.language,

@@ -37,7 +37,7 @@ export async function runWithCustomFixture({
     });
 
     const fernWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
-        absolutePathToWorkspace: pathToFixture,
+        absolutePathToAPIDefinition: pathToFixture,
         taskContext,
         fixture: "custom"
     });

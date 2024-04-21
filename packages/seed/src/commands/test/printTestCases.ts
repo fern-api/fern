@@ -8,7 +8,8 @@ export function printTestCases(result: TestRunner.TestResult[]): void {
             Result: r.type,
             "Generation Time": r.metrics.generationTime,
             "Compile Time": r.metrics.compileTime,
-            "Failure Type": r.type === "failure" ? r.cause : ""
+            "Failure Type": r.type === "failure" ? r.cause : "",
+            "Failure Message": r.type === "failure" ? r.message : ""
         };
     });
     printTable(items);
