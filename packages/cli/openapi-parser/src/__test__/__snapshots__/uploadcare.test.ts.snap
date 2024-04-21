@@ -202,7 +202,7 @@ Log.d("TAG", file.toString())
       "internal": null,
       "method": "POST",
       "operationId": "baseUpload",
-      "path": "/base",
+      "path": "/base/",
       "pathParameters": [],
       "queryParameters": [],
       "request": {
@@ -610,7 +610,7 @@ Log.d("TAG", file.toString())
       "internal": null,
       "method": "POST",
       "operationId": "multipartFileUploadStart",
-      "path": "/multipart/start",
+      "path": "/multipart/start/",
       "pathParameters": [],
       "queryParameters": [],
       "request": {
@@ -1725,7 +1725,7 @@ Log.d("TAG", file.toString())
       "internal": null,
       "method": "POST",
       "operationId": "multipartFileUploadComplete",
-      "path": "/multipart/complete",
+      "path": "/multipart/complete/",
       "pathParameters": [],
       "queryParameters": [],
       "request": {
@@ -2663,7 +2663,7 @@ Log.d("TAG", file.toString())
       "internal": null,
       "method": "POST",
       "operationId": "fromURLUpload",
-      "path": "/from_url",
+      "path": "/from_url/",
       "pathParameters": [],
       "queryParameters": [],
       "request": {
@@ -4166,7 +4166,7 @@ Log.d("TAG", status.toString())
       "internal": null,
       "method": "GET",
       "operationId": "fromURLUploadStatus",
-      "path": "/from_url/status",
+      "path": "/from_url/status/",
       "pathParameters": [],
       "queryParameters": [
         {
@@ -4932,7 +4932,7 @@ Log.d("TAG", file.toString())
       "internal": null,
       "method": "GET",
       "operationId": "fileUploadInfo",
-      "path": "/info",
+      "path": "/info/",
       "pathParameters": [],
       "queryParameters": [
         {
@@ -5809,7 +5809,7 @@ Log.d("TAG", group.toString())
       "internal": null,
       "method": "POST",
       "operationId": "createFilesGroup",
-      "path": "/group",
+      "path": "/group/",
       "pathParameters": [],
       "queryParameters": [],
       "request": {
@@ -6731,7 +6731,7 @@ Log.d("TAG", group.toString())
       "internal": null,
       "method": "GET",
       "operationId": "filesGroupInfo",
-      "path": "/group/info",
+      "path": "/group/info/",
       "pathParameters": [],
       "queryParameters": [
         {

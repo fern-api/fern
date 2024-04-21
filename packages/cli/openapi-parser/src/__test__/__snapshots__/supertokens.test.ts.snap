@@ -21591,7 +21591,7 @@ e.g.:
       "internal": null,
       "method": "GET",
       "operationId": "getHelloOnRootPath",
-      "path": "",
+      "path": "/",
       "pathParameters": [],
       "queryParameters": [],
       "request": null,

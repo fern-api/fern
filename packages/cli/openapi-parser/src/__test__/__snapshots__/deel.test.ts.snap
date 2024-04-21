@@ -16896,7 +16896,7 @@ exports[`open api parser deel parse open api 1`] = `
       "internal": null,
       "method": "GET",
       "operationId": "getEorClientTimeOffs",
-      "path": "/time-offs",
+      "path": "/time-offs/",
       "pathParameters": [],
       "queryParameters": [],
       "request": null,

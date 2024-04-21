@@ -72,8 +72,7 @@ export function generateIr({
             return;
         }
         taskContext.logger.debug(`Converting path ${path}`);
-        const pathWithoutTrailingSlash = path.replace(/\/$/, "");
-        const convertedOperations = convertPathItem(pathWithoutTrailingSlash, pathItem, openApi, context);
+        const convertedOperations = convertPathItem(path, pathItem, openApi, context);
 
         for (const operation of convertedOperations) {
             switch (operation.type) {
