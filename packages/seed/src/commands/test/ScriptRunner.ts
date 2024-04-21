@@ -33,20 +33,22 @@ interface RunningScriptConfig extends ScriptConfig {
  * Runs scripts on the generated code to verify the output.
  */
 export class ScriptRunner {
-    private started: boolean = false;
+    private startContainersFn: Promise<void>;
     private scripts: RunningScriptConfig[] = [];
 
-    constructor(private readonly workspace: GeneratorWorkspace) {}
+    constructor(private readonly workspace: GeneratorWorkspace) {
+        this.startContainersFn = this.startContainers();
+    }
 
     public async run({ taskContext, id, outputDir }: ScriptRunner.RunArgs): Promise<ScriptRunner.RunResponse> {
-        await this.startContainers();
+        await this.startContainersFn;
         for (const script of this.scripts) {
             const result = await this.runScript({
                 taskContext,
                 containerId: script.containerId,
                 outputDir,
                 script,
-                id,
+                id
             });
             if (result.type === "failure") {
                 return result;
@@ -142,15 +144,11 @@ export class ScriptRunner {
     }
 
     private async startContainers(): Promise<void> {
-        if (this.started) {
-            return;
-        }
         // Start running a docker container for each script instance
         for (const script of this.workspace.workspaceConfig.scripts ?? []) {
             const startSeedCommand = await loggingExeca(undefined, "docker", ["run", "-dit", script.docker, "/bin/sh"]);
             const containerId = startSeedCommand.stdout;
             this.scripts.push({ ...script, containerId });
         }
-        this.started = true;
     }
 }
