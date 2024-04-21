@@ -84,7 +84,7 @@ export class DockerTestRunner extends TestRunner {
                 fixtureName: fixture,
                 irVersion,
                 publishMetadata,
-                workspaceName: this.generator.workspaceName,
+                workspaceName: fixture,
                 context: taskContext
             });
         }
