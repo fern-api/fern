@@ -1,7 +1,7 @@
 import { printTable } from "console-table-printer";
-import { TestResult } from "./testWorkspaceFixtures";
+import { TestRunner } from "./test-runner";
 
-export function printTestCases(result: TestResult[]): void {
+export function printTestCases(result: TestRunner.TestResult[]): void {
     const items = result.map((r) => {
         return {
             Name: r.id,

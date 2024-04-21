@@ -2,7 +2,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { convertOpenApiWorkspaceToFernWorkspace, FernWorkspace, loadAPIWorkspace } from "@fern-api/workspace-loader";
 
-export async function convertSeedWorkspaceToFernWorkspace({
+export async function convertGeneratorWorkspaceToFernWorkspace({
     fixture,
     absolutePathToWorkspace,
     taskContext

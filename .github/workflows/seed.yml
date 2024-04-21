@@ -94,7 +94,7 @@ jobs:
 
       - name: Seed Test
         run: |
-          yarn seed:local test --workspace ruby-model
+          yarn seed:local test --generator ruby-model
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -122,7 +122,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace ruby-sdk
+          yarn seed:local test --generator ruby-sdk
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -154,7 +154,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace pydantic
+          yarn seed:local test --generator pydantic
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -186,7 +186,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace python-sdk --parallel 10
+          yarn seed:local test --generator python-sdk --parallel 10
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -218,7 +218,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace fastapi
+          yarn seed:local test --generator fastapi
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -243,7 +243,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace openapi
+          yarn seed:local test --generator openapi
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -268,7 +268,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace postman
+          yarn seed:local test --generator postman
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -293,7 +293,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace java-sdk --parallel 10
+          yarn seed:local test --generator java-sdk --parallel 10
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -318,7 +318,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace java-model --parallel 10
+          yarn seed:local test --generator java-model --parallel 10
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -343,7 +343,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace java-spring
+          yarn seed:local test --generator java-spring
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -368,7 +368,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace ts-sdk
+          yarn seed:local test --generator ts-sdk
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -393,7 +393,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace ts-express  --parallel 1
+          yarn seed:local test --generator ts-express  --parallel 1
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -418,7 +418,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace go-fiber --parallel 16
+          yarn seed:local test --generator go-fiber --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -443,7 +443,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace go-model --parallel 16
+          yarn seed:local test --generator go-model --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
@@ -468,7 +468,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace go-sdk --parallel 16
+          yarn seed:local test --generator go-sdk --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code

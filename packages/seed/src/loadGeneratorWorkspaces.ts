@@ -4,7 +4,7 @@ import { readdir, readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { FernSeedConfig } from "./config";
 
-export interface SeedWorkspace {
+export interface GeneratorWorkspace {
     workspaceName: string;
     absolutePathToWorkspace: AbsoluteFilePath;
     workspaceConfig: FernSeedConfig.SeedWorkspaceConfiguration;
@@ -13,7 +13,7 @@ export interface SeedWorkspace {
 export const SEED_DIRECTORY = "seed";
 export const SEED_CONFIG_FILENAME = "seed.yml";
 
-export async function loadSeedWorkspaces(): Promise<SeedWorkspace[]> {
+export async function loadGeneratorWorkspaces(): Promise<GeneratorWorkspace[]> {
     const seedDirectory = await getSeedDirectory();
 
     if (seedDirectory == null) {
@@ -29,7 +29,7 @@ export async function loadSeedWorkspaces(): Promise<SeedWorkspace[]> {
         return all;
     }, []);
 
-    const workspaces: SeedWorkspace[] = [];
+    const workspaces: GeneratorWorkspace[] = [];
 
     for (const workspace of workspaceDirectoryNames) {
         const absolutePathToWorkspace = join(seedDirectory, RelativeFilePath.of(workspace));

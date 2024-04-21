@@ -1,15 +1,15 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, LogLevel, LOG_LEVELS } from "@fern-api/logger";
-import path from "path";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import { rewriteInputsForWorkspace } from "./commands/rewrite-inputs/rewriteInputsForWorkspace";
+import { runWithCustomFixture } from "./commands/run/runWithCustomFixture";
+import { ScriptRunner } from "./commands/test/ScriptRunner";
 import { TaskContextFactory } from "./commands/test/TaskContextFactory";
-import { testCustomFixture } from "./commands/test/testCustomFixture";
-import { FIXTURES, testWorkspaceFixtures } from "./commands/test/testWorkspaceFixtures";
-import { loadSeedWorkspaces } from "./loadSeedWorkspaces";
-import { runScript } from "./runScript";
-import { parseDockerOrThrow } from "./utils/parseDockerOrThrow";
+import { DockerTestRunner } from "./commands/test/test-runner";
+import { FIXTURES, testGenerator } from "./commands/test/testWorkspaceFixtures";
+import { loadGeneratorWorkspaces } from "./loadGeneratorWorkspaces";
+import { Semaphore } from "./Semaphore";
 
 void tryRunCli();
 
@@ -17,6 +17,7 @@ export async function tryRunCli(): Promise<void> {
     const cli: Argv = yargs(hideBin(process.argv));
 
     addTestCommand(cli);
+    addRunCommand(cli);
     addWriteInputsCommand(cli);
 
     await cli.parse();
@@ -27,23 +28,20 @@ export async function tryRunCli(): Promise<void> {
 function addTestCommand(cli: Argv) {
     cli.command(
         "test",
-        "Run all snapshot tests",
+        "Run all snapshot tests for the generators",
         (yargs) =>
             yargs
-                .option("workspace", {
+                .option("generator", {
                     type: "array",
                     string: true,
                     demandOption: false,
-                    description: "The workspace to run tests on"
+                    alias: "g",
+                    description: "The generators to run tests for"
                 })
                 .option("parallel", {
                     type: "number",
-                    default: 4
-                })
-                .option("custom-fixture", {
-                    type: "string",
-                    demandOption: false,
-                    description: "Path to the API directory"
+                    default: 4,
+                    alias: "p"
                 })
                 .option("fixture", {
                     type: "array",
@@ -53,21 +51,10 @@ function addTestCommand(cli: Argv) {
                     demandOption: false,
                     description: "Runs on all fixtures if not provided"
                 })
-                .option("outputFolder", {
-                    type: "string",
-                    demandOption: false,
-                    description: "A specific output folder to test against"
-                })
                 .option("keepDocker", {
                     type: "boolean",
                     demandOption: false,
                     description: "Keeps the docker container after the tests are finished"
-                })
-                .option("update", {
-                    type: "boolean",
-                    alias: "u",
-                    description: "Determines whether or not snapshots are written to disk",
-                    default: false
                 })
                 .option("skip-scripts", {
                     type: "boolean",
@@ -79,63 +66,37 @@ function addTestCommand(cli: Argv) {
                     choices: LOG_LEVELS
                 }),
         async (argv) => {
-            const workspaces = await loadSeedWorkspaces();
+            const generators = await loadGeneratorWorkspaces();
 
-            let failurePresent = false;
-            for (const workspace of workspaces) {
-                if (argv.workspace != null && !argv.workspace.includes(workspace.workspaceName)) {
+            const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+            const lock = new Semaphore(argv.parallel);
+            const tests: Promise<boolean>[] = [];
+
+            for (const generator of generators) {
+                if (argv.workspace != null && !argv.generator?.includes(generator.workspaceName)) {
                     continue;
                 }
+                const testRunner = new DockerTestRunner({
+                    generator,
+                    lock,
+                    taskContextFactory,
+                    skipScripts: argv.skipScripts,
+                    keepDocker: argv.keepDocker ?? false,
+                    scriptRunner: new ScriptRunner(generator)
+                });
 
-                const parsedDockerImage = parseDockerOrThrow(workspace.workspaceConfig.docker);
-
-                const taskContextFactory = new TaskContextFactory(argv["log-level"]);
-                if (workspace.workspaceConfig.dockerCommand != null) {
-                    const workspaceTaskContext = taskContextFactory.create(workspace.workspaceName);
-                    await runScript({
-                        commands:
-                            typeof workspace.workspaceConfig.dockerCommand === "string"
-                                ? [workspace.workspaceConfig.dockerCommand]
-                                : workspace.workspaceConfig.dockerCommand,
-                        logger: workspaceTaskContext.logger,
-                        workingDir: path.dirname(path.dirname(workspace.absolutePathToWorkspace)),
-                        doNotPipeOutput: false
-                    });
-                }
-
-                if (argv.customFixture != null) {
-                    await testCustomFixture({
-                        pathToFixture: argv.customFixture.startsWith("/")
-                            ? AbsoluteFilePath.of(argv.customFixture)
-                            : join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of(argv.customFixture)),
-                        workspace,
-                        language: workspace.workspaceConfig.language,
-                        docker: parsedDockerImage,
-                        logLevel: argv["log-level"],
-                        numDockers: argv.parallel,
-                        keepDocker: argv.keepDocker,
-                        skipScripts: argv.skipScripts
-                    });
-                } else {
-                    const passed = await testWorkspaceFixtures({
-                        workspace,
-                        fixtures: argv.fixture,
-                        irVersion: workspace.workspaceConfig.irVersion,
-                        language: workspace.workspaceConfig.language,
-                        docker: parsedDockerImage,
-                        scripts: workspace.workspaceConfig.scripts,
-                        logLevel: argv["log-level"],
-                        numDockers: argv.parallel,
-                        taskContextFactory,
-                        keepDocker: argv.keepDocker,
-                        skipScripts: argv.skipScripts,
-                        outputFolder: argv.outputFolder
-                    });
-                    failurePresent = failurePresent || !passed;
-                }
+                tests.push(
+                    testGenerator({
+                        generator,
+                        runner: testRunner,
+                        fixtures: argv.fixture
+                    })
+                );
             }
+            const results = await Promise.all(tests);
 
-            if (failurePresent) {
+            // If any of the tests failed, exit with a non-zero status code
+            if (results.includes(false)) {
                 process.exit(1);
             }
         }
@@ -148,11 +109,11 @@ function addWriteInputsCommand(cli: Argv) {
         "Rewrites the .inputs directory for each workspace",
         (yargs) =>
             yargs
-                .option("workspace", {
+                .option("generator", {
                     type: "array",
                     string: true,
                     demandOption: false,
-                    description: "Workspaces to write inputs for"
+                    description: "Generator to write inputs for"
                 })
                 .option("fixture", {
                     type: "array",
@@ -167,20 +128,58 @@ function addWriteInputsCommand(cli: Argv) {
                     choices: LOG_LEVELS
                 }),
         async (argv) => {
-            const workspaces = await loadSeedWorkspaces();
+            const generators = await loadGeneratorWorkspaces();
             const promises: Promise<void>[] = [];
-            for (const workspace of workspaces) {
-                if (argv.workspace != null && !argv.workspace.includes(workspace.workspaceName)) {
+            for (const generator of generators) {
+                if (argv.workspace != null && !argv.generator?.includes(generator.workspaceName)) {
                     continue;
                 }
                 const promise = rewriteInputsForWorkspace({
-                    workspace,
+                    generator,
                     fixtures: argv.fixture,
                     taskContextFactory: new TaskContextFactory(argv["log-level"])
                 });
                 promises.push(promise);
             }
             await Promise.all(promises);
+        }
+    );
+}
+
+function addRunCommand(cli: Argv) {
+    cli.command(
+        "run",
+        "Runs the generator on the given input",
+        (yargs) =>
+            yargs
+                .option("generator", {
+                    string: true,
+                    demandOption: true,
+                    description: "Generator to run"
+                })
+                .option("path", {
+                    type: "string",
+                    string: true,
+                    demandOption: true,
+                    description: "Path to the fern definition"
+                })
+                .option("log-level", {
+                    default: LogLevel.Info,
+                    choices: LOG_LEVELS
+                }),
+        async (argv) => {
+            const generators = await loadGeneratorWorkspaces();
+            const generator = generators.find((g) => g.workspaceName === argv.generator);
+            if (generator == null) {
+                throw new Error(
+                    `Generator ${argv.generator} not found. Please make sure that there is a folder with the name ${argv.generator} in the seed directory.`
+                );
+            }
+            await runWithCustomFixture({
+                pathToFixture: AbsoluteFilePath.of(argv.path),
+                workspace: generator,
+                logLevel: argv["log-level"]
+            });
         }
     );
 }

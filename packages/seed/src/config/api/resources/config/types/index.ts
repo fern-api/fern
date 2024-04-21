@@ -1,5 +1,6 @@
 export * from "./SeedWorkspaceConfiguration";
 export * from "./LocalBuildInfo";
+export * from "./DockerBuildInfo";
 export * from "./DockerCommand";
 export * from "./ScriptConfig";
 export * from "./Language";
