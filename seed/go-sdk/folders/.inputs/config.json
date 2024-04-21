@@ -8,7 +8,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "api",
+    "workspaceName": "folders",
     "organization": "seed",
     "environment": {
         "type": "local"

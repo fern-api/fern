@@ -72,7 +72,7 @@ export declare namespace TestRunner {
 }
 
 export abstract class TestRunner {
-    private built: boolean = false;
+    private buildInvocation: Promise<void> | undefined;
     protected readonly generator: GeneratorWorkspace;
     protected readonly lock: Semaphore;
     protected readonly taskContextFactory: TaskContextFactory;
@@ -98,23 +98,12 @@ export abstract class TestRunner {
      * Runs the generator.
      */
     public async run({ fixture, configuration }: TestRunner.RunArgs): Promise<TestRunner.TestResult> {
-        if (!this.built) {
-            await this.build();
-            this.built = true;
+        if (this.buildInvocation == undefined) {
+            this.buildInvocation = this.build();
         }
+        await this.buildInvocation;
 
         const metrics: TestRunner.TestCaseMetrics = {};
-
-        const fixtureConfig = this.generator.workspaceConfig.fixtures?.[fixture];
-        if (fixtureConfig == null) {
-            return {
-                type: "failure",
-                cause: "invalid-fixture",
-                message: `Fixture ${fixture} not found.`,
-                id: fixture,
-                metrics
-            };
-        }
 
         const id = configuration != null ? `${fixture}:${configuration.outputFolder}` : `${fixture}`;
         const absolutePathToAPIDefinition = AbsoluteFilePath.of(
@@ -138,76 +127,80 @@ export abstract class TestRunner {
         }
 
         taskContext.logger.debug("Acquiring lock...");
-        await this.lock.acquire();
-        taskContext.logger.info("Running generator...");
         try {
-            const generationStopwatch = new Stopwatch();
-            generationStopwatch.start();
-            await this.runGenerator({
-                id,
-                fernWorkspace,
-                absolutePathToWorkspace: this.generator.absolutePathToWorkspace,
-                irVersion: this.generator.workspaceConfig.irVersion,
-                outputVersion: configuration?.outputVersion,
-                language: this.generator.workspaceConfig.language,
-                selectAudiences: configuration?.audiences,
-                fixture,
-                customConfig: configuration?.customConfig,
-                publishConfig: configuration?.publishConfig ?? undefined,
-                taskContext,
-                outputDir:
-                    configuration == null
-                        ? join(this.generator.absolutePathToWorkspace, RelativeFilePath.of(fixture))
-                        : join(
-                              this.generator.absolutePathToWorkspace,
-                              RelativeFilePath.of(fixture),
-                              RelativeFilePath.of(configuration.outputFolder)
-                          ),
-                outputMode: configuration?.outputMode ?? this.generator.workspaceConfig.defaultOutputMode,
-                outputFolder,
-                keepDocker: this.keepDocker,
-                publishMetadata: configuration?.publishMetadata ?? undefined
-            });
-            generationStopwatch.stop();
-            metrics.generationTime = generationStopwatch.duration();
-        } catch (error) {
-            return {
-                type: "failure",
-                cause: "generation",
-                id: fixture,
-                metrics
-            };
-        }
+            await this.lock.acquire();
+            taskContext.logger.info("Running generator...");
+            try {
+                const generationStopwatch = new Stopwatch();
+                generationStopwatch.start();
+                await this.runGenerator({
+                    id,
+                    fernWorkspace,
+                    absolutePathToWorkspace: this.generator.absolutePathToWorkspace,
+                    irVersion: this.generator.workspaceConfig.irVersion,
+                    outputVersion: configuration?.outputVersion,
+                    language: this.generator.workspaceConfig.language,
+                    selectAudiences: configuration?.audiences,
+                    fixture,
+                    customConfig: configuration?.customConfig,
+                    publishConfig: configuration?.publishConfig ?? undefined,
+                    taskContext,
+                    outputDir:
+                        configuration == null
+                            ? join(this.generator.absolutePathToWorkspace, RelativeFilePath.of(fixture))
+                            : join(
+                                  this.generator.absolutePathToWorkspace,
+                                  RelativeFilePath.of(fixture),
+                                  RelativeFilePath.of(configuration.outputFolder)
+                              ),
+                    outputMode: configuration?.outputMode ?? this.generator.workspaceConfig.defaultOutputMode,
+                    outputFolder,
+                    keepDocker: this.keepDocker,
+                    publishMetadata: configuration?.publishMetadata ?? undefined
+                });
+                generationStopwatch.stop();
+                metrics.generationTime = generationStopwatch.duration();
+            } catch (error) {
+                return {
+                    type: "failure",
+                    cause: "generation",
+                    id: fixture,
+                    metrics
+                };
+            }
 
-        if (this.skipScripts) {
+            if (this.skipScripts) {
+                return {
+                    type: "success",
+                    id: fixture,
+                    metrics
+                };
+            }
+
+            const scriptStopwatch = new Stopwatch();
+            scriptStopwatch.start();
+
+            const scriptResponse = await this.scriptRunner.run({ taskContext, fixture, outputFolder });
+
+            scriptStopwatch.stop();
+            metrics.compileTime = scriptStopwatch.duration();
+
+            if (scriptResponse.type === "failure") {
+                return {
+                    type: "failure",
+                    cause: "compile",
+                    id: fixture,
+                    metrics
+                };
+            }
             return {
                 type: "success",
                 id: fixture,
                 metrics
             };
+        } finally {
+            this.lock.release();
         }
-
-        const scriptStopwatch = new Stopwatch();
-        scriptStopwatch.start();
-
-        const scriptResponse = await this.scriptRunner.run({ taskContext, fixture, outputFolder });
-
-        scriptStopwatch.stop();
-        metrics.compileTime = scriptStopwatch.duration();
-
-        if (scriptResponse.type === "failure") {
-            return {
-                type: "failure",
-                cause: "compile",
-                id: fixture,
-                metrics
-            };
-        }
-        return {
-            type: "success",
-            id: fixture,
-            metrics
-        };
     }
 
     /**

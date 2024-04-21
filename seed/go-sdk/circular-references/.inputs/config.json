@@ -8,7 +8,7 @@
         },
         "path": "../"
     },
-    "workspaceName": "api",
+    "workspaceName": "circular-references",
     "organization": "seed",
     "environment": {
         "type": "local"

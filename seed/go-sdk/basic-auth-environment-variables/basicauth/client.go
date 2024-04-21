@@ -12,7 +12,10 @@ import (
 	option "github.com/basic-auth-environment-variables/fern/option"
 	io "io"
 	http "net/http"
+<<<<<<< HEAD
 	os "os"
+=======
+>>>>>>> 925464783 (fix)
 )
 
 type Client struct {
@@ -23,12 +26,15 @@ type Client struct {
 
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
+<<<<<<< HEAD
 	if options.Username == "" {
 		options.Username = os.Getenv("USERNAME")
 	}
 	if options.Password == "" {
 		options.Password = os.Getenv("PASSWORD")
 	}
+=======
+>>>>>>> 925464783 (fix)
 	return &Client{
 		baseURL: options.BaseURL,
 		caller: core.NewCaller(
