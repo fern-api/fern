@@ -30,7 +30,7 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/api/v2/accounts",
+            "path": "/api/v2/accounts/",
             "request": {
               "name": "listAccountsRequest",
               "query-parameters": {
@@ -87,7 +87,7 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/api/v2/games",
+            "path": "/api/v2/games/",
             "request": {
               "name": "listGamesRequest",
               "query-parameters": {
@@ -177,7 +177,7 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/api/v2/groups",
+            "path": "/api/v2/groups/",
             "request": {
               "name": "listGroupsRequest",
               "query-parameters": {
@@ -222,7 +222,7 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/api/v2/rooms",
+            "path": "/api/v2/rooms/",
             "request": {
               "name": "listLocationsRequest",
               "query-parameters": {
@@ -264,7 +264,7 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/api/v2/photos",
+            "path": "/api/v2/photos/",
             "request": {
               "name": "listPhotosRequest",
               "query-parameters": {
@@ -312,7 +312,7 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/api/v2/players",
+            "path": "/api/v2/players/",
             "request": {
               "name": "listPlayersRequest",
               "query-parameters": {
@@ -345,7 +345,7 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/api/v2/accounts/{id}",
+            "path": "/api/v2/accounts/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "A unique integer value identifying this account.",
@@ -403,7 +403,7 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/api/v2/games/{id}",
+            "path": "/api/v2/games/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "A unique integer value identifying this group.",
@@ -507,7 +507,7 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/api/v2/groups/{id}",
+            "path": "/api/v2/groups/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "A unique integer value identifying this group.",
@@ -550,7 +550,7 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/api/v2/rooms/{id}",
+            "path": "/api/v2/rooms/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "A unique integer value identifying this location.",
@@ -590,7 +590,7 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/api/v2/photos/{photo_id}",
+            "path": "/api/v2/photos/{photo_id}/",
             "path-parameters": {
               "photo_id": {
                 "docs": "",
@@ -632,7 +632,7 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/api/v2/players/{id}",
+            "path": "/api/v2/players/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "A unique integer value identifying this player.",

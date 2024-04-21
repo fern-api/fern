@@ -4939,7 +4939,7 @@ exports[`open api parser deel simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/time-offs",
+            "path": "/time-offs/",
             "response": {
               "docs": "successful operation",
               "type": "root.EorClientTimeoffsContainer",
