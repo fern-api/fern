@@ -1,0 +1,11 @@
+openapi: 3.0.0
+info:
+  title: Sample Path Parsing API
+  version: 1.0.0
+paths:
+  /example-without-trailing-slash:
+    get:
+      summary: Get Example
+  /example-with-trailing-slash/:
+    get:
+      summary: Get Example with trailing
