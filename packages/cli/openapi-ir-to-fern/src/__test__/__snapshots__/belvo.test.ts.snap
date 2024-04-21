@@ -105,7 +105,7 @@ client.accounts.list(params: {
               },
             ],
             "method": "DELETE",
-            "path": "/api/accounts/{id}",
+            "path": "/api/accounts/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`account.id\` you want to delete",
@@ -685,7 +685,7 @@ client.accounts.list(params: {
               },
             ],
             "method": "GET",
-            "path": "/api/accounts/{id}",
+            "path": "/api/accounts/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`account.id\` you want to get detailed information about.",
@@ -821,7 +821,7 @@ client.accounts.list(params: {
               },
             ],
             "method": "GET",
-            "path": "/api/accounts",
+            "path": "/api/accounts/",
             "request": {
               "name": "ListAccountsRequest",
               "query-parameters": {
@@ -1540,7 +1540,7 @@ client.accounts.list(params: {
               },
             ],
             "method": "PATCH",
-            "path": "/api/accounts",
+            "path": "/api/accounts/",
             "request": {
               "body": "root.PatchBody",
               "name": "PatchAccountsRequest",
@@ -2105,7 +2105,7 @@ client.accounts.list(params: {
               },
             ],
             "method": "POST",
-            "path": "/api/accounts",
+            "path": "/api/accounts/",
             "request": {
               "body": "root.StandardRequest",
               "name": "RetrieveAccountsRequest",
@@ -2233,7 +2233,7 @@ client.balances.list(params: {
               },
             ],
             "method": "DELETE",
-            "path": "/api/balances/{id}",
+            "path": "/api/balances/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`balance.id\` that you want to delete.",
@@ -2355,7 +2355,7 @@ client.balances.list(params: {
               },
             ],
             "method": "GET",
-            "path": "/api/balances/{id}",
+            "path": "/api/balances/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`balance.id\` you want to get detailed information about.",
@@ -2471,7 +2471,7 @@ client.balances.list(params: {
               },
             ],
             "method": "GET",
-            "path": "/api/balances",
+            "path": "/api/balances/",
             "request": {
               "name": "ListBalancesRequest",
               "query-parameters": {
@@ -2692,7 +2692,7 @@ client.balances.list(params: {
               },
             ],
             "method": "PATCH",
-            "path": "/api/balances",
+            "path": "/api/balances/",
             "request": {
               "body": "root.PatchBody",
               "name": "PatchBalancesRequest",
@@ -2802,7 +2802,7 @@ client.balances.list(params: {
               },
             ],
             "method": "POST",
-            "path": "/api/balances",
+            "path": "/api/balances/",
             "request": {
               "body": {
                 "properties": {
@@ -3141,7 +3141,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               },
             ],
             "method": "POST",
-            "path": "/payments/bank-accounts",
+            "path": "/payments/bank-accounts/",
             "request": {
               "body": "CreateBankAccountRequest",
             },
@@ -3247,7 +3247,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               },
             ],
             "method": "GET",
-            "path": "/payments/bank-accounts/{id}",
+            "path": "/payments/bank-accounts/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`bank-account.id\` you want to get detailed information about.",
@@ -3414,7 +3414,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               },
             ],
             "method": "GET",
-            "path": "/payments/bank-accounts",
+            "path": "/payments/bank-accounts/",
             "request": {
               "name": "ListBankAccountRequest",
               "query-parameters": {
@@ -3612,7 +3612,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               },
             ],
             "method": "POST",
-            "path": "/api/categorization",
+            "path": "/api/categorization/",
             "request": {
               "body": {
                 "properties": {
@@ -3821,7 +3821,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               },
             ],
             "method": "POST",
-            "path": "/payments/customers",
+            "path": "/payments/customers/",
             "request": {
               "body": "CreateCustomerRequest",
             },
@@ -3904,7 +3904,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               },
             ],
             "method": "GET",
-            "path": "/payments/customers/{id}",
+            "path": "/payments/customers/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`customer.id\` you want to get detailed information about.",
@@ -4076,7 +4076,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               },
             ],
             "method": "GET",
-            "path": "/payments/customers",
+            "path": "/payments/customers/",
             "request": {
               "name": "ListCustomersRequest",
               "query-parameters": {
@@ -4201,7 +4201,7 @@ At the moment, the employment records resource is available for:
               },
             ],
             "method": "DELETE",
-            "path": "/api/employment-records/{id}",
+            "path": "/api/employment-records/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`employment-record.id\` that you want to delete.",
@@ -4286,7 +4286,7 @@ At the moment, the employment records resource is available for:
               },
             ],
             "method": "GET",
-            "path": "/api/employment-records/{id}",
+            "path": "/api/employment-records/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`employment-record.id\` you want to get detailed information about.",
@@ -4365,7 +4365,7 @@ At the moment, the employment records resource is available for:
               },
             ],
             "method": "GET",
-            "path": "/api/employment-records",
+            "path": "/api/employment-records/",
             "request": {
               "name": "ListEmploymentRecordsRequest",
               "query-parameters": {
@@ -4469,7 +4469,7 @@ At the moment, the employment records resource is available for:
               },
             ],
             "method": "POST",
-            "path": "/api/employment-records",
+            "path": "/api/employment-records/",
             "request": {
               "body": {
                 "properties": {
@@ -4625,7 +4625,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               },
             ],
             "method": "POST",
-            "path": "/api/enrich/incomes",
+            "path": "/api/enrich/incomes/",
             "request": {
               "body": {
                 "properties": {
@@ -4753,7 +4753,7 @@ client.incomes.list(params: {
               },
             ],
             "method": "DELETE",
-            "path": "/api/incomes/{id}",
+            "path": "/api/incomes/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "the \`income.id\` that you want to delete",
@@ -4807,7 +4807,7 @@ client.incomes.list(params: {
               },
             ],
             "method": "GET",
-            "path": "/api/incomes/{id}",
+            "path": "/api/incomes/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`income.id\` you want to get detailed information about.",
@@ -4885,7 +4885,7 @@ client.incomes.list(params: {
               },
             ],
             "method": "GET",
-            "path": "/api/incomes",
+            "path": "/api/incomes/",
             "request": {
               "name": "ListIncomesRequest",
               "query-parameters": {
@@ -4987,7 +4987,7 @@ client.incomes.list(params: {
               },
             ],
             "method": "PATCH",
-            "path": "/api/incomes",
+            "path": "/api/incomes/",
             "request": {
               "body": "root.PatchBody",
               "name": "PatchIncomesRequest",
@@ -5076,7 +5076,7 @@ client.incomes.list(params: {
               },
             ],
             "method": "POST",
-            "path": "/api/incomes",
+            "path": "/api/incomes/",
             "request": {
               "body": {
                 "properties": {
@@ -5217,7 +5217,7 @@ You can see a complete list of institutions by either consulting our [Institutio
               },
             ],
             "method": "GET",
-            "path": "/api/institutions/{id}",
+            "path": "/api/institutions/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`institution.id\` you want to get detailed information about.",
@@ -5314,7 +5314,7 @@ You can see a complete list of institutions by either consulting our [Institutio
               },
             ],
             "method": "GET",
-            "path": "/api/institutions",
+            "path": "/api/institutions/",
             "request": {
               "name": "ListInstitutionsRequest",
               "query-parameters": {
@@ -5459,7 +5459,7 @@ client. investments_portfolio.list(params: {
               },
             ],
             "method": "DELETE",
-            "path": "/investments/portfolios/{id}",
+            "path": "/investments/portfolios/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`portfolio.id\` that you want to delete.",
@@ -5539,7 +5539,7 @@ client. investments_portfolio.list(params: {
               },
             ],
             "method": "GET",
-            "path": "/investments/portfolios/{id}",
+            "path": "/investments/portfolios/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`portfolio.id\` you want to get detailed information about.",
@@ -5623,7 +5623,7 @@ client. investments_portfolio.list(params: {
               },
             ],
             "method": "GET",
-            "path": "/investments/portfolios",
+            "path": "/investments/portfolios/",
             "request": {
               "name": "ListPortfolioRequest",
               "query-parameters": {
@@ -5741,7 +5741,7 @@ client. investments_portfolio.list(params: {
               },
             ],
             "method": "PATCH",
-            "path": "/investments/portfolios",
+            "path": "/investments/portfolios/",
             "request": {
               "body": "root.PatchBodyWithoutSaveData",
               "name": "PatchPortfolioRequest",
@@ -5835,7 +5835,7 @@ client. investments_portfolio.list(params: {
               },
             ],
             "method": "POST",
-            "path": "/investments/portfolios",
+            "path": "/investments/portfolios/",
             "request": {
               "body": "root.StandardRequest",
               "name": "RetrievePortfolioRequest",
@@ -5950,7 +5950,7 @@ client.invoices.list(params: {
               },
             ],
             "method": "DELETE",
-            "path": "/api/invoices/{id}",
+            "path": "/api/invoices/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`invoice.id\` that you want to delete.",
@@ -6534,7 +6534,7 @@ client.invoices.list(params: {
               },
             ],
             "method": "GET",
-            "path": "/api/invoices/{id}",
+            "path": "/api/invoices/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`invoice.id\` you want to get detailed information about.",
@@ -7286,7 +7286,7 @@ client.invoices.list(params: {
               },
             ],
             "method": "GET",
-            "path": "/api/invoices",
+            "path": "/api/invoices/",
             "request": {
               "name": "ListInvoicesRequest",
               "query-parameters": {
@@ -7546,7 +7546,7 @@ client.invoices.list(params: {
               },
             ],
             "method": "PATCH",
-            "path": "/api/invoices",
+            "path": "/api/invoices/",
             "request": {
               "body": "root.PatchBody",
               "name": "PatchInvoicesRequest",
@@ -8157,7 +8157,7 @@ client.invoices.list(params: {
               },
             ],
             "method": "POST",
-            "path": "/api/invoices",
+            "path": "/api/invoices/",
             "request": {
               "body": {
                 "properties": {
@@ -8319,7 +8319,7 @@ For single links, you have to perform POST calls to an institution **every time*
               },
             ],
             "method": "PATCH",
-            "path": "/api/links/{id}",
+            "path": "/api/links/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`link.id\` you want to change the \`access_mode\` for.",
@@ -8374,7 +8374,7 @@ To delete links in bulk, we recommend looping through the list of links you want
               },
             ],
             "method": "DELETE",
-            "path": "/api/links/{id}",
+            "path": "/api/links/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`link.id\` that you want to delete.",
@@ -8416,7 +8416,7 @@ To delete links in bulk, we recommend looping through the list of links you want
               },
             ],
             "method": "GET",
-            "path": "/api/links/{id}",
+            "path": "/api/links/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`link.id\` you want to get detailed information about.",
@@ -8499,7 +8499,7 @@ To delete links in bulk, we recommend looping through the list of links you want
               },
             ],
             "method": "GET",
-            "path": "/api/links",
+            "path": "/api/links/",
             "request": {
               "name": "ListLinksRequest",
               "query-parameters": {
@@ -8642,7 +8642,7 @@ To delete links in bulk, we recommend looping through the list of links you want
               },
             ],
             "method": "PATCH",
-            "path": "/api/links",
+            "path": "/api/links/",
             "request": {
               "body": "root.PatchBodyWithoutSaveData",
               "name": "PatchLinksRequest",
@@ -8704,7 +8704,7 @@ To delete links in bulk, we recommend looping through the list of links you want
               },
             ],
             "method": "POST",
-            "path": "/api/links",
+            "path": "/api/links/",
             "request": {
               "body": {
                 "properties": {
@@ -8894,7 +8894,7 @@ For a list of standards codes, see the table below.
               },
             ],
             "method": "PUT",
-            "path": "/api/links/{id}",
+            "path": "/api/links/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`link.id\` you want to update.",
@@ -9073,7 +9073,7 @@ client.owners.list(params: {
               },
             ],
             "method": "DELETE",
-            "path": "/api/owners/{id}",
+            "path": "/api/owners/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`owner.id\` that you want to delete.",
@@ -9123,7 +9123,7 @@ Cancun, COL 10447",
               },
             ],
             "method": "GET",
-            "path": "/api/owners/{id}",
+            "path": "/api/owners/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`owner.id\` you want to get detailed information about.",
@@ -9206,7 +9206,7 @@ Cancun, COL 10447",
               },
             ],
             "method": "GET",
-            "path": "/api/owners",
+            "path": "/api/owners/",
             "request": {
               "name": "ListOwnersRequest",
               "query-parameters": {
@@ -9328,7 +9328,7 @@ Cancun, COL 10447",
               },
             ],
             "method": "PATCH",
-            "path": "/api/owners",
+            "path": "/api/owners/",
             "request": {
               "body": "root.PatchBody",
               "name": "PatchOwnersRequest",
@@ -9395,7 +9395,7 @@ Cancun, COL 10447",
               },
             ],
             "method": "POST",
-            "path": "/api/owners",
+            "path": "/api/owners/",
             "request": {
               "body": "root.StandardRequest",
               "name": "RetrieveOwnersRequest",
@@ -9481,7 +9481,7 @@ Cancun, COL 10447",
               },
             ],
             "method": "GET",
-            "path": "/payments/institutions/{id}",
+            "path": "/payments/institutions/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The payment \`institution.id\` you want to get detailed information about.",
@@ -9550,7 +9550,7 @@ Cancun, COL 10447",
               },
             ],
             "method": "GET",
-            "path": "/payments/institutions",
+            "path": "/payments/institutions/",
             "request": {
               "name": "ListPaymentInstitutionsRequest",
               "query-parameters": {
@@ -9625,7 +9625,7 @@ A payment intent captures all payment information (such as the amount to be char
               "root.InternalServerError",
             ],
             "method": "POST",
-            "path": "/payments/payment-intents",
+            "path": "/payments/payment-intents/",
             "request": {
               "body": {
                 "properties": {
@@ -9678,7 +9678,7 @@ A payment intent captures all payment information (such as the amount to be char
               "root.NotFoundError",
             ],
             "method": "GET",
-            "path": "/payments/payment-intents/{id}",
+            "path": "/payments/payment-intents/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`payment-intent.id\` you want to get detailed information about.",
@@ -9730,7 +9730,7 @@ A payment intent captures all payment information (such as the amount to be char
               },
             ],
             "method": "GET",
-            "path": "/payments/payment-intents",
+            "path": "/payments/payment-intents/",
             "request": {
               "name": "ListPaymentIntentsRequest",
               "query-parameters": {
@@ -9828,7 +9828,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
               "root.NotFoundError",
             ],
             "method": "PATCH",
-            "path": "/payments/payment-intents/{id}",
+            "path": "/payments/payment-intents/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`payment-intent.id\` you want to get detailed information about.",
@@ -9929,7 +9929,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
               },
             ],
             "method": "POST",
-            "path": "/payments/payment-links",
+            "path": "/payments/payment-links/",
             "request": {
               "body": "CreatePaymentlinkRequest",
             },
@@ -9971,7 +9971,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
               },
             ],
             "method": "GET",
-            "path": "/payments/payment-links/{access_token}",
+            "path": "/payments/payment-links/{access_token}/",
             "path-parameters": {
               "access_token": {
                 "docs": "The \`access_token\` of the payment link you want to get detailed information about. 
@@ -10033,7 +10033,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
               },
             ],
             "method": "GET",
-            "path": "/payments/payment-links",
+            "path": "/payments/payment-links/",
             "request": {
               "name": "ListPaymentLinksRequest",
               "query-parameters": {
@@ -10194,7 +10194,7 @@ You can use the Payment Transactions resource in order to get useful information
               },
             ],
             "method": "GET",
-            "path": "/payments/transactions/{id}",
+            "path": "/payments/transactions/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`transaction.id\` you want to get detailed information about.",
@@ -10265,7 +10265,7 @@ You can use the Payment Transactions resource in order to get useful information
               },
             ],
             "method": "GET",
-            "path": "/payments/transactions",
+            "path": "/payments/transactions/",
             "request": {
               "name": "ListPaymentTransactionsRequest",
               "query-parameters": {
@@ -10399,7 +10399,7 @@ You can use the Payment Transactions resource in order to get useful information
               },
             ],
             "method": "DELETE",
-            "path": "/payments/webhooks/{id}",
+            "path": "/payments/webhooks/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`webhook.id\` that you want to delete.",
@@ -10436,7 +10436,7 @@ You can use the Payment Transactions resource in order to get useful information
               },
             ],
             "method": "GET",
-            "path": "/payments/webhooks/{id}",
+            "path": "/payments/webhooks/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`webhook.id\` you want to get detailed information about.",
@@ -10480,7 +10480,7 @@ You can use the Payment Transactions resource in order to get useful information
               },
             ],
             "method": "GET",
-            "path": "/payments/webhooks",
+            "path": "/payments/webhooks/",
             "response": {
               "docs": "OK",
               "type": "root.PaymentsWebhooksPaginatedResponse",
@@ -10521,7 +10521,7 @@ You can use the Payment Transactions resource in order to get useful information
               },
             ],
             "method": "POST",
-            "path": "/payments/webhooks",
+            "path": "/payments/webhooks/",
             "request": {
               "body": {
                 "properties": {
@@ -10590,7 +10590,7 @@ You can use the Payment Transactions resource in order to get useful information
               },
             ],
             "method": "DELETE",
-            "path": "/receivables/transactions/{id}",
+            "path": "/receivables/transactions/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`transaction.id\` that you want to delete.",
@@ -10650,7 +10650,7 @@ You can use the Payment Transactions resource in order to get useful information
               },
             ],
             "method": "GET",
-            "path": "/receivables/transactions/{id}",
+            "path": "/receivables/transactions/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`transaction.id\` you want to get detailed information about.",
@@ -10745,7 +10745,7 @@ You can use the Payment Transactions resource in order to get useful information
               },
             ],
             "method": "GET",
-            "path": "/receivables/transactions",
+            "path": "/receivables/transactions/",
             "request": {
               "name": "ListReceivableTransactionsRequest",
               "query-parameters": {
@@ -10897,7 +10897,7 @@ You can use the Payment Transactions resource in order to get useful information
               },
             ],
             "method": "POST",
-            "path": "/receivables/transactions",
+            "path": "/receivables/transactions/",
             "request": {
               "body": {
                 "properties": {
@@ -11015,7 +11015,7 @@ client. recurring_expenses.list(params: {
               },
             ],
             "method": "DELETE",
-            "path": "/api/recurring-expenses/{id}",
+            "path": "/api/recurring-expenses/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`recurring-expenses.id\` that you want to delete",
@@ -11114,7 +11114,7 @@ client. recurring_expenses.list(params: {
               },
             ],
             "method": "GET",
-            "path": "/api/recurring-expenses/{id}",
+            "path": "/api/recurring-expenses/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`recurring-expenses.id\` you want to get detailed information about.",
@@ -11213,7 +11213,7 @@ client. recurring_expenses.list(params: {
               },
             ],
             "method": "GET",
-            "path": "/api/recurring-expenses",
+            "path": "/api/recurring-expenses/",
             "request": {
               "name": "ListRecurringExpensesRequest",
               "query-parameters": {
@@ -11368,7 +11368,7 @@ client. recurring_expenses.list(params: {
               },
             ],
             "method": "PATCH",
-            "path": "/api/recurring-expenses",
+            "path": "/api/recurring-expenses/",
             "request": {
               "body": "root.PatchBody",
               "name": "PatchRecurringExpensesRequest",
@@ -11482,7 +11482,7 @@ client. recurring_expenses.list(params: {
               },
             ],
             "method": "POST",
-            "path": "/api/recurring-expenses",
+            "path": "/api/recurring-expenses/",
             "request": {
               "body": {
                 "properties": {
@@ -11680,7 +11680,7 @@ client.connect()
               },
             ],
             "method": "DELETE",
-            "path": "/api/risk-insights/{id}",
+            "path": "/api/risk-insights/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`risk-insights.id\` that you want to delete",
@@ -11862,7 +11862,7 @@ client.connect()
               },
             ],
             "method": "GET",
-            "path": "/api/risk-insights/{id}",
+            "path": "/api/risk-insights/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`risk-insights.id\` you want to get detailed information about.",
@@ -12070,7 +12070,7 @@ client.connect()
               },
             ],
             "method": "GET",
-            "path": "/api/risk-insights",
+            "path": "/api/risk-insights/",
             "request": {
               "name": "ListRiskInsightsRequest",
               "query-parameters": {
@@ -12314,7 +12314,7 @@ client.connect()
               },
             ],
             "method": "PATCH",
-            "path": "/api/risk-insights",
+            "path": "/api/risk-insights/",
             "request": {
               "body": "root.PatchBody",
               "name": "PatchRiskInsightsRequest",
@@ -12522,7 +12522,7 @@ client.connect()
               },
             ],
             "method": "POST",
-            "path": "/api/risk-insights",
+            "path": "/api/risk-insights/",
             "request": {
               "body": "root.StandardRequest",
               "name": "RetrieveRiskInsightsRequest",
@@ -12614,7 +12614,7 @@ For example:
               },
             ],
             "method": "POST",
-            "path": "/payments/secret-keys",
+            "path": "/payments/secret-keys/",
             "response": {
               "docs": "Ok",
               "type": "list<root.SecretKeys>",
@@ -12650,7 +12650,7 @@ For example:
               },
             ],
             "method": "GET",
-            "path": "/payments/secret-keys",
+            "path": "/payments/secret-keys/",
             "response": {
               "docs": "OK",
               "type": "root.SecretKeysPaginatedResponse",
@@ -12738,7 +12738,7 @@ client.tax_compliance_status.list(params: {
               },
             ],
             "method": "DELETE",
-            "path": "/api/tax-compliance-status/{id}",
+            "path": "/api/tax-compliance-status/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`tax-compliance-status.id\` that you want to delete.",
@@ -12777,7 +12777,7 @@ client.tax_compliance_status.list(params: {
               },
             ],
             "method": "GET",
-            "path": "/api/tax-compliance-status/{id}",
+            "path": "/api/tax-compliance-status/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`tax-compliance-status.id\` you want to get detailed information about.",
@@ -12847,7 +12847,7 @@ client.tax_compliance_status.list(params: {
               },
             ],
             "method": "GET",
-            "path": "/api/tax-compliance-status",
+            "path": "/api/tax-compliance-status/",
             "request": {
               "name": "ListTaxComplianceStatusRequest",
               "query-parameters": {
@@ -12949,7 +12949,7 @@ client.tax_compliance_status.list(params: {
               },
             ],
             "method": "POST",
-            "path": "/api/tax-compliance-status",
+            "path": "/api/tax-compliance-status/",
             "request": {
               "body": {
                 "properties": {
@@ -13019,7 +13019,7 @@ At the moment, the Tax Declaration resource is available for:
               },
             ],
             "method": "DELETE",
-            "path": "/api/tax-declarations/{id}",
+            "path": "/api/tax-declarations/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`tax-declration.id\` that you want to delete.",
@@ -13124,7 +13124,7 @@ At the moment, the Tax Declaration resource is available for:
               },
             ],
             "method": "GET",
-            "path": "/api/tax-declarations/{id}",
+            "path": "/api/tax-declarations/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`tax-declaration.id\` you want to get detailed information about.",
@@ -13266,7 +13266,7 @@ At the moment, the Tax Declaration resource is available for:
               },
             ],
             "method": "GET",
-            "path": "/api/tax-declarations",
+            "path": "/api/tax-declarations/",
             "request": {
               "name": "ListTaxDeclarationsRequest",
               "query-parameters": {
@@ -13453,7 +13453,7 @@ At the moment, the Tax Declaration resource is available for:
               },
             ],
             "method": "POST",
-            "path": "/api/tax-declarations",
+            "path": "/api/tax-declarations/",
             "request": {
               "body": {
                 "properties": {
@@ -13615,7 +13615,7 @@ client.tax_retentions.list(params: {
               },
             ],
             "method": "DELETE",
-            "path": "/api/tax-retentions/{id}",
+            "path": "/api/tax-retentions/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`tax-retention.id\` that you want to delete.",
@@ -13675,7 +13675,7 @@ client.tax_retentions.list(params: {
               },
             ],
             "method": "GET",
-            "path": "/api/tax-retentions/{id}",
+            "path": "/api/tax-retentions/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`tax-retention.id\` you want to get detailed information about.",
@@ -13763,7 +13763,7 @@ client.tax_retentions.list(params: {
               },
             ],
             "method": "GET",
-            "path": "/api/tax-retentions",
+            "path": "/api/tax-retentions/",
             "request": {
               "name": "ListTaxRetentionsRequest",
               "query-parameters": {
@@ -13882,7 +13882,7 @@ client.tax_retentions.list(params: {
               },
             ],
             "method": "POST",
-            "path": "/api/tax-retentions",
+            "path": "/api/tax-retentions/",
             "request": {
               "body": {
                 "properties": {
@@ -14021,7 +14021,7 @@ client.tax_returns.list(params: {
               },
             ],
             "method": "DELETE",
-            "path": "/api/tax-returns/{id}",
+            "path": "/api/tax-returns/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The ID of the tax return you want to delete.",
@@ -15052,7 +15052,7 @@ client.tax_returns.list(params: {
               },
             ],
             "method": "GET",
-            "path": "/api/tax-returns/{id}",
+            "path": "/api/tax-returns/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`tax-return.id\` you want to get detailed information about.",
@@ -15864,7 +15864,7 @@ client.tax_returns.list(params: {
               },
             ],
             "method": "GET",
-            "path": "/api/tax-returns",
+            "path": "/api/tax-returns/",
             "request": {
               "name": "ListTaxReturnsRequest",
               "query-parameters": {
@@ -17015,7 +17015,7 @@ client.tax_returns.list(params: {
               },
             ],
             "method": "POST",
-            "path": "/api/tax-returns",
+            "path": "/api/tax-returns/",
             "request": {
               "body": "RetrieveTaxReturnsRequestBody",
               "name": "RetrieveTaxReturnsRequest",
@@ -17143,7 +17143,7 @@ client.tax_status.list(params: {
               },
             ],
             "method": "DELETE",
-            "path": "/api/tax-status/{id}",
+            "path": "/api/tax-status/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "the \`tax-status.id\` that you want to delete",
@@ -17332,7 +17332,7 @@ client.tax_status.list(params: {
               },
             ],
             "method": "GET",
-            "path": "/api/tax-status/{id}",
+            "path": "/api/tax-status/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`tax-status.id\` you want to get detailed information about.",
@@ -17551,7 +17551,7 @@ client.tax_status.list(params: {
               },
             ],
             "method": "GET",
-            "path": "/api/tax-status",
+            "path": "/api/tax-status/",
             "request": {
               "name": "ListTaxStatusRequest",
               "query-parameters": {
@@ -17803,7 +17803,7 @@ client.tax_status.list(params: {
               },
             ],
             "method": "POST",
-            "path": "/api/tax-status",
+            "path": "/api/tax-status/",
             "request": {
               "body": {
                 "properties": {
@@ -17957,7 +17957,7 @@ client.transactions.list(params: {
               },
             ],
             "method": "DELETE",
-            "path": "/api/transactions/{id}",
+            "path": "/api/transactions/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`transaction.id\` that you want to delete.",
@@ -18351,7 +18351,7 @@ client.transactions.list(params: {
               },
             ],
             "method": "GET",
-            "path": "/api/transactions/{id}",
+            "path": "/api/transactions/{id}/",
             "path-parameters": {
               "id": {
                 "docs": "The \`transaction.id\` you want to get detailed information about.",
@@ -18778,7 +18778,7 @@ client.transactions.list(params: {
               },
             ],
             "method": "GET",
-            "path": "/api/transactions",
+            "path": "/api/transactions/",
             "request": {
               "name": "ListTransactionsRequest",
               "query-parameters": {
@@ -19335,7 +19335,7 @@ client.transactions.list(params: {
               },
             ],
             "method": "PATCH",
-            "path": "/api/transactions",
+            "path": "/api/transactions/",
             "request": {
               "body": "root.PatchBody",
               "name": "PatchTransactionsRequest",
@@ -19666,7 +19666,7 @@ If you try to access older information than what we can access, we will return a
               },
             ],
             "method": "POST",
-            "path": "/api/transactions",
+            "path": "/api/transactions/",
             "request": {
               "body": "root.TransactionsRequest",
               "name": "RetrieveTransactionsRequest",
@@ -19722,7 +19722,7 @@ If you try to access older information than what we can access, we will return a
               },
             ],
             "method": "POST",
-            "path": "/api/transactions",
+            "path": "/api/transactions/",
             "request": {
               "body": "root.TransactionsRequest",
               "headers": {
