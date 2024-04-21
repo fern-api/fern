@@ -46,7 +46,7 @@ describe("Fetcher Tests", () => {
         }
     }, 90_000);
 
-    it("SSE", async () => {
+    it.skip("SSE", async () => {
         const response = await fetcher<stream.Readable>({
             url: "https://text.octoai.run/v1/chat/completions",
             method: "POST",

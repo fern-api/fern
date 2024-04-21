@@ -21,4 +21,15 @@ module.exports = {
         POSTHOG_API_KEY: null,
         DOCS_DOMAIN_SUFFIX: "dev.docs.buildwithfern.com",
     },
+    local: {
+        AUTH0_DOMAIN: "fern-dev.us.auth0.com",
+        AUTH0_CLIENT_ID: "4QiMvRvRUYpnycrVDK2M59hhJ6kcHYFQ",
+        DEFAULT_FIDDLE_ORIGIN: "https://fiddle-coordinator-dev2.buildwithfern.com",
+        DEFAULT_VENUS_ORIGIN: "https://venus-dev2.buildwithfern.com",
+        DEFAULT_FDR_ORIGIN: "http://localhost:8080",
+        VENUS_AUDIENCE: "venus-dev",
+        LOCAL_STORAGE_FOLDER: ".fern-local",
+        POSTHOG_API_KEY: null,
+        DOCS_DOMAIN_SUFFIX: "dev.docs.buildwithfern.com",
+    },
 };

@@ -17,6 +17,7 @@
   "sideEffects": false,
   "bin": {
     "fern:dev": "./dist/dev/bundle.cjs",
+    "fern:local": "./dist/local/bundle.cjs",
     "fern:prod": "./dist/prod/bundle.cjs"
   },
   "scripts": {
@@ -30,10 +31,13 @@
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck",
     "env:dev": "env-cmd -r .env-cmdrc.cjs -e dev",
+    "env:local": "env-cmd -r .env-cmdrc.cjs -e local",
     "env:prod": "env-cmd -r .env-cmdrc.cjs -e prod",
     "dist:cli:dev": "yarn compile && yarn env:dev node build.dev.cjs",
+    "dist:cli:local": "yarn compile && yarn env:local node build.local.cjs",
     "dist:cli:prod": "yarn compile && yarn env:prod node build.prod.cjs",
     "publish:cli:dev": "yarn dist:cli:dev && cd dist/dev && yarn npm publish",
+    "publish:cli:local": "yarn dist:cli:local && cd dist/local && yarn npm publish",
     "publish:cli:prod": "yarn dist:cli:prod && cd dist/prod && yarn npm publish"
   },
   "dependencies": {

@@ -3438,6 +3438,7 @@ __metadata:
     yargs: ^17.4.1
   bin:
     "fern:dev": ./dist/dev/bundle.cjs
+    "fern:local": ./dist/local/bundle.cjs
     "fern:prod": ./dist/prod/bundle.cjs
   languageName: unknown
   linkType: soft
