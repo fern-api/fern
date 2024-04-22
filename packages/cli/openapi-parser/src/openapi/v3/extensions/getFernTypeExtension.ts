@@ -150,7 +150,8 @@ export function getSchemaFromFernType({
                       key: keyType,
                       value: valueType,
                       description,
-                      groupName
+                      groupName,
+                      example: undefined
                   })
                 : undefined,
         list: (itemType) =>

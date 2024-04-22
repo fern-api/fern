@@ -1323,10 +1323,10 @@ exports[`open api parser flexport simple 1`] = `
                         "twenty_ft": 2,
                       },
                       "new_metadata": {
-                        "PO": {
+                        "purchase_order": {
                           "0": "12345",
                         },
-                        "SKU": {
+                        "sku": {
                           "0": "abc123",
                         },
                       },
@@ -1969,6 +1969,14 @@ exports[`open api parser flexport simple 1`] = `
                           "document_line_number": 4,
                           "id": 12345,
                           "manufacturer_name": "Company Name",
+                          "metadata": {
+                            "purchase_order": {
+                              "0": "12345",
+                            },
+                            "sku": {
+                              "0": "abc123",
+                            },
+                          },
                           "price_per_unit": {
                             "amount": "12.34",
                             "currency_code": "USD",
@@ -2013,8 +2021,11 @@ exports[`open api parser flexport simple 1`] = `
                         },
                       ],
                       "metadata": {
-                        "metadata": {
-                          "key": "value",
+                        "purchase_order": {
+                          "0": "12345",
+                        },
+                        "sku": {
+                          "0": "abc123",
                         },
                       },
                       "order_number": "order_number",
@@ -2127,6 +2138,14 @@ exports[`open api parser flexport simple 1`] = `
                               "document_line_number": 4,
                               "id": 12345,
                               "manufacturer_name": "Company Name",
+                              "metadata": {
+                                "purchase_order": {
+                                  "0": "12345",
+                                },
+                                "sku": {
+                                  "0": "abc123",
+                                },
+                              },
                               "price_per_unit": {
                                 "amount": "12.34",
                                 "currency_code": "USD",
@@ -2170,6 +2189,14 @@ exports[`open api parser flexport simple 1`] = `
                               "zip": "56307",
                             },
                           ],
+                          "metadata": {
+                            "purchase_order": {
+                              "0": "12345",
+                            },
+                            "sku": {
+                              "0": "abc123",
+                            },
+                          },
                           "shipment": {
                             "_object": "/api/refs/object",
                             "id": 123456,
@@ -2282,6 +2309,14 @@ exports[`open api parser flexport simple 1`] = `
                           "document_line_number": 4,
                           "id": 12345,
                           "manufacturer_name": "Company Name",
+                          "metadata": {
+                            "purchase_order": {
+                              "0": "12345",
+                            },
+                            "sku": {
+                              "0": "abc123",
+                            },
+                          },
                           "price_per_unit": {
                             "amount": "12.34",
                             "currency_code": "USD",
@@ -2326,8 +2361,11 @@ exports[`open api parser flexport simple 1`] = `
                         },
                       ],
                       "metadata": {
-                        "metadata": {
-                          "key": "value",
+                        "purchase_order": {
+                          "0": "12345",
+                        },
+                        "sku": {
+                          "0": "abc123",
                         },
                       },
                       "order_number": "order_number",
@@ -2414,6 +2452,14 @@ exports[`open api parser flexport simple 1`] = `
                           "document_line_number": 4,
                           "id": 12345,
                           "manufacturer_name": "Company Name",
+                          "metadata": {
+                            "purchase_order": {
+                              "0": "12345",
+                            },
+                            "sku": {
+                              "0": "abc123",
+                            },
+                          },
                           "price_per_unit": {
                             "amount": "12.34",
                             "currency_code": "USD",
@@ -2458,8 +2504,11 @@ exports[`open api parser flexport simple 1`] = `
                         },
                       ],
                       "metadata": {
-                        "metadata": {
-                          "key": "value",
+                        "purchase_order": {
+                          "0": "12345",
+                        },
+                        "sku": {
+                          "0": "abc123",
                         },
                       },
                       "order_number": "order_number",
@@ -2642,8 +2691,11 @@ exports[`open api parser flexport simple 1`] = `
                         "ref_type": "/network/location",
                       },
                       "metadata": {
-                        "metadata": {
-                          "key": "value",
+                        "purchase_order": {
+                          "0": "12345",
+                        },
+                        "sku": {
+                          "0": "abc123",
                         },
                       },
                       "name": "Zoomit",
@@ -2740,6 +2792,14 @@ exports[`open api parser flexport simple 1`] = `
                             "_object": "/api/refs/collection",
                             "link": "https://api.flexport.com/network/location/123456",
                             "ref_type": "/network/location",
+                          },
+                          "metadata": {
+                            "purchase_order": {
+                              "0": "12345",
+                            },
+                            "sku": {
+                              "0": "abc123",
+                            },
                           },
                           "name": "CompanyFoo",
                           "ref": "ref_for_company",
@@ -2839,8 +2899,11 @@ exports[`open api parser flexport simple 1`] = `
                         "ref_type": "/network/location",
                       },
                       "metadata": {
-                        "metadata": {
-                          "key": "value",
+                        "purchase_order": {
+                          "0": "12345",
+                        },
+                        "sku": {
+                          "0": "abc123",
                         },
                       },
                       "name": "CompanyFoo",
@@ -2915,8 +2978,11 @@ exports[`open api parser flexport simple 1`] = `
                         "ref_type": "/network/location",
                       },
                       "metadata": {
-                        "metadata": {
-                          "key": "value",
+                        "purchase_order": {
+                          "0": "12345",
+                        },
+                        "sku": {
+                          "0": "abc123",
                         },
                       },
                       "name": "CompanyFoo",
@@ -3001,8 +3067,11 @@ exports[`open api parser flexport simple 1`] = `
                         "ref_type": "/network/location",
                       },
                       "metadata": {
-                        "metadata": {
-                          "key": "value",
+                        "purchase_order": {
+                          "0": "12345",
+                        },
+                        "sku": {
+                          "0": "abc123",
                         },
                       },
                       "name": "Updated Zoomit",
@@ -3915,6 +3984,14 @@ exports[`open api parser flexport simple 1`] = `
                             },
                           ],
                           "last_free_day_date": "2019-02-16T00:00:00Z",
+                          "metadata": {
+                            "purchase_order": {
+                              "0": "12345",
+                            },
+                            "sku": {
+                              "0": "abc123",
+                            },
+                          },
                           "seal_number": "UE_WQ2934875",
                           "shipment": {
                             "_object": "/api/refs/object",
@@ -4035,8 +4112,11 @@ exports[`open api parser flexport simple 1`] = `
                       ],
                       "last_free_day_date": "2019-02-16T00:00:00Z",
                       "metadata": {
-                        "metadata": {
-                          "key": "value",
+                        "purchase_order": {
+                          "0": "12345",
+                        },
+                        "sku": {
+                          "0": "abc123",
                         },
                       },
                       "pickup_number": "ABCD1234",
@@ -4801,6 +4881,14 @@ exports[`open api parser flexport simple 1`] = `
                             "_object": "/ocean/shipment_container",
                             "container_number": "BWSE3982156",
                             "id": 283910,
+                            "metadata": {
+                              "purchase_order": {
+                                "0": "12345",
+                              },
+                              "sku": {
+                                "0": "abc123",
+                              },
+                            },
                           },
                         ],
                         "exception": {
@@ -4817,6 +4905,14 @@ exports[`open api parser flexport simple 1`] = `
                           "_object": "/shipments",
                           "id": 2983,
                           "it_number": "V12345678",
+                          "metadata": {
+                            "purchase_order": {
+                              "0": "12345",
+                            },
+                            "sku": {
+                              "0": "abc123",
+                            },
+                          },
                           "name": "ABC Shipment",
                           "pieces": 8372,
                           "visibility_only": true,
@@ -4834,6 +4930,14 @@ exports[`open api parser flexport simple 1`] = `
                           "_object": "/shipments",
                           "id": 2983,
                           "it_number": "V12345678",
+                          "metadata": {
+                            "purchase_order": {
+                              "0": "12345",
+                            },
+                            "sku": {
+                              "0": "abc123",
+                            },
+                          },
                           "name": "ABC Shipment",
                           "pieces": 8372,
                           "visibility_only": true,
@@ -5647,6 +5751,14 @@ Other details about this invoice",
                           },
                           "editable": true,
                           "id": "abdef123",
+                          "metadata": {
+                            "purchase_order": {
+                              "0": "12345",
+                            },
+                            "sku": {
+                              "0": "abc123",
+                            },
+                          },
                           "name": "Wayne Enterprises",
                         },
                       ],
@@ -5748,8 +5860,11 @@ Other details about this invoice",
                       "editable": true,
                       "id": "abdef123",
                       "metadata": {
-                        "metadata": {
-                          "key": "value",
+                        "purchase_order": {
+                          "0": "12345",
+                        },
+                        "sku": {
+                          "0": "abc123",
                         },
                       },
                       "name": "Zoomit",
@@ -5844,8 +5959,11 @@ Other details about this invoice",
                       "editable": true,
                       "id": "abdef123",
                       "metadata": {
-                        "metadata": {
-                          "key": "value",
+                        "purchase_order": {
+                          "0": "12345",
+                        },
+                        "sku": {
+                          "0": "abc123",
                         },
                       },
                       "name": "Wayne Enterprises",
@@ -5917,8 +6035,11 @@ Other details about this invoice",
                       "editable": true,
                       "id": "abdef123",
                       "metadata": {
-                        "metadata": {
-                          "key": "value",
+                        "purchase_order": {
+                          "0": "12345",
+                        },
+                        "sku": {
+                          "0": "abc123",
                         },
                       },
                       "name": "Zoomit V2",
@@ -6818,8 +6939,11 @@ Other details about this invoice",
                     },
                     "memo": "This message is written in invisible ink",
                     "metadata": {
-                      "metadata": {
-                        "key": "value",
+                      "purchase_order": {
+                        "0": "12345",
+                      },
+                      "sku": {
+                        "0": "abc123",
                       },
                     },
                     "must_arrive_date": "must_arrive_date",
@@ -6996,8 +7120,11 @@ Other details about this invoice",
                           },
                           "memo": "memo",
                           "metadata": {
-                            "size": {
-                              "0": "M",
+                            "purchase_order": {
+                              "0": "12345",
+                            },
+                            "sku": {
+                              "0": "abc123",
                             },
                           },
                           "must_arrive_date": "2019-07-31",
@@ -7293,8 +7420,11 @@ Other details about this invoice",
                       },
                       "memo": "This message is written in invisible ink",
                       "metadata": {
-                        "metadata": {
-                          "key": "value",
+                        "purchase_order": {
+                          "0": "12345",
+                        },
+                        "sku": {
+                          "0": "abc123",
                         },
                       },
                       "must_arrive_date": "must_arrive_date",
@@ -7492,8 +7622,11 @@ Other details about this invoice",
                     },
                     "memo": "This message is written in invisible ink",
                     "metadata": {
-                      "metadata": {
-                        "key": "value",
+                      "purchase_order": {
+                        "0": "12345",
+                      },
+                      "sku": {
+                        "0": "abc123",
                       },
                     },
                     "must_arrive_date": "must_arrive_date",
@@ -7744,8 +7877,11 @@ Other details about this invoice",
                             },
                           ],
                           "metadata": {
-                            "size": {
-                              "0": "M",
+                            "purchase_order": {
+                              "0": "12345",
+                            },
+                            "sku": {
+                              "0": "abc123",
                             },
                           },
                           "must_arrive_date": "2019-03-11",
@@ -7934,8 +8070,11 @@ Other details about this invoice",
                         },
                       ],
                       "metadata": {
-                        "size": {
-                          "0": "M",
+                        "purchase_order": {
+                          "0": "12345",
+                        },
+                        "sku": {
+                          "0": "abc123",
                         },
                       },
                       "must_arrive_date": "2019-03-11",
@@ -8267,6 +8406,14 @@ Other details about this invoice",
                             "_object": "/api/refs/collection",
                             "link": "https://api.flexport.com/shipment_legs?f.shipment.id=123",
                             "ref_type": "/shipment_leg",
+                          },
+                          "metadata": {
+                            "purchase_order": {
+                              "0": "12345",
+                            },
+                            "sku": {
+                              "0": "abc123",
+                            },
                           },
                           "name": "ABC Shipment",
                           "ocean_shipment": {
@@ -8776,8 +8923,11 @@ Other details about this invoice",
                         "ref_type": "/shipment_leg",
                       },
                       "metadata": {
-                        "metadata": {
-                          "key": "value",
+                        "purchase_order": {
+                          "0": "12345",
+                        },
+                        "sku": {
+                          "0": "abc123",
                         },
                       },
                       "name": "ABC Shipment",
@@ -9109,6 +9259,9 @@ Other details about this invoice",
                       "metadata": {
                         "purchase_order": {
                           "0": "12345",
+                        },
+                        "sku": {
+                          "0": "abc123",
                         },
                       },
                       "name": "ABC Shipment",

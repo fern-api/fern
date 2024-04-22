@@ -629,6 +629,65 @@ exports[`open api parser merge parse open api 1`] = `
                           "value": "a3617eb4-dfe3-426f-921e-a65fc1661e10",
                         },
                       },
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "id": {
                         "type": "primitive",
                         "value": {
@@ -1231,25 +1290,55 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "field_mappings",
+                      "value": "organization_defined_targets",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
                               "type": "string",
-                              "value": "value",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
                             },
                           },
-                        },
-                      ],
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "linked_account_defined_targets",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
+                            },
+                          },
+                        ],
+                      },
                     },
                   },
                 ],
@@ -1559,6 +1648,65 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "datetime",
                           "value": "2021-10-15 00:23:25.309761+00:00",
                         },
+                      },
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
                       },
                       "id": {
                         "type": "primitive",
@@ -2009,25 +2157,55 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "field_mappings",
+                      "value": "organization_defined_targets",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
                               "type": "string",
-                              "value": "value",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
                             },
                           },
-                        },
-                      ],
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "linked_account_defined_targets",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
+                            },
+                          },
+                        ],
+                      },
                     },
                   },
                 ],
@@ -2263,6 +2441,65 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "string",
                           "value": "Waystar Royco",
                         },
+                      },
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
                       },
                       "id": {
                         "type": "primitive",
@@ -2643,25 +2880,55 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "field_mappings",
+                      "value": "organization_defined_targets",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
                               "type": "string",
-                              "value": "value",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
                             },
                           },
-                        },
-                      ],
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "linked_account_defined_targets",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
+                            },
+                          },
+                        ],
+                      },
                     },
                   },
                 ],
@@ -2996,6 +3263,65 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "datetime",
                           "value": "2020-11-09T00:00:00Z",
                         },
+                      },
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
                       },
                       "gross_pay": {
                         "type": "primitive",
@@ -3622,6 +3948,65 @@ exports[`open api parser merge parse open api 1`] = `
                           "value": "35347df1-95e7-46e2-93cc-66f1191edca5",
                         },
                       },
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "id": {
                         "type": "primitive",
                         "value": {
@@ -3698,6 +4083,65 @@ exports[`open api parser merge parse open api 1`] = `
                           "value": "35347df1-95e7-46e2-93cc-66f1191edca5",
                         },
                       },
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "id": {
                         "type": "primitive",
                         "value": {
@@ -3772,25 +4216,55 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "field_mappings",
+                      "value": "organization_defined_targets",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
                               "type": "string",
-                              "value": "value",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
                             },
                           },
-                        },
-                      ],
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "linked_account_defined_targets",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
+                            },
+                          },
+                        ],
+                      },
                     },
                   },
                 ],
@@ -3893,6 +4367,65 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "boolean",
                           "value": true,
                         },
+                      },
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
                       },
                       "id": {
                         "type": "primitive",
@@ -4193,6 +4726,65 @@ exports[`open api parser merge parse open api 1`] = `
                       "ethnicity": {
                         "type": "enum",
                         "value": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
+                      },
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
                       },
                       "first_name": {
                         "type": "primitive",
@@ -8761,25 +9353,55 @@ exports[`open api parser merge parse open api 1`] = `
                       {
                         "key": {
                           "type": "string",
-                          "value": "field_mappings",
+                          "value": "organization_defined_targets",
                         },
                         "value": {
-                          "type": "map",
-                          "value": [
-                            {
-                              "key": {
-                                "type": "string",
-                                "value": "key",
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
+                          "type": "unknown",
+                          "value": {
+                            "type": "map",
+                            "value": [
+                              {
+                                "key": {
                                   "type": "string",
-                                  "value": "value",
+                                  "value": "custom_key",
+                                },
+                                "value": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "custom_value",
+                                  },
                                 },
                               },
-                            },
-                          ],
+                            ],
+                          },
+                        },
+                      },
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "linked_account_defined_targets",
+                        },
+                        "value": {
+                          "type": "unknown",
+                          "value": {
+                            "type": "map",
+                            "value": [
+                              {
+                                "key": {
+                                  "type": "string",
+                                  "value": "custom_key",
+                                },
+                                "value": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "custom_value",
+                                  },
+                                },
+                              },
+                            ],
+                          },
                         },
                       },
                     ],
@@ -9248,25 +9870,55 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "field_mappings",
+                      "value": "organization_defined_targets",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
                               "type": "string",
-                              "value": "value",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
                             },
                           },
-                        },
-                      ],
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "linked_account_defined_targets",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
+                            },
+                          },
+                        ],
+                      },
                     },
                   },
                 ],
@@ -13404,6 +14056,65 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "enum",
                         "value": "FULL_TIME",
                       },
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "flsa_status": {
                         "type": "enum",
                         "value": "EXEMPT",
@@ -14340,25 +15051,55 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "field_mappings",
+                      "value": "organization_defined_targets",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
                               "type": "string",
-                              "value": "value",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
                             },
                           },
-                        },
-                      ],
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "linked_account_defined_targets",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
+                            },
+                          },
+                        ],
+                      },
                     },
                   },
                 ],
@@ -15137,6 +15878,65 @@ exports[`open api parser merge parse open api 1`] = `
                 "value": [
                   {
                     "properties": {
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "id": {
                         "type": "primitive",
                         "value": {
@@ -15578,25 +16378,55 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "field_mappings",
+                      "value": "organization_defined_targets",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
                               "type": "string",
-                              "value": "value",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
                             },
                           },
-                        },
-                      ],
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "linked_account_defined_targets",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
+                            },
+                          },
+                        ],
+                      },
                     },
                   },
                 ],
@@ -17228,6 +18058,65 @@ exports[`open api parser merge parse open api 1`] = `
                         "type": "enum",
                         "value": "AF",
                       },
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "id": {
                         "type": "primitive",
                         "value": {
@@ -17684,25 +18573,55 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "field_mappings",
+                      "value": "organization_defined_targets",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
                               "type": "string",
-                              "value": "value",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
                             },
                           },
-                        },
-                      ],
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "linked_account_defined_targets",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
+                            },
+                          },
+                        ],
+                      },
                     },
                   },
                 ],
@@ -17989,25 +18908,33 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "headers",
+                      "value": "EXTRA-HEADER",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "Authorization",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "<redacted>",
+                        },
+                      },
                     },
                   },
                 ],
@@ -18050,25 +18977,17 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "response_headers",
+                      "value": "X-Page-Token",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -18198,6 +19117,65 @@ exports[`open api parser merge parse open api 1`] = `
                 "value": [
                   {
                     "properties": {
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "id": {
                         "type": "primitive",
                         "value": {
@@ -18558,25 +19536,55 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "field_mappings",
+                      "value": "organization_defined_targets",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
                               "type": "string",
-                              "value": "value",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
                             },
                           },
-                        },
-                      ],
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "linked_account_defined_targets",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
+                            },
+                          },
+                        ],
+                      },
                     },
                   },
                 ],
@@ -18789,6 +19797,65 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "datetime",
                           "value": "2020-11-15T00:00:00Z",
                         },
+                      },
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
                       },
                       "id": {
                         "type": "primitive",
@@ -19461,25 +20528,55 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "field_mappings",
+                      "value": "organization_defined_targets",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
                               "type": "string",
-                              "value": "value",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
                             },
                           },
-                        },
-                      ],
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "linked_account_defined_targets",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
+                            },
+                          },
+                        ],
+                      },
                     },
                   },
                 ],
@@ -20816,6 +21913,65 @@ exports[`open api parser merge parse open api 1`] = `
                 "value": [
                   {
                     "properties": {
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "id": {
                         "type": "primitive",
                         "value": {
@@ -21230,25 +22386,55 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "field_mappings",
+                      "value": "organization_defined_targets",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
                               "type": "string",
-                              "value": "value",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
                             },
                           },
-                        },
-                      ],
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "linked_account_defined_targets",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
+                            },
+                          },
+                        ],
+                      },
                     },
                   },
                 ],
@@ -21512,6 +22698,65 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "datetime",
                           "value": "2020-11-17T00:00:00Z",
                         },
+                      },
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
                       },
                       "id": {
                         "type": "primitive",
@@ -22514,25 +23759,55 @@ exports[`open api parser merge parse open api 1`] = `
                       {
                         "key": {
                           "type": "string",
-                          "value": "field_mappings",
+                          "value": "organization_defined_targets",
                         },
                         "value": {
-                          "type": "map",
-                          "value": [
-                            {
-                              "key": {
-                                "type": "string",
-                                "value": "key",
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
+                          "type": "unknown",
+                          "value": {
+                            "type": "map",
+                            "value": [
+                              {
+                                "key": {
                                   "type": "string",
-                                  "value": "value",
+                                  "value": "custom_key",
+                                },
+                                "value": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "custom_value",
+                                  },
                                 },
                               },
-                            },
-                          ],
+                            ],
+                          },
+                        },
+                      },
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "linked_account_defined_targets",
+                        },
+                        "value": {
+                          "type": "unknown",
+                          "value": {
+                            "type": "map",
+                            "value": [
+                              {
+                                "key": {
+                                  "type": "string",
+                                  "value": "custom_key",
+                                },
+                                "value": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "custom_value",
+                                  },
+                                },
+                              },
+                            ],
+                          },
                         },
                       },
                     ],
@@ -22819,6 +24094,65 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "string",
                           "value": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                         },
+                      },
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
                       },
                       "id": {
                         "type": "primitive",
@@ -23391,25 +24725,55 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "field_mappings",
+                      "value": "organization_defined_targets",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
                               "type": "string",
-                              "value": "value",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
                             },
                           },
-                        },
-                      ],
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "linked_account_defined_targets",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
+                            },
+                          },
+                        ],
+                      },
                     },
                   },
                 ],
@@ -23715,25 +25079,55 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "field_mappings",
+                      "value": "organization_defined_targets",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
                               "type": "string",
-                              "value": "value",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
                             },
                           },
-                        },
-                      ],
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "linked_account_defined_targets",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
+                            },
+                          },
+                        ],
+                      },
                     },
                   },
                 ],

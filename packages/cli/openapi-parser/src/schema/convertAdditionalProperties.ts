@@ -17,7 +17,8 @@ export function convertAdditionalProperties({
     description,
     wrapAsNullable,
     context,
-    groupName
+    groupName,
+    example
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -27,6 +28,7 @@ export function convertAdditionalProperties({
     wrapAsNullable: boolean;
     context: SchemaParserContext;
     groupName: SdkGroupName | undefined;
+    example: unknown | undefined;
 }): SchemaWithExample {
     if (typeof additionalProperties === "boolean" || isAdditionalPropertiesEmptyDictionary(additionalProperties)) {
         return wrapMap({
@@ -52,7 +54,8 @@ export function convertAdditionalProperties({
                 example: undefined,
                 groupName: undefined
             }),
-            groupName
+            groupName,
+            example
         });
     }
     return wrapMap({
@@ -72,7 +75,8 @@ export function convertAdditionalProperties({
             groupName: undefined
         },
         valueSchema: convertSchema(additionalProperties, wrapAsNullable, context, [...breadcrumbs, "Value"]),
-        groupName
+        groupName,
+        example
     });
 }
 
@@ -89,7 +93,8 @@ export function wrapMap({
     valueSchema,
     wrapAsNullable,
     description,
-    groupName
+    groupName,
+    example
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -98,6 +103,7 @@ export function wrapMap({
     wrapAsNullable: boolean;
     description: string | undefined;
     groupName: SdkGroupName | undefined;
+    example: unknown | undefined;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
@@ -109,7 +115,8 @@ export function wrapMap({
                 description,
                 key: keySchema,
                 value: valueSchema,
-                groupName
+                groupName,
+                example
             }),
             description,
             groupName
@@ -121,6 +128,7 @@ export function wrapMap({
         description,
         key: keySchema,
         value: valueSchema,
-        groupName
+        groupName,
+        example
     });
 }
