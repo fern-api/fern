@@ -1,3 +1,4 @@
+import json
 from typing import Dict, List, Optional, Union
 
 import fern.ir.resources as ir_types
@@ -20,7 +21,8 @@ from fdr import (
     TemplateInput,
     VersionedSnippetTemplate,
 )
-
+from fern_python.generator_exec_wrapper import GeneratorExecWrapper
+from fern.generator_exec.resources import GeneratorUpdate, LogLevel, LogUpdate
 from fern_python.codegen import AST
 from fern_python.codegen.imports_manager import ImportsManager
 from fern_python.codegen.project import Project
@@ -68,6 +70,7 @@ class SnippetTemplateFactory:
         imports_manager: ImportsManager,
         ir: ir_types.IntermediateRepresentation,
         generated_root_client: GeneratedRootClient,
+        generator_exec_wrapper: GeneratorExecWrapper,
     ) -> None:
         self._project = project
         self._context = context
@@ -75,6 +78,7 @@ class SnippetTemplateFactory:
         self._imports_manager = imports_manager
         self._ir = ir
         self._generated_root_client = generated_root_client
+        self._generator_exec_wrapper = generator_exec_wrapper
 
     # Stolen from SnippetRegistry
     def _expression_to_snippet_str(
@@ -696,6 +700,10 @@ class SnippetTemplateFactory:
                         input_delimiter=",\n",
                         is_optional=True,
                     )
+                )
+
+                self._generator_exec_wrapper.send_update(
+                    GeneratorUpdate.factory.log(LogUpdate(level=LogLevel.DEBUG, message=f"Snippet template created for endpoint {json.dumps(self._endpoint_to_identifier(endpoint))}."))
                 )
                 snippet_templates.append(
                     SnippetRegistryEntry(

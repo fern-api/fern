@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.3.0-rc0] - 2024-04-10
+## [1.3.0-rc1] - 2024-04-22
+
+- Internal: add logging for python snippet template generation.
+
+## [1.3.0-rc0] - 2024-04-21
 
 - Feature: The generator now registers snippet templates which can be used for dynamic
   SDK code snippet generation.
