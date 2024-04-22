@@ -43,7 +43,7 @@ class SDKCustomConfig(pydantic.BaseModel):
     # Python SDK by removing nested `resources` directoy
     improved_imports: bool = True
 
-    follow_redirects_by_default: Optional[bool] = None
+    follow_redirects_by_default: Optional[bool] = True
 
     # deprecated, use client config instead
     client_class_name: Optional[str] = None
