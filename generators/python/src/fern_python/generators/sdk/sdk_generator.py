@@ -426,7 +426,7 @@ pip install --upgrade {project._project_config.package_name}
                 GeneratorUpdate.factory.log(
                     LogUpdate(
                         level=LogLevel.DEBUG,
-                        message=f"Generating snippet templates for Org: {org_id}, API: {api_name} at version: {project._project_config.package_version if project._project_config is not None else '0.0.0'}.",
+                        message=f"Generating snippet templates for Org: {org_id}, API: {api_name} for package {project._project_config.package_name if project._project_config is not None else 'package_unknown'} at version: {project._project_config.package_version if project._project_config is not None else '0.0.0'}.",
                     )
                 )
             )
