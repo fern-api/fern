@@ -718,7 +718,7 @@ class SnippetTemplateFactory:
 
                 # Create the outermost template, with the above template inputs
                 init_expression = AST.Expression(
-                    f"await {self.CLIENT_FIXTURE_NAME}.{package_path}{get_endpoint_name(endpoint)}(\n{self.TEMPLATE_SENTINEL}\n)"
+                    f"await {self.CLIENT_FIXTURE_NAME}.{package_path}{get_endpoint_name(endpoint)}(\n\t{self.TEMPLATE_SENTINEL}\n)"
                 )
                 init_string_template = self._expression_to_snippet_str(init_expression)
                 function_template = Template.factory.generic(
