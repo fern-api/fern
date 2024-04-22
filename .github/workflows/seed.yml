@@ -176,8 +176,10 @@ jobs:
         with:
           python-version: '3.8'
           cache: 'poetry'
-      
-      - run: poetry install
+
+      - name: Install Dependencies
+        working-directory: ./generators/python
+        run: poetry install
 
       - name: Seed Test
         env:
