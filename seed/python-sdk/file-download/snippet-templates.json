@@ -14,7 +14,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.service.download_file(\n$FERN_INPUT\n)",
+                "templateString": "await client.service.download_file(\n\t$FERN_INPUT\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",\n\t",
                 "type": "generic"

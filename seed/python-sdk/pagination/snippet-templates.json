@@ -14,7 +14,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.users.list_with_cursor_pagination(\n$FERN_INPUT\n)",
+                "templateString": "await client.users.list_with_cursor_pagination(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -103,7 +103,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.users.list_with_offset_pagination(\n$FERN_INPUT\n)",
+                "templateString": "await client.users.list_with_offset_pagination(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -192,7 +192,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.users.list_with_extended_results(\n$FERN_INPUT\n)",
+                "templateString": "await client.users.list_with_extended_results(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -232,7 +232,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.users.list_usernames(\n$FERN_INPUT\n)",
+                "templateString": "await client.users.list_usernames(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -272,7 +272,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.users.list_with_global_config(\n$FERN_INPUT\n)",
+                "templateString": "await client.users.list_with_global_config(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",

@@ -14,7 +14,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.service.upload(\n$FERN_INPUT\n)",
+                "templateString": "await client.service.upload(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",

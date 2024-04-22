@@ -14,7 +14,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.dummy.generate_stream(\n$FERN_INPUT\n)",
+                "templateString": "await client.dummy.generate_stream(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
