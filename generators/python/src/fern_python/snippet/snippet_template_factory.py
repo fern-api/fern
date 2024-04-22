@@ -1,4 +1,3 @@
-import json
 from typing import Dict, List, Optional, Union
 
 import fern.ir.resources as ir_types
@@ -133,9 +132,11 @@ class SnippetTemplateFactory:
                 is_optional=True,
                 template_string=f"{name}={self.TEMPLATE_SENTINEL}" if name is not None else f"{self.TEMPLATE_SENTINEL}",
                 template_inputs=[
-                    PayloadInput(
-                        location=location,
-                        path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs),
+                    TemplateInput.factory.payload(
+                        PayloadInput(
+                            location=location,
+                            path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs),
+                        )
                     )
                 ],
             )
