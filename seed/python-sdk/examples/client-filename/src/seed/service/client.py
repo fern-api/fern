@@ -185,7 +185,7 @@ class ServiceClient:
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        "X-API-Version": str(x_api_version),
+                        "X-API-Version": str(x_api_version) if x_api_version is not None else None,
                         **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
@@ -372,7 +372,7 @@ class AsyncServiceClient:
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        "X-API-Version": str(x_api_version),
+                        "X-API-Version": str(x_api_version) if x_api_version is not None else None,
                         **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
