@@ -17,7 +17,6 @@ export const GeneratorInvocationSchema = z.strictObject({
     "disable-examples": z.optional(z.boolean()),
     // Configures snippets for a particular generator.
     snippets: z.optional(GeneratorSnippetsSchema),
-
     // Use `metadata` instead of `publish-metadata`
     "publish-metadata": z.optional(GeneratorPublishMetadataSchema),
     metadata: z.optional(GeneratorPublishMetadataSchema)

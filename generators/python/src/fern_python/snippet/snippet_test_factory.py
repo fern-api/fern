@@ -305,20 +305,22 @@ class SnippetTestFactory:
         response_name = "response"
         async_response_name = "async_response"
 
-        response_json = (
-            example_response.body.json_example
-            if example_response is not None and example_response.body is not None
-            else None
-        )
-        response_body = example_response.body if example_response is not None else None
+        response_body = example_response.get_as_union().body if example_response is not None else None
+        response_json = response_body.json_example if response_body is not None else None
+        response_body = example_response.get_as_union().body if example_response is not None else None
 
         def writer(writer: AST.NodeWriter) -> None:
             if response_json is not None:
                 maybe_stringify_response_json = repr(response_json) if type(response_json) is str else response_json
                 writer.write_line(f"{expectation_name} = {maybe_stringify_response_json}")
-                expectations = self._generate_type_expectations_for_type_reference(response_body)
-                maybe_stringify_expectations = f"'{expectations}'" if type(expectations) is str else expectations
-                writer.write_line(f"{type_expectation_name} = {maybe_stringify_expectations}")
+                expectations = (
+                    self._generate_type_expectations_for_type_reference(response_body)
+                    if response_body is not None
+                    else None
+                )
+                if expectations is not None:
+                    maybe_stringify_expectations = f"'{expectations}'" if type(expectations) is str else expectations
+                    writer.write_line(f"{type_expectation_name} = {maybe_stringify_expectations}")
             if sync_expression:
                 if response_json is not None:
                     writer.write(f"{response_name} = ")
@@ -430,7 +432,7 @@ class SnippetTestFactory:
             if len(successful_examples) == 0:
                 continue
 
-            example: ir_types.ExampleEndpointCall = successful_examples[0]
+            example = successful_examples[0]
             endpoint_snippet = EndpointFunctionSnippetGenerator(
                 context=self._context,
                 snippet_writer=snippet_writer,
@@ -447,7 +449,7 @@ class SnippetTestFactory:
 
             response = ir_types.ExampleResponse.visit(
                 example.get_as_union().response,
-                ok=lambda ok_example: ok_example,
+                ok=lambda _: example.get_as_union().response,
                 error=lambda _: None,
             )
             # Add functions to a test function

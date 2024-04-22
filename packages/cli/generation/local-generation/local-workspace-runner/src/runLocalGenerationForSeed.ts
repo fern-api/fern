@@ -1,4 +1,4 @@
-import { generatorsYml, SNIPPET_JSON_FILENAME } from "@fern-api/configuration";
+import { generatorsYml, SNIPPET_JSON_FILENAME, SNIPPET_TEMPLATES_JSON_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
@@ -47,6 +47,14 @@ export async function runLocalGenerationForSeed({
                                   join(
                                       generatorInvocation.absolutePathToLocalOutput,
                                       RelativeFilePath.of(SNIPPET_JSON_FILENAME)
+                                  )
+                              )
+                            : undefined,
+                        absolutePathToLocalSnippetTemplateJSON: generatorInvocation.absolutePathToLocalOutput
+                            ? AbsoluteFilePath.of(
+                                  join(
+                                      generatorInvocation.absolutePathToLocalOutput,
+                                      RelativeFilePath.of(SNIPPET_TEMPLATES_JSON_FILENAME)
                                   )
                               )
                             : undefined,
@@ -123,6 +131,12 @@ export async function writeIrAndConfigJson({
                             join(
                                 generatorInvocation.absolutePathToLocalOutput,
                                 RelativeFilePath.of(SNIPPET_JSON_FILENAME)
+                            )
+                        ),
+                        absolutePathToLocalSnippetTemplateJSON: AbsoluteFilePath.of(
+                            join(
+                                generatorInvocation.absolutePathToLocalOutput,
+                                RelativeFilePath.of(SNIPPET_TEMPLATES_JSON_FILENAME)
                             )
                         ),
                         audiences: generatorGroup.audiences,

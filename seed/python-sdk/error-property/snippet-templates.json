@@ -1,0 +1,25 @@
+[
+    {
+        "sdk": {
+            "package": "fern_error-property",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/property-based-error",
+            "method": "GET"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedErrorProperty\n\nclient = AsyncSeedErrorProperty(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.property_based_error.throw_error(\n$FERN_INPUT\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

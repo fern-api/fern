@@ -51,12 +51,12 @@ def test_construct_valid() -> None:
     shape_expectation = Shape_Square(id="string", length=1.1)
     assert cast_response.union is not None
     assert cast_response.union.id == shape_expectation.id
-    assert cast_response.union.length == shape_expectation.length
+    assert "length" in cast_response.union and cast_response.union.length == shape_expectation.length
     assert cast_response.union.type == shape_expectation.type
 
     assert cast_response.undiscriminated_union is not None
     assert cast_response.undiscriminated_union.id == "string2"
-    assert cast_response.undiscriminated_union.length == 6.7
+    assert "length" in cast_response.undiscriminated_union and cast_response.undiscriminated_union.length == 6.7
 
 
 def test_construct_unset() -> None:

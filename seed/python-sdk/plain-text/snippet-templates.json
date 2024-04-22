@@ -1,0 +1,25 @@
+[
+    {
+        "sdk": {
+            "package": "fern_plain-text",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/text",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedPlainText\n\nclient = AsyncSeedPlainText(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.service.get_text(\n$FERN_INPUT\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

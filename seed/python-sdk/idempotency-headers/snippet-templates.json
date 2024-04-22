@@ -1,0 +1,97 @@
+[
+    {
+        "sdk": {
+            "package": "fern_idempotency-headers",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/payment",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedIdempotencyHeaders\n\nclient = AsyncSeedIdempotencyHeaders(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.payment.create(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "amount=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": "amount"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "currency=$FERN_INPUT",
+                            "values": {
+                                "USD": "\"USD\"\n",
+                                "YEN": "\"YEN\"\n"
+                            },
+                            "templateInput": {
+                                "location": "BODY",
+                                "path": "currency"
+                            },
+                            "type": "enum"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_idempotency-headers",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/payment/{paymentId}",
+            "method": "DELETE"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedIdempotencyHeaders\n\nclient = AsyncSeedIdempotencyHeaders(\n    token=\"YOUR_TOKEN\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.payment.delete(\n$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "payment_id=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "PATH",
+                                    "path": "paymentId"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

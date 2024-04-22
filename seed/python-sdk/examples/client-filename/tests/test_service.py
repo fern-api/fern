@@ -40,7 +40,6 @@ async def test_get_movie(client: SeedExhaustive, async_client: AsyncSeedExhausti
 
 async def test_create_movie(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
     expected_response = "movie-c06a4ad7"
-    expected_types = None
     response = client.service.create_movie(
         request=Movie(
             id="movie-c06a4ad7",

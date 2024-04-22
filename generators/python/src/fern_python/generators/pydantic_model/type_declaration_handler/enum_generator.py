@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Union
 
 import fern.ir.resources as ir_types
 
@@ -97,13 +97,13 @@ class EnumSnippetGenerator:
         self,
         snippet_writer: SnippetWriter,
         name: ir_types.DeclaredTypeName,
-        example: ir_types.ExampleEnumType,
+        example: Union[ir_types.ExampleEnumType, ir_types.NameAndWireValue],
         use_str_enums: bool,
     ):
         self._use_str_enums = use_str_enums
         self.snippet_writer = snippet_writer
         self.name = name
-        self.example = example
+        self.example = example.value if isinstance(example, ir_types.ExampleEnumType) else example
 
     def generate_snippet(self) -> AST.Expression:
         class_reference = self.snippet_writer.get_class_reference_for_declared_type_name(
@@ -112,10 +112,11 @@ class EnumSnippetGenerator:
 
         def write_enum(writer: AST.NodeWriter) -> None:
             if self._use_str_enums:
-                writer.write(f'"{self.example.value.wire_value}"')
+                writer.write(f'"{self.example.wire_value}"')
             else:
+                enum_wire_value = self.example.name
                 writer.write_node(AST.Expression(class_reference))
-                writer.write(f".{_get_class_var_name(self.example.value.name)}")
+                writer.write(f".{_get_class_var_name(enum_wire_value)}")
 
         return AST.Expression(AST.CodeWriter(write_enum))
 

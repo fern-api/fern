@@ -7,7 +7,6 @@ from .utilities import validate_response
 
 async def test_get_dummy(client: SeedNoEnvironment, async_client: AsyncSeedNoEnvironment) -> None:
     expected_response = "string"
-    expected_types = None
     response = client.dummy.get_dummy()
     validate_response(response, expected_response, expected_types)
 

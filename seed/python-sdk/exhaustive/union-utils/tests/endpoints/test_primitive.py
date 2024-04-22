@@ -10,7 +10,6 @@ from ..utilities import validate_response
 
 async def test_get_and_return_string(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
     expected_response = "string"
-    expected_types = None
     response = client.endpoints.primitive.get_and_return_string(request="string")
     validate_response(response, expected_response, expected_types)
 
@@ -30,7 +29,6 @@ async def test_get_and_return_int(client: SeedExhaustive, async_client: AsyncSee
 
 async def test_get_and_return_long(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
     expected_response = 1000000
-    expected_types = None
     response = client.endpoints.primitive.get_and_return_long(request=1000000)
     validate_response(response, expected_response, expected_types)
 
@@ -40,7 +38,6 @@ async def test_get_and_return_long(client: SeedExhaustive, async_client: AsyncSe
 
 async def test_get_and_return_double(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
     expected_response = 1.1
-    expected_types = None
     response = client.endpoints.primitive.get_and_return_double(request=1.1)
     validate_response(response, expected_response, expected_types)
 
@@ -50,7 +47,6 @@ async def test_get_and_return_double(client: SeedExhaustive, async_client: Async
 
 async def test_get_and_return_bool(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
     expected_response = True
-    expected_types = None
     response = client.endpoints.primitive.get_and_return_bool(request=True)
     validate_response(response, expected_response, expected_types)
 
@@ -98,7 +94,6 @@ async def test_get_and_return_uuid(client: SeedExhaustive, async_client: AsyncSe
 
 async def test_get_and_return_base_64(client: SeedExhaustive, async_client: AsyncSeedExhaustive) -> None:
     expected_response = "SGVsbG8gd29ybGQh"
-    expected_types = None
     response = client.endpoints.primitive.get_and_return_base_64(request="SGVsbG8gd29ybGQh")
     validate_response(response, expected_response, expected_types)
 

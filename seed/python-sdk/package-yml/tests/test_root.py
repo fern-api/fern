@@ -7,7 +7,6 @@ from .utilities import validate_response
 
 async def test_echo(client: SeedPackageYml, async_client: AsyncSeedPackageYml) -> None:
     expected_response = "Hello world!"
-    expected_types = None
     response = client.echo(id="id-ksfd9c1", request="Hello world!")
     validate_response(response, expected_response, expected_types)
 

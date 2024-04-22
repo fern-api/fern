@@ -7,7 +7,6 @@ from .utilities import validate_response
 
 async def test_send_optional_body(client: SeedObjectsWithImports, async_client: AsyncSeedObjectsWithImports) -> None:
     expected_response = "string"
-    expected_types = None
     response = client.optional.send_optional_body(request={"string": {"key": "value"}})
     validate_response(response, expected_response, expected_types)
 

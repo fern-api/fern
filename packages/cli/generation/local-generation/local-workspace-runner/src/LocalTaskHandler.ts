@@ -11,8 +11,10 @@ export declare namespace LocalTaskHandler {
         context: TaskContext;
         absolutePathToTmpOutputDirectory: AbsoluteFilePath;
         absolutePathToTmpSnippetJSON: AbsoluteFilePath | undefined;
+        absolutePathToLocalSnippetTemplateJSON: AbsoluteFilePath | undefined;
         absolutePathToLocalOutput: AbsoluteFilePath;
         absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
+        absolutePathToTmpSnippetTemplatesJSON: AbsoluteFilePath | undefined;
     }
 }
 
@@ -20,6 +22,8 @@ export class LocalTaskHandler {
     private context: TaskContext;
     private absolutePathToTmpOutputDirectory: AbsoluteFilePath;
     private absolutePathToTmpSnippetJSON: AbsoluteFilePath | undefined;
+    private absolutePathToTmpSnippetTemplatesJSON: AbsoluteFilePath | undefined;
+    private absolutePathToLocalSnippetTemplateJSON: AbsoluteFilePath | undefined;
     private absolutePathToLocalOutput: AbsoluteFilePath;
     private absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
 
@@ -27,14 +31,18 @@ export class LocalTaskHandler {
         context,
         absolutePathToTmpOutputDirectory,
         absolutePathToTmpSnippetJSON,
+        absolutePathToLocalSnippetTemplateJSON,
         absolutePathToLocalOutput,
-        absolutePathToLocalSnippetJSON
+        absolutePathToLocalSnippetJSON,
+        absolutePathToTmpSnippetTemplatesJSON
     }: LocalTaskHandler.Init) {
         this.context = context;
         this.absolutePathToLocalOutput = absolutePathToLocalOutput;
         this.absolutePathToTmpOutputDirectory = absolutePathToTmpOutputDirectory;
         this.absolutePathToTmpSnippetJSON = absolutePathToTmpSnippetJSON;
         this.absolutePathToLocalSnippetJSON = absolutePathToLocalSnippetJSON;
+        this.absolutePathToLocalSnippetTemplateJSON = absolutePathToLocalSnippetTemplateJSON;
+        this.absolutePathToTmpSnippetTemplatesJSON = absolutePathToTmpSnippetTemplatesJSON;
     }
 
     public async copyGeneratedFiles(): Promise<void> {
@@ -47,6 +55,13 @@ export class LocalTaskHandler {
             await this.copySnippetJSON({
                 absolutePathToTmpSnippetJSON: this.absolutePathToTmpSnippetJSON,
                 absolutePathToLocalSnippetJSON: this.absolutePathToLocalSnippetJSON
+            });
+        }
+
+        if (this.absolutePathToTmpSnippetTemplatesJSON != null && this.absolutePathToLocalSnippetTemplateJSON != null) {
+            await this.copySnippetJSON({
+                absolutePathToTmpSnippetJSON: this.absolutePathToTmpSnippetTemplatesJSON,
+                absolutePathToLocalSnippetJSON: this.absolutePathToLocalSnippetTemplateJSON
             });
         }
     }
