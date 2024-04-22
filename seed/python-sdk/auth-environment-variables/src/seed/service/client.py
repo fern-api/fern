@@ -96,7 +96,7 @@ class ServiceClient:
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        "X-Endpoint-Header": str(x_endpoint_header),
+                        "X-Endpoint-Header": str(x_endpoint_header) if x_endpoint_header is not None else None,
                         **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
@@ -199,7 +199,7 @@ class AsyncServiceClient:
                 remove_none_from_dict(
                     {
                         **self._client_wrapper.get_headers(),
-                        "X-Endpoint-Header": str(x_endpoint_header),
+                        "X-Endpoint-Header": str(x_endpoint_header) if x_endpoint_header is not None else None,
                         **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
                 )
