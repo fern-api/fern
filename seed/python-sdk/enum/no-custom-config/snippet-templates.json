@@ -53,7 +53,7 @@
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -113,7 +113,7 @@
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -173,7 +173,7 @@
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -233,7 +233,7 @@
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"

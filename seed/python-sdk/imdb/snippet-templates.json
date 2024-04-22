@@ -23,7 +23,7 @@
                                 "from .create_movie_request import CreateMovieRequest"
                             ],
                             "isOptional": true,
-                            "templateString": "request=CreateMovieRequest(\n$FERN_INPUT\n)",
+                            "templateString": "request=CreateMovieRequest(\n\t\t$FERN_INPUT\n\t)",
                             "templateInputs": [
                                 {
                                     "type": "template",
@@ -34,7 +34,8 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "title"
+                                                "path": "title",
+                                                "type": "payload"
                                             }
                                         ],
                                         "type": "generic"
@@ -49,19 +50,20 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "rating"
+                                                "path": "rating",
+                                                "type": "payload"
                                             }
                                         ],
                                         "type": "generic"
                                     }
                                 }
                             ],
-                            "inputDelimiter": ",\n",
+                            "inputDelimiter": ",\n\t\t",
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -93,14 +95,15 @@
                             "templateInputs": [
                                 {
                                     "location": "PATH",
-                                    "path": "movieId"
+                                    "path": "movieId",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"

@@ -25,14 +25,15 @@
                             "templateInputs": [
                                 {
                                     "location": "BODY",
-                                    "path": "query"
+                                    "path": "query",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -64,7 +65,8 @@
                             "templateInputs": [
                                 {
                                     "location": "BODY",
-                                    "path": "query"
+                                    "path": "query",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
@@ -79,14 +81,15 @@
                             "templateInputs": [
                                 {
                                     "location": "BODY",
-                                    "path": "temperature"
+                                    "path": "temperature",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -109,7 +112,7 @@
                 "isOptional": true,
                 "templateString": "await client.path.send(\n$FERN_INPUT\n)",
                 "templateInputs": [],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -141,14 +144,15 @@
                             "templateInputs": [
                                 {
                                     "location": "QUERY",
-                                    "path": "query"
+                                    "path": "query",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -178,7 +182,7 @@
                                 "from .send_request import SendRequest"
                             ],
                             "isOptional": true,
-                            "templateString": "request=SendRequest(\n$FERN_INPUT\n)",
+                            "templateString": "request=SendRequest(\n\t\t$FERN_INPUT\n\t)",
                             "templateInputs": [
                                 {
                                     "type": "template",
@@ -189,19 +193,20 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "query"
+                                                "path": "query",
+                                                "type": "payload"
                                             }
                                         ],
                                         "type": "generic"
                                     }
                                 }
                             ],
-                            "inputDelimiter": ",\n",
+                            "inputDelimiter": ",\n\t\t",
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"

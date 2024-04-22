@@ -16,7 +16,7 @@
                 "isOptional": true,
                 "templateString": "await client.union.get(\n$FERN_INPUT\n)",
                 "templateInputs": [],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"

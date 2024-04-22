@@ -25,14 +25,15 @@
                             "templateInputs": [
                                 {
                                     "location": "BODY",
-                                    "path": null
+                                    "path": null,
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -64,14 +65,15 @@
                             "templateInputs": [
                                 {
                                     "location": "PATH",
-                                    "path": "nestedId"
+                                    "path": "nestedId",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"

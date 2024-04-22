@@ -25,14 +25,15 @@
                             "templateInputs": [
                                 {
                                     "location": "BODY",
-                                    "path": "size"
+                                    "path": "size",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -64,14 +65,15 @@
                             "templateInputs": [
                                 {
                                     "location": "BODY",
-                                    "path": "s3Key"
+                                    "path": "s3Key",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"

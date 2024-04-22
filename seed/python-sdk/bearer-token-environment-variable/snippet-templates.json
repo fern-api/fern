@@ -16,7 +16,7 @@
                 "isOptional": true,
                 "templateString": "await client.service.get_with_bearer_token(\n$FERN_INPUT\n)",
                 "templateInputs": [],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
