@@ -151,7 +151,10 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             const eventShape = this.response.value._visit<
                 StreamingFetcher.MessageEventShape | StreamingFetcher.SSEEventShape
             >({
-                sse: () => ({ type: "sse" }),
+                sse: (sse) => ({
+                    type: "sse",
+                    streamTerminator: ts.factory.createStringLiteral(sse.terminator ?? "[DONE]")
+                }),
                 json: (json) => ({
                     type: "json",
                     messageTerminator: ts.factory.createStringLiteral(json.terminator ?? "\n")

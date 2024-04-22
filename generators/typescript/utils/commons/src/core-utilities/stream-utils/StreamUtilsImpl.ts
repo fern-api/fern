@@ -37,6 +37,14 @@ export class StreamingUtilsImpl extends CoreUtility implements StreamUtils {
                                 ts.factory.createStringLiteral("sse")
                             )
                         );
+                        if (eventShape.streamTerminator != null) {
+                            eventShapeProperties.push(
+                                ts.factory.createPropertyAssignment(
+                                    ts.factory.createIdentifier("streamTerminator"),
+                                    eventShape.streamTerminator ?? ts.factory.createStringLiteral("\n")
+                                )
+                            );
+                        }
                     } else if (eventShape.type === "json") {
                         eventShapeProperties.push(
                             ts.factory.createPropertyAssignment(
