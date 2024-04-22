@@ -703,11 +703,12 @@ class SnippetTemplateFactory:
                     )
                 )
 
+                endpoint_id = self._endpoint_to_identifier(endpoint)
                 self._generator_exec_wrapper.send_update(
                     GeneratorUpdate.factory.log(
                         LogUpdate(
                             level=LogLevel.DEBUG,
-                            message=f"Snippet template created for endpoint {json.dumps(self._endpoint_to_identifier(endpoint))}.",
+                            message=f"Snippet template created for endpoint: {endpoint_id.method} {endpoint_id.path}.",
                         )
                     )
                 )
