@@ -169,12 +169,15 @@ jobs:
       - name: Yarn Install
         run: yarn install
 
-      - name: Install Poetry
-        uses: snok/install-poetry@v1
-
-      - name: Install Dependencies
-        working-directory: ./generators/python
-        run: poetry install
+      - name: Install poetry
+        run: pipx install poetry
+      
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.8'
+          cache: 'poetry'
+      
+      - run: poetry install
 
       - name: Seed Test
         env:
