@@ -941,7 +941,9 @@ async function convertNavigationItem({
             convertedItem = {
                 type: "api",
                 title: item.title,
+                icon: item.icon,
                 api: apiDefinitionId,
+                skipUrlSlug: item.skipUrlSlug,
                 showErrors: item.showErrors,
                 changelog:
                     changelogItems.length > 0
@@ -950,6 +952,7 @@ async function convertNavigationItem({
                               items: changelogItems
                           }
                         : undefined,
+                hidden: item.hidden,
                 navigation: convertIrToNavigation(
                     ir,
                     item.summaryAbsolutePath,
