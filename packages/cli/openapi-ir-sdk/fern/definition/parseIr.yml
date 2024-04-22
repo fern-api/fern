@@ -7,9 +7,9 @@ types:
     properties:
       name: optional<string>
       value: unknown
-    
-  WebsocketHandshakeWithExample: 
-    properties: 
+
+  WebsocketHandshakeWithExample:
+    properties:
       queryParameters: list<QueryParameterWithExample>
       headers: list<HeaderWithExample>
 
@@ -140,6 +140,7 @@ types:
     properties:
       key: PrimitiveSchemaWithExample
       value: SchemaWithExample
+      example: optional<unknown>
 
   OptionalSchemaWithExample:
     extends:

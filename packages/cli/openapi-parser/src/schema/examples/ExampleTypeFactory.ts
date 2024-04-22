@@ -305,7 +305,8 @@ export class ExampleTypeFactory {
                 return FullExample.array(itemExamples);
             }
             case "map": {
-                const objectExample = getFullExampleAsObject(example);
+                // use fullExample schema, with fallback to inlined example
+                const objectExample = getFullExampleAsObject(example ?? schema.example);
                 if (objectExample != null && Object.entries(objectExample).length > 0) {
                     const kvs: KeyValuePair[] = [];
                     for (const [key, value] of Object.entries(objectExample)) {
@@ -546,8 +547,9 @@ export class ExampleTypeFactory {
                 return false;
             case "map":
                 return (
-                    schema.key.schema.example != null &&
-                    this.hasExample(schema.value, depth + 1, visitedSchemaIds, options)
+                    schema.example != null ||
+                    (schema.key.schema.example != null &&
+                        this.hasExample(schema.value, depth + 1, visitedSchemaIds, options))
                 );
             case "object": {
                 const objectExample = schema.fullExamples != null && schema.fullExamples.length > 0;

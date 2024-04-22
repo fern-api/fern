@@ -11357,25 +11357,82 @@ Note that there is an invisible character at the end of the path, this was to av
                   {
                     "key": {
                       "type": "string",
-                      "value": "metadata",
+                      "value": "preferences",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
                               "type": "string",
-                              "value": "value",
+                              "value": "theme",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "dark",
+                              },
                             },
                           },
-                        },
-                      ],
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "notifications",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "email",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "boolean",
+                                "value": true,
+                              },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "todos",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "0",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "example",
+                              },
+                            },
+                          },
+                        ],
+                      },
                     },
                   },
                 ],
@@ -11602,25 +11659,82 @@ e.g.:
                   {
                     "key": {
                       "type": "string",
-                      "value": "metadata",
+                      "value": "preferences",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
                               "type": "string",
-                              "value": "value",
+                              "value": "theme",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "dark",
+                              },
                             },
                           },
-                        },
-                      ],
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "notifications",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "email",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "boolean",
+                                "value": true,
+                              },
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "todos",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "0",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "example",
+                              },
+                            },
+                          },
+                        ],
+                      },
                     },
                   },
                 ],
@@ -14555,25 +14669,17 @@ e.g.:
                     {
                       "key": {
                         "type": "string",
-                        "value": "string",
+                        "value": "test",
                       },
                       "value": {
-                        "type": "map",
-                        "value": [
-                          {
-                            "key": {
-                              "type": "string",
-                              "value": "key",
-                            },
-                            "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string",
-                                "value": "value",
-                              },
-                            },
+                        "type": "unknown",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 123,
                           },
-                        ],
+                        },
                       },
                     },
                   ],
@@ -14584,25 +14690,17 @@ e.g.:
                     {
                       "key": {
                         "type": "string",
-                        "value": "string",
+                        "value": "test",
                       },
                       "value": {
-                        "type": "map",
-                        "value": [
-                          {
-                            "key": {
-                              "type": "string",
-                              "value": "key",
-                            },
-                            "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string",
-                                "value": "value",
-                              },
-                            },
+                        "type": "unknown",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 123,
                           },
-                        ],
+                        },
                       },
                     },
                   ],
@@ -14998,25 +15096,17 @@ e.g.:
                       {
                         "key": {
                           "type": "string",
-                          "value": "userDataInJWT",
+                          "value": "test",
                         },
                         "value": {
-                          "type": "map",
-                          "value": [
-                            {
-                              "key": {
-                                "type": "string",
-                                "value": "key",
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "value",
-                                },
-                              },
+                          "type": "unknown",
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "int",
+                              "value": 123,
                             },
-                          ],
+                          },
                         },
                       },
                     ],
@@ -15732,25 +15822,17 @@ e.g.:
                         {
                           "key": {
                             "type": "string",
-                            "value": "userDataInJWT",
+                            "value": "test",
                           },
                           "value": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "key",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "value",
-                                  },
-                                },
+                            "type": "unknown",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "int",
+                                "value": 123,
                               },
-                            ],
+                            },
                           },
                         },
                       ],
@@ -16225,25 +16307,17 @@ e.g.:
                         {
                           "key": {
                             "type": "string",
-                            "value": "userDataInJWT",
+                            "value": "test",
                           },
                           "value": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "key",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "value",
-                                  },
-                                },
+                            "type": "unknown",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "int",
+                                "value": 123,
                               },
-                            ],
+                            },
                           },
                         },
                       ],
@@ -16932,25 +17006,17 @@ e.g.:
                         {
                           "key": {
                             "type": "string",
-                            "value": "userDataInJWT",
+                            "value": "test",
                           },
                           "value": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "key",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "value",
-                                  },
-                                },
+                            "type": "unknown",
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "int",
+                                "value": 123,
                               },
-                            ],
+                            },
                           },
                         },
                       ],
@@ -17258,25 +17324,17 @@ e.g.:
                     {
                       "key": {
                         "type": "string",
-                        "value": "string",
+                        "value": "test",
                       },
                       "value": {
-                        "type": "map",
-                        "value": [
-                          {
-                            "key": {
-                              "type": "string",
-                              "value": "key",
-                            },
-                            "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string",
-                                "value": "value",
-                              },
-                            },
+                        "type": "unknown",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 123,
                           },
-                        ],
+                        },
                       },
                     },
                   ],
@@ -18175,25 +18233,17 @@ e.g.:
                     {
                       "key": {
                         "type": "string",
-                        "value": "string",
+                        "value": "test",
                       },
                       "value": {
-                        "type": "map",
-                        "value": [
-                          {
-                            "key": {
-                              "type": "string",
-                              "value": "key",
-                            },
-                            "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "string",
-                                "value": "value",
-                              },
-                            },
+                        "type": "unknown",
+                        "value": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 123,
                           },
-                        ],
+                        },
                       },
                     },
                   ],

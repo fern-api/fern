@@ -85,7 +85,8 @@ export function convertSchemaToSchemaWithExample(schema: Schema): SchemaWithExam
                 value: convertSchemaToSchemaWithExample(schema.value),
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
-                groupName: schema.groupName
+                groupName: schema.groupName,
+                example: undefined
             });
         case "reference":
             return SchemaWithExample.reference({

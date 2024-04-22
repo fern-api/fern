@@ -23,9 +23,9 @@ import { convertObject } from "./convertObject";
 import { convertUndiscriminatedOneOf } from "./convertUndiscriminatedOneOf";
 import { getExampleAsBoolean, getExampleAsNumber, getExamplesString } from "./examples/getExample";
 import { SchemaParserContext } from "./SchemaParserContext";
+import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
 import { getGeneratedTypeName } from "./utils/getSchemaName";
 import { isReferenceObject } from "./utils/isReferenceObject";
-import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
 
 export const SCHEMA_REFERENCE_PREFIX = "#/components/schemas/";
 export const SCHEMA_INLINE_REFERENCE_PREFIX = "#/components/responses/";
@@ -385,7 +385,8 @@ export function convertSchemaObject(
             description,
             wrapAsNullable,
             context,
-            groupName
+            groupName,
+            example: schema.example
         });
     }
 
@@ -613,7 +614,8 @@ export function convertSchemaObject(
                 example: undefined,
                 groupName
             }),
-            groupName
+            groupName,
+            example: schema.example
         });
     }
 
