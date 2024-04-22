@@ -25,14 +25,15 @@
                             "templateInputs": [
                                 {
                                     "location": "BODY",
-                                    "path": "query"
+                                    "path": "query",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"

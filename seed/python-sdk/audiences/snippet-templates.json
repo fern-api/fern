@@ -16,7 +16,7 @@
                 "isOptional": true,
                 "templateString": "await client.folder_a.service.get_direct_thread(\n$FERN_INPUT\n)",
                 "templateInputs": [],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -48,7 +48,8 @@
                             "templateInputs": [
                                 {
                                     "location": "QUERY",
-                                    "path": "optionalString"
+                                    "path": "optionalString",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
@@ -63,7 +64,8 @@
                             "templateInputs": [
                                 {
                                     "location": "BODY",
-                                    "path": "publicProperty"
+                                    "path": "publicProperty",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
@@ -78,14 +80,15 @@
                             "templateInputs": [
                                 {
                                     "location": "BODY",
-                                    "path": "privateProperty"
+                                    "path": "privateProperty",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"

@@ -25,14 +25,15 @@
                             "templateInputs": [
                                 {
                                     "location": "PATH",
-                                    "path": "ResourceID"
+                                    "path": "ResourceID",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -64,7 +65,8 @@
                             "templateInputs": [
                                 {
                                     "location": "QUERY",
-                                    "path": "page_limit"
+                                    "path": "page_limit",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
@@ -79,14 +81,15 @@
                             "templateInputs": [
                                 {
                                     "location": "QUERY",
-                                    "path": "beforeDate"
+                                    "path": "beforeDate",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"

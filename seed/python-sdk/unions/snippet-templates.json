@@ -25,14 +25,15 @@
                             "templateInputs": [
                                 {
                                     "location": "PATH",
-                                    "path": "id"
+                                    "path": "id",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -79,7 +80,8 @@
                                                 "templateInputs": [
                                                     {
                                                         "location": "BODY",
-                                                        "path": "radius"
+                                                        "path": "radius",
+                                                        "type": "payload"
                                                     }
                                                 ],
                                                 "type": "generic"
@@ -104,7 +106,8 @@
                                                 "templateInputs": [
                                                     {
                                                         "location": "BODY",
-                                                        "path": "length"
+                                                        "path": "length",
+                                                        "type": "payload"
                                                     }
                                                 ],
                                                 "type": "generic"
@@ -118,7 +121,7 @@
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"

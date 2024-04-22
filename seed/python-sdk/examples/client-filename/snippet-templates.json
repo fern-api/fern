@@ -25,14 +25,15 @@
                             "templateInputs": [
                                 {
                                     "location": "BODY",
-                                    "path": null
+                                    "path": null,
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -55,7 +56,7 @@
                 "isOptional": true,
                 "templateString": "await client.file.notification.service.get_exception(\n$FERN_INPUT\n)",
                 "templateInputs": [],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -87,14 +88,15 @@
                             "templateInputs": [
                                 {
                                     "location": "PATH",
-                                    "path": "filename"
+                                    "path": "filename",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -126,14 +128,15 @@
                             "templateInputs": [
                                 {
                                     "location": "PATH",
-                                    "path": "id"
+                                    "path": "id",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -156,7 +159,7 @@
                 "isOptional": true,
                 "templateString": "await client.health.service.ping(\n$FERN_INPUT\n)",
                 "templateInputs": [],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -188,14 +191,15 @@
                             "templateInputs": [
                                 {
                                     "location": "PATH",
-                                    "path": "movieId"
+                                    "path": "movieId",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -225,7 +229,7 @@
                                 "from .movie import Movie"
                             ],
                             "isOptional": true,
-                            "templateString": "request=Movie(\n$FERN_INPUT\n)",
+                            "templateString": "request=Movie(\n\t\t$FERN_INPUT\n\t)",
                             "templateInputs": [
                                 {
                                     "type": "template",
@@ -236,7 +240,8 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "id"
+                                                "path": "id",
+                                                "type": "payload"
                                             }
                                         ],
                                         "type": "generic"
@@ -251,7 +256,8 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "prequel"
+                                                "path": "prequel",
+                                                "type": "payload"
                                             }
                                         ],
                                         "type": "generic"
@@ -266,7 +272,8 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "title"
+                                                "path": "title",
+                                                "type": "payload"
                                             }
                                         ],
                                         "type": "generic"
@@ -281,7 +288,8 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "from"
+                                                "path": "from",
+                                                "type": "payload"
                                             }
                                         ],
                                         "type": "generic"
@@ -296,7 +304,8 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "rating"
+                                                "path": "rating",
+                                                "type": "payload"
                                             }
                                         ],
                                         "type": "generic"
@@ -311,7 +320,8 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "tag"
+                                                "path": "tag",
+                                                "type": "payload"
                                             }
                                         ],
                                         "type": "generic"
@@ -326,7 +336,8 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "book"
+                                                "path": "book",
+                                                "type": "payload"
                                             }
                                         ],
                                         "type": "generic"
@@ -337,8 +348,8 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "metadata={$FERN_INPUT}",
-                                        "delimiter": ", ",
+                                        "containerTemplateString": "metadata={\n\t$FERN_INPUT\n}",
+                                        "delimiter": ",\n\t",
                                         "keyTemplate": {
                                             "imports": [],
                                             "isOptional": true,
@@ -346,7 +357,8 @@
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
-                                                    "path": null
+                                                    "path": null,
+                                                    "type": "payload"
                                                 }
                                             ],
                                             "type": "generic"
@@ -358,7 +370,8 @@
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
-                                                    "path": null
+                                                    "path": null,
+                                                    "type": "payload"
                                                 }
                                             ],
                                             "type": "generic"
@@ -372,12 +385,12 @@
                                     }
                                 }
                             ],
-                            "inputDelimiter": ",\n",
+                            "inputDelimiter": ",\n\t\t",
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -409,7 +422,8 @@
                             "templateInputs": [
                                 {
                                     "location": "HEADERS",
-                                    "path": "X-API-Version"
+                                    "path": "X-API-Version",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
@@ -424,7 +438,8 @@
                             "templateInputs": [
                                 {
                                     "location": "QUERY",
-                                    "path": "shallow"
+                                    "path": "shallow",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
@@ -439,14 +454,15 @@
                             "templateInputs": [
                                 {
                                     "location": "QUERY",
-                                    "path": "tag"
+                                    "path": "tag",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"

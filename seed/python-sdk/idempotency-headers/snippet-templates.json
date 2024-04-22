@@ -25,7 +25,8 @@
                             "templateInputs": [
                                 {
                                     "location": "BODY",
-                                    "path": "amount"
+                                    "path": "amount",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
@@ -49,7 +50,7 @@
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -81,14 +82,15 @@
                             "templateInputs": [
                                 {
                                     "location": "PATH",
-                                    "path": "paymentId"
+                                    "path": "paymentId",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"

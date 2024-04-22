@@ -21,8 +21,8 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "containerTemplateString": "request={$FERN_INPUT}",
-                            "delimiter": ", ",
+                            "containerTemplateString": "request={\n\t\t$FERN_INPUT\n\t}",
+                            "delimiter": ",\n\t\t",
                             "keyTemplate": {
                                 "imports": [],
                                 "isOptional": true,
@@ -30,7 +30,8 @@
                                 "templateInputs": [
                                     {
                                         "location": "BODY",
-                                        "path": null
+                                        "path": null,
+                                        "type": "payload"
                                     }
                                 ],
                                 "type": "generic"
@@ -42,7 +43,8 @@
                                 "templateInputs": [
                                     {
                                         "location": "BODY",
-                                        "path": null
+                                        "path": null,
+                                        "type": "payload"
                                     }
                                 ],
                                 "type": "generic"
@@ -56,7 +58,7 @@
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"

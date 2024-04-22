@@ -16,7 +16,7 @@
                 "isOptional": true,
                 "templateString": "await client.dummy.get_dummy(\n$FERN_INPUT\n)",
                 "templateInputs": [],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"

@@ -25,7 +25,8 @@
                             "templateInputs": [
                                 {
                                     "location": "QUERY",
-                                    "path": "limit"
+                                    "path": "limit",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
@@ -40,7 +41,8 @@
                             "templateInputs": [
                                 {
                                     "location": "QUERY",
-                                    "path": "id"
+                                    "path": "id",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
@@ -55,7 +57,8 @@
                             "templateInputs": [
                                 {
                                     "location": "QUERY",
-                                    "path": "date"
+                                    "path": "date",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
@@ -70,7 +73,8 @@
                             "templateInputs": [
                                 {
                                     "location": "QUERY",
-                                    "path": "deadline"
+                                    "path": "deadline",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
@@ -85,7 +89,8 @@
                             "templateInputs": [
                                 {
                                     "location": "QUERY",
-                                    "path": "bytes"
+                                    "path": "bytes",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
@@ -98,7 +103,7 @@
                                 "from .user import User"
                             ],
                             "isOptional": true,
-                            "templateString": "user=User(\n$FERN_INPUT\n)",
+                            "templateString": "user=User(\n\t\t$FERN_INPUT\n\t)",
                             "templateInputs": [
                                 {
                                     "type": "template",
@@ -109,7 +114,8 @@
                                         "templateInputs": [
                                             {
                                                 "location": "QUERY",
-                                                "path": "user.name"
+                                                "path": "user.name",
+                                                "type": "payload"
                                             }
                                         ],
                                         "type": "generic"
@@ -120,8 +126,8 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "tags=[$FERN_INPUT]",
-                                        "delimiter": ", ",
+                                        "containerTemplateString": "tags=[\n\t$FERN_INPUT\n]",
+                                        "delimiter": ",\n\t",
                                         "innerTemplate": {
                                             "imports": [],
                                             "isOptional": true,
@@ -129,7 +135,8 @@
                                             "templateInputs": [
                                                 {
                                                     "location": "QUERY",
-                                                    "path": null
+                                                    "path": null,
+                                                    "type": "payload"
                                                 }
                                             ],
                                             "type": "generic"
@@ -142,7 +149,7 @@
                                     }
                                 }
                             ],
-                            "inputDelimiter": ",\n",
+                            "inputDelimiter": ",\n\t\t",
                             "type": "generic"
                         }
                     },
@@ -151,8 +158,8 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "containerTemplateString": "key_value={$FERN_INPUT}",
-                            "delimiter": ", ",
+                            "containerTemplateString": "key_value={\n\t\t$FERN_INPUT\n\t}",
+                            "delimiter": ",\n\t\t",
                             "keyTemplate": {
                                 "imports": [],
                                 "isOptional": true,
@@ -160,7 +167,8 @@
                                 "templateInputs": [
                                     {
                                         "location": "QUERY",
-                                        "path": null
+                                        "path": null,
+                                        "type": "payload"
                                     }
                                 ],
                                 "type": "generic"
@@ -172,7 +180,8 @@
                                 "templateInputs": [
                                     {
                                         "location": "QUERY",
-                                        "path": null
+                                        "path": null,
+                                        "type": "payload"
                                     }
                                 ],
                                 "type": "generic"
@@ -194,7 +203,8 @@
                             "templateInputs": [
                                 {
                                     "location": "QUERY",
-                                    "path": "optionalString"
+                                    "path": "optionalString",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
@@ -207,7 +217,7 @@
                                 "from .nested_user import NestedUser"
                             ],
                             "isOptional": true,
-                            "templateString": "nested_user=NestedUser(\n$FERN_INPUT\n)",
+                            "templateString": "nested_user=NestedUser(\n\t\t$FERN_INPUT\n\t)",
                             "templateInputs": [
                                 {
                                     "type": "template",
@@ -218,7 +228,8 @@
                                         "templateInputs": [
                                             {
                                                 "location": "QUERY",
-                                                "path": "nestedUser.name"
+                                                "path": "nestedUser.name",
+                                                "type": "payload"
                                             }
                                         ],
                                         "type": "generic"
@@ -231,7 +242,7 @@
                                             "from .user import User"
                                         ],
                                         "isOptional": true,
-                                        "templateString": "user=User(\n$FERN_INPUT\n)",
+                                        "templateString": "user=User(\n\t$FERN_INPUT\n)",
                                         "templateInputs": [
                                             {
                                                 "type": "template",
@@ -242,7 +253,8 @@
                                                     "templateInputs": [
                                                         {
                                                             "location": "QUERY",
-                                                            "path": "nestedUser.user.name"
+                                                            "path": "nestedUser.user.name",
+                                                            "type": "payload"
                                                         }
                                                     ],
                                                     "type": "generic"
@@ -253,8 +265,8 @@
                                                 "value": {
                                                     "imports": [],
                                                     "isOptional": true,
-                                                    "containerTemplateString": "tags=[$FERN_INPUT]",
-                                                    "delimiter": ", ",
+                                                    "containerTemplateString": "tags=[\n\t$FERN_INPUT\n]",
+                                                    "delimiter": ",\n\t",
                                                     "innerTemplate": {
                                                         "imports": [],
                                                         "isOptional": true,
@@ -262,7 +274,8 @@
                                                         "templateInputs": [
                                                             {
                                                                 "location": "QUERY",
-                                                                "path": null
+                                                                "path": null,
+                                                                "type": "payload"
                                                             }
                                                         ],
                                                         "type": "generic"
@@ -275,12 +288,12 @@
                                                 }
                                             }
                                         ],
-                                        "inputDelimiter": ",\n",
+                                        "inputDelimiter": ",\n\t",
                                         "type": "generic"
                                     }
                                 }
                             ],
-                            "inputDelimiter": ",\n",
+                            "inputDelimiter": ",\n\t\t",
                             "type": "generic"
                         }
                     },
@@ -291,7 +304,7 @@
                                 "from .user import User"
                             ],
                             "isOptional": true,
-                            "templateString": "optional_user=User(\n$FERN_INPUT\n)",
+                            "templateString": "optional_user=User(\n\t\t$FERN_INPUT\n\t)",
                             "templateInputs": [
                                 {
                                     "type": "template",
@@ -302,7 +315,8 @@
                                         "templateInputs": [
                                             {
                                                 "location": "QUERY",
-                                                "path": "optionalUser.name"
+                                                "path": "optionalUser.name",
+                                                "type": "payload"
                                             }
                                         ],
                                         "type": "generic"
@@ -313,8 +327,8 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "tags=[$FERN_INPUT]",
-                                        "delimiter": ", ",
+                                        "containerTemplateString": "tags=[\n\t$FERN_INPUT\n]",
+                                        "delimiter": ",\n\t",
                                         "innerTemplate": {
                                             "imports": [],
                                             "isOptional": true,
@@ -322,7 +336,8 @@
                                             "templateInputs": [
                                                 {
                                                     "location": "QUERY",
-                                                    "path": null
+                                                    "path": null,
+                                                    "type": "payload"
                                                 }
                                             ],
                                             "type": "generic"
@@ -335,7 +350,7 @@
                                     }
                                 }
                             ],
-                            "inputDelimiter": ",\n",
+                            "inputDelimiter": ",\n\t\t",
                             "type": "generic"
                         }
                     },
@@ -346,7 +361,7 @@
                                 "from .user import User"
                             ],
                             "isOptional": true,
-                            "templateString": "exclude_user=User(\n$FERN_INPUT\n)",
+                            "templateString": "exclude_user=User(\n\t\t$FERN_INPUT\n\t)",
                             "templateInputs": [
                                 {
                                     "type": "template",
@@ -357,7 +372,8 @@
                                         "templateInputs": [
                                             {
                                                 "location": "QUERY",
-                                                "path": "excludeUser.name"
+                                                "path": "excludeUser.name",
+                                                "type": "payload"
                                             }
                                         ],
                                         "type": "generic"
@@ -368,8 +384,8 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "tags=[$FERN_INPUT]",
-                                        "delimiter": ", ",
+                                        "containerTemplateString": "tags=[\n\t$FERN_INPUT\n]",
+                                        "delimiter": ",\n\t",
                                         "innerTemplate": {
                                             "imports": [],
                                             "isOptional": true,
@@ -377,7 +393,8 @@
                                             "templateInputs": [
                                                 {
                                                     "location": "QUERY",
-                                                    "path": null
+                                                    "path": null,
+                                                    "type": "payload"
                                                 }
                                             ],
                                             "type": "generic"
@@ -390,7 +407,7 @@
                                     }
                                 }
                             ],
-                            "inputDelimiter": ",\n",
+                            "inputDelimiter": ",\n\t\t",
                             "type": "generic"
                         }
                     },
@@ -403,14 +420,15 @@
                             "templateInputs": [
                                 {
                                     "location": "QUERY",
-                                    "path": "filter"
+                                    "path": "filter",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"

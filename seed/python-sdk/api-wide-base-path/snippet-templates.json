@@ -25,7 +25,8 @@
                             "templateInputs": [
                                 {
                                     "location": "PATH",
-                                    "path": "resourceParam"
+                                    "path": "resourceParam",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
@@ -40,14 +41,15 @@
                             "templateInputs": [
                                 {
                                     "location": "PATH",
-                                    "path": "endpointParam"
+                                    "path": "endpointParam",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"

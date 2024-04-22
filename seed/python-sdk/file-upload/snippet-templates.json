@@ -25,7 +25,8 @@
                             "templateInputs": [
                                 {
                                     "location": "BODY",
-                                    "path": "maybeString"
+                                    "path": "maybeString",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
@@ -40,7 +41,8 @@
                             "templateInputs": [
                                 {
                                     "location": "BODY",
-                                    "path": "integer"
+                                    "path": "integer",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
@@ -55,7 +57,8 @@
                             "templateInputs": [
                                 {
                                     "location": "BODY",
-                                    "path": "file"
+                                    "path": "file",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
@@ -66,8 +69,8 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "containerTemplateString": "file_list=[$FERN_INPUT]",
-                            "delimiter": ", ",
+                            "containerTemplateString": "file_list=[\n\t\t$FERN_INPUT\n\t]",
+                            "delimiter": ",\n\t\t",
                             "innerTemplate": {
                                 "imports": [],
                                 "isOptional": true,
@@ -75,7 +78,8 @@
                                 "templateInputs": [
                                     {
                                         "location": "BODY",
-                                        "path": null
+                                        "path": null,
+                                        "type": "payload"
                                     }
                                 ],
                                 "type": "generic"
@@ -96,7 +100,8 @@
                             "templateInputs": [
                                 {
                                     "location": "BODY",
-                                    "path": "maybeFile"
+                                    "path": "maybeFile",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
@@ -107,8 +112,8 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "containerTemplateString": "maybe_file_list=[$FERN_INPUT]",
-                            "delimiter": ", ",
+                            "containerTemplateString": "maybe_file_list=[\n\t\t$FERN_INPUT\n\t]",
+                            "delimiter": ",\n\t\t",
                             "innerTemplate": {
                                 "imports": [],
                                 "isOptional": true,
@@ -116,7 +121,8 @@
                                 "templateInputs": [
                                     {
                                         "location": "BODY",
-                                        "path": null
+                                        "path": null,
+                                        "type": "payload"
                                     }
                                 ],
                                 "type": "generic"
@@ -137,7 +143,8 @@
                             "templateInputs": [
                                 {
                                     "location": "BODY",
-                                    "path": "maybeInteger"
+                                    "path": "maybeInteger",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
@@ -148,8 +155,8 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "containerTemplateString": "optional_list_of_strings=[$FERN_INPUT]",
-                            "delimiter": ", ",
+                            "containerTemplateString": "optional_list_of_strings=[\n\t\t$FERN_INPUT\n\t]",
+                            "delimiter": ",\n\t\t",
                             "innerTemplate": {
                                 "imports": [],
                                 "isOptional": true,
@@ -157,7 +164,8 @@
                                 "templateInputs": [
                                     {
                                         "location": "BODY",
-                                        "path": null
+                                        "path": null,
+                                        "type": "payload"
                                     }
                                 ],
                                 "type": "generic"
@@ -174,14 +182,14 @@
                         "value": {
                             "imports": [],
                             "isOptional": true,
-                            "containerTemplateString": "list_of_objects=[$FERN_INPUT]",
-                            "delimiter": ", ",
+                            "containerTemplateString": "list_of_objects=[\n\t\t$FERN_INPUT\n\t]",
+                            "delimiter": ",\n\t\t",
                             "innerTemplate": {
                                 "imports": [
                                     "from .my_object import MyObject"
                                 ],
                                 "isOptional": true,
-                                "templateString": "MyObject($FERN_INPUT)",
+                                "templateString": "MyObject(\n\t\t\t$FERN_INPUT\n\t\t)",
                                 "templateInputs": [
                                     {
                                         "type": "template",
@@ -192,14 +200,15 @@
                                             "templateInputs": [
                                                 {
                                                     "location": "BODY",
-                                                    "path": "foo"
+                                                    "path": "foo",
+                                                    "type": "payload"
                                                 }
                                             ],
                                             "type": "generic"
                                         }
                                     }
                                 ],
-                                "inputDelimiter": ",\n",
+                                "inputDelimiter": ",\n\t\t\t",
                                 "type": "generic"
                             },
                             "templateInput": {
@@ -210,7 +219,7 @@
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -242,14 +251,15 @@
                             "templateInputs": [
                                 {
                                     "location": "BODY",
-                                    "path": "file"
+                                    "path": "file",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -281,7 +291,8 @@
                             "templateInputs": [
                                 {
                                     "location": "QUERY",
-                                    "path": "maybeString"
+                                    "path": "maybeString",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
@@ -296,7 +307,8 @@
                             "templateInputs": [
                                 {
                                     "location": "QUERY",
-                                    "path": "integer"
+                                    "path": "integer",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
@@ -311,7 +323,8 @@
                             "templateInputs": [
                                 {
                                     "location": "QUERY",
-                                    "path": "maybeInteger"
+                                    "path": "maybeInteger",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
@@ -326,7 +339,8 @@
                             "templateInputs": [
                                 {
                                     "location": "QUERY",
-                                    "path": "listOfStrings"
+                                    "path": "listOfStrings",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
@@ -341,7 +355,8 @@
                             "templateInputs": [
                                 {
                                     "location": "QUERY",
-                                    "path": "optionalListOfStrings"
+                                    "path": "optionalListOfStrings",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
@@ -356,14 +371,15 @@
                             "templateInputs": [
                                 {
                                     "location": "BODY",
-                                    "path": "file"
+                                    "path": "file",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"

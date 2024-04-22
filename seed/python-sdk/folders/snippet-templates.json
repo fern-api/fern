@@ -16,7 +16,7 @@
                 "isOptional": true,
                 "templateString": "await client.foo(\n$FERN_INPUT\n)",
                 "templateInputs": [],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -39,7 +39,7 @@
                 "isOptional": true,
                 "templateString": "await client.a.b.foo(\n$FERN_INPUT\n)",
                 "templateInputs": [],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -62,7 +62,7 @@
                 "isOptional": true,
                 "templateString": "await client.a.c.foo(\n$FERN_INPUT\n)",
                 "templateInputs": [],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -85,7 +85,7 @@
                 "isOptional": true,
                 "templateString": "await client.folder.foo(\n$FERN_INPUT\n)",
                 "templateInputs": [],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -108,7 +108,7 @@
                 "isOptional": true,
                 "templateString": "await client.folder.service.endpoint(\n$FERN_INPUT\n)",
                 "templateInputs": [],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -140,14 +140,15 @@
                             "templateInputs": [
                                 {
                                     "location": "BODY",
-                                    "path": null
+                                    "path": null,
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"

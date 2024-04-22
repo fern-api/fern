@@ -16,7 +16,7 @@
                 "isOptional": true,
                 "templateString": "await client.custom_auth.get_with_custom_auth(\n$FERN_INPUT\n)",
                 "templateInputs": [],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -48,14 +48,15 @@
                             "templateInputs": [
                                 {
                                     "location": "BODY",
-                                    "path": null
+                                    "path": null,
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"

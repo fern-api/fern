@@ -25,7 +25,8 @@
                             "templateInputs": [
                                 {
                                     "location": "QUERY",
-                                    "path": "page"
+                                    "path": "page",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
@@ -40,7 +41,8 @@
                             "templateInputs": [
                                 {
                                     "location": "QUERY",
-                                    "path": "per_page"
+                                    "path": "per_page",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
@@ -72,14 +74,15 @@
                             "templateInputs": [
                                 {
                                     "location": "QUERY",
-                                    "path": "starting_after"
+                                    "path": "starting_after",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -111,7 +114,8 @@
                             "templateInputs": [
                                 {
                                     "location": "QUERY",
-                                    "path": "page"
+                                    "path": "page",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
@@ -126,7 +130,8 @@
                             "templateInputs": [
                                 {
                                     "location": "QUERY",
-                                    "path": "per_page"
+                                    "path": "per_page",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
@@ -158,14 +163,15 @@
                             "templateInputs": [
                                 {
                                     "location": "QUERY",
-                                    "path": "starting_after"
+                                    "path": "starting_after",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -197,14 +203,15 @@
                             "templateInputs": [
                                 {
                                     "location": "QUERY",
-                                    "path": "cursor"
+                                    "path": "cursor",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -236,14 +243,15 @@
                             "templateInputs": [
                                 {
                                     "location": "QUERY",
-                                    "path": "starting_after"
+                                    "path": "starting_after",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
@@ -275,14 +283,15 @@
                             "templateInputs": [
                                 {
                                     "location": "QUERY",
-                                    "path": "offset"
+                                    "path": "offset",
+                                    "type": "payload"
                                 }
                             ],
                             "type": "generic"
                         }
                     }
                 ],
-                "inputDelimiter": ",\n",
+                "inputDelimiter": ",\n\t",
                 "type": "generic"
             },
             "type": "v1"
