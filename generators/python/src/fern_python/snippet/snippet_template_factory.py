@@ -62,7 +62,7 @@ class SnippetTemplateFactory:
     # Write this in the fern def to share between FE + BE
     TEMPLATE_SENTINEL = "$FERN_INPUT"
 
-    TAB_CHAR = '\t'
+    TAB_CHAR = "\t"
 
     def __init__(
         self,
@@ -163,7 +163,9 @@ class SnippetTemplateFactory:
                     if name is not None
                     else f"[\n{self.TAB_CHAR * child_indentation_level}{self.TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}]",
                     delimiter=f",\n{self.TAB_CHAR * child_indentation_level}",
-                    inner_template=self.get_type_reference_template(innerTr, None, location, None, None, child_indentation_level),
+                    inner_template=self.get_type_reference_template(
+                        innerTr, None, location, None, None, child_indentation_level
+                    ),
                     template_input=PayloadInput(
                         location=location, path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs)
                     ),
@@ -177,7 +179,9 @@ class SnippetTemplateFactory:
                     if name is not None
                     else f"{{\n{self.TAB_CHAR * child_indentation_level}{self.TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}}}",
                     delimiter=f",\n{self.TAB_CHAR * child_indentation_level}",
-                    inner_template=self.get_type_reference_template(innerTr, None, location, None, None, child_indentation_level),
+                    inner_template=self.get_type_reference_template(
+                        innerTr, None, location, None, None, child_indentation_level
+                    ),
                     template_input=PayloadInput(
                         location=location, path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs)
                     ),
@@ -192,8 +196,12 @@ class SnippetTemplateFactory:
                     else f"{{\n{self.TAB_CHAR * child_indentation_level}{self.TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}}}",
                     delimiter=f",\n{self.TAB_CHAR * child_indentation_level}",
                     key_value_separator=": ",
-                    key_template=self.get_type_reference_template(kvTr.key_type, None, location, None, None, child_indentation_level),
-                    value_template=self.get_type_reference_template(kvTr.value_type, None, location, None, None, child_indentation_level),
+                    key_template=self.get_type_reference_template(
+                        kvTr.key_type, None, location, None, None, child_indentation_level
+                    ),
+                    value_template=self.get_type_reference_template(
+                        kvTr.value_type, None, location, None, None, child_indentation_level
+                    ),
                     template_input=PayloadInput(
                         location=location, path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs)
                     ),
@@ -472,7 +480,7 @@ class SnippetTemplateFactory:
                     location=location,
                     wire_or_original_name=wire_or_original_name,
                     name_breadcrumbs=name_breadcrumbs,
-                    indentation_level=indentation_level
+                    indentation_level=indentation_level,
                 ),
                 enum=lambda etd: self._get_enum_template(
                     type_name=type_name,
@@ -489,7 +497,7 @@ class SnippetTemplateFactory:
                     location=location,
                     wire_or_original_name=wire_or_original_name,
                     name_breadcrumbs=name_breadcrumbs,
-                    indentation_level=indentation_level
+                    indentation_level=indentation_level,
                 ),
                 union=lambda utd: self._get_discriminated_union_template(
                     type_name=type_name,
@@ -639,7 +647,7 @@ class SnippetTemplateFactory:
                         location="HEADERS",
                         wire_or_original_name=header.name.wire_value,
                         name_breadcrumbs=None,
-                        indentation_level=1
+                        indentation_level=1,
                     )
                     if ti is not None:
                         top_level_template_inputs.append(ti)
@@ -651,7 +659,7 @@ class SnippetTemplateFactory:
                         location="PATH",
                         wire_or_original_name=path_parameter.name.original_name,
                         name_breadcrumbs=None,
-                        indentation_level=1
+                        indentation_level=1,
                     )
                     if ti is not None:
                         top_level_template_inputs.append(ti)
@@ -663,7 +671,7 @@ class SnippetTemplateFactory:
                         location="QUERY",
                         wire_or_original_name=query_parameter.name.name.original_name,
                         name_breadcrumbs=None,
-                        indentation_level=1
+                        indentation_level=1,
                     )
                     if ti is not None:
                         top_level_template_inputs.append(ti)
@@ -700,7 +708,7 @@ class SnippetTemplateFactory:
                                 location="BODY",
                                 wire_or_original_name=parameter.raw_name,
                                 name_breadcrumbs=None,
-                                indentation_level=1
+                                indentation_level=1,
                             )
                             if parameter.raw_type is not None
                             else None
