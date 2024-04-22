@@ -56,6 +56,7 @@ export class Completions {
                 },
                 eventShape: {
                     type: "sse",
+                    streamTerminator: "[[DONE]]",
                 },
             });
         }
