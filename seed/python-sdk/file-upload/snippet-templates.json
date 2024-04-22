@@ -14,7 +14,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.service.post(\n$FERN_INPUT\n)",
+                "templateString": "await client.service.post(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -77,7 +77,7 @@
                                 "templateString": "$FERN_INPUT",
                                 "templateInputs": [
                                     {
-                                        "location": "BODY",
+                                        "location": "RELATIVE",
                                         "path": null,
                                         "type": "payload"
                                     }
@@ -120,7 +120,7 @@
                                 "templateString": "$FERN_INPUT",
                                 "templateInputs": [
                                     {
-                                        "location": "BODY",
+                                        "location": "RELATIVE",
                                         "path": null,
                                         "type": "payload"
                                     }
@@ -163,7 +163,7 @@
                                 "templateString": "$FERN_INPUT",
                                 "templateInputs": [
                                     {
-                                        "location": "BODY",
+                                        "location": "RELATIVE",
                                         "path": null,
                                         "type": "payload"
                                     }
@@ -199,7 +199,7 @@
                                             "templateString": "foo=$FERN_INPUT",
                                             "templateInputs": [
                                                 {
-                                                    "location": "BODY",
+                                                    "location": "RELATIVE",
                                                     "path": "foo",
                                                     "type": "payload"
                                                 }
@@ -240,7 +240,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.service.just_file(\n$FERN_INPUT\n)",
+                "templateString": "await client.service.just_file(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -280,7 +280,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.service.just_file_with_query_params(\n$FERN_INPUT\n)",
+                "templateString": "await client.service.just_file_with_query_params(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",

@@ -14,7 +14,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.headers.send(\n$FERN_INPUT\n)",
+                "templateString": "await client.headers.send(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -54,7 +54,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.inlined.send(\n$FERN_INPUT\n)",
+                "templateString": "await client.inlined.send(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -110,7 +110,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.path.send(\n$FERN_INPUT\n)",
+                "templateString": "await client.path.send(\n\t$FERN_INPUT\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",\n\t",
                 "type": "generic"
@@ -133,7 +133,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.query.send(\n$FERN_INPUT\n)",
+                "templateString": "await client.query.send(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -173,7 +173,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.reference.send(\n$FERN_INPUT\n)",
+                "templateString": "await client.reference.send(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",

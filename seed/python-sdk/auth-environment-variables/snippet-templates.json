@@ -14,7 +14,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.service.get_with_api_key(\n$FERN_INPUT\n)",
+                "templateString": "await client.service.get_with_api_key(\n\t$FERN_INPUT\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",\n\t",
                 "type": "generic"
@@ -37,7 +37,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.service.get_with_header(\n$FERN_INPUT\n)",
+                "templateString": "await client.service.get_with_header(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",

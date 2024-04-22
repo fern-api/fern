@@ -14,7 +14,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.ec_2.boot_instance(\n$FERN_INPUT\n)",
+                "templateString": "await client.ec_2.boot_instance(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -54,7 +54,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.s_3.get_presigned_url(\n$FERN_INPUT\n)",
+                "templateString": "await client.s_3.get_presigned_url(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",

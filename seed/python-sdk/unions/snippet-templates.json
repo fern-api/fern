@@ -14,7 +14,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.union.get(\n$FERN_INPUT\n)",
+                "templateString": "await client.union.get(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -54,7 +54,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.union.update(\n$FERN_INPUT\n)",
+                "templateString": "await client.union.update(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",

@@ -154,8 +154,6 @@ class SnippetTemplateFactory:
         indentation_level: int = 0,
     ) -> Union[Template, None]:
         child_indentation_level = indentation_level + 1
-        if container.get_as_union().type == "list":
-            raise Exception(f"couldn't build container {container.get_as_union().type}")
         return container.visit(
             list_=lambda innerTr: Template.factory.iterable(
                 IterableTemplate(

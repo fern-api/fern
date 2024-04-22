@@ -14,7 +14,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.service.get_text(\n$FERN_INPUT\n)",
+                "templateString": "await client.service.get_text(\n\t$FERN_INPUT\n)",
                 "templateInputs": [],
                 "inputDelimiter": ",\n\t",
                 "type": "generic"

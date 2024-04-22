@@ -14,7 +14,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "await client.service.hello(\n$FERN_INPUT\n)",
+                "templateString": "await client.service.hello(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
