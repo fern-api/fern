@@ -3,6 +3,7 @@ from typing import Optional, Sequence, Tuple, Union, cast
 from uuid import uuid4
 
 import fern.ir.resources as ir_types
+from fern.generator_exec.resources import GeneratorUpdate, LogLevel, LogUpdate
 from fern.generator_exec.resources.config import GeneratorConfig
 from fern.generator_exec.resources.readme import BadgeType, GenerateReadmeRequest
 
@@ -18,7 +19,6 @@ from fern_python.generators.sdk.context.sdk_generator_context_impl import (
 from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
 )
-from fern.generator_exec.resources import GeneratorUpdate, LogLevel, LogUpdate
 from fern_python.snippet import SnippetRegistry, SnippetWriter
 from fern_python.snippet.snippet_template_factory import SnippetTemplateFactory
 from fern_python.snippet.snippet_test_factory import SnippetTestFactory
@@ -191,6 +191,7 @@ class SdkGenerator(AbstractGenerator):
                 imports_manager=snippet_template_source_file.get_imports_manager(),
                 ir=ir,
                 generated_root_client=generated_root_client,
+                generator_exec_wrapper=generator_exec_wrapper,
             ),
             project=project,
             generator_exec_wrapper=generator_exec_wrapper,
@@ -419,8 +420,15 @@ pip install --upgrade {project._project_config.package_name}
         generator_exec_wrapper: GeneratorExecWrapper,
     ) -> None:
         if context.generator_config.output.snippet_template_filepath is not None:
+            org_id = generator_config.organization
+            api_name = ir.api_name.original_name
             generator_exec_wrapper.send_update(
-                GeneratorUpdate.factory.log(LogUpdate(level=LogLevel.DEBUG, message=f"Generating snippet templates for Org: {org_id}, API: {api_name} at version: {project._project_config.package_version}."))
+                GeneratorUpdate.factory.log(
+                    LogUpdate(
+                        level=LogLevel.DEBUG,
+                        message=f"Generating snippet templates for Org: {org_id}, API: {api_name} at version: {project._project_config.package_version if project._project_config is not None else '0.0.0'}.",
+                    )
+                )
             )
 
             snippets = snippet_template_factory.generate_templates()
@@ -430,14 +438,14 @@ pip install --upgrade {project._project_config.package_name}
             # Send snippets to FDR
             fdr_client = generator_exec_wrapper.fdr_client
             if fdr_client is not None:
-                org_id = generator_config.organization
-                api_name = ir.api_name.original_name
                 # API Definition ID doesn't matter right now
                 fdr_client.template.register_batch(
                     org_id=org_id, api_id=api_name, api_definition_id=uuid4(), snippets=snippets
                 )
                 generator_exec_wrapper.send_update(
-                    GeneratorUpdate.factory.log(LogUpdate(level=LogLevel.DEBUG, message=f"Uploaded snippet templates to FDR."))
+                    GeneratorUpdate.factory.log(
+                        LogUpdate(level=LogLevel.DEBUG, message=f"Uploaded snippet templates to FDR.")
+                    )
                 )
             else:
                 # Otherwise write them for local
@@ -446,7 +454,9 @@ pip install --upgrade {project._project_config.package_name}
                     json.dumps(list(map(lambda template: template.dict(by_alias=True), snippets)), indent=4),
                 )
                 generator_exec_wrapper.send_update(
-                    GeneratorUpdate.factory.log(LogUpdate(level=LogLevel.DEBUG, message=f"Wrote snippet templates to disk."))
+                    GeneratorUpdate.factory.log(
+                        LogUpdate(level=LogLevel.DEBUG, message=f"Wrote snippet templates to disk.")
+                    )
                 )
 
     def _maybe_write_snippets(

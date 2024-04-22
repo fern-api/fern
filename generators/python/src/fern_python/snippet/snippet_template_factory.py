@@ -21,11 +21,12 @@ from fdr import (
     TemplateInput,
     VersionedSnippetTemplate,
 )
-from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern.generator_exec.resources import GeneratorUpdate, LogLevel, LogUpdate
+
 from fern_python.codegen import AST
 from fern_python.codegen.imports_manager import ImportsManager
 from fern_python.codegen.project import Project
+from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model.type_declaration_handler.discriminated_union.simple_discriminated_union_generator import (
     DiscriminatedUnionSnippetGenerator,
 )
@@ -703,7 +704,12 @@ class SnippetTemplateFactory:
                 )
 
                 self._generator_exec_wrapper.send_update(
-                    GeneratorUpdate.factory.log(LogUpdate(level=LogLevel.DEBUG, message=f"Snippet template created for endpoint {json.dumps(self._endpoint_to_identifier(endpoint))}."))
+                    GeneratorUpdate.factory.log(
+                        LogUpdate(
+                            level=LogLevel.DEBUG,
+                            message=f"Snippet template created for endpoint {json.dumps(self._endpoint_to_identifier(endpoint))}.",
+                        )
+                    )
                 )
                 snippet_templates.append(
                     SnippetRegistryEntry(
