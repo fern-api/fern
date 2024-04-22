@@ -696,7 +696,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                       {
                         "key": {
                           "type": "string",
-                          "value": "purchase_order",
+                          "value": "PO",
                         },
                         "value": {
                           "type": "unknown",
@@ -723,7 +723,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                       {
                         "key": {
                           "type": "string",
-                          "value": "sku",
+                          "value": "SKU",
                         },
                         "value": {
                           "type": "unknown",
@@ -18832,65 +18832,6 @@ Other details about this invoice",
                             },
                             "type": "object",
                           },
-                          "metadata": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "purchase_order",
-                                },
-                                "value": {
-                                  "type": "unknown",
-                                  "value": {
-                                    "type": "map",
-                                    "value": [
-                                      {
-                                        "key": {
-                                          "type": "string",
-                                          "value": "0",
-                                        },
-                                        "value": {
-                                          "type": "primitive",
-                                          "value": {
-                                            "type": "string",
-                                            "value": "12345",
-                                          },
-                                        },
-                                      },
-                                    ],
-                                  },
-                                },
-                              },
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "sku",
-                                },
-                                "value": {
-                                  "type": "unknown",
-                                  "value": {
-                                    "type": "map",
-                                    "value": [
-                                      {
-                                        "key": {
-                                          "type": "string",
-                                          "value": "0",
-                                        },
-                                        "value": {
-                                          "type": "primitive",
-                                          "value": {
-                                            "type": "string",
-                                            "value": "abc123",
-                                          },
-                                        },
-                                      },
-                                    ],
-                                  },
-                                },
-                              },
-                            ],
-                          },
                           "name": {
                             "type": "primitive",
                             "value": {
@@ -20082,55 +20023,25 @@ Other details about this invoice",
                       {
                         "key": {
                           "type": "string",
-                          "value": "purchase_order",
+                          "value": "metadata",
                         },
                         "value": {
-                          "type": "unknown",
-                          "value": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
+                          "type": "map",
+                          "value": [
+                            {
+                              "key": {
+                                "type": "string",
+                                "value": "key",
+                              },
+                              "value": {
+                                "type": "primitive",
                                 "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "12345",
-                                  },
+                                  "type": "string",
+                                  "value": "value",
                                 },
                               },
-                            ],
-                          },
-                        },
-                      },
-                      {
-                        "key": {
-                          "type": "string",
-                          "value": "sku",
-                        },
-                        "value": {
-                          "type": "unknown",
-                          "value": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "abc123",
-                                  },
-                                },
-                              },
-                            ],
-                          },
+                            },
+                          ],
                         },
                       },
                     ],
@@ -24271,65 +24182,6 @@ Other details about this invoice",
                               "value": "abdef123",
                             },
                           },
-                          "metadata": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "purchase_order",
-                                },
-                                "value": {
-                                  "type": "unknown",
-                                  "value": {
-                                    "type": "map",
-                                    "value": [
-                                      {
-                                        "key": {
-                                          "type": "string",
-                                          "value": "0",
-                                        },
-                                        "value": {
-                                          "type": "primitive",
-                                          "value": {
-                                            "type": "string",
-                                            "value": "12345",
-                                          },
-                                        },
-                                      },
-                                    ],
-                                  },
-                                },
-                              },
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "sku",
-                                },
-                                "value": {
-                                  "type": "unknown",
-                                  "value": {
-                                    "type": "map",
-                                    "value": [
-                                      {
-                                        "key": {
-                                          "type": "string",
-                                          "value": "0",
-                                        },
-                                        "value": {
-                                          "type": "primitive",
-                                          "value": {
-                                            "type": "string",
-                                            "value": "abc123",
-                                          },
-                                        },
-                                      },
-                                    ],
-                                  },
-                                },
-                              },
-                            ],
-                          },
                           "name": {
                             "type": "primitive",
                             "value": {
@@ -25046,55 +24898,25 @@ Other details about this invoice",
                       {
                         "key": {
                           "type": "string",
-                          "value": "purchase_order",
+                          "value": "metadata",
                         },
                         "value": {
-                          "type": "unknown",
-                          "value": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
+                          "type": "map",
+                          "value": [
+                            {
+                              "key": {
+                                "type": "string",
+                                "value": "key",
+                              },
+                              "value": {
+                                "type": "primitive",
                                 "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "12345",
-                                  },
+                                  "type": "string",
+                                  "value": "value",
                                 },
                               },
-                            ],
-                          },
-                        },
-                      },
-                      {
-                        "key": {
-                          "type": "string",
-                          "value": "sku",
-                        },
-                        "value": {
-                          "type": "unknown",
-                          "value": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "abc123",
-                                  },
-                                },
-                              },
-                            ],
-                          },
+                            },
+                          ],
                         },
                       },
                     ],
@@ -25489,55 +25311,25 @@ Other details about this invoice",
                       {
                         "key": {
                           "type": "string",
-                          "value": "purchase_order",
+                          "value": "metadata",
                         },
                         "value": {
-                          "type": "unknown",
-                          "value": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
+                          "type": "map",
+                          "value": [
+                            {
+                              "key": {
+                                "type": "string",
+                                "value": "key",
+                              },
+                              "value": {
+                                "type": "primitive",
                                 "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "12345",
-                                  },
+                                  "type": "string",
+                                  "value": "value",
                                 },
                               },
-                            ],
-                          },
-                        },
-                      },
-                      {
-                        "key": {
-                          "type": "string",
-                          "value": "sku",
-                        },
-                        "value": {
-                          "type": "unknown",
-                          "value": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "abc123",
-                                  },
-                                },
-                              },
-                            ],
-                          },
+                            },
+                          ],
                         },
                       },
                     ],
@@ -25941,55 +25733,25 @@ Other details about this invoice",
                       {
                         "key": {
                           "type": "string",
-                          "value": "purchase_order",
+                          "value": "metadata",
                         },
                         "value": {
-                          "type": "unknown",
-                          "value": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
+                          "type": "map",
+                          "value": [
+                            {
+                              "key": {
+                                "type": "string",
+                                "value": "key",
+                              },
+                              "value": {
+                                "type": "primitive",
                                 "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "12345",
-                                  },
+                                  "type": "string",
+                                  "value": "value",
                                 },
                               },
-                            ],
-                          },
-                        },
-                      },
-                      {
-                        "key": {
-                          "type": "string",
-                          "value": "sku",
-                        },
-                        "value": {
-                          "type": "unknown",
-                          "value": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "abc123",
-                                  },
-                                },
-                              },
-                            ],
-                          },
+                            },
+                          ],
                         },
                       },
                     ],
@@ -27888,65 +27650,6 @@ Other details about this invoice",
                               "value": "2019-02-16T00:00:00.000Z",
                             },
                           },
-                          "metadata": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "purchase_order",
-                                },
-                                "value": {
-                                  "type": "unknown",
-                                  "value": {
-                                    "type": "map",
-                                    "value": [
-                                      {
-                                        "key": {
-                                          "type": "string",
-                                          "value": "0",
-                                        },
-                                        "value": {
-                                          "type": "primitive",
-                                          "value": {
-                                            "type": "string",
-                                            "value": "12345",
-                                          },
-                                        },
-                                      },
-                                    ],
-                                  },
-                                },
-                              },
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "sku",
-                                },
-                                "value": {
-                                  "type": "unknown",
-                                  "value": {
-                                    "type": "map",
-                                    "value": [
-                                      {
-                                        "key": {
-                                          "type": "string",
-                                          "value": "0",
-                                        },
-                                        "value": {
-                                          "type": "primitive",
-                                          "value": {
-                                            "type": "string",
-                                            "value": "abc123",
-                                          },
-                                        },
-                                      },
-                                    ],
-                                  },
-                                },
-                              },
-                            ],
-                          },
                           "seal_number": {
                             "type": "primitive",
                             "value": {
@@ -28734,55 +28437,25 @@ Other details about this invoice",
                       {
                         "key": {
                           "type": "string",
-                          "value": "purchase_order",
+                          "value": "metadata",
                         },
                         "value": {
-                          "type": "unknown",
-                          "value": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
+                          "type": "map",
+                          "value": [
+                            {
+                              "key": {
+                                "type": "string",
+                                "value": "key",
+                              },
+                              "value": {
+                                "type": "primitive",
                                 "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "12345",
-                                  },
+                                  "type": "string",
+                                  "value": "value",
                                 },
                               },
-                            ],
-                          },
-                        },
-                      },
-                      {
-                        "key": {
-                          "type": "string",
-                          "value": "sku",
-                        },
-                        "value": {
-                          "type": "unknown",
-                          "value": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "abc123",
-                                  },
-                                },
-                              },
-                            ],
-                          },
+                            },
+                          ],
                         },
                       },
                     ],
@@ -31907,7 +31580,7 @@ Other details about this invoice",
                               {
                                 "key": {
                                   "type": "string",
-                                  "value": "purchase_order",
+                                  "value": "size",
                                 },
                                 "value": {
                                   "type": "unknown",
@@ -31923,34 +31596,7 @@ Other details about this invoice",
                                           "type": "primitive",
                                           "value": {
                                             "type": "string",
-                                            "value": "12345",
-                                          },
-                                        },
-                                      },
-                                    ],
-                                  },
-                                },
-                              },
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "sku",
-                                },
-                                "value": {
-                                  "type": "unknown",
-                                  "value": {
-                                    "type": "map",
-                                    "value": [
-                                      {
-                                        "key": {
-                                          "type": "string",
-                                          "value": "0",
-                                        },
-                                        "value": {
-                                          "type": "primitive",
-                                          "value": {
-                                            "type": "string",
-                                            "value": "abc123",
+                                            "value": "M",
                                           },
                                         },
                                       },
@@ -33095,7 +32741,7 @@ Other details about this invoice",
                       {
                         "key": {
                           "type": "string",
-                          "value": "purchase_order",
+                          "value": "size",
                         },
                         "value": {
                           "type": "unknown",
@@ -33111,34 +32757,7 @@ Other details about this invoice",
                                   "type": "primitive",
                                   "value": {
                                     "type": "string",
-                                    "value": "12345",
-                                  },
-                                },
-                              },
-                            ],
-                          },
-                        },
-                      },
-                      {
-                        "key": {
-                          "type": "string",
-                          "value": "sku",
-                        },
-                        "value": {
-                          "type": "unknown",
-                          "value": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "abc123",
+                                    "value": "M",
                                   },
                                 },
                               },
@@ -34116,7 +33735,7 @@ Other details about this invoice",
                               {
                                 "key": {
                                   "type": "string",
-                                  "value": "purchase_order",
+                                  "value": "size",
                                 },
                                 "value": {
                                   "type": "unknown",
@@ -34132,34 +33751,7 @@ Other details about this invoice",
                                           "type": "primitive",
                                           "value": {
                                             "type": "string",
-                                            "value": "12345",
-                                          },
-                                        },
-                                      },
-                                    ],
-                                  },
-                                },
-                              },
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "sku",
-                                },
-                                "value": {
-                                  "type": "unknown",
-                                  "value": {
-                                    "type": "map",
-                                    "value": [
-                                      {
-                                        "key": {
-                                          "type": "string",
-                                          "value": "0",
-                                        },
-                                        "value": {
-                                          "type": "primitive",
-                                          "value": {
-                                            "type": "string",
-                                            "value": "abc123",
+                                            "value": "M",
                                           },
                                         },
                                       },
@@ -42306,65 +41898,6 @@ Other details about this invoice",
                             },
                             "type": "object",
                           },
-                          "metadata": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "purchase_order",
-                                },
-                                "value": {
-                                  "type": "unknown",
-                                  "value": {
-                                    "type": "map",
-                                    "value": [
-                                      {
-                                        "key": {
-                                          "type": "string",
-                                          "value": "0",
-                                        },
-                                        "value": {
-                                          "type": "primitive",
-                                          "value": {
-                                            "type": "string",
-                                            "value": "12345",
-                                          },
-                                        },
-                                      },
-                                    ],
-                                  },
-                                },
-                              },
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "sku",
-                                },
-                                "value": {
-                                  "type": "unknown",
-                                  "value": {
-                                    "type": "map",
-                                    "value": [
-                                      {
-                                        "key": {
-                                          "type": "string",
-                                          "value": "0",
-                                        },
-                                        "value": {
-                                          "type": "primitive",
-                                          "value": {
-                                            "type": "string",
-                                            "value": "abc123",
-                                          },
-                                        },
-                                      },
-                                    ],
-                                  },
-                                },
-                              },
-                            ],
-                          },
                           "name": {
                             "type": "primitive",
                             "value": {
@@ -45009,55 +44542,25 @@ Other details about this invoice",
                       {
                         "key": {
                           "type": "string",
-                          "value": "purchase_order",
+                          "value": "metadata",
                         },
                         "value": {
-                          "type": "unknown",
-                          "value": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
+                          "type": "map",
+                          "value": [
+                            {
+                              "key": {
+                                "type": "string",
+                                "value": "key",
+                              },
+                              "value": {
+                                "type": "primitive",
                                 "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "12345",
-                                  },
+                                  "type": "string",
+                                  "value": "value",
                                 },
                               },
-                            ],
-                          },
-                        },
-                      },
-                      {
-                        "key": {
-                          "type": "string",
-                          "value": "sku",
-                        },
-                        "value": {
-                          "type": "unknown",
-                          "value": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "abc123",
-                                  },
-                                },
-                              },
-                            ],
-                          },
+                            },
+                          ],
                         },
                       },
                     ],
@@ -46858,33 +46361,6 @@ Other details about this invoice",
                                   "value": {
                                     "type": "string",
                                     "value": "12345",
-                                  },
-                                },
-                              },
-                            ],
-                          },
-                        },
-                      },
-                      {
-                        "key": {
-                          "type": "string",
-                          "value": "sku",
-                        },
-                        "value": {
-                          "type": "unknown",
-                          "value": {
-                            "type": "map",
-                            "value": [
-                              {
-                                "key": {
-                                  "type": "string",
-                                  "value": "0",
-                                },
-                                "value": {
-                                  "type": "primitive",
-                                  "value": {
-                                    "type": "string",
-                                    "value": "abc123",
                                   },
                                 },
                               },
