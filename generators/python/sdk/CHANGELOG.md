@@ -5,13 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0-rc0] - 2024-04-10
+
+- Feature: The generator now registers snippet templates which can be used for dynamic
+  SDK code snippet generation.
+
 ## [1.2.0-rc2] - 2024-04-10
+
 - Fix: The generator now correctly imports `json` when deserializing server sent events.
 
 ## [1.2.0-rc0] - 2024-04-10
 
-- Feature: The generator now depends on v38 of Intermediate Representation which requires the latest 
-  CLI. As part of this, the generator now supports server sent events using `httpx-sse`. 
+- Feature: The generator now depends on v38 of Intermediate Representation which requires the latest
+  CLI. As part of this, the generator now supports server sent events using `httpx-sse`.
 
 ## [1.1.0-rc3] - 2024-04-04
 
