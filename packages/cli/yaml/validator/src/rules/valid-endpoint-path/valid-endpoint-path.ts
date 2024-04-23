@@ -24,11 +24,6 @@ export const ValidEndpointPathRule: Rule = {
                             severity: "error",
                             message: 'Path cannot be /. Use "" instead.'
                         });
-                    } else if (endpoint.path.endsWith("/")) {
-                        violations.push({
-                            severity: "error",
-                            message: "Path cannot end with a slash."
-                        });
                     }
 
                     return violations;
