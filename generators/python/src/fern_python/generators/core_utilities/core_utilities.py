@@ -69,7 +69,7 @@ class CoreUtilities:
                 module=AST.Module.local(*self._module_path, "datetime_utils"), named_import="serialize_datetime"
             ),
         )
-   
+
     def get_union_metadata(self) -> AST.ClassReference:
         return AST.ClassReference(
             qualified_name_excluding_import=(),

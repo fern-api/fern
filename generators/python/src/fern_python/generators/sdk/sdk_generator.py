@@ -27,8 +27,8 @@ from fern_python.utils import build_snippet_writer
 
 from .client_generator.client_generator import ClientGenerator
 from .client_generator.generated_root_client import GeneratedRootClient
-from .client_generator.root_client_generator import RootClientGenerator
 from .client_generator.oauth_token_provider_generator import OAuthTokenProviderGenerator
+from .client_generator.root_client_generator import RootClientGenerator
 from .custom_config import SDKCustomConfig
 from .environment_generators import (
     GeneratedEnvironment,
@@ -133,13 +133,19 @@ class SdkGenerator(AbstractGenerator):
                 project=project,
             )
 
-        maybe_oauth_scheme = next((scheme for scheme in context.ir.auth.schemes if scheme.get_as_union().type == "oauth"), None)
-        oauth_scheme = maybe_oauth_scheme.visit(
-            bearer=lambda _: None,
-            basic=lambda _: None,
-            header=lambda _: None,
-            oauth=lambda oauth: oauth,
-        ) if maybe_oauth_scheme is not None and generator_config.generate_oauth_clients else None
+        maybe_oauth_scheme = next(
+            (scheme for scheme in context.ir.auth.schemes if scheme.get_as_union().type == "oauth"), None
+        )
+        oauth_scheme = (
+            maybe_oauth_scheme.visit(
+                bearer=lambda _: None,
+                basic=lambda _: None,
+                header=lambda _: None,
+                oauth=lambda oauth: oauth,
+            )
+            if maybe_oauth_scheme is not None and generator_config.generate_oauth_clients
+            else None
+        )
         if oauth_scheme is not None:
             self._generate_oauth_token_provider(
                 context=context,
@@ -166,7 +172,7 @@ class SdkGenerator(AbstractGenerator):
             project=project,
             snippet_registry=snippet_registry,
             snippet_writer=snippet_writer,
-            oauth_scheme=oauth_scheme
+            oauth_scheme=oauth_scheme,
         )
 
         for subpackage_id in ir.subpackages.keys():

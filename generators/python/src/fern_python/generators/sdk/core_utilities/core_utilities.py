@@ -135,7 +135,7 @@ class CoreUtilities:
                 module=AST.Module.local(*self._module_path, "api_error"), named_import="ApiError"
             ),
         )
-    
+
     def get_oauth_token_provider(self) -> AST.ClassReference:
         return AST.ClassReference(
             qualified_name_excluding_import=(),

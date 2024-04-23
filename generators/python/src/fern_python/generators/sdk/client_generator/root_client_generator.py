@@ -26,7 +26,6 @@ from ..environment_generators import (
 from .constants import DEFAULT_BODY_PARAMETER_VALUE
 from .endpoint_function_generator import EndpointFunctionGenerator
 from .generated_root_client import GeneratedRootClient, RootClient
-from .oauth_token_provider_generator import OAuthTokenProviderGenerator
 
 
 @dataclass
@@ -109,7 +108,7 @@ class RootClientGenerator:
                             constructor_parameter_name="client_id",
                             type_hint=AST.TypeHint.str_(),
                             private_member_name="client_id",
-                            instantiation=AST.Expression(f"client_id=\"YOUR_CLIENT_ID\""),
+                            instantiation=AST.Expression(f'client_id="YOUR_CLIENT_ID"'),
                         )
                     )
                 if oauth.client_secret_env_var is None:
@@ -118,10 +117,9 @@ class RootClientGenerator:
                             constructor_parameter_name="client_secret",
                             type_hint=AST.TypeHint.str_(),
                             private_member_name="client_secret",
-                            instantiation=AST.Expression(f"client_secret=\"YOUR_CLIENT_SECRET\""),
+                            instantiation=AST.Expression(f'client_secret="YOUR_CLIENT_SECRET"'),
                         )
                     )
-
 
     def generate(self, source_file: SourceFile) -> GeneratedRootClient:
         exported_client_class_name = self._context.get_class_name_for_exported_root_client()
@@ -211,7 +209,9 @@ class RootClientGenerator:
                 named_parameters.append(
                     AST.NamedFunctionParameter(
                         name="client_id",
-                        type_hint=AST.TypeHint.optional(AST.TypeHint.str_()) if oauth.client_id_env_var is not None else AST.TypeHint.str_(),
+                        type_hint=AST.TypeHint.optional(AST.TypeHint.str_())
+                        if oauth.client_id_env_var is not None
+                        else AST.TypeHint.str_(),
                         initializer=AST.Expression(
                             AST.FunctionInvocation(
                                 function_definition=AST.Reference(
@@ -222,13 +222,15 @@ class RootClientGenerator:
                             )
                         )
                         if oauth.client_id_env_var is not None
-                        else None
+                        else None,
                     ),
                 )
                 named_parameters.append(
                     AST.NamedFunctionParameter(
                         name="client_secret",
-                        type_hint=AST.TypeHint.optional(AST.TypeHint.str_()) if oauth.client_secret_env_var is not None else AST.TypeHint.str_(),
+                        type_hint=AST.TypeHint.optional(AST.TypeHint.str_())
+                        if oauth.client_secret_env_var is not None
+                        else AST.TypeHint.str_(),
                         initializer=AST.Expression(
                             AST.FunctionInvocation(
                                 function_definition=AST.Reference(
@@ -239,7 +241,7 @@ class RootClientGenerator:
                             )
                         )
                         if oauth.client_secret_env_var is not None
-                        else None
+                        else None,
                     ),
                 )
 
@@ -537,7 +539,7 @@ class RootClientGenerator:
                     environments_config=self._environments_config,
                     timeout_local_variable=timeout_local_variable,
                     is_async=is_async,
-                    exclude_auth=True
+                    exclude_auth=True,
                 )
                 writer.write("oauth_token_provider = ")
                 writer.write_node(
@@ -556,11 +558,13 @@ class RootClientGenerator:
                                 "client_wrapper",
                                 AST.Expression(
                                     AST.ClassInstantiation(
-                                        class_=self._context.core_utilities.get_reference_to_client_wrapper(is_async=False),
+                                        class_=self._context.core_utilities.get_reference_to_client_wrapper(
+                                            is_async=False
+                                        ),
                                         kwargs=client_wrapper_constructor_kwargs,
                                     ),
                                 ),
-                            )
+                            ),
                         ],
                     )
                 )
@@ -570,7 +574,7 @@ class RootClientGenerator:
                 environments_config=self._environments_config,
                 timeout_local_variable=timeout_local_variable,
                 is_async=is_async,
-                use_oauth_token_provider=use_oauth_token_provider
+                use_oauth_token_provider=use_oauth_token_provider,
             )
             for param in self._get_constructor_parameters(is_async=is_async):
                 if param.private_member_name is not None:
@@ -613,7 +617,7 @@ class RootClientGenerator:
                     writer.write_line()
 
         return _write_constructor_body
-    
+
     def _get_client_wrapper_kwargs(
         self,
         client_wrapper_generator: ClientWrapperGenerator,
@@ -651,7 +655,9 @@ class RootClientGenerator:
                 )
             )
 
-        for wrapper_param in client_wrapper_generator._get_constructor_info(exclude_auth=exclude_auth if exclude_auth else use_oauth_token_provider).constructor_parameters:
+        for wrapper_param in client_wrapper_generator._get_constructor_info(
+            exclude_auth=exclude_auth if exclude_auth else use_oauth_token_provider
+        ).constructor_parameters:
             client_wrapper_constructor_kwargs.append(
                 (
                     wrapper_param.constructor_parameter_name,
@@ -711,9 +717,8 @@ class RootClientGenerator:
                 AST.Expression(timeout_local_variable),
             )
         )
-        
-        return client_wrapper_constructor_kwargs
 
+        return client_wrapper_constructor_kwargs
 
     def _write_default_param(self, writer: AST.NodeWriter) -> None:
         writer.write_line("# this is used as the default value for optional parameters")
