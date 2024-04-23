@@ -203,7 +203,7 @@ Log.d("TAG", group.toString())
               },
             ],
             "method": "POST",
-            "path": "/group",
+            "path": "/group/",
             "request": {
               "body": {
                 "properties": {
@@ -402,7 +402,7 @@ Log.d("TAG", group.toString())
               },
             ],
             "method": "GET",
-            "path": "/group/info",
+            "path": "/group/info/",
             "request": {
               "name": "FilesGroupInfoRequest",
               "query-parameters": {
@@ -566,7 +566,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "POST",
-            "path": "/base",
+            "path": "/base/",
             "request": {
               "body": {
                 "properties": {
@@ -690,7 +690,7 @@ Log.d("TAG", file.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-08-20T12:59:50Z",
+                        "datetime_original": "2018-08-20T08:59:50Z",
                         "dpi": [
                           72,
                           72,
@@ -738,7 +738,7 @@ Log.d("TAG", file.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-08-20T12:59:50Z",
+                      "datetime_original": "2018-08-20T08:59:50Z",
                       "dpi": [
                         72,
                         72,
@@ -789,7 +789,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "GET",
-            "path": "/info",
+            "path": "/info/",
             "request": {
               "name": "FileUploadInfoRequest",
               "query-parameters": {
@@ -1060,7 +1060,7 @@ Log.d("TAG", file.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-08-20T12:59:50Z",
+                        "datetime_original": "2018-08-20T08:59:50Z",
                         "dpi": [
                           72,
                           72,
@@ -1108,7 +1108,7 @@ Log.d("TAG", file.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-08-20T12:59:50Z",
+                      "datetime_original": "2018-08-20T08:59:50Z",
                       "dpi": [
                         72,
                         72,
@@ -1160,7 +1160,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "POST",
-            "path": "/from_url",
+            "path": "/from_url/",
             "request": {
               "body": {
                 "properties": {
@@ -1504,7 +1504,7 @@ Log.d("TAG", status.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-08-20T12:59:50Z",
+                        "datetime_original": "2018-08-20T08:59:50Z",
                         "dpi": [
                           72,
                           72,
@@ -1552,7 +1552,7 @@ Log.d("TAG", status.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-08-20T12:59:50Z",
+                      "datetime_original": "2018-08-20T08:59:50Z",
                       "dpi": [
                         72,
                         72,
@@ -1790,7 +1790,7 @@ Log.d("TAG", status.toString())
               },
             ],
             "method": "GET",
-            "path": "/from_url/status",
+            "path": "/from_url/status/",
             "request": {
               "name": "FromUrlUploadStatusRequest",
               "query-parameters": {
@@ -1930,7 +1930,7 @@ Log.d("TAG", file.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-08-20T12:59:50Z",
+                        "datetime_original": "2018-08-20T08:59:50Z",
                         "dpi": [
                           72,
                           72,
@@ -1978,7 +1978,7 @@ Log.d("TAG", file.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-08-20T12:59:50Z",
+                      "datetime_original": "2018-08-20T08:59:50Z",
                       "dpi": [
                         72,
                         72,
@@ -2029,7 +2029,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "POST",
-            "path": "/multipart/complete",
+            "path": "/multipart/complete/",
             "request": {
               "body": {
                 "properties": {
@@ -2325,7 +2325,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "POST",
-            "path": "/multipart/start",
+            "path": "/multipart/start/",
             "request": {
               "body": {
                 "properties": {
@@ -4278,7 +4278,7 @@ Log.d("TAG", group.toString())
               },
             ],
             "method": "POST",
-            "path": "/group",
+            "path": "/group/",
             "request": {
               "body": {
                 "properties": {
@@ -4477,7 +4477,7 @@ Log.d("TAG", group.toString())
               },
             ],
             "method": "GET",
-            "path": "/group/info",
+            "path": "/group/info/",
             "request": {
               "name": "FilesGroupInfoRequest",
               "query-parameters": {
@@ -4641,7 +4641,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "POST",
-            "path": "/base",
+            "path": "/base/",
             "request": {
               "body": {
                 "properties": {
@@ -4765,7 +4765,7 @@ Log.d("TAG", file.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-08-20T12:59:50Z",
+                        "datetime_original": "2018-08-20T08:59:50Z",
                         "dpi": [
                           72,
                           72,
@@ -4813,7 +4813,7 @@ Log.d("TAG", file.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-08-20T12:59:50Z",
+                      "datetime_original": "2018-08-20T08:59:50Z",
                       "dpi": [
                         72,
                         72,
@@ -4864,7 +4864,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "GET",
-            "path": "/info",
+            "path": "/info/",
             "request": {
               "name": "FileUploadInfoRequest",
               "query-parameters": {
@@ -5135,7 +5135,7 @@ Log.d("TAG", file.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-08-20T12:59:50Z",
+                        "datetime_original": "2018-08-20T08:59:50Z",
                         "dpi": [
                           72,
                           72,
@@ -5183,7 +5183,7 @@ Log.d("TAG", file.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-08-20T12:59:50Z",
+                      "datetime_original": "2018-08-20T08:59:50Z",
                       "dpi": [
                         72,
                         72,
@@ -5235,7 +5235,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "POST",
-            "path": "/from_url",
+            "path": "/from_url/",
             "request": {
               "body": {
                 "properties": {
@@ -5579,7 +5579,7 @@ Log.d("TAG", status.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-08-20T12:59:50Z",
+                        "datetime_original": "2018-08-20T08:59:50Z",
                         "dpi": [
                           72,
                           72,
@@ -5627,7 +5627,7 @@ Log.d("TAG", status.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-08-20T12:59:50Z",
+                      "datetime_original": "2018-08-20T08:59:50Z",
                       "dpi": [
                         72,
                         72,
@@ -5865,7 +5865,7 @@ Log.d("TAG", status.toString())
               },
             ],
             "method": "GET",
-            "path": "/from_url/status",
+            "path": "/from_url/status/",
             "request": {
               "name": "FromUrlUploadStatusRequest",
               "query-parameters": {
@@ -6005,7 +6005,7 @@ Log.d("TAG", file.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-08-20T12:59:50Z",
+                        "datetime_original": "2018-08-20T08:59:50Z",
                         "dpi": [
                           72,
                           72,
@@ -6053,7 +6053,7 @@ Log.d("TAG", file.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-08-20T12:59:50Z",
+                      "datetime_original": "2018-08-20T08:59:50Z",
                       "dpi": [
                         72,
                         72,
@@ -6104,7 +6104,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "POST",
-            "path": "/multipart/complete",
+            "path": "/multipart/complete/",
             "request": {
               "body": {
                 "properties": {
@@ -6400,7 +6400,7 @@ Log.d("TAG", file.toString())
               },
             ],
             "method": "POST",
-            "path": "/multipart/start",
+            "path": "/multipart/start/",
             "request": {
               "body": {
                 "properties": {

@@ -14089,6 +14089,23 @@ exports[`open api parser aries docs 1`] = `
               "type": "file",
             },
           },
+          "download_tails_file_sparse": {
+            "auth": true,
+            "display-name": "Download tails file",
+            "docs": undefined,
+            "method": "GET",
+            "path": "/revocation/registry/{rev_reg_id}/tails-file-less-deets",
+            "path-parameters": {
+              "rev_reg_id": {
+                "docs": "Revocation Registry identifier",
+                "type": "string",
+              },
+            },
+            "response": {
+              "docs": "tails file",
+              "type": "file",
+            },
+          },
           "get_active_registry_for_cred_def_id": {
             "auth": true,
             "display-name": "Get current active revocation registry by credential definition id",

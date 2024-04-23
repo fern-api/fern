@@ -1,4 +1,5 @@
 import { GeneratorName } from "@fern-api/configuration";
+import { assertNever } from "@fern-api/core-utils";
 import { IrSerialization } from "../../ir-serialization";
 import { IrVersions } from "../../ir-versions";
 import { GeneratorWasNeverUpdatedToConsumeNewIR, IrMigration } from "../../types/IrMigration";
@@ -44,10 +45,45 @@ export const V39_TO_V38_MIGRATION: IrMigration<
             ...V39,
             auth: {
                 ...V39.auth,
-                schemes: V39.auth.schemes.filter(
-                    (scheme): scheme is IrVersions.V38.AuthScheme => scheme.type !== "oauth"
-                )
+                schemes: V39.auth.schemes.map((scheme) => convertAuthScheme(scheme))
             }
         };
     }
 };
+
+function convertAuthScheme(scheme: IrVersions.V39.AuthScheme): IrVersions.V38.AuthScheme {
+    switch (scheme.type) {
+        case "basic":
+            return IrVersions.V38.AuthScheme.basic(scheme);
+        case "bearer":
+            return IrVersions.V38.AuthScheme.bearer(scheme);
+        case "header":
+            return IrVersions.V38.AuthScheme.header(scheme);
+        case "oauth":
+            return IrVersions.V38.AuthScheme.bearer({
+                docs: scheme.docs,
+                token: {
+                    originalName: "token",
+                    camelCase: {
+                        unsafeName: "token",
+                        safeName: "token"
+                    },
+                    pascalCase: {
+                        unsafeName: "Token",
+                        safeName: "Token"
+                    },
+                    snakeCase: {
+                        unsafeName: "token",
+                        safeName: "token"
+                    },
+                    screamingSnakeCase: {
+                        unsafeName: "TOKEN",
+                        safeName: "TOKEN"
+                    }
+                },
+                tokenEnvVar: undefined
+            });
+        default:
+            assertNever(scheme);
+    }
+}
