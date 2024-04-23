@@ -30,5 +30,5 @@
     "dryRun": false,
     "whitelabel": false,
     "writeUnitTests": true,
-    "generateOauthClients": false
+    "generateOauthClients": true
 }

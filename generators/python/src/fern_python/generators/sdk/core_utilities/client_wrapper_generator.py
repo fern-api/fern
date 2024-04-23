@@ -416,7 +416,7 @@ class ClientWrapperGenerator:
 
         return _write_constructor_body
 
-    def _get_constructor_info(self) -> ConstructorInfo:
+    def _get_constructor_info(self, exclude_auth: bool = False) -> ConstructorInfo:
         parameters: List[ConstructorParameter] = []
         literal_headers: List[LiteralHeader] = []
 
@@ -443,6 +443,12 @@ class ClientWrapperGenerator:
                     header_key=header.name.wire_value,
                     environment_variable=header.env,
                 )
+            )
+
+        if exclude_auth:
+            return ConstructorInfo(
+                constructor_parameters=parameters,
+                literal_headers=literal_headers,
             )
 
         # TODO(dsinghvi): Support suppliers for header auth schemes
@@ -612,6 +618,38 @@ class ClientWrapperGenerator:
             scheme_as_union = scheme.get_as_union()
             if scheme_as_union.type == "bearer":
                 return scheme_as_union
+
+        for scheme in self._context.ir.auth.schemes:
+            scheme_as_union = scheme.get_as_union()
+            if scheme_as_union.type == "oauth":
+                # TODO: For now, we create the default bearer auth scheme if the auth scheme is oauth.
+                #
+                #       This should be eventually be handled in the IR when we can support multiple auth
+                #       schemes.
+                #
+                # TODO: We need to support the token prefix. This will actually need to be handled as a
+                #       custom header auth scheme.
+                return ir_types.BearerAuthScheme(
+                    token=ir_types.Name(
+                        original_name="token",
+                        camel_case=ir_types.SafeAndUnsafeString(
+                            safe_name="token",
+                            unsafe_name="token",
+                        ),
+                        pascal_case=ir_types.SafeAndUnsafeString(
+                            safe_name="Token",
+                            unsafe_name="Token",
+                        ),
+                        snake_case=ir_types.SafeAndUnsafeString(
+                            safe_name="token",
+                            unsafe_name="token",
+                        ),
+                        screaming_snake_case=ir_types.SafeAndUnsafeString(
+                            safe_name="TOKEN",
+                            unsafe_name="TOKEN",
+                        ),
+                    )
+                )
         return None
 
     def _has_basic_auth(self) -> bool:

@@ -31,6 +31,7 @@ export declare namespace getGeneratorConfig {
         absolutePathToSnippet: AbsoluteFilePath | undefined;
         absolutePathToSnippetTemplates: AbsoluteFilePath | undefined;
         writeUnitTests: boolean;
+        generateOauthClients: boolean;
     }
 
     export interface Return {
@@ -96,7 +97,8 @@ export function getGeneratorConfig({
     outputVersion = DEFAULT_OUTPUT_VERSION,
     absolutePathToSnippet,
     absolutePathToSnippetTemplates,
-    writeUnitTests
+    writeUnitTests,
+    generateOauthClients
 }: getGeneratorConfig.Args): getGeneratorConfig.Return {
     const binds: string[] = [];
     const output = generatorInvocation.outputMode._visit<FernGeneratorExec.GeneratorOutputConfig>({
@@ -184,7 +186,7 @@ export function getGeneratorConfig({
             dryRun: false,
             whitelabel: false,
             writeUnitTests,
-            generateOauthClients: false
+            generateOauthClients
         }
     };
 }

@@ -8,9 +8,17 @@ from seed.client import AsyncSeedOauthClientCredentials, SeedOauthClientCredenti
 
 @pytest.fixture
 def client() -> SeedOauthClientCredentials:
-    return SeedOauthClientCredentials(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
+    return SeedOauthClientCredentials(
+        client_id=os.getenv("ENV_CLIENT_ID", "client_id"),
+        client_secret=os.getenv("ENV_CLIENT_SECRET", "client_secret"),
+        base_url=os.getenv("TESTS_BASE_URL", "base_url"),
+    )
 
 
 @pytest.fixture
 def async_client() -> AsyncSeedOauthClientCredentials:
-    return AsyncSeedOauthClientCredentials(base_url=os.getenv("TESTS_BASE_URL", "base_url"))
+    return AsyncSeedOauthClientCredentials(
+        client_id=os.getenv("ENV_CLIENT_ID", "client_id"),
+        client_secret=os.getenv("ENV_CLIENT_SECRET", "client_secret"),
+        base_url=os.getenv("TESTS_BASE_URL", "base_url"),
+    )

@@ -22,7 +22,92 @@
     "apiDocs": null,
     "auth": {
         "requirement": "ALL",
-        "schemes": [],
+        "schemes": [
+            {
+                "_type": "oauth",
+                "configuration": {
+                    "type": "clientCredentials",
+                    "clientIdEnvVar": null,
+                    "clientSecretEnvVar": null,
+                    "tokenPrefix": null,
+                    "scopes": null,
+                    "tokenEndpoint": {
+                        "endpointReference": "endpoint_auth.getTokenWithClientCredentials",
+                        "responseProperties": {
+                            "accessToken": {
+                                "propertyPath": [],
+                                "property": {
+                                    "name": {
+                                        "name": {
+                                            "originalName": "access_token",
+                                            "camelCase": {
+                                                "unsafeName": "accessToken",
+                                                "safeName": "accessToken"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "access_token",
+                                                "safeName": "access_token"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "ACCESS_TOKEN",
+                                                "safeName": "ACCESS_TOKEN"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "AccessToken",
+                                                "safeName": "AccessToken"
+                                            }
+                                        },
+                                        "wireValue": "access_token"
+                                    },
+                                    "valueType": {
+                                        "_type": "primitive",
+                                        "primitive": "STRING"
+                                    },
+                                    "availability": null,
+                                    "docs": null
+                                }
+                            },
+                            "expiresIn": {
+                                "propertyPath": [],
+                                "property": {
+                                    "name": {
+                                        "name": {
+                                            "originalName": "expires_in",
+                                            "camelCase": {
+                                                "unsafeName": "expiresIn",
+                                                "safeName": "expiresIn"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "expires_in",
+                                                "safeName": "expires_in"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "EXPIRES_IN",
+                                                "safeName": "EXPIRES_IN"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "ExpiresIn",
+                                                "safeName": "ExpiresIn"
+                                            }
+                                        },
+                                        "wireValue": "expires_in"
+                                    },
+                                    "valueType": {
+                                        "_type": "primitive",
+                                        "primitive": "INTEGER"
+                                    },
+                                    "availability": null,
+                                    "docs": null
+                                }
+                            },
+                            "refreshToken": null
+                        }
+                    },
+                    "refreshEndpoint": null
+                },
+                "docs": null
+            }
+        ],
         "docs": null
     },
     "headers": [],

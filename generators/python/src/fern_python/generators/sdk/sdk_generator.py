@@ -27,6 +27,7 @@ from fern_python.utils import build_snippet_writer
 
 from .client_generator.client_generator import ClientGenerator
 from .client_generator.generated_root_client import GeneratedRootClient
+from .client_generator.oauth_token_provider_generator import OAuthTokenProviderGenerator
 from .client_generator.root_client_generator import RootClientGenerator
 from .custom_config import SDKCustomConfig
 from .environment_generators import (
@@ -132,6 +133,28 @@ class SdkGenerator(AbstractGenerator):
                 project=project,
             )
 
+        maybe_oauth_scheme = next(
+            (scheme for scheme in context.ir.auth.schemes if scheme.get_as_union().type == "oauth"), None
+        )
+        oauth_scheme = (
+            maybe_oauth_scheme.visit(
+                bearer=lambda _: None,
+                basic=lambda _: None,
+                header=lambda _: None,
+                oauth=lambda oauth: oauth,
+            )
+            if maybe_oauth_scheme is not None and generator_config.generate_oauth_clients
+            else None
+        )
+        if oauth_scheme is not None:
+            self._generate_oauth_token_provider(
+                context=context,
+                ir=ir,
+                generator_exec_wrapper=generator_exec_wrapper,
+                project=project,
+                oauth_scheme=oauth_scheme,
+            )
+
         self._generate_client_wrapper(
             context=context,
             generated_environment=generated_environment,
@@ -149,6 +172,7 @@ class SdkGenerator(AbstractGenerator):
             project=project,
             snippet_registry=snippet_registry,
             snippet_writer=snippet_writer,
+            oauth_scheme=oauth_scheme,
         )
 
         for subpackage_id in ir.subpackages.keys():
@@ -278,6 +302,24 @@ class SdkGenerator(AbstractGenerator):
         ).generate(source_file=source_file, project=project)
         project.write_source_file(source_file=source_file, filepath=filepath)
 
+    def _generate_oauth_token_provider(
+        self,
+        context: SdkGeneratorContext,
+        ir: ir_types.IntermediateRepresentation,
+        generator_exec_wrapper: GeneratorExecWrapper,
+        project: Project,
+        oauth_scheme: ir_types.OAuthScheme,
+    ) -> None:
+        filepath = context.get_filepath_for_generated_oauth_token_provider()
+        source_file = SourceFileFactory.create(
+            project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
+        )
+        OAuthTokenProviderGenerator(
+            context=context,
+            oauth_scheme=oauth_scheme,
+        ).generate(source_file=source_file)
+        project.write_source_file(source_file=source_file, filepath=filepath)
+
     def _generate_root_client(
         self,
         context: SdkGeneratorContext,
@@ -287,6 +329,7 @@ class SdkGenerator(AbstractGenerator):
         project: Project,
         snippet_registry: SnippetRegistry,
         snippet_writer: SnippetWriter,
+        oauth_scheme: Optional[ir_types.OAuthScheme] = None,
     ) -> GeneratedRootClient:
         filepath = context.get_filepath_for_generated_root_client()
         source_file = SourceFileFactory.create(
@@ -300,6 +343,7 @@ class SdkGenerator(AbstractGenerator):
             async_class_name="Async" + context.get_class_name_for_generated_root_client(),
             snippet_registry=snippet_registry,
             snippet_writer=snippet_writer,
+            oauth_scheme=oauth_scheme,
         ).generate(source_file=source_file)
         project.write_source_file(source_file=source_file, filepath=filepath)
         return generated_root_client
