@@ -26,8 +26,7 @@ describe("valid-endpoint-path", () => {
                 nodePath: ["service", "endpoints", "noLeadingSlash"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
                 severity: "error"
-            },
-            
+            }
         ];
 
         expect(violations).toEqual(expectedViolations);
