@@ -55,7 +55,7 @@ class OAuthTokenProviderGenerator:
                 body=AST.CodeWriter(
                     self._get_write_constructor_body(
                         constructor_parameters=constructor_parameters,
-                        auth_client_initialization_exprs=self._get_auth_client_initialization_exprs(
+                        private_member_initialization_exprs=self._get_private_member_initialization_exprs(
                             client_credentials=client_credentials
                         ),
                     )
@@ -108,7 +108,7 @@ class OAuthTokenProviderGenerator:
     def _get_write_constructor_body(
         self,
         constructor_parameters: List[ConstructorParameter],
-        auth_client_initialization_exprs: List[AST.Expression],
+        private_member_initialization_exprs: List[AST.Expression],
     ) -> CodeWriterFunction:
         def _write_constructor_body(writer: AST.NodeWriter) -> None:
             for param in constructor_parameters:
@@ -117,22 +117,69 @@ class OAuthTokenProviderGenerator:
                 if param.private_member_name is not None:
                     writer.write_line(f"self.{param.private_member_name} = {param.constructor_parameter_name}")
 
-            for expr in auth_client_initialization_exprs:
+            for expr in private_member_initialization_exprs:
                 writer.write_node(expr)
 
         return _write_constructor_body
 
-    def _get_auth_client_initialization_exprs(
+    def _get_private_member_initialization_exprs(
         self, client_credentials: ir_types.OAuthClientCredentials
     ) -> List[AST.Expression]:
         """
-        Generates the initialization of the clients for the token and refresh endpoints. In most cases
-        this is only a single client.
+        Generates the initialization of the private member variables, including the clients for the token and refresh endpoints.
+        In most cases this is only a single client.
 
+        self._access_token: Optional[str] = None
+        self._refresh_token: Optional[str] = None
+        self._expires_at: dt.datetime = dt.datetime.now()
         self._auth_client = AuthClient(client_wrapper=client_wrapper)
         self._refresh_client = RefreshClient(client_wrapper=client_wrapper)
         """
         result: List[AST.Expression] = []
+
+        result.append(
+            AST.Expression(
+                AST.CodeWriter(
+                    self._get_write_member_initialization(
+                        member_name=self._get_access_token_member_name(),
+                        type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                        initialization=AST.Expression("None"),
+                    ),
+                ),
+            ),
+        )
+
+        if client_credentials.token_endpoint.response_properties.expires_in is not None or (
+            client_credentials.refresh_endpoint is not None
+            and client_credentials.refresh_endpoint.response_properties.expires_in is not None
+        ):
+            result.append(
+                AST.Expression(
+                    AST.CodeWriter(
+                        self._get_write_member_initialization(
+                            member_name=self._get_expires_at_member_name(),
+                            type_hint=AST.TypeHint.datetime(),
+                            initialization=AST.Expression(self._get_datetime_now_invocation()),
+                        ),
+                    ),
+                ),
+            )
+
+        if client_credentials.token_endpoint.response_properties.refresh_token is not None or (
+            client_credentials.refresh_endpoint is not None
+            and client_credentials.refresh_endpoint.response_properties.refresh_token is not None
+        ):
+            result.append(
+                AST.Expression(
+                    AST.CodeWriter(
+                        self._get_write_member_initialization(
+                            member_name=self._get_refresh_token_member_name(),
+                            type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                            initialization=AST.Expression("None"),
+                        ),
+                    ),
+                ),
+            )
 
         token_subpackage_id = self._get_subpackage_id_for_endpoint_id(
             endpoint_id=client_credentials.token_endpoint.endpoint_reference,
@@ -169,6 +216,21 @@ class OAuthTokenProviderGenerator:
             )
 
         return result
+
+    def _get_write_member_initialization(
+        self,
+        member_name: str,
+        type_hint: AST.TypeHint,
+        initialization: AST.Expression,
+    ) -> AST.CodeWriterFunction:
+        def _write_member_initialization(writer: AST.NodeWriter) -> None:
+            writer.write_node(AST.Expression(f"self.{member_name}: "))
+            writer.write_node(type_hint)
+            writer.write(" = ")
+            writer.write_node(initialization)
+            writer.write_line()
+
+        return _write_member_initialization
 
     def _get_write_auth_client_initialization(
         self,
