@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0-rc2] - 2024-04-23
+
+- Fix: Initialize the OAuth token provider member variables to their default values before they are set.
+
 ## [1.4.0-rc1] - 2024-04-22
 
 - Feature: The python SDK generator now supports OAuth client generation for the client-credentials flow.

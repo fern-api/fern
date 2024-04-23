@@ -6,7 +6,7 @@ public partial class SeedOauthClientCredentialsClient
 {
     private RawClient _client;
 
-    public SeedOauthClientCredentialsClient(ClientOptions clientOptions)
+    public SeedOauthClientCredentialsClient(string token, ClientOptions clientOptions)
     {
         _client = new RawClient(
             new Dictionary<string, string> { { "X-Fern-Language", "C#" }, },
