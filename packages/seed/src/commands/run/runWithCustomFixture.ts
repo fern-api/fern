@@ -37,7 +37,7 @@ export async function runWithCustomFixture({
     });
 
     const fernWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
-        absolutePathToAPIDefinition: join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(pathToFixture)),
+        absolutePathToAPIDefinition: pathToFixture,
         taskContext,
         fixture: "custom"
     });
@@ -49,7 +49,7 @@ export async function runWithCustomFixture({
     try {
         await dockerGeneratorRunner.runGenerator({
             fernWorkspace,
-            absolutePathToWorkspace: join(pathToFixture),
+            absolutePathToWorkspace: pathToFixture,
             irVersion: workspace.workspaceConfig.irVersion,
             outputVersion: customFixtureConfig?.outputVersion,
             language: workspace.workspaceConfig.language,
