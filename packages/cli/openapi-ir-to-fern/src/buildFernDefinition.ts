@@ -1,13 +1,12 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { isRawAliasDefinition, RawSchemas } from "@fern-api/yaml-schema";
+import { isRawAliasDefinition } from "@fern-api/yaml-schema";
 import { buildAuthSchemes } from "./buildAuthSchemes";
 import { buildChannel } from "./buildChannel";
 import { buildEnvironments } from "./buildEnvironments";
 import { buildGlobalHeaders } from "./buildGlobalHeaders";
 import { buildServices } from "./buildServices";
 import { buildTypeDeclaration } from "./buildTypeDeclaration";
-import { buildTypeReference } from "./buildTypeReference";
 import { buildVariables } from "./buildVariables";
 import { buildWebhooks } from "./buildWebhooks";
 import { FernDefinition } from "./FernDefnitionBuilder";
@@ -57,25 +56,6 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
         context.builder.addType(declarationFile, {
             name: typeDeclaration.name ?? id,
             schema: typeDeclaration.schema
-        });
-    }
-
-    // Add Errors
-    for (const [statusCode, httpError] of Object.entries(context.ir.errors)) {
-        const errorDeclaration: RawSchemas.ErrorDeclarationSchema = {
-            "status-code": parseInt(statusCode)
-        };
-        if (httpError.schema != null) {
-            const typeReference = buildTypeReference({
-                schema: httpError.schema,
-                context,
-                fileContainingReference: RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME)
-            });
-            errorDeclaration.type = getTypeFromTypeReference(typeReference);
-        }
-        context.builder.addError(ERROR_DECLARATIONS_FILENAME, {
-            name: httpError.generatedName,
-            schema: errorDeclaration
         });
     }
 

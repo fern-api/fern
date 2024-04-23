@@ -1,5 +1,5 @@
 import { Logger } from "@fern-api/logger";
-import { HttpError, SchemaId, StatusCode } from "@fern-api/openapi-ir-sdk";
+import { SchemaId } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 import { SchemaParserContext } from "../../schema/SchemaParserContext";
@@ -158,11 +158,6 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
 
     public abstract getDummy(): SchemaParserContext;
 
-    public abstract markSchemaForStatusCode(
-        statusCode: number,
-        schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject
-    ): void;
-
     public abstract markReferencedByDiscriminatedUnion(
         schema: OpenAPIV3.ReferenceObject,
         discrminant: string,
@@ -172,8 +167,6 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     public abstract getReferencesFromDiscriminatedUnion(
         schema: OpenAPIV3.ReferenceObject
     ): DiscriminatedUnionReference | undefined;
-
-    public abstract getErrors(): Record<StatusCode, HttpError>;
 
     public abstract excludeSchema(schemaId: SchemaId): void;
 

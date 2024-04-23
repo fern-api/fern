@@ -10,7 +10,7 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
       "authed": false,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "type": "unknown",
@@ -155,7 +155,6 @@ exports[`x-fern-examples x-fern-examples parse open api 1`] = `
       "tags": [],
     },
   ],
-  "errors": {},
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,

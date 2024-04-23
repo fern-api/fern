@@ -5,7 +5,6 @@ exports[`x-fern-ignore-schema x-fern-ignore-schema parse open api 1`] = `
   "channel": [],
   "description": null,
   "endpoints": [],
-  "errors": {},
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,

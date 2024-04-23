@@ -28,7 +28,11 @@ export interface EndpointWithExample extends FernOpenapiIr.WithDescription {
     requestNameOverride: string | undefined;
     request: FernOpenapiIr.RequestWithExample | undefined;
     response: FernOpenapiIr.ResponseWithExample | undefined;
-    errorStatusCode: FernOpenapiIr.StatusCode[];
+    /**
+     * Expected error status codes for this endpoint, and their corresponding schema and examples.
+     * SDK generators will only read the StatusCodes. Docs generators will read the HttpError schema.
+     */
+    errors: Record<FernOpenapiIr.StatusCode, FernOpenapiIr.HttpErrorWithExample>;
     server: FernOpenapiIr.Server[];
     /**
      * Populated by `x-fern-examples` on a path object.

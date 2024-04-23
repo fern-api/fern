@@ -10,10 +10,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -671,10 +697,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -938,10 +990,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -1205,9 +1283,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -1375,10 +1466,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -1689,9 +1806,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -1780,9 +1910,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -1950,9 +2093,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -2120,10 +2276,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -2623,9 +2805,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -2835,10 +3030,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -3700,10 +3921,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -3985,9 +4232,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -4179,11 +4439,50 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        404,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -4493,9 +4792,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -4584,11 +4896,50 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        404,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -4909,10 +5260,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -5914,10 +6291,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -6263,10 +6666,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -6612,9 +7041,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -6770,11 +7212,50 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        404,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -7179,9 +7660,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -7337,9 +7831,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -7495,10 +8002,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -9685,9 +10218,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -9939,9 +10485,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -10030,9 +10589,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -10422,9 +10994,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -10676,10 +11261,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -13806,10 +14417,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -15742,10 +16379,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -17554,9 +18217,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -17765,9 +18441,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -17976,10 +18665,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -19238,10 +19953,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -19600,10 +20341,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -19838,9 +20605,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -20049,9 +20829,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -20260,10 +21053,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -20502,10 +21321,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -20822,9 +21667,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -20993,11 +21851,50 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        404,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -21323,9 +22220,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -21414,10 +22324,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        404,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -21533,10 +22469,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        404,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -21644,10 +22606,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -23452,9 +24440,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        422,
-      ],
+      "errors": {
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -25222,9 +26223,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [],
       "generatedRequestName": "GetIssueRequest",
       "headers": [],
@@ -25279,10 +26293,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [],
       "generatedRequestName": "UpdateIssueRequest",
       "headers": [],
@@ -25415,9 +26455,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [],
       "generatedRequestName": "DismissIssueRequest",
       "headers": [],
@@ -25472,10 +26525,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -27266,9 +28345,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -27503,9 +28595,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -27594,11 +28699,50 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        404,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -28039,11 +29183,50 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        404,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -30259,11 +31442,50 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        404,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -30714,10 +31936,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -33431,10 +34679,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -34977,10 +36251,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -36399,9 +37699,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -36610,9 +37923,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -36821,10 +38147,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -37948,10 +39300,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -38183,10 +39561,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -38418,9 +39822,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -38586,11 +40003,50 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        404,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -38880,9 +40336,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -39048,9 +40517,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -39216,10 +40698,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -40168,10 +41676,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -40356,10 +41890,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -40544,9 +42104,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -40716,11 +42289,50 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        404,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -40963,9 +42575,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -41135,9 +42760,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -41307,7 +42945,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -41477,10 +43115,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -41977,10 +43641,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -42241,10 +43931,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -42505,9 +44221,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -42663,11 +44392,50 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        404,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -42956,10 +44724,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -43426,10 +45220,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -44319,9 +46139,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -44612,10 +46445,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -45974,10 +47833,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -46916,10 +48801,36 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -47858,9 +49769,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -48308,11 +50232,50 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        400,
-        404,
-        422,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+        "422": {
+          "description": "Unprocessable Entity",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -48956,9 +50919,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -49406,9 +51382,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -49856,9 +51845,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -50306,9 +52308,22 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "",
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "Not Found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "APIErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -50752,52 +52767,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
     },
   ],
-  "errors": {
-    "400": {
-      "description": null,
-      "generatedName": "BadRequestError",
-      "nameOverride": null,
-      "schema": {
-        "description": null,
-        "generatedName": "BadRequestErrorBody",
-        "groupName": null,
-        "nameOverride": null,
-        "schema": "APIErrorResponse",
-        "type": "reference",
-      },
-    },
-    "404": {
-      "description": null,
-      "generatedName": "NotFoundError",
-      "nameOverride": null,
-      "schema": {
-        "description": null,
-        "generatedName": "NotFoundErrorBody",
-        "groupName": null,
-        "nameOverride": null,
-        "schema": "APIErrorResponse",
-        "type": "reference",
-      },
-    },
-    "422": {
-      "description": null,
-      "generatedName": "UnprocessableEntityError",
-      "nameOverride": null,
-      "schema": {
-        "description": null,
-        "generatedName": "UnprocessableEntityErrorBody",
-        "groupName": null,
-        "nameOverride": null,
-        "schema": "APIErrorResponse",
-        "type": "reference",
-      },
-    },
-  },
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "IssueType",
+    "APIErrorResponse",
     "IssueTriggerPaginatedResult",
     "IssueTriggerDeliveryConfigs",
     "IssueTriggerTransformationConfigs",
@@ -50894,7 +52869,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
     "FilterRule",
     "TransformRule",
     "DelayRule",
-    "APIErrorResponse",
   ],
   "schemas": {
     "APIErrorResponse": {

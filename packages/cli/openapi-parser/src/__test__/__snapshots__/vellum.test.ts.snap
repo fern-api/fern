@@ -42,7 +42,7 @@ with all stable endpoints. You can find them here:
 
 Used to retrieve a deployment given its ID or name.
 ",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -185,7 +185,7 @@ Used to retrieve a deployment given its ID or name.
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Creates a new document index.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -905,7 +905,7 @@ Creates a new document index.",
 
 Used to list documents. Optionally filter on supported fields.
 ",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -1166,7 +1166,7 @@ Used to list documents. Optionally filter on supported fields.
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Executes a deployed Workflow and streams back its results.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [],
       "generatedRequestName": "ExecuteWorkflowStreamRequest",
       "headers": [],
@@ -1225,12 +1225,64 @@ Executes a deployed Workflow and streams back its results.",
 Generate a completion using a previously defined deployment.
 
 **Note:** Uses a base url of \`https://predict.vellum.ai\`.",
-      "errorStatusCode": [
-        400,
-        403,
-        404,
-        500,
-      ],
+      "errors": {
+        "400": {
+          "description": "",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "GenerateErrorResponse",
+            "type": "reference",
+          },
+        },
+        "403": {
+          "description": "",
+          "examples": [],
+          "generatedName": "ForbiddenError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "ForbiddenErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "GenerateErrorResponse",
+            "type": "reference",
+          },
+        },
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "GenerateErrorResponse",
+            "type": "reference",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "GenerateErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -1381,12 +1433,64 @@ Generate a completion using a previously defined deployment.
 Generate a stream of completions using a previously defined deployment.
 
 **Note:** Uses a base url of \`https://predict.vellum.ai\`.",
-      "errorStatusCode": [
-        400,
-        403,
-        404,
-        500,
-      ],
+      "errors": {
+        "400": {
+          "description": "",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "GenerateErrorResponse",
+            "type": "reference",
+          },
+        },
+        "403": {
+          "description": "",
+          "examples": [],
+          "generatedName": "ForbiddenError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "ForbiddenErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "GenerateErrorResponse",
+            "type": "reference",
+          },
+        },
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "GenerateErrorResponse",
+            "type": "reference",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "GenerateErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [],
       "generatedRequestName": "GenerateStreamRequest",
       "headers": [],
@@ -1445,7 +1549,7 @@ Generate a stream of completions using a previously defined deployment.
 
 Used to retrieve a model version given its ID.
 ",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -1746,7 +1850,7 @@ Used to retrieve a model version given its ID.
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Compiles the prompt backing the model version using the provided input values.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -1872,9 +1976,22 @@ Registers a prompt within Vellum and creates associated Vellum entities. Intende
 partners, not directly by Vellum users.
 
 Under the hood, this endpoint creates a new sandbox, a new model version, and a new deployment.",
-      "errorStatusCode": [
-        409,
-      ],
+      "errors": {
+        "409": {
+          "description": "",
+          "examples": [],
+          "generatedName": "ConflictError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "ConflictErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "RegisterPromptErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -2170,7 +2287,7 @@ is found, a new scenario will be appended to the end.
 
 Note that a full replacement of the scenario is performed, so any fields not provided will be removed
 or overwritten with default values.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -2583,7 +2700,7 @@ or overwritten with default values.",
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Deletes an existing scenario from a sandbox, keying off of the provided scenario id.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -2680,11 +2797,50 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
 Perform a search against a document index.
 
 **Note:** Uses a base url of \`https://predict.vellum.ai\`.",
-      "errorStatusCode": [
-        400,
-        404,
-        500,
-      ],
+      "errors": {
+        "400": {
+          "description": "",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "SearchErrorResponse",
+            "type": "reference",
+          },
+        },
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "SearchErrorResponse",
+            "type": "reference",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "SearchErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -2825,11 +2981,50 @@ Perform a search against a document index.
 Used to submit feedback regarding the quality of previously generated completions.
 
 **Note:** Uses a base url of \`https://predict.vellum.ai\`.",
-      "errorStatusCode": [
-        400,
-        404,
-        500,
-      ],
+      "errors": {
+        "400": {
+          "description": "",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "SubmitCompletionActualsErrorResponse",
+            "type": "reference",
+          },
+        },
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "SubmitCompletionActualsErrorResponse",
+            "type": "reference",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "SubmitCompletionActualsErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -2905,7 +3100,7 @@ is found, a new test case will be appended to the end.
 
 Note that a full replacement of the test case is performed, so any fields not provided will be removed
 or overwritten with default values.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -3068,7 +3263,7 @@ or overwritten with default values.",
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Deletes an existing test case for a test suite, keying off of the test case id.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -3165,11 +3360,50 @@ Deletes an existing test case for a test suite, keying off of the test case id."
 Upload a document to be indexed and used for search.
 
 **Note:** Uses a base url of \`https://documents.vellum.ai\`.",
-      "errorStatusCode": [
-        400,
-        404,
-        500,
-      ],
+      "errors": {
+        "400": {
+          "description": "",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "UploadDocumentErrorResponse",
+            "type": "reference",
+          },
+        },
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "UploadDocumentErrorResponse",
+            "type": "reference",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "UploadDocumentErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -3389,64 +3623,6 @@ Upload a document to be indexed and used for search.
       ],
     },
   ],
-  "errors": {
-    "400": {
-      "description": null,
-      "generatedName": "BadRequestError",
-      "nameOverride": null,
-      "schema": {
-        "generatedName": "BadRequestError",
-        "nameOverride": null,
-        "type": "unknown",
-      },
-    },
-    "403": {
-      "description": null,
-      "generatedName": "ForbiddenError",
-      "nameOverride": null,
-      "schema": {
-        "description": null,
-        "generatedName": "ForbiddenErrorBody",
-        "groupName": null,
-        "nameOverride": null,
-        "schema": "GenerateErrorResponse",
-        "type": "reference",
-      },
-    },
-    "404": {
-      "description": null,
-      "generatedName": "NotFoundError",
-      "nameOverride": null,
-      "schema": {
-        "generatedName": "NotFoundError",
-        "nameOverride": null,
-        "type": "unknown",
-      },
-    },
-    "409": {
-      "description": null,
-      "generatedName": "ConflictError",
-      "nameOverride": null,
-      "schema": {
-        "description": null,
-        "generatedName": "ConflictErrorBody",
-        "groupName": null,
-        "nameOverride": null,
-        "schema": "RegisterPromptErrorResponse",
-        "type": "reference",
-      },
-    },
-    "500": {
-      "description": null,
-      "generatedName": "InternalServerError",
-      "nameOverride": null,
-      "schema": {
-        "generatedName": "InternalServerError",
-        "nameOverride": null,
-        "type": "unknown",
-      },
-    },
-  },
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,
@@ -3455,14 +3631,19 @@ Upload a document to be indexed and used for search.
     "DocumentIndexRead",
     "PaginatedSlimDocumentList",
     "WorkflowStreamEvent",
+    "GenerateErrorResponse",
     "GenerateResponse",
     "GenerateStreamResponse",
     "ModelVersionRead",
     "ModelVersionCompilePromptResponse",
+    "RegisterPromptErrorResponse",
     "RegisterPromptResponse",
     "SandboxScenario",
+    "SearchErrorResponse",
     "SearchResponse",
+    "SubmitCompletionActualsErrorResponse",
     "TestSuiteTestCase",
+    "UploadDocumentErrorResponse",
     "UploadDocumentResponse",
     "ChatMessageRole",
     "ConditionalNodeResultData",
@@ -3542,8 +3723,6 @@ Upload a document to be indexed and used for search.
     "WorkflowNodeResultData",
     "WorkflowEventError",
     "WorkflowResultEventOutputData",
-    "GenerateErrorResponse",
-    "RegisterPromptErrorResponse",
   ],
   "schemas": {
     "BlockTypeEnum": {

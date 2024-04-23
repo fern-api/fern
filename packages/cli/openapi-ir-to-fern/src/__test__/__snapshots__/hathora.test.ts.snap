@@ -1,5 +1,2709 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`open api parser hathora docs 1`] = `
+{
+  "definitionFiles": {
+    "appV1.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "CreateApp": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.CreateAppRequestUnprocessableEntityError",
+              "root.CreateAppRequestInternalServerError",
+            ],
+            "examples": [
+              {
+                "request": {
+                  "appName": "appName",
+                  "authConfiguration": {},
+                },
+                "response": {
+                  "body": {
+                    "appId": "appId",
+                    "appName": "appName",
+                    "appSecret": "appSecret",
+                    "authConfiguration": {
+                      "google": {
+                        "clientId": "clientId",
+                      },
+                    },
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "createdBy": "createdBy",
+                    "deletedAt": "2024-01-15T09:30:00Z",
+                    "deletedBy": "deletedBy",
+                    "orgId": "orgId",
+                  },
+                },
+              },
+            ],
+            "method": "POST",
+            "path": "/apps/v1/create",
+            "request": {
+              "body": "root.AppConfig",
+            },
+            "response": {
+              "docs": "",
+              "type": "root.Application",
+            },
+          },
+          "DeleteApp": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.DeleteAppRequestNotFoundError",
+              "root.DeleteAppRequestInternalServerError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                },
+              },
+            ],
+            "method": "DELETE",
+            "path": "/apps/v1/delete/{appId}",
+            "path-parameters": {
+              "appId": "root.AppId",
+            },
+          },
+          "GetAppInfo": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.GetAppInfoRequestNotFoundError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                },
+                "response": {
+                  "body": {
+                    "appId": "appId",
+                    "appName": "appName",
+                    "appSecret": "appSecret",
+                    "authConfiguration": {
+                      "google": {
+                        "clientId": "clientId",
+                      },
+                    },
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "createdBy": "createdBy",
+                    "deletedAt": "2024-01-15T09:30:00Z",
+                    "deletedBy": "deletedBy",
+                    "orgId": "orgId",
+                  },
+                },
+              },
+            ],
+            "method": "GET",
+            "path": "/apps/v1/info/{appId}",
+            "path-parameters": {
+              "appId": "root.AppId",
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.Application",
+            },
+          },
+          "GetApps": {
+            "auth": true,
+            "docs": undefined,
+            "examples": [
+              {
+                "response": {
+                  "body": [
+                    {
+                      "appId": "appId",
+                      "appName": "appName",
+                      "appSecret": "appSecret",
+                      "authConfiguration": {
+                        "google": {
+                          "clientId": "clientId",
+                        },
+                      },
+                      "createdAt": "2024-01-15T09:30:00Z",
+                      "createdBy": "createdBy",
+                      "deletedAt": "2024-01-15T09:30:00Z",
+                      "deletedBy": "deletedBy",
+                      "deployment": {
+                        "appId": "appId",
+                        "buildId": 1.1,
+                        "containerPort": 1,
+                        "createdAt": "2024-01-15T09:30:00Z",
+                        "createdBy": "createdBy",
+                        "deploymentId": 1.1,
+                        "env": [
+                          {
+                            "name": "name",
+                            "value": "value",
+                          },
+                        ],
+                        "planName": "tiny",
+                        "requestedCPU": 1.1,
+                        "requestedMemoryMB": 1.1,
+                        "roomsPerProcess": 1,
+                        "transportType": "tcp",
+                      },
+                      "orgId": "orgId",
+                    },
+                  ],
+                },
+              },
+            ],
+            "method": "GET",
+            "path": "/apps/v1/list",
+            "response": {
+              "docs": "Ok",
+              "type": "list<root.ApplicationWithDeployment>",
+            },
+          },
+          "UpdateApp": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.UpdateAppRequestNotFoundError",
+              "root.UpdateAppRequestInternalServerError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                },
+                "request": {
+                  "appName": "appName",
+                  "authConfiguration": {},
+                },
+                "response": {
+                  "body": {
+                    "appId": "appId",
+                    "appName": "appName",
+                    "appSecret": "appSecret",
+                    "authConfiguration": {
+                      "google": {
+                        "clientId": "clientId",
+                      },
+                    },
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "createdBy": "createdBy",
+                    "deletedAt": "2024-01-15T09:30:00Z",
+                    "deletedBy": "deletedBy",
+                    "orgId": "orgId",
+                  },
+                },
+              },
+            ],
+            "method": "POST",
+            "path": "/apps/v1/update/{appId}",
+            "path-parameters": {
+              "appId": "root.AppId",
+            },
+            "request": {
+              "body": "root.AppConfig",
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.Application",
+            },
+          },
+        },
+      },
+    },
+    "authV1.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "LoginAnonymous": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.LoginAnonymousRequestNotFoundError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                },
+                "response": {
+                  "body": {
+                    "token": "token",
+                  },
+                },
+              },
+            ],
+            "method": "POST",
+            "path": "/auth/v1/{appId}/login/anonymous",
+            "path-parameters": {
+              "appId": "root.AppId",
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "LoginAnonymousResponse",
+            },
+          },
+          "LoginGoogle": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.LoginGoogleRequestUnauthorizedError",
+              "root.LoginGoogleRequestNotFoundError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                },
+                "request": {
+                  "idToken": "idToken",
+                },
+                "response": {
+                  "body": {
+                    "token": "token",
+                  },
+                },
+              },
+            ],
+            "method": "POST",
+            "path": "/auth/v1/{appId}/login/google",
+            "path-parameters": {
+              "appId": "root.AppId",
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "idToken": "string",
+                },
+              },
+              "headers": undefined,
+              "name": "LoginGoogleRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "LoginGoogleResponse",
+            },
+          },
+          "LoginNickname": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.LoginNicknameRequestNotFoundError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                },
+                "request": {
+                  "nickname": "nickname",
+                },
+                "response": {
+                  "body": {
+                    "token": "token",
+                  },
+                },
+              },
+            ],
+            "method": "POST",
+            "path": "/auth/v1/{appId}/login/nickname",
+            "path-parameters": {
+              "appId": "root.AppId",
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "nickname": "string",
+                },
+              },
+              "headers": undefined,
+              "name": "LoginNicknameRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "LoginNicknameResponse",
+            },
+          },
+        },
+      },
+      "types": {
+        "LoginAnonymousResponse": {
+          "docs": undefined,
+          "properties": {
+            "token": "string",
+          },
+        },
+        "LoginGoogleResponse": {
+          "docs": undefined,
+          "properties": {
+            "token": "string",
+          },
+        },
+        "LoginNicknameResponse": {
+          "docs": undefined,
+          "properties": {
+            "token": "string",
+          },
+        },
+      },
+    },
+    "buildV1.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "CreateBuild": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.CreateBuildRequestNotFoundError",
+              "root.CreateBuildRequestUnprocessableEntityError",
+              "root.CreateBuildRequestInternalServerError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                },
+                "response": {
+                  "body": {
+                    "appId": "appId",
+                    "buildId": 1.1,
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "createdBy": "createdBy",
+                    "deletedAt": "2024-01-15T09:30:00Z",
+                    "finishedAt": "2024-01-15T09:30:00Z",
+                    "imageSize": 1.1,
+                    "regionalContainerTags": [
+                      {
+                        "containerTag": "containerTag",
+                        "region": "Seattle",
+                      },
+                    ],
+                    "startedAt": "2024-01-15T09:30:00Z",
+                    "status": "created",
+                  },
+                },
+              },
+            ],
+            "method": "POST",
+            "path": "/builds/v1/{appId}/create",
+            "path-parameters": {
+              "appId": "root.AppId",
+            },
+            "response": {
+              "docs": "",
+              "type": "root.Build",
+            },
+          },
+          "DeleteBuild": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.DeleteBuildRequestNotFoundError",
+              "root.DeleteBuildRequestUnprocessableEntityError",
+              "root.DeleteBuildRequestInternalServerError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                  "buildId": 1.1,
+                },
+              },
+            ],
+            "method": "DELETE",
+            "path": "/builds/v1/{appId}/delete/{buildId}",
+            "path-parameters": {
+              "appId": "root.AppId",
+              "buildId": "root.BuildId",
+            },
+          },
+          "GetBuildInfo": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.GetBuildInfoRequestNotFoundError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                  "buildId": 1.1,
+                },
+                "response": {
+                  "body": {
+                    "appId": "appId",
+                    "buildId": 1.1,
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "createdBy": "createdBy",
+                    "deletedAt": "2024-01-15T09:30:00Z",
+                    "finishedAt": "2024-01-15T09:30:00Z",
+                    "imageSize": 1.1,
+                    "regionalContainerTags": [
+                      {
+                        "containerTag": "containerTag",
+                        "region": "Seattle",
+                      },
+                    ],
+                    "startedAt": "2024-01-15T09:30:00Z",
+                    "status": "created",
+                  },
+                },
+              },
+            ],
+            "method": "GET",
+            "path": "/builds/v1/{appId}/info/{buildId}",
+            "path-parameters": {
+              "appId": "root.AppId",
+              "buildId": "root.BuildId",
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.Build",
+            },
+          },
+          "GetBuilds": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.GetBuildsRequestNotFoundError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                },
+                "response": {
+                  "body": [
+                    {
+                      "appId": "appId",
+                      "buildId": 1.1,
+                      "createdAt": "2024-01-15T09:30:00Z",
+                      "createdBy": "createdBy",
+                      "deletedAt": "2024-01-15T09:30:00Z",
+                      "finishedAt": "2024-01-15T09:30:00Z",
+                      "imageSize": 1.1,
+                      "regionalContainerTags": [
+                        {
+                          "containerTag": "containerTag",
+                          "region": "Seattle",
+                        },
+                      ],
+                      "startedAt": "2024-01-15T09:30:00Z",
+                      "status": "created",
+                    },
+                  ],
+                },
+              },
+            ],
+            "method": "GET",
+            "path": "/builds/v1/{appId}/list",
+            "path-parameters": {
+              "appId": "root.AppId",
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "list<root.Build>",
+            },
+          },
+          "RunBuild": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.RunBuildRequestNotFoundError",
+              "root.RunBuildRequestInternalServerError",
+            ],
+            "method": "POST",
+            "path": "/builds/v1/{appId}/run/{buildId}",
+            "path-parameters": {
+              "appId": "root.AppId",
+              "buildId": "root.BuildId",
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "file": "file",
+                },
+              },
+              "content-type": "multipart/form-data",
+              "headers": undefined,
+              "name": "RunBuildRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "file",
+            },
+          },
+        },
+      },
+    },
+    "deploymentV1.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "CreateDeployment": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.CreateDeploymentRequestBadRequestError",
+              "root.CreateDeploymentRequestNotFoundError",
+              "root.CreateDeploymentRequestInternalServerError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                  "buildId": 1.1,
+                },
+                "request": {
+                  "containerPort": 1,
+                  "env": [
+                    {
+                      "name": "name",
+                      "value": "value",
+                    },
+                  ],
+                  "planName": "tiny",
+                  "roomsPerProcess": 1,
+                  "transportType": "tcp",
+                },
+                "response": {
+                  "body": {
+                    "appId": "appId",
+                    "buildId": 1.1,
+                    "containerPort": 1,
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "createdBy": "createdBy",
+                    "deploymentId": 1.1,
+                    "env": [
+                      {
+                        "name": "name",
+                        "value": "value",
+                      },
+                    ],
+                    "planName": "tiny",
+                    "requestedCPU": 1.1,
+                    "requestedMemoryMB": 1.1,
+                    "roomsPerProcess": 1,
+                    "transportType": "tcp",
+                  },
+                },
+              },
+            ],
+            "method": "POST",
+            "path": "/deployments/v1/{appId}/create/{buildId}",
+            "path-parameters": {
+              "appId": "root.AppId",
+              "buildId": "root.BuildId",
+            },
+            "request": {
+              "body": "root.DeploymentConfig",
+            },
+            "response": {
+              "docs": "",
+              "type": "root.Deployment",
+            },
+          },
+          "GetDeploymentInfo": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.GetDeploymentInfoRequestNotFoundError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                  "deploymentId": 1.1,
+                },
+                "response": {
+                  "body": {
+                    "appId": "appId",
+                    "buildId": 1.1,
+                    "containerPort": 1,
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "createdBy": "createdBy",
+                    "deploymentId": 1.1,
+                    "env": [
+                      {
+                        "name": "name",
+                        "value": "value",
+                      },
+                    ],
+                    "planName": "tiny",
+                    "requestedCPU": 1.1,
+                    "requestedMemoryMB": 1.1,
+                    "roomsPerProcess": 1,
+                    "transportType": "tcp",
+                  },
+                },
+              },
+            ],
+            "method": "GET",
+            "path": "/deployments/v1/{appId}/info/{deploymentId}",
+            "path-parameters": {
+              "appId": "root.AppId",
+              "deploymentId": "root.DeploymentId",
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.Deployment",
+            },
+          },
+          "GetDeployments": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.GetDeploymentsRequestNotFoundError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                },
+                "response": {
+                  "body": [
+                    {
+                      "appId": "appId",
+                      "buildId": 1.1,
+                      "containerPort": 1,
+                      "createdAt": "2024-01-15T09:30:00Z",
+                      "createdBy": "createdBy",
+                      "deploymentId": 1.1,
+                      "env": [
+                        {
+                          "name": "name",
+                          "value": "value",
+                        },
+                      ],
+                      "planName": "tiny",
+                      "requestedCPU": 1.1,
+                      "requestedMemoryMB": 1.1,
+                      "roomsPerProcess": 1,
+                      "transportType": "tcp",
+                    },
+                  ],
+                },
+              },
+            ],
+            "method": "GET",
+            "path": "/deployments/v1/{appId}/list",
+            "path-parameters": {
+              "appId": "root.AppId",
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "list<root.Deployment>",
+            },
+          },
+        },
+      },
+    },
+    "discoveryV1.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "GetPingServiceEndpoints": {
+            "auth": true,
+            "docs": undefined,
+            "examples": [
+              {
+                "response": {
+                  "body": [
+                    {
+                      "host": "host",
+                      "port": 1.1,
+                      "region": "Seattle",
+                    },
+                  ],
+                },
+              },
+            ],
+            "method": "GET",
+            "path": "/discovery/v1/ping",
+            "response": {
+              "docs": "Ok",
+              "type": "root.DiscoveryResponse",
+            },
+          },
+        },
+      },
+    },
+    "lobbyV1.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "CreatePrivateLobbyDeprecated": {
+            "auth": true,
+            "availability": "deprecated",
+            "docs": undefined,
+            "errors": [
+              "root.CreatePrivateLobbyDeprecatedRequestUnauthorizedError",
+              "root.CreatePrivateLobbyDeprecatedRequestNotFoundError",
+              "root.CreatePrivateLobbyDeprecatedRequestUnprocessableEntityError",
+              "root.CreatePrivateLobbyDeprecatedRequestTooManyRequestsError",
+              "root.CreatePrivateLobbyDeprecatedRequestInternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {
+                  "Authorization": "Authorization",
+                },
+                "path-parameters": {
+                  "appId": "appId",
+                },
+                "response": {
+                  "body": "string",
+                },
+              },
+            ],
+            "method": "POST",
+            "path": "/lobby/v1/{appId}/create/private",
+            "path-parameters": {
+              "appId": "root.AppId",
+            },
+            "request": {
+              "headers": {
+                "Authorization": {
+                  "name": "authorization",
+                  "type": "string",
+                },
+              },
+              "name": "CreatePrivateLobbyDeprecatedRequest",
+              "query-parameters": {
+                "local": "optional<boolean>",
+                "region": "optional<root.Region>",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.RoomId",
+            },
+          },
+          "CreatePublicLobbyDeprecated": {
+            "auth": true,
+            "availability": "deprecated",
+            "docs": undefined,
+            "errors": [
+              "root.CreatePublicLobbyDeprecatedRequestUnauthorizedError",
+              "root.CreatePublicLobbyDeprecatedRequestNotFoundError",
+              "root.CreatePublicLobbyDeprecatedRequestUnprocessableEntityError",
+              "root.CreatePublicLobbyDeprecatedRequestTooManyRequestsError",
+              "root.CreatePublicLobbyDeprecatedRequestInternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {
+                  "Authorization": "Authorization",
+                },
+                "path-parameters": {
+                  "appId": "appId",
+                },
+                "response": {
+                  "body": "string",
+                },
+              },
+            ],
+            "method": "POST",
+            "path": "/lobby/v1/{appId}/create/public",
+            "path-parameters": {
+              "appId": "root.AppId",
+            },
+            "request": {
+              "headers": {
+                "Authorization": {
+                  "name": "authorization",
+                  "type": "string",
+                },
+              },
+              "name": "CreatePublicLobbyDeprecatedRequest",
+              "query-parameters": {
+                "local": "optional<boolean>",
+                "region": "optional<root.Region>",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.RoomId",
+            },
+          },
+          "ListActivePublicLobbiesDeprecated": {
+            "auth": true,
+            "availability": "deprecated",
+            "docs": undefined,
+            "errors": [
+              "root.ListActivePublicLobbiesDeprecatedRequestUnauthorizedError",
+              "root.ListActivePublicLobbiesDeprecatedRequestNotFoundError",
+            ],
+            "examples": [
+              {
+                "headers": {
+                  "Authorization": "Authorization",
+                },
+                "path-parameters": {
+                  "appId": "appId",
+                },
+                "response": {
+                  "body": [
+                    {
+                      "appId": "appId",
+                      "createdAt": "2024-01-15T09:30:00Z",
+                      "createdBy": "createdBy",
+                      "initialConfig": {
+                        "initialConfig": {
+                          "key": "value",
+                        },
+                      },
+                      "local": true,
+                      "region": "Seattle",
+                      "roomId": "roomId",
+                      "state": {
+                        "state": {
+                          "key": "value",
+                        },
+                      },
+                      "visibility": "private",
+                    },
+                  ],
+                },
+              },
+            ],
+            "method": "GET",
+            "path": "/lobby/v1/{appId}/list",
+            "path-parameters": {
+              "appId": "root.AppId",
+            },
+            "request": {
+              "headers": {
+                "Authorization": {
+                  "name": "authorization",
+                  "type": "string",
+                },
+              },
+              "name": "ListActivePublicLobbiesDeprecatedRequest",
+              "query-parameters": {
+                "local": "optional<boolean>",
+                "region": "optional<root.Region>",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "list<root.Lobby>",
+            },
+          },
+        },
+      },
+    },
+    "lobbyV2.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "CreateLobby": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.CreateLobbyRequestUnauthorizedError",
+              "root.CreateLobbyRequestNotFoundError",
+              "root.CreateLobbyRequestUnprocessableEntityError",
+              "root.CreateLobbyRequestTooManyRequestsError",
+              "root.CreateLobbyRequestInternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {
+                  "Authorization": "Authorization",
+                },
+                "path-parameters": {
+                  "appId": "appId",
+                },
+                "request": {
+                  "initialConfig": {},
+                  "region": "Seattle",
+                  "visibility": "public",
+                },
+                "response": {
+                  "body": {
+                    "appId": "appId",
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "createdBy": "createdBy",
+                    "initialConfig": {
+                      "initialConfig": {
+                        "key": "value",
+                      },
+                    },
+                    "local": true,
+                    "region": "Seattle",
+                    "roomId": "roomId",
+                    "state": {
+                      "state": {
+                        "key": "value",
+                      },
+                    },
+                    "visibility": "private",
+                  },
+                },
+              },
+            ],
+            "method": "POST",
+            "path": "/lobby/v2/{appId}/create",
+            "path-parameters": {
+              "appId": "root.AppId",
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "initialConfig": "map<string, unknown>",
+                  "region": "root.Region",
+                  "visibility": "CreateLobbyRequestVisibility",
+                },
+              },
+              "headers": {
+                "Authorization": {
+                  "name": "authorization",
+                  "type": "string",
+                },
+              },
+              "name": "CreateLobbyRequest",
+              "query-parameters": {
+                "roomId": "optional<root.RoomId>",
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "root.Lobby",
+            },
+          },
+          "CreateLocalLobby": {
+            "auth": true,
+            "availability": "deprecated",
+            "docs": undefined,
+            "errors": [
+              "root.CreateLocalLobbyRequestUnauthorizedError",
+              "root.CreateLocalLobbyRequestNotFoundError",
+              "root.CreateLocalLobbyRequestUnprocessableEntityError",
+              "root.CreateLocalLobbyRequestTooManyRequestsError",
+              "root.CreateLocalLobbyRequestInternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {
+                  "Authorization": "Authorization",
+                },
+                "path-parameters": {
+                  "appId": "appId",
+                },
+                "request": {
+                  "initialConfig": {},
+                  "region": "Seattle",
+                },
+                "response": {
+                  "body": {
+                    "appId": "appId",
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "createdBy": "createdBy",
+                    "initialConfig": {
+                      "initialConfig": {
+                        "key": "value",
+                      },
+                    },
+                    "local": true,
+                    "region": "Seattle",
+                    "roomId": "roomId",
+                    "state": {
+                      "state": {
+                        "key": "value",
+                      },
+                    },
+                    "visibility": "private",
+                  },
+                },
+              },
+            ],
+            "method": "POST",
+            "path": "/lobby/v2/{appId}/create/local",
+            "path-parameters": {
+              "appId": "root.AppId",
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "initialConfig": "map<string, unknown>",
+                  "region": "root.Region",
+                },
+              },
+              "headers": {
+                "Authorization": {
+                  "name": "authorization",
+                  "type": "string",
+                },
+              },
+              "name": "CreateLocalLobbyRequest",
+              "query-parameters": {
+                "roomId": "optional<root.RoomId>",
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "root.Lobby",
+            },
+          },
+          "CreatePrivateLobby": {
+            "auth": true,
+            "availability": "deprecated",
+            "docs": undefined,
+            "errors": [
+              "root.CreatePrivateLobbyRequestUnauthorizedError",
+              "root.CreatePrivateLobbyRequestNotFoundError",
+              "root.CreatePrivateLobbyRequestUnprocessableEntityError",
+              "root.CreatePrivateLobbyRequestTooManyRequestsError",
+              "root.CreatePrivateLobbyRequestInternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {
+                  "Authorization": "Authorization",
+                },
+                "path-parameters": {
+                  "appId": "appId",
+                },
+                "request": {
+                  "initialConfig": {},
+                  "region": "Seattle",
+                },
+                "response": {
+                  "body": {
+                    "appId": "appId",
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "createdBy": "createdBy",
+                    "initialConfig": {
+                      "initialConfig": {
+                        "key": "value",
+                      },
+                    },
+                    "local": true,
+                    "region": "Seattle",
+                    "roomId": "roomId",
+                    "state": {
+                      "state": {
+                        "key": "value",
+                      },
+                    },
+                    "visibility": "private",
+                  },
+                },
+              },
+            ],
+            "method": "POST",
+            "path": "/lobby/v2/{appId}/create/private",
+            "path-parameters": {
+              "appId": "root.AppId",
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "initialConfig": "map<string, unknown>",
+                  "region": "root.Region",
+                },
+              },
+              "headers": {
+                "Authorization": {
+                  "name": "authorization",
+                  "type": "string",
+                },
+              },
+              "name": "CreatePrivateLobbyRequest",
+              "query-parameters": {
+                "roomId": "optional<root.RoomId>",
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "root.Lobby",
+            },
+          },
+          "CreatePublicLobby": {
+            "auth": true,
+            "availability": "deprecated",
+            "docs": undefined,
+            "errors": [
+              "root.CreatePublicLobbyRequestUnauthorizedError",
+              "root.CreatePublicLobbyRequestNotFoundError",
+              "root.CreatePublicLobbyRequestUnprocessableEntityError",
+              "root.CreatePublicLobbyRequestTooManyRequestsError",
+              "root.CreatePublicLobbyRequestInternalServerError",
+            ],
+            "examples": [
+              {
+                "headers": {
+                  "Authorization": "Authorization",
+                },
+                "path-parameters": {
+                  "appId": "appId",
+                },
+                "request": {
+                  "initialConfig": {},
+                  "region": "Seattle",
+                },
+                "response": {
+                  "body": {
+                    "appId": "appId",
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "createdBy": "createdBy",
+                    "initialConfig": {
+                      "initialConfig": {
+                        "key": "value",
+                      },
+                    },
+                    "local": true,
+                    "region": "Seattle",
+                    "roomId": "roomId",
+                    "state": {
+                      "state": {
+                        "key": "value",
+                      },
+                    },
+                    "visibility": "private",
+                  },
+                },
+              },
+            ],
+            "method": "POST",
+            "path": "/lobby/v2/{appId}/create/public",
+            "path-parameters": {
+              "appId": "root.AppId",
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "initialConfig": "map<string, unknown>",
+                  "region": "root.Region",
+                },
+              },
+              "headers": {
+                "Authorization": {
+                  "name": "authorization",
+                  "type": "string",
+                },
+              },
+              "name": "CreatePublicLobbyRequest",
+              "query-parameters": {
+                "roomId": "optional<root.RoomId>",
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "root.Lobby",
+            },
+          },
+          "GetLobbyInfo": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.GetLobbyInfoRequestNotFoundError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                  "roomId": "roomId",
+                },
+                "response": {
+                  "body": {
+                    "appId": "appId",
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "createdBy": "createdBy",
+                    "initialConfig": {
+                      "initialConfig": {
+                        "key": "value",
+                      },
+                    },
+                    "local": true,
+                    "region": "Seattle",
+                    "roomId": "roomId",
+                    "state": {
+                      "state": {
+                        "key": "value",
+                      },
+                    },
+                    "visibility": "private",
+                  },
+                },
+              },
+            ],
+            "method": "GET",
+            "path": "/lobby/v2/{appId}/info/{roomId}",
+            "path-parameters": {
+              "appId": "root.AppId",
+              "roomId": "root.RoomId",
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.Lobby",
+            },
+          },
+          "ListActivePublicLobbies": {
+            "auth": true,
+            "docs": undefined,
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                },
+                "response": {
+                  "body": [
+                    {
+                      "appId": "appId",
+                      "createdAt": "2024-01-15T09:30:00Z",
+                      "createdBy": "createdBy",
+                      "initialConfig": {
+                        "initialConfig": {
+                          "key": "value",
+                        },
+                      },
+                      "local": true,
+                      "region": "Seattle",
+                      "roomId": "roomId",
+                      "state": {
+                        "state": {
+                          "key": "value",
+                        },
+                      },
+                      "visibility": "private",
+                    },
+                  ],
+                },
+              },
+            ],
+            "method": "GET",
+            "path": "/lobby/v2/{appId}/list/public",
+            "path-parameters": {
+              "appId": "root.AppId",
+            },
+            "request": {
+              "name": "ListActivePublicLobbiesRequest",
+              "query-parameters": {
+                "region": "optional<root.Region>",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "list<root.Lobby>",
+            },
+          },
+          "SetLobbyState": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.SetLobbyStateRequestNotFoundError",
+              "root.SetLobbyStateRequestUnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                  "roomId": "roomId",
+                },
+                "request": {
+                  "state": {},
+                },
+                "response": {
+                  "body": {
+                    "appId": "appId",
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "createdBy": "createdBy",
+                    "initialConfig": {
+                      "initialConfig": {
+                        "key": "value",
+                      },
+                    },
+                    "local": true,
+                    "region": "Seattle",
+                    "roomId": "roomId",
+                    "state": {
+                      "state": {
+                        "key": "value",
+                      },
+                    },
+                    "visibility": "private",
+                  },
+                },
+              },
+            ],
+            "method": "POST",
+            "path": "/lobby/v2/{appId}/setState/{roomId}",
+            "path-parameters": {
+              "appId": "root.AppId",
+              "roomId": "root.RoomId",
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "state": "map<string, unknown>",
+                },
+              },
+              "headers": undefined,
+              "name": "SetLobbyStateRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.Lobby",
+            },
+          },
+        },
+      },
+      "types": {
+        "CreateLobbyRequestVisibility": {
+          "enum": [
+            "public",
+            "private",
+            "local",
+          ],
+        },
+      },
+    },
+    "logV1.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "GetLogsForApp": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.GetLogsForAppRequestNotFoundError",
+            ],
+            "method": "GET",
+            "path": "/logs/v1/{appId}/all",
+            "path-parameters": {
+              "appId": "root.AppId",
+            },
+            "request": {
+              "name": "GetLogsForAppRequest",
+              "query-parameters": {
+                "follow": "optional<boolean>",
+                "region": "optional<root.Region>",
+                "tailLines": "optional<root.TailLines>",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "file",
+            },
+          },
+          "GetLogsForDeployment": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.GetLogsForDeploymentRequestNotFoundError",
+            ],
+            "method": "GET",
+            "path": "/logs/v1/{appId}/deployment/{deploymentId}",
+            "path-parameters": {
+              "appId": "root.AppId",
+              "deploymentId": "root.DeploymentId",
+            },
+            "request": {
+              "name": "GetLogsForDeploymentRequest",
+              "query-parameters": {
+                "follow": "optional<boolean>",
+                "tailLines": "optional<root.TailLines>",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "text",
+            },
+          },
+          "GetLogsForProcess": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.GetLogsForProcessRequestNotFoundError",
+            ],
+            "method": "GET",
+            "path": "/logs/v1/{appId}/process/{processId}",
+            "path-parameters": {
+              "appId": "root.AppId",
+              "processId": "root.ProcessId",
+            },
+            "request": {
+              "name": "GetLogsForProcessRequest",
+              "query-parameters": {
+                "follow": "optional<boolean>",
+                "tailLines": "optional<root.TailLines>",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "file",
+            },
+          },
+        },
+      },
+    },
+    "metricsV1.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "GetMetrics": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.GetMetricsRequestNotFoundError",
+              "root.GetMetricsRequestUnprocessableEntityError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                  "processId": "processId",
+                },
+                "response": {
+                  "body": {
+                    "cpu": [
+                      {
+                        "timestamp": 1.1,
+                        "value": 1.1,
+                      },
+                    ],
+                    "memory": [
+                      {
+                        "timestamp": 1.1,
+                        "value": 1.1,
+                      },
+                    ],
+                    "rate_egress": [
+                      {
+                        "timestamp": 1.1,
+                        "value": 1.1,
+                      },
+                    ],
+                    "total_egress": [
+                      {
+                        "timestamp": 1.1,
+                        "value": 1.1,
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
+            "method": "GET",
+            "path": "/metrics/v1/{appId}/process/{processId}",
+            "path-parameters": {
+              "appId": "root.AppId",
+              "processId": "root.ProcessId",
+            },
+            "request": {
+              "name": "GetMetricsRequest",
+              "query-parameters": {
+                "end": "optional<integer>",
+                "metrics": {
+                  "allow-multiple": true,
+                  "type": "optional<root.MetricName>",
+                },
+                "start": "optional<integer>",
+                "step": "optional<integer>",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.MetricsResponse",
+            },
+          },
+        },
+      },
+    },
+    "processesV1.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "GetProcessInfo": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.GetProcessInfoRequestNotFoundError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                  "processId": "processId",
+                },
+                "response": {
+                  "body": {
+                    "activeConnections": 1.1,
+                    "appId": "appId",
+                    "deploymentId": 1.1,
+                    "draining": true,
+                    "egressedBytes": 1.1,
+                    "host": "host",
+                    "idleSince": "2024-01-15T09:30:00Z",
+                    "port": 1.1,
+                    "processId": "processId",
+                    "region": "Seattle",
+                    "roomSlotsAvailable": 1.1,
+                    "roomsPerProcess": 1.1,
+                    "startedAt": "2024-01-15T09:30:00Z",
+                    "startingAt": "2024-01-15T09:30:00Z",
+                    "stoppingAt": "2024-01-15T09:30:00Z",
+                    "terminatedAt": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
+            "method": "GET",
+            "path": "/processes/v1/{appId}/info/{processId}",
+            "path-parameters": {
+              "appId": "root.AppId",
+              "processId": "root.ProcessId",
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.Process",
+            },
+          },
+          "GetRunningProcesses": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.GetRunningProcessesRequestNotFoundError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                },
+                "response": {
+                  "body": [
+                    {
+                      "activeConnections": 1.1,
+                      "appId": "appId",
+                      "deploymentId": 1.1,
+                      "draining": true,
+                      "egressedBytes": 1.1,
+                      "host": "host",
+                      "idleSince": "2024-01-15T09:30:00Z",
+                      "port": 1.1,
+                      "processId": "processId",
+                      "region": "Seattle",
+                      "roomSlotsAvailable": 1.1,
+                      "rooms": [
+                        {
+                          "appId": "appId",
+                          "roomId": "roomId",
+                          "status": "scheduling",
+                        },
+                      ],
+                      "roomsPerProcess": 1.1,
+                      "startedAt": "2024-01-15T09:30:00Z",
+                      "startingAt": "2024-01-15T09:30:00Z",
+                      "stoppingAt": "2024-01-15T09:30:00Z",
+                      "terminatedAt": "2024-01-15T09:30:00Z",
+                      "totalRooms": 1.1,
+                    },
+                  ],
+                },
+              },
+            ],
+            "method": "GET",
+            "path": "/processes/v1/{appId}/list/running",
+            "path-parameters": {
+              "appId": "root.AppId",
+            },
+            "request": {
+              "name": "GetRunningProcessesRequest",
+              "query-parameters": {
+                "region": "optional<root.Region>",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "list<root.ProcessWithRooms>",
+            },
+          },
+          "GetStoppedProcesses": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.GetStoppedProcessesRequestNotFoundError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                },
+                "response": {
+                  "body": [
+                    {
+                      "activeConnections": 1.1,
+                      "appId": "appId",
+                      "deploymentId": 1.1,
+                      "draining": true,
+                      "egressedBytes": 1.1,
+                      "host": "host",
+                      "idleSince": "2024-01-15T09:30:00Z",
+                      "port": 1.1,
+                      "processId": "processId",
+                      "region": "Seattle",
+                      "roomSlotsAvailable": 1.1,
+                      "roomsPerProcess": 1.1,
+                      "startedAt": "2024-01-15T09:30:00Z",
+                      "startingAt": "2024-01-15T09:30:00Z",
+                      "stoppingAt": "2024-01-15T09:30:00Z",
+                      "terminatedAt": "2024-01-15T09:30:00Z",
+                    },
+                  ],
+                },
+              },
+            ],
+            "method": "GET",
+            "path": "/processes/v1/{appId}/list/stopped",
+            "path-parameters": {
+              "appId": "root.AppId",
+            },
+            "request": {
+              "name": "GetStoppedProcessesRequest",
+              "query-parameters": {
+                "region": "optional<root.Region>",
+              },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "list<root.Process>",
+            },
+          },
+        },
+      },
+    },
+    "roomV1.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "CreateRoom": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.CreateRoomRequestNotFoundError",
+              "root.CreateRoomRequestInternalServerError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                },
+                "request": {
+                  "region": "Seattle",
+                },
+                "response": {
+                  "body": "string",
+                },
+              },
+            ],
+            "method": "POST",
+            "path": "/rooms/v1/{appId}/create",
+            "path-parameters": {
+              "appId": "root.AppId",
+            },
+            "request": {
+              "body": {
+                "properties": {
+                  "region": "root.Region",
+                },
+              },
+              "headers": undefined,
+              "name": "CreateRoomRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "",
+              "type": "root.RoomId",
+            },
+          },
+          "DestroyRoom": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.DestroyRoomRequestNotFoundError",
+              "root.DestroyRoomRequestInternalServerError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                  "roomId": "roomId",
+                },
+              },
+            ],
+            "method": "POST",
+            "path": "/rooms/v1/{appId}/destroy/{roomId}",
+            "path-parameters": {
+              "appId": "root.AppId",
+              "roomId": "root.RoomId",
+            },
+          },
+          "GetActiveRoomsForProcess": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.GetActiveRoomsForProcessRequestNotFoundError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                  "processId": "processId",
+                },
+                "response": {
+                  "body": [
+                    {
+                      "appId": "appId",
+                      "currentAllocation": {
+                        "processId": "processId",
+                        "roomAllocationId": "roomAllocationId",
+                        "scheduledAt": "2024-01-15T09:30:00Z",
+                        "unscheduledAt": "2024-01-15T09:30:00Z",
+                      },
+                      "roomId": "roomId",
+                      "status": "scheduling",
+                    },
+                  ],
+                },
+              },
+            ],
+            "method": "GET",
+            "path": "/rooms/v1/{appId}/list/{processId}/active",
+            "path-parameters": {
+              "appId": "root.AppId",
+              "processId": "root.ProcessId",
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "list<root.RoomWithoutAllocations>",
+            },
+          },
+          "GetConnectionInfo": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.GetConnectionInfoRequestBadRequestError",
+              "root.GetConnectionInfoRequestNotFoundError",
+              "root.GetConnectionInfoRequestInternalServerError",
+            ],
+            "method": "GET",
+            "path": "/rooms/v1/{appId}/connectioninfo/{roomId}",
+            "path-parameters": {
+              "appId": "root.AppId",
+              "roomId": "root.RoomId",
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.ConnectionInfo",
+            },
+          },
+          "GetInactiveRoomsForProcess": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.GetInactiveRoomsForProcessRequestNotFoundError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                  "processId": "processId",
+                },
+                "response": {
+                  "body": [
+                    {
+                      "appId": "appId",
+                      "currentAllocation": {
+                        "processId": "processId",
+                        "roomAllocationId": "roomAllocationId",
+                        "scheduledAt": "2024-01-15T09:30:00Z",
+                        "unscheduledAt": "2024-01-15T09:30:00Z",
+                      },
+                      "roomId": "roomId",
+                      "status": "scheduling",
+                    },
+                  ],
+                },
+              },
+            ],
+            "method": "GET",
+            "path": "/rooms/v1/{appId}/list/{processId}/inactive",
+            "path-parameters": {
+              "appId": "root.AppId",
+              "processId": "root.ProcessId",
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "list<root.RoomWithoutAllocations>",
+            },
+          },
+          "GetRoomInfo": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.GetRoomInfoRequestNotFoundError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                  "roomId": "roomId",
+                },
+                "response": {
+                  "body": {
+                    "allocations": [
+                      {
+                        "processId": "processId",
+                        "roomAllocationId": "roomAllocationId",
+                        "scheduledAt": "2024-01-15T09:30:00Z",
+                        "unscheduledAt": "2024-01-15T09:30:00Z",
+                      },
+                    ],
+                    "appId": "appId",
+                    "currentAllocation": {
+                      "processId": "processId",
+                      "roomAllocationId": "roomAllocationId",
+                      "scheduledAt": "2024-01-15T09:30:00Z",
+                      "unscheduledAt": "2024-01-15T09:30:00Z",
+                    },
+                    "roomId": "roomId",
+                    "status": "scheduling",
+                  },
+                },
+              },
+            ],
+            "method": "GET",
+            "path": "/rooms/v1/{appId}/info/{roomId}",
+            "path-parameters": {
+              "appId": "root.AppId",
+              "roomId": "root.RoomId",
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "root.Room",
+            },
+          },
+          "SuspendRoom": {
+            "auth": true,
+            "docs": undefined,
+            "errors": [
+              "root.SuspendRoomRequestNotFoundError",
+              "root.SuspendRoomRequestInternalServerError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                  "roomId": "roomId",
+                },
+              },
+            ],
+            "method": "POST",
+            "path": "/rooms/v1/{appId}/suspend/{roomId}",
+            "path-parameters": {
+              "appId": "root.AppId",
+              "roomId": "root.RoomId",
+            },
+          },
+        },
+      },
+    },
+  },
+  "packageMarkerFile": {
+    "errors": {
+      "CreateAppRequestInternalServerError": {
+        "docs": "",
+        "status-code": 500,
+        "type": "string",
+      },
+      "CreateAppRequestUnprocessableEntityError": {
+        "docs": "",
+        "status-code": 422,
+        "type": "string",
+      },
+      "CreateBuildRequestInternalServerError": {
+        "docs": "",
+        "status-code": 500,
+        "type": "string",
+      },
+      "CreateBuildRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "CreateBuildRequestUnprocessableEntityError": {
+        "docs": "",
+        "status-code": 422,
+        "type": "string",
+      },
+      "CreateDeploymentRequestBadRequestError": {
+        "docs": "",
+        "status-code": 400,
+        "type": "string",
+      },
+      "CreateDeploymentRequestInternalServerError": {
+        "docs": "",
+        "status-code": 500,
+        "type": "string",
+      },
+      "CreateDeploymentRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "CreateLobbyRequestInternalServerError": {
+        "docs": "",
+        "status-code": 500,
+        "type": "string",
+      },
+      "CreateLobbyRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "CreateLobbyRequestTooManyRequestsError": {
+        "docs": "",
+        "status-code": 429,
+        "type": "string",
+      },
+      "CreateLobbyRequestUnauthorizedError": {
+        "docs": "",
+        "status-code": 401,
+        "type": "string",
+      },
+      "CreateLobbyRequestUnprocessableEntityError": {
+        "docs": "",
+        "status-code": 422,
+        "type": "string",
+      },
+      "CreateLocalLobbyRequestInternalServerError": {
+        "docs": "",
+        "status-code": 500,
+        "type": "string",
+      },
+      "CreateLocalLobbyRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "CreateLocalLobbyRequestTooManyRequestsError": {
+        "docs": "",
+        "status-code": 429,
+        "type": "string",
+      },
+      "CreateLocalLobbyRequestUnauthorizedError": {
+        "docs": "",
+        "status-code": 401,
+        "type": "string",
+      },
+      "CreateLocalLobbyRequestUnprocessableEntityError": {
+        "docs": "",
+        "status-code": 422,
+        "type": "string",
+      },
+      "CreatePrivateLobbyDeprecatedRequestInternalServerError": {
+        "docs": "",
+        "status-code": 500,
+        "type": "string",
+      },
+      "CreatePrivateLobbyDeprecatedRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "CreatePrivateLobbyDeprecatedRequestTooManyRequestsError": {
+        "docs": "",
+        "status-code": 429,
+        "type": "string",
+      },
+      "CreatePrivateLobbyDeprecatedRequestUnauthorizedError": {
+        "docs": "",
+        "status-code": 401,
+        "type": "string",
+      },
+      "CreatePrivateLobbyDeprecatedRequestUnprocessableEntityError": {
+        "docs": "",
+        "status-code": 422,
+        "type": "string",
+      },
+      "CreatePrivateLobbyRequestInternalServerError": {
+        "docs": "",
+        "status-code": 500,
+        "type": "string",
+      },
+      "CreatePrivateLobbyRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "CreatePrivateLobbyRequestTooManyRequestsError": {
+        "docs": "",
+        "status-code": 429,
+        "type": "string",
+      },
+      "CreatePrivateLobbyRequestUnauthorizedError": {
+        "docs": "",
+        "status-code": 401,
+        "type": "string",
+      },
+      "CreatePrivateLobbyRequestUnprocessableEntityError": {
+        "docs": "",
+        "status-code": 422,
+        "type": "string",
+      },
+      "CreatePublicLobbyDeprecatedRequestInternalServerError": {
+        "docs": "",
+        "status-code": 500,
+        "type": "string",
+      },
+      "CreatePublicLobbyDeprecatedRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "CreatePublicLobbyDeprecatedRequestTooManyRequestsError": {
+        "docs": "",
+        "status-code": 429,
+        "type": "string",
+      },
+      "CreatePublicLobbyDeprecatedRequestUnauthorizedError": {
+        "docs": "",
+        "status-code": 401,
+        "type": "string",
+      },
+      "CreatePublicLobbyDeprecatedRequestUnprocessableEntityError": {
+        "docs": "",
+        "status-code": 422,
+        "type": "string",
+      },
+      "CreatePublicLobbyRequestInternalServerError": {
+        "docs": "",
+        "status-code": 500,
+        "type": "string",
+      },
+      "CreatePublicLobbyRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "CreatePublicLobbyRequestTooManyRequestsError": {
+        "docs": "",
+        "status-code": 429,
+        "type": "string",
+      },
+      "CreatePublicLobbyRequestUnauthorizedError": {
+        "docs": "",
+        "status-code": 401,
+        "type": "string",
+      },
+      "CreatePublicLobbyRequestUnprocessableEntityError": {
+        "docs": "",
+        "status-code": 422,
+        "type": "string",
+      },
+      "CreateRoomRequestInternalServerError": {
+        "docs": "",
+        "status-code": 500,
+        "type": "string",
+      },
+      "CreateRoomRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "DeleteAppRequestInternalServerError": {
+        "docs": "",
+        "status-code": 500,
+        "type": "string",
+      },
+      "DeleteAppRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "DeleteBuildRequestInternalServerError": {
+        "docs": "",
+        "status-code": 500,
+        "type": "string",
+      },
+      "DeleteBuildRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "DeleteBuildRequestUnprocessableEntityError": {
+        "docs": "",
+        "status-code": 422,
+        "type": "string",
+      },
+      "DestroyRoomRequestInternalServerError": {
+        "docs": "",
+        "status-code": 500,
+        "type": "string",
+      },
+      "DestroyRoomRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "GetActiveRoomsForProcessRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "GetAppInfoRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "GetBuildInfoRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "GetBuildsRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "GetConnectionInfoRequestBadRequestError": {
+        "docs": "",
+        "status-code": 400,
+        "type": "string",
+      },
+      "GetConnectionInfoRequestInternalServerError": {
+        "docs": "",
+        "status-code": 500,
+        "type": "string",
+      },
+      "GetConnectionInfoRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "GetDeploymentInfoRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "GetDeploymentsRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "GetInactiveRoomsForProcessRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "GetLobbyInfoRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "GetLogsForAppRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "GetLogsForDeploymentRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "GetLogsForProcessRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "GetMetricsRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "GetMetricsRequestUnprocessableEntityError": {
+        "docs": "",
+        "status-code": 422,
+        "type": "string",
+      },
+      "GetProcessInfoRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "GetRoomInfoRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "GetRunningProcessesRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "GetStoppedProcessesRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "ListActivePublicLobbiesDeprecatedRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "ListActivePublicLobbiesDeprecatedRequestUnauthorizedError": {
+        "docs": "",
+        "status-code": 401,
+        "type": "string",
+      },
+      "LoginAnonymousRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "LoginGoogleRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "LoginGoogleRequestUnauthorizedError": {
+        "docs": "",
+        "status-code": 401,
+        "type": "string",
+      },
+      "LoginNicknameRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "RunBuildRequestInternalServerError": {
+        "docs": "",
+        "status-code": 500,
+        "type": "string",
+      },
+      "RunBuildRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "SetLobbyStateRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "SetLobbyStateRequestUnprocessableEntityError": {
+        "docs": "",
+        "status-code": 422,
+        "type": "string",
+      },
+      "SuspendRoomRequestInternalServerError": {
+        "docs": "",
+        "status-code": 500,
+        "type": "string",
+      },
+      "SuspendRoomRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+      "UpdateAppRequestInternalServerError": {
+        "docs": "",
+        "status-code": 500,
+        "type": "string",
+      },
+      "UpdateAppRequestNotFoundError": {
+        "docs": "",
+        "status-code": 404,
+        "type": "string",
+      },
+    },
+    "types": {
+      "ActiveConnectionInfo": {
+        "docs": undefined,
+        "properties": {
+          "host": "string",
+          "port": "double",
+          "roomId": "RoomId",
+          "transportType": "TransportType",
+        },
+      },
+      "AppConfig": {
+        "docs": undefined,
+        "properties": {
+          "appName": "string",
+          "authConfiguration": "AppConfigAuthConfiguration",
+        },
+      },
+      "AppConfigAuthConfiguration": {
+        "docs": undefined,
+        "properties": {
+          "anonymous": "optional<RecordStringNever>",
+          "google": "optional<AppConfigAuthConfigurationGoogle>",
+          "nickname": "optional<RecordStringNever>",
+        },
+      },
+      "AppConfigAuthConfigurationGoogle": {
+        "docs": undefined,
+        "properties": {
+          "clientId": "string",
+        },
+      },
+      "AppId": "string",
+      "Application": {
+        "docs": undefined,
+        "properties": {
+          "appId": "string",
+          "appName": "string",
+          "appSecret": "string",
+          "authConfiguration": "ApplicationAuthConfiguration",
+          "createdAt": "datetime",
+          "createdBy": "string",
+          "deletedAt": "optional<datetime>",
+          "deletedBy": "optional<string>",
+          "orgId": "OrgId",
+        },
+      },
+      "ApplicationAuthConfiguration": {
+        "docs": undefined,
+        "properties": {
+          "anonymous": "optional<RecordStringNever>",
+          "google": "optional<ApplicationAuthConfigurationGoogle>",
+          "nickname": "optional<RecordStringNever>",
+        },
+      },
+      "ApplicationAuthConfigurationGoogle": {
+        "docs": undefined,
+        "properties": {
+          "clientId": "string",
+        },
+      },
+      "ApplicationWithDeployment": {
+        "docs": undefined,
+        "extends": [
+          "Application",
+        ],
+        "properties": {
+          "deployment": "Deployment",
+        },
+      },
+      "Build": {
+        "docs": undefined,
+        "properties": {
+          "appId": "AppId",
+          "buildId": "BuildId",
+          "createdAt": "datetime",
+          "createdBy": "string",
+          "deletedAt": "optional<datetime>",
+          "finishedAt": "optional<datetime>",
+          "imageSize": "double",
+          "regionalContainerTags": "list<BuildRegionalContainerTagsItem>",
+          "startedAt": "optional<datetime>",
+          "status": "BuildStatus",
+        },
+      },
+      "BuildId": "double",
+      "BuildRegionalContainerTagsItem": {
+        "docs": undefined,
+        "properties": {
+          "containerTag": "string",
+          "region": "Region",
+        },
+      },
+      "BuildStatus": {
+        "enum": [
+          "created",
+          "running",
+          "succeeded",
+          "failed",
+        ],
+      },
+      "ConnectionInfo": {
+        "base-properties": {},
+        "discriminant": "status",
+        "docs": undefined,
+        "union": {
+          "active": "ActiveConnectionInfo",
+          "starting": "StartingConnectionInfo",
+        },
+      },
+      "Deployment": {
+        "docs": undefined,
+        "extends": [
+          "DeploymentConfig",
+        ],
+        "properties": {
+          "appId": "AppId",
+          "buildId": "BuildId",
+          "createdAt": "datetime",
+          "createdBy": "string",
+          "deploymentId": "DeploymentId",
+          "requestedCPU": "double",
+          "requestedMemoryMB": "double",
+        },
+      },
+      "DeploymentConfig": {
+        "docs": undefined,
+        "properties": {
+          "containerPort": "integer",
+          "env": "list<DeploymentConfigEnvItem>",
+          "planName": "PlanName",
+          "roomsPerProcess": "integer",
+          "transportType": "TransportType",
+        },
+      },
+      "DeploymentConfigEnvItem": {
+        "docs": undefined,
+        "properties": {
+          "name": "string",
+          "value": "string",
+        },
+      },
+      "DeploymentId": "double",
+      "DiscoveryResponse": "list<DiscoveryResponseItem>",
+      "DiscoveryResponseItem": {
+        "docs": undefined,
+        "properties": {
+          "host": "string",
+          "port": "double",
+          "region": "Region",
+        },
+      },
+      "Lobby": {
+        "docs": undefined,
+        "properties": {
+          "appId": "AppId",
+          "createdAt": "datetime",
+          "createdBy": "string",
+          "initialConfig": "map<string, unknown>",
+          "local": "boolean",
+          "region": "Region",
+          "roomId": "RoomId",
+          "state": "optional<map<string, unknown>>",
+          "visibility": "LobbyVisibility",
+        },
+      },
+      "LobbyVisibility": {
+        "enum": [
+          "private",
+          "public",
+          "local",
+        ],
+      },
+      "MetricName": {
+        "enum": [
+          "cpu",
+          "memory",
+          "rate_egress",
+          "total_egress",
+        ],
+      },
+      "MetricValue": {
+        "docs": undefined,
+        "properties": {
+          "timestamp": "double",
+          "value": "double",
+        },
+      },
+      "MetricsResponse": "RecordPartialMetricNameMetricValueArray",
+      "OmitRoomAllocations": {
+        "docs": "Construct a type with the properties of T except for those in type K.",
+        "type": "PickRoomExcludeKeyofRoomAllocations",
+      },
+      "OrgId": "string",
+      "PickRoomExcludeKeyofRoomAllocations": {
+        "docs": "From T, pick a set of properties whose keys are in the union K",
+        "properties": {
+          "appId": "AppId",
+          "currentAllocation": "optional<RoomAllocation>",
+          "roomId": "RoomId",
+          "status": "RoomStatus",
+        },
+      },
+      "PlanName": {
+        "enum": [
+          "tiny",
+          "small",
+          "medium",
+          "large",
+        ],
+      },
+      "Process": {
+        "docs": undefined,
+        "properties": {
+          "activeConnections": "double",
+          "appId": "AppId",
+          "deploymentId": "DeploymentId",
+          "draining": "boolean",
+          "egressedBytes": "double",
+          "host": "string",
+          "idleSince": "optional<datetime>",
+          "port": "double",
+          "processId": "ProcessId",
+          "region": "Region",
+          "roomSlotsAvailable": "double",
+          "roomsPerProcess": "double",
+          "startedAt": "optional<datetime>",
+          "startingAt": "datetime",
+          "stoppingAt": "optional<datetime>",
+          "terminatedAt": "optional<datetime>",
+        },
+      },
+      "ProcessId": "string",
+      "ProcessWithRooms": {
+        "docs": undefined,
+        "extends": [
+          "Process",
+        ],
+        "properties": {
+          "rooms": "list<RoomWithoutAllocations>",
+          "totalRooms": "double",
+        },
+      },
+      "RecordPartialMetricNameMetricValueArray": {
+        "docs": "Construct a type with a set of properties K of type T",
+        "properties": {
+          "cpu": "optional<list<MetricValue>>",
+          "memory": "optional<list<MetricValue>>",
+          "rate_egress": "optional<list<MetricValue>>",
+          "total_egress": "optional<list<MetricValue>>",
+        },
+      },
+      "RecordStringNever": {
+        "docs": "Construct a type with a set of properties K of type T",
+        "properties": {},
+      },
+      "Region": {
+        "enum": [
+          "Seattle",
+          "Washington_DC",
+          "Chicago",
+          "London",
+          "Frankfurt",
+          "Mumbai",
+          "Singapore",
+          "Tokyo",
+          "Sydney",
+          "Sao_Paulo",
+        ],
+      },
+      "Room": {
+        "docs": undefined,
+        "properties": {
+          "allocations": "list<RoomAllocation>",
+          "appId": "AppId",
+          "currentAllocation": "optional<RoomAllocation>",
+          "roomId": "RoomId",
+          "status": "RoomStatus",
+        },
+      },
+      "RoomAllocation": {
+        "docs": undefined,
+        "properties": {
+          "processId": "ProcessId",
+          "roomAllocationId": "RoomAllocationId",
+          "scheduledAt": "datetime",
+          "unscheduledAt": "optional<datetime>",
+        },
+      },
+      "RoomAllocationId": "string",
+      "RoomId": "string",
+      "RoomStatus": {
+        "enum": [
+          "scheduling",
+          "active",
+          "suspended",
+          "destroyed",
+        ],
+      },
+      "RoomWithoutAllocations": "OmitRoomAllocations",
+      "StartingConnectionInfo": {
+        "docs": undefined,
+        "properties": {
+          "roomId": "RoomId",
+        },
+      },
+      "TailLines": "integer",
+      "TransportType": {
+        "enum": [
+          "tcp",
+          "udp",
+          "tls",
+        ],
+      },
+    },
+  },
+  "rootApiFile": {
+    "auth": "BearerAuthScheme",
+    "auth-schemes": {
+      "BearerAuthScheme": {
+        "scheme": "bearer",
+      },
+    },
+    "default-environment": "Default",
+    "display-name": "Hathora Cloud API",
+    "environments": {
+      "Default": "https://api.hathora.dev",
+    },
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
+
 exports[`open api parser hathora simple 1`] = `
 {
   "definitionFiles": {
@@ -528,15 +3232,6 @@ exports[`open api parser hathora simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "path-parameters": {
-                  "appId": "appId",
-                  "buildId": 1.1,
-                },
-                "request": {},
-              },
-            ],
             "method": "POST",
             "path": "/builds/v1/{appId}/run/{buildId}",
             "path-parameters": {
@@ -553,6 +3248,10 @@ exports[`open api parser hathora simple 1`] = `
               "headers": undefined,
               "name": "RunBuildRequest",
               "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "file",
             },
           },
         },
@@ -1413,13 +4112,6 @@ exports[`open api parser hathora simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "path-parameters": {
-                  "appId": "appId",
-                },
-              },
-            ],
             "method": "GET",
             "path": "/logs/v1/{appId}/all",
             "path-parameters": {
@@ -1433,10 +4125,17 @@ exports[`open api parser hathora simple 1`] = `
                 "tailLines": "optional<root.TailLines>",
               },
             },
+            "response": {
+              "docs": "Ok",
+              "type": "file",
+            },
           },
           "GetLogsForDeployment": {
             "auth": true,
             "docs": undefined,
+            "errors": [
+              "root.NotFoundError",
+            ],
             "method": "GET",
             "path": "/logs/v1/{appId}/deployment/{deploymentId}",
             "path-parameters": {
@@ -1461,14 +4160,6 @@ exports[`open api parser hathora simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
-            "examples": [
-              {
-                "path-parameters": {
-                  "appId": "appId",
-                  "processId": "processId",
-                },
-              },
-            ],
             "method": "GET",
             "path": "/logs/v1/{appId}/process/{processId}",
             "path-parameters": {
@@ -1481,6 +4172,10 @@ exports[`open api parser hathora simple 1`] = `
                 "follow": "optional<boolean>",
                 "tailLines": "optional<root.TailLines>",
               },
+            },
+            "response": {
+              "docs": "Ok",
+              "type": "file",
             },
           },
         },
@@ -1973,26 +4668,32 @@ exports[`open api parser hathora simple 1`] = `
   "packageMarkerFile": {
     "errors": {
       "BadRequestError": {
+        "docs": "",
         "status-code": 400,
         "type": "string",
       },
       "InternalServerError": {
+        "docs": "",
         "status-code": 500,
         "type": "string",
       },
       "NotFoundError": {
+        "docs": "",
         "status-code": 404,
         "type": "string",
       },
       "TooManyRequestsError": {
+        "docs": "",
         "status-code": 429,
         "type": "string",
       },
       "UnauthorizedError": {
+        "docs": "",
         "status-code": 401,
         "type": "string",
       },
       "UnprocessableEntityError": {
+        "docs": "",
         "status-code": 422,
         "type": "string",
       },

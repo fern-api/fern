@@ -51,12 +51,638 @@ File upload example with curl:
 curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "https://upload.uploadcare.com/base/"
 \`\`\`
 ",
-      "errorStatusCode": [
-        400,
-        403,
-        413,
-        429,
-      ],
+      "errors": {
+        "400": {
+          "description": "Request failed input parameters validation.",
+          "examples": [
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "The request contains too many HTTP POST fields.",
+                },
+              },
+              "name": "request-fields-number-limit-exceeded",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "HTTP POST request parsing failed.",
+                },
+              },
+              "name": "post-request-parser-failed",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Null characters are not allowed.",
+                },
+              },
+              "name": "null-characters-forbidden",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "File's metadata key \`subsystem\` has a duplicate.",
+                },
+              },
+              "name": "file-metadata-key-duplicate",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "File's metadata key can not be empty.",
+                },
+              },
+              "name": "file-metadata-key-empty",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "File's metadata key \`subsystem\` contains symbols not allowed by the metadata key format.",
+                },
+              },
+              "name": "file-metadata-key-forbidden",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Length of file metadata key \`aaa...\` can not be more than 64 symbols.",
+                },
+              },
+              "name": "file-metadata-key-length-too-big",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Value of the file metadata key \`subsystem\` can not be empty.",
+                },
+              },
+              "name": "file-metadata-value-empty",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Value of file metadata key \`subsystem\` contains symbols not allowed by the metadata value format.",
+                },
+              },
+              "name": "file-metadata-value-forbidden",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Value of file metadata's key \`subsystem\` can not be more than 512 symbols in length.",
+                },
+              },
+              "name": "file-metadata-value-length-too-big",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "A file can not have more than 50 metadata keys.",
+                },
+              },
+              "name": "file-metadata-keys-number-too-big",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "\`signature\` is required.",
+                },
+              },
+              "name": "signature-required",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "\`expire\` is required.",
+                },
+              },
+              "name": "signature-expiration-required",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "\`expire\` must be a UNIX timestamp.",
+                },
+              },
+              "name": "signature-expiration-invalid",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Request does not contain files.",
+                },
+              },
+              "name": "files-required",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "File is too large.",
+                },
+              },
+              "name": "file-size-limit-exceeded",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Uploading of these file types is not allowed.",
+                },
+              },
+              "name": "file-type-forbidden",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "The file is infected by Win.Test.EICAR_HDB-1 virus.",
+                },
+              },
+              "name": "file-infected",
+            },
+          ],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "type": "oneOf",
+            "value": {
+              "description": null,
+              "generatedName": "BadRequestErrorBody",
+              "groupName": null,
+              "nameOverride": null,
+              "schemas": [
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyZero",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "requestFiledsNumberLimitExceededError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyOne",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "postRequestParserFailedError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyTwo",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "nullCharactersForbiddenError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyThree",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileMetadataKeyDuplicatedError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyFour",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileMetadataKeyEmptyError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyFive",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileMetadataKeyForbiddenError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodySix",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileMetadataKeyLengthTooBigError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodySeven",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileMetadataValueEmptyError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyEight",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileMetadataValueForbiddenError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyNine",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileMetadataValueLengthTooBigError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyTen",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileMetadataKeysNumberTooBigError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyEleven",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "signatureRequiredError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyTwelve",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "signatureExpirationRequiredError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyThirteen",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "signatureExpirationInvalidError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyFourteen",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "filesRequiredError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyFifteen",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileSizeLimitExceededError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodySixteen",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileTypeForbiddenError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodySeventeen",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileInfectedError",
+                  "type": "reference",
+                },
+              ],
+              "type": "undisciminated",
+            },
+          },
+        },
+        "403": {
+          "description": "Request was not allowed.",
+          "examples": [
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "UPLOADCARE_PUB_KEY is required.",
+                },
+              },
+              "name": "public-key-is-required",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "UPLOADCARE_PUB_KEY is invalid.",
+                },
+              },
+              "name": "public-key-is-invalid",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Autostore is disabled.",
+                },
+              },
+              "name": "auto-store-is-disabled",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Project 39e3eb895fdada95e7a9 is marked as removed.",
+                },
+              },
+              "name": "project-public-key-removed",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Account has been blocked.",
+                },
+              },
+              "name": "account-blocked",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Account has been blocked for non payment.",
+                },
+              },
+              "name": "account-unpaid",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Upload failed.",
+                },
+              },
+              "name": "upload-failed",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Account has reached its limits.",
+                },
+              },
+              "name": "account-limits-exceeded",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Expired signature.",
+                },
+              },
+              "name": "signature-expiration",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Invalid signature.",
+                },
+              },
+              "name": "signature-invalid",
+            },
+          ],
+          "generatedName": "ForbiddenError",
+          "nameOverride": null,
+          "schema": {
+            "type": "oneOf",
+            "value": {
+              "description": null,
+              "generatedName": "ForbiddenErrorBody",
+              "groupName": null,
+              "nameOverride": null,
+              "schemas": [
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyZero",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "uploadcarePublicKeyRequiredError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyOne",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "uploadcarePublicKeyInvalidError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyTwo",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "autoStoreDisabledError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyThree",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "projectPublicKeyRemovedError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyFour",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "accountBlockedError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyFive",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "accountUnpaidError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodySix",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "uploadFailedError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodySeven",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "accountLimitsExceededError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyEight",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "signatureExpirationError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyNine",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "signatureInvalidError",
+                  "type": "reference",
+                },
+              ],
+              "type": "undisciminated",
+            },
+          },
+        },
+        "413": {
+          "description": "The size of the request is too large.",
+          "examples": [
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "The size of the request is too large.",
+                },
+              },
+              "name": null,
+            },
+          ],
+          "generatedName": "ContentTooLargeError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "ContentTooLargeErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "429": {
+          "description": "Request was throttled.",
+          "examples": [
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Request was throttled.",
+                },
+              },
+              "name": null,
+            },
+          ],
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "TooManyRequestsErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [
@@ -390,11 +1016,665 @@ To upload large files, 3 requests are sent in sequence:
 
 **Note**: Multipart uploads support files larger than 10 megabytes only.
 ",
-      "errorStatusCode": [
-        400,
-        403,
-        429,
-      ],
+      "errors": {
+        "400": {
+          "description": "Request failed input parameters validation.",
+          "examples": [
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "The request contains too many HTTP POST fields.",
+                },
+              },
+              "name": "request-fields-number-limit-exceeded",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "HTTP POST request parsing failed.",
+                },
+              },
+              "name": "post-request-parser-failed",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Null characters are not allowed.",
+                },
+              },
+              "name": "null-characters-forbidden",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "File's metadata key \`subsystem\` has a duplicate.",
+                },
+              },
+              "name": "file-metadata-key-duplicate",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "File's metadata key can not be empty.",
+                },
+              },
+              "name": "file-metadata-key-empty",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "File's metadata key \`subsystem\` contains symbols not allowed by the metadata key format.",
+                },
+              },
+              "name": "file-metadata-key-forbidden",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Length of file metadata key \`aaa...\` can not be more than 64 symbols.",
+                },
+              },
+              "name": "file-metadata-key-length-too-big",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Value of the file metadata key \`subsystem\` can not be empty.",
+                },
+              },
+              "name": "file-metadata-value-empty",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Value of file metadata key \`subsystem\` contains symbols not allowed by the metadata value format.",
+                },
+              },
+              "name": "file-metadata-value-forbidden",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Value of file metadata's key \`subsystem\` can not be more than 512 symbols in length.",
+                },
+              },
+              "name": "file-metadata-value-length-too-big",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "A file can not have more than 50 metadata keys.",
+                },
+              },
+              "name": "file-metadata-keys-number-too-big",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "\`signature\` is required.",
+                },
+              },
+              "name": "signature-required",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "\`expire\` is required.",
+                },
+              },
+              "name": "signature-expiration-required",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "\`expire\` must be a UNIX timestamp.",
+                },
+              },
+              "name": "signature-expiration-invalid",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "filename is required.",
+                },
+              },
+              "name": "request-param-required",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "size should be integer.",
+                },
+              },
+              "name": "multipart-size-invalid",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "File size exceeds project limit.",
+                },
+              },
+              "name": "multipart-file-size-limit-exceeded",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "File size can not be less than 10485760 bytes. Please use direct upload instead of multipart.",
+                },
+              },
+              "name": "multipart-file-size-too-small",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Multipart Upload Part Size should be an integer.",
+                },
+              },
+              "name": "multipart-part-size-invalid",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Multipart Upload Part Size can not be less than 5242880 bytes.",
+                },
+              },
+              "name": "multipart-part-size-too-small",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Multipart Upload Part Size can not be more than 5368709120 bytes.",
+                },
+              },
+              "name": "multipart-part-size-too-big",
+            },
+          ],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "type": "oneOf",
+            "value": {
+              "description": null,
+              "generatedName": "BadRequestErrorBody",
+              "groupName": null,
+              "nameOverride": null,
+              "schemas": [
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyZero",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "requestFiledsNumberLimitExceededError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyOne",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "postRequestParserFailedError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyTwo",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "nullCharactersForbiddenError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyThree",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileMetadataKeyDuplicatedError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyFour",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileMetadataKeyEmptyError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyFive",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileMetadataKeyForbiddenError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodySix",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileMetadataKeyLengthTooBigError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodySeven",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileMetadataValueEmptyError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyEight",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileMetadataValueForbiddenError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyNine",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileMetadataValueLengthTooBigError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyTen",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileMetadataKeysNumberTooBigError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyEleven",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "signatureRequiredError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyTwelve",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "signatureExpirationRequiredError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyThirteen",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "signatureExpirationInvalidError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyFourteen",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "requestParamRequiredError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyFifteen",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "multipartSizeInvalidError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodySixteen",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "multipartFileSizeLimitExceededError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodySeventeen",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "multipartFileSizeTooSmallError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyEighteen",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "multipartPartSizeInvalidError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyNineteen",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "multipartPartSizeTooSmallError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyTwenty",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "multipartPartSizeTooBigError",
+                  "type": "reference",
+                },
+              ],
+              "type": "undisciminated",
+            },
+          },
+        },
+        "403": {
+          "description": "Request was not allowed.",
+          "examples": [
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "UPLOADCARE_PUB_KEY is required.",
+                },
+              },
+              "name": "public-key-is-required",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "UPLOADCARE_PUB_KEY is invalid.",
+                },
+              },
+              "name": "public-key-is-invalid",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Autostore is disabled.",
+                },
+              },
+              "name": "auto-store-is-disabled",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Project 39e3eb895fdada95e7a9 is marked as removed.",
+                },
+              },
+              "name": "project-public-key-removed",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Account has been blocked.",
+                },
+              },
+              "name": "account-blocked",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Account has been blocked for non payment.",
+                },
+              },
+              "name": "account-unpaid",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Upload failed.",
+                },
+              },
+              "name": "upload-failed",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Account has reached its limits.",
+                },
+              },
+              "name": "account-limits-exceeded",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Expired signature.",
+                },
+              },
+              "name": "signature-expiration",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Invalid signature.",
+                },
+              },
+              "name": "signature-invalid",
+            },
+          ],
+          "generatedName": "ForbiddenError",
+          "nameOverride": null,
+          "schema": {
+            "type": "oneOf",
+            "value": {
+              "description": null,
+              "generatedName": "ForbiddenErrorBody",
+              "groupName": null,
+              "nameOverride": null,
+              "schemas": [
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyZero",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "uploadcarePublicKeyRequiredError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyOne",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "uploadcarePublicKeyInvalidError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyTwo",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "autoStoreDisabledError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyThree",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "projectPublicKeyRemovedError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyFour",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "accountBlockedError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyFive",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "accountUnpaidError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodySix",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "uploadFailedError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodySeven",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "accountLimitsExceededError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyEight",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "signatureExpirationError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyNine",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "signatureInvalidError",
+                  "type": "reference",
+                },
+              ],
+              "type": "undisciminated",
+            },
+          },
+        },
+        "429": {
+          "description": "Request was throttled.",
+          "examples": [
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Request was throttled.",
+                },
+              },
+              "name": null,
+            },
+          ],
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "TooManyRequestsErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [
@@ -897,7 +2177,7 @@ You can upload the file parts in parallel provided that the byte order stays unc
 
 **Note**: You MUST define \`Content-Type\` header for your data.
 ",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "type": "unknown",
@@ -1035,11 +2315,319 @@ Log.d("TAG", file.toString())
       "description": "Once all the file parts have been uploaded successfully, complete the
 upload session to assemble all the file parts into a single resulting file.
 ",
-      "errorStatusCode": [
-        400,
-        403,
-        404,
-      ],
+      "errors": {
+        "400": {
+          "description": "Request failed input parameters validation.",
+          "examples": [
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "The request contains too many HTTP POST fields.",
+                },
+              },
+              "name": "request-fields-number-limit-exceeded",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "HTTP POST request parsing failed.",
+                },
+              },
+              "name": "post-request-parser-failed",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Null characters are not allowed.",
+                },
+              },
+              "name": "null-characters-forbidden",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "uuid is required.",
+                },
+              },
+              "name": "multipart-file-id-required",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "uuid is invalid.",
+                },
+              },
+              "name": "uuid-invalid",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "File is already uploaded.",
+                },
+              },
+              "name": "multipart-file-already-uploaded",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Uploaded size is more than expected.",
+                },
+              },
+              "name": "multipart-upload-size-too-large",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "File size mismatch. Not all parts uploaded?",
+                },
+              },
+              "name": "multipart-upload-size-too-small",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Can not complete upload. Wrong parts size?",
+                },
+              },
+              "name": "multipart-file-completion-failed",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Uploading of these file types is not allowed.",
+                },
+              },
+              "name": "file-type-forbidden",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "The file is infected by Win.Test.EICAR_HDB-1 virus.",
+                },
+              },
+              "name": "file-infected",
+            },
+          ],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "type": "oneOf",
+            "value": {
+              "description": null,
+              "generatedName": "BadRequestErrorBody",
+              "groupName": null,
+              "nameOverride": null,
+              "schemas": [
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyZero",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "requestFiledsNumberLimitExceededError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyOne",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "postRequestParserFailedError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyTwo",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "nullCharactersForbiddenError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyThree",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "multipartFileIdRequiredError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyFour",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "uuidInvalidError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyFive",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "multipartFileAlreadyUploadedError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodySix",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "multipartUploadSizeTooLargeError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodySeven",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "multipartUploadSizeTooSmallError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyEight",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "multipartFileCompletionFailedError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyNine",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileTypeForbiddenError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyTen",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileInfectedError",
+                  "type": "reference",
+                },
+              ],
+              "type": "undisciminated",
+            },
+          },
+        },
+        "403": {
+          "description": "Request was not allowed.",
+          "examples": [
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "UPLOADCARE_PUB_KEY is required.",
+                },
+              },
+              "name": "public-key-is-required",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "UPLOADCARE_PUB_KEY is invalid.",
+                },
+              },
+              "name": "public-key-is-invalid",
+            },
+          ],
+          "generatedName": "ForbiddenError",
+          "nameOverride": null,
+          "schema": {
+            "type": "oneOf",
+            "value": {
+              "description": null,
+              "generatedName": "ForbiddenErrorBody",
+              "groupName": null,
+              "nameOverride": null,
+              "schemas": [
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyZero",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "uploadcarePublicKeyRequiredError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyOne",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "uploadcarePublicKeyInvalidError",
+                  "type": "reference",
+                },
+              ],
+              "type": "undisciminated",
+            },
+          },
+        },
+        "404": {
+          "description": "File with specified UUID was not found.",
+          "examples": [
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "File is not found.",
+                },
+              },
+              "name": "file-not-found",
+            },
+          ],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "fileNotFoundError",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [
@@ -1812,11 +3400,703 @@ a new upload leading to file duplication.
 If you would like Uploadcare to keep track of the requested URLs and avoid the duplicate
 uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameters described below.
 ",
-      "errorStatusCode": [
-        400,
-        403,
-        429,
-      ],
+      "errors": {
+        "400": {
+          "description": "Request failed input parameters validation.",
+          "examples": [
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "The request contains too many HTTP POST fields.",
+                },
+              },
+              "name": "request-fields-number-limit-exceeded",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "HTTP POST request parsing failed.",
+                },
+              },
+              "name": "post-request-parser-failed",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Null characters are not allowed.",
+                },
+              },
+              "name": "null-characters-forbidden",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "File's metadata key \`subsystem\` has a duplicate.",
+                },
+              },
+              "name": "file-metadata-key-duplicate",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "File's metadata key can not be empty.",
+                },
+              },
+              "name": "file-metadata-key-empty",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "File's metadata key \`subsystem\` contains symbols not allowed by the metadata key format.",
+                },
+              },
+              "name": "file-metadata-key-forbidden",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Length of file metadata key \`aaa...\` can not be more than 64 symbols.",
+                },
+              },
+              "name": "file-metadata-key-length-too-big",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Value of the file metadata key \`subsystem\` can not be empty.",
+                },
+              },
+              "name": "file-metadata-value-empty",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Value of file metadata key \`subsystem\` contains symbols not allowed by the metadata value format.",
+                },
+              },
+              "name": "file-metadata-value-forbidden",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Value of file metadata's key \`subsystem\` can not be more than 512 symbols in length.",
+                },
+              },
+              "name": "file-metadata-value-length-too-big",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "A file can not have more than 50 metadata keys.",
+                },
+              },
+              "name": "file-metadata-keys-number-too-big",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "\`signature\` is required.",
+                },
+              },
+              "name": "signature-required",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "\`expire\` is required.",
+                },
+              },
+              "name": "signature-expiration-required",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "\`expire\` must be a UNIX timestamp.",
+                },
+              },
+              "name": "signature-expiration-invalid",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "source_url is required.",
+                },
+              },
+              "name": "source-url-required",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Failed to parse URL.",
+                },
+              },
+              "name": "url-parsing-failed",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "No URL scheme supplied.",
+                },
+              },
+              "name": "url-scheme-required",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Invalid URL scheme.",
+                },
+              },
+              "name": "url-scheme-invalid",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "No URL host supplied.",
+                },
+              },
+              "name": "url-host-required",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Source is blacklisted.",
+                },
+              },
+              "name": "url-blacklisted",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Host does not exist.",
+                },
+              },
+              "name": "hostname-not-found",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "URL host is malformed.",
+                },
+              },
+              "name": "url-host-malformed",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Only public IPs are allowed.",
+                },
+              },
+              "name": "url-host-private-ip-forbidden",
+            },
+          ],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "type": "oneOf",
+            "value": {
+              "description": null,
+              "generatedName": "BadRequestErrorBody",
+              "groupName": null,
+              "nameOverride": null,
+              "schemas": [
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyZero",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "requestFiledsNumberLimitExceededError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyOne",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "postRequestParserFailedError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyTwo",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "nullCharactersForbiddenError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyThree",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileMetadataKeyDuplicatedError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyFour",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileMetadataKeyEmptyError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyFive",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileMetadataKeyForbiddenError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodySix",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileMetadataKeyLengthTooBigError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodySeven",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileMetadataValueEmptyError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyEight",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileMetadataValueForbiddenError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyNine",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileMetadataValueLengthTooBigError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyTen",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileMetadataKeysNumberTooBigError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyEleven",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "signatureRequiredError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyTwelve",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "signatureExpirationRequiredError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyThirteen",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "signatureExpirationInvalidError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyFourteen",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "sourceURLRequiredError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyFifteen",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "urlParsingFailedError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodySixteen",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "urlSchemeRequiredError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodySeventeen",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "urlSchemeInvalidError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyEighteen",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "urlHostRequiredError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyNineteen",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "urlBlacklistedError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyTwenty",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "hostnameNotFoundError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyTwentyOne",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "urlHostMalformedError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyTwentyTwo",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "urlHostPrivateIPForbiddenError",
+                  "type": "reference",
+                },
+              ],
+              "type": "undisciminated",
+            },
+          },
+        },
+        "403": {
+          "description": "Request was not allowed.",
+          "examples": [
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "pub_key is required.",
+                },
+              },
+              "name": "public-key-is-required",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "pub_key is invalid.",
+                },
+              },
+              "name": "public-key-is-invalid",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Autostore is disabled.",
+                },
+              },
+              "name": "auto-store-is-disabled",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Project 39e3eb895fdada95e7a9 is marked as removed.",
+                },
+              },
+              "name": "project-public-key-removed",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Account has been blocked.",
+                },
+              },
+              "name": "account-blocked",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Account has been blocked for non payment.",
+                },
+              },
+              "name": "account-unpaid",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Upload failed.",
+                },
+              },
+              "name": "upload-failed",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Account has reached its limits.",
+                },
+              },
+              "name": "account-limits-exceeded",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Expired signature.",
+                },
+              },
+              "name": "signature-expiration",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Invalid signature.",
+                },
+              },
+              "name": "signature-invalid",
+            },
+          ],
+          "generatedName": "ForbiddenError",
+          "nameOverride": null,
+          "schema": {
+            "type": "oneOf",
+            "value": {
+              "description": null,
+              "generatedName": "ForbiddenErrorBody",
+              "groupName": null,
+              "nameOverride": null,
+              "schemas": [
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyZero",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "publicKeyRequiredError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyOne",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "publicKeyInvalidError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyTwo",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "autoStoreDisabledError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyThree",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "projectPublicKeyRemovedError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyFour",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "accountBlockedError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyFive",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "accountUnpaidError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodySix",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "uploadFailedError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodySeven",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "accountLimitsExceededError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyEight",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "signatureExpirationError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyNine",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "signatureInvalidError",
+                  "type": "reference",
+                },
+              ],
+              "type": "undisciminated",
+            },
+          },
+        },
+        "429": {
+          "description": "Request was throttled.",
+          "examples": [
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Request was throttled.",
+                },
+              },
+              "name": null,
+            },
+          ],
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "TooManyRequestsErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [
@@ -2995,9 +5275,34 @@ to the value of the \`check_URL_duplicates\` parameter.
   * if the system fails to fetch/upload the file, the \`status\` field is set to \`error\` and
     the \`error\` field is set to the cause of the error.
 ",
-      "errorStatusCode": [
-        400,
-      ],
+      "errors": {
+        "400": {
+          "description": "Request failed input parameters validation.",
+          "examples": [
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "token is required.",
+                },
+              },
+              "name": "token-required",
+            },
+          ],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "tokenRequiredError",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [
@@ -4260,11 +6565,167 @@ Log.d("TAG", status.toString())
       "availability": null,
       "description": "Returns a JSON object with information about an uploaded file (file size, MIME type, metadata, etc).
 ",
-      "errorStatusCode": [
-        400,
-        403,
-        404,
-      ],
+      "errors": {
+        "400": {
+          "description": "Request failed input parameters validation.",
+          "examples": [
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Null characters are not allowed.",
+                },
+              },
+              "name": "null-characters-forbidden",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "file_id is required.",
+                },
+              },
+              "name": "file-id-required",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "file_id is invalid.",
+                },
+              },
+              "name": "file-id-invalid",
+            },
+          ],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "type": "oneOf",
+            "value": {
+              "description": null,
+              "generatedName": "BadRequestErrorBody",
+              "groupName": null,
+              "nameOverride": null,
+              "schemas": [
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyZero",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "nullCharactersForbiddenError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyOne",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileIdRequiredError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyTwo",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "fileIdInvalidError",
+                  "type": "reference",
+                },
+              ],
+              "type": "undisciminated",
+            },
+          },
+        },
+        "403": {
+          "description": "Request was not allowed.",
+          "examples": [
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "pub_key is required.",
+                },
+              },
+              "name": "public-key-is-required",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "pub_key is invalid.",
+                },
+              },
+              "name": "public-key-is-invalid",
+            },
+          ],
+          "generatedName": "ForbiddenError",
+          "nameOverride": null,
+          "schema": {
+            "type": "oneOf",
+            "value": {
+              "description": null,
+              "generatedName": "ForbiddenErrorBody",
+              "groupName": null,
+              "nameOverride": null,
+              "schemas": [
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyZero",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "publicKeyRequiredError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyOne",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "publicKeyInvalidError",
+                  "type": "reference",
+                },
+              ],
+              "type": "undisciminated",
+            },
+          },
+        },
+        "404": {
+          "description": "File with specified UUID was not found.",
+          "examples": [
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "File is not found.",
+                },
+              },
+              "name": "file-not-found",
+            },
+          ],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "fileNotFoundError",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [
@@ -5002,10 +7463,388 @@ multiple files at once and then wants to display them together.
 **Note:** Groups are immutable and the only way to add/remove a file to a group
 is to create a new one.
 ",
-      "errorStatusCode": [
-        400,
-        403,
-      ],
+      "errors": {
+        "400": {
+          "description": "Request failed input parameters validation.",
+          "examples": [
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "The request contains too many HTTP POST fields.",
+                },
+              },
+              "name": "request-fields-number-limit-exceeded",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "HTTP POST request parsing failed.",
+                },
+              },
+              "name": "post-request-parser-failed",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Null characters are not allowed.",
+                },
+              },
+              "name": "null-characters-forbidden",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "\`signature\` is required.",
+                },
+              },
+              "name": "signature-required",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "\`expire\` is required.",
+                },
+              },
+              "name": "signature-expiration-required",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "\`expire\` must be a UNIX timestamp.",
+                },
+              },
+              "name": "signature-expiration-invalid",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "This is not valid file url: wrong-uuid.",
+                },
+              },
+              "name": "group-files-invalid",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "No files[N] parameters found.",
+                },
+              },
+              "name": "group-file-url-parsing-failed",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Some files not found.",
+                },
+              },
+              "name": "group-files-not-found",
+            },
+          ],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "type": "oneOf",
+            "value": {
+              "description": null,
+              "generatedName": "BadRequestErrorBody",
+              "groupName": null,
+              "nameOverride": null,
+              "schemas": [
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyZero",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "requestFiledsNumberLimitExceededError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyOne",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "postRequestParserFailedError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyTwo",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "nullCharactersForbiddenError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyThree",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "signatureRequiredError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyFour",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "signatureExpirationRequiredError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyFive",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "signatureExpirationInvalidError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodySix",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "groupFilesInvalidError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodySeven",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "groupFileURLParsingFailedError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyEight",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "groupFilesNotFoundError",
+                  "type": "reference",
+                },
+              ],
+              "type": "undisciminated",
+            },
+          },
+        },
+        "403": {
+          "description": "Request was not allowed.",
+          "examples": [
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "pub_key is required.",
+                },
+              },
+              "name": "public-key-is-required",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "pub_key is invalid.",
+                },
+              },
+              "name": "public-key-is-invalid",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Project 39e3eb895fdada95e7a9 is marked as removed.",
+                },
+              },
+              "name": "project-public-key-removed",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Account has been blocked.",
+                },
+              },
+              "name": "account-blocked",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Account has been blocked for non payment.",
+                },
+              },
+              "name": "account-unpaid",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Upload failed.",
+                },
+              },
+              "name": "upload-failed",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Account has reached its limits.",
+                },
+              },
+              "name": "account-limits-exceeded",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Expired signature.",
+                },
+              },
+              "name": "signature-expiration",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Invalid signature.",
+                },
+              },
+              "name": "signature-invalid",
+            },
+          ],
+          "generatedName": "ForbiddenError",
+          "nameOverride": null,
+          "schema": {
+            "type": "oneOf",
+            "value": {
+              "description": null,
+              "generatedName": "ForbiddenErrorBody",
+              "groupName": null,
+              "nameOverride": null,
+              "schemas": [
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyZero",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "publicKeyRequiredError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyOne",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "publicKeyInvalidError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyTwo",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "projectPublicKeyRemovedError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyThree",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "accountBlockedError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyFour",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "accountUnpaidError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyFive",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "uploadFailedError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodySix",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "accountLimitsExceededError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodySeven",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "signatureExpirationError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyEight",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "signatureInvalidError",
+                  "type": "reference",
+                },
+              ],
+              "type": "undisciminated",
+            },
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [
@@ -5935,11 +8774,148 @@ processing operations.
       "description": "Returns a JSON object with information about a file group (when the group was created,
 number of the files in the group, etc).
 ",
-      "errorStatusCode": [
-        400,
-        403,
-        404,
-      ],
+      "errors": {
+        "400": {
+          "description": "Request failed input parameters validation.",
+          "examples": [
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Null characters are not allowed.",
+                },
+              },
+              "name": "null-characters-forbidden",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "group_id is required.",
+                },
+              },
+              "name": "group-id-required",
+            },
+          ],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "type": "oneOf",
+            "value": {
+              "description": null,
+              "generatedName": "BadRequestErrorBody",
+              "groupName": null,
+              "nameOverride": null,
+              "schemas": [
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyZero",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "nullCharactersForbiddenError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "BadRequestErrorBodyOne",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "groupIdRequiredError",
+                  "type": "reference",
+                },
+              ],
+              "type": "undisciminated",
+            },
+          },
+        },
+        "403": {
+          "description": "Request was not allowed.",
+          "examples": [
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "pub_key is required.",
+                },
+              },
+              "name": "public-key-is-required",
+            },
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "pub_key is invalid.",
+                },
+              },
+              "name": "public-key-is-invalid",
+            },
+          ],
+          "generatedName": "ForbiddenError",
+          "nameOverride": null,
+          "schema": {
+            "type": "oneOf",
+            "value": {
+              "description": null,
+              "generatedName": "ForbiddenErrorBody",
+              "groupName": null,
+              "nameOverride": null,
+              "schemas": [
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyZero",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "publicKeyRequiredError",
+                  "type": "reference",
+                },
+                {
+                  "description": null,
+                  "generatedName": "ForbiddenErrorBodyOne",
+                  "groupName": null,
+                  "nameOverride": null,
+                  "schema": "publicKeyInvalidError",
+                  "type": "reference",
+                },
+              ],
+              "type": "undisciminated",
+            },
+          },
+        },
+        "404": {
+          "description": "Group with specified UUID was not found.",
+          "examples": [
+            {
+              "description": null,
+              "example": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "group_id is invalid.",
+                },
+              },
+              "name": "group-not-found",
+            },
+          ],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "groupNotFoundError",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [
@@ -6789,58 +9765,6 @@ Log.d("TAG", group.toString())
       ],
     },
   ],
-  "errors": {
-    "400": {
-      "description": null,
-      "generatedName": "BadRequestError",
-      "nameOverride": null,
-      "schema": {
-        "generatedName": "BadRequestErrorBody",
-        "nameOverride": null,
-        "type": "unknown",
-      },
-    },
-    "403": {
-      "description": null,
-      "generatedName": "ForbiddenError",
-      "nameOverride": null,
-      "schema": {
-        "generatedName": "ForbiddenErrorBody",
-        "nameOverride": null,
-        "type": "unknown",
-      },
-    },
-    "404": {
-      "description": null,
-      "generatedName": "NotFoundError",
-      "nameOverride": null,
-      "schema": {
-        "generatedName": "NotFoundErrorBody",
-        "nameOverride": null,
-        "type": "unknown",
-      },
-    },
-    "413": {
-      "description": null,
-      "generatedName": "ContentTooLargeError",
-      "nameOverride": null,
-      "schema": {
-        "generatedName": "ContentTooLargeErrorBody",
-        "nameOverride": null,
-        "type": "unknown",
-      },
-    },
-    "429": {
-      "description": null,
-      "generatedName": "TooManyRequestsError",
-      "nameOverride": null,
-      "schema": {
-        "generatedName": "TooManyRequestsErrorBody",
-        "nameOverride": null,
-        "type": "unknown",
-      },
-    },
-  },
   "globalHeaders": [],
   "groups": {},
   "hasEndpointsMarkedInternal": false,
@@ -6850,15 +9774,76 @@ Log.d("TAG", group.toString())
     "metadataValue",
     "signatureType",
     "expireType",
+    "requestFiledsNumberLimitExceededError",
+    "postRequestParserFailedError",
+    "nullCharactersForbiddenError",
+    "fileMetadataKeyDuplicatedError",
+    "fileMetadataKeyEmptyError",
+    "fileMetadataKeyForbiddenError",
+    "fileMetadataKeyLengthTooBigError",
+    "fileMetadataValueEmptyError",
+    "fileMetadataValueForbiddenError",
+    "fileMetadataValueLengthTooBigError",
+    "fileMetadataKeysNumberTooBigError",
+    "signatureRequiredError",
+    "signatureExpirationRequiredError",
+    "signatureExpirationInvalidError",
+    "filesRequiredError",
+    "fileSizeLimitExceededError",
+    "fileTypeForbiddenError",
+    "fileInfectedError",
+    "uploadcarePublicKeyRequiredError",
+    "uploadcarePublicKeyInvalidError",
+    "autoStoreDisabledError",
+    "projectPublicKeyRemovedError",
+    "accountBlockedError",
+    "accountUnpaidError",
+    "uploadFailedError",
+    "accountLimitsExceededError",
+    "signatureExpirationError",
+    "signatureInvalidError",
+    "requestParamRequiredError",
+    "multipartSizeInvalidError",
+    "multipartFileSizeLimitExceededError",
+    "multipartFileSizeTooSmallError",
+    "multipartPartSizeInvalidError",
+    "multipartPartSizeTooSmallError",
+    "multipartPartSizeTooBigError",
+    "multipartFileIdRequiredError",
+    "uuidInvalidError",
+    "multipartFileAlreadyUploadedError",
+    "multipartUploadSizeTooLargeError",
+    "multipartUploadSizeTooSmallError",
+    "multipartFileCompletionFailedError",
+    "fileNotFoundError",
     "fileUploadInfo",
+    "sourceURLRequiredError",
+    "urlParsingFailedError",
+    "urlSchemeRequiredError",
+    "urlSchemeInvalidError",
+    "urlHostRequiredError",
+    "urlBlacklistedError",
+    "hostnameNotFoundError",
+    "urlHostMalformedError",
+    "urlHostPrivateIPForbiddenError",
+    "publicKeyRequiredError",
+    "publicKeyInvalidError",
     "fromURLUploadResponseSchema",
     "fileUploadInfoFromURL",
+    "tokenRequiredError",
     "fileUploadInfoWaitingStatus",
     "fileUploadInfoProgressStatus",
     "fileUploadInfoSuccessStatus",
     "fileUploadInfoErrorStatus",
     "fileUploadInfoUnknownStatus",
+    "fileIdRequiredError",
+    "fileIdInvalidError",
+    "groupFilesInvalidError",
+    "groupFileURLParsingFailedError",
+    "groupFilesNotFoundError",
     "groupInfo",
+    "groupIdRequiredError",
+    "groupNotFoundError",
     "imageInfo",
     "legacyVideoInfo",
     "contentInfo",
