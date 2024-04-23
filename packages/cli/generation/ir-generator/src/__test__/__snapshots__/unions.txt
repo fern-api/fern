@@ -1563,6 +1563,7 @@ exports[`generate IR 1`] = `
       "shape": {
         "_type": "object",
         "extends": [],
+        "extra-properties": false,
         "properties": [
           {
             "availability": null,
@@ -1670,6 +1671,7 @@ exports[`generate IR 1`] = `
       "shape": {
         "_type": "object",
         "extends": [],
+        "extra-properties": false,
         "properties": [
           {
             "availability": null,
@@ -4172,6 +4174,7 @@ exports[`generate IR 1`] = `
       "shape": {
         "_type": "object",
         "extends": [],
+        "extra-properties": false,
         "properties": [
           {
             "availability": null,
@@ -4279,6 +4282,7 @@ exports[`generate IR 1`] = `
       "shape": {
         "_type": "object",
         "extends": [],
+        "extra-properties": false,
         "properties": [
           {
             "availability": null,
@@ -4702,6 +4706,7 @@ exports[`generate IR 1`] = `
       "shape": {
         "_type": "object",
         "extends": [],
+        "extra-properties": false,
         "properties": [
           {
             "availability": null,

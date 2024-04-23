@@ -1,0 +1,20 @@
+types:
+  User:
+    extra-properties: true
+    properties:
+      name: string
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    createUser:
+      path: /user
+      method: POST
+      request: 
+        name: CreateUserRequest
+        body:
+          extra-properties: true
+          properties:
+            name: string
+      response: User

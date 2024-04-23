@@ -702,6 +702,7 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
       "shape": {
         "_visit": [Function],
         "extends": [],
+        "extraProperties": false,
         "properties": [
           {
             "availability": undefined,
@@ -881,6 +882,7 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
       "shape": {
         "_visit": [Function],
         "extends": [],
+        "extraProperties": false,
         "properties": [
           {
             "availability": undefined,

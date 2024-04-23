@@ -948,6 +948,7 @@ exports[`generate IR from OpenAPI 1`] = `
       "shape": {
         "_type": "object",
         "extends": [],
+        "extra-properties": false,
         "properties": [
           {
             "availability": null,

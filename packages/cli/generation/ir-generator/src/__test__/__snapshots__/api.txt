@@ -2314,6 +2314,7 @@ exports[`generate IR 1`] = `
       "shape": {
         "_type": "object",
         "extends": [],
+        "extra-properties": false,
         "properties": [
           {
             "availability": null,
@@ -2453,6 +2454,7 @@ exports[`generate IR 1`] = `
       "shape": {
         "_type": "object",
         "extends": [],
+        "extra-properties": false,
         "properties": [
           {
             "availability": null,
@@ -2998,6 +3000,7 @@ exports[`generate IR 2`] = `
       "shape": {
         "_type": "object",
         "extends": [],
+        "extra-properties": false,
         "properties": [
           {
             "availability": null,
@@ -3135,6 +3138,7 @@ exports[`generate IR 2`] = `
       "shape": {
         "_type": "object",
         "extends": [],
+        "extra-properties": false,
         "properties": [
           {
             "availability": null,
@@ -3272,6 +3276,7 @@ exports[`generate IR 2`] = `
             "typeId": "type_:RootType",
           },
         ],
+        "extra-properties": false,
         "properties": [],
       },
     },
@@ -4125,6 +4130,7 @@ exports[`generate IR 2`] = `
       "shape": {
         "_type": "object",
         "extends": [],
+        "extra-properties": false,
         "properties": [],
       },
     },
@@ -4567,6 +4573,7 @@ exports[`generate IR 3`] = `
       "shape": {
         "_type": "object",
         "extends": [],
+        "extra-properties": false,
         "properties": [
           {
             "availability": null,
@@ -4704,6 +4711,7 @@ exports[`generate IR 3`] = `
       "shape": {
         "_type": "object",
         "extends": [],
+        "extra-properties": false,
         "properties": [
           {
             "availability": null,
@@ -4841,6 +4849,7 @@ exports[`generate IR 3`] = `
             "typeId": "type_:RootType",
           },
         ],
+        "extra-properties": false,
         "properties": [],
       },
     },
@@ -5782,6 +5791,7 @@ exports[`generate IR 3`] = `
       "shape": {
         "_type": "object",
         "extends": [],
+        "extra-properties": false,
         "properties": [
           {
             "availability": null,
@@ -6043,6 +6053,7 @@ exports[`generate IR 3`] = `
       "shape": {
         "_type": "object",
         "extends": [],
+        "extra-properties": false,
         "properties": [],
       },
     },

@@ -100,7 +100,8 @@ export function convertHttpRequestBody({
                               file
                           })
                       )
-                    : []
+                    : [],
+            extraProperties: request.body["extra-properties"] ?? false
         });
     }
 
