@@ -690,7 +690,7 @@ Log.d("TAG", file.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-08-20T15:59:50Z",
+                        "datetime_original": "2018-08-20T08:59:50Z",
                         "dpi": [
                           72,
                           72,
@@ -738,7 +738,7 @@ Log.d("TAG", file.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-08-20T15:59:50Z",
+                      "datetime_original": "2018-08-20T08:59:50Z",
                       "dpi": [
                         72,
                         72,
@@ -1060,7 +1060,7 @@ Log.d("TAG", file.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-08-20T15:59:50Z",
+                        "datetime_original": "2018-08-20T08:59:50Z",
                         "dpi": [
                           72,
                           72,
@@ -1108,7 +1108,7 @@ Log.d("TAG", file.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-08-20T15:59:50Z",
+                      "datetime_original": "2018-08-20T08:59:50Z",
                       "dpi": [
                         72,
                         72,
@@ -1504,7 +1504,7 @@ Log.d("TAG", status.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-08-20T15:59:50Z",
+                        "datetime_original": "2018-08-20T08:59:50Z",
                         "dpi": [
                           72,
                           72,
@@ -1552,7 +1552,7 @@ Log.d("TAG", status.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-08-20T15:59:50Z",
+                      "datetime_original": "2018-08-20T08:59:50Z",
                       "dpi": [
                         72,
                         72,
@@ -1930,7 +1930,7 @@ Log.d("TAG", file.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-08-20T15:59:50Z",
+                        "datetime_original": "2018-08-20T08:59:50Z",
                         "dpi": [
                           72,
                           72,
@@ -1978,7 +1978,7 @@ Log.d("TAG", file.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-08-20T15:59:50Z",
+                      "datetime_original": "2018-08-20T08:59:50Z",
                       "dpi": [
                         72,
                         72,
@@ -4765,7 +4765,7 @@ Log.d("TAG", file.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-08-20T15:59:50Z",
+                        "datetime_original": "2018-08-20T08:59:50Z",
                         "dpi": [
                           72,
                           72,
@@ -4813,7 +4813,7 @@ Log.d("TAG", file.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-08-20T15:59:50Z",
+                      "datetime_original": "2018-08-20T08:59:50Z",
                       "dpi": [
                         72,
                         72,
@@ -5135,7 +5135,7 @@ Log.d("TAG", file.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-08-20T15:59:50Z",
+                        "datetime_original": "2018-08-20T08:59:50Z",
                         "dpi": [
                           72,
                           72,
@@ -5183,7 +5183,7 @@ Log.d("TAG", file.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-08-20T15:59:50Z",
+                      "datetime_original": "2018-08-20T08:59:50Z",
                       "dpi": [
                         72,
                         72,
@@ -5579,7 +5579,7 @@ Log.d("TAG", status.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-08-20T15:59:50Z",
+                        "datetime_original": "2018-08-20T08:59:50Z",
                         "dpi": [
                           72,
                           72,
@@ -5627,7 +5627,7 @@ Log.d("TAG", status.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-08-20T15:59:50Z",
+                      "datetime_original": "2018-08-20T08:59:50Z",
                       "dpi": [
                         72,
                         72,
@@ -6005,7 +6005,7 @@ Log.d("TAG", file.toString())
                     "content_info": {
                       "image": {
                         "color_mode": "RGB",
-                        "datetime_original": "2018-08-20T15:59:50Z",
+                        "datetime_original": "2018-08-20T08:59:50Z",
                         "dpi": [
                           72,
                           72,
@@ -6053,7 +6053,7 @@ Log.d("TAG", file.toString())
                     "filename": "IMG0412_123.JPG",
                     "image_info": {
                       "color_mode": "RGB",
-                      "datetime_original": "2018-08-20T15:59:50Z",
+                      "datetime_original": "2018-08-20T08:59:50Z",
                       "dpi": [
                         72,
                         72,
