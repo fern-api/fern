@@ -1,4 +1,4 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
@@ -175,8 +175,11 @@ function addRunCommand(cli: Argv) {
                     `Generator ${argv.generator} not found. Please make sure that there is a folder with the name ${argv.generator} in the seed directory.`
                 );
             }
+
             await runWithCustomFixture({
-                pathToFixture: AbsoluteFilePath.of(argv.path),
+                pathToFixture: argv.path.startsWith("/")
+                    ? AbsoluteFilePath.of(argv.path)
+                    : join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(argv.path)),
                 workspace: generator,
                 logLevel: argv["log-level"]
             });
