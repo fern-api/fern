@@ -63,6 +63,7 @@ class OAuthTokenProviderGenerator:
             ),
         )
 
+        # TODO: Make the BUFFER_IN_MINUTES constant configurable.
         class_declaration.add_class_var(
             AST.VariableDeclaration(
                 name=self._get_buffer_in_minutes_member_name(),
@@ -210,6 +211,7 @@ class OAuthTokenProviderGenerator:
 
     def _get_refresh_function_declaration(self, client_credentials: ir_types.OAuthClientCredentials) -> AST.FunctionDeclaration:
         def _write_refresh_body(writer: AST.NodeWriter) -> None:
+                # TODO: Add better support for the refresh token endpoint.
                 writer.write(f"token_response = ")
                 writer.write_node(self._get_refresh_function_invocation(client_credentials))
                 writer.write_newline_if_last_line_not()
