@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+<<<<<<< HEAD
 require_relative "types_export"
 require_relative "requests"
 require_relative "fern_oauth_client_credentials/auth/client"
@@ -45,3 +46,6 @@ module SeedOauthClientCredentialsClient
     end
   end
 end
+=======
+require_relative "fern_oauth_client_credentials/auth/types/token_response"
+>>>>>>> main
