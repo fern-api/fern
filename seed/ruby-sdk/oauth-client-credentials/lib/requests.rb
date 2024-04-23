@@ -16,13 +16,15 @@ module SeedOauthClientCredentialsClient
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
+    # @param token [String]
     # @return [SeedOauthClientCredentialsClient::RequestClient]
-    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil)
+    def initialize(token:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
       @base_url = base_url
       @headers = {
         "X-Fern-Language": "Ruby",
         "X-Fern-SDK-Name": "fern_oauth_client_credentials",
-        "X-Fern-SDK-Version": "0.0.1"
+        "X-Fern-SDK-Version": "0.0.1",
+        "Authorization": "Bearer #{token}"
       }
       @conn = Faraday.new(headers: @headers) do |faraday|
         faraday.request :json
@@ -50,13 +52,15 @@ module SeedOauthClientCredentialsClient
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
+    # @param token [String]
     # @return [SeedOauthClientCredentialsClient::AsyncRequestClient]
-    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil)
+    def initialize(token:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
       @base_url = base_url
       @headers = {
         "X-Fern-Language": "Ruby",
         "X-Fern-SDK-Name": "fern_oauth_client_credentials",
-        "X-Fern-SDK-Version": "0.0.1"
+        "X-Fern-SDK-Version": "0.0.1",
+        "Authorization": "Bearer #{token}"
       }
       @conn = Faraday.new(headers: @headers) do |faraday|
         faraday.request :json
@@ -79,6 +83,8 @@ module SeedOauthClientCredentialsClient
   class RequestOptions
     # @return [String]
     attr_reader :base_url
+    # @return [String]
+    attr_reader :token
     # @return [Hash{String => Object}]
     attr_reader :additional_headers
     # @return [Hash{String => Object}]
@@ -89,14 +95,16 @@ module SeedOauthClientCredentialsClient
     attr_reader :timeout_in_seconds
 
     # @param base_url [String]
+    # @param token [String]
     # @param additional_headers [Hash{String => Object}]
     # @param additional_query_parameters [Hash{String => Object}]
     # @param additional_body_parameters [Hash{String => Object}]
     # @param timeout_in_seconds [Long]
     # @return [SeedOauthClientCredentialsClient::RequestOptions]
-    def initialize(base_url: nil, additional_headers: nil, additional_query_parameters: nil,
+    def initialize(base_url: nil, token: nil, additional_headers: nil, additional_query_parameters: nil,
                    additional_body_parameters: nil, timeout_in_seconds: nil)
       @base_url = base_url
+      @token = token
       @additional_headers = additional_headers
       @additional_query_parameters = additional_query_parameters
       @additional_body_parameters = additional_body_parameters
@@ -109,6 +117,8 @@ module SeedOauthClientCredentialsClient
   class IdempotencyRequestOptions
     # @return [String]
     attr_reader :base_url
+    # @return [String]
+    attr_reader :token
     # @return [Hash{String => Object}]
     attr_reader :additional_headers
     # @return [Hash{String => Object}]
@@ -119,14 +129,16 @@ module SeedOauthClientCredentialsClient
     attr_reader :timeout_in_seconds
 
     # @param base_url [String]
+    # @param token [String]
     # @param additional_headers [Hash{String => Object}]
     # @param additional_query_parameters [Hash{String => Object}]
     # @param additional_body_parameters [Hash{String => Object}]
     # @param timeout_in_seconds [Long]
     # @return [SeedOauthClientCredentialsClient::IdempotencyRequestOptions]
-    def initialize(base_url: nil, additional_headers: nil, additional_query_parameters: nil,
+    def initialize(base_url: nil, token: nil, additional_headers: nil, additional_query_parameters: nil,
                    additional_body_parameters: nil, timeout_in_seconds: nil)
       @base_url = base_url
+      @token = token
       @additional_headers = additional_headers
       @additional_query_parameters = additional_query_parameters
       @additional_body_parameters = additional_body_parameters
