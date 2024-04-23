@@ -1021,6 +1021,7 @@ exports[`migrateFromV33ToV32 snapshot 1`] = `
       "shape": {
         "_visit": [Function],
         "extends": [],
+        "extraProperties": false,
         "properties": [
           {
             "availability": undefined,

@@ -908,6 +908,7 @@ print(response.json())
           "requestBody": {
             "contentType": null,
             "extends": [],
+            "extra-properties": false,
             "name": {
               "camelCase": {
                 "safeName": "myRequest",
@@ -1297,6 +1298,7 @@ print(response.json())
       "shape": {
         "_type": "object",
         "extends": [],
+        "extra-properties": false,
         "properties": [
           {
             "availability": null,

@@ -803,6 +803,7 @@ exports[`migrateFromV39ToV38 snapshot 1`] = `
             "_visit": [Function],
             "contentType": undefined,
             "extends": [],
+            "extraProperties": false,
             "name": {
               "camelCase": {
                 "safeName": "getTokenRequest",
@@ -1845,6 +1846,7 @@ exports[`migrateFromV39ToV38 snapshot 1`] = `
             "_visit": [Function],
             "contentType": undefined,
             "extends": [],
+            "extraProperties": false,
             "name": {
               "camelCase": {
                 "safeName": "refreshTokenRequest",
@@ -5305,6 +5307,7 @@ exports[`migrateFromV39ToV38 snapshot 1`] = `
       "shape": {
         "_visit": [Function],
         "extends": [],
+        "extraProperties": false,
         "properties": [
           {
             "availability": undefined,
@@ -5486,6 +5489,7 @@ exports[`migrateFromV39ToV38 snapshot 1`] = `
       "shape": {
         "_visit": [Function],
         "extends": [],
+        "extraProperties": false,
         "properties": [
           {
             "availability": undefined,
@@ -5665,6 +5669,7 @@ exports[`migrateFromV39ToV38 snapshot 1`] = `
       "shape": {
         "_visit": [Function],
         "extends": [],
+        "extraProperties": false,
         "properties": [
           {
             "availability": undefined,

@@ -108,6 +108,7 @@ export async function visitTypeDeclaration({
                         }
                     }
                 },
+                ["extra-properties"]: noop,
                 availability: noop,
                 audiences: noop,
                 examples: visitExamples

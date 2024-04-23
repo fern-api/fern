@@ -189,7 +189,8 @@ async function visitEndpoint({
                                         });
                                     }
                                 }
-                            }
+                            },
+                            ["extra-properties"]: noop
                         });
                     } else {
                         await createDocsVisitor(visitor, nodePathForRequestBody)(body.docs);

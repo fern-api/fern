@@ -493,6 +493,7 @@ exports[`generate IR 1`] = `
           "requestBody": {
             "contentType": null,
             "extends": [],
+            "extra-properties": false,
             "name": {
               "camelCase": {
                 "safeName": "streamCompletionRequest",
@@ -883,6 +884,7 @@ exports[`generate IR 1`] = `
       "shape": {
         "_type": "object",
         "extends": [],
+        "extra-properties": false,
         "properties": [
           {
             "availability": null,

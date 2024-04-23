@@ -1,4 +1,3 @@
 name: ir
 docs: |
- Adds the concept of an OAuth scheme (starting with the client-credentials flow)
- to the API definition.
+ Add support for extra properties on objects and in-lined requests.

@@ -1549,6 +1549,7 @@ exports[`migrateFromV37ToV36 snapshot 1`] = `
       "shape": {
         "_visit": [Function],
         "extends": [],
+        "extraProperties": false,
         "properties": [
           {
             "availability": undefined,

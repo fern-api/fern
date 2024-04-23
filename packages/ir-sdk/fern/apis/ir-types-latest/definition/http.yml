@@ -94,6 +94,9 @@ types:
       extends: list<types.DeclaredTypeName>
       properties: list<InlinedRequestBodyProperty>
       contentType: optional<string>
+      extra-properties:
+        docs: Whether to allow extra properties on the request.
+        type: boolean
   InlinedRequestBodyProperty:
     extends: commons.WithDocs
     properties:

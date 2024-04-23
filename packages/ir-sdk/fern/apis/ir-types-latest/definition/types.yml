@@ -70,9 +70,12 @@ types:
   ObjectTypeDeclaration:
     properties:
       extends:
-        docs: "A list of other types to inherit from"
+        docs: A list of other types to inherit from
         type: list<DeclaredTypeName>
       properties: list<ObjectProperty>
+      extra-properties:
+        docs: Whether to allow extra properties on the object.
+        type: boolean
   ObjectProperty:
     extends: commons.Declaration
     properties:
