@@ -88,23 +88,23 @@ class RootClientGenerator:
         exclude_auth = self._oauth_scheme is not None
 
         self._constructor_info = client_wrapper_generator._get_constructor_info(exclude_auth=exclude_auth)
-        self._client_wrapper_constructor_params = self._constructor_info.constructor_parameters
+        self._root_client_constructor_params = self._constructor_info.constructor_parameters
         if self._context.ir.environments is not None and self._context.ir.environments.default_environment is None:
             environment_constructor_parameter = client_wrapper_generator._get_environment_constructor_parameter()
-            self._client_wrapper_constructor_params.append(environment_constructor_parameter)
+            self._root_client_constructor_params.append(environment_constructor_parameter)
         elif self._context.ir.environments is None:
             base_url_constructor_parameter = client_wrapper_generator._get_base_url_constructor_parameter()
-            self._client_wrapper_constructor_params.append(base_url_constructor_parameter)
+            self._root_client_constructor_params.append(base_url_constructor_parameter)
 
         self._timeout_constructor_parameter_name = self._get_timeout_constructor_parameter_name(
-            [param.constructor_parameter_name for param in self._client_wrapper_constructor_params]
+            [param.constructor_parameter_name for param in self._root_client_constructor_params]
         )
 
         if self._oauth_scheme is not None:
             oauth = self._oauth_scheme.configuration.get_as_union()
             if oauth.type == "clientCredentials":
                 if oauth.client_id_env_var is None:
-                    self._client_wrapper_constructor_params.append(
+                    self._root_client_constructor_params.append(
                         ConstructorParameter(
                             constructor_parameter_name="client_id",
                             type_hint=AST.TypeHint.str_(),
@@ -113,7 +113,7 @@ class RootClientGenerator:
                         )
                     )
                 if oauth.client_secret_env_var is None:
-                    self._client_wrapper_constructor_params.append(
+                    self._root_client_constructor_params.append(
                         ConstructorParameter(
                             constructor_parameter_name="client_secret",
                             type_hint=AST.TypeHint.str_(),
@@ -131,7 +131,7 @@ class RootClientGenerator:
             ),
             class_name=self._context.get_class_name_for_exported_root_client(),
             async_class_name="Async" + exported_client_class_name,
-            constructor_parameters=self._client_wrapper_constructor_params,
+            constructor_parameters=self._root_client_constructor_params,
         )
         generated_root_client = builder.build()
         class_declaration = self._create_class_declaration(
