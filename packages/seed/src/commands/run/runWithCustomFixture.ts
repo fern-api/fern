@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
 import tmp from "tmp-promise";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
@@ -37,7 +37,7 @@ export async function runWithCustomFixture({
     });
 
     const fernWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
-        absolutePathToAPIDefinition: pathToFixture,
+        absolutePathToAPIDefinition: join(AbsoluteFilePath.of(process.cwd()), RelativeFilePath.of(pathToFixture)),
         taskContext,
         fixture: "custom"
     });
