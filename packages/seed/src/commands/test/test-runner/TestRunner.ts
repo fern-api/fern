@@ -41,6 +41,7 @@ export declare namespace TestRunner {
         taskContext: TaskContext;
         outputDir: AbsoluteFilePath;
         absolutePathToWorkspace: AbsoluteFilePath;
+        absolutePathToFernDefinition: AbsoluteFilePath;
         outputMode: OutputMode;
         outputFolder: string;
         keepDocker: boolean | undefined;
@@ -143,6 +144,7 @@ export abstract class TestRunner {
                 generationStopwatch.start();
                 await this.runGenerator({
                     id,
+                    absolutePathToFernDefinition: absolutePathToAPIDefinition,
                     fernWorkspace,
                     absolutePathToWorkspace: this.generator.absolutePathToWorkspace,
                     irVersion: this.generator.workspaceConfig.irVersion,

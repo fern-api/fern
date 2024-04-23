@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
 import tmp from "tmp-promise";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
@@ -47,8 +47,10 @@ export async function runWithCustomFixture({
     }
 
     try {
+        await dockerGeneratorRunner.build();
         await dockerGeneratorRunner.runGenerator({
             fernWorkspace,
+            absolutePathToFernDefinition: pathToFixture,
             absolutePathToWorkspace: pathToFixture,
             irVersion: workspace.workspaceConfig.irVersion,
             outputVersion: customFixtureConfig?.outputVersion,
