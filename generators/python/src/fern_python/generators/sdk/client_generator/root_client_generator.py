@@ -538,7 +538,8 @@ class RootClientGenerator:
                     client_wrapper_generator=client_wrapper_generator,
                     environments_config=self._environments_config,
                     timeout_local_variable=timeout_local_variable,
-                    is_async=is_async,
+                    is_async=False,
+                    ignore_httpx_constructor_parameter=True,
                     exclude_auth=True,
                 )
                 writer.write("oauth_token_provider = ")
@@ -625,6 +626,7 @@ class RootClientGenerator:
         timeout_local_variable: str,
         is_async: bool,
         exclude_auth: Optional[bool] = False,
+        ignore_httpx_constructor_parameter: bool = False,
         use_oauth_token_provider: bool = False,
     ) -> List[typing.Tuple[str, AST.Expression]]:
         client_wrapper_constructor_kwargs = []
@@ -673,13 +675,12 @@ class RootClientGenerator:
                 )
             )
 
-        client_wrapper_constructor_kwargs.append(
-            (
-                ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME,
-                AST.Expression(
-                    AST.ConditionalExpression(
-                        left=AST.Expression(f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME}"),
-                        right=AST.ConditionalExpression(
+        if ignore_httpx_constructor_parameter:
+            client_wrapper_constructor_kwargs.append(
+                (
+                    ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME,
+                    AST.Expression(
+                        AST.ConditionalExpression(
                             left=AST.ClassInstantiation(
                                 HttpX.ASYNC_CLIENT if is_async else HttpX.CLIENT,
                                 kwargs=[
@@ -704,13 +705,49 @@ class RootClientGenerator:
                             ),
                             test=AST.Expression(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME} is not None"),
                         ),
-                        test=AST.Expression(
-                            f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME} is not None"
-                        ),
                     ),
                 ),
             )
-        )
+            pass
+        else:
+            client_wrapper_constructor_kwargs.append(
+                (
+                    ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME,
+                    AST.Expression(
+                        AST.ConditionalExpression(
+                            left=AST.Expression(f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME}"),
+                            right=AST.ConditionalExpression(
+                                left=AST.ClassInstantiation(
+                                    HttpX.ASYNC_CLIENT if is_async else HttpX.CLIENT,
+                                    kwargs=[
+                                        (
+                                            "timeout",
+                                            AST.Expression(f"{timeout_local_variable}"),
+                                        ),
+                                        (
+                                            "follow_redirects",
+                                            AST.Expression(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME}"),
+                                        ),
+                                    ],
+                                ),
+                                right=AST.ClassInstantiation(
+                                    HttpX.ASYNC_CLIENT if is_async else HttpX.CLIENT,
+                                    kwargs=[
+                                        (
+                                            "timeout",
+                                            AST.Expression(f"{timeout_local_variable}"),
+                                        ),
+                                    ],
+                                ),
+                                test=AST.Expression(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME} is not None"),
+                            ),
+                            test=AST.Expression(
+                                f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME} is not None"
+                            ),
+                        ),
+                    ),
+                )
+            )
         client_wrapper_constructor_kwargs.append(
             (
                 ClientWrapperGenerator.TIMEOUT_PARAMETER_NAME,
