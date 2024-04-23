@@ -4295,6 +4295,27 @@ paths:
       summary: Set revocation registry state manually
       tags:
         - revocation
+  /revocation/registry/{rev_reg_id}/tails-file-less-deets:
+    get:
+      operationId: download_tails_file_sparse
+      parameters:
+        - description: Revocation Registry identifier
+          explode: false
+          in: path
+          name: rev_reg_id
+          required: true
+          schema:
+            pattern: "^([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):4:([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}):3:CL:(([1-9][0-9]*)|([123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{21,22}:2:.+:[0-9.]+))(:.+)?:CL_ACCUM:(.+$)"
+            type: string
+          style: simple
+      responses:
+        "200":
+          content:
+            application/octet-stream: {}
+          description: tails file
+      summary: Download tails file
+      tags:
+        - revocation
   /revocation/registry/{rev_reg_id}/tails-file:
     get:
       operationId: download_tails_file

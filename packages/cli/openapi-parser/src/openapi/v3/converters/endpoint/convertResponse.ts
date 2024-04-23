@@ -89,6 +89,10 @@ export function convertResponse({
     };
 }
 
+function isOctetStreamResponse(response: OpenAPIV3.ResponseObject): boolean {
+    return response?.content?.[APPLICATION_OCTET_STREAM_CONTENT] != null;
+}
+
 function convertResolvedResponse({
     operationContext,
     streamFormat,
@@ -149,15 +153,15 @@ function convertResolvedResponse({
         });
     }
 
-    if (resolvedResponse.content?.[APPLICATION_OCTET_STREAM_CONTENT]?.schema != null) {
+    if (resolvedResponse.content?.[APPLICATION_OCTET_STREAM_CONTENT] != null) {
         return ResponseWithExample.file({ description: resolvedResponse.description });
     }
 
-    if (resolvedResponse.content?.[APPLICATION_PDF]?.schema != null) {
+    if (resolvedResponse.content?.[APPLICATION_PDF] != null) {
         return ResponseWithExample.file({ description: resolvedResponse.description });
     }
 
-    if (resolvedResponse.content?.[TEXT_PLAIN_CONTENT]?.schema != null) {
+    if (resolvedResponse.content?.[TEXT_PLAIN_CONTENT] != null) {
         const textPlainSchema = resolvedResponse.content[TEXT_PLAIN_CONTENT]?.schema;
         if (textPlainSchema == null) {
             return ResponseWithExample.text({ description: resolvedResponse.description });
