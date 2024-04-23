@@ -58340,7 +58340,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [],
       "generatedRequestName": "DownloadTailsFileRequest",
       "headers": [],

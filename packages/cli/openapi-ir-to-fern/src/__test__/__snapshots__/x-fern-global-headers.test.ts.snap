@@ -83,6 +83,7 @@ exports[`x-fern-global-headers x-fern-global-headers docs 1`] = `
             },
             "response-stream": {
               "docs": "",
+              "format": "json",
               "type": "root.StreamUser",
             },
           },

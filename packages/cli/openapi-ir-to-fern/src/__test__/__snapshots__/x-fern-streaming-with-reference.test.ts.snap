@@ -63,6 +63,7 @@ exports[`x-fern-streaming-with-reference x-fern-streaming-with-reference docs 1`
             },
             "response-stream": {
               "docs": "",
+              "format": "json",
               "type": "root.CompletionChunk",
             },
           },
