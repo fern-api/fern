@@ -39,7 +39,7 @@ class SeedOauthClientCredentialsEnvironmentVariables:
         *,
         base_url: str,
         timeout: typing.Optional[float] = None,
-        follow_redirects: typing.Optional[bool] = None,
+        follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
         client_id: typing.Optional[str] = os.getenv("CLIENT_ID"),
         client_secret: typing.Optional[str] = os.getenv("CLIENT_SECRET")
@@ -100,7 +100,7 @@ class AsyncSeedOauthClientCredentialsEnvironmentVariables:
         *,
         base_url: str,
         timeout: typing.Optional[float] = None,
-        follow_redirects: typing.Optional[bool] = None,
+        follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
         client_id: typing.Optional[str] = os.getenv("CLIENT_ID"),
         client_secret: typing.Optional[str] = os.getenv("CLIENT_SECRET")

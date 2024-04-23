@@ -40,7 +40,7 @@ class SeedOauthClientCredentials:
         *,
         base_url: str,
         timeout: typing.Optional[float] = None,
-        follow_redirects: typing.Optional[bool] = None,
+        follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.Client] = None,
         client_id: str,
         client_secret: str
@@ -103,7 +103,7 @@ class AsyncSeedOauthClientCredentials:
         *,
         base_url: str,
         timeout: typing.Optional[float] = None,
-        follow_redirects: typing.Optional[bool] = None,
+        follow_redirects: typing.Optional[bool] = True,
         httpx_client: typing.Optional[httpx.AsyncClient] = None,
         client_id: str,
         client_secret: str
