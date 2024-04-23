@@ -26,7 +26,33 @@ exports[`migrateFromV39ToV38 snapshot 1`] = `
   "auth": {
     "docs": undefined,
     "requirement": "ALL",
-    "schemes": [],
+    "schemes": [
+      {
+        "_visit": [Function],
+        "docs": undefined,
+        "token": {
+          "camelCase": {
+            "safeName": "token",
+            "unsafeName": "token",
+          },
+          "originalName": "token",
+          "pascalCase": {
+            "safeName": "Token",
+            "unsafeName": "Token",
+          },
+          "screamingSnakeCase": {
+            "safeName": "TOKEN",
+            "unsafeName": "TOKEN",
+          },
+          "snakeCase": {
+            "safeName": "token",
+            "unsafeName": "token",
+          },
+        },
+        "tokenEnvVar": undefined,
+        "type": "bearer",
+      },
+    ],
   },
   "basePath": undefined,
   "constants": {
