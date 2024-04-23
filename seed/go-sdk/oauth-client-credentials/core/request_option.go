@@ -20,6 +20,7 @@ type RequestOptions struct {
 	HTTPClient  HTTPClient
 	HTTPHeader  http.Header
 	MaxAttempts uint
+	Token       string
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -38,7 +39,13 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 
 // ToHeader maps the configured request options into a http.Header used
 // for the request(s).
-func (r *RequestOptions) ToHeader() http.Header { return r.cloneHeader() }
+func (r *RequestOptions) ToHeader() http.Header {
+	header := r.cloneHeader()
+	if r.Token != "" {
+		header.Set("Authorization", "Bearer "+r.Token)
+	}
+	return header
+}
 
 func (r *RequestOptions) cloneHeader() http.Header {
 	headers := r.HTTPHeader.Clone()
@@ -82,4 +89,13 @@ type MaxAttemptsOption struct {
 
 func (m *MaxAttemptsOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxAttempts = m.MaxAttempts
+}
+
+// TokenOption implements the RequestOption interface.
+type TokenOption struct {
+	Token string
+}
+
+func (t *TokenOption) applyRequestOptions(opts *RequestOptions) {
+	opts.Token = t.Token
 }

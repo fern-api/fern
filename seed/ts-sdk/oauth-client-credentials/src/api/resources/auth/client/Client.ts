@@ -11,6 +11,7 @@ import * as errors from "../../../../errors/index";
 export declare namespace Auth {
     interface Options {
         environment: core.Supplier<string>;
+        token?: core.Supplier<core.BearerToken | undefined>;
     }
 
     interface RequestOptions {
@@ -30,6 +31,7 @@ export class Auth {
             url: urlJoin(await core.Supplier.get(this._options.environment), "/token"),
             method: "POST",
             headers: {
+                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/oauth-client-credentials",
                 "X-Fern-SDK-Version": "0.0.1",
@@ -84,6 +86,7 @@ export class Auth {
             url: urlJoin(await core.Supplier.get(this._options.environment), "/token"),
             method: "POST",
             headers: {
+                Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/oauth-client-credentials",
                 "X-Fern-SDK-Version": "0.0.1",
@@ -128,5 +131,14 @@ export class Auth {
                     message: _response.error.errorMessage,
                 });
         }
+    }
+
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
+        const bearer = await core.Supplier.get(this._options.token);
+        if (bearer != null) {
+            return `Bearer ${bearer}`;
+        }
+
+        return undefined;
     }
 }

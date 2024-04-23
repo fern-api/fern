@@ -9,11 +9,14 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 public final class RequestOptions {
+    private final String token;
+
     private final Optional<Integer> timeout;
 
     private final TimeUnit timeoutTimeUnit;
 
-    private RequestOptions(Optional<Integer> timeout, TimeUnit timeoutTimeUnit) {
+    private RequestOptions(String token, Optional<Integer> timeout, TimeUnit timeoutTimeUnit) {
+        this.token = token;
         this.timeout = timeout;
         this.timeoutTimeUnit = timeoutTimeUnit;
     }
@@ -28,6 +31,9 @@ public final class RequestOptions {
 
     public Map<String, String> getHeaders() {
         Map<String, String> headers = new HashMap<>();
+        if (this.token != null) {
+            headers.put("Authorization", "Bearer " + this.token);
+        }
         return headers;
     }
 
@@ -36,9 +42,16 @@ public final class RequestOptions {
     }
 
     public static final class Builder {
+        private String token = null;
+
         private Optional<Integer> timeout = null;
 
         private TimeUnit timeoutTimeUnit = TimeUnit.SECONDS;
+
+        public Builder token(String token) {
+            this.token = token;
+            return this;
+        }
 
         public Builder timeout(Integer timeout) {
             this.timeout = Optional.of(timeout);
@@ -52,7 +65,7 @@ public final class RequestOptions {
         }
 
         public RequestOptions build() {
-            return new RequestOptions(timeout, timeoutTimeUnit);
+            return new RequestOptions(token, timeout, timeoutTimeUnit);
         }
     }
 }
