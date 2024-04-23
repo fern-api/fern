@@ -35,6 +35,7 @@ export class Stream<T> implements AsyncIterable<T> {
      */
     private prefix: string | undefined;
     private messageTerminator: string;
+    private streamTerminator: string | undefined;
 
     constructor({ stream, parse, eventShape }: Stream.Args & { parse: (val: unknown) => Promise<T> }) {
         this.stream = stream;
@@ -42,6 +43,7 @@ export class Stream<T> implements AsyncIterable<T> {
         if (eventShape.type === "sse") {
             this.prefix = DATA_PREFIX;
             this.messageTerminator = "\n";
+            this.streamTerminator = eventShape.streamTerminator;
         } else {
             this.messageTerminator = eventShape.messageTerminator;
         }
@@ -66,10 +68,13 @@ export class Stream<T> implements AsyncIterable<T> {
                     prefixSeen = true;
                     buf = buf.slice(prefixIndex + this.prefix.length);
                 }
-                // Yield message from the prefix to the terminator
                 const line = buf.slice(0, terminatorIndex).trimEnd();
-                console.log(line);
-                const message = await this.parse(line);
+                // If the stream terminator is present, return
+                if (this.streamTerminator != null && line.includes(this.streamTerminator)) {
+                    return;
+                }
+                // Otherwise, yield message from the prefix to the terminator
+                const message = await this.parse(JSON.parse(line));
                 yield message;
                 buf = buf.slice(terminatorIndex + 1);
                 prefixSeen = false;
