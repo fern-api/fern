@@ -54,6 +54,7 @@ function addTestCommand(cli: Argv) {
                 .option("keepDocker", {
                     type: "boolean",
                     demandOption: false,
+                    default: false,
                     description: "Keeps the docker container after the tests are finished"
                 })
                 .option("skip-scripts", {
@@ -71,19 +72,22 @@ function addTestCommand(cli: Argv) {
             const taskContextFactory = new TaskContextFactory(argv["log-level"]);
             const lock = new Semaphore(argv.parallel);
             const tests: Promise<boolean>[] = [];
+            const scriptRunners: ScriptRunner[] = [];
 
             for (const generator of generators) {
                 if (argv.generator != null && !argv.generator.includes(generator.workspaceName)) {
                     continue;
                 }
+                const scriptRunner = new ScriptRunner(generator);
                 const testRunner = new DockerTestRunner({
                     generator,
                     lock,
                     taskContextFactory,
                     skipScripts: argv.skipScripts,
-                    keepDocker: argv.keepDocker ?? false,
+                    keepDocker: argv.keepDocker,
                     scriptRunner: new ScriptRunner(generator)
                 });
+                scriptRunners.push(scriptRunner);
 
                 tests.push(
                     testGenerator({
@@ -93,7 +97,12 @@ function addTestCommand(cli: Argv) {
                     })
                 );
             }
+
             const results = await Promise.all(tests);
+
+            for (const scriptRunner of scriptRunners) {
+                await scriptRunner.stop();
+            }
 
             // If any of the tests failed, exit with a non-zero status code
             if (results.includes(false)) {

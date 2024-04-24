@@ -49,8 +49,8 @@ class ServiceClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
                 f"test/{jsonable_encoder(path_param)}/{jsonable_encoder(service_param)}/{jsonable_encoder(endpoint_param)}/{jsonable_encoder(resource_param)}",
             ),
@@ -121,8 +121,8 @@ class AsyncServiceClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/",
                 f"test/{jsonable_encoder(path_param)}/{jsonable_encoder(service_param)}/{jsonable_encoder(endpoint_param)}/{jsonable_encoder(resource_param)}",
             ),

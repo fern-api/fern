@@ -483,14 +483,25 @@ pip install --upgrade {project._project_config.package_name}
             fdr_client = generator_exec_wrapper.fdr_client
             if fdr_client is not None:
                 # API Definition ID doesn't matter right now
-                fdr_client.template.register_batch(
-                    org_id=org_id, api_id=api_name, api_definition_id=uuid4(), snippets=snippets
-                )
-                generator_exec_wrapper.send_update(
-                    GeneratorUpdate.factory.log(
-                        LogUpdate(level=LogLevel.DEBUG, message=f"Uploaded snippet templates to FDR.")
+                try:
+                    fdr_client.template.register_batch(
+                        org_id=org_id, api_id=api_name, api_definition_id=uuid4(), snippets=snippets
                     )
-                )
+                    generator_exec_wrapper.send_update(
+                        GeneratorUpdate.factory.log(
+                            LogUpdate(level=LogLevel.DEBUG, message=f"Uploaded snippet templates to FDR.")
+                        )
+                    )
+                except Exception as e:
+                    # Don't fail hard here, but issue a warning to the user.
+                    generator_exec_wrapper.send_update(
+                        GeneratorUpdate.factory.log(
+                            LogUpdate(
+                                level=LogLevel.WARN,
+                                message=f"Failed to upload snippet templates to FDR, this is ok: {str(e)}",
+                            )
+                        )
+                    )
             else:
                 # Otherwise write them for local
                 project.add_file(
@@ -522,7 +533,10 @@ pip install --upgrade {project._project_config.package_name}
         ir: ir_types.IntermediateRepresentation,
     ) -> None:
         # Write tests
-        snippet_test_factory.tests(ir, snippet_writer)
+        #
+        # TODO: Re-enable this feature as soon as we can.
+        # snippet_test_factory.tests(ir, snippet_writer)
+        pass
 
     def get_sorted_modules(self) -> Sequence[str]:
         # always import types/errors before resources (nested packages)

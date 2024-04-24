@@ -31,8 +31,8 @@ class PackageClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            self._client_wrapper.get_base_url(),
+            method="POST",
+            url=self._client_wrapper.get_base_url(),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -92,8 +92,8 @@ class AsyncPackageClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            self._client_wrapper.get_base_url(),
+            method="POST",
+            url=self._client_wrapper.get_base_url(),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {

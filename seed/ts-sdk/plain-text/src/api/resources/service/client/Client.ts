@@ -4,7 +4,7 @@
 
 import * as core from "../../../../core";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Service {
     interface Options {
@@ -20,21 +20,24 @@ export declare namespace Service {
 export class Service {
     constructor(protected readonly _options: Service.Options) {}
 
-    public async getText(requestOptions?: Service.RequestOptions): Promise<unknown> {
+    public async getText(requestOptions?: Service.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
             url: urlJoin(await core.Supplier.get(this._options.environment), "text"),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/plain-text",
                 "X-Fern-SDK-Version": "0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            responseType: "text",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });
         if (_response.ok) {
-            return _response.body;
+            return _response.body as string;
         }
 
         if (_response.error.reason === "status-code") {

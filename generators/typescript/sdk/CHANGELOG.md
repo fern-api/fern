@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Feature: The generator now registers snippet templates which can be used for dynamic
   SDK code snippet generation.
 
+## [0.15.1-rc0] - 2024-04-22
+
+- Feature: plain text responses are now supported in the TypeScript generator.
+
 ## [0.15.0-rc1] - 2024-04-22
 
 - Fix: Minor fixes to SSE processing. In particular, stream terminal characters are now

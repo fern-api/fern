@@ -67,8 +67,8 @@ class ObjectClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-optional-field"
             ),
             params=jsonable_encoder(
@@ -125,8 +125,8 @@ class ObjectClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-required-field"
             ),
             params=jsonable_encoder(
@@ -183,8 +183,10 @@ class ObjectClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-map-of-map"),
+            method="POST",
+            url=urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-map-of-map"
+            ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -262,8 +264,8 @@ class ObjectClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-optional-field"
             ),
             params=jsonable_encoder(
@@ -343,8 +345,8 @@ class ObjectClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-required-field"
             ),
             params=jsonable_encoder(
@@ -429,8 +431,8 @@ class ObjectClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-required-field-list"
             ),
             params=jsonable_encoder(
@@ -512,8 +514,8 @@ class AsyncObjectClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-optional-field"
             ),
             params=jsonable_encoder(
@@ -570,8 +572,8 @@ class AsyncObjectClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-required-field"
             ),
             params=jsonable_encoder(
@@ -628,8 +630,10 @@ class AsyncObjectClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-map-of-map"),
+            method="POST",
+            url=urllib.parse.urljoin(
+                f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-map-of-map"
+            ),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -707,8 +711,8 @@ class AsyncObjectClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-optional-field"
             ),
             params=jsonable_encoder(
@@ -788,8 +792,8 @@ class AsyncObjectClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-required-field"
             ),
             params=jsonable_encoder(
@@ -874,8 +878,8 @@ class AsyncObjectClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(
+            method="POST",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-required-field-list"
             ),
             params=jsonable_encoder(

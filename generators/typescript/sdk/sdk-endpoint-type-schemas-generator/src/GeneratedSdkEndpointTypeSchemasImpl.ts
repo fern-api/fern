@@ -1,5 +1,11 @@
 import { assertNever } from "@fern-api/core-utils";
-import { ErrorDiscriminationStrategy, HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
+import {
+    ErrorDiscriminationStrategy,
+    HttpEndpoint,
+    HttpService,
+    PrimitiveType,
+    TypeReference
+} from "@fern-fern/ir-sdk/api";
 import { getSchemaOptions, PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
@@ -249,7 +255,10 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         }
 
         if (this.endpoint.response.type === "text") {
-            throw new Error("Text response is not supported");
+            return ts.factory.createAsExpression(
+                referenceToRawResponse,
+                context.type.getReferenceToType(TypeReference.primitive(PrimitiveType.String)).typeNode
+            );
         }
 
         if (this.endpoint.response.value.responseBodyType.type === "unknown") {

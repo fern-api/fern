@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0-rc3] - 2024-04-24
+
+- Fix: Set `mypy` dev depenency in generated `pyproject.toml` to `1.9.0`.
+       This prevents upstream `mypy` bugs from affecting user builds. Note that
+       this is only a dev dependency, so it does not affect the behavior of the
+       SDK.
+- Fix: Temporarily disable unit test generation.
+- Improvement: Use named parameters for all `httpx` request params.
+
 ## [1.4.0-rc2] - 2024-04-23
 
 - Fix: Initialize the OAuth token provider member variables to their default values before they are set.

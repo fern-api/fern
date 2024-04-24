@@ -29,8 +29,8 @@ class ServiceClient:
         client.folder_a.service.get_direct_thread()
         """
         _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            self._client_wrapper.get_base_url(),
+            method="GET",
+            url=self._client_wrapper.get_base_url(),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -74,8 +74,8 @@ class AsyncServiceClient:
         await client.folder_a.service.get_direct_thread()
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            self._client_wrapper.get_base_url(),
+            method="GET",
+            url=self._client_wrapper.get_base_url(),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),

@@ -36,8 +36,8 @@ class S3Client:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_environment().s_3}/", "s3/presigned-url"),
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_environment().s_3}/", "s3/presigned-url"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -91,8 +91,8 @@ class AsyncS3Client:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_environment().s_3}/", "s3/presigned-url"),
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_environment().s_3}/", "s3/presigned-url"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),

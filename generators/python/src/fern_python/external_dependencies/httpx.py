@@ -107,7 +107,7 @@ class HttpX:
             if is_async:
                 writer.write("await ")
             writer.write_node(reference_to_client)
-            writer.write(f'.request("{method}", ')
+            writer.write(f'.request(method="{method}", url=')
             writer.write_node(url)
             writer.write(", ")
             with writer.indent():
@@ -119,7 +119,7 @@ class HttpX:
                 writer.write("async ")
             writer.write("with ")
             writer.write_node(reference_to_client)
-            writer.write(f'.stream("{method}", ')
+            writer.write(f'.stream(method="{method}", url=')
             writer.write_node(url)
             writer.write(", ")
             with writer.indent():

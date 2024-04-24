@@ -3,6 +3,7 @@ export type APIResponse<Success, Failure> = SuccessfulResponse<Success> | Failed
 export interface SuccessfulResponse<T> {
     ok: true;
     body: T;
+    headers?: Record<string, any>;
 }
 
 export interface FailedResponse<T> {
