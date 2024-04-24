@@ -27,6 +27,7 @@ export class DockerTestRunner extends TestRunner {
     }
 
     async runGenerator({
+        absolutePathToFernDefinition,
         fernWorkspace,
         outputDir,
         fixture,
@@ -61,7 +62,7 @@ export class DockerTestRunner extends TestRunner {
             };
             await runLocalGenerationForSeed({
                 organization: DUMMY_ORGANIZATION,
-                absolutePathToFernConfig: undefined,
+                absolutePathToFernConfig: absolutePathToFernDefinition,
                 workspace: fernWorkspace,
                 generatorGroup,
                 keepDocker: keepDocker ?? false,
@@ -72,7 +73,7 @@ export class DockerTestRunner extends TestRunner {
         } catch (e) {
             throw e;
         } finally {
-            writeInputs({
+            await writeInputs({
                 absolutePathToOutput: outputDir,
                 fernWorkspace,
                 taskContext,

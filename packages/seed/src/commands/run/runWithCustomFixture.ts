@@ -1,3 +1,4 @@
+import { DEFINITION_DIRECTORY } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
 import tmp from "tmp-promise";
@@ -7,6 +8,7 @@ import { convertGeneratorWorkspaceToFernWorkspace } from "../../utils/convertSee
 import { ScriptRunner } from "../test/ScriptRunner";
 import { TaskContextFactory } from "../test/TaskContextFactory";
 import { DockerTestRunner } from "../test/test-runner";
+import { writeDotMock } from "../test/test-runner/TestRunner";
 
 export async function runWithCustomFixture({
     pathToFixture,
@@ -47,8 +49,10 @@ export async function runWithCustomFixture({
     }
 
     try {
+        await dockerGeneratorRunner.build();
         await dockerGeneratorRunner.runGenerator({
             fernWorkspace,
+            absolutePathToFernDefinition: join(pathToFixture, RelativeFilePath.of(DEFINITION_DIRECTORY)),
             absolutePathToWorkspace: pathToFixture,
             irVersion: workspace.workspaceConfig.irVersion,
             outputVersion: customFixtureConfig?.outputVersion,
@@ -64,6 +68,10 @@ export async function runWithCustomFixture({
             outputFolder: customFixtureConfig?.outputFolder ?? "custom",
             id: "custom",
             keepDocker: true
+        });
+        await writeDotMock({
+            absolutePathToDotMockDirectory: absolutePathToOutput,
+            absolutePathToFernDefinition: pathToFixture
         });
         taskContext.logger.info(`Wrote files to ${absolutePathToOutput}`);
     } catch (error) {

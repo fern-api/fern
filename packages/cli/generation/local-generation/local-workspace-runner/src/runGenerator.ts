@@ -120,16 +120,6 @@ export async function writeFilesToDiskAndRunGenerator({
     });
     await taskHandler.copyGeneratedFiles();
 
-    if (writeUnitTests) {
-        context.logger.debug("Will write .mock to: " + absolutePathToLocalOutput);
-
-        await writeDotMock({
-            absolutePathToDotMockDirectory: absolutePathToLocalOutput,
-            absolutePathToFernDefinition,
-            absolutePathToFernConfig
-        });
-    }
-
     return {
         absolutePathToIr,
         absolutePathToConfigJson: absolutePathToWriteConfigJson
@@ -166,34 +156,6 @@ async function writeIrToFile({
     await writeFile(absolutePathToIr, JSON.stringify(intermediateRepresentation, undefined, 4));
     context.logger.debug(`Wrote IR to ${absolutePathToIr}`);
     return absolutePathToIr;
-}
-
-// Copy Fern definition to output directory
-async function writeDotMock({
-    absolutePathToDotMockDirectory,
-    absolutePathToFernDefinition,
-    absolutePathToFernConfig
-}: {
-    absolutePathToDotMockDirectory: AbsoluteFilePath;
-    absolutePathToFernDefinition: AbsoluteFilePath | undefined;
-    absolutePathToFernConfig: AbsoluteFilePath | undefined;
-}): Promise<void> {
-    if (absolutePathToFernDefinition != null) {
-        await cp(`${absolutePathToFernDefinition}`, `${absolutePathToDotMockDirectory}/.mock/definition`, {
-            recursive: true
-        });
-    }
-    if (absolutePathToFernConfig != null) {
-        // Copy Fern config
-        await cp(`${absolutePathToFernConfig}`, `${absolutePathToDotMockDirectory}/.mock`);
-    } else if (absolutePathToFernDefinition != null) {
-        // If for whatever reason we don't have the fern config, just write a dummy ones
-        await mkdir(`${absolutePathToDotMockDirectory}/.mock`, { recursive: true });
-        await writeFile(
-            `${absolutePathToDotMockDirectory}/.mock/fern.config.json`,
-            '{"organization": "fern-test", "version": "0.19.0"}'
-        );
-    }
 }
 
 export declare namespace runGenerator {
