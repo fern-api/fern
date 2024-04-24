@@ -27,8 +27,8 @@ class ServiceClient:
         client.service.download_file()
         """
         with self._client_wrapper.httpx_client.stream(
-            "POST",
-            self._client_wrapper.get_base_url(),
+            method="POST",
+            url=self._client_wrapper.get_base_url(),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -80,8 +80,8 @@ class AsyncServiceClient:
         await client.service.download_file()
         """
         async with self._client_wrapper.httpx_client.stream(
-            "POST",
-            self._client_wrapper.get_base_url(),
+            method="POST",
+            url=self._client_wrapper.get_base_url(),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),

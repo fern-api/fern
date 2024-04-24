@@ -57,8 +57,8 @@ class UsersClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "users"),
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "users"),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -131,8 +131,8 @@ class UsersClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "users"),
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "users"),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -194,8 +194,8 @@ class UsersClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "users"),
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "users"),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -250,8 +250,8 @@ class UsersClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "users"),
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "users"),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -306,8 +306,8 @@ class UsersClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "users"),
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "users"),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -382,8 +382,8 @@ class AsyncUsersClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "users"),
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "users"),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -456,8 +456,8 @@ class AsyncUsersClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "users"),
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "users"),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -519,8 +519,8 @@ class AsyncUsersClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "users"),
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "users"),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -575,8 +575,8 @@ class AsyncUsersClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "users"),
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "users"),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -631,8 +631,8 @@ class AsyncUsersClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "users"),
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "users"),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {

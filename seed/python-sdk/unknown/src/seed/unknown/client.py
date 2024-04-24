@@ -37,8 +37,8 @@ class UnknownClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            self._client_wrapper.get_base_url(),
+            method="POST",
+            url=self._client_wrapper.get_base_url(),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -94,8 +94,8 @@ class AsyncUnknownClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            self._client_wrapper.get_base_url(),
+            method="POST",
+            url=self._client_wrapper.get_base_url(),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
