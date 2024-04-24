@@ -32,6 +32,7 @@ export const Mocks = {
         return {
             whitelabel: false,
             snippetFilepath: undefined,
+            snippetTemplateFilepath: undefined,
             shouldUseBrandedStringAliases: false,
             isPackagePrivate: false,
             neverThrowErrors: false,

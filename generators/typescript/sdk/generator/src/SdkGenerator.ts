@@ -2,6 +2,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
 import { ExampleEndpointCall, HttpEndpoint, HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { FdrSnippetTemplate, FdrSnippetTemplateClient, FdrSnippetTemplateEnvironment } from "@fern-fern/snippet-sdk";
 import {
     BundledTypescriptProject,
     convertExportedFilePathToFilePath,
@@ -35,6 +36,7 @@ import { TypeSchemaGenerator } from "@fern-typescript/type-schema-generator";
 import { writeFile } from "fs/promises";
 import { Directory, Project, SourceFile, ts } from "ts-morph";
 import urlJoin from "url-join";
+import { v4 as uuidv4 } from "uuid";
 import { SdkContextImpl } from "./contexts/SdkContextImpl";
 import { EndpointDeclarationReferencer } from "./declaration-referencers/EndpointDeclarationReferencer";
 import { EnvironmentsDeclarationReferencer } from "./declaration-referencers/EnvironmentsDeclarationReferencer";
@@ -71,6 +73,7 @@ export declare namespace SdkGenerator {
     export interface Config {
         whitelabel: boolean;
         snippetFilepath: AbsoluteFilePath | undefined;
+        snippetTemplateFilepath: AbsoluteFilePath | undefined;
         shouldBundle: boolean;
         shouldUseBrandedStringAliases: boolean;
         isPackagePrivate: boolean;
@@ -95,6 +98,9 @@ export declare namespace SdkGenerator {
         retainOriginalCasing: boolean;
         allowExtraFields: boolean;
         writeUnitTests: boolean;
+        executionEnvironment: "local" | "dev" | "prod";
+        organization: string;
+        apiName: string;
     }
 }
 
@@ -109,6 +115,7 @@ export class SdkGenerator {
     private extraScripts: Record<string, string> = {};
 
     private endpointSnippets: FernGeneratorExec.Endpoint[] = [];
+    private endpointSnippetTemplates: FdrSnippetTemplate.SnippetRegistryEntry[] = [];
 
     private project: Project;
     private rootDirectory: Directory;
@@ -146,6 +153,7 @@ export class SdkGenerator {
     private genericAPISdkErrorGenerator: GenericAPISdkErrorGenerator;
     private timeoutSdkErrorGenerator: TimeoutSdkErrorGenerator;
     private jestTestGenerator: JestTestGenerator;
+    private FdrClient: FdrSnippetTemplateClient | undefined;
 
     constructor({
         namespaceExport,
@@ -305,6 +313,16 @@ export class SdkGenerator {
             this.rootDirectory,
             this.config.writeUnitTests
         );
+
+        this.FdrClient =
+            this.config.executionEnvironment !== "local"
+                ? new FdrSnippetTemplateClient({
+                      environment:
+                          this.config.executionEnvironment === "dev"
+                              ? FdrSnippetTemplateEnvironment.Dev
+                              : FdrSnippetTemplateEnvironment.Prod
+                  })
+                : undefined;
     }
 
     public async generate(): Promise<TypescriptProject> {
@@ -370,6 +388,20 @@ export class SdkGenerator {
                 this.config.snippetFilepath,
                 JSON.stringify(await FernGeneratorExecSerializers.Snippets.jsonOrThrow(snippets), undefined, 4)
             );
+            if (this.config.snippetTemplateFilepath != null) {
+                await writeFile(
+                    this.config.snippetTemplateFilepath,
+                    JSON.stringify(this.endpointSnippetTemplates, undefined, 4)
+                );
+                if (this.FdrClient != null) {
+                    await this.FdrClient.templates.registerBatch({
+                        orgId: this.config.organization,
+                        apiId: this.config.apiName,
+                        apiDefinitionId: uuidv4(),
+                        snippets: this.endpointSnippetTemplates
+                    });
+                }
+            }
             if (this.config.includeApiReference && refGenerator !== undefined) {
                 this.extraFiles["reference.md"] = refGenerator.write();
             }
@@ -668,6 +700,36 @@ export class SdkGenerator {
                         });
                     }
 
+                    if (this.config.snippetTemplateFilepath != null) {
+                        const snippetTemplate = this.withSnippetTemplate({
+                            run: ({ sourceFile, importsManager }): ts.Node[] | undefined => {
+                                return this.runWithSnippet({
+                                    sourceFile,
+                                    importsManager,
+                                    rootPackage,
+                                    packageId,
+                                    endpoint,
+                                    example,
+                                    includeImports: true
+                                });
+                            },
+                            includeImports: true
+                        });
+                        if (snippetTemplate != null && this.npmPackage != null) {
+                            this.endpointSnippetTemplates.push({
+                                sdk: FdrSnippetTemplate.Sdk.typescript({
+                                    package: this.npmPackage.packageName,
+                                    version: this.npmPackage.version
+                                }),
+                                endpointId: {
+                                    path: FernGeneratorExec.EndpointPath(this.getFullPathForEndpoint(endpoint)),
+                                    method: endpoint.method
+                                },
+                                snippetTemplate
+                            });
+                        }
+                    }
+
                     if (serviceReference !== undefined) {
                         let returnType = undefined;
                         let endpointClientAccess: ts.Expression | undefined = undefined;
@@ -783,6 +845,16 @@ export class SdkGenerator {
                     .writeToFile(context);
             }
         });
+    }
+
+    private withSnippetTemplate({
+        run,
+        includeImports = false
+    }: {
+        run: (args: { sourceFile: SourceFile; importsManager: ImportsManager }) => ts.Node[] | undefined;
+        includeImports: boolean;
+    }): FdrSnippetTemplate.VersionedSnippetTemplate | undefined {
+        return undefined;
     }
 
     private withSnippet({

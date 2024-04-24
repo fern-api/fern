@@ -4696,6 +4696,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fern-fern/generator-exec-sdk@npm:^0.0.763":
+  version: 0.0.763
+  resolution: "@fern-fern/generator-exec-sdk@npm:0.0.763"
+  dependencies:
+    form-data: 4.0.0
+    node-fetch: 2.7.0
+    qs: 6.11.2
+    url-join: 4.0.1
+  checksum: e6c27a08d17d3ee6a5ea6be17d08a7235a14c4dd2e3a5d62229688fcf79f7b4fbd205f88178522d40a6f14d125f266d5d71eaa47219cc4701a038428e89882de
+  languageName: node
+  linkType: hard
+
 "@fern-fern/ir-sdk@npm:0.0.2828":
   version: 0.0.2828
   resolution: "@fern-fern/ir-sdk@npm:0.0.2828"
@@ -5019,6 +5031,19 @@ __metadata:
     axios: 0.27.2
     url-join: 4.0.1
   checksum: 6031648c9c26599c2018de51ffaff024f18ae03f524ba4d77c1c83ad032cf7d0f95f1e39aef93f11620f2af8a8a890e2da6b301b7b716607757eeb3dbec8a7fd
+  languageName: node
+  linkType: hard
+
+"@fern-fern/snippet-sdk@npm:^0.0.5346":
+  version: 0.0.5346
+  resolution: "@fern-fern/snippet-sdk@npm:0.0.5346"
+  dependencies:
+    form-data: 4.0.0
+    js-base64: 3.7.2
+    node-fetch: 2.7.0
+    qs: 6.11.2
+    url-join: 4.0.1
+  checksum: 1ffb4c80e4d407648ecb6a3dbc1ab8aac7b5a306978e6c0b627d65bd2a3052aea13017df1604135fa2e6bdbb6b8d8905e5930edf0877e5caf8643fea36fcae0b
   languageName: node
   linkType: hard
 
@@ -5660,8 +5685,9 @@ __metadata:
     "@babel/preset-typescript": ^7.24.1
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
-    "@fern-fern/generator-exec-sdk": ^0.0.748
+    "@fern-fern/generator-exec-sdk": ^0.0.763
     "@fern-fern/ir-sdk": ^38.0.0
+    "@fern-fern/snippet-sdk": ^0.0.5346
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/endpoint-error-union-generator": "workspace:*"
@@ -5694,6 +5720,7 @@ __metadata:
     ts-poet: ^6.7.0
     typescript: 4.6.4
     url-join: ^5.0.0
+    uuid: ^9.0.1
   languageName: unknown
   linkType: soft
 

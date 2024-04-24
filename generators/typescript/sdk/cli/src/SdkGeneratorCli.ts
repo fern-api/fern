@@ -83,6 +83,10 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                     config.output.snippetFilepath != null
                         ? AbsoluteFilePath.of(config.output.snippetFilepath)
                         : undefined,
+                snippetTemplateFilepath:
+                    config.output.snippetTemplateFilepath != null
+                        ? AbsoluteFilePath.of(config.output.snippetTemplateFilepath)
+                        : undefined,
                 shouldUseBrandedStringAliases: customConfig.useBrandedStringAliases,
                 isPackagePrivate: customConfig.isPackagePrivate,
                 neverThrowErrors: customConfig.neverThrowErrors,
@@ -106,7 +110,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 includeApiReference: customConfig.includeApiReference ?? false,
                 tolerateRepublish: customConfig.tolerateRepublish,
                 allowExtraFields: customConfig.allowExtraFields ?? false,
-                writeUnitTests: config.writeUnitTests
+                writeUnitTests: config.writeUnitTests,
+                executionEnvironment: this.exectuionEnvironment(config)
             }
         });
         const typescriptProject = await sdkGenerator.generate();
@@ -128,5 +133,13 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
 
     protected shouldTolerateRepublish(customConfig: SdkCustomConfig): boolean {
         return customConfig.tolerateRepublish;
+    }
+
+    protected exectuionEnvironment(config: FernGeneratorExec.GeneratorConfig): "local" | "dev" | "prod" {
+        return config.environment.type === "local"
+            ? "local"
+            : config.environment.coordinatorUrlV2.endsWith("dev2.buildwithfern.com")
+            ? "dev"
+            : "prod";
     }
 }

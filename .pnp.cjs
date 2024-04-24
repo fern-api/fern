@@ -7807,6 +7807,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["url-join", "npm:4.0.1"]\
           ],\
           "linkType": "HARD"\
+        }],\
+        ["npm:0.0.763", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-generator-exec-sdk-npm-0.0.763-85dfdb4629-e6c27a08d1.zip/node_modules/@fern-fern/generator-exec-sdk/",\
+          "packageDependencies": [\
+            ["@fern-fern/generator-exec-sdk", "npm:0.0.763"],\
+            ["form-data", "npm:4.0.0"],\
+            ["node-fetch", "virtual:eba7b125e9ef0be4ba7986cee714d09b00064af28d0c38584d822d811c86708dd0301c4d22305df7435dc4c73e71ea20443a8d422a46a3363bdd018ea0837c28#npm:2.7.0"],\
+            ["qs", "npm:6.11.2"],\
+            ["url-join", "npm:4.0.1"]\
+          ],\
+          "linkType": "HARD"\
         }]\
       ]],\
       ["@fern-fern/ir-sdk", [\
@@ -8213,6 +8224,20 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/postman-sdk", "npm:0.0.46"],\
             ["@types/url-join", "npm:4.0.1"],\
             ["axios", "npm:0.27.2"],\
+            ["url-join", "npm:4.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@fern-fern/snippet-sdk", [\
+        ["npm:0.0.5346", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-snippet-sdk-npm-0.0.5346-e96862b75c-1ffb4c80e4.zip/node_modules/@fern-fern/snippet-sdk/",\
+          "packageDependencies": [\
+            ["@fern-fern/snippet-sdk", "npm:0.0.5346"],\
+            ["form-data", "npm:4.0.0"],\
+            ["js-base64", "npm:3.7.2"],\
+            ["node-fetch", "virtual:eba7b125e9ef0be4ba7986cee714d09b00064af28d0c38584d822d811c86708dd0301c4d22305df7435dc4c73e71ea20443a8d422a46a3363bdd018ea0837c28#npm:2.7.0"],\
+            ["qs", "npm:6.11.2"],\
             ["url-join", "npm:4.0.1"]\
           ],\
           "linkType": "HARD"\
@@ -8886,8 +8911,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:8a76149279d527dc42458201c3444f0e08bb8ef2b7cbf4f32fc7e89d242b47183703ea44d1dad80bf1fea71f560f9b94f46bf42448e2ea552c04d3003cead412#npm:7.24.1"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
-            ["@fern-fern/generator-exec-sdk", "npm:0.0.748"],\
+            ["@fern-fern/generator-exec-sdk", "npm:0.0.763"],\
             ["@fern-fern/ir-sdk", "npm:38.0.1"],\
+            ["@fern-fern/snippet-sdk", "npm:0.0.5346"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
             ["@fern-typescript/endpoint-error-union-generator", "workspace:generators/typescript/sdk/endpoint-error-union-generator"],\
@@ -8919,7 +8945,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["ts-morph", "npm:15.1.0"],\
             ["ts-poet", "npm:6.7.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
-            ["url-join", "npm:5.0.0"]\
+            ["url-join", "npm:5.0.0"],\
+            ["uuid", "npm:9.0.1"]\
           ],\
           "linkType": "SOFT"\
         }]\
