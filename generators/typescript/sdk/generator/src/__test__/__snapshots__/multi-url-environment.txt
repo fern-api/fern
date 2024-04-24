@@ -394,7 +394,7 @@ export declare namespace BootInstanceRequest {
 
 
 /// File: /src/serialization/resources/ec2/client/requests/index.ts
-export { type BootInstanceRequest } from "./BootInstanceRequest";
+export { BootInstanceRequest } from "./BootInstanceRequest";
 
 
 /// File: /src/serialization/resources/ec2/index.ts
@@ -451,7 +451,7 @@ export declare namespace GetPresignedUrlRequest {
 
 
 /// File: /src/serialization/resources/s3/client/requests/index.ts
-export { type GetPresignedUrlRequest } from "./GetPresignedUrlRequest";
+export { GetPresignedUrlRequest } from "./GetPresignedUrlRequest";
 
 
 /// File: /src/serialization/resources/s3/index.ts
