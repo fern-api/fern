@@ -16,7 +16,6 @@ import {
     ServiceId,
     Subpackage,
     SubpackageId,
-    TypeDeclaration,
     TypeId
 } from "@fern-fern/ir-sdk/api";
 import {
@@ -39,7 +38,6 @@ import { RootImportsFile } from "./utils/RootImportsFile";
 
 // TODO: This (as an abstract class) will probably be used across CLIs
 export class ClientsGenerator {
-    private types: Map<TypeId, TypeDeclaration>;
     private services: Map<ServiceId, HttpService>;
     private subpackages: Map<SubpackageId, Subpackage>;
     private gc: AbstractGeneratorContext;
@@ -55,7 +53,6 @@ export class ClientsGenerator {
     private hasFileBasedDependencies: boolean;
     private intermediateRepresentation: IntermediateRepresentation;
     private crf: ClassReferenceFactory;
-    private headersGenerator: HeadersGenerator;
     private locationGenerator: LocationGenerator;
 
     // TODO: should this be an object instead of a string
@@ -69,10 +66,10 @@ export class ClientsGenerator {
         sdkVersion: string | undefined,
         generatedClasses: Map<TypeId, Class_>,
         flattenedProperties: Map<TypeId, ObjectProperty[]>,
-        hasFileBasedDependencies: boolean
+        hasFileBasedDependencies: boolean,
+        locationGenerator: LocationGenerator | undefined,
+        classReferenceFactory: ClassReferenceFactory | undefined
     ) {
-        this.types = new Map();
-
         this.gc = generatorContext;
         this.sdkVersion = sdkVersion;
         this.intermediateRepresentation = intermediateRepresentation;
@@ -81,14 +78,22 @@ export class ClientsGenerator {
         this.apiName = intermediateRepresentation.apiName.snakeCase.safeName;
         this.hasFileBasedDependencies = hasFileBasedDependencies;
 
+        // These should be gotten from the TypesGenerator
+        this.locationGenerator =
+            locationGenerator == null ? new LocationGenerator(this.gemName, this.clientName) : locationGenerator;
+        if (classReferenceFactory !== undefined) {
+            this.crf = classReferenceFactory;
+        } else {
+            this.gc.logger.warn("[Ruby] Client generator was not provided a ClassReferenceFactory, regenerating one.");
+            const types = new Map();
+            for (const type of Object.values(intermediateRepresentation.types)) {
+                types.set(type.name.typeId, type);
+            }
+            this.crf = new ClassReferenceFactory(types, this.locationGenerator);
+        }
+
         this.generatedClasses = generatedClasses;
         this.flattenedProperties = flattenedProperties;
-
-        // For convenience just get what's inheriting what ahead of time.
-        this.gc.logger.debug(`Found ${intermediateRepresentation.types.length} types to generate`);
-        for (const type of Object.values(intermediateRepresentation.types)) {
-            this.types.set(type.name.typeId, type);
-        }
 
         this.services = new Map(Object.entries(intermediateRepresentation.services));
         this.subpackages = new Map(Object.entries(intermediateRepresentation.subpackages));
@@ -105,15 +110,6 @@ export class ClientsGenerator {
             });
         });
 
-        this.locationGenerator = new LocationGenerator(this.gemName, this.clientName);
-        this.crf = new ClassReferenceFactory(this.types, this.locationGenerator);
-        this.headersGenerator = new HeadersGenerator(
-            this.intermediateRepresentation.headers,
-            this.crf,
-            this.intermediateRepresentation.auth
-        );
-
-        this.defaultEnvironment = getDefaultEnvironmentUrl(this.intermediateRepresentation.environments);
         this.irBasePath = generateRubyPathTemplate(
             this.intermediateRepresentation.pathParameters,
             this.intermediateRepresentation.basePath
@@ -125,6 +121,9 @@ export class ClientsGenerator {
 
         let environmentClass: Class_ | undefined;
         if (this.intermediateRepresentation.environments !== undefined) {
+            this.gc.logger.debug("[Ruby] Preparing environment files.");
+            this.defaultEnvironment = getDefaultEnvironmentUrl(this.intermediateRepresentation.environments);
+
             environmentClass = generateEnvironmentConstants(
                 this.intermediateRepresentation.environments,
                 this.clientName
@@ -138,22 +137,32 @@ export class ClientsGenerator {
             );
         }
 
+        this.gc.logger.debug("[Ruby] Preparing authorization headers.");
+        const headersGenerator = new HeadersGenerator(
+            this.intermediateRepresentation.headers,
+            this.crf,
+            this.intermediateRepresentation.auth
+        );
+
+        this.gc.logger.debug("[Ruby] Preparing request options classes.");
         const requestOptionsClass = new RequestOptions({
-            headersGenerator: this.headersGenerator,
+            headersGenerator,
             clientName: this.clientName
         });
         const idempotencyRequestOptionsClass = new IdempotencyRequestOptions({
             crf: this.crf,
             idempotencyHeaders: this.intermediateRepresentation.idempotencyHeaders,
-            headersGenerator: this.headersGenerator,
+            headersGenerator,
             clientName: this.clientName
         });
+
+        this.gc.logger.debug("[Ruby] Preparing request clients.");
         const [syncClientClass, asyncClientClass] = generateRequestClients(
             this.clientName,
             this.intermediateRepresentation.sdkConfig,
             this.gemName,
             this.sdkVersion,
-            this.headersGenerator,
+            headersGenerator,
             environmentClass?.classReference,
             this.intermediateRepresentation.environments?.environments.type === "multipleBaseUrls",
             this.defaultEnvironment,
@@ -174,6 +183,7 @@ export class ClientsGenerator {
             })
         );
 
+        this.gc.logger.debug("[Ruby] Preparing example snippets.");
         const dummyRootClientDoNotUse = generateDummyRootClient(this.gemName, this.clientName, syncClientClass);
         const eg = new ExampleGenerator({
             rootClientClass: dummyRootClientDoNotUse,
@@ -339,6 +349,7 @@ export class ClientsGenerator {
             }
         }
 
+        this.gc.logger.debug("[Ruby] Generating files for subpackages.");
         Array.from(this.subpackages.entries()).forEach(([packageId, subpackage]) =>
             getSubpackageClasses(
                 subpackage.name,
@@ -356,6 +367,7 @@ export class ClientsGenerator {
         );
 
         // 3. Generate main file, this is what people import while leveraging the gem.
+        this.gc.logger.debug("[Ruby] Generating files for root package.");
         const rootSubpackageClasses = this.intermediateRepresentation.rootPackage.subpackages
             .map((sp) => subpackageClassReferences.get(sp))
             .filter((cp) => cp !== undefined) as ClientClassPair[];
@@ -387,6 +399,7 @@ export class ClientsGenerator {
             )
         );
 
+        this.gc.logger.debug("[Ruby] Generating snippets.json file.");
         if (this.gc.config.output.snippetFilepath !== undefined) {
             clientFiles.push(eg.generateSnippetsFile(this.gc.config.output.snippetFilepath));
         }
