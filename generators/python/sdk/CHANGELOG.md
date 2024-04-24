@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.4.0-rc3] - 2024-04-24
 
-- Fix: Set `mypy` version to `1.9.0`.
+- Fix: Set `mypy` dev depenency in generated `pyproject.toml` to `1.9.0`.
+       This prevents upstream `mypy` bugs from affecting user builds. Note that
+       this is only a dev dependency, so it does not affect the behavior of the
+       SDK.
 - Fix: Temporarily disable unit test generation.
 - Improvement: Use named parameters for all `httpx` request params.
 
