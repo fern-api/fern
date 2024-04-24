@@ -180,6 +180,10 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             withCredentials: this.includeCredentialsOnCrossOriginRequests
         };
 
+        if (this.endpoint.response?.type === "text") {
+            fetcherArgs.responseType = "text";
+        }
+
         return [
             ts.factory.createVariableStatement(
                 undefined,

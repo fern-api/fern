@@ -15,7 +15,12 @@ export declare namespace GeneratedNonThrowingEndpointResponse {
     export interface Init {
         packageId: PackageId;
         endpoint: HttpEndpoint;
-        response: HttpResponse.Json | HttpResponse.FileDownload | HttpResponse.Streaming | undefined;
+        response:
+            | HttpResponse.Json
+            | HttpResponse.FileDownload
+            | HttpResponse.Streaming
+            | HttpResponse.Text
+            | undefined;
         errorDiscriminationStrategy: ErrorDiscriminationStrategy;
         errorResolver: ErrorResolver;
         includeSerdeLayer: boolean;
@@ -27,7 +32,12 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
 
     private packageId: PackageId;
     private endpoint: HttpEndpoint;
-    private response: HttpResponse.Json | HttpResponse.FileDownload | HttpResponse.Streaming | undefined;
+    private response:
+        | HttpResponse.Json
+        | HttpResponse.FileDownload
+        | HttpResponse.Streaming
+        | HttpResponse.Text
+        | undefined;
     private errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     private errorResolver: ErrorResolver;
     private includeSerdeLayer: boolean;

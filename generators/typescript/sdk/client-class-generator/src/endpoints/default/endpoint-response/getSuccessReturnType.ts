@@ -5,7 +5,7 @@ import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 export function getSuccessReturnType(
-    response: HttpResponse.Json | HttpResponse.FileDownload | HttpResponse.Streaming | undefined,
+    response: HttpResponse.Json | HttpResponse.FileDownload | HttpResponse.Streaming | HttpResponse.Text | undefined,
     context: SdkContext,
     opts: {
         includeContentHeadersOnResponse: boolean;
@@ -24,6 +24,8 @@ export function getSuccessReturnType(
         }
         case "json":
             return context.type.getReferenceToType(response.value.responseBodyType).typeNode;
+        case "text":
+            return context.type.getReferenceToType(TypeReference.primitive(PrimitiveType.String)).typeNode;
         case "streaming": {
             const dataEventType = response.value._visit({
                 json: (json) => context.type.getReferenceToType(json.payload),
