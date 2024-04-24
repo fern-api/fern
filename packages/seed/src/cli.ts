@@ -93,6 +93,7 @@ function addTestCommand(cli: Argv) {
                     })
                 );
             }
+
             const results = await Promise.all(tests);
 
             // If any of the tests failed, exit with a non-zero status code
