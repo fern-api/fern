@@ -60,6 +60,7 @@ const WHITELABEL_FILE_HEADER = `/**
  */
 `;
 
+
 export declare namespace SdkGenerator {
     export interface Init {
         namespaceExport: string;
@@ -701,20 +702,7 @@ export class SdkGenerator {
                     }
 
                     if (this.config.snippetTemplateFilepath != null) {
-                        const snippetTemplate = this.withSnippetTemplate({
-                            run: ({ sourceFile, importsManager }): ts.Node[] | undefined => {
-                                return this.runWithSnippet({
-                                    sourceFile,
-                                    importsManager,
-                                    rootPackage,
-                                    packageId,
-                                    endpoint,
-                                    example,
-                                    includeImports: true
-                                });
-                            },
-                            includeImports: true
-                        });
+                        const snippetTemplate = this.generateSnippetTemplate({"TODO"});
                         if (snippetTemplate != null && this.npmPackage != null) {
                             this.endpointSnippetTemplates.push({
                                 sdk: FdrSnippetTemplate.Sdk.typescript({
@@ -782,7 +770,7 @@ export class SdkGenerator {
                             // clientPath: getTextOfTsNode(statement),
                             clientPath: statement,
                             functionPath: serviceFilepath,
-                            functionName: endpoint.name.camelCase.unsafeName,
+                            functionName: this.getEndpointFunctionName(endpoint),
                             returnType,
                             parameters,
                             codeSnippet: referenceSnippet,
@@ -792,6 +780,10 @@ export class SdkGenerator {
                 }
             }
         });
+    }
+
+    private getEndpointFunctionName(endpoint: HttpEndpoint): string {
+        return endpoint.name.camelCase.unsafeName;
     }
 
     // TODO(dsinghvi): HACKHACK Move this to IR
@@ -845,16 +837,6 @@ export class SdkGenerator {
                     .writeToFile(context);
             }
         });
-    }
-
-    private withSnippetTemplate({
-        run,
-        includeImports = false
-    }: {
-        run: (args: { sourceFile: SourceFile; importsManager: ImportsManager }) => ts.Node[] | undefined;
-        includeImports: boolean;
-    }): FdrSnippetTemplate.VersionedSnippetTemplate | undefined {
-        return undefined;
     }
 
     private withSnippet({
