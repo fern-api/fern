@@ -2,6 +2,7 @@ import { APIS_DIRECTORY, FERN_DIRECTORY, generatorsYml } from "@fern-api/configu
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
+import { cp, mkdir, writeFile } from "fs/promises";
 import path from "path";
 import { FixtureConfigurations, OutputMode } from "../../../config/api";
 import { GeneratorWorkspace } from "../../../loadGeneratorWorkspaces";
@@ -163,6 +164,11 @@ export abstract class TestRunner {
                 });
                 generationStopwatch.stop();
                 metrics.generationTime = generationStopwatch.duration();
+                taskContext.logger.info("Writing .mock directory...");
+                await writeDotMock({
+                    absolutePathToDotMockDirectory: outputDir,
+                    absolutePathToFernDefinition: absolutePathToAPIDefinition
+                });
             } catch (error) {
                 return {
                     type: "failure",
@@ -210,4 +216,24 @@ export abstract class TestRunner {
      *
      */
     public abstract runGenerator({}: TestRunner.DoRunArgs): Promise<void>;
+}
+
+// Copy Fern definition to output directory
+export async function writeDotMock({
+    absolutePathToDotMockDirectory,
+    absolutePathToFernDefinition
+}: {
+    absolutePathToDotMockDirectory: AbsoluteFilePath;
+    absolutePathToFernDefinition: AbsoluteFilePath;
+}): Promise<void> {
+    if (absolutePathToFernDefinition != null) {
+        await cp(`${absolutePathToFernDefinition}`, `${absolutePathToDotMockDirectory}/.mock`, {
+            recursive: true
+        });
+    }
+    await mkdir(`${absolutePathToDotMockDirectory}/.mock`, { recursive: true });
+    await writeFile(
+        `${absolutePathToDotMockDirectory}/.mock/fern.config.json`,
+        '{"organization": "fern-test", "version": "*"}'
+    );
 }

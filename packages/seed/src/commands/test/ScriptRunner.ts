@@ -57,6 +57,12 @@ export class ScriptRunner {
         return { type: "success" };
     }
 
+    public async stop(): Promise<void> {
+        for (const script of this.scripts) {
+            await loggingExeca(undefined, "docker", ["kill", script.containerId]);
+        }
+    }
+
     private async runScript({
         taskContext,
         containerId,
