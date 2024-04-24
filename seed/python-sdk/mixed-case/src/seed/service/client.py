@@ -35,8 +35,8 @@ class ServiceClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(
+            method="GET",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"resource/{jsonable_encoder(resource_id)}"
             ),
             params=jsonable_encoder(
@@ -90,8 +90,8 @@ class ServiceClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "resource"),
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "resource"),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -151,8 +151,8 @@ class AsyncServiceClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(
+            method="GET",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"resource/{jsonable_encoder(resource_id)}"
             ),
             params=jsonable_encoder(
@@ -206,8 +206,8 @@ class AsyncServiceClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "resource"),
+            method="GET",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "resource"),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {

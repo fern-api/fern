@@ -57,8 +57,8 @@ class InlinedRequestClient:
         if maybe_operand_or_color is not OMIT:
             _request["maybeOperandOrColor"] = maybe_operand_or_color
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "inlined"),
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "inlined"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
@@ -132,8 +132,8 @@ class AsyncInlinedRequestClient:
         if maybe_operand_or_color is not OMIT:
             _request["maybeOperandOrColor"] = maybe_operand_or_color
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "inlined"),
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "inlined"),
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),

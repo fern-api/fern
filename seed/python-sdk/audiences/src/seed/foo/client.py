@@ -55,8 +55,8 @@ class FooClient:
         if private_property is not OMIT:
             _request["privateProperty"] = private_property
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            self._client_wrapper.get_base_url(),
+            method="POST",
+            url=self._client_wrapper.get_base_url(),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -137,8 +137,8 @@ class AsyncFooClient:
         if private_property is not OMIT:
             _request["privateProperty"] = private_property
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            self._client_wrapper.get_base_url(),
+            method="POST",
+            url=self._client_wrapper.get_base_url(),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {

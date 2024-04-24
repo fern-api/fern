@@ -49,8 +49,8 @@ class QueryParamClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "query"),
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "query"),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -125,8 +125,8 @@ class QueryParamClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "query-list"),
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "query-list"),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -204,8 +204,8 @@ class AsyncQueryParamClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "query"),
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "query"),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -280,8 +280,8 @@ class AsyncQueryParamClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "POST",
-            urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "query-list"),
+            method="POST",
+            url=urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "query-list"),
             params=jsonable_encoder(
                 remove_none_from_dict(
                     {

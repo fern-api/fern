@@ -38,8 +38,8 @@ class ServiceClient:
         )
         """
         _response = self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(
+            method="GET",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"file/notification/{jsonable_encoder(notification_id)}"
             ),
             params=jsonable_encoder(
@@ -93,8 +93,8 @@ class AsyncServiceClient:
         )
         """
         _response = await self._client_wrapper.httpx_client.request(
-            "GET",
-            urllib.parse.urljoin(
+            method="GET",
+            url=urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"file/notification/{jsonable_encoder(notification_id)}"
             ),
             params=jsonable_encoder(

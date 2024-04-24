@@ -522,7 +522,10 @@ pip install --upgrade {project._project_config.package_name}
         ir: ir_types.IntermediateRepresentation,
     ) -> None:
         # Write tests
-        snippet_test_factory.tests(ir, snippet_writer)
+        #
+        # TODO: Re-enable this feature as soon as we can.
+        # snippet_test_factory.tests(ir, snippet_writer)
+        pass
 
     def get_sorted_modules(self) -> Sequence[str]:
         # always import types/errors before resources (nested packages)
