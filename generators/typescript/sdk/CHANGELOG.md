@@ -5,9 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.15.1-rc1] - 2024-04-24
+
+- Improvement: In an effort to make the generated code JSR compatible, the TS generator
+  will append the `type` explicitly for request exports.
+
 ## [0.15.1-rc0] - 2024-04-22
 
-- Feature: plain text responses are now supported in the TypeScript generator. 
+- Feature: plain text responses are now supported in the TypeScript generator.
 
 ## [0.15.0-rc1] - 2024-04-22
 
