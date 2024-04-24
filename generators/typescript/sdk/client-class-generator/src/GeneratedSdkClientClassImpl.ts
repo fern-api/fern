@@ -161,7 +161,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 const getGeneratedEndpointResponse = ({
                     response
                 }: {
-                    response: HttpResponse.Json | HttpResponse.FileDownload | HttpResponse.Streaming | undefined;
+                    response:
+                        | HttpResponse.Json
+                        | HttpResponse.FileDownload
+                        | HttpResponse.Text
+                        | HttpResponse.Streaming
+                        | undefined;
                 }) => {
                     if (neverThrowErrors) {
                         return new GeneratedNonThrowingEndpointResponse({
@@ -187,7 +192,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 const getDefaultEndpointImplementation = ({
                     response
                 }: {
-                    response: HttpResponse.Json | HttpResponse.FileDownload | undefined;
+                    response: HttpResponse.Json | HttpResponse.FileDownload | HttpResponse.Text | undefined;
                 }) => {
                     return new GeneratedDefaultEndpointImplementation({
                         endpoint,
@@ -237,8 +242,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             includeSerdeLayer,
                             retainOriginalCasing
                         }),
-                    text: () => {
-                        throw new Error("Text responses are unsupported");
+                    text: (textResponse) => {
+                        return getDefaultEndpointImplementation({
+                            response: HttpResponse.text(textResponse)
+                        });
                     },
                     _other: () => {
                         throw new Error("Unknown Response type: " + endpoint.response?.type);
