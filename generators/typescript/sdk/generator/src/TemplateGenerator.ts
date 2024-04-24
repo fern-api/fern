@@ -1,32 +1,60 @@
 import {
     ContainerType,
     DeclaredTypeName,
+    EnumTypeDeclaration,
+    ExampleTypeShape,
     HttpEndpoint,
     Name,
     NameAndWireValue,
-    TypeReference
+    ObjectTypeDeclaration,
+    TypeReference,
+    UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { FdrSnippetTemplate } from "@fern-fern/snippet-sdk";
-import { getTextOfTsNode, ImportsManager, NpmPackage, PackageId } from "@fern-typescript/commons";
-import { Project, SourceFile, ts } from "ts-morph";
-import { SdkContextImpl } from "./contexts/SdkContextImpl";
+import { GetReferenceOpts, getTextOfTsNode, ImportsManager, NpmPackage, PackageId } from "@fern-typescript/commons";
+import { GeneratedEnumType, SdkContext } from "@fern-typescript/contexts";
+import { Project, ts } from "ts-morph";
 
 // Write this in the fern def to share between FE + BE
 const TEMPLATE_SENTINEL = "$FERN_INPUT";
 
 export class TemplateGenerator {
-    constructor(
-        private readonly npmPackage: NpmPackage,
-        private readonly endpoint: HttpEndpoint,
-        private readonly packageId: PackageId,
-        private readonly rootPackageId: PackageId,
-        private readonly retainOriginalCasing: boolean,
-        private readonly getEndpointFunctionName: (endpoint: HttpEndpoint) => string,
-        private readonly generateSdkContext: (
-            args: { sourceFile: SourceFile; importsManager: ImportsManager },
-            opts: { isForSnippet: boolean }
-        ) => SdkContextImpl
-    ) {}
+    private endpointContext: SdkContext;
+    private clientContext: SdkContext;
+    private opts: GetReferenceOpts;
+    private npmPackage: NpmPackage;
+    private endpoint: HttpEndpoint;
+    private packageId: PackageId;
+    private rootPackageId: PackageId;
+    private retainOriginalCasing: boolean;
+
+    constructor({
+        clientContext,
+        endpointContext,
+        npmPackage,
+        endpoint,
+        packageId,
+        rootPackageId,
+        retainOriginalCasing
+    }: {
+        clientContext: SdkContext;
+        endpointContext: SdkContext;
+        npmPackage: NpmPackage;
+        endpoint: HttpEndpoint;
+        packageId: PackageId;
+        rootPackageId: PackageId;
+        retainOriginalCasing: boolean;
+    }) {
+        this.endpointContext = endpointContext;
+        this.clientContext = clientContext;
+        this.npmPackage = npmPackage;
+        this.endpoint = endpoint;
+        this.packageId = packageId;
+        this.rootPackageId = rootPackageId;
+        this.retainOriginalCasing = retainOriginalCasing;
+
+        this.opts = { isForSnippet: true };
+    }
 
     private getPropertyKey(name: Name): string {
         return this.retainOriginalCasing ? name.originalName : name.camelCase.unsafeName;
@@ -64,7 +92,7 @@ export class TemplateGenerator {
         name: string | undefined;
         location: FdrSnippetTemplate.PayloadLocation;
         wireOrOriginalName: string | undefined;
-        nameBreadcrumbs: string[];
+        nameBreadcrumbs: string[] | undefined;
     }): FdrSnippetTemplate.Template {
         return FdrSnippetTemplate.Template.generic({
             imports: [],
@@ -76,6 +104,193 @@ export class TemplateGenerator {
                     path: this.getBreadCrumbPath({ wireOrOriginalName, nameBreadcrumbs })
                 })
             ]
+        });
+    }
+
+    private getAsNamedParameterTemplate(name: string | undefined, coreTemplate: string): string {
+        return name != null ? `${name}: ${coreTemplate}` : coreTemplate;
+    }
+
+    private getEnumTemplate({
+        etd,
+        generatedEnum,
+        name,
+        location,
+        wireOrOriginalName,
+        nameBreadcrumbs
+    }: {
+        etd: EnumTypeDeclaration;
+        generatedEnum: GeneratedEnumType<SdkContext>;
+        name: string | undefined;
+        location: FdrSnippetTemplate.PayloadLocation;
+        wireOrOriginalName: string | undefined;
+        nameBreadcrumbs: string[] | undefined;
+    }): FdrSnippetTemplate.Template {
+        const mappedEnumValues: Record<string, string> = {};
+        etd.values.forEach((ev) => {
+            const mockExampleTypeShape: ExampleTypeShape = ExampleTypeShape.enum({ value: ev.name });
+            const enumValue = generatedEnum.buildExample(mockExampleTypeShape, this.endpointContext, this.opts);
+            mappedEnumValues[ev.name.wireValue] = getTextOfTsNode(enumValue);
+        });
+
+        return FdrSnippetTemplate.Template.enum({
+            imports: [],
+            isOptional: true,
+            values: mappedEnumValues,
+            templateString: this.getAsNamedParameterTemplate(name, `'${TEMPLATE_SENTINEL}'`),
+            templateInput: FdrSnippetTemplate.TemplateInput.payload({
+                location,
+                path: this.getBreadCrumbPath({ wireOrOriginalName, nameBreadcrumbs })
+            })
+        });
+    }
+
+    private getUnionTemplate({
+        utd,
+        name,
+        location,
+        wireOrOriginalName,
+        nameBreadcrumbs,
+        indentationLevel
+    }: {
+        utd: UnionTypeDeclaration;
+        name: string | undefined;
+        location: FdrSnippetTemplate.PayloadLocation;
+        wireOrOriginalName: string | undefined;
+        nameBreadcrumbs: string[] | undefined;
+        indentationLevel: number;
+    }): FdrSnippetTemplate.Template | undefined {
+        const childIndentationLevel = indentationLevel + 1;
+        const childTabs = "\t".repeat(childIndentationLevel);
+        const childBreadcrumbs: string[] = [...(nameBreadcrumbs ?? [])];
+        if (name != null) {
+            childBreadcrumbs.push(name);
+        }
+
+        const selfTabs = "\t".repeat(indentationLevel);
+        const memberTemplates: Record<string, FdrSnippetTemplate.Template> = {};
+        for (const member of utd.types) {
+            const memberTemplate = member.shape._visit<FdrSnippetTemplate.Template | undefined>({
+                samePropertiesAsObject: (utdodtn) => {
+                    const namedTypeTemplate = this.getNamedTypeTemplate({
+                        typeName: utdodtn,
+                        name: undefined,
+                        location,
+                        wireOrOriginalName,
+                        nameBreadcrumbs,
+                        indentationLevel: childIndentationLevel
+                    });
+
+                    return FdrSnippetTemplate.Template.generic({
+                        imports: [],
+                        templateString: this.getAsNamedParameterTemplate(
+                            name,
+                            `{ \n${childTabs}${this.getPropertyKey(utd.discriminant.name)} : "${
+                                member.discriminantValue.wireValue
+                            }", \n${childTabs}${TEMPLATE_SENTINEL}\n${selfTabs}}`
+                        ),
+                        isOptional: true,
+                        templateInputs:
+                            namedTypeTemplate != null ? [this.getTemplateInputFromTemplate(namedTypeTemplate)] : []
+                    });
+                },
+                singleProperty: (utdsp) => {
+                    const singlePropertyTemplate = this.getTemplateInputFromTypeReference({
+                        typeReference: utdsp.type,
+                        name: this.getPropertyKey(utdsp.name.name),
+                        location,
+                        wireOrOriginalName: utdsp.name.wireValue,
+                        nameBreadcrumbs: childBreadcrumbs,
+                        indentationLevel: childIndentationLevel
+                    });
+                    return FdrSnippetTemplate.Template.generic({
+                        imports: [],
+                        templateString: this.getAsNamedParameterTemplate(
+                            name,
+                            `{ \n${childTabs}${this.getPropertyKey(utd.discriminant.name)} : "${
+                                member.discriminantValue.wireValue
+                            }", \n${childTabs}${TEMPLATE_SENTINEL}\n${selfTabs}}`
+                        ),
+                        isOptional: true,
+                        templateInputs: singlePropertyTemplate != null ? [singlePropertyTemplate] : []
+                    });
+                },
+                noProperties: () =>
+                    FdrSnippetTemplate.Template.generic({
+                        imports: [],
+                        templateString: this.getAsNamedParameterTemplate(
+                            name,
+                            `{ ${this.getPropertyKey(utd.discriminant.name)} : "${
+                                member.discriminantValue.wireValue
+                            }" }`
+                        ),
+                        isOptional: true,
+                        templateInputs: []
+                    }),
+                _other: () => undefined
+            });
+
+            if (memberTemplate != null) {
+                memberTemplates[member.discriminantValue.wireValue] = memberTemplate;
+            }
+        }
+
+        return FdrSnippetTemplate.Template.discriminatedUnion({
+            imports: [],
+            isOptional: true,
+            templateString: this.getAsNamedParameterTemplate(name, `'${TEMPLATE_SENTINEL}'`),
+            discriminantField: utd.discriminant.wireValue,
+            members: memberTemplates,
+            templateInput: FdrSnippetTemplate.TemplateInput.payload({
+                location,
+                path: this.getBreadCrumbPath({ wireOrOriginalName, nameBreadcrumbs })
+            })
+        });
+    }
+
+    private getObjectTemplate({
+        otd,
+        name,
+        location,
+        wireOrOriginalName,
+        nameBreadcrumbs,
+        indentationLevel
+    }: {
+        otd: ObjectTypeDeclaration;
+        name: string | undefined;
+        location: FdrSnippetTemplate.PayloadLocation;
+        wireOrOriginalName: string | undefined;
+        nameBreadcrumbs: string[] | undefined;
+        indentationLevel: number;
+    }): FdrSnippetTemplate.Template | undefined {
+        const childIndentationLevel = indentationLevel + 1;
+        const childTabs = "\t".repeat(childIndentationLevel);
+        const selfTabs = "\t".repeat(indentationLevel);
+        const templateInputs: FdrSnippetTemplate.TemplateInput[] = [];
+        for (const prop of otd.properties) {
+            const childBreadcrumbs = nameBreadcrumbs != null ? [...nameBreadcrumbs] : [];
+            if (wireOrOriginalName != null) {
+                childBreadcrumbs.push(wireOrOriginalName);
+            }
+            const propInput = this.getTemplateInputFromTypeReference({
+                typeReference: prop.valueType,
+                name: this.getPropertyKey(prop.name.name),
+                location,
+                wireOrOriginalName: prop.name.wireValue,
+                nameBreadcrumbs: childBreadcrumbs,
+                indentationLevel: childIndentationLevel
+            });
+
+            if (propInput != null) {
+                templateInputs.push(propInput);
+            }
+        }
+        return FdrSnippetTemplate.Template.generic({
+            imports: [],
+            templateString: this.getAsNamedParameterTemplate(name, `{\n${childTabs}${TEMPLATE_SENTINEL}\n${selfTabs}}`),
+            isOptional: true,
+            inputDelimiter: `,\n${childTabs}`,
+            templateInputs
         });
     }
 
@@ -91,10 +306,52 @@ export class TemplateGenerator {
         name: string | undefined;
         location: FdrSnippetTemplate.PayloadLocation;
         wireOrOriginalName: string | undefined;
-        nameBreadcrumbs: string[];
+        nameBreadcrumbs: string[] | undefined;
         indentationLevel: number;
     }): FdrSnippetTemplate.Template | undefined {
-        return;
+        const td = this.endpointContext.type.getTypeDeclaration(typeName);
+        const generatedType = this.endpointContext.type.getGeneratedType(typeName);
+        return td.shape._visit<FdrSnippetTemplate.Template | undefined>({
+            enum: (etd) =>
+                this.getEnumTemplate({
+                    etd,
+                    generatedEnum: generatedType as GeneratedEnumType<SdkContext>,
+                    name,
+                    location,
+                    wireOrOriginalName,
+                    nameBreadcrumbs
+                }),
+            alias: (atd) =>
+                this.getTemplateFromTypeReference({
+                    typeReference: atd.aliasOf,
+                    name,
+                    location,
+                    wireOrOriginalName,
+                    nameBreadcrumbs,
+                    indentationLevel
+                }),
+            object: (otd) =>
+                this.getObjectTemplate({
+                    name,
+                    otd,
+                    location,
+                    wireOrOriginalName,
+                    nameBreadcrumbs,
+                    indentationLevel
+                }),
+            // This is likely just calling get object template on every member
+            union: (utd) =>
+                this.getUnionTemplate({
+                    utd,
+                    name,
+                    location,
+                    wireOrOriginalName,
+                    nameBreadcrumbs,
+                    indentationLevel
+                }),
+            undiscriminatedUnion: () => undefined,
+            _other: () => undefined
+        });
     }
 
     private getContainerTemplate({
@@ -109,13 +366,104 @@ export class TemplateGenerator {
         name: string | undefined;
         location: FdrSnippetTemplate.PayloadLocation;
         wireOrOriginalName: string | undefined;
-        nameBreadcrumbs: string[];
+        nameBreadcrumbs: string[] | undefined;
         indentationLevel: number;
     }): FdrSnippetTemplate.Template | undefined {
+        const childIndentationLevel = indentationLevel + 1;
+        const selfTabs = "\t".repeat(indentationLevel);
+        const childTabs = "\t".repeat(childIndentationLevel);
+        const immediatePayloadPath = this.getBreadCrumbPath({ wireOrOriginalName, nameBreadcrumbs });
         return containerType._visit<FdrSnippetTemplate.Template | undefined>({
-            list: (list) => {},
-            map: (map) => {},
-            set: (set) => {},
+            list: (itemType) => {
+                const innerTemplate = this.getTemplateFromTypeReference({
+                    typeReference: itemType,
+                    name: undefined,
+                    location: FdrSnippetTemplate.PayloadLocation.Relative,
+                    wireOrOriginalName: undefined,
+                    nameBreadcrumbs: undefined,
+                    indentationLevel: childIndentationLevel
+                });
+                return innerTemplate != null
+                    ? FdrSnippetTemplate.Template.iterable({
+                          imports: [],
+                          isOptional: true,
+                          containerTemplateString: this.getAsNamedParameterTemplate(
+                              name,
+                              `[\n${childTabs}${TEMPLATE_SENTINEL}\n${selfTabs}]`
+                          ),
+                          delimiter: `,\n${childTabs}`,
+                          innerTemplate,
+                          templateInput: FdrSnippetTemplate.TemplateInput.payload({
+                              location,
+                              path: immediatePayloadPath
+                          })
+                      })
+                    : undefined;
+            },
+            set: (itemType) => {
+                const innerTemplate = this.getTemplateFromTypeReference({
+                    typeReference: itemType,
+                    name: undefined,
+                    location: FdrSnippetTemplate.PayloadLocation.Relative,
+                    wireOrOriginalName: undefined,
+                    nameBreadcrumbs: undefined,
+                    indentationLevel: childIndentationLevel
+                });
+
+                return innerTemplate != null
+                    ? FdrSnippetTemplate.Template.iterable({
+                          imports: [],
+                          isOptional: true,
+                          containerTemplateString: this.getAsNamedParameterTemplate(
+                              name,
+                              `new Set([\n${childTabs}${TEMPLATE_SENTINEL}\n${selfTabs}])`
+                          ),
+                          delimiter: `,\n${childTabs}`,
+                          innerTemplate,
+                          templateInput: FdrSnippetTemplate.TemplateInput.payload({
+                              location,
+                              path: immediatePayloadPath
+                          })
+                      })
+                    : undefined;
+            },
+            map: (kvType) => {
+                const keyTemplate = this.getTemplateFromTypeReference({
+                    typeReference: kvType.keyType,
+                    name: undefined,
+                    location: FdrSnippetTemplate.PayloadLocation.Relative,
+                    wireOrOriginalName: undefined,
+                    nameBreadcrumbs: undefined,
+                    indentationLevel: childIndentationLevel
+                });
+                const valueTemplate = this.getTemplateFromTypeReference({
+                    typeReference: kvType.valueType,
+                    name: undefined,
+                    location: FdrSnippetTemplate.PayloadLocation.Relative,
+                    wireOrOriginalName: undefined,
+                    nameBreadcrumbs: undefined,
+                    indentationLevel: childIndentationLevel
+                });
+
+                return keyTemplate != null && valueTemplate != null
+                    ? FdrSnippetTemplate.Template.dict({
+                          imports: [],
+                          isOptional: true,
+                          containerTemplateString: this.getAsNamedParameterTemplate(
+                              name,
+                              `{\n${childTabs}${TEMPLATE_SENTINEL}\n${selfTabs}}`
+                          ),
+                          delimiter: `,\n${childTabs}`,
+                          keyValueSeparator: ": ",
+                          keyTemplate,
+                          valueTemplate,
+                          templateInput: FdrSnippetTemplate.TemplateInput.payload({
+                              location,
+                              path: immediatePayloadPath
+                          })
+                      })
+                    : undefined;
+            },
             optional: (optionalType) =>
                 this.getTemplateFromTypeReference({
                     typeReference: optionalType,
@@ -142,7 +490,7 @@ export class TemplateGenerator {
         name: string | undefined;
         location: FdrSnippetTemplate.PayloadLocation;
         wireOrOriginalName: string | undefined;
-        nameBreadcrumbs: string[];
+        nameBreadcrumbs: string[] | undefined;
         indentationLevel: number;
     }): FdrSnippetTemplate.Template | undefined {
         // Do not insert literals into templates
@@ -183,7 +531,7 @@ export class TemplateGenerator {
         name: string | undefined;
         location: FdrSnippetTemplate.PayloadLocation;
         wireOrOriginalName: string | undefined;
-        nameBreadcrumbs: string[];
+        nameBreadcrumbs: string[] | undefined;
         indentationLevel: number;
     }): FdrSnippetTemplate.TemplateInput | undefined {
         const template = this.getTemplateFromTypeReference(args);
@@ -339,7 +687,7 @@ export class TemplateGenerator {
         // if they're in the request object then they're named within this hash (this.requestExample)
         // path parameters matter since they are unnamed, if they're not present undefined is required
         // Generally its: (`path parameters`, {`request parameter`}}
-        // If there's a file in the requestbody properties they go first????
+
         // Add the unnamed, non-request params first
         topLevelTemplateInputs.push(
             FdrSnippetTemplate.TemplateInput.template(
@@ -368,26 +716,27 @@ export class TemplateGenerator {
         return topLevelTemplateInputs;
     }
 
-    private generateSnippetTemplate(): FdrSnippetTemplate.VersionedSnippetTemplate | undefined {
+    // TODO: share this logic with SdkGenerator
+    private getEndpointFunctionName(endpoint: HttpEndpoint): string {
+        return endpoint.name.camelCase.unsafeName;
+    }
+
+    public generateSnippetTemplate(): FdrSnippetTemplate.VersionedSnippetTemplate | undefined {
         const project = new Project({
             useInMemoryFileSystem: true
         });
         const clientInstantiationSourceFile = project.createSourceFile("snippet");
         const ciImportsManager = new ImportsManager();
 
-        const context = this.generateSdkContext(
-            { sourceFile: clientInstantiationSourceFile, importsManager: ciImportsManager },
-            { isForSnippet: true }
-        );
-        const clientInstantiation = context.sdkClientClass
+        const clientInstantiation = this.clientContext.sdkClientClass
             .getGeneratedSdkClientClass(this.rootPackageId)
-            .instantiateAsRoot({ context, npmPackage: this.npmPackage });
+            .instantiateAsRoot({ context: this.clientContext, npmPackage: this.npmPackage });
         const clientAssignment = ts.factory.createVariableStatement(
             undefined,
             ts.factory.createVariableDeclarationList(
                 [
                     ts.factory.createVariableDeclaration(
-                        context.sdkInstanceReferenceForSnippet,
+                        this.clientContext.sdkInstanceReferenceForSnippet,
                         undefined,
                         undefined,
                         clientInstantiation
@@ -402,16 +751,12 @@ export class TemplateGenerator {
         const clientInstantiationString = clientInstantiationSourceFile.getText();
 
         // Recurse over the parameters to the function
-        const generatedEndpoint = context.sdkClientClass
-            .getGeneratedSdkClientClass(this.packageId)
-            .getEndpoint({ context, endpointId: this.endpoint.id });
-        const parameters = generatedEndpoint?.getSignature(context).parameters;
-        const topLevelTemplateInputs = this.generateTopLevelSnippetTemplateInput(parameters ?? []);
+        const topLevelTemplateInputs = this.generateTopLevelSnippetTemplateInput();
 
         // Create the outer function snippet
-        const clientClass = context.sdkClientClass.getGeneratedSdkClientClass(this.packageId);
+        const clientClass = this.clientContext.sdkClientClass.getGeneratedSdkClientClass(this.packageId);
         const endpointClientAccess = clientClass.accessFromRootClient({
-            referenceToRootClient: context.sdkInstanceReferenceForSnippet
+            referenceToRootClient: this.clientContext.sdkInstanceReferenceForSnippet
         });
         const endpointClientAccessString = getTextOfTsNode(endpointClientAccess);
         return FdrSnippetTemplate.VersionedSnippetTemplate.v1({
@@ -419,9 +764,8 @@ export class TemplateGenerator {
             functionInvocation: FdrSnippetTemplate.Template.generic({
                 imports: [],
                 templateString: `await ${endpointClientAccessString}.${this.getEndpointFunctionName(
-                    endpoint
+                    this.endpoint
                 )}(\n\t${TEMPLATE_SENTINEL}\n)`,
-                // templateString: endpointInvocationString,
                 isOptional: false,
                 inputDelimiter: ",\n\t",
                 templateInputs: topLevelTemplateInputs

@@ -48,6 +48,7 @@ import { SdkInlinedRequestBodyDeclarationReferencer } from "./declaration-refere
 import { TimeoutSdkErrorDeclarationReferencer } from "./declaration-referencers/TimeoutSdkErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer";
 import { ReferenceGenerator, ReferenceParameterDeclaration } from "./ReferenceGenerator";
+import { TemplateGenerator } from "./TemplateGenerator";
 import { JestTestGenerator } from "./test-generator/JestTestGenerator";
 
 const FILE_HEADER = `/**
@@ -59,7 +60,6 @@ const WHITELABEL_FILE_HEADER = `/**
  * This file was auto-generated from our API Definition.
  */
 `;
-
 
 export declare namespace SdkGenerator {
     export interface Init {
@@ -655,6 +655,7 @@ export class SdkGenerator {
 
     private generateSnippets(refGenerator: ReferenceGenerator | undefined) {
         const rootPackage: PackageId = { isRoot: true };
+        const generateSdkContext = this.generateSdkContext;
         this.forEachService((service, packageId) => {
             if (service.endpoints.length === 0) {
                 return;
@@ -673,6 +674,49 @@ export class SdkGenerator {
                         endpoint.displayName ?? endpoint.name.pascalCase.unsafeName
                     );
                 }
+
+                if (this.config.snippetTemplateFilepath != null && this.npmPackage != null) {
+                    const project = new Project({
+                        useInMemoryFileSystem: true
+                    });
+                    const sourceFile = project.createSourceFile("snippet-test");
+                    const importsManager = new ImportsManager();
+                    const endpointContext = this.generateSdkContext(
+                        { sourceFile, importsManager },
+                        { isForSnippet: true }
+                    );
+
+                    const clientSourceFile = project.createSourceFile("snippet-test");
+                    const clientImportsManager = new ImportsManager();
+                    const clientContext = this.generateSdkContext(
+                        { sourceFile: clientSourceFile, importsManager: clientImportsManager },
+                        { isForSnippet: true }
+                    );
+
+                    const snippetTemplate = new TemplateGenerator({
+                        endpointContext,
+                        clientContext,
+                        npmPackage: this.npmPackage,
+                        endpoint,
+                        packageId,
+                        rootPackageId: rootPackage,
+                        retainOriginalCasing: this.config.retainOriginalCasing
+                    }).generateSnippetTemplate();
+                    if (snippetTemplate != null) {
+                        this.endpointSnippetTemplates.push({
+                            sdk: FdrSnippetTemplate.Sdk.typescript({
+                                package: this.npmPackage.packageName,
+                                version: this.npmPackage.version
+                            }),
+                            endpointId: {
+                                path: FernGeneratorExec.EndpointPath(this.getFullPathForEndpoint(endpoint)),
+                                method: endpoint.method
+                            },
+                            snippetTemplate
+                        });
+                    }
+                }
+
                 const example = endpoint.examples[0];
                 if (example != null) {
                     const snippet = this.withSnippet({
@@ -699,23 +743,6 @@ export class SdkGenerator {
                                 client: snippet
                             })
                         });
-                    }
-
-                    if (this.config.snippetTemplateFilepath != null) {
-                        const snippetTemplate = this.generateSnippetTemplate({"TODO"});
-                        if (snippetTemplate != null && this.npmPackage != null) {
-                            this.endpointSnippetTemplates.push({
-                                sdk: FdrSnippetTemplate.Sdk.typescript({
-                                    package: this.npmPackage.packageName,
-                                    version: this.npmPackage.version
-                                }),
-                                endpointId: {
-                                    path: FernGeneratorExec.EndpointPath(this.getFullPathForEndpoint(endpoint)),
-                                    method: endpoint.method
-                                },
-                                snippetTemplate
-                            });
-                        }
                     }
 
                     if (serviceReference !== undefined) {
