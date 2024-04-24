@@ -1,1 +1,1 @@
-export { type CreateUserRequest } from "./CreateUserRequest";
+export { CreateUserRequest } from "./CreateUserRequest";

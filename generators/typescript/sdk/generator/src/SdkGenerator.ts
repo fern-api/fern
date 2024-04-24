@@ -524,8 +524,7 @@ export class SdkGenerator {
                             context.sdkInlinedRequestBodySchema
                                 .getGeneratedInlinedRequestBodySchema(packageId, endpoint.name)
                                 .writeToFile(context);
-                        },
-                        addExportTypeModifier: true
+                        }
                     });
                 }
             }

@@ -1,1 +1,1 @@
-export { type BootInstanceRequest } from "./BootInstanceRequest";
+export { BootInstanceRequest } from "./BootInstanceRequest";

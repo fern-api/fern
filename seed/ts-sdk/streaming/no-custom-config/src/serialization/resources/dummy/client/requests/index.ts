@@ -1,1 +1,1 @@
-export { type GenerateStreamRequestzs } from "./GenerateStreamRequestzs";
+export { GenerateStreamRequestzs } from "./GenerateStreamRequestzs";

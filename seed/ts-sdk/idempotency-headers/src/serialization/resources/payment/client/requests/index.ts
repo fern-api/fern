@@ -1,1 +1,1 @@
-export { type CreatePaymentRequest } from "./CreatePaymentRequest";
+export { CreatePaymentRequest } from "./CreatePaymentRequest";

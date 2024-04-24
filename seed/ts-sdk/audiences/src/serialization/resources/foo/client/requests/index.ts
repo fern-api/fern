@@ -1,1 +1,1 @@
-export { type FindRequest } from "./FindRequest";
+export { FindRequest } from "./FindRequest";

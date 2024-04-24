@@ -1,1 +1,1 @@
-export { type MyRequest } from "./MyRequest";
+export { MyRequest } from "./MyRequest";

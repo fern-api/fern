@@ -1,1 +1,1 @@
-export { type SendLiteralsInlinedRequest } from "./SendLiteralsInlinedRequest";
+export { SendLiteralsInlinedRequest } from "./SendLiteralsInlinedRequest";
