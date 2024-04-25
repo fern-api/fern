@@ -94,7 +94,7 @@ jobs:
           yarn seed:local test --generator ruby-model
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)*.mock/*"
+        run: git --no-pager diff --exit-code  -- ":(exclude).mock/*"
 
   ruby-sdk:
     runs-on: ubuntu-latest
@@ -119,7 +119,7 @@ jobs:
           yarn seed:local test --generator ruby-sdk
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)*.mock/*"
+        run: git --no-pager diff --exit-code  -- ":(exclude).mock/*"
 
   pydantic-model:
     runs-on: ubuntu-latest
@@ -151,7 +151,7 @@ jobs:
           yarn seed:local test --generator pydantic
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)*.mock/*"
+        run: git --no-pager diff --exit-code  -- ":(exclude).mock/*"
 
   python-sdk:
     runs-on: Seed
@@ -183,7 +183,7 @@ jobs:
           yarn seed:local test --generator python-sdk --parallel 10
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)*.mock/*"
+        run: git --no-pager diff --exit-code  -- ":(exclude).mock/*"
 
   fastapi:
     runs-on: ubuntu-latest
@@ -215,7 +215,7 @@ jobs:
           yarn seed:local test --generator fastapi
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)*.mock/*"
+        run: git --no-pager diff --exit-code  -- ":(exclude).mock/*"
 
   openapi:
     runs-on: ubuntu-latest
@@ -240,7 +240,7 @@ jobs:
           yarn seed:local test --generator openapi
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)*.mock/*"
+        run: git --no-pager diff --exit-code  -- ":(exclude).mock/*"
 
   postman:
     runs-on: ubuntu-latest
@@ -265,7 +265,7 @@ jobs:
           yarn seed:local test --generator postman
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)*.mock/*"
+        run: git --no-pager diff --exit-code  -- ":(exclude).mock/*"
 
   java-sdk:
     runs-on: Seed
@@ -290,7 +290,7 @@ jobs:
           yarn seed:local test --generator java-sdk --parallel 10
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)*.mock/*"
+        run: git --no-pager diff --exit-code  -- ":(exclude).mock/*"
 
   java-model:
     runs-on: Seed
@@ -315,7 +315,7 @@ jobs:
           yarn seed:local test --generator java-model --parallel 10
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)*.mock/*"
+        run: git --no-pager diff --exit-code  -- ":(exclude).mock/*"
 
   java-spring:
     runs-on: ubuntu-latest
@@ -340,7 +340,7 @@ jobs:
           yarn seed:local test --generator java-spring
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)*.mock/*"
+        run: git --no-pager diff --exit-code  -- ":(exclude).mock/*"
 
   typescript-sdk:
     runs-on: Seed
@@ -365,7 +365,7 @@ jobs:
           yarn seed:local test --generator ts-sdk
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)*.mock/*"
+        run: git --no-pager diff --exit-code  -- ":(exclude).mock/*"
 
   typescript-express:
     runs-on: ubuntu-latest
@@ -390,7 +390,7 @@ jobs:
           yarn seed:local test --generator ts-express  --parallel 1
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)*.mock/*"
+        run: git --no-pager diff --exit-code  -- ":(exclude).mock/*"
 
   go-fiber:
     runs-on: ubuntu-latest
@@ -415,7 +415,7 @@ jobs:
           yarn seed:local test --generator go-fiber --parallel 16
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)*.mock/*"
+        run: git --no-pager diff --exit-code  -- ":(exclude).mock/*"
 
   go-model:
     runs-on: ubuntu-latest
@@ -440,7 +440,7 @@ jobs:
           yarn seed:local test --generator go-model --parallel 16
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)*.mock/*"
+        run: git --no-pager diff --exit-code  -- ":(exclude).mock/*"
 
   go-sdk:
     runs-on: ubuntu-latest
@@ -465,7 +465,7 @@ jobs:
           yarn seed:local test --generator go-sdk --parallel 16
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)*.mock/*"
+        run: git --no-pager diff --exit-code  -- ":(exclude).mock/*"
 
   csharp-model:
     runs-on: ubuntu-latest
@@ -490,7 +490,7 @@ jobs:
           yarn seed:local test --generator csharp-model --parallel 16
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)*.mock/*"
+        run: git --no-pager diff --exit-code  -- ":(exclude).mock/*"
 
   csharp-sdk:
     runs-on: ubuntu-latest
@@ -515,4 +515,4 @@ jobs:
           yarn seed:local test --generator csharp-sdk --parallel 16
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code  -- ":(exclude)*.mock/*"
+        run: git --no-pager diff --exit-code  -- ":(exclude).mock/*"
