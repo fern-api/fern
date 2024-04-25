@@ -5,6 +5,8 @@
 /**
  * @example
  *     {
+ *         type: "CreateUserRequest",
+ *         version: "v1",
  *         name: "string"
  *     }
  */

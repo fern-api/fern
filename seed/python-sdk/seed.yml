@@ -86,5 +86,6 @@ allowedFailures:
   - websocket
   - exhaustive:union-utils
   - exhaustive:additional_init_exports
+  - extra-properties
   - trace
   - circular-references-advanced

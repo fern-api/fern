@@ -23,6 +23,9 @@ func NewClient(opts ...option.RequestOption) *Client {
 	if options.ApiKey == "" {
 		options.ApiKey = os.Getenv("FERN_API_KEY")
 	}
+	if options.XAnotherHeader == "" {
+		options.XAnotherHeader = os.Getenv("ANOTHER_ENV_VAR")
+	}
 	return &Client{
 		baseURL: options.BaseURL,
 		caller: core.NewCaller(

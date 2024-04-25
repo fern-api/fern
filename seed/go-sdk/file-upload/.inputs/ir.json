@@ -128,7 +128,8 @@
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [],
@@ -677,7 +678,26 @@
                     },
                     "response": null,
                     "errors": [],
-                    "examples": [],
+                    "examples": [
+                        {
+                            "exampleType": "generated",
+                            "url": "",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [],
+                            "request": null,
+                            "name": null,
+                            "codeSamples": null,
+                            "response": {
+                                "type": "ok",
+                                "body": null
+                            },
+                            "docs": null
+                        }
+                    ],
                     "pagination": null,
                     "availability": null,
                     "docs": null
@@ -837,7 +857,26 @@
                     },
                     "response": null,
                     "errors": [],
-                    "examples": [],
+                    "examples": [
+                        {
+                            "exampleType": "generated",
+                            "url": "/just-file",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [],
+                            "request": null,
+                            "name": null,
+                            "codeSamples": null,
+                            "response": {
+                                "type": "ok",
+                                "body": null
+                            },
+                            "docs": null
+                        }
+                    ],
                     "pagination": null,
                     "availability": null,
                     "docs": null
@@ -1171,7 +1210,203 @@
                     },
                     "response": null,
                     "errors": [],
-                    "examples": [],
+                    "examples": [
+                        {
+                            "exampleType": "generated",
+                            "url": "/just-file-with-query-params",
+                            "rootPathParameters": [],
+                            "servicePathParameters": [],
+                            "endpointPathParameters": [],
+                            "serviceHeaders": [],
+                            "endpointHeaders": [],
+                            "queryParameters": [
+                                {
+                                    "name": {
+                                        "name": {
+                                            "originalName": "maybeString",
+                                            "camelCase": {
+                                                "unsafeName": "maybeString",
+                                                "safeName": "maybeString"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "maybe_string",
+                                                "safeName": "maybe_string"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "MAYBE_STRING",
+                                                "safeName": "MAYBE_STRING"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "MaybeString",
+                                                "safeName": "MaybeString"
+                                            }
+                                        },
+                                        "wireValue": "maybeString"
+                                    },
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "string"
+                                                }
+                                            }
+                                        },
+                                        "jsonExample": "string"
+                                    }
+                                },
+                                {
+                                    "name": {
+                                        "name": {
+                                            "originalName": "integer",
+                                            "camelCase": {
+                                                "unsafeName": "integer",
+                                                "safeName": "integer"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "integer",
+                                                "safeName": "integer"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "INTEGER",
+                                                "safeName": "INTEGER"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Integer",
+                                                "safeName": "Integer"
+                                            }
+                                        },
+                                        "wireValue": "integer"
+                                    },
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "integer",
+                                                "integer": 1
+                                            }
+                                        },
+                                        "jsonExample": 1
+                                    }
+                                },
+                                {
+                                    "name": {
+                                        "name": {
+                                            "originalName": "maybeInteger",
+                                            "camelCase": {
+                                                "unsafeName": "maybeInteger",
+                                                "safeName": "maybeInteger"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "maybe_integer",
+                                                "safeName": "maybe_integer"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "MAYBE_INTEGER",
+                                                "safeName": "MAYBE_INTEGER"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "MaybeInteger",
+                                                "safeName": "MaybeInteger"
+                                            }
+                                        },
+                                        "wireValue": "maybeInteger"
+                                    },
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "integer",
+                                                "integer": 1
+                                            }
+                                        },
+                                        "jsonExample": 1
+                                    }
+                                },
+                                {
+                                    "name": {
+                                        "name": {
+                                            "originalName": "listOfStrings",
+                                            "camelCase": {
+                                                "unsafeName": "listOfStrings",
+                                                "safeName": "listOfStrings"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "list_of_strings",
+                                                "safeName": "list_of_strings"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "LIST_OF_STRINGS",
+                                                "safeName": "LIST_OF_STRINGS"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "ListOfStrings",
+                                                "safeName": "ListOfStrings"
+                                            }
+                                        },
+                                        "wireValue": "listOfStrings"
+                                    },
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "string"
+                                                }
+                                            }
+                                        },
+                                        "jsonExample": "string"
+                                    }
+                                },
+                                {
+                                    "name": {
+                                        "name": {
+                                            "originalName": "optionalListOfStrings",
+                                            "camelCase": {
+                                                "unsafeName": "optionalListOfStrings",
+                                                "safeName": "optionalListOfStrings"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "optional_list_of_strings",
+                                                "safeName": "optional_list_of_strings"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "OPTIONAL_LIST_OF_STRINGS",
+                                                "safeName": "OPTIONAL_LIST_OF_STRINGS"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "OptionalListOfStrings",
+                                                "safeName": "OptionalListOfStrings"
+                                            }
+                                        },
+                                        "wireValue": "optionalListOfStrings"
+                                    },
+                                    "value": {
+                                        "shape": {
+                                            "type": "primitive",
+                                            "primitive": {
+                                                "type": "string",
+                                                "string": {
+                                                    "original": "string"
+                                                }
+                                            }
+                                        },
+                                        "jsonExample": "string"
+                                    }
+                                }
+                            ],
+                            "request": null,
+                            "name": null,
+                            "codeSamples": null,
+                            "response": {
+                                "type": "ok",
+                                "body": null
+                            },
+                            "docs": null
+                        }
+                    ],
                     "pagination": null,
                     "availability": null,
                     "docs": null
