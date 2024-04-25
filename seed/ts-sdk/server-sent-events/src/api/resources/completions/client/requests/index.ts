@@ -1,1 +1,1 @@
-export { StreamCompletionRequest } from "./StreamCompletionRequest";
+export { type StreamCompletionRequest } from "./StreamCompletionRequest";
