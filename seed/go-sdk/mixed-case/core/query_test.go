@@ -143,4 +143,18 @@ func TestQueryValues(t *testing.T) {
 		require.NoError(t, err)
 		assert.Empty(t, values.Encode())
 	})
+
+	t.Run("omitempty with non-pointer zero value", func(t *testing.T) {
+		type enum string
+
+		type example struct {
+			Enum enum `json:"enum,omitempty" url:"enum,omitempty"`
+		}
+
+		values, err := QueryValues(
+			&example{},
+		)
+		require.NoError(t, err)
+		assert.Empty(t, values.Encode())
+	})
 }

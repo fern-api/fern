@@ -31,7 +31,7 @@ func NewResourceFromOrganization(value *Organization) *Resource {
 func (r *Resource) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		ResourceType string         `json:"resource_type"`
-		Status       ResourceStatus `json:"status,omitempty"`
+		Status       ResourceStatus `json:"status"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -62,7 +62,7 @@ func (r Resource) MarshalJSON() ([]byte, error) {
 	case "user":
 		var marshaler = struct {
 			ResourceType string         `json:"resource_type"`
-			Status       ResourceStatus `json:"status,omitempty"`
+			Status       ResourceStatus `json:"status"`
 			*User
 		}{
 			ResourceType: "user",
@@ -73,7 +73,7 @@ func (r Resource) MarshalJSON() ([]byte, error) {
 	case "Organization":
 		var marshaler = struct {
 			ResourceType string         `json:"resource_type"`
-			Status       ResourceStatus `json:"status,omitempty"`
+			Status       ResourceStatus `json:"status"`
 			*Organization
 		}{
 			ResourceType: "Organization",

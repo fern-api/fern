@@ -12,7 +12,7 @@ import (
 
 type ApiAuth struct {
 	Docs        *string                `json:"docs,omitempty" url:"docs,omitempty"`
-	Requirement AuthSchemesRequirement `json:"requirement,omitempty" url:"requirement,omitempty"`
+	Requirement AuthSchemesRequirement `json:"requirement" url:"requirement"`
 	Schemes     []*AuthScheme          `json:"schemes,omitempty" url:"schemes,omitempty"`
 }
 
@@ -188,7 +188,7 @@ func (h *HeaderAuthScheme) String() string {
 }
 
 type Availability struct {
-	Status  AvailabilityStatus `json:"status,omitempty" url:"status,omitempty"`
+	Status  AvailabilityStatus `json:"status" url:"status"`
 	Message *string            `json:"message,omitempty" url:"message,omitempty"`
 }
 
@@ -1003,7 +1003,7 @@ type HttpEndpoint struct {
 	Availability      *Availability          `json:"availability,omitempty" url:"availability,omitempty"`
 	Name              EndpointName           `json:"name,omitempty" url:"name,omitempty"`
 	DisplayName       *string                `json:"displayName,omitempty" url:"displayName,omitempty"`
-	Method            HttpMethod             `json:"method,omitempty" url:"method,omitempty"`
+	Method            HttpMethod             `json:"method" url:"method"`
 	Headers           []*HttpHeader          `json:"headers,omitempty" url:"headers,omitempty"`
 	BaseUrl           *EnvironmentBaseUrlId  `json:"baseUrl,omitempty" url:"baseUrl,omitempty"`
 	Path              *HttpPath              `json:"path,omitempty" url:"path,omitempty"`
@@ -1364,7 +1364,7 @@ type PathParameter struct {
 	Docs      *string               `json:"docs,omitempty" url:"docs,omitempty"`
 	Name      *Name                 `json:"name,omitempty" url:"name,omitempty"`
 	ValueType *TypeReference        `json:"valueType,omitempty" url:"valueType,omitempty"`
-	Location  PathParameterLocation `json:"location,omitempty" url:"location,omitempty"`
+	Location  PathParameterLocation `json:"location" url:"location"`
 	Variable  *VariableId           `json:"variable,omitempty" url:"variable,omitempty"`
 }
 
@@ -3133,7 +3133,7 @@ func (p PrimitiveType) Ptr() *PrimitiveType {
 
 type ResolvedNamedType struct {
 	Name  *DeclaredTypeName `json:"name,omitempty" url:"name,omitempty"`
-	Shape ShapeType         `json:"shape,omitempty" url:"shape,omitempty"`
+	Shape ShapeType         `json:"shape" url:"shape"`
 }
 
 func (r *ResolvedNamedType) String() string {
@@ -3192,7 +3192,7 @@ func (r *ResolvedTypeReference) UnmarshalJSON(data []byte) error {
 		r.Named = value
 	case "primitive":
 		var valueUnmarshaler struct {
-			Primitive PrimitiveType `json:"primitive,omitempty"`
+			Primitive PrimitiveType `json:"primitive"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -3233,7 +3233,7 @@ func (r ResolvedTypeReference) MarshalJSON() ([]byte, error) {
 	case "primitive":
 		var marshaler = struct {
 			Type      string        `json:"_type"`
-			Primitive PrimitiveType `json:"primitive,omitempty"`
+			Primitive PrimitiveType `json:"primitive"`
 		}{
 			Type:      "primitive",
 			Primitive: r.Primitive,
@@ -3645,7 +3645,7 @@ func (t *TypeReference) UnmarshalJSON(data []byte) error {
 		t.Named = value
 	case "primitive":
 		var valueUnmarshaler struct {
-			Primitive PrimitiveType `json:"primitive,omitempty"`
+			Primitive PrimitiveType `json:"primitive"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -3686,7 +3686,7 @@ func (t TypeReference) MarshalJSON() ([]byte, error) {
 	case "primitive":
 		var marshaler = struct {
 			Type      string        `json:"_type"`
-			Primitive PrimitiveType `json:"primitive,omitempty"`
+			Primitive PrimitiveType `json:"primitive"`
 		}{
 			Type:      "primitive",
 			Primitive: t.Primitive,
