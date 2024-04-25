@@ -57,12 +57,20 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         let resolvedSchema: any = this.document;
         for (const key of keys) {
             if (typeof resolvedSchema !== "object" || resolvedSchema == null) {
-                throw new Error(`Failed to resolve ${schema.$ref}`);
+                return {
+                    "x-fern-type": "unknown",
+                    additionalProperties: true
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                } as any as OpenAPIV3.SchemaObject;
             }
             resolvedSchema = resolvedSchema[key];
         }
         if (resolvedSchema == null) {
-            throw new Error(`Failed to resolve ${schema.$ref}`);
+            return {
+                "x-fern-type": "unknown",
+                additionalProperties: true
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            } as any as OpenAPIV3.SchemaObject;
         }
 
         // Step 3: If the result is another reference object, make a recursive call
@@ -148,6 +156,25 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
             return this.resolveExampleReference(resolvedExample);
         }
         return resolvedExample;
+    }
+
+    public referenceExists(ref: string): boolean {
+        // Step 1: Get keys
+        const keys = ref
+            .substring(2)
+            .split("/")
+            .map((key) => key.replace(/~1/g, "/"));
+
+        // Step 2: Index recursively into the document with all the keys
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        let resolvedSchema: any = this.document;
+        for (const key of keys) {
+            if (typeof resolvedSchema !== "object" || resolvedSchema == null) {
+                return false;
+            }
+            resolvedSchema = resolvedSchema[key];
+        }
+        return true;
     }
 
     public abstract markSchemaAsReferencedByNonRequest(schemaId: SchemaId): void;
