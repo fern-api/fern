@@ -22,7 +22,6 @@ describe("parseImagePaths", () => {
             '"This is a test page with an image ![image](my/docs/folder/path/to/image.png)"'
         );
     });
-
     it("should return an array of image paths with multiple images", () => {
         const page =
             "This is a test page with an image ![image1](path/to/image1.png) and another image ![image2](path/to/image2.png)";
@@ -70,6 +69,29 @@ describe("parseImagePaths", () => {
         expect(result.markdown.trim()).toMatchInlineSnapshot(`
             "This is a test page with an image ![image1](my/docs/folder/path/to/image1.png) and another image 
             <img src='my/docs/folder/path/to/image2.png' />"
+        `);
+    });
+
+    it("should parse image with alt on multiple lines", () => {
+        const page = "This is a test page with an image ![image with \n new line in alt](path/to/image.png)";
+        const result = parseImagePaths(MDX_PATH, page);
+        expect(result.filepaths).toEqual(["my/docs/folder/path/to/image.png"]);
+        expect(result.markdown.trim()).toMatchInlineSnapshot(`
+            "This is a test page with an image ![image with 
+             new line in alt](my/docs/folder/path/to/image.png)"
+        `);
+    });
+
+    it("should parse img tag with src on multiple lines", () => {
+        const page = "This is a test page with an image <img \n\n src='path/to/image.png' \n\n alt='image' />";
+        const result = parseImagePaths(MDX_PATH, page);
+        expect(result.filepaths).toEqual(["my/docs/folder/path/to/image.png"]);
+        expect(result.markdown.trim()).toMatchInlineSnapshot(`
+            "This is a test page with an image <img 
+
+             src='my/docs/folder/path/to/image.png' 
+
+             alt='image' />"
         `);
     });
 
