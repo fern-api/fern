@@ -85,7 +85,7 @@ async function parseAPIConfiguration(
                         path: definition.path,
                         origin: definition.origin,
                         overrides: definition.overrides,
-                        audiences: definition.audiences,
+                        audiences: definition.audiences
                     });
                 }
             }

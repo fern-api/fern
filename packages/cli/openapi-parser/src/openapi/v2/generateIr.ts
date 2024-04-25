@@ -20,6 +20,6 @@ export async function generateIr({
         openApi: conversionResult.openapi,
         taskContext,
         disableExamples,
-        audiences,
+        audiences
     });
 }
