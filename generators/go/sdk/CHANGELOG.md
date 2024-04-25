@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## Unreleased -->
 
+## [0.20.1 - 2024-04-25]
+
+- Fix: The `omitempty` struct tag is now only used for nil-able types. It was
+       previously used for non-optional enums, which was never intended. For
+       example, the following `RequestType` enum will no longer include an
+       `omitempty` tag:
+
+  ```go
+  type Request struct {
+    Type RequestType `json:"type" url:"type"`
+  }
+  ```
+
+- Fix: Update the query encoder to prevent unintentional errors whenever the
+       `omitempty` is used for a non-optional field.
+
 ## [0.20.0 - 2024-04-24]
 
 - Feature: The Go generator now supports extra properties.

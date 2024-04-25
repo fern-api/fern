@@ -209,7 +209,7 @@ func (f *FieldValue) UnmarshalJSON(data []byte) error {
 	switch unmarshaler.Type {
 	case "primitive_value":
 		var valueUnmarshaler struct {
-			PrimitiveValue PrimitiveValue `json:"value,omitempty"`
+			PrimitiveValue PrimitiveValue `json:"value"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
@@ -240,7 +240,7 @@ func (f FieldValue) MarshalJSON() ([]byte, error) {
 	case "primitive_value":
 		var marshaler = struct {
 			Type           string         `json:"type"`
-			PrimitiveValue PrimitiveValue `json:"value,omitempty"`
+			PrimitiveValue PrimitiveValue `json:"value"`
 		}{
 			Type:           "primitive_value",
 			PrimitiveValue: f.PrimitiveValue,

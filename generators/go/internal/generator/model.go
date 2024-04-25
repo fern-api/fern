@@ -1423,8 +1423,12 @@ func tagFormatForType(
 	if valueType != nil {
 		primitive := valueType.Primitive
 		if valueType.Named != nil {
+			typeDeclaration := types[valueType.Named.TypeId]
+			if typeDeclaration.Shape.Enum != nil {
+				return "%s:%q"
+			}
 			// If the type is an alias, we need to check if it's an alias to a primitive.
-			if typeDeclaration := types[valueType.Named.TypeId]; typeDeclaration.Shape.Alias != nil {
+			if typeDeclaration.Shape.Alias != nil {
 				primitive = typeDeclaration.Shape.Alias.AliasOf.Primitive
 			}
 		}

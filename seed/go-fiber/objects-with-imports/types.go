@@ -35,7 +35,7 @@ func (t *Tree) String() string {
 type File struct {
 	Name     string   `json:"name" url:"name"`
 	Contents string   `json:"contents" url:"contents"`
-	Info     FileInfo `json:"info,omitempty" url:"info,omitempty"`
+	Info     FileInfo `json:"info" url:"info"`
 }
 
 func (f *File) String() string {

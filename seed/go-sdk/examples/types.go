@@ -473,7 +473,7 @@ func (m *Metadata) Accept(visitor MetadataVisitor) error {
 
 type Migration struct {
 	Name   string          `json:"name" url:"name"`
-	Status MigrationStatus `json:"status,omitempty" url:"status,omitempty"`
+	Status MigrationStatus `json:"status" url:"status"`
 
 	_rawJSON json.RawMessage
 }
