@@ -68,7 +68,8 @@ async function parseAPIConfiguration(
             apiDefinitions.push({
                 path: apiConfiguration,
                 origin: undefined,
-                overrides: undefined
+                overrides: undefined,
+                audiences: []
             });
         } else if (Array.isArray(apiConfiguration)) {
             for (const definition of apiConfiguration) {
@@ -76,13 +77,15 @@ async function parseAPIConfiguration(
                     apiDefinitions.push({
                         path: definition,
                         origin: undefined,
-                        overrides: undefined
+                        overrides: undefined,
+                        audiences: []
                     });
                 } else {
                     apiDefinitions.push({
                         path: definition.path,
                         origin: definition.origin,
-                        overrides: definition.overrides
+                        overrides: definition.overrides,
+                        audiences: definition.audiences,
                     });
                 }
             }
@@ -90,7 +93,8 @@ async function parseAPIConfiguration(
             apiDefinitions.push({
                 path: apiConfiguration.path,
                 origin: apiConfiguration.origin,
-                overrides: apiConfiguration.overrides
+                overrides: apiConfiguration.overrides,
+                audiences: apiConfiguration.audiences
             });
         }
     } else {
@@ -103,13 +107,15 @@ async function parseAPIConfiguration(
             apiDefinitions.push({
                 path: openapi,
                 origin: apiOrigin,
-                overrides: openapiOverrides
+                overrides: openapiOverrides,
+                audiences: []
             });
         } else if (openapi != null) {
             apiDefinitions.push({
                 path: openapi.path,
                 origin: openapi.origin,
-                overrides: openapi.overrides
+                overrides: openapi.overrides,
+                audiences: []
             });
         }
 
@@ -117,7 +123,8 @@ async function parseAPIConfiguration(
             apiDefinitions.push({
                 path: asyncapi,
                 origin: apiOrigin,
-                overrides: undefined
+                overrides: undefined,
+                audiences: []
             });
         }
     }

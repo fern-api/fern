@@ -52,7 +52,10 @@ export async function loadAPIWorkspace({
                 absoluteFilepathToOverrides:
                     definition.overrides != null
                         ? join(absolutePathToWorkspace, RelativeFilePath.of(definition.overrides))
-                        : undefined
+                        : undefined,
+                settings: {
+                    audiences: definition.audiences ?? []
+                }
             });
         }
         return {
