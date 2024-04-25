@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.16.0-rc4] - 2024-04-25
+
+- Fix: fixes to styling of the SDK code snippet templates.
+
 ## [0.16.0-rc0] - 2024-04-24
 
 - Feature: The generator now registers snippet templates which can be used for dynamic
@@ -19,10 +23,10 @@ export { MyRequest } from "./MyRequest";
 ```
 
 In an effort to make the generated code JSR compatible, the TS generator
-will now append the `type` explicitly for request exports. 
+will now append the `type` explicitly for request exports.
 
 ```ts
-  export { type MyRequest } from "./MyRequest";
+export { type MyRequest } from "./MyRequest";
 ```
 
 ## [0.15.1-rc0] - 2024-04-22
