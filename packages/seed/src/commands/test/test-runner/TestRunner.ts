@@ -172,6 +172,7 @@ export abstract class TestRunner {
                     absolutePathToDotMockDirectory: outputDir,
                     absolutePathToFernDefinition: absolutePathToAPIDefinition
                 });
+                taskContext.logger.info("Successfully wrote .mock directory...");
             } catch (error) {
                 return {
                     type: "failure",
