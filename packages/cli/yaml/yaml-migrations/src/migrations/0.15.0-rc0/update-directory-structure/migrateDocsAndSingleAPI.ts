@@ -6,6 +6,7 @@ import { getAbsolutePathToDocsFolder, getAbsolutePathToDocsYaml, loadRawDocsConf
 import { convertLegacyDocsConfig } from "./docs-config/convertLegacyDocsConfig";
 import { getAbsolutePathToGeneratorsConfiguration, loadRawGeneratorsConfiguration } from "./generators-configuration";
 import { convertLegacyGeneratorsConfiguration } from "./generators-configuration/convertLegacyGeneratorsConfiguration";
+import { migrateDocsInstances } from "./migrateDocsInstances";
 
 /**
  * fern/  <------ path to fern directory
@@ -48,7 +49,7 @@ async function migrateAndWriteDocsYml({
     }
     const convertedDocsConfig = convertLegacyDocsConfig({
         docsConfiguration,
-        docsURLs,
+        docsURLs: migrateDocsInstances(docsURLs),
         apiName: undefined
     });
     const absolutePathToDocsConfig = getAbsolutePathToDocsYaml({ absolutePathToWorkspace });
