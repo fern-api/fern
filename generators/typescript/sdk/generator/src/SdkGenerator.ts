@@ -2,7 +2,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
 import { ExampleEndpointCall, HttpEndpoint, HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { FdrSnippetTemplate, FdrSnippetTemplateClient, FdrSnippetTemplateEnvironment } from "@fern-fern/snippet-sdk";
+import { FdrSnippetTemplate, FdrSnippetTemplateClient } from "@fern-fern/snippet-sdk";
 import {
     BundledTypescriptProject,
     convertExportedFilePathToFilePath,
@@ -315,15 +315,7 @@ export class SdkGenerator {
             this.config.writeUnitTests
         );
 
-        this.FdrClient =
-            this.config.executionEnvironment !== "local"
-                ? new FdrSnippetTemplateClient({
-                      environment:
-                          this.config.executionEnvironment === "dev"
-                              ? FdrSnippetTemplateEnvironment.Dev
-                              : FdrSnippetTemplateEnvironment.Prod
-                  })
-                : undefined;
+        throw new Error(this.config.executionEnvironment);
     }
 
     public async generate(): Promise<TypescriptProject> {

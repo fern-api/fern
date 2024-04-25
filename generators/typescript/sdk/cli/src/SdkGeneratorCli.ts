@@ -113,7 +113,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 tolerateRepublish: customConfig.tolerateRepublish,
                 allowExtraFields: customConfig.allowExtraFields ?? false,
                 writeUnitTests: config.writeUnitTests,
-                executionEnvironment: "prod"
+                executionEnvironment: this.exectuionEnvironment(config)
             }
         });
         const typescriptProject = await sdkGenerator.generate();
