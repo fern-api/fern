@@ -7402,6 +7402,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.508"],\
             ["@types/decompress", "npm:4.2.7"],\
+            ["@types/diff", "npm:5.2.0"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/mime-types", "npm:2.1.4"],\
@@ -7412,6 +7413,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["chalk", "npm:5.0.1"],\
             ["decompress", "npm:4.2.1"],\
             ["depcheck", "npm:1.4.6"],\
+            ["diff", "npm:5.2.0"],\
             ["eslint", "npm:8.56.0"],\
             ["form-data", "npm:4.0.0"],\
             ["gray-matter", "npm:4.0.3"],\
@@ -10347,6 +10349,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@types/decompress", "npm:4.2.7"],\
             ["@types/node", "npm:18.7.18"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@types/diff", [\
+        ["npm:5.2.0", {\
+          "packageLocation": "./.yarn/cache/@types-diff-npm-5.2.0-b2c6787ace-07e20ba25d.zip/node_modules/@types/diff/",\
+          "packageDependencies": [\
+            ["@types/diff", "npm:5.2.0"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -14928,6 +14939,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/diff-npm-5.1.0-d24d222280-c7bf0df7c9.zip/node_modules/diff/",\
           "packageDependencies": [\
             ["diff", "npm:5.1.0"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:5.2.0", {\
+          "packageLocation": "./.yarn/cache/diff-npm-5.2.0-f523a581f3-12b63ca9c3.zip/node_modules/diff/",\
+          "packageDependencies": [\
+            ["diff", "npm:5.2.0"]\
           ],\
           "linkType": "HARD"\
         }]\

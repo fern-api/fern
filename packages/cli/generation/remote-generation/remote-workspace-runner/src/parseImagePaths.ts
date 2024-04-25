@@ -1,6 +1,6 @@
 import { dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
+import grayMatter from "gray-matter";
 import { fromMarkdown } from "mdast-util-from-markdown";
-import { toMarkdown } from "mdast-util-to-markdown";
 import { visit } from "unist-util-visit";
 
 /**
@@ -16,6 +16,9 @@ export function parseImagePaths(
     filepaths: RelativeFilePath[];
     markdown: string;
 } {
+    const { content, data } = grayMatter(markdown);
+    let replacedContent = content;
+
     const filepaths = new Set<RelativeFilePath>();
 
     function resolvePath(pathToImage: string): RelativeFilePath | undefined {
@@ -30,63 +33,53 @@ export function parseImagePaths(
         return join(dirname(pathToMdx), RelativeFilePath.of(pathToImage));
     }
 
-    const tree = fromMarkdown(markdown);
+    const tree = fromMarkdown(content);
 
-    visit(tree, "image", (node) => {
-        const src = node.url as string;
-        if (typeof src === "string") {
-            const resolvedPath = resolvePath(src);
-            if (resolvedPath == null) {
-                return;
-            }
-            filepaths.add(resolvedPath);
-            node.url = resolvedPath;
+    let offset = 0;
+
+    visit(tree, (node) => {
+        if (node.position == null) {
+            return;
         }
-    });
-
-    visit(tree, "html", (node) => {
-        const srcRegex = /src=['"]([^'"]+)['"]/g;
-
-        let match;
-        while ((match = srcRegex.exec(node.value)) != null) {
-            const [original, pathToImage] = match;
-            if (original != null && pathToImage != null) {
-                const resolvedPath = resolvePath(pathToImage);
+        const { start, length } = getPosition(content, node.position);
+        const original = replacedContent.slice(start + offset, start + offset + length);
+        let replaced = original;
+        if (node.type === "image") {
+            const src = node.url as string;
+            if (typeof src === "string") {
+                const resolvedPath = resolvePath(src);
                 if (resolvedPath == null) {
                     return;
                 }
                 filepaths.add(resolvedPath);
-                node.value =
-                    node.value.slice(0, match.index) +
-                    original.replace(pathToImage, resolvedPath) +
-                    node.value.slice(match.index + original.length);
+                node.url = resolvedPath;
+                replaced = replaced.replace(src, resolvedPath);
             }
         }
-    });
 
-    visit(tree, "text", (node) => {
-        const srcRegex = /src={['"]([^'"]+)['"]}/g;
+        if (node.type === "html" || node.type === "text") {
+            const srcRegex = /src={?['"]([^'"]+)['"](?! \+)}?/g;
 
-        let match;
-        while ((match = srcRegex.exec(node.value)) != null) {
-            const [original, pathToImage] = match;
-            if (original != null && pathToImage != null) {
-                const resolvedPath = resolvePath(pathToImage);
-                if (resolvedPath == null) {
-                    return;
+            let match;
+            while ((match = srcRegex.exec(node.value)) != null) {
+                const [matchedSnippet, pathToImage] = match;
+                if (matchedSnippet != null && pathToImage != null) {
+                    const resolvedPath = resolvePath(pathToImage);
+                    if (resolvedPath == null) {
+                        return;
+                    }
+                    filepaths.add(resolvedPath);
+                    replaced = replaced.replaceAll(pathToImage, resolvedPath);
                 }
-                filepaths.add(resolvedPath);
-                node.value =
-                    node.value.slice(0, match.index) +
-                    original.replace(pathToImage, resolvedPath) +
-                    node.value.slice(match.index + original.length);
             }
         }
+
+        replacedContent =
+            replacedContent.slice(0, start + offset) + replaced + replacedContent.slice(start + offset + length);
+        offset += replaced.length - length;
     });
 
-    markdown = toMarkdown(tree);
-
-    return { filepaths: [...filepaths], markdown };
+    return { filepaths: [...filepaths], markdown: grayMatter.stringify(replacedContent, data) };
 }
 
 function isExternalUrl(url: string): boolean {
@@ -98,53 +91,75 @@ function isExternalUrl(url: string): boolean {
  * In the frontend, the fileIDs are then used to securely fetch the images.
  */
 export function replaceImagePaths(markdown: string, fileIdsMap: Map<RelativeFilePath, string>): string {
-    const tree = fromMarkdown(markdown);
+    const matter = grayMatter(markdown);
+    let { content } = matter;
 
-    visit(tree, "image", (node) => {
-        const src = node.url as RelativeFilePath;
-        if (typeof src === "string") {
-            const fileId = fileIdsMap.get(src);
-            if (fileId != null) {
-                node.url = fileId;
-            }
+    const tree = fromMarkdown(content);
+
+    let offset = 0;
+
+    visit(tree, (node) => {
+        if (node.position == null) {
+            return;
         }
-    });
-
-    visit(tree, "html", (node) => {
-        const srcRegex = /src=['"]([^'"]+)['"]/g;
-
-        let match;
-        while ((match = srcRegex.exec(node.value)) != null) {
-            const [original, pathToImage] = match;
-            if (original != null && pathToImage != null) {
-                const fileId = fileIdsMap.get(RelativeFilePath.of(pathToImage));
+        const { start, length } = getPosition(markdown, node.position);
+        const original = markdown.slice(start + offset, start + offset + length);
+        let replaced = original;
+        if (node.type === "image") {
+            const src = node.url as string;
+            if (typeof src === "string") {
+                const fileId = fileIdsMap.get(RelativeFilePath.of(src));
                 if (fileId != null) {
-                    node.value =
-                        node.value.slice(0, match.index) +
-                        original.replace(pathToImage, fileId) +
-                        node.value.slice(match.index + original.length);
+                    replaced = replaced.replace(src, fileId);
                 }
             }
         }
-    });
 
-    visit(tree, "text", (node) => {
-        const srcRegex = /src={['"]([^'"]+)['"]}/g;
+        if (node.type === "html" || node.type === "text") {
+            const srcRegex = /src={?['"]([^'"]+)['"](?! \+)}?/g;
 
-        let match;
-        while ((match = srcRegex.exec(node.value)) != null) {
-            const [original, pathToImage] = match;
-            if (original != null && pathToImage != null) {
-                const fileId = fileIdsMap.get(RelativeFilePath.of(pathToImage));
-                if (fileId != null) {
-                    node.value =
-                        node.value.slice(0, match.index) +
-                        original.replace(pathToImage, fileId) +
-                        node.value.slice(match.index + original.length);
+            let match;
+            while ((match = srcRegex.exec(node.value)) != null) {
+                const [matchedSnippet, pathToImage] = match;
+                if (matchedSnippet != null && pathToImage != null) {
+                    const fileId = fileIdsMap.get(RelativeFilePath.of(pathToImage));
+                    if (fileId != null) {
+                        replaced = replaced.replaceAll(pathToImage, fileId);
+                    }
                 }
             }
         }
+
+        content = content.slice(0, start + offset) + replaced + content.slice(start + offset + length);
+        offset += replaced.length - length;
     });
 
-    return toMarkdown(tree);
+    return grayMatter.stringify(content, matter.data);
+}
+
+function getPosition(
+    markdown: string,
+    position: { start: { line: number; column: number }; end: { line: number; column: number } }
+) {
+    const lines = markdown.split("\n");
+    let start = position.start.column - 1;
+    for (let i = 0; i < position.start.line - 1; i++) {
+        const line = lines[i];
+        if (line == null) {
+            break;
+        }
+        start += line.length + 1;
+    }
+
+    let length = 0 - position.start.column + position.end.column;
+
+    for (let i = position.start.line - 1; i < position.end.line - 1; i++) {
+        const line = lines[i];
+        if (line == null) {
+            break;
+        }
+        length += line.length + 1;
+    }
+
+    return { start, length };
 }

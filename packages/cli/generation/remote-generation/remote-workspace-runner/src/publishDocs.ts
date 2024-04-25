@@ -58,7 +58,7 @@ export async function publishDocs({
 
     const mdxImageReferences: docsYml.ImageReference[] = [];
 
-    // parse all relative image paths in the markdown files
+    // preprocess markdown files to extract image paths
     for (const [relativePath, markdown] of Object.entries(parsedDocsConfig.pages)) {
         const { filepaths, markdown: newMarkdown } = parseImagePaths(RelativeFilePath.of(relativePath), markdown);
         parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = newMarkdown;
@@ -190,7 +190,7 @@ export async function publishDocs({
         })
     ]);
 
-    // after uploading all images, replace the image paths in the markdown files with the file ids
+    // postprocess markdown files after uploading all images to replace the image paths in the markdown files with the fileIDs
     for (const [relativePath, markdown] of Object.entries(parsedDocsConfig.pages)) {
         parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = replaceImagePaths(markdown, collectedFileIds);
     }

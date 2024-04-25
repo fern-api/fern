@@ -4313,6 +4313,7 @@ __metadata:
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.508
     "@types/decompress": ^4.2.7
+    "@types/diff": ^5.2.0
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.9
     "@types/mime-types": ^2.1.4
@@ -4323,6 +4324,7 @@ __metadata:
     chalk: ^5.0.1
     decompress: ^4.2.1
     depcheck: ^1.4.6
+    diff: ^5.2.0
     eslint: ^8.56.0
     form-data: 4.0.0
     gray-matter: ^4.0.3
@@ -6935,6 +6937,13 @@ __metadata:
   dependencies:
     "@types/node": "*"
   checksum: f2fcc588e0bbeed4f3897e25980d3a5cceba334b900f83c9ad91b9885e3b25b50bdc283a6d684b73442368f9f12f34b4eabfc7f422067c6a882591ed844aa65b
+  languageName: node
+  linkType: hard
+
+"@types/diff@npm:^5.2.0":
+  version: 5.2.0
+  resolution: "@types/diff@npm:5.2.0"
+  checksum: 07e20ba25d15b997758cc248628bb1e6459e7b396c868f176dee1e6a5d1dfcdf1e186fb5bf5e67128d7f55a11e989cff2ec656de089e15ed4a44e654c5c1fda3
   languageName: node
   linkType: hard
 
@@ -10780,6 +10789,13 @@ __metadata:
   version: 5.1.0
   resolution: "diff@npm:5.1.0"
   checksum: c7bf0df7c9bfbe1cf8a678fd1b2137c4fb11be117a67bc18a0e03ae75105e8533dbfb1cda6b46beb3586ef5aed22143ef9d70713977d5fb1f9114e21455fba90
+  languageName: node
+  linkType: hard
+
+"diff@npm:^5.2.0":
+  version: 5.2.0
+  resolution: "diff@npm:5.2.0"
+  checksum: 12b63ca9c36c72bafa3effa77121f0581b4015df18bc16bac1f8e263597735649f1a173c26f7eba17fb4162b073fee61788abe49610e6c70a2641fe1895443fd
   languageName: node
   linkType: hard
 
