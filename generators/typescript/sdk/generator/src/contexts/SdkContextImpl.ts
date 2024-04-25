@@ -109,6 +109,7 @@ export class SdkContextImpl implements SdkContext {
     public readonly type: TypeContextImpl;
     public readonly typeSchema: TypeSchemaContextImpl;
     public readonly namespaceExport: string | undefined;
+    public readonly rootClientVariableName: string;
     public readonly sdkInstanceReferenceForSnippet: ts.Identifier;
 
     public readonly sdkError: SdkErrorContextImpl;
@@ -170,10 +171,9 @@ export class SdkContextImpl implements SdkContext {
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.targetRuntime = targetRuntime;
-        this.sdkInstanceReferenceForSnippet = ts.factory.createIdentifier(
-            camelCase(typeDeclarationReferencer.namespaceExport)
-        );
         this.namespaceExport = typeDeclarationReferencer.namespaceExport;
+        this.rootClientVariableName = camelCase(this.namespaceExport);
+        this.sdkInstanceReferenceForSnippet = ts.factory.createIdentifier(this.rootClientVariableName);
         this.sourceFile = sourceFile;
         this.npmPackage = npmPackage;
         this.externalDependencies = createExternalDependencies({
