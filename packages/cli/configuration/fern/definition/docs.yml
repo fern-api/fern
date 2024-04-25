@@ -39,6 +39,7 @@ types:
     properties:
       url: string
       "custom-domain": optional<string>
+      "custom-domains": optional<list<string>>
       audiences:
         type: optional<AudiencesConfig>
         availability: in-development

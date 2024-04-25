@@ -12,6 +12,10 @@ export const DocsInstances: core.serialization.ObjectSchema<
 > = core.serialization.object({
     url: core.serialization.string(),
     customDomain: core.serialization.property("custom-domain", core.serialization.string().optional()),
+    customDomains: core.serialization.property(
+        "custom-domains",
+        core.serialization.list(core.serialization.string()).optional()
+    ),
     audiences: core.serialization.lazy(async () => (await import("../../..")).AudiencesConfig).optional(),
     private: core.serialization.boolean().optional(),
     editThisPage: core.serialization.property(
@@ -24,6 +28,7 @@ export declare namespace DocsInstances {
     interface Raw {
         url: string;
         "custom-domain"?: string | null;
+        "custom-domains"?: string[] | null;
         audiences?: serializers.AudiencesConfig.Raw | null;
         private?: boolean | null;
         "edit-this-page"?: serializers.EditThisPageConfig.Raw | null;

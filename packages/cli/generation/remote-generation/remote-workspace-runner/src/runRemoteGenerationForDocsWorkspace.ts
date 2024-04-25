@@ -27,43 +27,37 @@ export async function runRemoteGenerationForDocsWorkspace({
         return;
     }
 
-    if (instances.length === 1 && instances[0] != null) {
-        const instance = instances[0];
-        await context.runInteractiveTask({ name: instance.url }, async () => {
-            await publishDocs({
-                docsWorkspace,
-                customDomains: instance.customDomain != null ? [instance.customDomain] : [],
-                domain: instance.url,
-                token,
-                organization,
-                context,
-                fernWorkspaces,
-                version: "",
-                preview,
-                audiences: instance.audiences,
-                editThisPage: instance.editThisPage,
-                isPrivate: instance.private
-            });
-        });
-        return;
-    }
-
     if (instances.length > 1 && instanceUrl == null) {
         context.failAndThrow(`More than one docs instances. Please specify one (e.g. --instance ${instances[0]?.url})`);
         return;
     }
 
-    const maybeInstance = instances.find((instance) => instance.url === instanceUrl);
+    const maybeInstance = instances.find((instance) => instance.url === instanceUrl) ?? instances[0];
 
     if (maybeInstance == null) {
         context.failAndThrow(`No docs instance with url ${instanceUrl}. Failed to register.`);
         return;
     }
 
+    // TODO: validate custom domains
+    const customDomains: string[] = [];
+
+    if (maybeInstance.customDomain != null && maybeInstance.customDomains != null) {
+        context.logger.warn("Both custom-domain and custom-domains are specified in docs.yml. Please use only one.");
+    }
+
+    if (maybeInstance.customDomain != null) {
+        customDomains.push(maybeInstance.customDomain);
+    }
+
+    if (maybeInstance.customDomains != null) {
+        customDomains.push(...maybeInstance.customDomains);
+    }
+
     await context.runInteractiveTask({ name: maybeInstance.url }, async () => {
         await publishDocs({
             docsWorkspace,
-            customDomains: maybeInstance.customDomain != null ? [maybeInstance.customDomain] : [],
+            customDomains,
             domain: maybeInstance.url,
             token,
             organization,

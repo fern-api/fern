@@ -7,6 +7,7 @@ import * as FernDocsConfig from "../../..";
 export interface DocsInstances {
     url: string;
     customDomain?: string;
+    customDomains?: string[];
     audiences?: FernDocsConfig.AudiencesConfig;
     /** If `private` is set to true, Fern will protect the docs site with SSO. */
     private?: boolean;
