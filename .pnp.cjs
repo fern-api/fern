@@ -7428,7 +7428,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["terminal-link", "npm:3.0.0"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
-            ["unified", "npm:11.0.4"],\
             ["unist-util-visit", "npm:5.0.0"],\
             ["url-join", "npm:5.0.0"]\
           ],\
@@ -28521,20 +28520,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["is-plain-obj", "npm:4.1.0"],\
             ["trough", "npm:2.1.0"],\
             ["vfile", "npm:5.3.7"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:11.0.4", {\
-          "packageLocation": "./.yarn/cache/unified-npm-11.0.4-8cd6f1dc4d-cfb0239134.zip/node_modules/unified/",\
-          "packageDependencies": [\
-            ["unified", "npm:11.0.4"],\
-            ["@types/unist", "npm:3.0.2"],\
-            ["bail", "npm:2.0.2"],\
-            ["devlop", "npm:1.1.0"],\
-            ["extend", "npm:3.0.2"],\
-            ["is-plain-obj", "npm:4.1.0"],\
-            ["trough", "npm:2.1.0"],\
-            ["vfile", "npm:6.0.1"]\
           ],\
           "linkType": "HARD"\
         }]\
