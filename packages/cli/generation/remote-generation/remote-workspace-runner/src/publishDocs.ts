@@ -18,7 +18,7 @@ import terminalLink from "terminal-link";
 import { promisify } from "util";
 import { convertIrToNavigation } from "./convertIrToNavigation";
 import { extractDatetimeFromChangelogTitle } from "./extractDatetimeFromChangelogTitle";
-import { parseImagePaths } from "./parseImagePaths";
+import { parseImagePaths, replaceImagePaths } from "./parseImagePaths";
 
 export async function publishDocs({
     token,
@@ -56,19 +56,27 @@ export async function publishDocs({
         absoluteFilepathToDocsConfig: docsWorkspace.absoluteFilepathToDocsConfig
     });
 
-    const mdxImageMatches: AbsoluteFilePath[] = [];
+    const mdxImageReferences: docsYml.ImageReference[] = [];
 
-    for (const [_, page] of Object.entries(parsedDocsConfig.pages)) {
-        mdxImageMatches.push(...parseImagePaths(page).map((path) => AbsoluteFilePath.of(path)));
+    // parse all relative image paths in the markdown files
+    for (const [relativePath, markdown] of Object.entries(parsedDocsConfig.pages)) {
+        const { filepaths, markdown: newMarkdown } = parseImagePaths(RelativeFilePath.of(relativePath), markdown);
+        parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = newMarkdown;
+        for (const filepath of filepaths) {
+            mdxImageReferences.push(
+                docsYml.convertImageReference({
+                    rawImageReference: filepath,
+                    absoluteFilepathToDocsConfig: docsWorkspace.absoluteFilepathToDocsConfig
+                })
+            );
+        }
     }
-
-    context.logger.info("MATCHES: ", mdxImageMatches.toString());
 
     // images where sizes cannot be inferred are uploaded as normal files.
     // images where sizes can be inferred are also uploaded as normal files, but their sizes are submitted to the registry.
     const [imageFilepathsWithSizesToUpload, unsizedImageFilepathsToUpload] = await getImageFilepathsToUpload(
         parsedDocsConfig,
-        mdxImageMatches
+        mdxImageReferences
     );
     context.logger.debug(
         "Absolute filepaths of images to upload:",
@@ -137,40 +145,55 @@ export async function publishDocs({
 
     // const copiedRecord: Record<RelativeFilePath, string> = Object.assign({}, parsedDocsConfig.pages);
 
+    const collectedFileIds = new Map<RelativeFilePath, string>();
+
     await Promise.all([
         ...filepathsToUpload.map(async (filepathToUpload) => {
-            const uploadUrl = uploadUrls[convertAbsoluteFilepathToFdrFilepath(filepathToUpload, parsedDocsConfig)];
+            const relativePath = convertAbsoluteFilepathToFdrFilepath(filepathToUpload, parsedDocsConfig);
+            const uploadUrl = uploadUrls[relativePath];
             if (uploadUrl == null) {
                 context.failAndThrow(`Failed to upload ${filepathToUpload}`, "Upload URL is missing");
             } else {
-                const mimeType = mime.lookup(filepathToUpload);
-                await axios.put(uploadUrl.uploadUrl, await readFile(filepathToUpload), {
-                    headers: {
-                        "Content-Type": mimeType === false ? "application/octet-stream" : mimeType
-                    }
-                });
+                try {
+                    const mimeType = mime.lookup(filepathToUpload);
+                    await axios.put(uploadUrl.uploadUrl, await readFile(filepathToUpload), {
+                        headers: {
+                            "Content-Type": mimeType === false ? "application/octet-stream" : mimeType
+                        }
+                    });
+                    collectedFileIds.set(relativePath, uploadUrl.fileId);
+                } catch (e) {
+                    // file might not exist
+                    context.failAndThrow(`Failed to upload ${filepathToUpload}`, e);
+                }
             }
         }),
         ...imageFilepathsWithSizesToUpload.map(async ({ filePath: imageFilepathToUpload }) => {
-            const uploadUrl = uploadUrls[convertAbsoluteFilepathToFdrFilepath(imageFilepathToUpload, parsedDocsConfig)];
+            const relativePath = convertAbsoluteFilepathToFdrFilepath(imageFilepathToUpload, parsedDocsConfig);
+            const uploadUrl = uploadUrls[relativePath];
             if (uploadUrl == null) {
                 context.failAndThrow(`Failed to upload ${imageFilepathToUpload}`, "Upload URL is missing");
             } else {
-                for (const [relativePath, page] of Object.entries(parsedDocsConfig.pages)) {
-                    parsedDocsConfig.pages[relativePath as RelativeFilePath] = page.replace(
-                        imageFilepathToUpload.toString(),
-                        uploadUrl.fileId.toString()
-                    );
+                try {
+                    const mimeType = mime.lookup(imageFilepathToUpload);
+                    await axios.put(uploadUrl.uploadUrl, await readFile(imageFilepathToUpload), {
+                        headers: {
+                            "Content-Type": mimeType === false ? "application/octet-stream" : mimeType
+                        }
+                    });
+                    collectedFileIds.set(relativePath, uploadUrl.fileId);
+                } catch (e) {
+                    // file might not exist
+                    context.failAndThrow(`Failed to upload ${imageFilepathToUpload}`, e);
                 }
-                const mimeType = mime.lookup(imageFilepathToUpload);
-                await axios.put(uploadUrl.uploadUrl, await readFile(imageFilepathToUpload), {
-                    headers: {
-                        "Content-Type": mimeType === false ? "application/octet-stream" : mimeType
-                    }
-                });
             }
         })
     ]);
+
+    // after uploading all images, replace the image paths in the markdown files with the file ids
+    for (const [relativePath, markdown] of Object.entries(parsedDocsConfig.pages)) {
+        parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = replaceImagePaths(markdown, collectedFileIds);
+    }
 
     const registerDocsRequest = await constructRegisterDocsRequest({
         parsedDocsConfig,
@@ -1107,7 +1130,7 @@ interface AbsoluteImageFilePath {
 
 async function getImageFilepathsToUpload(
     parsedDocsConfig: docsYml.ParsedDocsConfiguration,
-    parsedImagePaths: AbsoluteFilePath[]
+    parsedImagePaths: docsYml.ImageReference[]
 ): Promise<[AbsoluteImageFilePath[], AbsoluteFilePath[]]> {
     const filepaths: AbsoluteFilePath[] = [];
 
@@ -1139,18 +1162,24 @@ async function getImageFilepathsToUpload(
         filepaths.push(parsedDocsConfig.backgroundImage.light.filepath);
     }
 
-    filepaths.push(...parsedImagePaths);
+    for (const parsedImagePath of parsedImagePaths) {
+        filepaths.push(parsedImagePath.filepath);
+    }
 
     const imageFilepathsAndSizesToUpload = await Promise.all(
         filepaths.map(async (filePath): Promise<ImageFile> => {
-            const size = await sizeOf(filePath);
-            if (size == null || size.height == null || size.width == null) {
+            try {
+                const size = await sizeOf(filePath);
+                if (size == null || size.height == null || size.width == null) {
+                    return { type: "filepath", value: filePath };
+                }
+                return {
+                    type: "image",
+                    value: { filePath, width: size.width, height: size.height, blurDataUrl: undefined }
+                };
+            } catch (e) {
                 return { type: "filepath", value: filePath };
             }
-            return {
-                type: "image",
-                value: { filePath, width: size.width, height: size.height, blurDataUrl: undefined }
-            };
         })
     );
 
