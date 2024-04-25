@@ -390,17 +390,29 @@ export class SdkGenerator {
                 JSON.stringify(await FernGeneratorExecSerializers.Snippets.jsonOrThrow(snippets), undefined, 4)
             );
             if (this.config.snippetTemplateFilepath != null) {
+                this.context.logger.debug(
+                    `Generating snippet templates for Org: ${this.config.organization}, API: ${
+                        this.config.apiName
+                    } for package ${this.npmPackage?.packageName ?? "package_unknown"} at version: ${
+                        this.npmPackage?.version ?? "0.0.0"
+                    }.`
+                );
                 await writeFile(
                     this.config.snippetTemplateFilepath,
                     JSON.stringify(this.endpointSnippetTemplates, undefined, 4)
                 );
                 if (this.FdrClient != null) {
-                    await this.FdrClient.templates.registerBatch({
-                        orgId: this.config.organization,
-                        apiId: this.config.apiName,
-                        apiDefinitionId: uuidv4(),
-                        snippets: this.endpointSnippetTemplates
-                    });
+                    this.context.logger.debug("FDR Client found, registering snippet templates.");
+                    try {
+                        await this.FdrClient.templates.registerBatch({
+                            orgId: this.config.organization,
+                            apiId: this.config.apiName,
+                            apiDefinitionId: uuidv4(),
+                            snippets: this.endpointSnippetTemplates
+                        });
+                    } catch (e) {
+                        this.context.logger.warn("Failed to register snippet templates with FDR, this is OK");
+                    }
                 }
             }
             if (this.config.includeApiReference && refGenerator !== undefined) {
@@ -703,13 +715,17 @@ export class SdkGenerator {
                         retainOriginalCasing: this.config.retainOriginalCasing
                     }).generateSnippetTemplate();
                     if (snippetTemplate != null) {
+                        const endpointPath = FernGeneratorExec.EndpointPath(this.getFullPathForEndpoint(endpoint));
+                        this.context.logger.debug(
+                            `Snippet template created for endpoint: ${endpoint.method} ${endpointPath}`
+                        );
                         this.endpointSnippetTemplates.push({
                             sdk: FdrSnippetTemplate.Sdk.typescript({
                                 package: this.npmPackage.packageName,
                                 version: this.npmPackage.version
                             }),
                             endpointId: {
-                                path: FernGeneratorExec.EndpointPath(this.getFullPathForEndpoint(endpoint)),
+                                path: endpointPath,
                                 method: endpoint.method
                             },
                             snippetTemplate
