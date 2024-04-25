@@ -1215,6 +1215,10 @@ func NewGeneratedClient(
 		if len(endpoint.Examples) == 0 {
 			continue
 		}
+		example := exampleEndpointCallFromEndpointExample(endpoint.Examples[0])
+		if example == nil {
+			continue
+		}
 		generatedEndpoints = append(
 			generatedEndpoints,
 			newGeneratedEndpoint(
@@ -1222,7 +1226,7 @@ func NewGeneratedClient(
 				fernFilepath,
 				rootClientInstantiation,
 				endpoint,
-				endpoint.Examples[0], // Generate a snippet for the first example.
+				example,
 			),
 		)
 	}
@@ -1230,6 +1234,26 @@ func NewGeneratedClient(
 		Instantiation: rootClientInstantiation,
 		Endpoints:     generatedEndpoints,
 	}, nil
+}
+
+type exampleEndpointCallVisitor struct {
+	value *ir.ExampleEndpointCall
+}
+
+func (e *exampleEndpointCallVisitor) VisitUserProvided(value *ir.ExampleEndpointCall) error {
+	e.value = value
+	return nil
+}
+
+func (e *exampleEndpointCallVisitor) VisitGenerated(value *ir.ExampleEndpointCall) error {
+	e.value = value
+	return nil
+}
+
+func exampleEndpointCallFromEndpointExample(example *ir.HttpEndpointExample) *ir.ExampleEndpointCall {
+	visitor := new(exampleEndpointCallVisitor)
+	example.Accept(visitor)
+	return visitor.value
 }
 
 func newGeneratedEndpoint(
@@ -1855,12 +1879,15 @@ func (f *fileWriter) endpointFromIR(
 			successfulReturnValues = "response.String(), nil"
 			errorReturnValues = `"", err`
 		case "streaming":
-			if terminator := irEndpoint.Response.Streaming.Terminator; terminator != nil {
-				streamDelimiter = *terminator
+			if irEndpoint.Response.Streaming.Json == nil && irEndpoint.Response.Streaming.Text == nil {
+				return nil, fmt.Errorf("unsupported streaming response type: %s", irEndpoint.Response.Streaming.Type)
 			}
-			typeReference := typeReferenceFromStreamingResponseChunkType(irEndpoint.Response.Streaming.DataEventType)
-			if typeReference == nil {
-				return nil, fmt.Errorf("unsupported streaming response type: %s", irEndpoint.Response.Streaming.DataEventType.Type)
+			if irEndpoint.Response.Streaming.Json != nil && irEndpoint.Response.Streaming.Json.Terminator != nil {
+				streamDelimiter = *irEndpoint.Response.Streaming.Json.Terminator
+			}
+			typeReference, err := typeReferenceFromStreamingResponse(irEndpoint.Response.Streaming)
+			if err != nil {
+				return nil, err
 			}
 			responseType = strings.TrimPrefix(typeReferenceToGoType(typeReference, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false), "*")
 			responseParameterName = "response"
@@ -2136,6 +2163,10 @@ func (f *fileWriter) WriteRequestType(
 	for _, literal := range literals {
 		f.P(literal.Name.Name.CamelCase.SafeName, " ", literalToGoType(literal.Value))
 	}
+	if requestBody.extraProperties {
+		f.P()
+		f.P("ExtraProperties map[string]interface{} `json:\"-\" url:\"-\"`")
+	}
 	f.P("}")
 	f.P()
 	// Implement the getter methods.
@@ -2162,7 +2193,7 @@ func (f *fileWriter) WriteRequestType(
 		}
 	}
 
-	if len(literals) == 0 && len(requestBody.dates) == 0 && len(referenceType) == 0 {
+	if len(literals) == 0 && len(requestBody.dates) == 0 && len(referenceType) == 0 && !requestBody.extraProperties {
 		// If the request doesn't specify any literals or a reference type,
 		// we don't need to customize the [de]serialization logic at all.
 		return nil
@@ -2196,6 +2227,10 @@ func (f *fileWriter) WriteRequestType(
 	for _, literal := range literals {
 		f.P(receiver, ".", literal.Name.Name.CamelCase.SafeName, " = ", literalToValue(literal.Value))
 	}
+	if requestBody.extraProperties {
+		f.P()
+		writeExtractExtraProperties(f, literals, receiver)
+	}
 	f.P("return nil")
 	f.P("}")
 	f.P()
@@ -2228,7 +2263,11 @@ func (f *fileWriter) WriteRequestType(
 			f.P(literal.Name.Name.PascalCase.UnsafeName, ": ", literalToValue(literal.Value), ",")
 		}
 		f.P("}")
-		f.P("return json.Marshal(marshaler)")
+		if requestBody.extraProperties {
+			f.P("return core.MarshalJSONWithExtraProperties(marshaler, ", receiver, ".ExtraProperties)")
+		} else {
+			f.P("return json.Marshal(marshaler)")
+		}
 	}
 	f.P("}")
 	f.P()
@@ -2422,8 +2461,9 @@ func (e *environmentsURLVisitor) VisitMultipleBaseUrls(url *ir.MultipleBaseUrlsE
 }
 
 type requestBody struct {
-	dates    []*date
-	literals []*literal
+	dates           []*date
+	literals        []*literal
+	extraProperties bool
 }
 
 func requestBodyToFieldDeclaration(
@@ -2446,14 +2486,16 @@ func requestBodyToFieldDeclaration(
 		return nil, err
 	}
 	return &requestBody{
-		dates:    visitor.dates,
-		literals: visitor.literals,
+		dates:           visitor.dates,
+		literals:        visitor.literals,
+		extraProperties: visitor.extraProperties,
 	}, nil
 }
 
 type requestBodyVisitor struct {
-	dates    []*date
-	literals []*literal
+	dates           []*date
+	literals        []*literal
+	extraProperties bool
 
 	bodyField      string
 	baseImportPath string
@@ -2477,6 +2519,7 @@ func (r *requestBodyVisitor) VisitInlinedRequestBody(inlinedRequestBody *ir.Inli
 	objectProperties := typeVisitor.visitObjectProperties(objectTypeDeclaration, true /* includeTags */, r.includeGenericOptionals)
 	r.dates = objectProperties.dates
 	r.literals = objectProperties.literals
+	r.extraProperties = objectTypeDeclaration.ExtraProperties
 	return nil
 }
 
@@ -2540,8 +2583,9 @@ func inlinedRequestBodyToObjectTypeDeclaration(inlinedRequestBody *ir.InlinedReq
 		}
 	}
 	return &ir.ObjectTypeDeclaration{
-		Extends:    inlinedRequestBody.Extends,
-		Properties: properties,
+		Extends:         inlinedRequestBody.Extends,
+		Properties:      properties,
+		ExtraProperties: inlinedRequestBody.ExtraProperties,
 	}
 }
 
@@ -2644,19 +2688,19 @@ func typeReferenceFromJsonResponse(
 	return nil
 }
 
-func typeReferenceFromStreamingResponseChunkType(
-	chunkType *ir.StreamingResponseChunkType,
-) *ir.TypeReference {
-	if chunkType == nil {
-		return nil
+func typeReferenceFromStreamingResponse(
+	streamingResponse *ir.StreamingResponse,
+) (*ir.TypeReference, error) {
+	if streamingResponse == nil {
+		return nil, nil
 	}
-	switch chunkType.Type {
+	switch streamingResponse.Type {
 	case "json":
-		return chunkType.Json
+		return streamingResponse.Json.Payload, nil
 	case "text":
-		return ir.NewTypeReferenceFromPrimitive(ir.PrimitiveTypeString)
+		return ir.NewTypeReferenceFromPrimitive(ir.PrimitiveTypeString), nil
 	}
-	return nil
+	return nil, fmt.Errorf("unsupported streaming response type: %s", streamingResponse.Type)
 }
 
 // needsRequestParameter returns true if the endpoint needs a request parameter in its

@@ -25,6 +25,16 @@ public final class CreateUserRequest {
     this.name = name;
   }
 
+  @JsonProperty("_type")
+  public String getType() {
+    return "CreateUserRequest";
+  }
+
+  @JsonProperty("_version")
+  public String getVersion() {
+    return "v1";
+  }
+
   @JsonProperty("name")
   public String getName() {
     return name;

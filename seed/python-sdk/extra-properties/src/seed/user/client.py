@@ -42,10 +42,10 @@ class UserClient:
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
-            json=jsonable_encoder({"name": name})
+            json=jsonable_encoder({"_type": "CreateUserRequest", "_version": "v1", "name": name})
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder({"name": name}),
+                **jsonable_encoder({"_type": "CreateUserRequest", "_version": "v1", "name": name}),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(
@@ -97,10 +97,10 @@ class AsyncUserClient:
             params=jsonable_encoder(
                 request_options.get("additional_query_parameters") if request_options is not None else None
             ),
-            json=jsonable_encoder({"name": name})
+            json=jsonable_encoder({"_type": "CreateUserRequest", "_version": "v1", "name": name})
             if request_options is None or request_options.get("additional_body_parameters") is None
             else {
-                **jsonable_encoder({"name": name}),
+                **jsonable_encoder({"_type": "CreateUserRequest", "_version": "v1", "name": name}),
                 **(jsonable_encoder(remove_none_from_dict(request_options.get("additional_body_parameters", {})))),
             },
             headers=jsonable_encoder(

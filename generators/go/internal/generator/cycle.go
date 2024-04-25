@@ -415,8 +415,13 @@ func replaceFilepathForTypeInHttpResponse(
 			replaceFilepathForTypeInTypeReference(typeReference, typeId, fernFilepath)
 		}
 	}
-	if httpResponse.Streaming != nil && httpResponse.Streaming.DataEventType != nil {
-		replaceFilepathForTypeInTypeReference(httpResponse.Streaming.DataEventType.Json, typeId, fernFilepath)
+	if httpResponse.Streaming != nil {
+		if httpResponse.Streaming.Json != nil {
+			replaceFilepathForTypeInTypeReference(httpResponse.Streaming.Json.Payload, typeId, fernFilepath)
+		}
+		if httpResponse.Streaming.Sse != nil {
+			replaceFilepathForTypeInTypeReference(httpResponse.Streaming.Sse.Payload, typeId, fernFilepath)
+		}
 	}
 }
 
