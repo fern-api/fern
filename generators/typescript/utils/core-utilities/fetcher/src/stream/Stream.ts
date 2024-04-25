@@ -55,28 +55,37 @@ export class Stream<T> implements AsyncIterable<T> {
         let prefixSeen = false;
         for await (const chunk of stream) {
             buf += this.decodeChunk(chunk);
+
             let terminatorIndex: number;
             // Parse the chunk into as many messages as possible
-            while ((terminatorIndex = buf.indexOf(this.messageTerminator)) > 0) {
+            while ((terminatorIndex = buf.indexOf(this.messageTerminator)) >= 0) {
+                // Extract the line from the buffer
+                let line = buf.slice(0, terminatorIndex + 1);
+                buf = buf.slice(terminatorIndex + 1);
+
+                // Skip empty lines
+                if (line.length === 0) {
+                    continue;
+                }
+
                 // Skip the chunk until the prefix is found
                 if (!prefixSeen && this.prefix != null) {
-                    const prefixIndex = buf.indexOf(this.prefix);
+                    const prefixIndex = line.indexOf(this.prefix);
                     if (prefixIndex === -1) {
-                        buf = "";
-                        break;
+                        continue;
                     }
                     prefixSeen = true;
-                    buf = buf.slice(prefixIndex + this.prefix.length);
+                    line = line.slice(prefixIndex + this.prefix.length);
                 }
-                const line = buf.slice(0, terminatorIndex).trimEnd();
+
                 // If the stream terminator is present, return
                 if (this.streamTerminator != null && line.includes(this.streamTerminator)) {
                     return;
                 }
+
                 // Otherwise, yield message from the prefix to the terminator
                 const message = await this.parse(JSON.parse(line));
                 yield message;
-                buf = buf.slice(terminatorIndex + 1);
                 prefixSeen = false;
             }
         }

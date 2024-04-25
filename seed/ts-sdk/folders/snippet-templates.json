@@ -1,0 +1,168 @@
+[
+    {
+        "sdk": {
+            "package": "@fern/folders",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "const seedApi = new SeedApiClient;\n",
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await seedApi.foo()",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/folders",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "const seedApi = new SeedApiClient;\n",
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await seedApi.a.b.foo()",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/folders",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "const seedApi = new SeedApiClient;\n",
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await seedApi.a.c.foo()",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/folders",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "const seedApi = new SeedApiClient;\n",
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await seedApi.folder.foo()",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/folders",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/service",
+            "method": "GET"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "const seedApi = new SeedApiClient;\n",
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await seedApi.folder.service.endpoint()",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/folders",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/service",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "const seedApi = new SeedApiClient;\n",
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await seedApi.folder.service.unknownRequest(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                            "isOptional": true,
+                            "inputDelimiter": ",\n\t\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "\"$FERN_INPUT\"",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

@@ -1,0 +1,25 @@
+[
+    {
+        "sdk": {
+            "package": "@fern/undiscriminated-unions",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "const seedUndiscriminatedUnions = new SeedUndiscriminatedUnionsClient;\n",
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await seedUndiscriminatedUnions.union.get()",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

@@ -1,0 +1,53 @@
+[
+    {
+        "sdk": {
+            "package": "@fern/unknown",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "const seedUnknownAsAny = new SeedUnknownAsAnyClient;\n",
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await seedUnknownAsAny.unknown.post(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                            "isOptional": true,
+                            "inputDelimiter": ",\n\t\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "\"$FERN_INPUT\"",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

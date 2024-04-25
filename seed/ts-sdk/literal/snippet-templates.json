@@ -1,0 +1,261 @@
+[
+    {
+        "sdk": {
+            "package": "@fern/literal",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/headers",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "const seedLiteral = new SeedLiteralClient;\n",
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await seedLiteral.headers.send(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                            "isOptional": true,
+                            "inputDelimiter": ",\n\t\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "query: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "query",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/literal",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/inlined",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "const seedLiteral = new SeedLiteralClient;\n",
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await seedLiteral.inlined.send(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                            "isOptional": true,
+                            "inputDelimiter": ",\n\t\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "query: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "query",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "temperature: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "temperature",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/literal",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/path/{id}",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "const seedLiteral = new SeedLiteralClient;\n",
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await seedLiteral.path.send()",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/literal",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/query",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "const seedLiteral = new SeedLiteralClient;\n",
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await seedLiteral.query.send(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                            "isOptional": true,
+                            "inputDelimiter": ",\n\t\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "query: $FERN_INPUT",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "QUERY",
+                                                "path": "query",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/literal",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/reference",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "const seedLiteral = new SeedLiteralClient;\n",
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await seedLiteral.reference.send(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                            "isOptional": true,
+                            "inputDelimiter": ",\n\t\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                                        "isOptional": true,
+                                        "inputDelimiter": ",\n\t\t",
+                                        "templateInputs": [
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "query: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "query",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

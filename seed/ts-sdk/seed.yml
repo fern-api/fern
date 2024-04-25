@@ -112,7 +112,9 @@ fixtures:
 scripts:
   - docker: fernapi/ts-seed
     commands:
-      - yarn install && yarn build
+      - mkdir cache
+      - yarn install --cache-folder ./cache
+      - yarn build 
 allowedFailures:
   - response-property
   - bytes

@@ -6609,7 +6609,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/express", "npm:4.17.20"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
-            ["@types/uuid", "npm:9.0.7"],\
+            ["@types/uuid", "npm:9.0.8"],\
             ["cors", "npm:2.8.5"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
@@ -6730,7 +6730,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fern-csharp-model", "workspace:generators/csharp/model"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/generator-commons", "workspace:generators/commons"],\
-            ["@fern-fern/generator-exec-sdk", "npm:0.0.748"],\
+            ["@fern-fern/generator-exec-sdk", "npm:0.0.763"],\
             ["@fern-fern/ir-sdk", "npm:0.0.3318"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.12"],\
@@ -6760,7 +6760,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
             ["@fern-api/ruby-codegen", "workspace:generators/ruby/codegen"],\
             ["@fern-api/ruby-generator-cli", "workspace:generators/ruby/cli"],\
-            ["@fern-fern/generator-exec-sdk", "npm:0.0.748"],\
+            ["@fern-fern/generator-exec-sdk", "npm:0.0.763"],\
             ["@fern-fern/ir-sdk", "npm:32.0.0"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
@@ -6790,7 +6790,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
             ["@fern-api/ruby-codegen", "workspace:generators/ruby/codegen"],\
             ["@fern-api/ruby-generator-cli", "workspace:generators/ruby/cli"],\
-            ["@fern-fern/generator-exec-sdk", "npm:0.0.748"],\
+            ["@fern-fern/generator-exec-sdk", "npm:0.0.763"],\
             ["@fern-fern/ir-sdk", "npm:32.0.0"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
@@ -6837,7 +6837,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
-            ["@fern-fern/generator-exec-sdk", "npm:0.0.748"],\
+            ["@fern-fern/generator-exec-sdk", "npm:0.0.763"],\
             ["@fern-fern/ir-sdk", "npm:0.0.3294"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
@@ -7057,7 +7057,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.508"],\
-            ["@fern-fern/generator-exec-sdk", "npm:0.0.748"],\
+            ["@fern-fern/generator-exec-sdk", "npm:0.0.763"],\
             ["@types/decompress", "npm:4.2.7"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
@@ -7286,7 +7286,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
-            ["@types/uuid", "npm:9.0.7"],\
+            ["@types/uuid", "npm:9.0.8"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:29.7.0"],\
@@ -7436,7 +7436,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-api/ruby-codegen", "workspace:generators/ruby/codegen"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
-            ["@fern-fern/generator-exec-sdk", "npm:0.0.748"],\
+            ["@fern-fern/generator-exec-sdk", "npm:0.0.763"],\
             ["@fern-fern/ir-sdk", "npm:32.0.0"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.12"],\
@@ -7520,7 +7520,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.508"],\
-            ["@fern-fern/generator-exec-sdk", "npm:0.0.748"],\
+            ["@fern-fern/generator-exec-sdk", "npm:0.0.763"],\
             ["@types/find-up", "npm:4.0.0"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.8"],\
@@ -7797,10 +7797,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "linkType": "HARD"\
         }],\
-        ["npm:0.0.748", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-generator-exec-sdk-npm-0.0.748-fdccfa2c36-6c2f86504c.zip/node_modules/@fern-fern/generator-exec-sdk/",\
+        ["npm:0.0.763", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-generator-exec-sdk-npm-0.0.763-85dfdb4629-e6c27a08d1.zip/node_modules/@fern-fern/generator-exec-sdk/",\
           "packageDependencies": [\
-            ["@fern-fern/generator-exec-sdk", "npm:0.0.748"],\
+            ["@fern-fern/generator-exec-sdk", "npm:0.0.763"],\
             ["form-data", "npm:4.0.0"],\
             ["node-fetch", "virtual:eba7b125e9ef0be4ba7986cee714d09b00064af28d0c38584d822d811c86708dd0301c4d22305df7435dc4c73e71ea20443a8d422a46a3363bdd018ea0837c28#npm:2.7.0"],\
             ["qs", "npm:6.11.2"],\
@@ -8218,6 +8218,20 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["@fern-fern/snippet-sdk", [\
+        ["npm:0.0.5346", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-snippet-sdk-npm-0.0.5346-e96862b75c-1ffb4c80e4.zip/node_modules/@fern-fern/snippet-sdk/",\
+          "packageDependencies": [\
+            ["@fern-fern/snippet-sdk", "npm:0.0.5346"],\
+            ["form-data", "npm:4.0.0"],\
+            ["js-base64", "npm:3.7.2"],\
+            ["node-fetch", "virtual:eba7b125e9ef0be4ba7986cee714d09b00064af28d0c38584d822d811c86708dd0301c4d22305df7435dc4c73e71ea20443a8d422a46a3363bdd018ea0837c28#npm:2.7.0"],\
+            ["qs", "npm:6.11.2"],\
+            ["url-join", "npm:4.0.1"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["@fern-typescript/abstract-error-class-generator", [\
         ["workspace:generators/typescript/utils/abstract-error-class-generator", {\
           "packageLocation": "./generators/typescript/utils/abstract-error-class-generator/",\
@@ -8246,7 +8260,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/generator-commons", "workspace:generators/commons"],\
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
-            ["@fern-fern/generator-exec-sdk", "npm:0.0.748"],\
+            ["@fern-fern/generator-exec-sdk", "npm:0.0.763"],\
             ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
@@ -8548,7 +8562,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/typescript/express/cli/",\
           "packageDependencies": [\
             ["@fern-typescript/express-generator-cli", "workspace:generators/typescript/express/cli"],\
-            ["@fern-fern/generator-exec-sdk", "npm:0.0.748"],\
+            ["@fern-fern/generator-exec-sdk", "npm:0.0.763"],\
             ["@fern-fern/ir-sdk", "npm:38.0.1"],\
             ["@fern-typescript/abstract-generator-cli", "workspace:generators/typescript/utils/abstract-generator-cli"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
@@ -8886,8 +8900,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:8a76149279d527dc42458201c3444f0e08bb8ef2b7cbf4f32fc7e89d242b47183703ea44d1dad80bf1fea71f560f9b94f46bf42448e2ea552c04d3003cead412#npm:7.24.1"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
-            ["@fern-fern/generator-exec-sdk", "npm:0.0.748"],\
+            ["@fern-fern/generator-exec-sdk", "npm:0.0.763"],\
             ["@fern-fern/ir-sdk", "npm:38.0.1"],\
+            ["@fern-fern/snippet-sdk", "npm:0.0.5346"],\
             ["@fern-typescript/commons", "workspace:generators/typescript/utils/commons"],\
             ["@fern-typescript/contexts", "workspace:generators/typescript/utils/contexts"],\
             ["@fern-typescript/endpoint-error-union-generator", "workspace:generators/typescript/sdk/endpoint-error-union-generator"],\
@@ -8909,6 +8924,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/lodash-es", "npm:4.17.12"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/url-join", "npm:4.0.1"],\
+            ["@types/uuid", "npm:9.0.8"],\
             ["depcheck", "npm:1.4.6"],\
             ["eslint", "npm:8.56.0"],\
             ["jest", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:29.7.0"],\
@@ -8919,7 +8935,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["ts-morph", "npm:15.1.0"],\
             ["ts-poet", "npm:6.7.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
-            ["url-join", "npm:5.0.0"]\
+            ["url-join", "npm:5.0.0"],\
+            ["uuid", "npm:9.0.1"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -11091,10 +11108,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/uuid", [\
-        ["npm:9.0.7", {\
-          "packageLocation": "./.yarn/cache/@types-uuid-npm-9.0.7-c380bb8654-c7321194ae.zip/node_modules/@types/uuid/",\
+        ["npm:9.0.8", {\
+          "packageLocation": "./.yarn/cache/@types-uuid-npm-9.0.8-3eeeaa5abb-b8c60b7ba8.zip/node_modules/@types/uuid/",\
           "packageDependencies": [\
-            ["@types/uuid", "npm:9.0.7"]\
+            ["@types/uuid", "npm:9.0.8"]\
           ],\
           "linkType": "HARD"\
         }]\
