@@ -144,6 +144,41 @@ describe("parseImagePaths", () => {
             "\"This is a test page with an image \\<img src={'https://external.com/image.png'} />\""
         );
     });
+
+    it("should ignore img src if it is not a string", () => {
+        const page = "This is a test page with an image <img src={pathToImage} />";
+        const result = parseImagePaths(MDX_PATH, page);
+        expect(result.filepaths).toEqual([]);
+        expect(result.markdown.trim()).toMatchInlineSnapshot(
+            '"This is a test page with an image <img src={pathToImage} />"'
+        );
+    });
+
+    it("should ignore img src if it is an empty string", () => {
+        const page = "This is a test page with an image <img src='' />";
+        const result = parseImagePaths(MDX_PATH, page);
+        expect(result.filepaths).toEqual([]);
+        expect(result.markdown.trim()).toMatchInlineSnapshot("\"This is a test page with an image <img src='' />\"");
+    });
+
+    it("should ignore img src if it is an empty string in mdx img tags", () => {
+        const page = "This is a test page with an image <img src={''} />";
+        const result = parseImagePaths(MDX_PATH, page);
+        expect(result.filepaths).toEqual([]);
+        expect(result.markdown.trim()).toMatchInlineSnapshot(
+            "\"This is a test page with an image \\<img src={''} />\""
+        );
+    });
+
+    it("should ignore img src if it is a string with concatenated variables", () => {
+        const page =
+            "This is a test page with an image <img src={path + '/image.png'} /> <img src={'abc' + 'def.png'} />";
+        const result = parseImagePaths(MDX_PATH, page);
+        expect(result.filepaths).toEqual([]);
+        expect(result.markdown.trim()).toMatchInlineSnapshot(
+            "\"This is a test page with an image \\<img src={path + '/image.png'} /> \\<img src={'abc' + 'def.png'} />\""
+        );
+    });
 });
 
 describe("replaceImagePaths", () => {
@@ -151,6 +186,9 @@ describe("replaceImagePaths", () => {
         const page = "This is a test page with an image ![image](path/to/image.png)";
         const fileIds = new Map([[RelativeFilePath.of("path/to/image.png"), "fileID"]]);
         const result = replaceImagePaths(page, fileIds);
-        expect(result).toMatchInlineSnapshot('"This is a test page with an image ![image](fileID)"');
+        expect(result).toMatchInlineSnapshot(`
+            "This is a test page with an image ![image](fileID)
+            "
+        `);
     });
 });
