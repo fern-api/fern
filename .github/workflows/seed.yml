@@ -84,15 +84,12 @@ jobs:
           node-version: 18
           cache: "yarn"
 
-      - name: Install Seed
-        env:
-          FORCE_COLOR: "2"
-        run: npm install -g @fern-api/seed-cli
-
       - name: Yarn Install
         run: yarn install
 
       - name: Seed Test
+        env:
+          FORCE_COLOR: "2"
         run: |
           yarn seed:local test --generator ruby-model
 
@@ -111,9 +108,6 @@ jobs:
         with:
           node-version: 18
           cache: "yarn"
-
-      - name: Install Seed
-        run: npm install -g @fern-api/seed-cli
 
       - name: Yarn Install
         run: yarn install
