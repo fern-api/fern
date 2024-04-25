@@ -4672,18 +4672,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/generator-exec-sdk@npm:^0.0.730":
-  version: 0.0.730
-  resolution: "@fern-fern/generator-exec-sdk@npm:0.0.730"
-  dependencies:
-    form-data: 4.0.0
-    node-fetch: 2.7.0
-    qs: 6.11.2
-    url-join: 4.0.1
-  checksum: c870d1a5a5b1b1bfcbe11d51c22002e99bc44dec9ba3e8482def1efbef8c3746c886c24c88b98166778d897007719ab452d179dc943720fe1499a8df9549a1fa
-  languageName: node
-  linkType: hard
-
 "@fern-fern/generator-exec-sdk@npm:^0.0.763":
   version: 0.0.763
   resolution: "@fern-fern/generator-exec-sdk@npm:0.0.763"
@@ -12464,7 +12452,7 @@ env-cmd@toddbluhm/env-cmd:
     "@blueprintjs/eslint-plugin": ^2.1.2
     "@blueprintjs/stylelint-plugin": ^4.1.3
     "@fern-api/logging-execa": "workspace:^"
-    "@fern-fern/generator-exec-sdk": ^0.0.730
+    "@fern-fern/generator-exec-sdk": ^0.0.763
     "@types/is-ci": ^3.0.2
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.6
