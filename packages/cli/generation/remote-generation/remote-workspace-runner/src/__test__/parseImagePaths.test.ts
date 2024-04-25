@@ -1,5 +1,5 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { parseImagePaths } from "../parseImagePaths";
+import { parseImagePaths, replaceImagePaths } from "../parseImagePaths";
 
 const MDX_PATH = RelativeFilePath.of("my/docs/folder/file.mdx");
 
@@ -143,5 +143,14 @@ describe("parseImagePaths", () => {
         expect(result.markdown.trim()).toMatchInlineSnapshot(
             "\"This is a test page with an image \\<img src={'https://external.com/image.png'} />\""
         );
+    });
+});
+
+describe("replaceImagePaths", () => {
+    it("should replace image paths with fileIDs", () => {
+        const page = "This is a test page with an image ![image](path/to/image.png)";
+        const fileIds = new Map([[RelativeFilePath.of("path/to/image.png"), "fileID"]]);
+        const result = replaceImagePaths(page, fileIds);
+        expect(result).toMatchInlineSnapshot('"This is a test page with an image ![image](fileID)"');
     });
 });
