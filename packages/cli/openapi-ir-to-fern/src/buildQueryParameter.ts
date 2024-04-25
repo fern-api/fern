@@ -79,7 +79,9 @@ function getQueryParameterTypeReference({
 }): QueryParameterTypeReference | undefined {
     if (schema.type === "reference") {
         const resolvedSchema = context.getSchema(schema.schema);
-        if (resolvedSchema.type === "array") {
+        if (resolvedSchema == null) {
+            return undefined;
+        } else if (resolvedSchema.type === "array") {
             return {
                 value: buildTypeReference({
                     schema: Schema.optional({
@@ -138,7 +140,9 @@ function getQueryParameterTypeReference({
     if (schema.type === "optional" || schema.type === "nullable") {
         if (schema.value.type === "reference") {
             const resolvedSchema = context.getSchema(schema.value.schema);
-            if (resolvedSchema.type === "array") {
+            if (resolvedSchema == null) {
+                return undefined;
+            } else if (resolvedSchema.type === "array") {
                 return {
                     value: buildTypeReference({
                         schema: Schema.optional({

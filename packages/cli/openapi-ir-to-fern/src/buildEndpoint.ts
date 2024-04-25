@@ -327,7 +327,7 @@ function getRequest({
         // the request body is referenced if it is not an object or if other parts of the spec
         // refer to the same type
         if (
-            resolvedSchema.type !== "object" ||
+            resolvedSchema?.type !== "object" ||
             (maybeSchemaId != null && nonRequestReferencedSchemas.includes(maybeSchemaId))
         ) {
             const requestTypeReference = buildTypeReference({

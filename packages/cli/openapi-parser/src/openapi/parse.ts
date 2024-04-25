@@ -60,6 +60,8 @@ export async function parse({
         groups: {}
     };
 
+    console.log("workspace.specs", JSON.stringify(workspace.specs));
+
     for (const spec of workspace.specs) {
         const contents = (await readFile(spec.absoluteFilepath)).toString();
         if (contents.includes("openapi") || contents.includes("swagger")) {
