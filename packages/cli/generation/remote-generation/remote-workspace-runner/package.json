@@ -50,9 +50,12 @@
     "image-size": "^1.1.1",
     "lodash-es": "^4.17.21",
     "mime-types": "^2.1.35",
+    "remark-parse": "^11.0.0",
+    "remark-rehype": "^11.1.0",
     "tar": "^6.2.1",
     "terminal-link": "^3.0.0",
     "tmp-promise": "^3.0.3",
+    "unified": "^11.0.4",
     "url-join": "^5.0.0"
   },
   "devDependencies": {
