@@ -431,7 +431,7 @@ class RootClientGenerator:
                             )
                         )
                         if add_validation and oauth.client_id_env_var is not None
-                        else None
+                        else None,
                     ),
                 )
 
@@ -464,10 +464,9 @@ class RootClientGenerator:
                             )
                         )
                         if sec_add_validation and oauth.client_secret_env_var is not None
-                        else None
+                        else None,
                     ),
                 )
-
 
         parameters.append(
             RootClientConstructorParameter(
