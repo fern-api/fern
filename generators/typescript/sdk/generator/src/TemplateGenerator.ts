@@ -553,7 +553,7 @@ export class TemplateGenerator {
                 location: FdrSnippetTemplate.PayloadLocation.Path,
                 wireOrOriginalName: pathParameter.name.originalName,
                 nameBreadcrumbs: undefined,
-                indentationLevel: 0
+                indentationLevel: 1
             });
             if (pt != null) {
                 nrp.push(pt);
@@ -572,7 +572,7 @@ export class TemplateGenerator {
                 location: FdrSnippetTemplate.PayloadLocation.Query,
                 wireOrOriginalName: pathParameter.name.wireValue,
                 nameBreadcrumbs: undefined,
-                indentationLevel: 0
+                indentationLevel: 2
             });
             if (pt != null) {
                 nrp.push(pt);
@@ -586,7 +586,7 @@ export class TemplateGenerator {
                 location: FdrSnippetTemplate.PayloadLocation.Headers,
                 wireOrOriginalName: header.name.wireValue,
                 nameBreadcrumbs: undefined,
-                indentationLevel: 0
+                indentationLevel: 2
             });
             if (pt != null) {
                 nrp.push(pt);
@@ -603,7 +603,7 @@ export class TemplateGenerator {
                         location: FdrSnippetTemplate.PayloadLocation.Body,
                         wireOrOriginalName: prop.name.wireValue,
                         nameBreadcrumbs: undefined,
-                        indentationLevel: 1
+                        indentationLevel: 2
                     })
                 ),
             reference: (ref) => [
@@ -613,7 +613,7 @@ export class TemplateGenerator {
                     name: undefined,
                     wireOrOriginalName: undefined,
                     nameBreadcrumbs: undefined,
-                    indentationLevel: 1
+                    indentationLevel: 2
                 })
             ],
             fileUpload: (fu) =>
@@ -633,7 +633,7 @@ export class TemplateGenerator {
                                 location: FdrSnippetTemplate.PayloadLocation.Body,
                                 wireOrOriginalName: bp.name.wireValue,
                                 nameBreadcrumbs: undefined,
-                                indentationLevel: 1
+                                indentationLevel: 2
                             }),
                         _other: () => undefined
                     })
