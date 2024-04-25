@@ -5,6 +5,7 @@ import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 import { ScriptConfig } from "../../config/api";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
+import { Semaphore } from "../../Semaphore";
 
 export declare namespace ScriptRunner {
     interface RunArgs {
@@ -35,6 +36,7 @@ interface RunningScriptConfig extends ScriptConfig {
 export class ScriptRunner {
     private startContainersFn: Promise<void>;
     private scripts: RunningScriptConfig[] = [];
+    private lock = new Semaphore(1);
 
     constructor(private readonly workspace: GeneratorWorkspace) {
         this.startContainersFn = this.startContainers();
