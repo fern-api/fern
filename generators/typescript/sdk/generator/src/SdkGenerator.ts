@@ -315,7 +315,6 @@ export class SdkGenerator {
             this.config.writeUnitTests
         );
 
-        this.context.logger.debug(`execution environment: ${this.config.executionEnvironment}`);
         this.FdrClient =
             this.config.executionEnvironment !== "local"
                 ? new FdrSnippetTemplateClient({
@@ -324,9 +323,7 @@ export class SdkGenerator {
                               ? FdrSnippetTemplateEnvironment.Dev
                               : FdrSnippetTemplateEnvironment.Prod
                   })
-                : new FdrSnippetTemplateClient({
-                      environment: FdrSnippetTemplateEnvironment.Dev
-                  });
+                : undefined;
     }
 
     public async generate(): Promise<TypescriptProject> {
@@ -405,6 +402,7 @@ export class SdkGenerator {
                     JSON.stringify(this.endpointSnippetTemplates, undefined, 4)
                 );
                 if (this.FdrClient != null) {
+                    this.context.logger.debug("FDR Client found, registering snippet templates.");
                     try {
                         await this.FdrClient.templates.registerBatch({
                             orgId: this.config.organization,
