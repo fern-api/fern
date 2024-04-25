@@ -2,6 +2,7 @@ export * from "./DocsConfiguration";
 export * from "./TabId";
 export * from "./TabConfig";
 export * from "./DocsInstances";
+export * from "./CustomDomain";
 export * from "./EditThisPageConfig";
 export * from "./GithubEditThisPageConfig";
 export * from "./AudiencesConfig";

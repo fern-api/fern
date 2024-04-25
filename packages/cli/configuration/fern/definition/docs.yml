@@ -38,8 +38,7 @@ types:
   DocsInstances:
     properties:
       url: string
-      "custom-domain": optional<string>
-      "custom-domains": optional<list<string>>
+      "custom-domain": optional<CustomDomain>
       audiences:
         type: optional<AudiencesConfig>
         availability: in-development
@@ -53,6 +52,12 @@ types:
         docs: |
           If `edit-this-page` is set, Fern will add an "Edit this page" link to the bottom of each page that links to the given GitHub repository.
         availability: in-development
+
+  CustomDomain:
+    discriminated: false
+    union:
+      - string
+      - list<string>
 
   # this is a partial object in case we want to add more options in the future
   EditThisPageConfig:

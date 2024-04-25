@@ -42,16 +42,12 @@ export async function runRemoteGenerationForDocsWorkspace({
     // TODO: validate custom domains
     const customDomains: string[] = [];
 
-    if (maybeInstance.customDomain != null && maybeInstance.customDomains != null) {
-        context.logger.warn("Both custom-domain and custom-domains are specified in docs.yml. Please use only one.");
-    }
-
     if (maybeInstance.customDomain != null) {
-        customDomains.push(maybeInstance.customDomain);
-    }
-
-    if (maybeInstance.customDomains != null) {
-        customDomains.push(...maybeInstance.customDomains);
+        if (typeof maybeInstance.customDomain === "string") {
+            customDomains.push(maybeInstance.customDomain);
+        } else if (Array.isArray(maybeInstance.customDomain)) {
+            customDomains.push(...maybeInstance.customDomain);
+        }
     }
 
     await context.runInteractiveTask({ name: maybeInstance.url }, async () => {
