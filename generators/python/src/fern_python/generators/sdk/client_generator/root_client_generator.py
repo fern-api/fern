@@ -203,48 +203,6 @@ class RootClientGenerator:
             for param in constructor_parameters
         ]
 
-        if self._oauth_scheme is not None:
-            oauth = self._oauth_scheme.configuration.get_as_union()
-            if oauth.type == "clientCredentials":
-                named_parameters.append(
-                    AST.NamedFunctionParameter(
-                        name="client_id",
-                        type_hint=AST.TypeHint.optional(AST.TypeHint.str_())
-                        if oauth.client_id_env_var is not None
-                        else AST.TypeHint.str_(),
-                        initializer=AST.Expression(
-                            AST.FunctionInvocation(
-                                function_definition=AST.Reference(
-                                    import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
-                                    qualified_name_excluding_import=("getenv",),
-                                ),
-                                args=[AST.Expression(f'"{oauth.client_id_env_var.get_as_str()}"')],
-                            )
-                        )
-                        if oauth.client_id_env_var is not None
-                        else None,
-                    ),
-                )
-                named_parameters.append(
-                    AST.NamedFunctionParameter(
-                        name="client_secret",
-                        type_hint=AST.TypeHint.optional(AST.TypeHint.str_())
-                        if oauth.client_secret_env_var is not None
-                        else AST.TypeHint.str_(),
-                        initializer=AST.Expression(
-                            AST.FunctionInvocation(
-                                function_definition=AST.Reference(
-                                    import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
-                                    qualified_name_excluding_import=("getenv",),
-                                ),
-                                args=[AST.Expression(f'"{oauth.client_secret_env_var.get_as_str()}"')],
-                            )
-                        )
-                        if oauth.client_secret_env_var is not None
-                        else None,
-                    ),
-                )
-
         snippet = SourceFileFactory.create_snippet()
         snippet.add_expression(
             generated_root_client.async_instantiation if is_async else generated_root_client.sync_instantiation
@@ -440,6 +398,76 @@ class RootClientGenerator:
                     else None,
                 )
             )
+
+        if self._oauth_scheme is not None:
+            oauth = self._oauth_scheme.configuration.get_as_union()
+            if oauth.type == "clientCredentials":
+                cred_type_hint = AST.TypeHint.str_()
+                add_validation = False
+                if oauth.client_id_env_var is not None:
+                    add_validation = True
+                    cred_type_hint = AST.TypeHint.optional(cred_type_hint)
+                parameters.append(
+                    RootClientConstructorParameter(
+                        constructor_parameter_name="client_id",
+                        type_hint=cred_type_hint,
+                        initializer=AST.Expression(
+                            AST.FunctionInvocation(
+                                function_definition=AST.Reference(
+                                    import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                                    qualified_name_excluding_import=("getenv",),
+                                ),
+                                args=[AST.Expression(f'"{oauth.client_id_env_var.get_as_str()}"')],
+                            )
+                        )
+                        if oauth.client_id_env_var is not None
+                        else None,
+                        validation_check=AST.Expression(
+                            AST.CodeWriter(
+                                self._get_paramter_validation_writer(
+                                    param_name="client_id",
+                                    environment_variable=oauth.client_id_env_var.get_as_str(),
+                                )
+                            )
+                        )
+                        if add_validation and oauth.client_id_env_var is not None
+                        else None
+                    ),
+                )
+
+                sec_cred_type_hint = AST.TypeHint.str_()
+                sec_add_validation = False
+                if oauth.client_secret_env_var is not None:
+                    sec_add_validation = True
+                    sec_cred_type_hint = AST.TypeHint.optional(sec_cred_type_hint)
+                parameters.append(
+                    RootClientConstructorParameter(
+                        constructor_parameter_name="client_secret",
+                        type_hint=sec_cred_type_hint,
+                        initializer=AST.Expression(
+                            AST.FunctionInvocation(
+                                function_definition=AST.Reference(
+                                    import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                                    qualified_name_excluding_import=("getenv",),
+                                ),
+                                args=[AST.Expression(f'"{oauth.client_secret_env_var.get_as_str()}"')],
+                            )
+                        )
+                        if oauth.client_secret_env_var is not None
+                        else None,
+                        validation_check=AST.Expression(
+                            AST.CodeWriter(
+                                self._get_paramter_validation_writer(
+                                    param_name="client_secret",
+                                    environment_variable=oauth.client_secret_env_var.get_as_str(),
+                                )
+                            )
+                        )
+                        if sec_add_validation and oauth.client_secret_env_var is not None
+                        else None
+                    ),
+                )
+
 
         parameters.append(
             RootClientConstructorParameter(
