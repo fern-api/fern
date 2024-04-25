@@ -31,7 +31,11 @@ export class OpenApiIrConverterContext {
     public getSchema(id: SchemaId): Schema {
         const schema = this.ir.schemas[id];
         if (schema == null) {
-            return this.taskContext.failAndThrow(`Unexpected error. Failed to find schema ${id}`);
+            this.logger.warn(`Schema with id ${id} not found. Treating as unknown.`);
+            return Schema.unknown({
+                generatedName: "",
+                nameOverride: undefined
+            });
         }
         return schema;
     }

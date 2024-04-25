@@ -78,8 +78,9 @@ scripts:
       # The global python version is 3.8
       - poetry install
       # Remove mypy for now given the issue where it falsely flags the use of field aliases.
-      # - poetry run mypy .
-      - fern test --command "poetry run pytest -rP ."
+      - poetry run mypy .
+      # TODO(FER-1142): Add back soon
+      # - fern test --command "poetry run pytest -rP ."
 allowedFailures: 
   - response-property
   - websocket

@@ -72,6 +72,24 @@ export abstract class AbstractAsyncAPIV2ParserContext implements SchemaParserCon
         return resolvedMessage;
     }
 
+    public referenceExists(ref: string): boolean {
+        // Step 1: Get keys
+        const keys = ref
+            .substring(2)
+            .split("/")
+            .map((key) => key.replace(/~1/g, "/"));
+
+        // Step 2: Index recursively into the document with all the keys
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        let resolvedSchema: any = this.document;
+        for (const key of keys) {
+            if (typeof resolvedSchema !== "object" || resolvedSchema == null) {
+                return false;
+            }
+            resolvedSchema = resolvedSchema[key];
+        }
+        return true;
+    }
     public abstract markSchemaAsReferencedByNonRequest(schemaId: string): void;
 
     public abstract markSchemaAsReferencedByRequest(schemaId: string): void;

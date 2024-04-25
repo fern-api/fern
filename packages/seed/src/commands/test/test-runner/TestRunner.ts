@@ -54,6 +54,7 @@ export declare namespace TestRunner {
     interface TestSuccess {
         type: "success";
         id: string;
+        outputFolder: string;
         metrics: TestCaseMetrics;
     }
 
@@ -62,6 +63,7 @@ export declare namespace TestRunner {
         cause: "invalid-fixture" | "generation" | "compile";
         message?: string;
         id: string;
+        outputFolder: string;
         metrics: TestCaseMetrics;
     }
 
@@ -132,6 +134,7 @@ export abstract class TestRunner {
                 cause: "invalid-fixture",
                 message: `Failed to validate fixture ${fixture}`,
                 id: fixture,
+                outputFolder,
                 metrics
             };
         }
@@ -169,11 +172,13 @@ export abstract class TestRunner {
                     absolutePathToDotMockDirectory: outputDir,
                     absolutePathToFernDefinition: absolutePathToAPIDefinition
                 });
+                taskContext.logger.info("Successfully wrote .mock directory...");
             } catch (error) {
                 return {
                     type: "failure",
                     cause: "generation",
                     id: fixture,
+                    outputFolder,
                     metrics
                 };
             }
@@ -182,6 +187,7 @@ export abstract class TestRunner {
                 return {
                     type: "success",
                     id: fixture,
+                    outputFolder,
                     metrics
                 };
             }
@@ -199,12 +205,14 @@ export abstract class TestRunner {
                     type: "failure",
                     cause: "compile",
                     id: fixture,
+                    outputFolder,
                     metrics
                 };
             }
             return {
                 type: "success",
                 id: fixture,
+                outputFolder,
                 metrics
             };
         } finally {

@@ -534,7 +534,7 @@ pip install --upgrade {project._project_config.package_name}
     ) -> None:
         # Write tests
         #
-        # TODO: Re-enable this feature as soon as we can.
+        # TODO(FER-1142): Re-enable this feature as soon as we can.
         # snippet_test_factory.tests(ir, snippet_writer)
         pass
 
