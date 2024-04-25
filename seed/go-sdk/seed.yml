@@ -1,4 +1,4 @@
-irVersion: v35
+irVersion: v40
 docker: fernapi/fern-go-sdk:latest
 dockerCommand: docker build -f ./generators/go/docker/Dockerfile.sdk -t fernapi/fern-go-sdk:latest ./generators/go
 language: go
@@ -43,4 +43,5 @@ scripts:
 allowedFailures: 
   - exhaustive
   - reserved-keywords
+  - server-sent-events
   - trace

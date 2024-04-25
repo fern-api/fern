@@ -23,12 +23,32 @@ paths:
             schema:
               type: object
               properties:
+                _type:
+                  type: string
+                  enum:
+                    - CreateUserRequest
+                _version:
+                  type: string
+                  enum:
+                    - v1
                 name:
                   type: string
               required:
+                - _type
+                - _version
                 - name
 components:
   schemas:
+    Failure:
+      title: Failure
+      type: object
+      properties:
+        status:
+          type: string
+          enum:
+            - failure
+      required:
+        - status
     User:
       title: User
       type: object

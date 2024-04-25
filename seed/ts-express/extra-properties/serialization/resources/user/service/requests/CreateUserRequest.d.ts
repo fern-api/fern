@@ -7,6 +7,8 @@ import * as core from "../../../../../core";
 export declare const CreateUserRequest: core.serialization.Schema<serializers.CreateUserRequest.Raw, SeedExtraProperties.CreateUserRequest>;
 export declare namespace CreateUserRequest {
     interface Raw {
+        _type: "CreateUserRequest";
+        _version: "v1";
         name: string;
     }
 }

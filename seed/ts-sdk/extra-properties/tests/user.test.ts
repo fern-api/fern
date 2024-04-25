@@ -9,6 +9,8 @@ const client = new SeedExtraPropertiesClient({ environment: process.env.TESTS_BA
 describe("User", () => {
     test("createUser", async () => {
         const response = await client.user.createUser({
+            type: "CreateUserRequest",
+            version: "v1",
             name: "string",
         });
         expect(response).toEqual({ name: "string" });
