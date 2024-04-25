@@ -1,2 +1,2 @@
-export { GetTokenRequest } from "./GetTokenRequest";
-export { RefreshTokenRequest } from "./RefreshTokenRequest";
+export { type GetTokenRequest } from "./GetTokenRequest";
+export { type RefreshTokenRequest } from "./RefreshTokenRequest";

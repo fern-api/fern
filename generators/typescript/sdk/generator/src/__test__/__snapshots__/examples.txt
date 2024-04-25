@@ -446,7 +446,7 @@ export interface GetFileRequest {
 
 
 /// File: /src/api/resources/file/resources/service/client/requests/index.ts
-export { GetFileRequest } from "./GetFileRequest";
+export { type GetFileRequest } from "./GetFileRequest";
 
 
 /// File: /src/api/resources/file/resources/service/index.ts
@@ -872,7 +872,7 @@ export interface GetMetadataRequest {
 
 
 /// File: /src/api/resources/service/client/requests/index.ts
-export { GetMetadataRequest } from "./GetMetadataRequest";
+export { type GetMetadataRequest } from "./GetMetadataRequest";
 
 
 /// File: /src/api/resources/service/index.ts

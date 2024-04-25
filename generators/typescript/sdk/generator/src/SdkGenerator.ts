@@ -535,7 +535,8 @@ export class SdkGenerator {
                             context.requestWrapper
                                 .getGeneratedRequestWrapper(packageId, endpoint.name)
                                 .writeToFile(context);
-                        }
+                        },
+                        addExportTypeModifier: true
                     });
                 }
             }
@@ -890,10 +891,12 @@ export class SdkGenerator {
 
     private withSourceFile({
         run,
-        filepath
+        filepath,
+        addExportTypeModifier
     }: {
         run: (args: { sourceFile: SourceFile; importsManager: ImportsManager }) => void;
         filepath: ExportedFilePath;
+        addExportTypeModifier?: boolean;
     }) {
         const filepathStr = convertExportedFilePathToFilePath(filepath);
         this.context.logger.debug(`Generating ${filepathStr}`);
@@ -908,7 +911,7 @@ export class SdkGenerator {
             this.context.logger.debug(`Skipping ${filepathStr} (no content)`);
         } else {
             importsManager.writeImportsToSourceFile(sourceFile);
-            this.exportsManager.addExportsForFilepath(filepath);
+            this.exportsManager.addExportsForFilepath(filepath, addExportTypeModifier);
 
             // this needs to be last.
             // https://github.com/dsherret/ts-morph/issues/189#issuecomment-414174283

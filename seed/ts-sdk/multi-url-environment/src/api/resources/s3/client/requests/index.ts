@@ -1,1 +1,1 @@
-export { GetPresignedUrlRequest } from "./GetPresignedUrlRequest";
+export { type GetPresignedUrlRequest } from "./GetPresignedUrlRequest";

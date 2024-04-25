@@ -10,6 +10,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Feature: The generator now registers snippet templates which can be used for dynamic
   SDK code snippet generation.
 
+## [0.15.1-rc1] - 2024-04-24
+
+- Improvement: Earlier for inlined request exports, we were doing the following:
+
+```ts
+export { MyRequest } from "./MyRequest";
+```
+
+In an effort to make the generated code JSR compatible, the TS generator
+will now append the `type` explicitly for request exports. 
+
+```ts
+  export { type MyRequest } from "./MyRequest";
+```
+
 ## [0.15.1-rc0] - 2024-04-22
 
 - Feature: plain text responses are now supported in the TypeScript generator.
