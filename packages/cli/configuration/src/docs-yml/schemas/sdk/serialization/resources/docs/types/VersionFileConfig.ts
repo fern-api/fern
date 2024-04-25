@@ -16,7 +16,7 @@ export const VersionFileConfig: core.serialization.ObjectSchema<
             core.serialization.lazyObject(async () => (await import("../../..")).TabConfig)
         )
         .optional(),
-    navigation: core.serialization.lazy(async () => (await import("../../..")).NavigationConfig)
+    navigation: core.serialization.lazy(async () => (await import("../../..")).NavigationConfig),
 });
 
 export declare namespace VersionFileConfig {

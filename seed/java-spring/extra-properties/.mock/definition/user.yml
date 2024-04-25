@@ -16,5 +16,7 @@ service:
         body:
           extra-properties: true
           properties:
+            _type: literal<"CreateUserRequest">
+            _version: literal<"v1">
             name: string
       response: User

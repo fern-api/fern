@@ -13,6 +13,12 @@ import (
 )
 
 var (
+	//go:embed sdk/core/extra_properties.go
+	extraPropertiesFile string
+
+	//go:embed sdk/core/extra_properties_test.go
+	extraPropertiesTestFile string
+
 	//go:embed model/core/stringer.go
 	stringerFile string
 
@@ -139,6 +145,10 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	for _, literal := range objectProperties.literals {
 		t.writer.P(literal.Name.Name.CamelCase.SafeName, " ", literalToGoType(literal.Value))
 	}
+	if object.ExtraProperties {
+		t.writer.P()
+		t.writer.P("ExtraProperties map[string]interface{} `json:\"-\" url:\"-\"`")
+	}
 	if t.includeRawJSON {
 		t.writer.P()
 		t.writer.P("_rawJSON json.RawMessage")
@@ -157,8 +167,8 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	}
 
 	// Implement the json.Unmarshaler interface.
-	if t.includeRawJSON || len(objectProperties.literals) > 0 || len(objectProperties.dates) > 0 {
-		if t.includeRawJSON && len(objectProperties.literals) == 0 && len(objectProperties.dates) == 0 {
+	if t.includeRawJSON || len(objectProperties.literals) > 0 || len(objectProperties.dates) > 0 || object.ExtraProperties {
+		if t.includeRawJSON && len(objectProperties.literals) == 0 && len(objectProperties.dates) == 0 && !object.ExtraProperties {
 			// If we don't require any special unmarshaling, prefer the simpler implementation.
 			t.writer.P("func (", receiver, " *", t.typeName, ") UnmarshalJSON(data []byte) error {")
 			t.writer.P("type unmarshaler ", t.typeName)
@@ -192,9 +202,15 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 			for _, literal := range objectProperties.literals {
 				t.writer.P(receiver, ".", literal.Name.Name.CamelCase.SafeName, " = ", literalToValue(literal.Value))
 			}
+			if object.ExtraProperties {
+				t.writer.P()
+				writeExtractExtraProperties(t.writer, objectProperties.literals, receiver)
+			}
 			if t.includeRawJSON {
+				t.writer.P()
 				t.writer.P(receiver, "._rawJSON = json.RawMessage(data)")
 			}
+
 			t.writer.P("return nil")
 			t.writer.P("}")
 			t.writer.P()
@@ -202,7 +218,7 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	}
 
 	// Implement the json.Marshaler interface.
-	if len(objectProperties.literals) > 0 || len(objectProperties.dates) > 0 {
+	if len(objectProperties.literals) > 0 || len(objectProperties.dates) > 0 || object.ExtraProperties {
 		t.writer.P("func (", receiver, " *", t.typeName, ") MarshalJSON() ([]byte, error) {")
 		t.writer.P("type embed ", t.typeName)
 		t.writer.P("var marshaler = struct{")
@@ -222,7 +238,11 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 			t.writer.P(literal.Name.Name.PascalCase.UnsafeName, ": ", literalToValue(literal.Value), ",")
 		}
 		t.writer.P("}")
-		t.writer.P("return json.Marshal(marshaler)")
+		if object.ExtraProperties {
+			t.writer.P("return core.MarshalJSONWithExtraProperties(marshaler, ", receiver, ".ExtraProperties)")
+		} else {
+			t.writer.P("return json.Marshal(marshaler)")
+		}
 		t.writer.P("}")
 		t.writer.P()
 	}
@@ -1232,6 +1252,26 @@ func singleUnionTypePropertiesToInitializer(
 	}
 	_ = singleUnionTypeProperties.Accept(visitor)
 	return visitor.value
+}
+
+func writeExtractExtraProperties(
+	f *fileWriter,
+	literals []*literal,
+	receiver string,
+) {
+	var exclude string
+	if len(literals) > 0 {
+		for _, literal := range literals {
+			exclude += fmt.Sprintf("%q", literal.Name.WireValue) + ", "
+		}
+		exclude = ", " + exclude
+	}
+	f.P("extraProperties, err := core.ExtractExtraProperties(data, *", receiver, exclude, ")")
+	f.P("if err != nil {")
+	f.P("return err")
+	f.P("}")
+	f.P(receiver, ".ExtraProperties = extraProperties")
+	f.P()
 }
 
 // typeReferenceToUndiscriminatedUnionField maps Fern's type references to the field name used in an

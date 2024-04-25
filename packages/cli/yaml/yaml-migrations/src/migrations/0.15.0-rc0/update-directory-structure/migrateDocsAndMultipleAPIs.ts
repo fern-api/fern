@@ -10,6 +10,7 @@ import {
     loadRawGeneratorsConfiguration
 } from "./generators-configuration";
 import { PathModificationStrategy } from "./generators-configuration/convertLegacyGeneratorsConfiguration";
+import { migrateDocsInstances } from "./migrateDocsInstances";
 
 const APIS_DIRECTORY = "apis";
 
@@ -93,7 +94,7 @@ async function migrateAndWriteDocsYml({
     }
     const convertedDocsConfig = convertLegacyDocsConfig({
         docsConfiguration,
-        docsURLs,
+        docsURLs: migrateDocsInstances(docsURLs),
         apiName
     });
     const absolutePathToDocsConfig = getAbsolutePathToDocsYaml({ absolutePathToWorkspace });

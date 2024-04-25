@@ -25,6 +25,7 @@ export interface APIDefinitionLocation {
     path: string;
     origin: string | undefined;
     overrides: string | undefined;
+    audiences: string[] | undefined;
 }
 
 export interface GeneratorGroup {

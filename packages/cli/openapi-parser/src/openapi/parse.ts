@@ -14,6 +14,11 @@ import { generateIr as generateIrFromV3 } from "./v3/generateIr";
 export interface Spec {
     absoluteFilepath: AbsoluteFilePath;
     absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
+    settings?: SpecImportSettings;
+}
+
+export interface SpecImportSettings {
+    audiences: string[];
 }
 
 export interface RawOpenAPIFile {
@@ -67,14 +72,16 @@ export async function parse({
                 const openapiIr = generateIrFromV3({
                     openApi: openApiDocument,
                     taskContext,
-                    disableExamples: false
+                    disableExamples: false,
+                    audiences: spec.settings?.audiences ?? []
                 });
                 ir = merge(ir, openapiIr);
             } else if (isOpenApiV2(openApiDocument)) {
                 const openapiIr = await generateIrFromV2({
                     openApi: openApiDocument,
                     taskContext,
-                    disableExamples: false
+                    disableExamples: false,
+                    audiences: spec.settings?.audiences ?? []
                 });
                 ir = merge(ir, openapiIr);
             }

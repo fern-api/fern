@@ -3,12 +3,46 @@
 package extraproperties
 
 import (
+	json "encoding/json"
 	fmt "fmt"
 	core "github.com/extra-properties/fern/core"
 )
 
 type User struct {
 	Name string `json:"name" url:"name"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+}
+
+func (u *User) UnmarshalJSON(data []byte) error {
+	type embed User
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*u = User(unmarshaler.embed)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.ExtraProperties = extraProperties
+
+	return nil
+}
+
+func (u *User) MarshalJSON() ([]byte, error) {
+	type embed User
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	return core.MarshalJSONWithExtraProperties(marshaler, u.ExtraProperties)
 }
 
 func (u *User) String() string {

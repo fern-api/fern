@@ -37,7 +37,11 @@ export class User {
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.CreateUserRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: {
+                ...(await serializers.CreateUserRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })),
+                _type: "CreateUserRequest",
+                _version: "v1",
+            },
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });

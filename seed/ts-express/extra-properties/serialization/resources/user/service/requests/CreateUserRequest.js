@@ -29,5 +29,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateUserRequest = void 0;
 const core = __importStar(require("../../../../../core"));
 exports.CreateUserRequest = core.serialization.object({
+    type: core.serialization.property("_type", core.serialization.stringLiteral("CreateUserRequest")),
+    version: core.serialization.property("_version", core.serialization.stringLiteral("v1")),
     name: core.serialization.string(),
 });

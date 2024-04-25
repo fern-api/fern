@@ -96,6 +96,9 @@ export function buildReferenceTypeReference({
     context: OpenApiIrConverterContext;
 }): RawSchemas.TypeReferenceWithDocsSchema {
     const resolvedSchema = context.getSchema(schema.schema);
+    if (resolvedSchema == null) {
+        return "unknown";
+    }
     const schemaName = getSchemaName(resolvedSchema) ?? schema.schema;
     const groupName = getGroupNameForSchema(resolvedSchema);
     const typeWithPrefix = getPrefixedType({

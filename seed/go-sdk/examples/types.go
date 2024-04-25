@@ -314,6 +314,7 @@ func (e *ExtendedMovie) UnmarshalJSON(data []byte) error {
 	}
 	*e = ExtendedMovie(unmarshaler.embed)
 	e.type_ = "movie"
+
 	e._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -550,6 +551,7 @@ func (m *Moment) UnmarshalJSON(data []byte) error {
 	*m = Moment(unmarshaler.embed)
 	m.Date = unmarshaler.Date.Time()
 	m.Datetime = unmarshaler.Datetime.Time()
+
 	m._rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -611,6 +613,7 @@ func (m *Movie) UnmarshalJSON(data []byte) error {
 	}
 	*m = Movie(unmarshaler.embed)
 	m.type_ = "movie"
+
 	m._rawJSON = json.RawMessage(data)
 	return nil
 }

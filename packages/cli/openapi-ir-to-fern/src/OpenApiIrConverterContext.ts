@@ -28,15 +28,8 @@ export class OpenApiIrConverterContext {
         this.builder = new FernDefinitionBuilderImpl(ir, false, enableUniqueErrorsPerEndpoint);
     }
 
-    public getSchema(id: SchemaId): Schema {
+    public getSchema(id: SchemaId): Schema | undefined {
         const schema = this.ir.schemas[id];
-        if (schema == null) {
-            this.logger.warn(`Schema with id ${id} not found. Treating as unknown.`);
-            return Schema.unknown({
-                generatedName: "",
-                nameOverride: undefined
-            });
-        }
         return schema;
     }
 

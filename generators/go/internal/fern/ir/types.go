@@ -5,9 +5,10 @@ package ir
 import (
 	json "encoding/json"
 	fmt "fmt"
-	uuid "github.com/google/uuid"
-  core "github.com/fern-api/fern-go/internal/fern/ir/core"
 	time "time"
+
+	core "github.com/fern-api/fern-go/internal/fern/ir/core"
+	uuid "github.com/google/uuid"
 )
 
 type ApiAuth struct {
@@ -28,6 +29,7 @@ type AuthScheme struct {
 	Bearer *BearerAuthScheme
 	Basic  *BasicAuthScheme
 	Header *HeaderAuthScheme
+	Oauth  *OAuthScheme
 }
 
 func NewAuthSchemeFromBearer(value *BearerAuthScheme) *AuthScheme {
@@ -40,6 +42,10 @@ func NewAuthSchemeFromBasic(value *BasicAuthScheme) *AuthScheme {
 
 func NewAuthSchemeFromHeader(value *HeaderAuthScheme) *AuthScheme {
 	return &AuthScheme{Type: "header", Header: value}
+}
+
+func NewAuthSchemeFromOauth(value *OAuthScheme) *AuthScheme {
+	return &AuthScheme{Type: "oauth", Oauth: value}
 }
 
 func (a *AuthScheme) UnmarshalJSON(data []byte) error {
@@ -69,6 +75,12 @@ func (a *AuthScheme) UnmarshalJSON(data []byte) error {
 			return err
 		}
 		a.Header = value
+	case "oauth":
+		value := new(OAuthScheme)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		a.Oauth = value
 	}
 	return nil
 }
@@ -104,6 +116,15 @@ func (a AuthScheme) MarshalJSON() ([]byte, error) {
 			HeaderAuthScheme: a.Header,
 		}
 		return json.Marshal(marshaler)
+	case "oauth":
+		var marshaler = struct {
+			Type string `json:"_type"`
+			*OAuthScheme
+		}{
+			Type:        "oauth",
+			OAuthScheme: a.Oauth,
+		}
+		return json.Marshal(marshaler)
 	}
 }
 
@@ -111,6 +132,7 @@ type AuthSchemeVisitor interface {
 	VisitBearer(*BearerAuthScheme) error
 	VisitBasic(*BasicAuthScheme) error
 	VisitHeader(*HeaderAuthScheme) error
+	VisitOauth(*OAuthScheme) error
 }
 
 func (a *AuthScheme) Accept(visitor AuthSchemeVisitor) error {
@@ -123,6 +145,8 @@ func (a *AuthScheme) Accept(visitor AuthSchemeVisitor) error {
 		return visitor.VisitBasic(a.Basic)
 	case "header":
 		return visitor.VisitHeader(a.Header)
+	case "oauth":
+		return visitor.VisitOauth(a.Oauth)
 	}
 }
 
@@ -195,6 +219,145 @@ func (h *HeaderAuthScheme) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", h)
+}
+
+// The properties to map to the corresponding OAuth token primitive.
+type OAuthAccessTokenProperties struct {
+	AccessToken  *ResponseProperty `json:"accessToken,omitempty" url:"accessToken,omitempty"`
+	ExpiresIn    *ResponseProperty `json:"expiresIn,omitempty" url:"expiresIn,omitempty"`
+	RefreshToken *ResponseProperty `json:"refreshToken,omitempty" url:"refreshToken,omitempty"`
+}
+
+func (o *OAuthAccessTokenProperties) String() string {
+	if value, err := core.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+type OAuthClientCredentials struct {
+	ClientIdEnvVar     *EnvironmentVariable  `json:"clientIdEnvVar,omitempty" url:"clientIdEnvVar,omitempty"`
+	ClientSecretEnvVar *EnvironmentVariable  `json:"clientSecretEnvVar,omitempty" url:"clientSecretEnvVar,omitempty"`
+	TokenPrefix        *string               `json:"tokenPrefix,omitempty" url:"tokenPrefix,omitempty"`
+	Scopes             []string              `json:"scopes,omitempty" url:"scopes,omitempty"`
+	TokenEndpoint      *OAuthTokenEndpoint   `json:"tokenEndpoint,omitempty" url:"tokenEndpoint,omitempty"`
+	RefreshEndpoint    *OAuthRefreshEndpoint `json:"refreshEndpoint,omitempty" url:"refreshEndpoint,omitempty"`
+}
+
+func (o *OAuthClientCredentials) String() string {
+	if value, err := core.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+type OAuthConfiguration struct {
+	Type              string
+	ClientCredentials *OAuthClientCredentials
+}
+
+func NewOAuthConfigurationFromClientCredentials(value *OAuthClientCredentials) *OAuthConfiguration {
+	return &OAuthConfiguration{Type: "clientCredentials", ClientCredentials: value}
+}
+
+func (o *OAuthConfiguration) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type string `json:"type"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	o.Type = unmarshaler.Type
+	switch unmarshaler.Type {
+	case "clientCredentials":
+		value := new(OAuthClientCredentials)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		o.ClientCredentials = value
+	}
+	return nil
+}
+
+func (o OAuthConfiguration) MarshalJSON() ([]byte, error) {
+	switch o.Type {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", o.Type, o)
+	case "clientCredentials":
+		var marshaler = struct {
+			Type string `json:"type"`
+			*OAuthClientCredentials
+		}{
+			Type:                   "clientCredentials",
+			OAuthClientCredentials: o.ClientCredentials,
+		}
+		return json.Marshal(marshaler)
+	}
+}
+
+type OAuthConfigurationVisitor interface {
+	VisitClientCredentials(*OAuthClientCredentials) error
+}
+
+func (o *OAuthConfiguration) Accept(visitor OAuthConfigurationVisitor) error {
+	switch o.Type {
+	default:
+		return fmt.Errorf("invalid type %s in %T", o.Type, o)
+	case "clientCredentials":
+		return visitor.VisitClientCredentials(o.ClientCredentials)
+	}
+}
+
+type OAuthRefreshEndpoint struct {
+	// The refrence to the refresh token endpoint (e.g. \_endpoint_auth.refreshToken).
+	EndpointReference  EndpointId                   `json:"endpointReference" url:"endpointReference"`
+	RequestProperties  *OAuthRefreshTokenProperties `json:"requestProperties,omitempty" url:"requestProperties,omitempty"`
+	ResponseProperties *OAuthAccessTokenProperties  `json:"responseProperties,omitempty" url:"responseProperties,omitempty"`
+}
+
+func (o *OAuthRefreshEndpoint) String() string {
+	if value, err := core.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+// The properties to map to the corresponding OAuth token primitive.
+type OAuthRefreshTokenProperties struct {
+	RefreshToken *RequestProperty `json:"refreshToken,omitempty" url:"refreshToken,omitempty"`
+}
+
+func (o *OAuthRefreshTokenProperties) String() string {
+	if value, err := core.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+// We currently assume the resultant token is leveraged as a bearer token, e.g. "Authorization Bearer"
+type OAuthScheme struct {
+	Docs          *string             `json:"docs,omitempty" url:"docs,omitempty"`
+	Configuration *OAuthConfiguration `json:"configuration,omitempty" url:"configuration,omitempty"`
+}
+
+func (o *OAuthScheme) String() string {
+	if value, err := core.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+type OAuthTokenEndpoint struct {
+	// The refrence to the access token endpoint (e.g. \_endpoint_auth.token).
+	EndpointReference  EndpointId                  `json:"endpointReference" url:"endpointReference"`
+	ResponseProperties *OAuthAccessTokenProperties `json:"responseProperties,omitempty" url:"responseProperties,omitempty"`
+}
+
+func (o *OAuthTokenEndpoint) String() string {
+	if value, err := core.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
 }
 
 type Availability struct {
@@ -653,9 +816,9 @@ func (b *BytesRequest) String() string {
 // whereas the next page and results are resolved from properties defined
 // on the response.
 type CursorPagination struct {
-	Page    *QueryParameter     `json:"page,omitempty" url:"page,omitempty"`
-	Next    *PaginationProperty `json:"next,omitempty" url:"next,omitempty"`
-	Results *PaginationProperty `json:"results,omitempty" url:"results,omitempty"`
+	Page    *QueryParameter   `json:"page,omitempty" url:"page,omitempty"`
+	Next    *ResponseProperty `json:"next,omitempty" url:"next,omitempty"`
+	Results *ResponseProperty `json:"results,omitempty" url:"results,omitempty"`
 }
 
 func (c *CursorPagination) String() string {
@@ -1294,7 +1457,7 @@ type HttpEndpoint struct {
 	Auth              bool                   `json:"auth" url:"auth"`
 	Idempotent        bool                   `json:"idempotent" url:"idempotent"`
 	Pagination        *Pagination            `json:"pagination,omitempty" url:"pagination,omitempty"`
-	Examples          []*ExampleEndpointCall `json:"examples,omitempty" url:"examples,omitempty"`
+	Examples          []*HttpEndpointExample `json:"examples,omitempty" url:"examples,omitempty"`
 }
 
 func (h *HttpEndpoint) String() string {
@@ -1302,6 +1465,86 @@ func (h *HttpEndpoint) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", h)
+}
+
+type HttpEndpointExample struct {
+	ExampleType  string
+	UserProvided *ExampleEndpointCall
+	Generated    *ExampleEndpointCall
+}
+
+func NewHttpEndpointExampleFromUserProvided(value *ExampleEndpointCall) *HttpEndpointExample {
+	return &HttpEndpointExample{ExampleType: "userProvided", UserProvided: value}
+}
+
+func NewHttpEndpointExampleFromGenerated(value *ExampleEndpointCall) *HttpEndpointExample {
+	return &HttpEndpointExample{ExampleType: "generated", Generated: value}
+}
+
+func (h *HttpEndpointExample) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		ExampleType string `json:"exampleType"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	h.ExampleType = unmarshaler.ExampleType
+	switch unmarshaler.ExampleType {
+	case "userProvided":
+		value := new(ExampleEndpointCall)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		h.UserProvided = value
+	case "generated":
+		value := new(ExampleEndpointCall)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		h.Generated = value
+	}
+	return nil
+}
+
+func (h HttpEndpointExample) MarshalJSON() ([]byte, error) {
+	switch h.ExampleType {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", h.ExampleType, h)
+	case "userProvided":
+		var marshaler = struct {
+			ExampleType string `json:"exampleType"`
+			*ExampleEndpointCall
+		}{
+			ExampleType:         "userProvided",
+			ExampleEndpointCall: h.UserProvided,
+		}
+		return json.Marshal(marshaler)
+	case "generated":
+		var marshaler = struct {
+			ExampleType string `json:"exampleType"`
+			*ExampleEndpointCall
+		}{
+			ExampleType:         "generated",
+			ExampleEndpointCall: h.Generated,
+		}
+		return json.Marshal(marshaler)
+	}
+}
+
+type HttpEndpointExampleVisitor interface {
+	VisitUserProvided(*ExampleEndpointCall) error
+	VisitGenerated(*ExampleEndpointCall) error
+}
+
+func (h *HttpEndpointExample) Accept(visitor HttpEndpointExampleVisitor) error {
+	switch h.ExampleType {
+	default:
+		return fmt.Errorf("invalid type %s in %T", h.ExampleType, h)
+	case "userProvided":
+		return visitor.VisitUserProvided(h.UserProvided)
+	case "generated":
+		return visitor.VisitGenerated(h.Generated)
+	}
 }
 
 type HttpHeader struct {
@@ -1567,11 +1810,13 @@ func (h *HttpResponse) UnmarshalJSON(data []byte) error {
 		}
 		h.Text = value
 	case "streaming":
-		value := new(StreamingResponse)
-		if err := json.Unmarshal(data, &value); err != nil {
+		var valueUnmarshaler struct {
+			Streaming *StreamingResponse `json:"value,omitempty"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		h.Streaming = value
+		h.Streaming = valueUnmarshaler.Streaming
 	}
 	return nil
 }
@@ -1609,11 +1854,11 @@ func (h HttpResponse) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "streaming":
 		var marshaler = struct {
-			Type string `json:"type"`
-			*StreamingResponse
+			Type      string             `json:"type"`
+			Streaming *StreamingResponse `json:"value,omitempty"`
 		}{
-			Type:              "streaming",
-			StreamingResponse: h.Streaming,
+			Type:      "streaming",
+			Streaming: h.Streaming,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -1663,6 +1908,8 @@ type InlinedRequestBody struct {
 	Extends     []*DeclaredTypeName           `json:"extends,omitempty" url:"extends,omitempty"`
 	Properties  []*InlinedRequestBodyProperty `json:"properties,omitempty" url:"properties,omitempty"`
 	ContentType *string                       `json:"contentType,omitempty" url:"contentType,omitempty"`
+	// Whether to allow extra properties on the request.
+	ExtraProperties bool `json:"extra-properties" url:"extra-properties"`
 }
 
 func (i *InlinedRequestBody) String() string {
@@ -1795,13 +2042,26 @@ func (j *JsonResponseBodyWithProperty) String() string {
 	return fmt.Sprintf("%#v", j)
 }
 
+type JsonStreamChunk struct {
+	Docs       *string        `json:"docs,omitempty" url:"docs,omitempty"`
+	Payload    *TypeReference `json:"payload,omitempty" url:"payload,omitempty"`
+	Terminator *string        `json:"terminator,omitempty" url:"terminator,omitempty"`
+}
+
+func (j *JsonStreamChunk) String() string {
+	if value, err := core.StringifyJSON(j); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", j)
+}
+
 // The page must be defined as a query parameter included in the request,
 // whereas the results are resolved from properties defined on the response.
 //
 // The page index is auto-incremented between every additional page request.
 type OffsetPagination struct {
-	Page    *QueryParameter     `json:"page,omitempty" url:"page,omitempty"`
-	Results *PaginationProperty `json:"results,omitempty" url:"results,omitempty"`
+	Page    *QueryParameter   `json:"page,omitempty" url:"page,omitempty"`
+	Results *ResponseProperty `json:"results,omitempty" url:"results,omitempty"`
 }
 
 func (o *OffsetPagination) String() string {
@@ -1892,22 +2152,6 @@ func (p *Pagination) Accept(visitor PaginationVisitor) error {
 	}
 }
 
-// A property associated with a paginated endpoint's request or response.
-type PaginationProperty struct {
-	// If empty, the property is defined at the top-level.
-	// Otherwise, the property is defined on the nested object identified
-	// by the path.
-	PropertyPath []*Name         `json:"propertyPath,omitempty" url:"propertyPath,omitempty"`
-	Property     *ObjectProperty `json:"property,omitempty" url:"property,omitempty"`
-}
-
-func (p *PaginationProperty) String() string {
-	if value, err := core.StringifyJSON(p); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", p)
-}
-
 type PathParameter struct {
 	Docs      *string               `json:"docs,omitempty" url:"docs,omitempty"`
 	Name      *Name                 `json:"name,omitempty" url:"name,omitempty"`
@@ -1963,6 +2207,102 @@ func (q *QueryParameter) String() string {
 	return fmt.Sprintf("%#v", q)
 }
 
+// A property associated with an endpoint's request.
+type RequestProperty struct {
+	// If empty, the property is defined at the top-level.
+	// Otherwise, the property is defined on the nested object identified
+	// by the path.
+	PropertyPath []*Name               `json:"propertyPath,omitempty" url:"propertyPath,omitempty"`
+	Property     *RequestPropertyValue `json:"property,omitempty" url:"property,omitempty"`
+}
+
+func (r *RequestProperty) String() string {
+	if value, err := core.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+type RequestPropertyValue struct {
+	Type  string
+	Query *QueryParameter
+	Body  *ObjectProperty
+}
+
+func NewRequestPropertyValueFromQuery(value *QueryParameter) *RequestPropertyValue {
+	return &RequestPropertyValue{Type: "query", Query: value}
+}
+
+func NewRequestPropertyValueFromBody(value *ObjectProperty) *RequestPropertyValue {
+	return &RequestPropertyValue{Type: "body", Body: value}
+}
+
+func (r *RequestPropertyValue) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type string `json:"type"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	r.Type = unmarshaler.Type
+	switch unmarshaler.Type {
+	case "query":
+		value := new(QueryParameter)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		r.Query = value
+	case "body":
+		value := new(ObjectProperty)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		r.Body = value
+	}
+	return nil
+}
+
+func (r RequestPropertyValue) MarshalJSON() ([]byte, error) {
+	switch r.Type {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", r.Type, r)
+	case "query":
+		var marshaler = struct {
+			Type string `json:"type"`
+			*QueryParameter
+		}{
+			Type:           "query",
+			QueryParameter: r.Query,
+		}
+		return json.Marshal(marshaler)
+	case "body":
+		var marshaler = struct {
+			Type string `json:"type"`
+			*ObjectProperty
+		}{
+			Type:           "body",
+			ObjectProperty: r.Body,
+		}
+		return json.Marshal(marshaler)
+	}
+}
+
+type RequestPropertyValueVisitor interface {
+	VisitQuery(*QueryParameter) error
+	VisitBody(*ObjectProperty) error
+}
+
+func (r *RequestPropertyValue) Accept(visitor RequestPropertyValueVisitor) error {
+	switch r.Type {
+	default:
+		return fmt.Errorf("invalid type %s in %T", r.Type, r)
+	case "query":
+		return visitor.VisitQuery(r.Query)
+	case "body":
+		return visitor.VisitBody(r.Body)
+	}
+}
+
 type ResponseError struct {
 	Docs  *string            `json:"docs,omitempty" url:"docs,omitempty"`
 	Error *DeclaredErrorName `json:"error,omitempty" url:"error,omitempty"`
@@ -1976,6 +2316,22 @@ func (r *ResponseError) String() string {
 }
 
 type ResponseErrors = []*ResponseError
+
+// A property associated with a paginated endpoint's request or response.
+type ResponseProperty struct {
+	// If empty, the property is defined at the top-level.
+	// Otherwise, the property is defined on the nested object identified
+	// by the path.
+	PropertyPath []*Name         `json:"propertyPath,omitempty" url:"propertyPath,omitempty"`
+	Property     *ObjectProperty `json:"property,omitempty" url:"property,omitempty"`
+}
+
+func (r *ResponseProperty) String() string {
+	if value, err := core.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
 
 type SdkRequest struct {
 	RequestParameterName *Name            `json:"requestParameterName,omitempty" url:"requestParameterName,omitempty"`
@@ -2163,34 +2519,39 @@ func (s *SdkRequestWrapper) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
-type StreamingResponse struct {
-	Docs          *string                     `json:"docs,omitempty" url:"docs,omitempty"`
-	DataEventType *StreamingResponseChunkType `json:"dataEventType,omitempty" url:"dataEventType,omitempty"`
-	Terminator    *string                     `json:"terminator,omitempty" url:"terminator,omitempty"`
+type SseStreamChunk struct {
+	Docs       *string        `json:"docs,omitempty" url:"docs,omitempty"`
+	Payload    *TypeReference `json:"payload,omitempty" url:"payload,omitempty"`
+	Terminator *string        `json:"terminator,omitempty" url:"terminator,omitempty"`
 }
 
-func (s *StreamingResponse) String() string {
+func (s *SseStreamChunk) String() string {
 	if value, err := core.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)
 }
 
-type StreamingResponseChunkType struct {
+type StreamingResponse struct {
 	Type string
-	Json *TypeReference
-	Text interface{}
+	Json *JsonStreamChunk
+	Text *TextStreamChunk
+	Sse  *SseStreamChunk
 }
 
-func NewStreamingResponseChunkTypeFromJson(value *TypeReference) *StreamingResponseChunkType {
-	return &StreamingResponseChunkType{Type: "json", Json: value}
+func NewStreamingResponseFromJson(value *JsonStreamChunk) *StreamingResponse {
+	return &StreamingResponse{Type: "json", Json: value}
 }
 
-func NewStreamingResponseChunkTypeFromText(value interface{}) *StreamingResponseChunkType {
-	return &StreamingResponseChunkType{Type: "text", Text: value}
+func NewStreamingResponseFromText(value *TextStreamChunk) *StreamingResponse {
+	return &StreamingResponse{Type: "text", Text: value}
 }
 
-func (s *StreamingResponseChunkType) UnmarshalJSON(data []byte) error {
+func NewStreamingResponseFromSse(value *SseStreamChunk) *StreamingResponse {
+	return &StreamingResponse{Type: "sse", Sse: value}
+}
+
+func (s *StreamingResponse) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
 	}
@@ -2200,54 +2561,68 @@ func (s *StreamingResponseChunkType) UnmarshalJSON(data []byte) error {
 	s.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "json":
-		var valueUnmarshaler struct {
-			Json *TypeReference `json:"json,omitempty"`
-		}
-		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+		value := new(JsonStreamChunk)
+		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		s.Json = valueUnmarshaler.Json
+		s.Json = value
 	case "text":
-		value := make(map[string]interface{})
+		value := new(TextStreamChunk)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
 		s.Text = value
+	case "sse":
+		value := new(SseStreamChunk)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		s.Sse = value
 	}
 	return nil
 }
 
-func (s StreamingResponseChunkType) MarshalJSON() ([]byte, error) {
+func (s StreamingResponse) MarshalJSON() ([]byte, error) {
 	switch s.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", s.Type, s)
 	case "json":
 		var marshaler = struct {
-			Type string         `json:"type"`
-			Json *TypeReference `json:"json,omitempty"`
+			Type string `json:"type"`
+			*JsonStreamChunk
 		}{
-			Type: "json",
-			Json: s.Json,
+			Type:            "json",
+			JsonStreamChunk: s.Json,
 		}
 		return json.Marshal(marshaler)
 	case "text":
 		var marshaler = struct {
-			Type string      `json:"type"`
-			Text interface{} `json:"text,omitempty"`
+			Type string `json:"type"`
+			*TextStreamChunk
 		}{
-			Type: "text",
-			Text: s.Text,
+			Type:            "text",
+			TextStreamChunk: s.Text,
+		}
+		return json.Marshal(marshaler)
+	case "sse":
+		var marshaler = struct {
+			Type string `json:"type"`
+			*SseStreamChunk
+		}{
+			Type:           "sse",
+			SseStreamChunk: s.Sse,
 		}
 		return json.Marshal(marshaler)
 	}
 }
 
-type StreamingResponseChunkTypeVisitor interface {
-	VisitJson(*TypeReference) error
-	VisitText(interface{}) error
+type StreamingResponseVisitor interface {
+	VisitJson(*JsonStreamChunk) error
+	VisitText(*TextStreamChunk) error
+	VisitSse(*SseStreamChunk) error
 }
 
-func (s *StreamingResponseChunkType) Accept(visitor StreamingResponseChunkTypeVisitor) error {
+func (s *StreamingResponse) Accept(visitor StreamingResponseVisitor) error {
 	switch s.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", s.Type, s)
@@ -2255,6 +2630,8 @@ func (s *StreamingResponseChunkType) Accept(visitor StreamingResponseChunkTypeVi
 		return visitor.VisitJson(s.Json)
 	case "text":
 		return visitor.VisitText(s.Text)
+	case "sse":
+		return visitor.VisitSse(s.Sse)
 	}
 }
 
@@ -2303,6 +2680,17 @@ type TextResponse struct {
 }
 
 func (t *TextResponse) String() string {
+	if value, err := core.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
+}
+
+type TextStreamChunk struct {
+	Docs *string `json:"docs,omitempty" url:"docs,omitempty"`
+}
+
+func (t *TextStreamChunk) String() string {
 	if value, err := core.StringifyJSON(t); err == nil {
 		return value
 	}
@@ -3766,6 +4154,8 @@ type ObjectTypeDeclaration struct {
 	// A list of other types to inherit from
 	Extends    []*DeclaredTypeName `json:"extends,omitempty" url:"extends,omitempty"`
 	Properties []*ObjectProperty   `json:"properties,omitempty" url:"properties,omitempty"`
+	// Whether to allow extra properties on the object.
+	ExtraProperties bool `json:"extra-properties" url:"extra-properties"`
 }
 
 func (o *ObjectTypeDeclaration) String() string {

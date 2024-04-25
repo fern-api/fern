@@ -32,6 +32,7 @@ func (s *SendResponse) UnmarshalJSON(data []byte) error {
 	}
 	*s = SendResponse(unmarshaler.embed)
 	s.success = true
+
 	s._rawJSON = json.RawMessage(data)
 	return nil
 }

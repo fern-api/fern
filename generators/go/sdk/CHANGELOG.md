@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## Unreleased -->
 
+## [0.20.0 - 2024-04-24]
+
+- Feature: The Go generator now supports extra properties.
+
+  For example, consider the following type definition:
+
+  ```yaml
+  types:
+    User:
+      extra-properties: true
+      properties:
+        name: string
+  ```
+
+  The generated `User` type will now have an `ExtraProperties` field like so:
+
+  ```go
+  type User struct {
+    Name string `json:"name" url:"name"`
+
+    ExtraProperties map[string]interface{} `json:"-" url:"-"`
+  }
+  ```
+
+  If any extra properties are set, they will be sent alongside the rest of the
+  defined properties, e.g. the `age` key in `{"name": "alice", "age": 42}`.
+
 ## [0.19.0 - 2024-04-16]
 
 - Feature: The Go generator now supports environment variable scanning.

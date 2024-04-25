@@ -28,6 +28,81 @@
     "headers": [],
     "idempotencyHeaders": [],
     "types": {
+        "type_:Failure": {
+            "name": {
+                "name": {
+                    "originalName": "Failure",
+                    "camelCase": {
+                        "unsafeName": "failure",
+                        "safeName": "failure"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "failure",
+                        "safeName": "failure"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "FAILURE",
+                        "safeName": "FAILURE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Failure",
+                        "safeName": "Failure"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "typeId": "type_:Failure"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "status",
+                                "camelCase": {
+                                    "unsafeName": "status",
+                                    "safeName": "status"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "status",
+                                    "safeName": "status"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "STATUS",
+                                    "safeName": "STATUS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Status",
+                                    "safeName": "Status"
+                                }
+                            },
+                            "wireValue": "status"
+                        },
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "literal",
+                                "literal": {
+                                    "type": "string",
+                                    "string": "failure"
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ]
+            },
+            "referencedTypes": [],
+            "examples": [],
+            "availability": null,
+            "docs": null
+        },
         "type_user:User": {
             "name": {
                 "name": {
@@ -256,6 +331,76 @@
                             {
                                 "name": {
                                     "name": {
+                                        "originalName": "_type",
+                                        "camelCase": {
+                                            "unsafeName": "type",
+                                            "safeName": "type"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "type",
+                                            "safeName": "type"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "TYPE",
+                                            "safeName": "TYPE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Type",
+                                            "safeName": "Type"
+                                        }
+                                    },
+                                    "wireValue": "_type"
+                                },
+                                "valueType": {
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "literal",
+                                        "literal": {
+                                            "type": "string",
+                                            "string": "CreateUserRequest"
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            },
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "_version",
+                                        "camelCase": {
+                                            "unsafeName": "version",
+                                            "safeName": "version"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "version",
+                                            "safeName": "version"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "VERSION",
+                                            "safeName": "VERSION"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Version",
+                                            "safeName": "Version"
+                                        }
+                                    },
+                                    "wireValue": "_version"
+                                },
+                                "valueType": {
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "literal",
+                                        "literal": {
+                                            "type": "string",
+                                            "string": "v1"
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            },
+                            {
+                                "name": {
+                                    "name": {
                                         "originalName": "name",
                                         "camelCase": {
                                             "unsafeName": "name",
@@ -466,7 +611,9 @@
                 "type_user:User"
             ]
         },
-        "sharedTypes": []
+        "sharedTypes": [
+            "type_:Failure"
+        ]
     },
     "webhookGroups": {},
     "websocketChannels": {},
@@ -555,7 +702,9 @@
         },
         "websocket": null,
         "service": null,
-        "types": [],
+        "types": [
+            "type_:Failure"
+        ],
         "errors": [],
         "subpackages": [
             "subpackage_user"
