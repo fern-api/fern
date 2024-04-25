@@ -18,6 +18,7 @@ import terminalLink from "terminal-link";
 import { promisify } from "util";
 import { convertIrToNavigation } from "./convertIrToNavigation";
 import { extractDatetimeFromChangelogTitle } from "./extractDatetimeFromChangelogTitle";
+import { parseImagePaths } from "./parseImagePaths";
 
 export async function publishDocs({
     token,
@@ -58,7 +59,7 @@ export async function publishDocs({
     const mdxImageMatches: AbsoluteFilePath[] = [];
 
     for (const [_, page] of Object.entries(parsedDocsConfig.pages)) {
-        mdxImageMatches.push(...parseImagePaths(page));
+        mdxImageMatches.push(...parseImagePaths(page).map((path) => AbsoluteFilePath.of(path)));
     }
 
     context.logger.info("MATCHES: ", mdxImageMatches.toString());
@@ -1199,18 +1200,4 @@ function convertFdrFilepathToAbsoluteFilepath(
 
 function wrapWithHttps(url: string): string {
     return url.startsWith("https://") || url.startsWith("http://") ? url : `https://${url}`;
-}
-
-function parseImagePaths(page: string): AbsoluteFilePath[] {
-    const regex = /!\[.*?\]\(([^)]+)\)/g;
-    let match;
-
-    const filepaths: AbsoluteFilePath[] = [];
-
-    while ((match = regex.exec(page)) != null) {
-        if (match[1] != null) {
-            filepaths.push(AbsoluteFilePath.of(match[1].toString()));
-        }
-    }
-    return filepaths;
 }
