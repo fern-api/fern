@@ -27,7 +27,8 @@ export const APIDefintionWithOverridesSchema = z.object({
     origin: z
         .optional(z.string())
         .describe("The URL of the API definition origin, from which the file should be polled."),
-    overrides: z.optional(z.string()).describe("Path to the OpenAPI or AsyncAPI overrides")
+    overrides: z.optional(z.string()).describe("Path to the OpenAPI or AsyncAPI overrides"),
+    audiences: z.optional(z.array(z.string())).describe("Audiences that you would like to filter to")
 });
 
 /**

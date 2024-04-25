@@ -27,6 +27,7 @@ import { convertSecurityScheme } from "./converters/convertSecurityScheme";
 import { convertServer } from "./converters/convertServer";
 import { ERROR_NAMES } from "./converters/convertToHttpError";
 import { ExampleEndpointFactory } from "./converters/ExampleEndpointFactory";
+import { ConvertedOperation } from "./converters/operation/convertOperation";
 import { FernOpenAPIExtension } from "./extensions/fernExtensions";
 import { getFernGroups } from "./extensions/getFernGroups";
 import { getGlobalHeaders } from "./extensions/getGlobalHeaders";
@@ -38,11 +39,13 @@ import { runResolutions } from "./runResolutions";
 export function generateIr({
     openApi,
     taskContext,
-    disableExamples
+    disableExamples,
+    audiences
 }: {
     openApi: OpenAPIV3.Document;
     taskContext: TaskContext;
     disableExamples: boolean | undefined;
+    audiences: string[];
 }): OpenApiIntermediateRepresentation {
     openApi = runResolutions({ openapi: openApi });
 
@@ -79,6 +82,10 @@ export function generateIr({
         const convertedOperations = convertPathItem(path, pathItem, openApi, context);
 
         for (const operation of convertedOperations) {
+            const operationAudiences = getAudiences({ operation });
+            if (audiences.length > 0 && !audiences.some((audience) => operationAudiences.includes(audience))) {
+                continue;
+            }
             switch (operation.type) {
                 case "async":
                     endpointsWithExample.push(operation.sync);
@@ -327,4 +334,24 @@ function getAllParentSchemaIds({
         }
     }
     return result;
+}
+
+function getAudiences({ operation }: { operation: ConvertedOperation }): string[] {
+    let endpointAudiences: string[] = [];
+    switch (operation.type) {
+        case "async":
+            endpointAudiences = operation.async.audiences;
+            break;
+        case "http":
+            endpointAudiences = operation.value.audiences;
+            break;
+        case "streaming":
+            endpointAudiences = operation.streaming.audiences;
+            break;
+        case "webhook":
+            break;
+        default:
+            assertNever(operation);
+    }
+    return endpointAudiences;
 }
