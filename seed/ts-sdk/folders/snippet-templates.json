@@ -13,33 +13,10 @@
             "clientInstantiation": "const seedApi = new SeedApiClient;\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedApi.foo(\n\t$FERN_INPUT\n)",
+                "templateString": "await seedApi.foo()",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
-                "templateInputs": [
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
-                            "isOptional": true,
-                            "inputDelimiter": ",\n\t\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    }
-                ],
+                "templateInputs": [],
                 "type": "generic"
             },
             "type": "v1"
@@ -59,33 +36,10 @@
             "clientInstantiation": "const seedApi = new SeedApiClient;\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedApi.a.b.foo(\n\t$FERN_INPUT\n)",
+                "templateString": "await seedApi.a.b.foo()",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
-                "templateInputs": [
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
-                            "isOptional": true,
-                            "inputDelimiter": ",\n\t\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    }
-                ],
+                "templateInputs": [],
                 "type": "generic"
             },
             "type": "v1"
@@ -105,33 +59,10 @@
             "clientInstantiation": "const seedApi = new SeedApiClient;\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedApi.a.c.foo(\n\t$FERN_INPUT\n)",
+                "templateString": "await seedApi.a.c.foo()",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
-                "templateInputs": [
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
-                            "isOptional": true,
-                            "inputDelimiter": ",\n\t\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    }
-                ],
+                "templateInputs": [],
                 "type": "generic"
             },
             "type": "v1"
@@ -151,33 +82,10 @@
             "clientInstantiation": "const seedApi = new SeedApiClient;\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedApi.folder.foo(\n\t$FERN_INPUT\n)",
+                "templateString": "await seedApi.folder.foo()",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
-                "templateInputs": [
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
-                            "isOptional": true,
-                            "inputDelimiter": ",\n\t\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    }
-                ],
+                "templateInputs": [],
                 "type": "generic"
             },
             "type": "v1"
@@ -197,33 +105,10 @@
             "clientInstantiation": "const seedApi = new SeedApiClient;\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedApi.folder.service.endpoint(\n\t$FERN_INPUT\n)",
+                "templateString": "await seedApi.folder.service.endpoint()",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
-                "templateInputs": [
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
-                            "isOptional": true,
-                            "inputDelimiter": ",\n\t\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    }
-                ],
+                "templateInputs": [],
                 "type": "generic"
             },
             "type": "v1"
@@ -250,17 +135,6 @@
                     {
                         "value": {
                             "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
                             "templateString": "{\n\t\t$FERN_INPUT\n\t}",
                             "isOptional": true,
                             "inputDelimiter": ",\n\t\t",
@@ -273,7 +147,6 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "",
                                                 "type": "payload"
                                             }
                                         ],

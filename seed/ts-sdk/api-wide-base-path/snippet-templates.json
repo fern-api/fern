@@ -92,17 +92,6 @@
                             "type": "generic"
                         },
                         "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
-                            "isOptional": true,
-                            "inputDelimiter": ",\n\t\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
                     }
                 ],
                 "type": "generic"

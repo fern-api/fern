@@ -13,33 +13,10 @@
             "clientInstantiation": "const seedErrorProperty = new SeedErrorPropertyClient;\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedErrorProperty.propertyBasedError.throwError(\n\t$FERN_INPUT\n)",
+                "templateString": "await seedErrorProperty.propertyBasedError.throwError()",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
-                "templateInputs": [
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
-                            "isOptional": true,
-                            "inputDelimiter": ",\n\t\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    }
-                ],
+                "templateInputs": [],
                 "type": "generic"
             },
             "type": "v1"

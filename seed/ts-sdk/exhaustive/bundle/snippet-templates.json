@@ -20,17 +20,6 @@
                     {
                         "value": {
                             "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
                             "templateString": "{\n\t\t$FERN_INPUT\n\t}",
                             "isOptional": true,
                             "inputDelimiter": ",\n\t\t",
@@ -55,7 +44,6 @@
                                         },
                                         "templateInput": {
                                             "location": "BODY",
-                                            "path": "",
                                             "type": "payload"
                                         },
                                         "type": "iterable"
@@ -94,17 +82,6 @@
                     {
                         "value": {
                             "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
                             "templateString": "{\n\t\t$FERN_INPUT\n\t}",
                             "isOptional": true,
                             "inputDelimiter": ",\n\t\t",
@@ -142,7 +119,6 @@
                                         },
                                         "templateInput": {
                                             "location": "BODY",
-                                            "path": "",
                                             "type": "payload"
                                         },
                                         "type": "iterable"
@@ -181,17 +157,6 @@
                     {
                         "value": {
                             "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
                             "templateString": "{\n\t\t$FERN_INPUT\n\t}",
                             "isOptional": true,
                             "inputDelimiter": ",\n\t\t",
@@ -216,7 +181,6 @@
                                         },
                                         "templateInput": {
                                             "location": "BODY",
-                                            "path": "",
                                             "type": "payload"
                                         },
                                         "type": "iterable"
@@ -255,17 +219,6 @@
                     {
                         "value": {
                             "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
                             "templateString": "{\n\t\t$FERN_INPUT\n\t}",
                             "isOptional": true,
                             "inputDelimiter": ",\n\t\t",
@@ -303,7 +256,6 @@
                                         },
                                         "templateInput": {
                                             "location": "BODY",
-                                            "path": "",
                                             "type": "payload"
                                         },
                                         "type": "iterable"
@@ -342,17 +294,6 @@
                     {
                         "value": {
                             "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
                             "templateString": "{\n\t\t$FERN_INPUT\n\t}",
                             "isOptional": true,
                             "inputDelimiter": ",\n\t\t",
@@ -390,7 +331,6 @@
                                         },
                                         "templateInput": {
                                             "location": "BODY",
-                                            "path": "",
                                             "type": "payload"
                                         },
                                         "type": "dict"
@@ -426,17 +366,6 @@
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
                     {
                         "value": {
                             "imports": [],
@@ -490,7 +419,6 @@
                                         },
                                         "templateInput": {
                                             "location": "BODY",
-                                            "path": "",
                                             "type": "payload"
                                         },
                                         "type": "dict"
@@ -526,17 +454,6 @@
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
                     {
                         "value": {
                             "imports": [],
@@ -604,17 +521,6 @@
                     {
                         "value": {
                             "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
                             "templateString": "{\n\t\t$FERN_INPUT\n\t}",
                             "isOptional": true,
                             "inputDelimiter": ",\n\t\t",
@@ -632,7 +538,6 @@
                                         "templateString": "'$FERN_INPUT'",
                                         "templateInput": {
                                             "location": "BODY",
-                                            "path": "",
                                             "type": "payload"
                                         },
                                         "type": "enum"
@@ -695,17 +600,6 @@
                             "type": "generic"
                         },
                         "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
-                            "isOptional": true,
-                            "inputDelimiter": ",\n\t\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
                     }
                 ],
                 "type": "generic"
@@ -731,17 +625,6 @@
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
                     {
                         "value": {
                             "imports": [],
@@ -1239,17 +1122,6 @@
                             "type": "generic"
                         },
                         "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
-                            "isOptional": true,
-                            "inputDelimiter": ",\n\t\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
                     }
                 ],
                 "type": "generic"
@@ -1275,17 +1147,6 @@
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
                     {
                         "value": {
                             "imports": [],
@@ -1575,17 +1436,6 @@
                     {
                         "value": {
                             "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
                             "templateString": "{\n\t\t$FERN_INPUT\n\t}",
                             "isOptional": true,
                             "inputDelimiter": ",\n\t\t",
@@ -1647,17 +1497,6 @@
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
                     {
                         "value": {
                             "imports": [],
@@ -1770,17 +1609,6 @@
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
                     {
                         "value": {
                             "imports": [],
@@ -2098,17 +1926,6 @@
                     {
                         "value": {
                             "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
                             "templateString": "{\n\t\t$FERN_INPUT\n\t}",
                             "isOptional": true,
                             "inputDelimiter": ",\n\t\t",
@@ -2423,17 +2240,6 @@
                     {
                         "value": {
                             "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
                             "templateString": "{\n\t\t$FERN_INPUT\n\t}",
                             "isOptional": true,
                             "inputDelimiter": ",\n\t\t",
@@ -2721,7 +2527,6 @@
                                         },
                                         "templateInput": {
                                             "location": "BODY",
-                                            "path": "",
                                             "type": "payload"
                                         },
                                         "type": "iterable"
@@ -2784,17 +2589,6 @@
                             "type": "generic"
                         },
                         "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
-                            "isOptional": true,
-                            "inputDelimiter": ",\n\t\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
                     }
                 ],
                 "type": "generic"
@@ -2820,17 +2614,6 @@
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
                     {
                         "value": {
                             "imports": [],
@@ -2899,17 +2682,6 @@
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
                     {
                         "value": {
                             "imports": [],
@@ -3101,7 +2873,6 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "",
                                                 "type": "payload"
                                             }
                                         ],
@@ -3141,17 +2912,6 @@
                     {
                         "value": {
                             "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
                             "templateString": "{\n\t\t$FERN_INPUT\n\t}",
                             "isOptional": true,
                             "inputDelimiter": ",\n\t\t",
@@ -3164,7 +2924,6 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "",
                                                 "type": "payload"
                                             }
                                         ],
@@ -3204,17 +2963,6 @@
                     {
                         "value": {
                             "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
                             "templateString": "{\n\t\t$FERN_INPUT\n\t}",
                             "isOptional": true,
                             "inputDelimiter": ",\n\t\t",
@@ -3227,7 +2975,6 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "",
                                                 "type": "payload"
                                             }
                                         ],
@@ -3267,17 +3014,6 @@
                     {
                         "value": {
                             "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
                             "templateString": "{\n\t\t$FERN_INPUT\n\t}",
                             "isOptional": true,
                             "inputDelimiter": ",\n\t\t",
@@ -3290,7 +3026,6 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "",
                                                 "type": "payload"
                                             }
                                         ],
@@ -3330,17 +3065,6 @@
                     {
                         "value": {
                             "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
                             "templateString": "{\n\t\t$FERN_INPUT\n\t}",
                             "isOptional": true,
                             "inputDelimiter": ",\n\t\t",
@@ -3353,7 +3077,6 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "",
                                                 "type": "payload"
                                             }
                                         ],
@@ -3393,17 +3116,6 @@
                     {
                         "value": {
                             "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
                             "templateString": "{\n\t\t$FERN_INPUT\n\t}",
                             "isOptional": true,
                             "inputDelimiter": ",\n\t\t",
@@ -3416,7 +3128,6 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "",
                                                 "type": "payload"
                                             }
                                         ],
@@ -3456,17 +3167,6 @@
                     {
                         "value": {
                             "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
                             "templateString": "{\n\t\t$FERN_INPUT\n\t}",
                             "isOptional": true,
                             "inputDelimiter": ",\n\t\t",
@@ -3479,7 +3179,6 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "",
                                                 "type": "payload"
                                             }
                                         ],
@@ -3519,17 +3218,6 @@
                     {
                         "value": {
                             "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
                             "templateString": "{\n\t\t$FERN_INPUT\n\t}",
                             "isOptional": true,
                             "inputDelimiter": ",\n\t\t",
@@ -3542,7 +3230,6 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "",
                                                 "type": "payload"
                                             }
                                         ],
@@ -3582,17 +3269,6 @@
                     {
                         "value": {
                             "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
                             "templateString": "{\n\t\t$FERN_INPUT\n\t}",
                             "isOptional": true,
                             "inputDelimiter": ",\n\t\t",
@@ -3605,7 +3281,6 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "",
                                                 "type": "payload"
                                             }
                                         ],
@@ -3645,17 +3320,6 @@
                     {
                         "value": {
                             "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
                             "templateString": "{\n\t\t$FERN_INPUT\n\t}",
                             "isOptional": true,
                             "inputDelimiter": ",\n\t\t",
@@ -3668,7 +3332,6 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "",
                                                 "type": "payload"
                                             }
                                         ],
@@ -3705,17 +3368,6 @@
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
                     {
                         "value": {
                             "imports": [],
@@ -3837,7 +3489,6 @@
                                         },
                                         "templateInput": {
                                             "location": "BODY",
-                                            "path": "",
                                             "type": "payload"
                                         },
                                         "type": "discriminatedUnion"
@@ -3873,17 +3524,6 @@
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
                     {
                         "value": {
                             "imports": [],
@@ -4205,17 +3845,6 @@
                     {
                         "value": {
                             "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
                             "templateString": "{\n\t\t$FERN_INPUT\n\t}",
                             "isOptional": true,
                             "inputDelimiter": ",\n\t\t",
@@ -4228,7 +3857,6 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "",
                                                 "type": "payload"
                                             }
                                         ],
@@ -4261,33 +3889,10 @@
             "clientInstantiation": "const fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await fiddle.noReqBody.getWithNoRequestBody(\n\t$FERN_INPUT\n)",
+                "templateString": "await fiddle.noReqBody.getWithNoRequestBody()",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
-                "templateInputs": [
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
-                            "isOptional": true,
-                            "inputDelimiter": ",\n\t\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    }
-                ],
+                "templateInputs": [],
                 "type": "generic"
             },
             "type": "v1"
@@ -4307,33 +3912,10 @@
             "clientInstantiation": "const fiddle = new FiddleClient({ token: \"YOUR_TOKEN\" });\n",
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await fiddle.noReqBody.postWithNoRequestBody(\n\t$FERN_INPUT\n)",
+                "templateString": "await fiddle.noReqBody.postWithNoRequestBody()",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
-                "templateInputs": [
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
-                            "isOptional": true,
-                            "inputDelimiter": ",\n\t\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    }
-                ],
+                "templateInputs": [],
                 "type": "generic"
             },
             "type": "v1"
@@ -4357,17 +3939,6 @@
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
-                    {
-                        "value": {
-                            "imports": [],
-                            "templateString": "$FERN_INPUT",
-                            "isOptional": false,
-                            "inputDelimiter": ",\n\t",
-                            "templateInputs": [],
-                            "type": "generic"
-                        },
-                        "type": "template"
-                    },
                     {
                         "value": {
                             "imports": [],
@@ -4399,7 +3970,6 @@
                                         "templateInputs": [
                                             {
                                                 "location": "BODY",
-                                                "path": "",
                                                 "type": "payload"
                                             }
                                         ],

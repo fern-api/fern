@@ -71,7 +71,7 @@ export class TemplateGenerator {
         let crumbs: string[] = [];
         if (wireOrOriginalName == null && nameBreadcrumbs != null) {
             crumbs = nameBreadcrumbs;
-        } else if (wireOrOriginalName != null && nameBreadcrumbs == null) {
+        } else if (wireOrOriginalName != null && (nameBreadcrumbs == null || nameBreadcrumbs.length === 0)) {
             crumbs = [wireOrOriginalName];
         } else if (wireOrOriginalName != null && nameBreadcrumbs != null) {
             crumbs = [...nameBreadcrumbs, wireOrOriginalName];
@@ -497,6 +497,12 @@ export class TemplateGenerator {
         if (typeReference.type === "container" && typeReference.container.type === "literal") {
             return;
         }
+        // TODO: Implement a better way to handle type -> template relation to better handle
+        // circular references
+        if (indentationLevel > 10) {
+            return;
+        }
+
         return typeReference._visit({
             primitive: () => this.getBaseGenericTemplate({ name, location, wireOrOriginalName, nameBreadcrumbs }),
             unknown: () => this.getBaseGenericTemplate({ name, location, wireOrOriginalName, nameBreadcrumbs }),
@@ -546,7 +552,7 @@ export class TemplateGenerator {
                 name: undefined,
                 location: FdrSnippetTemplate.PayloadLocation.Path,
                 wireOrOriginalName: pathParameter.name.originalName,
-                nameBreadcrumbs: [],
+                nameBreadcrumbs: undefined,
                 indentationLevel: 0
             });
             if (pt != null) {
@@ -565,7 +571,7 @@ export class TemplateGenerator {
                 name: this.getPropertyKey(pathParameter.name.name),
                 location: FdrSnippetTemplate.PayloadLocation.Query,
                 wireOrOriginalName: pathParameter.name.wireValue,
-                nameBreadcrumbs: [],
+                nameBreadcrumbs: undefined,
                 indentationLevel: 0
             });
             if (pt != null) {
@@ -579,7 +585,7 @@ export class TemplateGenerator {
                 name: this.getPropertyKey(header.name.name),
                 location: FdrSnippetTemplate.PayloadLocation.Headers,
                 wireOrOriginalName: header.name.wireValue,
-                nameBreadcrumbs: [],
+                nameBreadcrumbs: undefined,
                 indentationLevel: 0
             });
             if (pt != null) {
@@ -596,7 +602,7 @@ export class TemplateGenerator {
                         name: this.getPropertyKey(prop.name.name),
                         location: FdrSnippetTemplate.PayloadLocation.Body,
                         wireOrOriginalName: prop.name.wireValue,
-                        nameBreadcrumbs: [],
+                        nameBreadcrumbs: undefined,
                         indentationLevel: 1
                     })
                 ),
@@ -606,7 +612,7 @@ export class TemplateGenerator {
                     location: FdrSnippetTemplate.PayloadLocation.Body,
                     name: undefined,
                     wireOrOriginalName: undefined,
-                    nameBreadcrumbs: [],
+                    nameBreadcrumbs: undefined,
                     indentationLevel: 1
                 })
             ],
@@ -626,7 +632,7 @@ export class TemplateGenerator {
                                 name: this.getPropertyKey(bp.name.name),
                                 location: FdrSnippetTemplate.PayloadLocation.Body,
                                 wireOrOriginalName: bp.name.wireValue,
-                                nameBreadcrumbs: [],
+                                nameBreadcrumbs: undefined,
                                 indentationLevel: 1
                             }),
                         _other: () => undefined
@@ -689,30 +695,36 @@ export class TemplateGenerator {
         // Generally its: (`path parameters`, {`request parameter`}}
 
         // Add the unnamed, non-request params first
-        topLevelTemplateInputs.push(
-            FdrSnippetTemplate.TemplateInput.template(
-                FdrSnippetTemplate.Template.generic({
-                    imports: [],
-                    templateString: TEMPLATE_SENTINEL,
-                    isOptional: false,
-                    inputDelimiter: ",\n\t",
-                    templateInputs: this.getNonRequestParametersFromEndpoint()
-                })
-            )
-        );
+        const nonRequestParamInputs = this.getNonRequestParametersFromEndpoint();
+        if (nonRequestParamInputs.length > 0) {
+            topLevelTemplateInputs.push(
+                FdrSnippetTemplate.TemplateInput.template(
+                    FdrSnippetTemplate.Template.generic({
+                        imports: [],
+                        templateString: TEMPLATE_SENTINEL,
+                        isOptional: false,
+                        inputDelimiter: ",\n\t",
+                        templateInputs: this.getNonRequestParametersFromEndpoint()
+                    })
+                )
+            );
+        }
 
         // Finally, if there's a request param, build that.
-        topLevelTemplateInputs.push(
-            FdrSnippetTemplate.TemplateInput.template(
-                FdrSnippetTemplate.Template.generic({
-                    imports: [],
-                    templateString: `{\n\t\t${TEMPLATE_SENTINEL}\n\t}`,
-                    isOptional: true,
-                    inputDelimiter: ",\n\t\t",
-                    templateInputs: this.getRequestParametersFromEndpoint()
-                })
-            )
-        );
+        const requestParamInputs = this.getRequestParametersFromEndpoint();
+        if (requestParamInputs.length > 0) {
+            topLevelTemplateInputs.push(
+                FdrSnippetTemplate.TemplateInput.template(
+                    FdrSnippetTemplate.Template.generic({
+                        imports: [],
+                        templateString: `{\n\t\t${TEMPLATE_SENTINEL}\n\t}`,
+                        isOptional: true,
+                        inputDelimiter: ",\n\t\t",
+                        templateInputs: this.getRequestParametersFromEndpoint()
+                    })
+                )
+            );
+        }
         return topLevelTemplateInputs;
     }
 
@@ -759,13 +771,17 @@ export class TemplateGenerator {
             referenceToRootClient: this.clientContext.sdkInstanceReferenceForSnippet
         });
         const endpointClientAccessString = getTextOfTsNode(endpointClientAccess);
+        const templateString =
+            topLevelTemplateInputs.length > 0
+                ? `await ${endpointClientAccessString}.${this.getEndpointFunctionName(
+                      this.endpoint
+                  )}(\n\t${TEMPLATE_SENTINEL}\n)`
+                : `await ${endpointClientAccessString}.${this.getEndpointFunctionName(this.endpoint)}()`;
         return FdrSnippetTemplate.VersionedSnippetTemplate.v1({
             clientInstantiation: clientInstantiationString,
             functionInvocation: FdrSnippetTemplate.Template.generic({
                 imports: [],
-                templateString: `await ${endpointClientAccessString}.${this.getEndpointFunctionName(
-                    this.endpoint
-                )}(\n\t${TEMPLATE_SENTINEL}\n)`,
+                templateString,
                 isOptional: false,
                 inputDelimiter: ",\n\t",
                 templateInputs: topLevelTemplateInputs

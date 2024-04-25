@@ -3565,7 +3565,7 @@ __metadata:
     "@types/express": ^4.17.20
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
-    "@types/uuid": ^9.0.7
+    "@types/uuid": ^9.0.8
     cors: ^2.8.5
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -4203,7 +4203,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
-    "@types/uuid": ^9.0.7
+    "@types/uuid": ^9.0.8
     depcheck: ^1.4.6
     eslint: ^8.56.0
     jest: ^29.7.0
@@ -7599,13 +7599,6 @@ __metadata:
   version: 4.0.1
   resolution: "@types/url-join@npm:4.0.1"
   checksum: 29444b90e165b3970c8ad3fcef1e2de092e72b67e1f3aaff3016eea1697f98a01a28fb4f71f8044e3338a95bd2262327e9299be416efe5297018658760a331b4
-  languageName: node
-  linkType: hard
-
-"@types/uuid@npm:^9.0.7":
-  version: 9.0.7
-  resolution: "@types/uuid@npm:9.0.7"
-  checksum: c7321194aeba9ea173efd1e721403bdf4e7ae6945f8f8cdbc87c791f4b505ccf3dbc4a8883d90b394ef13b7c2dc778045792b05dbb23b3c746f8ea347804d448
   languageName: node
   linkType: hard
 
