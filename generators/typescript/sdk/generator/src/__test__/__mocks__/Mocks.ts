@@ -30,6 +30,9 @@ export const Mocks = {
     },
     sdkConfig(partialConfig?: Partial<SdkGenerator.Config>): SdkGenerator.Config {
         return {
+            organization: "test",
+            executionEnvironment: "local",
+            apiName: "test",
             whitelabel: false,
             snippetFilepath: undefined,
             snippetTemplateFilepath: undefined,

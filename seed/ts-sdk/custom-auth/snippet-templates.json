@@ -1,0 +1,111 @@
+[
+    {
+        "sdk": {
+            "package": "@fern/custom-auth",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/custom-auth",
+            "method": "GET"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "const seedCustomAuth = new SeedCustomAuthClient({ customAuthScheme: \"YOUR_CUSTOM_AUTH_SCHEME\" });\n",
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await seedCustomAuth.customAuth.getWithCustomAuth(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "$FERN_INPUT",
+                            "isOptional": false,
+                            "inputDelimiter": ",\n\t",
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    },
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                            "isOptional": true,
+                            "inputDelimiter": ",\n\t\t",
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "@fern/custom-auth",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/custom-auth",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "const seedCustomAuth = new SeedCustomAuthClient({ customAuthScheme: \"YOUR_CUSTOM_AUTH_SCHEME\" });\n",
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await seedCustomAuth.customAuth.postWithCustomAuth(\n\t$FERN_INPUT\n)",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "$FERN_INPUT",
+                            "isOptional": false,
+                            "inputDelimiter": ",\n\t",
+                            "templateInputs": [],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    },
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                            "isOptional": true,
+                            "inputDelimiter": ",\n\t\t",
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "\"$FERN_INPUT\"",
+                                        "isOptional": true,
+                                        "templateInputs": [
+                                            {
+                                                "location": "BODY",
+                                                "path": "",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

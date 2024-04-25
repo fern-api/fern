@@ -655,7 +655,6 @@ export class SdkGenerator {
 
     private generateSnippets(refGenerator: ReferenceGenerator | undefined) {
         const rootPackage: PackageId = { isRoot: true };
-        const generateSdkContext = this.generateSdkContext;
         this.forEachService((service, packageId) => {
             if (service.endpoints.length === 0) {
                 return;
@@ -679,14 +678,14 @@ export class SdkGenerator {
                     const project = new Project({
                         useInMemoryFileSystem: true
                     });
-                    const sourceFile = project.createSourceFile("snippet-test");
+                    const sourceFile = project.createSourceFile("snippet-test", undefined, { overwrite: true });
                     const importsManager = new ImportsManager();
                     const endpointContext = this.generateSdkContext(
                         { sourceFile, importsManager },
                         { isForSnippet: true }
                     );
 
-                    const clientSourceFile = project.createSourceFile("snippet-test");
+                    const clientSourceFile = project.createSourceFile("snippet-client", undefined, { overwrite: true });
                     const clientImportsManager = new ImportsManager();
                     const clientContext = this.generateSdkContext(
                         { sourceFile: clientSourceFile, importsManager: clientImportsManager },
