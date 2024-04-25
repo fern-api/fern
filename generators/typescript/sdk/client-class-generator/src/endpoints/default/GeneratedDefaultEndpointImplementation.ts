@@ -21,6 +21,7 @@ export declare namespace GeneratedDefaultEndpointImplementation {
         request: GeneratedEndpointRequest;
         response: GeneratedEndpointResponse;
         includeSerdeLayer: boolean;
+        retainOriginalCasing: boolean;
     }
 }
 
@@ -34,6 +35,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     private request: GeneratedEndpointRequest;
     private response: GeneratedEndpointResponse;
     private includeSerdeLayer: boolean;
+    private retainOriginalCasing: boolean;
 
     constructor({
         endpoint,
@@ -42,7 +44,8 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         includeCredentialsOnCrossOriginRequests,
         defaultTimeoutInSeconds,
         request,
-        includeSerdeLayer
+        includeSerdeLayer,
+        retainOriginalCasing
     }: GeneratedDefaultEndpointImplementation.Init) {
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -51,6 +54,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         this.request = request;
         this.response = response;
         this.includeSerdeLayer = includeSerdeLayer;
+        this.retainOriginalCasing = retainOriginalCasing;
     }
 
     public getOverloads(): EndpointSignature[] {
@@ -94,8 +98,12 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             if (generatedExample == null) {
                 continue;
             }
-            const exampleStr = "@example\n" + getTextOfTsNode(generatedExample);
-            groups.push(exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`));
+            let exampleStr = "@example\n" + getTextOfTsNode(generatedExample);
+            exampleStr = exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`);
+            // Only add if it doesn't already exist
+            if (!groups.includes(exampleStr)) {
+                groups.push(exampleStr);
+            }
         }
 
         return groups.join("\n\n");
@@ -143,7 +151,8 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             endpoint: this.endpoint,
             generatedClientClass: this.generatedSdkClientClass,
             context,
-            includeSerdeLayer: this.includeSerdeLayer
+            includeSerdeLayer: this.includeSerdeLayer,
+            retainOriginalCasing: this.retainOriginalCasing
         });
         if (url != null) {
             return context.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);
@@ -170,6 +179,10 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             }),
             withCredentials: this.includeCredentialsOnCrossOriginRequests
         };
+
+        if (this.endpoint.response?.type === "text") {
+            fetcherArgs.responseType = "text";
+        }
 
         return [
             ts.factory.createVariableStatement(

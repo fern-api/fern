@@ -17,10 +17,11 @@ class PydanticGeneratorContext(ABC):
         *,
         ir: ir_types.IntermediateRepresentation,
         generator_config: GeneratorConfig,
+        allow_skipping_validation: bool,
     ):
         self.ir = ir
         self.generator_config = generator_config
-        self.core_utilities = CoreUtilities()
+        self.core_utilities = CoreUtilities(allow_skipping_validation=allow_skipping_validation)
 
     @abstractmethod
     def get_module_path_in_project(self, module_path: AST.ModulePath) -> AST.ModulePath:

@@ -4,9 +4,9 @@
 
 import * as core from "../../../../core";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
-import * as SeedAuthEnvironmentVariables from "../../..";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
+import * as SeedAuthEnvironmentVariables from "../../../index";
 
 export declare namespace Service {
     interface Options {
@@ -26,6 +26,9 @@ export class Service {
 
     /**
      * GET request with custom api key
+     *
+     * @example
+     *     await seedAuthEnvironmentVariables.service.getWithApiKey()
      */
     public async getWithApiKey(requestOptions?: Service.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
@@ -34,7 +37,7 @@ export class Service {
             headers: {
                 "X-Another-Header": await core.Supplier.get(this._options.xAnotherHeader),
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/auth-environment-variables",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -77,6 +80,11 @@ export class Service {
 
     /**
      * GET request with custom api key
+     *
+     * @example
+     *     await seedAuthEnvironmentVariables.service.getWithHeader({
+     *         xEndpointHeader: "string"
+     *     })
      */
     public async getWithHeader(
         request: SeedAuthEnvironmentVariables.HeaderAuthRequest,
@@ -89,7 +97,7 @@ export class Service {
             headers: {
                 "X-Another-Header": await core.Supplier.get(this._options.xAnotherHeader),
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/auth-environment-variables",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,

@@ -31,8 +31,12 @@ export interface OSSWorkspace {
 export interface Spec {
     absoluteFilepath: AbsoluteFilePath;
     absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
+    settings?: SpecImportSettings;
 }
 
+export interface SpecImportSettings {
+    audiences: string[];
+}
 export interface APIChangelog {
     files: ChangelogFile[];
 }

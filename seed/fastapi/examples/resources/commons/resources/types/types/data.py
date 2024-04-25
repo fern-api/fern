@@ -5,12 +5,10 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-from ......core.datetime_utils import serialize_datetime
+import typing_extensions
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ......core.datetime_utils import serialize_datetime
+from ......core.pydantic_utilities import pydantic_v1
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -23,11 +21,11 @@ class _Factory:
         return Data(__root__=_Data.Base64(type="base64", value=value))
 
 
-class Data(pydantic.BaseModel):
+class Data(pydantic_v1.BaseModel):
     """
     from seed.examples.resources.commons import Data_String
 
-    Data_String(type="string", value="data")
+    Data_String(value="data")
     """
 
     factory: typing.ClassVar[_Factory] = _Factory()
@@ -41,7 +39,9 @@ class Data(pydantic.BaseModel):
         if self.__root__.type == "base64":
             return base_64(self.__root__.value)
 
-    __root__: typing.Annotated[typing.Union[_Data.String, _Data.Base64], pydantic.Field(discriminator="type")]
+    __root__: typing_extensions.Annotated[
+        typing.Union[_Data.String, _Data.Base64], pydantic_v1.Field(discriminator="type")
+    ]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -52,17 +52,17 @@ class Data(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _Data:
-    class String(pydantic.BaseModel):
-        type: typing.Literal["string"]
+    class String(pydantic_v1.BaseModel):
+        type: typing.Literal["string"] = "string"
         value: str
 
-    class Base64(pydantic.BaseModel):
-        type: typing.Literal["base64"]
+    class Base64(pydantic_v1.BaseModel):
+        type: typing.Literal["base64"] = "base64"
         value: str
 
 

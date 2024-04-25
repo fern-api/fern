@@ -30,7 +30,7 @@ export function convertStreamingOperation({
             const streamingOperation = convertHttpOperation({
                 operationContext,
                 context,
-                streamingResponse: true
+                streamFormat: streamingExtension.format
             });
             return {
                 streaming: streamingOperation,
@@ -45,7 +45,10 @@ export function convertStreamingOperation({
                 isStreaming: true
             });
             if (streamingRequestBody?.schemaReference != null) {
-                context.excludeSchema(getSchemaIdFromReference(streamingRequestBody.schemaReference));
+                const schemaId = getSchemaIdFromReference(streamingRequestBody.schemaReference);
+                if (schemaId != null) {
+                    context.excludeSchema(schemaId);
+                }
             }
             const streamingResponses = getResponses({
                 operation: operationContext.operation,
@@ -69,7 +72,7 @@ export function convertStreamingOperation({
                     baseBreadcrumbs: [...operationContext.baseBreadcrumbs, STREAM_SUFFIX]
                 },
                 context,
-                streamingResponse: true,
+                streamFormat: streamingExtension.format,
                 suffix: STREAM_SUFFIX
             });
 
@@ -84,6 +87,7 @@ export function convertStreamingOperation({
                 response: streamingExtension.response
             });
             const nonStreamingOperation = convertHttpOperation({
+                streamFormat: undefined,
                 operationContext: {
                     ...operationContext,
                     operation: {
@@ -129,7 +133,7 @@ function getRequestBody({
         ? context.resolveRequestBodyReference(operation.requestBody)
         : operation.requestBody;
 
-    const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedRequestBody.content);
+    const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedRequestBody.content, context);
 
     if (jsonMediaObject == null) {
         return undefined;

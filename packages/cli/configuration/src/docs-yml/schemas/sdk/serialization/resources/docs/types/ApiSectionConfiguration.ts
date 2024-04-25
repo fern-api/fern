@@ -15,6 +15,11 @@ export const ApiSectionConfiguration: core.serialization.ObjectSchema<
     audiences: core.serialization.list(core.serialization.string()).optional(),
     displayErrors: core.serialization.property("display-errors", core.serialization.boolean().optional()),
     snippets: core.serialization.lazyObject(async () => (await import("../../..")).SnippetsConfiguration).optional(),
+    summary: core.serialization.string().optional(),
+    layout: core.serialization.lazy(async () => (await import("../../..")).ApiNavigationItems).optional(),
+    icon: core.serialization.string().optional(),
+    hidden: core.serialization.boolean().optional(),
+    skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
 });
 
 export declare namespace ApiSectionConfiguration {
@@ -24,5 +29,10 @@ export declare namespace ApiSectionConfiguration {
         audiences?: string[] | null;
         "display-errors"?: boolean | null;
         snippets?: serializers.SnippetsConfiguration.Raw | null;
+        summary?: string | null;
+        layout?: serializers.ApiNavigationItems.Raw | null;
+        icon?: string | null;
+        hidden?: boolean | null;
+        "skip-slug"?: boolean | null;
     }
 }

@@ -83,7 +83,8 @@
                             }
                           ]
                         }
-                      }
+                      },
+                      "extra-properties": { "type": "boolean" }
                     },
                     "required": ["extends"],
                     "additionalProperties": false
@@ -110,7 +111,8 @@
                         "additionalProperties": {
                           "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
                         }
-                      }
+                      },
+                      "extra-properties": { "type": "boolean" }
                     },
                     "required": ["properties"],
                     "additionalProperties": false
@@ -464,7 +466,8 @@
                                         "additionalProperties": {
                                           "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
                                         }
-                                      }
+                                      },
+                                      "extra-properties": { "type": "boolean" }
                                     },
                                     "required": ["extends"],
                                     "additionalProperties": false
@@ -480,7 +483,8 @@
                                         "additionalProperties": {
                                           "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
                                         }
-                                      }
+                                      },
+                                      "extra-properties": { "type": "boolean" }
                                     },
                                     "required": ["properties"],
                                     "additionalProperties": false
@@ -517,6 +521,7 @@
                         "properties": {
                           "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
                           "type": { "type": "string" },
+                          "format": { "type": "string", "enum": ["sse", "json"] },
                           "terminator": { "type": "string" }
                         },
                         "required": ["type"],
@@ -647,45 +652,35 @@
                           {
                             "type": "object",
                             "properties": {
-                              "type": {
+                              "cursor": {
                                 "type": "string",
-                                "const": "cursor",
-                                "description": "Configures cursor auto-pagination."
+                                "description": "The path to the request property for the cursor."
                               },
-                              "page": {
+                              "next_cursor": {
                                 "type": "string",
-                                "description": "The request property name that represents the page cursor."
-                              },
-                              "next": {
-                                "type": "string",
-                                "description": "The response property name that represents the next page cursor to retrieve."
+                                "description": "The path to the response property for the next cursor."
                               },
                               "results": {
                                 "type": "string",
-                                "description": "The response property name that represents the page elements."
+                                "description": "The path to the response property for the page elements."
                               }
                             },
-                            "required": ["type", "page", "next", "results"],
+                            "required": ["cursor", "next_cursor", "results"],
                             "additionalProperties": false
                           },
                           {
                             "type": "object",
                             "properties": {
-                              "type": {
+                              "offset": {
                                 "type": "string",
-                                "const": "offset",
-                                "description": "Configures offset auto-pagination."
-                              },
-                              "page": {
-                                "type": "string",
-                                "description": "The request property name that represents the page offset."
+                                "description": "The path to the request property for the page offset."
                               },
                               "results": {
                                 "type": "string",
-                                "description": "The response property name that represents the page elements."
+                                "description": "The path to the response property for the page elements."
                               }
                             },
-                            "required": ["type", "page", "results"],
+                            "required": ["offset", "results"],
                             "additionalProperties": false
                           }
                         ]

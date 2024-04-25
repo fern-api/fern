@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
-import { PackageId } from "@fern-typescript/commons";
+import { getSchemaOptions, PackageId } from "@fern-typescript/commons";
 import { ExpressContext, GeneratedExpressEndpointTypeSchemas } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { GeneratedEndpointTypeSchema } from "./GeneratedEndpointTypeSchema";
@@ -12,6 +12,7 @@ export declare namespace GeneratedExpressEndpointTypeSchemasImpl {
         service: HttpService;
         endpoint: HttpEndpoint;
         includeSerdeLayer: boolean;
+        allowExtraFields: boolean;
     }
 }
 
@@ -23,10 +24,18 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
     private generatedRequestSchema: GeneratedEndpointTypeSchema | undefined;
     private generatedResponseSchema: GeneratedEndpointTypeSchemaImpl | undefined;
     private includeSerdeLayer: boolean;
+    private allowExtraFields: boolean;
 
-    constructor({ packageId, service, endpoint, includeSerdeLayer }: GeneratedExpressEndpointTypeSchemasImpl.Init) {
+    constructor({
+        packageId,
+        service,
+        endpoint,
+        includeSerdeLayer,
+        allowExtraFields
+    }: GeneratedExpressEndpointTypeSchemasImpl.Init) {
         this.endpoint = endpoint;
         this.includeSerdeLayer = includeSerdeLayer;
+        this.allowExtraFields = allowExtraFields;
 
         if (includeSerdeLayer) {
             // only generate request schemas for referenced request bodies.  inlined
@@ -162,11 +171,9 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                 return context.typeSchema
                     .getSchemaOfNamedType(this.endpoint.response.value.responseBodyType, { isGeneratingSchema: false })
                     .jsonOrThrow(referenceToParsedResponse, {
-                        unrecognizedObjectKeys: "strip",
-                        allowUnrecognizedEnumValues: false,
-                        allowUnrecognizedUnionMembers: false,
-                        skipValidation: false,
-                        breadcrumbsPrefix: []
+                        ...getSchemaOptions({
+                            allowExtraFields: this.allowExtraFields
+                        })
                     });
             case "primitive":
             case "container":
@@ -176,11 +183,9 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                 return this.generatedResponseSchema
                     .getReferenceToZurgSchema(context)
                     .jsonOrThrow(referenceToParsedResponse, {
-                        unrecognizedObjectKeys: "strip",
-                        allowUnrecognizedEnumValues: false,
-                        allowUnrecognizedUnionMembers: false,
-                        skipValidation: false,
-                        breadcrumbsPrefix: []
+                        ...getSchemaOptions({
+                            allowExtraFields: this.allowExtraFields
+                        })
                     });
             default:
                 assertNever(this.endpoint.response.value.responseBodyType);

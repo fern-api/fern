@@ -51,6 +51,7 @@ types:
     union:
       integer: integer
       string: string
+      foo: Foo
 
   UnionWithTime:
     union:

@@ -493,6 +493,7 @@ exports[`generate IR 1`] = `
           "requestBody": {
             "contentType": null,
             "extends": [],
+            "extra-properties": false,
             "name": {
               "camelCase": {
                 "safeName": "generateStreamRequestzs",
@@ -546,8 +547,10 @@ exports[`generate IR 1`] = `
             "type": "inlinedRequestBody",
           },
           "response": {
-            "dataEventType": {
-              "json": {
+            "type": "streaming",
+            "value": {
+              "docs": null,
+              "payload": {
                 "_type": "named",
                 "fernFilepath": {
                   "allParts": [
@@ -613,11 +616,9 @@ exports[`generate IR 1`] = `
                 },
                 "typeId": "type_dummy:StreamResponse",
               },
+              "terminator": null,
               "type": "json",
             },
-            "docs": null,
-            "terminator": null,
-            "type": "streaming",
           },
           "sdkRequest": {
             "requestParameterName": {
@@ -883,6 +884,7 @@ exports[`generate IR 1`] = `
       "shape": {
         "_type": "object",
         "extends": [],
+        "extra-properties": false,
         "properties": [
           {
             "availability": null,

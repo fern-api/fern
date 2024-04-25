@@ -94,6 +94,9 @@ types:
       extends: list<types.DeclaredTypeName>
       properties: list<InlinedRequestBodyProperty>
       contentType: optional<string>
+      extra-properties:
+        docs: Whether to allow extra properties on the request.
+        type: boolean
   InlinedRequestBodyProperty:
     extends: commons.WithDocs
     properties:
@@ -182,17 +185,26 @@ types:
     extends: commons.WithDocs
 
   StreamingResponse:
+    union: 
+      json: JsonStreamChunk
+      text: TextStreamChunk
+      sse: SseStreamChunk
+    
+  TextStreamChunk: 
+    extends: commons.WithDocs
+    properties: {}
+    
+  JsonStreamChunk:
     extends: commons.WithDocs
     properties:
-      dataEventType: StreamingResponseChunkType
+      payload: types.TypeReference
       terminator: optional<string>
-
-  StreamingResponseChunkType:
-    union:
-      json:
-        type: types.TypeReference
-        key: json
-      text: {}
+  
+  SseStreamChunk:
+    extends: commons.WithDocs
+    properties:
+      payload: types.TypeReference
+      terminator: optional<string>
 
   ResponseErrors: list<ResponseError>
   ResponseError:
@@ -216,8 +228,8 @@ types:
       on the response.
     properties:
       page: QueryParameter
-      next: PaginationProperty
-      results: PaginationProperty
+      next: ResponseProperty
+      results: ResponseProperty
 
   OffsetPagination:
     docs: |
@@ -227,9 +239,27 @@ types:
       The page index is auto-incremented between every additional page request.
     properties:
       page: QueryParameter
-      results: PaginationProperty
+      results: ResponseProperty
 
-  PaginationProperty:
+  # shared properties
+  RequestPropertyValue:
+    union:
+      query: QueryParameter
+      body: types.ObjectProperty
+
+  RequestProperty:
+    docs: |
+      A property associated with an endpoint's request.
+    properties:
+      propertyPath:
+        docs: |
+          If empty, the property is defined at the top-level.
+          Otherwise, the property is defined on the nested object identified
+          by the path.
+        type: optional<list<commons.Name>>
+      property: RequestPropertyValue
+
+  ResponseProperty:
     docs: |
       A property associated with a paginated endpoint's request or response.
     properties:

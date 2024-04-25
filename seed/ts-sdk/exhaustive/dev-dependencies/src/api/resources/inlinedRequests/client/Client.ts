@@ -3,8 +3,8 @@
  */
 
 import * as core from "../../../../core";
-import * as Fiddle from "../../..";
-import * as serializers from "../../../../serialization";
+import * as Fiddle from "../../../index";
+import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
 
 export declare namespace InlinedRequests {
@@ -24,6 +24,28 @@ export class InlinedRequests {
 
     /**
      * POST with custom object in request body, response is an object
+     *
+     * @example
+     *     await fiddle.inlinedRequests.postWithObjectBodyandResponse({
+     *         string: "string",
+     *         integer: 1,
+     *         nestedObject: {
+     *             string: "string",
+     *             integer: 1,
+     *             long: 1000000,
+     *             double: 1.1,
+     *             bool: true,
+     *             datetime: new Date("2024-01-15T09:30:00.000Z"),
+     *             date: "2023-01-15",
+     *             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+     *             base64: "SGVsbG8gd29ybGQh",
+     *             list: ["string"],
+     *             set: new Set(["string"]),
+     *             map: {
+     *                 1: "string"
+     *             }
+     *         }
+     *     })
      */
     public async postWithObjectBodyandResponse(
         request: Fiddle.PostWithObjectBody,
@@ -40,7 +62,7 @@ export class InlinedRequests {
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -85,7 +107,7 @@ export class InlinedRequests {
         };
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

@@ -1,5 +1,11 @@
 import { FileProperty } from "@fern-fern/ir-sdk/api";
 
-export function getParameterNameForFile(file: FileProperty): string {
-    return file.key.name.camelCase.unsafeName;
+export function getParameterNameForFile({
+    property,
+    retainOriginalCasing
+}: {
+    property: FileProperty;
+    retainOriginalCasing: boolean;
+}): string {
+    return retainOriginalCasing ? property.key.name.originalName : property.key.name.camelCase.unsafeName;
 }

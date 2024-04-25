@@ -33,6 +33,7 @@
     "fern-dev:local": "yarn workspace @fern-api/cli dist:cli:dev && FERN_NO_VERSION_REDIRECTION=true node $(yarn workspace @fern-api/cli bin fern:dev)",
     "fern:build": "POSTHOG_API_KEY=\"\" yarn workspace @fern-api/cli dist:cli:prod && echo $(yarn workspace @fern-api/cli bin fern:prod)",
     "fern-dev:build": "yarn workspace @fern-api/cli dist:cli:dev && echo $(yarn workspace @fern-api/cli bin fern:dev)",
+    "fern-local:build": "yarn workspace @fern-api/cli dist:cli:local && echo $(yarn workspace @fern-api/cli bin fern:local)",
     "seed:build": "yarn workspace @fern-api/seed-cli dist:cli && echo $(yarn workspace @fern-api/seed-cli bin seed)",
     "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public",
     "add-workspace": "yarn mrlint add-workspace",
@@ -44,11 +45,12 @@
     "root-package:check": "yarn fern-script check-root-package",
     "root-package:fix": "yarn root-package:check --fix",
     "demo-setup": "yarn workspace @fern-api/demo-setup dist:cli && node $(yarn workspace @fern-api/demo-setup bin demo-setup)",
+    "seed": "node $(yarn workspace @fern-api/seed-cli bin seed)",
     "seed:local": "yarn workspace @fern-api/seed-cli dist:cli && node $(yarn workspace @fern-api/seed-cli bin seed)",
     "ir:generate": "yarn workspace @fern-api/ir-sdk generate",
     "openapi-ir:generate": "yarn workspace @fern-api/openapi-ir-sdk generate",
     "seed-config:generate": "yarn workspace @fern-api/seed-cli generate",
-    "docs-config:generate": "yarn workspace @fern-api/docs-config-sdk generate"
+    "docs-config:generate": "yarn workspace @fern-api/configuration generate"
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",
@@ -68,9 +70,9 @@
     "eslint-plugin-deprecation": "^2.0.0",
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-jest": "^27.0.4",
-    "eslint-plugin-react": "^7.31.10",
+    "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-tailwindcss": "^3.13.1",
+    "eslint-plugin-tailwindcss": "^3.15.1",
     "execa": "^5.1.1",
     "husky": "^8.0.1",
     "immer": "^9.0.15",
@@ -102,6 +104,8 @@
     }
   },
   "dependencies": {
+    "@fern-api/logging-execa": "workspace:^",
+    "@fern-fern/generator-exec-sdk": "^0.0.730",
     "terminal-link": "^3.0.0",
     "workspace": "^0.0.1-preview.1"
   }

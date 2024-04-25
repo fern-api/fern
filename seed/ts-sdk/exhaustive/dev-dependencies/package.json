@@ -1,10 +1,10 @@
 {
-    "name": "",
+    "name": "@fern/exhaustive",
     "version": "0.0.1",
     "private": false,
     "repository": "https://github.com/exhaustive/fern",
     "scripts": {
-        "format": "prettier --write 'src/**/*.ts'",
+        "format": "prettier . --write --ignore-unknown",
         "compile": "tsc",
         "bundle": "node build.js",
         "build": "yarn compile && yarn bundle"
@@ -52,8 +52,9 @@
         "@types/qs": "6.9.8",
         "@types/node-fetch": "2.6.9",
         "jest": "^29.7.0",
-        "@types/jest": "^29.5.5",
-        "ts-jest": "^29.1.1",
+        "@types/jest": "29.5.5",
+        "ts-jest": "29.1.1",
+        "jest-environment-jsdom": "29.7.0",
         "@types/node": "17.0.33",
         "esbuild": "0.16.15",
         "prettier": "2.7.1",

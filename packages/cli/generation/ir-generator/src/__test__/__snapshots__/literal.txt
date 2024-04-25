@@ -1029,6 +1029,7 @@ exports[`generate IR 1`] = `
           "requestBody": {
             "contentType": null,
             "extends": [],
+            "extra-properties": false,
             "name": {
               "camelCase": {
                 "safeName": "sendLiteralsInHeadersRequest",
@@ -2097,6 +2098,7 @@ exports[`generate IR 1`] = `
           "requestBody": {
             "contentType": null,
             "extends": [],
+            "extra-properties": false,
             "name": {
               "camelCase": {
                 "safeName": "sendLiteralsInlinedRequest",
@@ -6143,6 +6145,7 @@ exports[`generate IR 1`] = `
       "shape": {
         "_type": "object",
         "extends": [],
+        "extra-properties": false,
         "properties": [
           {
             "availability": null,
@@ -6316,6 +6319,7 @@ exports[`generate IR 1`] = `
       "shape": {
         "_type": "object",
         "extends": [],
+        "extra-properties": false,
         "properties": [
           {
             "availability": null,

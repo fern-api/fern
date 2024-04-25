@@ -1,0 +1,25 @@
+[
+    {
+        "sdk": {
+            "package": "fern_single-url-environment-no-default",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/dummy",
+            "method": "GET"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedSingleUrlEnvironmentNoDefault\nfrom seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment\n\nclient = AsyncSeedSingleUrlEnvironmentNoDefault(\n    token=\"YOUR_TOKEN\",\n    environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION,\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.dummy.get_dummy(\n\t$FERN_INPUT\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

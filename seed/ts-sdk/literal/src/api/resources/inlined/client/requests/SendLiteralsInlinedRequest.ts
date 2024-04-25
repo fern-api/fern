@@ -10,6 +10,14 @@
  *         stream: false,
  *         query: "What is the weather today"
  *     }
+ *
+ * @example
+ *     {
+ *         temperature: 10.1,
+ *         prompt: "You are a helpful assistant",
+ *         stream: false,
+ *         query: "What is the weather today"
+ *     }
  */
 export interface SendLiteralsInlinedRequest {
     query: string;

@@ -1,0 +1,569 @@
+{
+    "apiName": {
+        "originalName": "websocket",
+        "camelCase": {
+            "unsafeName": "websocket",
+            "safeName": "websocket"
+        },
+        "snakeCase": {
+            "unsafeName": "websocket",
+            "safeName": "websocket"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "WEBSOCKET",
+            "safeName": "WEBSOCKET"
+        },
+        "pascalCase": {
+            "unsafeName": "Websocket",
+            "safeName": "Websocket"
+        }
+    },
+    "apiDisplayName": null,
+    "apiDocs": null,
+    "auth": {
+        "requirement": "ALL",
+        "schemes": [],
+        "docs": null
+    },
+    "headers": [],
+    "idempotencyHeaders": [],
+    "types": {},
+    "errors": {},
+    "services": {},
+    "constants": {
+        "errorInstanceIdKey": {
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceId",
+                    "safeName": "errorInstanceId"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceId",
+                    "safeName": "ErrorInstanceId"
+                }
+            },
+            "wireValue": "errorInstanceId"
+        }
+    },
+    "environments": null,
+    "errorDiscriminationStrategy": {
+        "type": "statusCode"
+    },
+    "basePath": null,
+    "pathParameters": [],
+    "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {},
+        "sharedTypes": []
+    },
+    "webhookGroups": {},
+    "websocketChannels": {
+        "channel_realtime": {
+            "path": {
+                "head": "/realtime/",
+                "parts": [
+                    {
+                        "pathParameter": "id",
+                        "tail": ""
+                    }
+                ]
+            },
+            "auth": true,
+            "name": {
+                "originalName": "realtime",
+                "camelCase": {
+                    "unsafeName": "realtime",
+                    "safeName": "realtime"
+                },
+                "snakeCase": {
+                    "unsafeName": "realtime",
+                    "safeName": "realtime"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "REALTIME",
+                    "safeName": "REALTIME"
+                },
+                "pascalCase": {
+                    "unsafeName": "Realtime",
+                    "safeName": "Realtime"
+                }
+            },
+            "displayName": null,
+            "headers": [],
+            "pathParameters": [
+                {
+                    "name": {
+                        "originalName": "id",
+                        "camelCase": {
+                            "unsafeName": "id",
+                            "safeName": "id"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "id",
+                            "safeName": "id"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "ID",
+                            "safeName": "ID"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Id",
+                            "safeName": "Id"
+                        }
+                    },
+                    "valueType": {
+                        "_type": "primitive",
+                        "primitive": "STRING"
+                    },
+                    "location": "ENDPOINT",
+                    "variable": null,
+                    "docs": null
+                }
+            ],
+            "queryParameters": [
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "model",
+                            "camelCase": {
+                                "unsafeName": "model",
+                                "safeName": "model"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "model",
+                                "safeName": "model"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "MODEL",
+                                "safeName": "MODEL"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Model",
+                                "safeName": "Model"
+                            }
+                        },
+                        "wireValue": "model"
+                    },
+                    "valueType": {
+                        "_type": "container",
+                        "container": {
+                            "_type": "optional",
+                            "optional": {
+                                "_type": "named",
+                                "name": {
+                                    "originalName": "Model",
+                                    "camelCase": {
+                                        "unsafeName": "model",
+                                        "safeName": "model"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "model",
+                                        "safeName": "model"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "MODEL",
+                                        "safeName": "MODEL"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Model",
+                                        "safeName": "Model"
+                                    }
+                                },
+                                "fernFilepath": {
+                                    "allParts": [
+                                        {
+                                            "originalName": "realtime",
+                                            "camelCase": {
+                                                "unsafeName": "realtime",
+                                                "safeName": "realtime"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "realtime",
+                                                "safeName": "realtime"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "REALTIME",
+                                                "safeName": "REALTIME"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Realtime",
+                                                "safeName": "Realtime"
+                                            }
+                                        }
+                                    ],
+                                    "packagePath": [],
+                                    "file": {
+                                        "originalName": "realtime",
+                                        "camelCase": {
+                                            "unsafeName": "realtime",
+                                            "safeName": "realtime"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "realtime",
+                                            "safeName": "realtime"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "REALTIME",
+                                            "safeName": "REALTIME"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Realtime",
+                                            "safeName": "Realtime"
+                                        }
+                                    }
+                                },
+                                "typeId": "type_realtime:Model"
+                            }
+                        }
+                    },
+                    "allowMultiple": false,
+                    "availability": null,
+                    "docs": null
+                },
+                {
+                    "name": {
+                        "name": {
+                            "originalName": "temperature",
+                            "camelCase": {
+                                "unsafeName": "temperature",
+                                "safeName": "temperature"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "temperature",
+                                "safeName": "temperature"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TEMPERATURE",
+                                "safeName": "TEMPERATURE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Temperature",
+                                "safeName": "Temperature"
+                            }
+                        },
+                        "wireValue": "temperature"
+                    },
+                    "valueType": {
+                        "_type": "container",
+                        "container": {
+                            "_type": "optional",
+                            "optional": {
+                                "_type": "primitive",
+                                "primitive": "INTEGER"
+                            }
+                        }
+                    },
+                    "allowMultiple": false,
+                    "availability": null,
+                    "docs": null
+                }
+            ],
+            "messages": [
+                {
+                    "type": "send",
+                    "origin": "client",
+                    "body": {
+                        "type": "reference",
+                        "bodyType": {
+                            "_type": "primitive",
+                            "primitive": "STRING"
+                        },
+                        "docs": null
+                    },
+                    "displayName": "Send",
+                    "availability": null,
+                    "docs": null
+                },
+                {
+                    "type": "receive",
+                    "origin": "server",
+                    "body": {
+                        "type": "inlinedBody",
+                        "name": {
+                            "originalName": "ReceiveEvent",
+                            "camelCase": {
+                                "unsafeName": "receiveEvent",
+                                "safeName": "receiveEvent"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "receive_event",
+                                "safeName": "receive_event"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "RECEIVE_EVENT",
+                                "safeName": "RECEIVE_EVENT"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "ReceiveEvent",
+                                "safeName": "ReceiveEvent"
+                            }
+                        },
+                        "extends": [],
+                        "properties": []
+                    },
+                    "displayName": "Receive",
+                    "availability": null,
+                    "docs": null
+                }
+            ],
+            "examples": [
+                {
+                    "name": {
+                        "originalName": "Default example",
+                        "camelCase": {
+                            "unsafeName": "defaultExample",
+                            "safeName": "defaultExample"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "default_example",
+                            "safeName": "default_example"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "DEFAULT_EXAMPLE",
+                            "safeName": "DEFAULT_EXAMPLE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "DefaultExample",
+                            "safeName": "DefaultExample"
+                        }
+                    },
+                    "url": "/realtime/doc_123",
+                    "pathParameters": [
+                        {
+                            "name": {
+                                "originalName": "id",
+                                "camelCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Id",
+                                    "safeName": "Id"
+                                }
+                            },
+                            "value": {
+                                "shape": {
+                                    "type": "primitive",
+                                    "primitive": {
+                                        "type": "string",
+                                        "string": {
+                                            "original": "doc_123"
+                                        }
+                                    }
+                                },
+                                "jsonExample": "doc_123"
+                            }
+                        }
+                    ],
+                    "headers": [],
+                    "queryParameters": [],
+                    "messages": [
+                        {
+                            "type": "send",
+                            "body": {
+                                "type": "reference",
+                                "shape": {
+                                    "type": "primitive",
+                                    "primitive": {
+                                        "type": "string",
+                                        "string": {
+                                            "original": "uvxcdv12344412b"
+                                        }
+                                    }
+                                },
+                                "jsonExample": "uvxcdv12344412b"
+                            }
+                        },
+                        {
+                            "type": "receive",
+                            "body": {
+                                "type": "inlinedBody",
+                                "properties": [
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "text",
+                                                "camelCase": {
+                                                    "unsafeName": "text",
+                                                    "safeName": "text"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "text",
+                                                    "safeName": "text"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "TEXT",
+                                                    "safeName": "TEXT"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Text",
+                                                    "safeName": "Text"
+                                                }
+                                            },
+                                            "wireValue": "text"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "The weather for today..."
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "The weather for today..."
+                                        },
+                                        "originalTypeDeclaration": null
+                                    }
+                                ],
+                                "jsonExample": {
+                                    "text": "The weather for today..."
+                                }
+                            }
+                        },
+                        {
+                            "type": "send",
+                            "body": {
+                                "type": "reference",
+                                "shape": {
+                                    "type": "primitive",
+                                    "primitive": {
+                                        "type": "string",
+                                        "string": {
+                                            "original": "uvxcdv12344412b"
+                                        }
+                                    }
+                                },
+                                "jsonExample": "uvxcdv12344412b"
+                            }
+                        }
+                    ],
+                    "docs": null
+                }
+            ],
+            "availability": null,
+            "docs": null
+        }
+    },
+    "subpackages": {
+        "subpackage_realtime": {
+            "name": {
+                "originalName": "realtime",
+                "camelCase": {
+                    "unsafeName": "realtime",
+                    "safeName": "realtime"
+                },
+                "snakeCase": {
+                    "unsafeName": "realtime",
+                    "safeName": "realtime"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "REALTIME",
+                    "safeName": "REALTIME"
+                },
+                "pascalCase": {
+                    "unsafeName": "Realtime",
+                    "safeName": "Realtime"
+                }
+            },
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "realtime",
+                        "camelCase": {
+                            "unsafeName": "realtime",
+                            "safeName": "realtime"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "realtime",
+                            "safeName": "realtime"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "REALTIME",
+                            "safeName": "REALTIME"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Realtime",
+                            "safeName": "Realtime"
+                        }
+                    }
+                ],
+                "packagePath": [],
+                "file": {
+                    "originalName": "realtime",
+                    "camelCase": {
+                        "unsafeName": "realtime",
+                        "safeName": "realtime"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "realtime",
+                        "safeName": "realtime"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "REALTIME",
+                        "safeName": "REALTIME"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Realtime",
+                        "safeName": "Realtime"
+                    }
+                }
+            },
+            "service": null,
+            "types": [],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": "channel_realtime",
+            "hasEndpointsInTree": false,
+            "docs": null
+        }
+    },
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": [],
+            "file": null
+        },
+        "websocket": null,
+        "service": null,
+        "types": [],
+        "errors": [],
+        "subpackages": [
+            "subpackage_realtime"
+        ],
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": false,
+        "docs": null
+    },
+    "sdkConfig": {
+        "isAuthMandatory": false,
+        "hasStreamingEndpoints": false,
+        "hasFileDownloadEndpoints": false,
+        "platformHeaders": {
+            "language": "X-Fern-Language",
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version"
+        }
+    }
+}

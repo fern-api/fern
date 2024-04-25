@@ -85,6 +85,7 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 	t.Six = unmarshaler.Six.Time()
 	t.Seven = unmarshaler.Seven.Time()
 	t.eighteen = "eighteen"
+
 	t._rawJSON = json.RawMessage(data)
 	return nil
 }

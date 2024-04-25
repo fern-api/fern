@@ -3,4 +3,4 @@
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 
 require "minitest/autorun"
-require "seed_single_url_environment_no_default_client"
+require "fern_single_url_environment_no_default"

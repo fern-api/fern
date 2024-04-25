@@ -8,19 +8,27 @@ types:
       title: optional<string>
       description: optional<string>
       servers: list<commons.Server>
+      groups:
+        docs: |
+          Top level group information populated through `x-fern-groups`.
+        type: map<string, SdkGroupInfo>
       tags: Tags
       hasEndpointsMarkedInternal: boolean
       endpoints: list<Endpoint>
       webhooks: list<Webhook>
       channel: list<WebsocketChannel>
       schemas: map<commons.SchemaId, Schema>
-      errors: map<commons.StatusCode, HttpError>
       variables: map<string, PrimitiveSchema>
       nonRequestReferencedSchemas:
         type: set<commons.SchemaId>
         docs: Whether the schema is directly referenced from a response, parameters, or other schemas
       securitySchemes: map<commons.SecuritySchemeId, commons.SecurityScheme>
       globalHeaders: optional<list<GlobalHeader>>
+
+  SdkGroupInfo:
+    properties:
+      summary: optional<string>
+      description: optional<string>
 
   GlobalHeader:
     properties:
@@ -41,6 +49,7 @@ types:
       - commons.WithName
     properties:
       schema: optional<Schema>
+      examples: optional<list<ErrorExample>>
 
   Webhook:
     extends: commons.WithDescription
@@ -56,23 +65,23 @@ types:
         docs: |
           Populated as ${operationId}Payload
       payload: Schema
-  
-  WebsocketChannel: 
+
+  WebsocketChannel:
     extends: commons.WithDescription
-    properties: 
+    properties:
       path: string
-      groupName: list<commons.SdkGroupName>
+      groupName: commons.SdkGroupName
       summary: optional<string>
       handshake: WebsocketHandshake
       publish: optional<Schema>
       subscribe: optional<Schema>
       examples: list<WebsocketSessionExample>
-    
-  WebsocketHandshake: 
-    properties: 
+
+  WebsocketHandshake:
+    properties:
       queryParameters: list<QueryParameter>
       headers: list<Header>
-  
+
   WebsocketSessionExample:
     docs: |
       A complete example associated with the websocket channel.
@@ -82,10 +91,10 @@ types:
       queryParameters: optional<list<QueryParameterExample>>
       headers: optional<list<HeaderExample>>
       messages: list<WebsocketMessageExample>
-  
-  WebsocketMessageExample: 
+
+  WebsocketMessageExample:
     extends: commons.WithDescription
-    properties: 
+    properties:
       messageType: string
       payload: example.FullExample
 
@@ -111,7 +120,7 @@ types:
       path:
         type: string
         docs: |
-          This string includes templated path parameters. 
+          This string includes templated path parameters.
           For example, `/users/{userId}` is a valid value.
       summary: optional<string>
       operationId: optional<string>
@@ -130,7 +139,11 @@ types:
           Populated by `x-request-name` on a path object.
       request: optional<Request>
       response: optional<Response>
-      errorStatusCode: list<commons.StatusCode>
+      errors:
+        type: map<commons.StatusCode, HttpError>
+        docs: |
+          Expected error status codes for this endpoint, and their corresponding schema and examples.
+          SDK generators will only read the StatusCodes. Docs generators will read the HttpError schema.
       server: list<commons.Server>
       examples: list<EndpointExample>
 
@@ -186,7 +199,14 @@ types:
       - dotnet # alias to csharp
       - jvm # alias to java
 
+  FernExample: unknown
+
   EndpointExample:
+    union:
+      unknown: FernExample
+      full: FullEndpointExample
+
+  FullEndpointExample:
     docs: |
       A complete example associated with the endpoint. All child
       examples will be fully complete (i.e. there will be no
@@ -216,10 +236,16 @@ types:
       name: string
       value: example.FullExample
 
+  ErrorExample:
+    properties:
+      name: optional<string>
+      description: optional<string>
+      example: example.FullExample
+
   EndpointSdkName:
     properties:
       groupName:
-        type: list<commons.SdkGroupName>
+        type: commons.SdkGroupName
         docs: This is populated by `x-fern-sdk-method-name`
       methodName:
         type: string
@@ -309,6 +335,7 @@ types:
       file: FileResponse
       json: JsonResponse
       text: TextResponse
+      streamingSse: JsonResponse
       streamingText: TextResponse
       streamingJson:
         type: JsonResponse
@@ -473,9 +500,9 @@ types:
         type: string
         docs: Value of the enum
       casing: optional<CasingOverrides>
-  
-  CasingOverrides: 
-    properties: 
+
+  CasingOverrides:
+    properties:
       snake: optional<string>
       camel: optional<string>
       screamingSnake: optional<string>

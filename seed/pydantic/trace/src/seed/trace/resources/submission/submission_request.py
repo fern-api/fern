@@ -4,31 +4,27 @@ from __future__ import annotations
 
 import typing
 
+from ...core.pydantic_utilities import pydantic_v1
 from .initialize_problem_request import InitializeProblemRequest
 from .stop_request import StopRequest
 from .submit_request_v_2 import SubmitRequestV2
 from .workspace_submit_request import WorkspaceSubmitRequest
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
-
 
 class SubmissionRequest_InitializeProblemRequest(InitializeProblemRequest):
-    type: typing.Literal["initializeProblemRequest"]
+    type: typing.Literal["initializeProblemRequest"] = "initializeProblemRequest"
 
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
 
 
-class SubmissionRequest_InitializeWorkspaceRequest(pydantic.BaseModel):
-    type: typing.Literal["initializeWorkspaceRequest"]
+class SubmissionRequest_InitializeWorkspaceRequest(pydantic_v1.BaseModel):
+    type: typing.Literal["initializeWorkspaceRequest"] = "initializeWorkspaceRequest"
 
 
 class SubmissionRequest_SubmitV2(SubmitRequestV2):
-    type: typing.Literal["submitV2"]
+    type: typing.Literal["submitV2"] = "submitV2"
 
     class Config:
         allow_population_by_field_name = True
@@ -36,7 +32,7 @@ class SubmissionRequest_SubmitV2(SubmitRequestV2):
 
 
 class SubmissionRequest_WorkspaceSubmit(WorkspaceSubmitRequest):
-    type: typing.Literal["workspaceSubmit"]
+    type: typing.Literal["workspaceSubmit"] = "workspaceSubmit"
 
     class Config:
         allow_population_by_field_name = True
@@ -44,7 +40,7 @@ class SubmissionRequest_WorkspaceSubmit(WorkspaceSubmitRequest):
 
 
 class SubmissionRequest_Stop(StopRequest):
-    type: typing.Literal["stop"]
+    type: typing.Literal["stop"] = "stop"
 
     class Config:
         allow_population_by_field_name = True

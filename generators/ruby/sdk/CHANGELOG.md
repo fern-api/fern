@@ -7,6 +7,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.6.1-rc0] - 2024-04-23
+
+- Internal: Improve logging within the Ruby generator
+
+## [0.6.0-rc1] - 2024-04-12
+
+- Fix: fix regression where sometimes the parsed_json variable would not be instantiated, and so there'd be a nil ref in the generated code
+
+## [0.6.0-rc0] - 2024-04-12
+
+- Feature: Introduce code snippets and examples for Ruby SDKs.
+
+## [0.5.0-rc2] - 2024-04-12
+
+- Fix: Call JSON.parse prior to iterating through an iterable response
+
+## [0.5.0-rc0] - 2024-04-09
+
+- Improvement: Consumers of the SDK can now pass in a base URL override into the root client, as well as the request's RequestOptions
+
+- Fix: this PR includes a number of typing annotation and cleanliness/QOL fixes.
+
+## [0.4.0] - 2024-04-08
+
+- Improvement: The generators now create a rakefile to run any tests prefixed with `test_` in the `test` directory. A step is also added to CI to run these test. The dummy test now running also provides a sanity check on the health of the build of the gem, even if no tests are added given the gem is imported.
+
+## [0.3.3] - 2024-03-22
+
+- Internal: Shared generator notification and config parsing logic.
+
+## [0.3.2] - 2024-03-18
+
+- Improvement: type bytes requests to also take in IO types, indicating to users that they may pass in a stream of bytes
+
 ## [0.3.1] - 2024-03-12
 
 - Fix: use strings instead of UUIDs, which are helper classes in Ruby

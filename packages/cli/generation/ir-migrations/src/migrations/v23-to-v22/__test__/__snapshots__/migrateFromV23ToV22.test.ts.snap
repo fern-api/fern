@@ -9916,6 +9916,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
             "_visit": [Function],
             "contentType": undefined,
             "extends": [],
+            "extraProperties": false,
             "name": {
               "camelCase": {
                 "safeName": "postWithObjectBody",
@@ -12796,6 +12797,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
         "_type": "object",
         "_visit": [Function],
         "extends": [],
+        "extraProperties": false,
         "properties": [
           {
             "availability": {
@@ -13291,6 +13293,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
         "_type": "object",
         "_visit": [Function],
         "extends": [],
+        "extraProperties": false,
         "properties": [
           {
             "availability": {
@@ -13698,6 +13701,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
         "_type": "object",
         "_visit": [Function],
         "extends": [],
+        "extraProperties": false,
         "properties": [
           {
             "availability": {
@@ -13988,6 +13992,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
         "_type": "object",
         "_visit": [Function],
         "extends": [],
+        "extraProperties": false,
         "properties": [
           {
             "availability": {
@@ -14599,6 +14604,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
         "_type": "object",
         "_visit": [Function],
         "extends": [],
+        "extraProperties": false,
         "properties": [
           {
             "availability": {
@@ -15372,6 +15378,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
         "_type": "object",
         "_visit": [Function],
         "extends": [],
+        "extraProperties": false,
         "properties": [
           {
             "availability": {
@@ -15559,6 +15566,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
         "_type": "object",
         "_visit": [Function],
         "extends": [],
+        "extraProperties": false,
         "properties": [
           {
             "availability": {

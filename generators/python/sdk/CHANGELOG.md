@@ -5,6 +5,191 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0-rc3] - 2024-04-24
+
+- Fix: Set `mypy` dev depenency in generated `pyproject.toml` to `1.9.0`.
+       This prevents upstream `mypy` bugs from affecting user builds. Note that
+       this is only a dev dependency, so it does not affect the behavior of the
+       SDK.
+- Fix: Temporarily disable unit test generation.
+- Improvement: Use named parameters for all `httpx` request params.
+
+## [1.4.0-rc2] - 2024-04-23
+
+- Fix: Initialize the OAuth token provider member variables to their default values before they are set.
+
+## [1.4.0-rc1] - 2024-04-22
+
+- Feature: The python SDK generator now supports OAuth client generation for the client-credentials flow.
+
+## [1.4.0-rc0] - 2024-04-22
+
+- Chore: default generated clients to follow redirects by default, this effectively flips the `follow_redirects_by_default` flag to `True` and can be reverted with the following configuration:
+
+  ```yaml
+  generators:
+    - name: fernapi/fern-python-sdk
+      config:
+        follow_redirects_by_default: false
+  ```
+
+## [1.3.1-rc0] - 2024-04-22
+
+- Fix: the python SDK generator now checks to make sure a header is not null before casting it to a string.
+
+## [1.3.0-rc1] - 2024-04-22
+
+- Internal: add logging for python snippet template generation.
+
+## [1.3.0-rc0] - 2024-04-21
+
+- Feature: The generator now registers snippet templates which can be used for dynamic
+  SDK code snippet generation.
+
+## [1.2.0-rc2] - 2024-04-10
+
+- Fix: The generator now correctly imports `json` when deserializing server sent events.
+
+## [1.2.0-rc0] - 2024-04-10
+
+- Feature: The generator now depends on v38 of Intermediate Representation which requires the latest
+  CLI. As part of this, the generator now supports server sent events using `httpx-sse`.
+
+## [1.1.0-rc3] - 2024-04-04
+
+- Fix: There are a number of fixes to the skip validation code as well as tests to reflect those updates.
+
+## [1.1.0-rc2] - 2024-04-04
+
+- Fix: The generator now writes the skipped-validation `cast` with a suffixing new line so that the code compiles.
+
+## [1.1.0-rc1] - 2024-04-04
+
+- Fix: The generator no longer attempts to create a version file if Fern does not own generating the full package (e.g. in local generation). It's too confusing for to make the relevant changes to the package set up, and is also arguably not even needed in local generation.
+
+## [1.1.0-rc0] - 2024-04-03
+
+- [EXPERIMENTAL] Feature: The python SDK now includes a configuration option to skip pydantic validation. This ensures that Pydantic does not immediately fail if the model being returned from an API does not exactly match the Pydantic model. This is meant to add flexibility, should your SDK fall behind your API, but should be used sparringly, as the type-hinting for users will still reflect the Pydantic model exactly.
+
+  ```yaml
+  generators:
+    - name: fernapi/fern-python-sdk
+      ...
+      config:
+        pydantic_config:
+          skip_validation: true
+  ```
+
+## [1.0.1] - 2024-04-03
+
+- Fix: Pydantic introduced a "break" to their 1.x libs by adding in a .v1 submodule that does not mirror the one that comes with pydantic v2. To get around this we now force the usage of the v1 submodule only if the pydantic version is v2.
+
+## [1.0.0] - 2024-04-02
+
+- Break: The python SDK now defaults new (breaking configuration) to introduce general improvements.
+
+  In order to revert to the previous configuration flags and avoid the break, please leverage the below configuration:
+
+  ```yaml
+  generators:
+    - name: fernapi/fern-python-sdk
+      config:
+        improved_imports: false
+        pydantic_config:
+          require_optional_fields: true
+          use_str_enums: false
+          extra_fields: "forbid"
+  ```
+
+- Improvement: The python SDK now supports specifying whether or not to follow redirects in requests by default, and exposes an option to override that functionality for consumers.
+
+  ```yaml
+  generators:
+    - name: fernapi/fern-python-sdk
+      config:
+        follow_redirects_by_default: true
+  ```
+
+  which then just instantiates the client like so:
+
+  ```python
+  client = SeedExhaustive(
+        token="YOUR_TOKEN",
+        follow_redirects=True  # This is defaulted to the value passed into follow_redirects_by_default, and ignored if not specified
+  )
+  ```
+
+## [0.13.4] - 2024-04-03
+
+- Fix: revert the change from 0.13.2, the stream call returns a context manager, which is not awaited. The issue that this was meant to solve was actually fixed in version `0.12.2`.
+
+## [0.13.3] - 2024-03-28
+
+- Fix: Github workflows for publishing now work again (previously the trigger was incorrect).
+
+## [0.13.2] - 2024-03-28
+
+- Fix: Asynchronous calls to `httpx.stream` are now awaited. This is applicable to any file download or
+  JSON streaming (chat completion) endpoints.
+
+  ```python
+  # Before
+  async with httpx.stream
+
+  # After
+  async with await httpx.stream
+  ```
+
+## [0.13.1] - 2024-03-26
+
+- Improvement: discriminant values in unions are now defaulted such that callers no longer need to specify the discriminant:
+
+  ```python
+  # Before
+  shape = Circle(discriminant="circle", radius=2.0)
+
+  # After
+  shape = Circle(radius=2.0)
+  ```
+
+## [0.13.0] - 2024-03-25
+
+- Improvement: the python SDK now exposes it's version through `__version__` to match module standards and expectations.
+
+```python
+import seed
+
+print(seed.__version__)  # prints 0.0.1 or whatever version is contained within the pyproject.toml
+```
+
+## [0.12.5] - 2024-03-22
+
+- Fix: the python SDK uses the timeout provided to the top level client as the default per-request, previously if there was no timeout override in the RequestOptions, we'd default to 60s, even if a timeout was provided at the client level.
+
+## [0.12.4] - 2024-03-19
+
+- Improvement: Allow full forward compat with enums while keeping intellisense by unioning enum literals with `typing.AnyStr`.
+
+  Before:
+
+  ```python
+  Operand = typing.Union[typing.AnyStr, typing.Literal[">", "=", "less_than"]]
+  ```
+
+  After:
+
+  ```python
+  Operand = typing.Literal[">", "=", "less_than"]
+  ```
+
+## [0.12.3] - 2024-03-18
+
+- Improvement: Allow bytes requests to take in iterators of bytes, mirroring the types allowed by HTTPX.
+
+## [0.12.2] - 2024-03-18
+
+- Fix: Fix the returned type and value contained within the retrying wrapper for the HTTPX client (http_client.py).
+
 ## [0.12.1] - 2024-03-14
 
 - Improves example generation and snippets for union types, as well as multi-url environments.

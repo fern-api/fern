@@ -42,7 +42,9 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 // for the request(s).
 func (r *RequestOptions) ToHeader() http.Header {
 	header := r.cloneHeader()
-	header.Set("X-API-KEY", fmt.Sprintf("%v", r.CustomAuthScheme))
+	if r.CustomAuthScheme != "" {
+		header.Set("X-API-KEY", fmt.Sprintf("%v", r.CustomAuthScheme))
+	}
 	return header
 }
 

@@ -9,7 +9,7 @@ from .test_case_non_hidden_grade import TestCaseNonHiddenGrade
 
 
 class TestCaseGrade_Hidden(TestCaseHiddenGrade):
-    type: typing.Literal["hidden"]
+    type: typing.Literal["hidden"] = "hidden"
 
     class Config:
         allow_population_by_field_name = True
@@ -17,7 +17,7 @@ class TestCaseGrade_Hidden(TestCaseHiddenGrade):
 
 
 class TestCaseGrade_NonHidden(TestCaseNonHiddenGrade):
-    type: typing.Literal["nonHidden"]
+    type: typing.Literal["nonHidden"] = "nonHidden"
 
     class Config:
         allow_population_by_field_name = True

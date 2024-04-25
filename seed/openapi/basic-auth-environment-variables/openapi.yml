@@ -1,0 +1,69 @@
+openapi: 3.0.1
+info:
+  title: basic-auth-environment-variables
+  version: ''
+paths:
+  /basic-auth:
+    get:
+      description: GET request with basic auth scheme
+      operationId: basicAuth_getWithBasicAuth
+      tags:
+        - BasicAuth
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedRequestErrorBody'
+      security:
+        - BasicAuth: []
+    post:
+      description: POST request with basic auth scheme
+      operationId: basicAuth_postWithBasicAuth
+      tags:
+        - BasicAuth
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: boolean
+        '400':
+          description: ''
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnauthorizedRequestErrorBody'
+      security:
+        - BasicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {}
+components:
+  schemas:
+    UnauthorizedRequestErrorBody:
+      title: UnauthorizedRequestErrorBody
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic

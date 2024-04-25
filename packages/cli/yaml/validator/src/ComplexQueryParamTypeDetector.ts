@@ -94,27 +94,31 @@ export class ComplexQueryParamTypeDetector {
                 return false;
             case "map":
                 return (
-                    this.isResolvedReferenceComplex({
+                    (this.isResolvedReferenceComplex({
                         type: type.keyType,
                         file,
                         visited
                     }) ||
-                    this.isResolvedReferenceComplex({
-                        type: type.valueType,
-                        file,
-                        visited
-                    })
+                        this.isResolvedReferenceComplex({
+                            type: type.valueType,
+                            file,
+                            visited
+                        })) &&
+                    // This is how we denote generic objects, which we should allow to pass through.
+                    !(
+                        type.keyType._type === "primitive" &&
+                        type.keyType.primitive === "STRING" &&
+                        type.valueType._type === "unknown"
+                    )
                 );
             case "optional":
+            case "list":
+            case "set":
                 return this.isResolvedReferenceComplex({
                     type: type.itemType,
                     file,
                     visited
                 });
-            case "list":
-            case "set":
-                // Users must specify allow-multiple instead.
-                return true;
             default:
                 assertNever(type);
         }

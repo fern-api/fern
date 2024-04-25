@@ -41,7 +41,9 @@ class SDKCustomConfig(pydantic.BaseModel):
     additional_init_exports: Optional[List[ModuleExport]] = None
     # Feature flag that improves imports in the
     # Python SDK by removing nested `resources` directoy
-    improved_imports: bool = False
+    improved_imports: bool = True
+
+    follow_redirects_by_default: Optional[bool] = True
 
     # deprecated, use client config instead
     client_class_name: Optional[str] = None

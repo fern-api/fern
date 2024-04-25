@@ -1,6 +1,9 @@
+import json
 from typing import Optional, Sequence, Tuple, Union, cast
+from uuid import uuid4
 
 import fern.ir.resources as ir_types
+from fern.generator_exec.resources import GeneratorUpdate, LogLevel, LogUpdate
 from fern.generator_exec.resources.config import GeneratorConfig
 from fern.generator_exec.resources.readme import BadgeType, GenerateReadmeRequest
 
@@ -17,12 +20,14 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ClientWrapperGenerator,
 )
 from fern_python.snippet import SnippetRegistry, SnippetWriter
+from fern_python.snippet.snippet_template_factory import SnippetTemplateFactory
 from fern_python.snippet.snippet_test_factory import SnippetTestFactory
 from fern_python.source_file_factory import SourceFileFactory
 from fern_python.utils import build_snippet_writer
 
 from .client_generator.client_generator import ClientGenerator
 from .client_generator.generated_root_client import GeneratedRootClient
+from .client_generator.oauth_token_provider_generator import OAuthTokenProviderGenerator
 from .client_generator.root_client_generator import RootClientGenerator
 from .custom_config import SDKCustomConfig
 from .environment_generators import (
@@ -128,12 +133,36 @@ class SdkGenerator(AbstractGenerator):
                 project=project,
             )
 
+        maybe_oauth_scheme = next(
+            (scheme for scheme in context.ir.auth.schemes if scheme.get_as_union().type == "oauth"), None
+        )
+        oauth_scheme = (
+            maybe_oauth_scheme.visit(
+                bearer=lambda _: None,
+                basic=lambda _: None,
+                header=lambda _: None,
+                oauth=lambda oauth: oauth,
+            )
+            if maybe_oauth_scheme is not None and generator_config.generate_oauth_clients
+            else None
+        )
+        if oauth_scheme is not None:
+            self._generate_oauth_token_provider(
+                context=context,
+                ir=ir,
+                generator_exec_wrapper=generator_exec_wrapper,
+                project=project,
+                oauth_scheme=oauth_scheme,
+            )
+
         self._generate_client_wrapper(
             context=context,
             generated_environment=generated_environment,
             generator_exec_wrapper=generator_exec_wrapper,
             project=project,
         )
+
+        self._generate_version(project=project)
 
         generated_root_client = self._generate_root_client(
             context=context,
@@ -143,6 +172,7 @@ class SdkGenerator(AbstractGenerator):
             project=project,
             snippet_registry=snippet_registry,
             snippet_writer=snippet_writer,
+            oauth_scheme=oauth_scheme,
         )
 
         for subpackage_id in ir.subpackages.keys():
@@ -173,6 +203,24 @@ class SdkGenerator(AbstractGenerator):
             context=context,
             snippet_registry=snippet_registry,
             project=project,
+        )
+
+        snippet_template_source_file = SourceFileFactory.create_snippet()
+        self._maybe_write_snippet_templates(
+            context=context,
+            snippet_template_factory=SnippetTemplateFactory(
+                project=project,
+                context=context,
+                snippet_writer=snippet_writer,
+                imports_manager=snippet_template_source_file.get_imports_manager(),
+                ir=ir,
+                generated_root_client=generated_root_client,
+                generator_exec_wrapper=generator_exec_wrapper,
+            ),
+            project=project,
+            generator_exec_wrapper=generator_exec_wrapper,
+            generator_config=generator_config,
+            ir=ir,
         )
 
         test_fac = SnippetTestFactory(
@@ -254,6 +302,24 @@ class SdkGenerator(AbstractGenerator):
         ).generate(source_file=source_file, project=project)
         project.write_source_file(source_file=source_file, filepath=filepath)
 
+    def _generate_oauth_token_provider(
+        self,
+        context: SdkGeneratorContext,
+        ir: ir_types.IntermediateRepresentation,
+        generator_exec_wrapper: GeneratorExecWrapper,
+        project: Project,
+        oauth_scheme: ir_types.OAuthScheme,
+    ) -> None:
+        filepath = context.get_filepath_for_generated_oauth_token_provider()
+        source_file = SourceFileFactory.create(
+            project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
+        )
+        OAuthTokenProviderGenerator(
+            context=context,
+            oauth_scheme=oauth_scheme,
+        ).generate(source_file=source_file)
+        project.write_source_file(source_file=source_file, filepath=filepath)
+
     def _generate_root_client(
         self,
         context: SdkGeneratorContext,
@@ -263,6 +329,7 @@ class SdkGenerator(AbstractGenerator):
         project: Project,
         snippet_registry: SnippetRegistry,
         snippet_writer: SnippetWriter,
+        oauth_scheme: Optional[ir_types.OAuthScheme] = None,
     ) -> GeneratedRootClient:
         filepath = context.get_filepath_for_generated_root_client()
         source_file = SourceFileFactory.create(
@@ -276,6 +343,7 @@ class SdkGenerator(AbstractGenerator):
             async_class_name="Async" + context.get_class_name_for_generated_root_client(),
             snippet_registry=snippet_registry,
             snippet_writer=snippet_writer,
+            oauth_scheme=oauth_scheme,
         ).generate(source_file=source_file)
         project.write_source_file(source_file=source_file, filepath=filepath)
         return generated_root_client
@@ -319,6 +387,27 @@ class SdkGenerator(AbstractGenerator):
         )
         ErrorGenerator(context=context, error=error).generate(source_file=source_file)
         project.write_source_file(source_file=source_file, filepath=filepath)
+
+    def _generate_version(
+        self,
+        project: Project,
+    ) -> None:
+        if project._project_config is not None:
+            filepath = Filepath(
+                directories=(),
+                file=Filepath.FilepathPart(module_name="version"),
+            )
+            filepath_nested = project.get_source_file_filepath(filepath, include_src_root=True)
+            contents = f"""
+from importlib import metadata
+
+__version__ = metadata.version("{project._project_config.package_name}")
+"""
+            project.add_file(filepath_nested, contents)
+            project.register_export_in_project(
+                filepath_in_project=filepath,
+                exports={"__version__"},
+            )
 
     def _generate_readme(
         self,
@@ -365,6 +454,66 @@ pip install --upgrade {project._project_config.package_name}
             requirements=[],
         )
 
+    def _maybe_write_snippet_templates(
+        self,
+        context: SdkGeneratorContext,
+        snippet_template_factory: SnippetTemplateFactory,
+        project: Project,
+        generator_config: GeneratorConfig,
+        ir: ir_types.IntermediateRepresentation,
+        generator_exec_wrapper: GeneratorExecWrapper,
+    ) -> None:
+        if context.generator_config.output.snippet_template_filepath is not None:
+            org_id = generator_config.organization
+            api_name = ir.api_name.original_name
+            generator_exec_wrapper.send_update(
+                GeneratorUpdate.factory.log(
+                    LogUpdate(
+                        level=LogLevel.DEBUG,
+                        message=f"Generating snippet templates for Org: {org_id}, API: {api_name} for package {project._project_config.package_name if project._project_config is not None else 'package_unknown'} at version: {project._project_config.package_version if project._project_config is not None else '0.0.0'}.",
+                    )
+                )
+            )
+
+            snippets = snippet_template_factory.generate_templates()
+            if snippets is None:
+                return
+
+            # Send snippets to FDR
+            fdr_client = generator_exec_wrapper.fdr_client
+            if fdr_client is not None:
+                # API Definition ID doesn't matter right now
+                try:
+                    fdr_client.template.register_batch(
+                        org_id=org_id, api_id=api_name, api_definition_id=uuid4(), snippets=snippets
+                    )
+                    generator_exec_wrapper.send_update(
+                        GeneratorUpdate.factory.log(
+                            LogUpdate(level=LogLevel.DEBUG, message=f"Uploaded snippet templates to FDR.")
+                        )
+                    )
+                except Exception as e:
+                    # Don't fail hard here, but issue a warning to the user.
+                    generator_exec_wrapper.send_update(
+                        GeneratorUpdate.factory.log(
+                            LogUpdate(
+                                level=LogLevel.WARN,
+                                message=f"Failed to upload snippet templates to FDR, this is ok: {str(e)}",
+                            )
+                        )
+                    )
+            else:
+                # Otherwise write them for local
+                project.add_file(
+                    context.generator_config.output.snippet_template_filepath,
+                    json.dumps(list(map(lambda template: template.dict(by_alias=True), snippets)), indent=4),
+                )
+                generator_exec_wrapper.send_update(
+                    GeneratorUpdate.factory.log(
+                        LogUpdate(level=LogLevel.DEBUG, message=f"Wrote snippet templates to disk.")
+                    )
+                )
+
     def _maybe_write_snippets(
         self,
         context: SdkGeneratorContext,
@@ -384,7 +533,10 @@ pip install --upgrade {project._project_config.package_name}
         ir: ir_types.IntermediateRepresentation,
     ) -> None:
         # Write tests
-        snippet_test_factory.tests(ir, snippet_writer)
+        #
+        # TODO(FER-1142): Re-enable this feature as soon as we can.
+        # snippet_test_factory.tests(ir, snippet_writer)
+        pass
 
     def get_sorted_modules(self) -> Sequence[str]:
         # always import types/errors before resources (nested packages)

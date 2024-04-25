@@ -3,11 +3,11 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedStreaming from "../../..";
-import * as serializers from "../../../../serialization";
+import * as SeedStreaming from "../../../index";
+import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
 import * as stream from "stream";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Dummy {
     interface Options {
@@ -32,7 +32,7 @@ export class Dummy {
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/streaming",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -46,7 +46,6 @@ export class Dummy {
         if (_response.ok) {
             return new core.Stream({
                 stream: _response.body,
-                terminator: "\n",
                 parse: async (data) => {
                     return await serializers.StreamResponse.parseOrThrow(data, {
                         unrecognizedObjectKeys: "passthrough",
@@ -54,6 +53,10 @@ export class Dummy {
                         allowUnrecognizedEnumValues: true,
                         breadcrumbsPrefix: ["response"],
                     });
+                },
+                eventShape: {
+                    type: "json",
+                    messageTerminator: "\n",
                 },
             });
         }

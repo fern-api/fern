@@ -5,10 +5,7 @@ import uuid
 
 from dateutil import parser
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from .pydantic_utilities import pydantic_v1
 
 
 def cast_field(json_expectation: typing.Any, type_expectation: typing.Any) -> typing.Any:
@@ -68,18 +65,18 @@ def validate_field(response: typing.Any, json_expectation: typing.Any, type_expe
     )
 
 
-# type_expectations is a deeply nested structure that matches the response, but with the values replaced with the expected types
+# Arg type_expectations is a deeply nested structure that matches the response, but with the values replaced with the expected types
 def validate_response(response: typing.Any, json_expectation: typing.Any, type_expectations: typing.Any) -> None:
     # Allow for an escape hatch if the object cannot be validated
     if type_expectations == "no_validate":
         return
 
-    if not isinstance(response, dict) and not issubclass(type(response), pydantic.BaseModel):
+    if not isinstance(response, dict) and not issubclass(type(response), pydantic_v1.BaseModel):
         validate_field(response=response, json_expectation=json_expectation, type_expectation=type_expectations)
         return
 
     response_json = response
-    if issubclass(type(response), pydantic.BaseModel):
+    if issubclass(type(response), pydantic_v1.BaseModel):
         response_json = response.dict(by_alias=True)
 
     for key, value in json_expectation.items():

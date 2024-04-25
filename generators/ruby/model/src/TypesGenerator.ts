@@ -1,4 +1,4 @@
-import { GeneratorContext } from "@fern-api/generator-commons";
+import { AbstractGeneratorContext } from "@fern-api/generator-commons";
 import { ClassReferenceFactory, Class_, GeneratedRubyFile, LocationGenerator, Module_ } from "@fern-api/ruby-codegen";
 import {
     AliasTypeDeclaration,
@@ -28,18 +28,18 @@ export class TypesGenerator {
     public generatedClasses: Map<TypeId, Class_>;
     public resolvedReferences: Map<TypeId, TypeId>;
     public flattenedProperties: Map<TypeId, ObjectProperty[]>;
+    public classReferenceFactory: ClassReferenceFactory;
+    public locationGenerator: LocationGenerator;
 
     private types: Map<TypeId, TypeDeclaration>;
-    private gc: GeneratorContext;
-    private classReferenceFactory: ClassReferenceFactory;
-    private locationGenerator: LocationGenerator;
+    private gc: AbstractGeneratorContext;
     private gemName: string;
     private clientName: string;
 
     constructor(
         gemName: string,
         clientName: string,
-        generatorContext: GeneratorContext,
+        generatorContext: AbstractGeneratorContext,
         intermediateRepresentation: IntermediateRepresentation
     ) {
         this.types = new Map();
@@ -52,16 +52,20 @@ export class TypesGenerator {
         this.clientName = clientName;
 
         // For convenience just get what's inheriting what ahead of time.
-        this.gc.logger.debug(`Found ${intermediateRepresentation.types.length} types to generate`);
+        this.gc.logger.debug(
+            `[Ruby] Found ${Object.values(intermediateRepresentation.types).length} types to generate`
+        );
         for (const type of Object.values(intermediateRepresentation.types)) {
             this.types.set(type.name.typeId, type);
         }
 
+        this.gc.logger.debug("[Ruby] Flattening properties across objects prior to file creation.");
         for (const typeId of this.types.keys()) {
             this.flattenedProperties.set(typeId, this.getFlattenedProperties(typeId));
         }
+        this.gc.logger.debug("[Ruby] Done flattening properties.");
 
-        this.locationGenerator = new LocationGenerator(this.gemName);
+        this.locationGenerator = new LocationGenerator(this.gemName, this.clientName);
         this.classReferenceFactory = new ClassReferenceFactory(this.types, this.locationGenerator);
     }
 
@@ -132,29 +136,35 @@ export class TypesGenerator {
             aliasTypeDeclaration,
             typeDeclaration
         );
-        aliasTypeDeclaration.resolvedType._visit<void>({
+
+        // For simplicity we do not generate aliases for primitive types
+        const shouldGenerate = aliasTypeDeclaration.resolvedType._visit<boolean>({
             container: () => {
-                return;
+                return true;
             },
             named: (rnt: ResolvedNamedType) => {
                 this.resolvedReferences.set(typeId, rnt.name.typeId);
+                return true;
             },
             primitive: () => {
-                return;
+                return false;
             },
             unknown: () => {
-                return;
+                return true;
             },
             _other: () => {
-                return;
+                return true;
             }
         });
 
-        const rootNode = Module_.wrapInModules(this.clientName, aliasExpression, typeDeclaration.name.fernFilepath);
-        return new GeneratedRubyFile({
-            rootNode,
-            fullPath: this.locationGenerator.getLocationForTypeDeclaration(typeDeclaration.name)
-        });
+        if (shouldGenerate) {
+            const rootNode = Module_.wrapInModules(this.clientName, aliasExpression, typeDeclaration.name.fernFilepath);
+            return new GeneratedRubyFile({
+                rootNode,
+                fullPath: this.locationGenerator.getLocationForTypeDeclaration(typeDeclaration.name)
+            });
+        }
+        return;
     }
     private generateEnumFile(
         enumTypeDeclaration: EnumTypeDeclaration,
@@ -234,6 +244,7 @@ export class TypesGenerator {
     public generateFiles(includeRootImports = false): GeneratedRubyFile[] {
         const typeFiles: GeneratedRubyFile[] = [];
         for (const [typeId, typeDeclaration] of this.types.entries()) {
+            this.gc.logger.debug(`[Ruby] Generating class file for type: ${typeId}`);
             const generatedFile = typeDeclaration.shape._visit<GeneratedRubyFile | undefined>({
                 alias: (atd: AliasTypeDeclaration) => this.generateAliasFile(typeId, atd, typeDeclaration),
                 enum: (etd: EnumTypeDeclaration) => this.generateEnumFile(etd, typeDeclaration),
@@ -250,6 +261,7 @@ export class TypesGenerator {
         }
 
         if (includeRootImports) {
+            this.gc.logger.debug("[Ruby] Generating root file for all types.");
             typeFiles.push(this.generateRootFile());
         }
 
@@ -257,12 +269,14 @@ export class TypesGenerator {
     }
 
     public getResolvedClasses(): Map<TypeId, Class_> {
+        this.gc.logger.debug("[Ruby] Gathering resolved types.");
         this.resolvedReferences.forEach((typeId, resolvedTypeId) => {
             const resolvedClass = this.generatedClasses.get(resolvedTypeId);
             if (resolvedClass !== undefined) {
                 this.generatedClasses.set(typeId, resolvedClass);
             }
         });
+        this.gc.logger.debug("[Ruby] Done gathering resolved types.");
         return this.generatedClasses;
     }
 }

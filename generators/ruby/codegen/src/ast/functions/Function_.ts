@@ -1,23 +1,32 @@
 import { ObjectProperty, TypeId } from "@fern-fern/ir-sdk/api";
 import { BLOCK_END } from "../../utils/RubyConstants";
+import { Argument } from "../Argument";
 import { ClassReference, ClassReferenceFactory } from "../classes/ClassReference";
 import { Class_ } from "../classes/Class_";
 import { AstNode } from "../core/AstNode";
+import { ExampleGenerator } from "../ExampleGenerator";
 import { Import } from "../Import";
 import { Parameter } from "../Parameter";
 import { Yardoc } from "../Yardoc";
+import { FunctionInvocation } from "./FunctionInvocation";
 
 export declare namespace Function_ {
     export interface Init extends AstNode.Init {
         name: string;
         functionBody: AstNode[];
+        // The package path represents the route to the submodule in which the
+        // function exists. Note for most external functions this will be empty.
+        packagePath?: string[];
         parameters?: Parameter[];
         isAsync?: boolean;
         isStatic?: boolean;
         returnValue?: ClassReference | ClassReference[];
         flattenedProperties?: Map<TypeId, ObjectProperty[]>;
         crf?: ClassReferenceFactory;
+        eg?: ExampleGenerator;
         invocationName?: string;
+
+        skipExample?: boolean;
     }
 }
 export class Function_ extends AstNode {
@@ -30,17 +39,22 @@ export class Function_ extends AstNode {
     public isAsync: boolean;
     public isStatic: boolean;
     public yardoc: Yardoc;
-
     public invocationName: string | undefined;
+
+    private packagePath: string[];
+    private skipExample: boolean;
 
     constructor({
         name,
         functionBody,
         flattenedProperties,
         crf,
+        eg,
+        packagePath = [],
         parameters = [],
         isAsync = false,
         isStatic = false,
+        skipExample = false,
         returnValue,
         invocationName,
         ...rest
@@ -48,14 +62,23 @@ export class Function_ extends AstNode {
         super(rest);
         this.name = name;
         this.parameters = parameters;
+        this.packagePath = packagePath;
         this.returnValue = (returnValue instanceof ClassReference ? [returnValue] : returnValue) ?? [];
         this.functionBody = functionBody;
         this.isAsync = isAsync;
         this.isStatic = isStatic;
         this.invocationName = invocationName;
+        this.skipExample = skipExample;
 
         this.yardoc = new Yardoc({
-            reference: { name: "docString", parameters, returnValue: this.returnValue },
+            reference: {
+                name: "docString",
+                parameters,
+                returnValue: this.returnValue,
+                documentation: this.documentation,
+                baseFunction: this
+            },
+            eg,
             crf,
             flattenedProperties
         });
@@ -66,13 +89,8 @@ export class Function_ extends AstNode {
     }
 
     public writeInternal(startingTabSpaces: number): void {
-        this.documentation?.forEach((doc) =>
-            this.addText({ stringContent: doc, templateString: "# %s", startingTabSpaces })
-        );
         this.addText({
-            stringContent: this.yardoc.write({ startingTabSpaces }),
-            templateString: this.documentation !== undefined && this.documentation.length > 0 ? "#\n%s" : undefined,
-            startingTabSpaces: this.documentation !== undefined && this.documentation.length > 0 ? startingTabSpaces : 0
+            stringContent: this.yardoc.write({ startingTabSpaces })
         });
         this.addText({
             stringContent: this.isStatic ? `self.${this.name}` : this.name,
@@ -98,5 +116,24 @@ export class Function_ extends AstNode {
             imports = new Set([...imports, ...exp.getImports()]);
         });
         return imports;
+    }
+
+    public getInvocationName(): string {
+        return this.invocationName != null ? this.invocationName : [...this.packagePath, this.name].join(".");
+    }
+
+    public generateSnippet(clientName: string): AstNode | string | undefined {
+        return this.skipExample
+            ? undefined
+            : new FunctionInvocation({
+                  baseFunction: this,
+                  onObject: clientName,
+                  arguments_: this.parameters
+                      .map((param) => {
+                          const parameterValue = param.example;
+                          return parameterValue != null ? param.toArgument(parameterValue) : undefined;
+                      })
+                      .filter((arg): arg is Argument => arg != null)
+              });
     }
 }

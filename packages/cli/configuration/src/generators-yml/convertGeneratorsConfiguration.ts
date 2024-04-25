@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import { PublishingMetadata } from "@fern-fern/fiddle-sdk/api";
 import { readFile } from "fs/promises";
 import path from "path";
 import {
@@ -15,12 +16,14 @@ import { GeneratorGroupSchema } from "./schemas/GeneratorGroupSchema";
 import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
 import { GeneratorOutputSchema } from "./schemas/GeneratorOutputSchema";
 import {
+    API_ORIGIN_LOCATION_KEY,
     ASYNC_API_LOCATION_KEY,
     GeneratorsConfigurationSchema,
     OPENAPI_LOCATION_KEY,
     OPENAPI_OVERRIDES_LOCATION_KEY
 } from "./schemas/GeneratorsConfigurationSchema";
 import { GithubLicenseSchema } from "./schemas/GithubLicenseSchema";
+import { MavenOutputLocationSchema } from "./schemas/MavenOutputLocationSchema";
 
 export async function convertGeneratorsConfiguration({
     absolutePathToGeneratorsConfiguration,
@@ -64,49 +67,64 @@ async function parseAPIConfiguration(
         if (typeof apiConfiguration === "string") {
             apiDefinitions.push({
                 path: apiConfiguration,
-                overrides: undefined
+                origin: undefined,
+                overrides: undefined,
+                audiences: []
             });
         } else if (Array.isArray(apiConfiguration)) {
             for (const definition of apiConfiguration) {
                 if (typeof definition === "string") {
                     apiDefinitions.push({
                         path: definition,
-                        overrides: undefined
+                        origin: undefined,
+                        overrides: undefined,
+                        audiences: []
                     });
                 } else {
                     apiDefinitions.push({
                         path: definition.path,
-                        overrides: definition.overrides
+                        origin: definition.origin,
+                        overrides: definition.overrides,
+                        audiences: definition.audiences
                     });
                 }
             }
         } else {
             apiDefinitions.push({
                 path: apiConfiguration.path,
-                overrides: apiConfiguration.overrides
+                origin: apiConfiguration.origin,
+                overrides: apiConfiguration.overrides,
+                audiences: apiConfiguration.audiences
             });
         }
     } else {
         const openapi = rawGeneratorsConfiguration[OPENAPI_LOCATION_KEY];
+        const apiOrigin = rawGeneratorsConfiguration[API_ORIGIN_LOCATION_KEY];
         const openapiOverrides = rawGeneratorsConfiguration[OPENAPI_OVERRIDES_LOCATION_KEY];
         const asyncapi = rawGeneratorsConfiguration[ASYNC_API_LOCATION_KEY];
 
         if (openapi != null && typeof openapi === "string") {
             apiDefinitions.push({
                 path: openapi,
-                overrides: openapiOverrides
+                origin: apiOrigin,
+                overrides: openapiOverrides,
+                audiences: []
             });
         } else if (openapi != null) {
             apiDefinitions.push({
                 path: openapi.path,
-                overrides: openapi.overrides
+                origin: openapi.origin,
+                overrides: openapi.overrides,
+                audiences: []
             });
         }
 
         if (asyncapi != null) {
             apiDefinitions.push({
                 path: asyncapi,
-                overrides: undefined
+                origin: apiOrigin,
+                overrides: undefined,
+                audiences: []
             });
         }
     }
@@ -153,8 +171,38 @@ async function convertGenerator({
             generator.output?.location === "local-file-system"
                 ? resolve(dirname(absolutePathToGeneratorsConfiguration), generator.output.path)
                 : undefined,
-        language: getLanguageFromGeneratorName(generator.name)
+        absolutePathToLocalSnippets:
+            generator.snippets?.path != null
+                ? resolve(dirname(absolutePathToGeneratorsConfiguration), generator.snippets.path)
+                : undefined,
+        language: getLanguageFromGeneratorName(generator.name),
+        irVersionOverride: generator["ir-version"] ?? undefined,
+        publishMetadata: getPublishMetadata({ generatorInvocation: generator })
     };
+}
+
+function getPublishMetadata({
+    generatorInvocation
+}: {
+    generatorInvocation: GeneratorInvocationSchema;
+}): PublishingMetadata | undefined {
+    const publishMetadata = generatorInvocation["publish-metadata"];
+    if (publishMetadata != null) {
+        return {
+            packageDescription: publishMetadata["package-description"],
+            publisherEmail: publishMetadata.email,
+            publisherName: publishMetadata.author,
+            referenceUrl: publishMetadata["reference-url"]
+        };
+    } else if (generatorInvocation.metadata != null) {
+        return {
+            packageDescription: generatorInvocation.metadata["package-description"],
+            publisherEmail: generatorInvocation.metadata.email,
+            publisherName: generatorInvocation.metadata.author,
+            referenceUrl: generatorInvocation.metadata["reference-url"]
+        };
+    }
+    return undefined;
 }
 
 async function convertOutputMode({
@@ -164,16 +212,18 @@ async function convertOutputMode({
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     generator: GeneratorInvocationSchema;
 }): Promise<FernFiddle.OutputMode> {
+    const downloadSnippets = generator.snippets != null && generator.snippets.path !== "";
     if (generator.github != null) {
         const indexOfFirstSlash = generator.github.repository.indexOf("/");
         const owner = generator.github.repository.slice(0, indexOfFirstSlash);
         const repo = generator.github.repository.slice(indexOfFirstSlash + 1);
         const publishInfo = generator.output != null ? getGithubPublishInfo(generator.output) : undefined;
+        const licenseSchema = getGithubLicenseSchema(generator);
         const license =
-            generator.github.license != null
+            licenseSchema != null
                 ? await getGithubLicense({
                       absolutePathToGeneratorsConfiguration,
-                      githubLicense: generator.github.license
+                      githubLicense: licenseSchema
                   })
                 : undefined;
         const mode = generator.github.mode ?? "release";
@@ -185,7 +235,8 @@ async function convertOutputMode({
                         owner,
                         repo,
                         license,
-                        publishInfo
+                        publishInfo,
+                        downloadSnippets
                     })
                 );
             case "pull-request":
@@ -194,7 +245,8 @@ async function convertOutputMode({
                         owner,
                         repo,
                         license,
-                        publishInfo
+                        publishInfo,
+                        downloadSnippets
                     })
                 );
             case "push":
@@ -204,7 +256,8 @@ async function convertOutputMode({
                         repo,
                         branch: generator.github.mode === "push" ? generator.github.branch : undefined,
                         license,
-                        publishInfo
+                        publishInfo,
+                        downloadSnippets
                     })
                 );
             default:
@@ -216,24 +269,37 @@ async function convertOutputMode({
     }
     switch (generator.output.location) {
         case "local-file-system":
-            return FernFiddle.OutputMode.downloadFiles();
+            return FernFiddle.OutputMode.downloadFiles({
+                downloadSnippets
+            });
         case "npm":
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.npmOverride({
                     registryUrl: generator.output.url ?? "https://registry.npmjs.org",
                     packageName: generator.output["package-name"],
-                    token: generator.output.token ?? ""
+                    token: generator.output.token ?? "",
+                    downloadSnippets
                 })
             );
-        case "maven":
+        case "maven": {
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.mavenOverride({
-                    registryUrl: generator.output.url ?? "https://s01.oss.sonatype.org/content/repositories/releases/",
+                    registryUrl: getMavenRegistryUrl(generator.output),
                     username: generator.output.username ?? "",
                     password: generator.output.password ?? "",
-                    coordinate: generator.output.coordinate
+                    coordinate: generator.output.coordinate,
+                    signature:
+                        generator.output.signature != null
+                            ? {
+                                  keyId: generator.output.signature.keyId,
+                                  secretKey: generator.output.signature.secretKey,
+                                  password: generator.output.signature.password
+                              }
+                            : undefined,
+                    downloadSnippets
                 })
             );
+        }
         case "postman":
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.postman({
@@ -247,7 +313,8 @@ async function convertOutputMode({
                     registryUrl: generator.output.url ?? "https://upload.pypi.org/legacy/",
                     username: generator.output.token != null ? "__token__" : generator.output.password ?? "",
                     password: generator.output.token ?? generator.output.password ?? "",
-                    coordinate: generator.output["package-name"]
+                    coordinate: generator.output["package-name"],
+                    downloadSnippets
                 })
             );
         case "nuget":
@@ -256,7 +323,8 @@ async function convertOutputMode({
                 FernFiddle.remoteGen.PublishOutputModeV2.rubyGemsOverride({
                     registryUrl: generator.output.url ?? "https://rubygems.org/",
                     packageName: generator.output["package-name"],
-                    apiKey: generator.output["api-key"] ?? ""
+                    apiKey: generator.output["api-key"] ?? "",
+                    downloadSnippets
                 })
             );
         default:
@@ -307,13 +375,21 @@ function getGithubPublishInfo(output: GeneratorOutputSchema): FernFiddle.GithubP
             });
         case "maven":
             return FernFiddle.GithubPublishInfo.maven({
-                registryUrl: output.url ?? "https://s01.oss.sonatype.org/content/repositories/releases/",
+                registryUrl: getMavenRegistryUrl(output),
                 coordinate: output.coordinate,
                 credentials:
                     output.username != null && output.password != null
                         ? {
                               username: output.username,
                               password: output.password
+                          }
+                        : undefined,
+                signature:
+                    output.signature != null
+                        ? {
+                              keyId: output.signature.keyId,
+                              password: output.signature.password,
+                              secretKey: output.signature.secretKey
                           }
                         : undefined
             });
@@ -366,4 +442,22 @@ function getLanguageFromGeneratorName(generatorName: string) {
         return GenerationLanguage.RUBY;
     }
     return undefined;
+}
+
+function getMavenRegistryUrl(maven: MavenOutputLocationSchema) {
+    if (maven.url != null) {
+        return maven.url;
+    }
+    return maven.signature != null
+        ? "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+        : "https://s01.oss.sonatype.org/content/repositories/releases/";
+}
+
+function getGithubLicenseSchema(generator: GeneratorInvocationSchema): GithubLicenseSchema | undefined {
+    if (generator["publish-metadata"]?.license != null) {
+        return generator["publish-metadata"].license;
+    } else if (generator.metadata?.license != null) {
+        return generator.metadata.license;
+    }
+    return generator.github?.license;
 }

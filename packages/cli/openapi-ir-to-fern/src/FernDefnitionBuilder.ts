@@ -58,7 +58,11 @@ export interface FernDefinitionBuilder {
 
     setServiceInfo(file: RelativeFilePath, { displayName, docs }: { displayName?: string; docs?: string }): void;
 
+    addTypeExample(file: RelativeFilePath, name: string, convertedExample: RawSchemas.ExampleTypeSchema): void;
+
     build(): FernDefinition;
+
+    readonly enableUniqueErrorsPerEndpoint: boolean;
 }
 
 export interface FernDefinition {
@@ -72,7 +76,11 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     private packageMarkerFile: RawSchemas.PackageMarkerFileSchema = {};
     private definitionFiles: Record<RelativeFilePath, RawSchemas.DefinitionFileSchema> = {};
 
-    public constructor(ir: OpenApiIntermediateRepresentation, private readonly modifyBasePaths: boolean) {
+    public constructor(
+        ir: OpenApiIntermediateRepresentation,
+        private readonly modifyBasePaths: boolean,
+        public readonly enableUniqueErrorsPerEndpoint: boolean
+    ) {
         this.rootApiFile = {
             name: "api",
             "error-discrimination": {
@@ -211,6 +219,27 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         fernFile.types[name] = schema;
     }
 
+    public addTypeExample(file: RelativeFilePath, name: string, convertedExample: RawSchemas.ExampleTypeSchema): void {
+        const fernFile = this.getOrCreateFile(file);
+        if (fernFile.types == null) {
+            fernFile.types = {};
+        }
+        const type = fernFile.types[name];
+        if (type != null) {
+            if (typeof type === "string") {
+                fernFile.types[name] = {
+                    type,
+                    examples: [convertedExample]
+                };
+            } else {
+                if (type.examples == null) {
+                    type.examples = [];
+                }
+                type.examples.push(convertedExample);
+            }
+        }
+    }
+
     public addError(
         file: RelativeFilePath,
         { name, schema }: { name: string; schema: RawSchemas.ErrorDeclarationSchema }
@@ -219,7 +248,14 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         if (fernFile.errors == null) {
             fernFile.errors = {};
         }
-        fernFile.errors[name] = schema;
+        if (fernFile.errors[name] == null) {
+            fernFile.errors[name] = schema;
+        } else if (fernFile.errors[name]?.type !== schema.type) {
+            fernFile.errors[name] = {
+                "status-code": schema["status-code"],
+                type: "unknown"
+            };
+        }
     }
 
     public addEndpoint(

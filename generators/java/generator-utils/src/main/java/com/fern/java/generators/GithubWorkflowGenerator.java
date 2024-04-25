@@ -1,13 +1,15 @@
 package com.fern.java.generators;
 
-import com.fern.java.output.RawGeneratedFile;
 import java.util.Optional;
+
+import com.fern.generator.exec.model.config.MavenCentralSignatureGithubInfo;
+import com.fern.java.output.GeneratedBuildGradle;
+import com.fern.java.output.RawGeneratedFile;
 
 public final class GithubWorkflowGenerator {
 
-    private GithubWorkflowGenerator() {}
-
-    public static RawGeneratedFile getGithubWorkflow(Optional<String> registryUrl) {
+    public static RawGeneratedFile getGithubWorkflow(Optional<String> registryUrl,
+            Optional<MavenCentralSignatureGithubInfo> signatureGithubInfo) {
         String contents = "name: ci\n"
                 + "\n"
                 + "on: [push]\n"
@@ -32,7 +34,7 @@ public final class GithubWorkflowGenerator {
                 + "\n";
         contents += getTestWorkflow();
         if (registryUrl.isPresent()) {
-            contents += getPublishWorkflow(registryUrl.get());
+            contents += getPublishWorkflow(registryUrl.get(), signatureGithubInfo);
         }
         return RawGeneratedFile.builder()
                 .filename("ci.yml")
@@ -61,8 +63,9 @@ public final class GithubWorkflowGenerator {
                 + "\n";
     }
 
-    public static String getPublishWorkflow(String registryUrl) {
-        return "  publish:\n"
+    public static String getPublishWorkflow(String registryUrl,
+            Optional<MavenCentralSignatureGithubInfo> maybeSignatureGithubInfo) {
+        String content = "  publish:\n"
                 + "    needs: [ compile, test ]\n"
                 + "    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')\n"
                 + "    runs-on: ubuntu-latest\n"
@@ -79,11 +82,30 @@ public final class GithubWorkflowGenerator {
                 + "          architecture: x64\n"
                 + "\n"
                 + "      - name: Publish to maven\n"
-                + "        run: |\n"
+                + "        run: |\n";
+
+        if (maybeSignatureGithubInfo.isPresent()) {
+            content = content
+                    + "          ./.publish/prepare.sh\n";
+        }
+        content = content
                 + "          ./gradlew  publish\n"
                 + "        env:\n"
                 + "          MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}\n"
                 + "          MAVEN_PASSWORD: ${{ secrets.MAVEN_PASSWORD }}\n"
-                + "          MAVEN_PUBLISH_REGISTRY_URL: \"" + registryUrl + "\"";
+                + "          MAVEN_PUBLISH_REGISTRY_URL: \"" + registryUrl + "\"\n";
+        if (maybeSignatureGithubInfo.isPresent()) {
+            content = content
+                    + "          " + GeneratedBuildGradle.MAVEN_SIGNING_KEY_ID
+                    + ": ${{ secrets.MAVEN_SIGNATURE_KID }}\n"
+                    + "          " + GeneratedBuildGradle.MAVEN_SIGNING_KEY
+                    + ": ${{ secrets.MAVEN_SIGNATURE_SECRET_KEY }}\n"
+                    + "          " + GeneratedBuildGradle.MAVEN_SIGNING_PASSWORD
+                    + ": ${{ secrets.MAVEN_SIGNATURE_PASSWORD }}\n";
+        }
+        return content;
+    }
+
+    private GithubWorkflowGenerator() {
     }
 }

@@ -43,6 +43,10 @@ class SourceFile(ClassParent):
     def write_to_file(self, *, filepath: str) -> None:
         ...
 
+    @abstractmethod
+    def get_imports_manager(self) -> ImportsManager:
+        ...
+
 
 class SourceFileImpl(SourceFile):
     def __init__(
@@ -69,6 +73,9 @@ class SourceFileImpl(SourceFile):
         self._should_format_as_snippet = should_format_as_snippet
         self._should_include_header = should_include_header
         self._whitelabel = whitelabel
+
+    def get_imports_manager(self) -> ImportsManager:
+        return self._imports_manager
 
     def add_declaration(
         self,

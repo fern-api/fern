@@ -3,8 +3,9 @@
  */
 
 import * as core from "../../../../core";
-import * as serializers from "../../..";
-import * as SeedUnions from "../../../../api";
+import * as serializers from "../../../index";
+import * as SeedUnions from "../../../../api/index";
+import { Foo } from "./Foo";
 
 const _Base = core.serialization.object({
     id: core.serialization.string(),
@@ -24,6 +25,7 @@ export const UnionWithBaseProperties: core.serialization.Schema<
                 value: core.serialization.string(),
             })
             .extend(_Base),
+        foo: Foo.extend(_Base),
     })
     .transform<SeedUnions.UnionWithBaseProperties>({
         transform: (value) => value,
@@ -31,7 +33,7 @@ export const UnionWithBaseProperties: core.serialization.Schema<
     });
 
 export declare namespace UnionWithBaseProperties {
-    type Raw = UnionWithBaseProperties.Integer | UnionWithBaseProperties.String;
+    type Raw = UnionWithBaseProperties.Integer | UnionWithBaseProperties.String | UnionWithBaseProperties.Foo;
 
     interface Integer extends _Base {
         type: "integer";
@@ -41,6 +43,10 @@ export declare namespace UnionWithBaseProperties {
     interface String extends _Base {
         type: "string";
         value: string;
+    }
+
+    interface Foo extends _Base, Foo.Raw {
+        type: "foo";
     }
 
     interface _Base {

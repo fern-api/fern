@@ -1,5 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { FernGeneratorExec } from "@fern-api/generator-commons";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
 import { JavaScriptRuntime, NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
@@ -48,7 +48,9 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             noSerdeLayer,
             noOptionalProperties: parsed?.noOptionalProperties ?? false,
             includeApiReference: parsed?.includeApiReference ?? false,
-            tolerateRepublish: parsed?.tolerateRepublish ?? false
+            tolerateRepublish: parsed?.tolerateRepublish ?? false,
+            retainOriginalCasing: parsed?.retainOriginalCasing ?? false,
+            allowExtraFields: parsed?.allowExtraFields ?? false
         };
     }
 
@@ -76,10 +78,16 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             npmPackage,
             generateJestTests: config.output.mode.type === "github",
             config: {
+                organization: config.organization,
+                apiName: intermediateRepresentation.apiName.originalName,
                 whitelabel: config.whitelabel,
                 snippetFilepath:
                     config.output.snippetFilepath != null
                         ? AbsoluteFilePath.of(config.output.snippetFilepath)
+                        : undefined,
+                snippetTemplateFilepath:
+                    config.output.snippetTemplateFilepath != null
+                        ? AbsoluteFilePath.of(config.output.snippetTemplateFilepath)
                         : undefined,
                 shouldUseBrandedStringAliases: customConfig.useBrandedStringAliases,
                 isPackagePrivate: customConfig.isPackagePrivate,
@@ -99,9 +107,13 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 treatUnknownAsAny: customConfig.treatUnknownAsAny,
                 includeContentHeadersOnFileDownloadResponse: customConfig.includeContentHeadersOnFileDownloadResponse,
                 includeSerdeLayer: !customConfig.noSerdeLayer,
+                retainOriginalCasing: customConfig.retainOriginalCasing ?? false,
                 noOptionalProperties: customConfig.noOptionalProperties,
                 includeApiReference: customConfig.includeApiReference ?? false,
-                tolerateRepublish: customConfig.tolerateRepublish
+                tolerateRepublish: customConfig.tolerateRepublish,
+                allowExtraFields: customConfig.allowExtraFields ?? false,
+                writeUnitTests: config.writeUnitTests,
+                executionEnvironment: "prod"
             }
         });
         const typescriptProject = await sdkGenerator.generate();
@@ -123,5 +135,13 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
 
     protected shouldTolerateRepublish(customConfig: SdkCustomConfig): boolean {
         return customConfig.tolerateRepublish;
+    }
+
+    protected exectuionEnvironment(config: FernGeneratorExec.GeneratorConfig): "local" | "dev" | "prod" {
+        return config.environment.type === "local"
+            ? "local"
+            : config.environment.coordinatorUrlV2.endsWith("dev2.buildwithfern.com")
+            ? "dev"
+            : "prod";
     }
 }

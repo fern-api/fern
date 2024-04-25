@@ -22,15 +22,16 @@ public class ServiceClient {
         this.clientOptions = clientOptions;
     }
 
-    public void post(String serviceParam, int endpointParam) {
-        post(serviceParam, endpointParam, null);
+    public void post(String serviceParam, String resourceParam, int endpointParam) {
+        post(serviceParam, resourceParam, endpointParam, null);
     }
 
-    public void post(String serviceParam, int endpointParam, RequestOptions requestOptions) {
+    public void post(String serviceParam, String resourceParam, int endpointParam, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegment(serviceParam)
                 .addPathSegment(Integer.toString(endpointParam))
+                .addPathSegment(resourceParam)
                 .build();
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)

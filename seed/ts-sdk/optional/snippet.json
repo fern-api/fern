@@ -1,4 +1,15 @@
 {
-    "endpoints": [],
+    "endpoints": [
+        {
+            "id": {
+                "path": "/send-optional-body",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedObjectsWithImportsClient } from \"@fern/optional\";\n\nconst seedObjectsWithImports = new SeedObjectsWithImportsClient;\nawait seedObjectsWithImports.optional.sendOptionalBody({\n    \"string\": {\n        \"key\": \"value\"\n    }\n});\n"
+            }
+        }
+    ],
     "types": {}
 }

@@ -1,6 +1,12 @@
 import { assertNever } from "@fern-api/core-utils";
-import { ErrorDiscriminationStrategy, HttpEndpoint, HttpService } from "@fern-fern/ir-sdk/api";
-import { PackageId } from "@fern-typescript/commons";
+import {
+    ErrorDiscriminationStrategy,
+    HttpEndpoint,
+    HttpService,
+    PrimitiveType,
+    TypeReference
+} from "@fern-fern/ir-sdk/api";
+import { getSchemaOptions, PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
@@ -20,6 +26,7 @@ export declare namespace GeneratedSdkEndpointTypeSchemasImpl {
         shouldGenerateErrors: boolean;
         skipResponseValidation: boolean;
         includeSerdeLayer: boolean;
+        allowExtraFields: boolean;
     }
 }
 
@@ -35,6 +42,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
     private generatedSdkErrorSchema: GeneratedEndpointErrorSchema | undefined;
     private skipResponseValidation: boolean;
     private includeSerdeLayer: boolean;
+    private allowExtraFields: boolean;
 
     constructor({
         packageId,
@@ -44,11 +52,13 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         errorDiscriminationStrategy,
         shouldGenerateErrors,
         skipResponseValidation,
-        includeSerdeLayer
+        includeSerdeLayer,
+        allowExtraFields
     }: GeneratedSdkEndpointTypeSchemasImpl.Init) {
         this.endpoint = endpoint;
         this.skipResponseValidation = skipResponseValidation;
         this.includeSerdeLayer = includeSerdeLayer;
+        this.allowExtraFields = allowExtraFields;
 
         if (this.includeSerdeLayer) {
             // only generate request schemas for referenced request bodies.  inlined
@@ -100,10 +110,10 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             }
 
             if (endpoint.response?.type === "streaming") {
-                if (endpoint.response.dataEventType.type === "text") {
+                if (endpoint.response.value.type === "text") {
                     throw new Error("Non-json responses are not supportd");
                 }
-                switch (endpoint.response.dataEventType.json.type) {
+                switch (endpoint.response.value.payload.type) {
                     case "primitive":
                     case "container":
                         this.generatedStreamDataSchema = new GeneratedEndpointTypeSchemaImpl({
@@ -111,7 +121,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                             service,
                             endpoint,
                             typeName: GeneratedSdkEndpointTypeSchemasImpl.STREAM_DATA_SCHEMA_NAME,
-                            type: endpoint.response.dataEventType.json
+                            type: endpoint.response.value.payload
                         });
                         break;
                     // named response bodies are not generated - consumers should
@@ -121,7 +131,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                     case "unknown":
                         break;
                     default:
-                        assertNever(endpoint.response.dataEventType.json);
+                        assertNever(endpoint.response.value.payload);
                 }
             }
 
@@ -211,11 +221,9 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                 return context.typeSchema
                     .getSchemaOfNamedType(this.endpoint.requestBody.requestBodyType, { isGeneratingSchema: false })
                     .jsonOrThrow(referenceToParsedRequest, {
-                        unrecognizedObjectKeys: "strip",
-                        allowUnrecognizedEnumValues: false,
-                        allowUnrecognizedUnionMembers: false,
-                        skipValidation: false,
-                        breadcrumbsPrefix: []
+                        ...getSchemaOptions({
+                            allowExtraFields: this.allowExtraFields
+                        })
                     });
             case "primitive":
             case "container":
@@ -225,11 +233,9 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                 return this.generatedRequestSchema
                     .getReferenceToZurgSchema(context)
                     .jsonOrThrow(referenceToParsedRequest, {
-                        unrecognizedObjectKeys: "strip",
-                        allowUnrecognizedEnumValues: false,
-                        allowUnrecognizedUnionMembers: false,
-                        skipValidation: false,
-                        breadcrumbsPrefix: []
+                        ...getSchemaOptions({
+                            allowExtraFields: this.allowExtraFields
+                        })
                     });
             default:
                 assertNever(this.endpoint.requestBody.requestBodyType);
@@ -249,7 +255,10 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         }
 
         if (this.endpoint.response.type === "text") {
-            throw new Error("Text response is not supported");
+            return ts.factory.createAsExpression(
+                referenceToRawResponse,
+                context.type.getReferenceToType(TypeReference.primitive(PrimitiveType.String)).typeNode
+            );
         }
 
         if (this.endpoint.response.value.responseBodyType.type === "unknown") {
@@ -319,16 +328,16 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         if (this.endpoint.response?.type !== "streaming") {
             throw new Error("Cannot deserialize stream data because it's not defined");
         }
-        if (this.endpoint.response.dataEventType.type === "text") {
+        if (this.endpoint.response.value.type === "text") {
             throw new Error("Cannot deserialize non-json stream data");
         }
 
-        switch (this.endpoint.response.dataEventType.json.type) {
+        switch (this.endpoint.response.value.payload.type) {
             case "unknown":
                 return referenceToRawStreamData;
             case "named":
                 return context.typeSchema
-                    .getSchemaOfNamedType(this.endpoint.response.dataEventType.json, { isGeneratingSchema: false })
+                    .getSchemaOfNamedType(this.endpoint.response.value.payload, { isGeneratingSchema: false })
                     .parseOrThrow(referenceToRawStreamData, {
                         allowUnrecognizedEnumValues: true,
                         allowUnrecognizedUnionMembers: true,
@@ -351,7 +360,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                         breadcrumbsPrefix: ["response"]
                     });
             default:
-                assertNever(this.endpoint.response.dataEventType.json);
+                assertNever(this.endpoint.response.value.payload);
         }
     }
 }

@@ -272,6 +272,10 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	files = append(files, modelFiles...)
 	files = append(files, newStringerFile(g.coordinator))
 	files = append(files, newTimeFile(g.coordinator))
+	if hasExtraProperties(ir) {
+		files = append(files, newExtraPropertiesFile(g.coordinator))
+		files = append(files, newExtraPropertiesTestFile(g.coordinator))
+	}
 	// Then handle mode-specific generation tasks.
 	var rootClientInstantiation *ast.AssignStmt
 	generatedRootClient := &GeneratedClient{
@@ -626,7 +630,9 @@ func (g *Generator) generateService(
 		g.coordinator,
 	)
 	generatedClient, err := writer.WriteClient(
+		ir.Auth,
 		irService.Endpoints,
+		ir.Headers,
 		ir.IdempotencyHeaders,
 		irSubpackages,
 		ir.Environments,
@@ -666,7 +672,9 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		g.coordinator,
 	)
 	if _, err := writer.WriteClient(
+		ir.Auth,
 		nil,
+		ir.Headers,
 		ir.IdempotencyHeaders,
 		irSubpackages,
 		nil,
@@ -700,7 +708,9 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		g.coordinator,
 	)
 	generatedClient, err := writer.WriteClient(
+		ir.Auth,
 		nil,
+		ir.Headers,
 		ir.IdempotencyHeaders,
 		irSubpackages,
 		nil,
@@ -982,6 +992,22 @@ func newTimeFile(coordinator *coordinator.Client) *File {
 		coordinator,
 		"core/time.go",
 		[]byte(timeFile),
+	)
+}
+
+func newExtraPropertiesFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/extra_properties.go",
+		[]byte(extraPropertiesFile),
+	)
+}
+
+func newExtraPropertiesTestFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/extra_properties_test.go",
+		[]byte(extraPropertiesTestFile),
 	)
 }
 
@@ -1449,6 +1475,24 @@ func generatorexecEndpointSnippetToString(endpointSnippet *generatorexec.Endpoin
 		endpointSnippet.Id.Method,
 		goSnippet,
 	)
+}
+
+// hasExtraProperties returns true if at least one object or in-lined request supports
+// extra properties.
+func hasExtraProperties(ir *fernir.IntermediateRepresentation) bool {
+	for _, irType := range ir.Types {
+		if irType.Shape.Object != nil && irType.Shape.Object.ExtraProperties {
+			return true
+		}
+	}
+	for _, irService := range ir.Services {
+		for _, irEndpoint := range irService.Endpoints {
+			if irEndpoint.RequestBody != nil && irEndpoint.RequestBody.InlinedRequestBody != nil && irEndpoint.RequestBody.InlinedRequestBody.ExtraProperties {
+				return true
+			}
+		}
+	}
+	return false
 }
 
 // pointerFunctionNames enumerates all of the pointer function names.

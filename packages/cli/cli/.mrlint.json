@@ -10,6 +10,10 @@
       "dev": {
         "cliName": "fern-dev",
         "cliPackageName": "@fern-api/fern-api-dev"
+      },
+      "local": {
+        "cliName": "fern-local",
+        "cliPackageName": "@fern-api/fern-api-local"
       }
     },
     "variables": [

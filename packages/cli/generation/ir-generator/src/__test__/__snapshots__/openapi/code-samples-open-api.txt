@@ -1485,6 +1485,7 @@ axios.request(options).then(function (response) {
       "shape": {
         "_type": "object",
         "extends": [],
+        "extra-properties": false,
         "properties": [
           {
             "availability": null,
@@ -1634,6 +1635,7 @@ axios.request(options).then(function (response) {
       "shape": {
         "_type": "object",
         "extends": [],
+        "extra-properties": false,
         "properties": [
           {
             "availability": null,

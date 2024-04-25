@@ -1,0 +1,65 @@
+[
+    {
+        "sdk": {
+            "package": "fern_basic-auth-environment-variables",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/basic-auth",
+            "method": "GET"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedBasicAuthEnvironmentVariables\n\nclient = AsyncSeedBasicAuthEnvironmentVariables(\n    username=\"YOUR_USERNAME\",\n    password=\"YOUR_PASSWORD\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.basic_auth.get_with_basic_auth(\n\t$FERN_INPUT\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_basic-auth-environment-variables",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/basic-auth",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedBasicAuthEnvironmentVariables\n\nclient = AsyncSeedBasicAuthEnvironmentVariables(\n    username=\"YOUR_USERNAME\",\n    password=\"YOUR_PASSWORD\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.basic_auth.post_with_basic_auth(\n\t$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "request=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": null,
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

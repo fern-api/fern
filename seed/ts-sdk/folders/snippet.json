@@ -1,4 +1,65 @@
 {
-    "endpoints": [],
+    "endpoints": [
+        {
+            "id": {
+                "path": "/",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient;\nawait seedApi.foo();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient;\nawait seedApi.a.b.foo();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient;\nawait seedApi.a.c.foo();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient;\nawait seedApi.folder.foo();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/service",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient;\nawait seedApi.folder.service.endpoint();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/service",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/folders\";\n\nconst seedApi = new SeedApiClient;\nawait seedApi.folder.service.unknownRequest({\n    \"key\": \"value\"\n});\n"
+            }
+        }
+    ],
     "types": {}
 }

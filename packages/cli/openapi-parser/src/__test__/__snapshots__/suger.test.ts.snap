@@ -10,9 +10,19 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "list all buyers by the given organization",
-      "errorStatusCode": [
-        500,
-      ],
+      "errors": {
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -122,6 +132,7 @@ exports[`open api parser suger parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListBuyersByOrganizationRequest",
@@ -184,9 +195,19 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "get buyer by the given organization and buyer id",
-      "errorStatusCode": [
-        500,
-      ],
+      "errors": {
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -425,6 +446,7 @@ exports[`open api parser suger parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetBuyerRequest",
@@ -497,9 +519,19 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "update buyer name and description by the given organization and buyer id",
-      "errorStatusCode": [
-        500,
-      ],
+      "errors": {
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -741,6 +773,7 @@ exports[`open api parser suger parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "UpdateBuyerNameDescriptionRequest",
@@ -825,9 +858,19 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "List all entitlements of the given buyer",
-      "errorStatusCode": [
-        500,
-      ],
+      "errors": {
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -1130,6 +1173,7 @@ exports[`open api parser suger parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListEntitlementsByBuyerRequest",
@@ -1209,10 +1253,30 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Create a new draft offer or update the existing draft offer. When updating draft offer, the offer.ID is required.",
-      "errorStatusCode": [
-        400,
-        500,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": null,
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "BadRequestErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -1794,6 +1858,7 @@ exports[`open api parser suger parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreateOrUpdateDraftOfferRequest",
@@ -1861,9 +1926,19 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "List all entitlements under the organization",
-      "errorStatusCode": [
-        500,
-      ],
+      "errors": {
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -2156,6 +2231,7 @@ exports[`open api parser suger parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListEntitlementsRequest",
@@ -2218,9 +2294,19 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Get the entitlement by ID",
-      "errorStatusCode": [
-        500,
-      ],
+      "errors": {
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -2518,6 +2604,7 @@ exports[`open api parser suger parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetEntitlementRequest",
@@ -2590,10 +2677,44 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Add the credit amount to the given Entitlement. The credit amount is accumulated & saved in the current Entitlement Term of the gvien Entitlement.",
-      "errorStatusCode": [
-        400,
-        500,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -2689,6 +2810,7 @@ exports[`open api parser suger parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "AddEntitlementCreditRequest",
@@ -2773,9 +2895,19 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Update the name of the given Entitlement",
-      "errorStatusCode": [
-        500,
-      ],
+      "errors": {
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -3076,6 +3208,7 @@ exports[`open api parser suger parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "UpdateEntitlementNameRequest",
@@ -3160,9 +3293,19 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "List all Entitlement Terms of the given Entitlement",
-      "errorStatusCode": [
-        500,
-      ],
+      "errors": {
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -3456,6 +3599,7 @@ exports[`open api parser suger parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListEntitlementTermsRequest",
@@ -3535,9 +3679,19 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Get the entitlement term by ID",
-      "errorStatusCode": [
-        500,
-      ],
+      "errors": {
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -3836,6 +3990,7 @@ exports[`open api parser suger parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetEntitlementTermRequest",
@@ -3925,10 +4080,30 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "list UsageRecordGroups for the given organization and entitlement",
-      "errorStatusCode": [
-        400,
-        500,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": null,
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "BadRequestErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -4055,6 +4230,7 @@ exports[`open api parser suger parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListUsageRecordGroupsByEntitlementRequest",
@@ -4220,11 +4396,62 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "It is recommended to provide the ID in the request body CreateUsageRecordGroupParams, so the report can be deduplicated. All duplicate report will return error code 409.",
-      "errorStatusCode": [
-        400,
-        409,
-        500,
-      ],
+      "errors": {
+        "400": {
+          "description": "all the quantity of usage records are zero",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "409": {
+          "description": "Conflict request error description",
+          "examples": [],
+          "generatedName": "ConflictError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "ConflictErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "internal error description",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -4393,6 +4620,7 @@ exports[`open api parser suger parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ReportUsageRecordGroupRequest",
@@ -4477,10 +4705,30 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "List usageRecordReports for the given organization and entitlement. Filter by entitlementTermId if it is given.",
-      "errorStatusCode": [
-        400,
-        500,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": null,
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "BadRequestErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -4575,6 +4823,7 @@ exports[`open api parser suger parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListUsageRecordReportsByEntitlementRequest",
@@ -4764,9 +5013,19 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "List all integrations for the given organization.",
-      "errorStatusCode": [
-        500,
-      ],
+      "errors": {
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -4847,6 +5106,7 @@ exports[`open api parser suger parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListIntegrationsByOrganizationRequest",
@@ -4909,10 +5169,44 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "For each organization, partner & service, there should be at most one integration.",
-      "errorStatusCode": [
-        400,
-        500,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad request error description",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "internal error description",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -5374,6 +5668,7 @@ exports[`open api parser suger parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreateIntegrationRequest",
@@ -5441,10 +5736,37 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Get the integration for the given organization, partner & service.",
-      "errorStatusCode": [
-        404,
-        500,
-      ],
+      "errors": {
+        "404": {
+          "description": "Integration not found",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -5894,6 +6216,7 @@ exports[`open api parser suger parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetIntegrationRequest",
@@ -6037,9 +6360,19 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "delete the integration for the given orgId, partner and service.",
-      "errorStatusCode": [
-        500,
-      ],
+      "errors": {
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -6081,6 +6414,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": "string",
             },
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DeleteIntegrationRequest",
@@ -6228,10 +6562,44 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Update the given integration.",
-      "errorStatusCode": [
-        400,
-        500,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad request error description",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "internal error description",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -6707,6 +7075,7 @@ exports[`open api parser suger parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "UpdateIntegrationRequest",
@@ -6862,9 +7231,19 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Verify the given integration, check whether it works correctly.",
-      "errorStatusCode": [
-        500,
-      ],
+      "errors": {
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -6906,6 +7285,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": true,
             },
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "VerifyIntegrationRequest",
@@ -7051,9 +7431,19 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "List all offers under the given organization.",
-      "errorStatusCode": [
-        500,
-      ],
+      "errors": {
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -7345,6 +7735,7 @@ exports[`open api parser suger parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListOffersByOrganizationRequest",
@@ -7407,10 +7798,30 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Create a private offer under the given organization.",
-      "errorStatusCode": [
-        400,
-        500,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": null,
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "BadRequestErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -7992,6 +8403,7 @@ exports[`open api parser suger parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreateOfferRequest",
@@ -8059,9 +8471,19 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Get the offer by the given offer ID.",
-      "errorStatusCode": [
-        500,
-      ],
+      "errors": {
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -8650,6 +9072,7 @@ exports[`open api parser suger parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetOfferRequest",
@@ -8722,9 +9145,19 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Only the offer with status = "DRAFT" or "CREATE_FAILED" is allowed to be deleted.",
-      "errorStatusCode": [
-        500,
-      ],
+      "errors": {
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -8762,6 +9195,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": "string",
             },
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DeleteOfferRequest",
@@ -8838,10 +9272,30 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Only the offer with status = "PENDING_ACCEPTANCE" or "PENDING_CANCEL" is allowed to cancel.",
-      "errorStatusCode": [
-        400,
-        500,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": null,
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "BadRequestErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -8879,6 +9333,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": "string",
             },
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CancelOfferRequest",
@@ -8955,9 +9410,19 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "List all entitlements under the given offer",
-      "errorStatusCode": [
-        500,
-      ],
+      "errors": {
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -9260,6 +9725,7 @@ exports[`open api parser suger parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListEntitlementsByOfferRequest",
@@ -9339,9 +9805,19 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "List all long running operations under the given organization, offer, entitlement, crmOpportunity or partnerOpportunity. Only provide one filter on a request.",
-      "errorStatusCode": [
-        500,
-      ],
+      "errors": {
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -9421,6 +9897,7 @@ exports[`open api parser suger parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListOperationsRequest",
@@ -9580,9 +10057,19 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "List all entitlements under the given partner",
-      "errorStatusCode": [
-        500,
-      ],
+      "errors": {
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -9882,6 +10369,7 @@ exports[`open api parser suger parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListEntitlementsByPartnerRequest",
@@ -9994,9 +10482,19 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": false,
       "availability": null,
       "description": "List all offers under the given organization & cloud partner.",
-      "errorStatusCode": [
-        500,
-      ],
+      "errors": {
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -10306,6 +10804,7 @@ exports[`open api parser suger parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListOffersByPartnerRequest",
@@ -10437,9 +10936,19 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "list all products under the given organization and cloud partner",
-      "errorStatusCode": [
-        500,
-      ],
+      "errors": {
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -10640,6 +11149,7 @@ exports[`open api parser suger parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListProductsByPartnerRequest",
@@ -10752,10 +11262,44 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "list the revenue records for the given organization, product, entitlement, or buyer.",
-      "errorStatusCode": [
-        400,
-        500,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad request error description",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "internal error description",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -10945,6 +11489,7 @@ exports[`open api parser suger parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListRevenueRecordsRequest",
@@ -11215,10 +11760,44 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "list the raw revenue record details for the given organization, product, entitlement, or buyer.",
-      "errorStatusCode": [
-        400,
-        500,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad request error description",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "internal error description",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -11267,6 +11846,7 @@ exports[`open api parser suger parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListRevenueRecordDetailsRequest",
@@ -11537,9 +12117,19 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "list all products under the given organization",
-      "errorStatusCode": [
-        500,
-      ],
+      "errors": {
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -11733,6 +12323,7 @@ exports[`open api parser suger parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListProductsByOrganizationRequest",
@@ -11795,9 +12386,19 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "get product by product id",
-      "errorStatusCode": [
-        500,
-      ],
+      "errors": {
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -12178,6 +12779,7 @@ exports[`open api parser suger parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetProductRequest",
@@ -12250,9 +12852,19 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "only the product with status = "CREATE_FAILED" is allowed to be deleted.",
-      "errorStatusCode": [
-        500,
-      ],
+      "errors": {
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -12290,6 +12902,7 @@ exports[`open api parser suger parse open api 1`] = `
               "value": "string",
             },
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DeleteProductRequest",
@@ -12366,9 +12979,19 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "currently only the Fulfillment URL is allowed to update via this API.",
-      "errorStatusCode": [
-        500,
-      ],
+      "errors": {
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -12774,6 +13397,7 @@ exports[`open api parser suger parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "UpdateProductRequest",
@@ -12858,9 +13482,19 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "list all metering dimensions of the given product",
-      "errorStatusCode": [
-        500,
-      ],
+      "errors": {
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -12941,6 +13575,7 @@ exports[`open api parser suger parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListProductMeteringDimensionsRequest",
@@ -13020,9 +13655,19 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "List all entitlements under the given product",
-      "errorStatusCode": [
-        500,
-      ],
+      "errors": {
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -13325,6 +13970,7 @@ exports[`open api parser suger parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListEntitlementsByProductRequest",
@@ -13404,9 +14050,19 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "List all offers under the given organization & product.",
-      "errorStatusCode": [
-        500,
-      ],
+      "errors": {
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -13708,6 +14364,7 @@ exports[`open api parser suger parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListOffersByProductRequest",
@@ -13787,10 +14444,30 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "list UsageRecordGroups for the given organization and product",
-      "errorStatusCode": [
-        400,
-        500,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": null,
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "BadRequestErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -13917,6 +14594,7 @@ exports[`open api parser suger parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListUsageRecordGroupsByProductRequest",
@@ -14082,10 +14760,30 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "List usageRecordReports for the given organization and product",
-      "errorStatusCode": [
-        400,
-        500,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": null,
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "BadRequestErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -14180,6 +14878,7 @@ exports[`open api parser suger parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListUsageRecordReportsByProductRequest",
@@ -14345,10 +15044,44 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Get the revenue report of the given organization, product, entitlement, or buyer.",
-      "errorStatusCode": [
-        400,
-        500,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad request error description",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "internal error description",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -14603,6 +15336,7 @@ exports[`open api parser suger parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetRevenueReportRequest",
@@ -14670,10 +15404,30 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "list UsageRecordGroups under the given organization.",
-      "errorStatusCode": [
-        400,
-        500,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": null,
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "BadRequestErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -14790,6 +15544,7 @@ exports[`open api parser suger parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListUsageRecordGroupsByOrganizationRequest",
@@ -14938,9 +15693,19 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "get UsageRecordGroup for the given organization and usageRecordGroup ID",
-      "errorStatusCode": [
-        500,
-      ],
+      "errors": {
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -15073,6 +15838,7 @@ exports[`open api parser suger parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetUsageRecordGroupRequest",
@@ -15145,10 +15911,30 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "List usageRecordReports under the given organization",
-      "errorStatusCode": [
-        400,
-        500,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": null,
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "BadRequestErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -15233,6 +16019,7 @@ exports[`open api parser suger parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListUsageRecordReportsByOrganizationRequest",
@@ -15381,9 +16168,19 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "get the usageRecordReport for a given organization and usageRecordReport ID.",
-      "errorStatusCode": [
-        500,
-      ],
+      "errors": {
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -15678,6 +16475,7 @@ exports[`open api parser suger parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetUsageRecordReportRequest",
@@ -15750,10 +16548,44 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "get the daily usage report of the given entitlement, the default timespan is lifetime.",
-      "errorStatusCode": [
-        400,
-        500,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad request error description",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "internal error description",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -15871,6 +16703,7 @@ exports[`open api parser suger parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetUsageReportRequest",
@@ -15938,9 +16771,19 @@ exports[`open api parser suger parse open api 1`] = `
       "authed": false,
       "availability": null,
       "description": "Get the Bearer Access Token by giving the Suger API Client ID & Client Secret.",
-      "errorStatusCode": [
-        500,
-      ],
+      "errors": {
+        "500": {
+          "description": "Internal Server Error",
+          "examples": null,
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "InternalServerErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -16001,6 +16844,7 @@ exports[`open api parser suger parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetApiClientAccessTokenRequest",
@@ -16046,63 +16890,8 @@ exports[`open api parser suger parse open api 1`] = `
       ],
     },
   ],
-  "errors": {
-    "400": {
-      "description": null,
-      "generatedName": "BadRequestError",
-      "nameOverride": null,
-      "schema": {
-        "generatedName": "BadRequestError",
-        "nameOverride": null,
-        "type": "unknown",
-      },
-    },
-    "404": {
-      "description": null,
-      "generatedName": "NotFoundError",
-      "nameOverride": null,
-      "schema": {
-        "description": null,
-        "generatedName": "NotFoundErrorBody",
-        "groupName": null,
-        "nameOverride": null,
-        "schema": {
-          "maxLength": null,
-          "minLength": null,
-          "type": "string",
-        },
-        "type": "primitive",
-      },
-    },
-    "409": {
-      "description": null,
-      "generatedName": "ConflictError",
-      "nameOverride": null,
-      "schema": {
-        "description": null,
-        "generatedName": "ConflictErrorBody",
-        "groupName": null,
-        "nameOverride": null,
-        "schema": {
-          "maxLength": null,
-          "minLength": null,
-          "type": "string",
-        },
-        "type": "primitive",
-      },
-    },
-    "500": {
-      "description": null,
-      "generatedName": "InternalServerError",
-      "nameOverride": null,
-      "schema": {
-        "generatedName": "InternalServerError",
-        "nameOverride": null,
-        "type": "unknown",
-      },
-    },
-  },
   "globalHeaders": [],
+  "groups": {},
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "shared.IdentityBuyer",

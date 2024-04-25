@@ -10,9 +10,9 @@ service:
     get:
       path: ""
       docs: Get snippet by endpoint method and path
-      display-name: Get snippet for endpoint
+      display-name: Get SDK snippet for endpoint
       availability: pre-release
-      audiences: 
+      audiences:
         - external
         - fiddle
       method: POST
@@ -34,12 +34,12 @@ service:
               docs: |
                 The SDKs for which to load snippets. If unspecified,
                 snippets for the latest published SDKs will be returned.
-            loadLevel: 
-              type: optional<SnippetLoadLevel>
-              docs: |
-                The level of detail to load for the snippet. If unspecified, 
-                the full snippet will be returned.
             endpoint: EndpointIdentifier
+            payload:
+              type: optional<CustomSnippetPayload>
+              docs: |
+                The JSON payload to be used as the input for the code snippet. This should just be thought of as the
+                request body you'd be sending to the endpoint as a cURL. If not specified then the default payload will be used.
       response: list<Snippet>
       examples:
         - request:
@@ -78,7 +78,7 @@ service:
 
     load:
       path: /load
-      display-name: Load all snippets
+      display-name: Load all SDK snippets
       method: POST
       availability: pre-release
       audiences: 
@@ -185,6 +185,17 @@ service:
                         })
 
 types:
+  ParameterPayload:
+    properties:
+      name: string
+      value: unknown
+  CustomSnippetPayload:
+    properties:
+      headers: optional<list<ParameterPayload>>
+      pathParameters: optional<list<ParameterPayload>>
+      queryParameters: optional<list<ParameterPayload>>
+      requestBody: optional<unknown>
+
   SnippetLoadLevel: 
     enum: 
       - value: full

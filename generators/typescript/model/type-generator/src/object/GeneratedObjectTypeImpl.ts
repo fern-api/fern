@@ -47,7 +47,7 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
     }
 
     private getPropertyKeyFromProperty(property: ObjectProperty): string {
-        if (this.includeSerdeLayer) {
+        if (this.includeSerdeLayer && !this.retainOriginalCasing) {
             return property.name.name.camelCase.unsafeName;
         } else {
             return property.name.wireValue;
@@ -73,6 +73,16 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
 
         return example.properties.map((property) => {
             const originalTypeForProperty = context.type.getGeneratedType(property.originalTypeDeclaration);
+            if (originalTypeForProperty.type === "union") {
+                const propertyKey = originalTypeForProperty.getSinglePropertyKey({
+                    name: property.name,
+                    type: TypeReference.named(property.originalTypeDeclaration)
+                });
+                return ts.factory.createPropertyAssignment(
+                    propertyKey,
+                    context.type.getGeneratedExample(property.value).build(context, opts)
+                );
+            }
             if (originalTypeForProperty.type !== "object") {
                 throw new Error("Property does not come from an object");
             }

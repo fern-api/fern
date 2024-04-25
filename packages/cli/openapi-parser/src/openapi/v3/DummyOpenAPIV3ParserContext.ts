@@ -1,4 +1,4 @@
-import { HttpError, SchemaId, StatusCode } from "@fern-api/openapi-ir-sdk";
+import { SchemaId } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 import { SchemaParserContext } from "../../schema/SchemaParserContext";
@@ -25,13 +25,6 @@ export class DummyOpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext 
         return new Set();
     }
 
-    public markSchemaForStatusCode(
-        _statusCode: number,
-        _schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject
-    ): void {
-        return;
-    }
-
     public markReferencedByDiscriminatedUnion(
         _schema: OpenAPIV3.ReferenceObject,
         _discrminant: string,
@@ -44,10 +37,6 @@ export class DummyOpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext 
         _schema: OpenAPIV3.ReferenceObject
     ): DiscriminatedUnionReference | undefined {
         return undefined;
-    }
-
-    public getErrors(): Record<StatusCode, HttpError> {
-        return {};
     }
 
     public excludeSchema(_schemaId: SchemaId): void {

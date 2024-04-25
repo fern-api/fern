@@ -4,24 +4,20 @@ from __future__ import annotations
 
 import typing
 
+from ...core.pydantic_utilities import pydantic_v1
 from .foo import Foo
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 
 class UnionWithUnknown_Foo(Foo):
-    type: typing.Literal["foo"]
+    type: typing.Literal["foo"] = "foo"
 
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
 
 
-class UnionWithUnknown_Unknown(pydantic.BaseModel):
-    type: typing.Literal["unknown"]
+class UnionWithUnknown_Unknown(pydantic_v1.BaseModel):
+    type: typing.Literal["unknown"] = "unknown"
 
 
 UnionWithUnknown = typing.Union[UnionWithUnknown_Foo, UnionWithUnknown_Unknown]

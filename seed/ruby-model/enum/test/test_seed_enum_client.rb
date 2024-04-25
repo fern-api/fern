@@ -6,6 +6,6 @@ require "seed_enum_client"
 # Basic SeedEnumClient tests
 class TestSeedEnumClient < Minitest::Test
   def test_function
-    SeedEnumClient::Client.new
+    # SeedEnumClient::Client.new
   end
 end

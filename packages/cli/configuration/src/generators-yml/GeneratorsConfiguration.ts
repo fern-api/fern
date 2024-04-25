@@ -23,7 +23,9 @@ export interface SingleNamespaceAPIDefinition {
 
 export interface APIDefinitionLocation {
     path: string;
+    origin: string | undefined;
     overrides: string | undefined;
+    audiences: string[] | undefined;
 }
 
 export interface GeneratorGroup {
@@ -34,13 +36,16 @@ export interface GeneratorGroup {
 
 export interface GeneratorInvocation {
     name: string;
+    irVersionOverride: string | undefined;
     version: string;
     config: unknown;
     outputMode: FernFiddle.remoteGen.OutputMode;
     absolutePathToLocalOutput: AbsoluteFilePath | undefined;
+    absolutePathToLocalSnippets: AbsoluteFilePath | undefined;
     smartCasing: boolean;
     disableExamples: boolean;
     language: GenerationLanguage | undefined;
+    publishMetadata: FernFiddle.remoteGen.PublishingMetadata | undefined;
 }
 
 export const GenerationLanguage = {
@@ -48,7 +53,8 @@ export const GenerationLanguage = {
     JAVA: "java",
     PYTHON: "python",
     GO: "go",
-    RUBY: "ruby"
+    RUBY: "ruby",
+    CSHARP: "csharp"
 } as const;
 
 export type GenerationLanguage = Values<typeof GenerationLanguage>;

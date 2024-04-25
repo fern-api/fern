@@ -4,7 +4,8 @@
   "include": ["./src/**/*"],
   "references": [
     { "path": "../../../packages/commons/fs-utils" },
-    { "path": "../../../packages/generators/commons" },
+    { "path": "../../../packages/commons/logging-execa" },
+    { "path": "../../commons" },
     { "path": "../cli" },
     { "path": "../codegen" },
     { "path": "../model" }

@@ -1,0 +1,25 @@
+[
+    {
+        "sdk": {
+            "package": "fern_undiscriminated-unions",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedUndiscriminatedUnions\n\nclient = AsyncSeedUndiscriminatedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.union.get(\n\t$FERN_INPUT\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

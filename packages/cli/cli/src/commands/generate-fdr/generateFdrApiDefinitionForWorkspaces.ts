@@ -27,7 +27,7 @@ export async function generateFdrApiDefinitionForWorkspaces({
                         ? await convertOpenApiWorkspaceToFernWorkspace(workspace, context)
                         : workspace;
 
-                const intermediateRepresentation = await generateIrForFernWorkspace({
+                const ir = await generateIrForFernWorkspace({
                     workspace: fernWorkspace,
                     context,
                     generationLanguage: undefined,
@@ -36,7 +36,10 @@ export async function generateFdrApiDefinitionForWorkspaces({
                     disableExamples: false
                 });
 
-                const apiDefinition = convertIrToFdrApi(intermediateRepresentation, {});
+                const apiDefinition = convertIrToFdrApi({
+                    ir,
+                    snippetsConfig: {}
+                });
 
                 const resolvedOutputFilePath = path.resolve(outputFilepath);
                 await writeFile(resolvedOutputFilePath, await stringifyLargeObject(apiDefinition, { pretty: true }));

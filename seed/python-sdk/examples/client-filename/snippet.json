@@ -1,9 +1,9 @@
 {
     "types": {
         "type_commons/types:Tag": "\"tag-wf9as23d\"\n",
-        "type_commons/types:Metadata": "from seed.resources.commons import Metadata\n\nMetadata(\n    id=\"metadata-js8dg24b\",\n    data={\"foo\": \"bar\", \"baz\": \"qux\"},\n    json_string='{\"foo\": \"bar\", \"baz\": \"qux\"}',\n)\n",
-        "type_commons/types:EventInfo": "from seed.resources.commons import EventInfo_Metadata\n\nEventInfo_Metadata(\n    type=\"metadata\",\n    id=\"metadata-alskjfg8\",\n    data={\"one\": \"two\"},\n    json_string='{\"one\": \"two\"}',\n)\n",
-        "type_commons/types:Data": "from seed.resources.commons import Data_String\n\nData_String(type=\"string\", value=\"data\")\n",
+        "type_commons/types:Metadata": "from seed.commons import Metadata\n\nMetadata(\n    id=\"metadata-js8dg24b\",\n    data={\"foo\": \"bar\", \"baz\": \"qux\"},\n    json_string='{\"foo\": \"bar\", \"baz\": \"qux\"}',\n)\n",
+        "type_commons/types:EventInfo": "from seed.commons import EventInfo_Metadata\n\nEventInfo_Metadata(\n    id=\"metadata-alskjfg8\",\n    data={\"one\": \"two\"},\n    json_string='{\"one\": \"two\"}',\n)\n",
+        "type_commons/types:Data": "from seed.commons import Data_String\n\nData_String(value=\"data\")\n",
         "type_file/service:Filename": "\"file.txt\"\n",
         "type_types:MovieId": "\"movie-c06a4ad7\"\n",
         "type_types:Movie": "from seed import Movie\n\nMovie(\n    id=\"movie-c06a4ad7\",\n    prequel=\"movie-cv9b914f\",\n    title=\"The Boy and the Heron\",\n    from_=\"Hayao Miyazaki\",\n    rating=8.0,\n    type=\"movie\",\n    tag=\"tag-wf9as23d\",\n    metadata={\n        \"actors\": [\"Christian Bale\", \"Florence Pugh\", \"Willem Dafoe\"],\n        \"releaseDate\": \"2023-12-08\",\n        \"ratings\": {\"rottenTomatoes\": 97, \"imdb\": 7.6},\n    },\n)\n",
@@ -15,14 +15,14 @@
         "type_types:Directory": "from seed import Directory, File\n\nDirectory(\n    name=\"root\",\n    files=[\n        File(\n            name=\"file.txt\",\n            contents=\"...\",\n        )\n    ],\n    directories=[\n        Directory(\n            name=\"tmp\",\n            files=[\n                File(\n                    name=\"another_file.txt\",\n                    contents=\"...\",\n                )\n            ],\n        )\n    ],\n)\n",
         "type_types:Node": "from seed import Node, Tree\n\nNode(\n    name=\"root\",\n    nodes=[\n        Node(\n            name=\"left\",\n        ),\n        Node(\n            name=\"right\",\n        ),\n    ],\n    trees=[\n        Tree(\n            nodes=[\n                Node(\n                    name=\"left\",\n                ),\n                Node(\n                    name=\"right\",\n                ),\n            ],\n        )\n    ],\n)\n",
         "type_types:Tree": "from seed import Node, Tree\n\nTree(\n    nodes=[\n        Node(\n            name=\"left\",\n        ),\n        Node(\n            name=\"right\",\n        ),\n    ],\n)\n",
-        "type_types:Metadata": "from seed import Metadata_Html\n\nMetadata_Html(type=\"html\", value=\"<head>...</head>\")\n",
-        "type_types:Exception": "from seed import Exception_Generic\n\nException_Generic(\n    type=\"generic\",\n    exception_type=\"Unavailable\",\n    exception_message=\"This component is unavailable!\",\n    exception_stacktrace=\"<logs>\",\n)\n",
+        "type_types:Metadata": "from seed import Metadata_Html\n\nMetadata_Html(value=\"<head>...</head>\")\n",
+        "type_types:Exception": "from seed import Exception_Generic\n\nException_Generic(\n    exception_type=\"Unavailable\",\n    exception_message=\"This component is unavailable!\",\n    exception_stacktrace=\"<logs>\",\n)\n",
         "type_types:ExceptionInfo": "from seed import ExceptionInfo\n\nExceptionInfo(\n    exception_type=\"Unavailable\",\n    exception_message=\"This component is unavailable!\",\n    exception_stacktrace=\"<logs>\",\n)\n",
-        "type_types:MigrationStatus": "from seed import MigrationStatus\n\nMigrationStatus.RUNNING\n",
-        "type_types:Migration": "from seed import Migration, MigrationStatus\n\nMigration(\n    name=\"001_init\",\n    status=MigrationStatus.RUNNING,\n)\n",
+        "type_types:MigrationStatus": "\"RUNNING\"\n",
+        "type_types:Migration": "from seed import Migration\n\nMigration(\n    name=\"001_init\",\n    status=\"RUNNING\",\n)\n",
         "type_types:Request": "from seed import Request\n\nRequest(\n    request={},\n)\n",
         "type_types:Response": "from seed import Response\n\nResponse(\n    response=\"Initializing...\",\n)\n",
-        "type_types:Test": "from seed import Test_And\n\nTest_And(type=\"and\", value=True)\n"
+        "type_types:Test": "from seed import Test_And\n\nTest_And(value=True)\n"
     },
     "endpoints": [
         {

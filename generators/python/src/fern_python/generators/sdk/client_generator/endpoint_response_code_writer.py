@@ -2,11 +2,8 @@ import fern.ir.resources as ir_types
 from typing_extensions import Never
 
 from fern_python.codegen import AST
+from fern_python.external_dependencies.httpx_sse import HttpxSSE
 from fern_python.external_dependencies.json import Json
-from fern_python.external_dependencies.pydantic import (
-    Pydantic,
-    PydanticVersionCompatibility,
-)
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 
 
@@ -15,6 +12,8 @@ class EndpointResponseCodeWriter:
     RESPONSE_JSON_VARIABLE = "_response_json"
     STREAM_TEXT_VARIABLE = "_text"
     FILE_CHUNK_VARIABLE = "_chunk"
+    EVENT_SOURCE_VARIABLE = "_event_source"
+    SSE_VARIABLE = "_sse"
 
     def __init__(
         self,
@@ -41,23 +40,45 @@ class EndpointResponseCodeWriter:
         return AST.CodeWriter(write)
 
     def _handle_success_stream(self, *, writer: AST.NodeWriter, stream_response: ir_types.StreamingResponse) -> None:
-        if self._is_async:
-            writer.write("async ")
-        writer.write_line(
-            f"for {EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE} in {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.{self._get_iter_lines_method(is_async=self._is_async)}(): "
-        )
-        with writer.indent():
-            writer.write_line(f"if len({EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE}) == 0:")
-            with writer.indent():
-                writer.write_line("continue")
-            writer.write("yield ")
+        stream_response_union = stream_response.get_as_union()
+        if stream_response_union.type == "sse":
+            writer.write(f"{EndpointResponseCodeWriter.EVENT_SOURCE_VARIABLE} = ")
             writer.write_node(
-                Pydantic.parse_obj_as(
-                    PydanticVersionCompatibility.Both,
-                    self._get_streaming_response_data_type(stream_response),
-                    AST.Expression(Json.loads(AST.Expression(EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE))),
-                ),
+                AST.ClassInstantiation(
+                    HttpxSSE.EVENT_SOURCE, [AST.Expression(EndpointResponseCodeWriter.RESPONSE_VARIABLE)]
+                )
             )
+            writer.write_newline_if_last_line_not()
+            if self._is_async:
+                writer.write("async ")
+            writer.write_line(
+                f"for {EndpointResponseCodeWriter.SSE_VARIABLE} in {EndpointResponseCodeWriter.EVENT_SOURCE_VARIABLE}.{self._get_iter_sse_method(is_async=self._is_async)}():"
+            )
+            with writer.indent():
+                writer.write("yield ")
+                writer.write_node(
+                    self._context.core_utilities.get_construct(
+                        self._get_streaming_response_data_type(stream_response),
+                        AST.Expression(Json.loads(AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.data"))),
+                    ),
+                )
+        else:
+            if self._is_async:
+                writer.write("async ")
+            writer.write_line(
+                f"for {EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE} in {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.{self._get_iter_lines_method(is_async=self._is_async)}(): "
+            )
+            with writer.indent():
+                writer.write_line(f"if len({EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE}) == 0:")
+                with writer.indent():
+                    writer.write_line("continue")
+                writer.write("yield ")
+                writer.write_node(
+                    self._context.core_utilities.get_construct(
+                        self._get_streaming_response_data_type(stream_response),
+                        AST.Expression(Json.loads(AST.Expression(EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE))),
+                    ),
+                )
 
         writer.write_line("return")
 
@@ -67,13 +88,18 @@ class EndpointResponseCodeWriter:
         else:
             return "iter_lines"
 
+    def _get_iter_sse_method(self, *, is_async: bool) -> str:
+        if is_async:
+            return "aiter_sse"
+        else:
+            return "iter_sse"
+
     def _handle_success_json(
         self, *, writer: AST.NodeWriter, json_response: ir_types.JsonResponse, use_response_json: bool
     ) -> None:
         writer.write("return ")
         writer.write_node(
-            Pydantic.parse_obj_as(
-                PydanticVersionCompatibility.Both,
+            self._context.core_utilities.get_construct(
                 self._get_json_response_body_type(json_response),
                 AST.Expression(
                     f"{EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE}"
@@ -152,8 +178,7 @@ class EndpointResponseCodeWriter:
                     AST.ClassInstantiation(
                         class_=self._context.get_reference_to_error(error.error),
                         args=[
-                            Pydantic.parse_obj_as(
-                                PydanticVersionCompatibility.Both,
+                            self._context.core_utilities.get_construct(
                                 self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                                     error_declaration.type
                                 ),
@@ -222,8 +247,7 @@ class EndpointResponseCodeWriter:
                             AST.ClassInstantiation(
                                 class_=self._context.get_reference_to_error(error.error),
                                 args=[
-                                    Pydantic.parse_obj_as(
-                                        PydanticVersionCompatibility.Both,
+                                    self._context.core_utilities.get_construct(
                                         self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                                             error_declaration.type
                                         ),
@@ -291,9 +315,11 @@ class EndpointResponseCodeWriter:
         )
 
     def _get_streaming_response_data_type(self, streaming_response: ir_types.StreamingResponse) -> AST.TypeHint:
-        union = streaming_response.data_event_type.get_as_union()
+        union = streaming_response.get_as_union()
         if union.type == "json":
-            return self._context.pydantic_generator_context.get_type_hint_for_type_reference(union.json_)
+            return self._context.pydantic_generator_context.get_type_hint_for_type_reference(union.payload)
+        if union.type == "sse":
+            return self._context.pydantic_generator_context.get_type_hint_for_type_reference(union.payload)
         if union.type == "text":
             return AST.TypeHint.str_()
         raise RuntimeError(f"{union.type} streaming response is unsupported")

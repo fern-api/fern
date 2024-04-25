@@ -54,10 +54,13 @@ class ClientWrapperGenerator:
 
     GET_HEADERS_METHOD_NAME = "get_headers"
     GET_BASE_URL_METHOD_NAME = "get_base_url"
+    GET_TIMEOUT_METHOD_NAME = "get_timeout"
     GET_ENVIRONMENT_METHOD_NAME = "get_environment"
 
     BASE_URL_PARAMETER_NAME = "base_url"
     ENVIRONMENT_PARAMETER_NAME = "environment"
+
+    TIMEOUT_PARAMETER_NAME = "timeout"
 
     HTTPX_CLIENT_MEMBER_NAME = "httpx_client"
 
@@ -77,8 +80,10 @@ class ClientWrapperGenerator:
     def generate(self, source_file: SourceFile, project: Project) -> None:
         constructor_info = self._get_constructor_info()
         url_constructor_param = self._get_url_storage_info()
+        timeout_param = self._get_timeout_constructor_parameter()
         constructor_parameters = [param for param in constructor_info.constructor_parameters]
         constructor_parameters.append(url_constructor_param)
+        constructor_parameters.append(timeout_param)
 
         source_file.add_class_declaration(
             declaration=self._create_base_client_wrapper_class_declaration(
@@ -122,6 +127,18 @@ class ClientWrapperGenerator:
                 name=ClientWrapperGenerator.GET_BASE_URL_METHOD_NAME,
                 signature=AST.FunctionSignature(return_type=AST.TypeHint.str_()),
                 body=AST.CodeWriter(f"return self._{ClientWrapperGenerator.BASE_URL_PARAMETER_NAME}"),
+            ),
+        )
+
+    def _get_timeout_constructor_parameter(self) -> ConstructorParameter:
+        return ConstructorParameter(
+            constructor_parameter_name=ClientWrapperGenerator.TIMEOUT_PARAMETER_NAME,
+            type_hint=AST.TypeHint.optional(AST.TypeHint.float_()),
+            private_member_name=f"_{ClientWrapperGenerator.TIMEOUT_PARAMETER_NAME}",
+            getter_method=AST.FunctionDeclaration(
+                name=ClientWrapperGenerator.GET_TIMEOUT_METHOD_NAME,
+                signature=AST.FunctionSignature(return_type=AST.TypeHint.optional(AST.TypeHint.float_())),
+                body=AST.CodeWriter(f"return self._{ClientWrapperGenerator.TIMEOUT_PARAMETER_NAME}"),
             ),
         )
 
@@ -399,7 +416,7 @@ class ClientWrapperGenerator:
 
         return _write_constructor_body
 
-    def _get_constructor_info(self) -> ConstructorInfo:
+    def _get_constructor_info(self, exclude_auth: bool = False) -> ConstructorInfo:
         parameters: List[ConstructorParameter] = []
         literal_headers: List[LiteralHeader] = []
 
@@ -426,6 +443,12 @@ class ClientWrapperGenerator:
                     header_key=header.name.wire_value,
                     environment_variable=header.env,
                 )
+            )
+
+        if exclude_auth:
+            return ConstructorInfo(
+                constructor_parameters=parameters,
+                literal_headers=literal_headers,
             )
 
         # TODO(dsinghvi): Support suppliers for header auth schemes
@@ -595,6 +618,38 @@ class ClientWrapperGenerator:
             scheme_as_union = scheme.get_as_union()
             if scheme_as_union.type == "bearer":
                 return scheme_as_union
+
+        for scheme in self._context.ir.auth.schemes:
+            scheme_as_union = scheme.get_as_union()
+            if scheme_as_union.type == "oauth":
+                # TODO: For now, we create the default bearer auth scheme if the auth scheme is oauth.
+                #
+                #       This should be eventually be handled in the IR when we can support multiple auth
+                #       schemes.
+                #
+                # TODO: We need to support the token prefix. This will actually need to be handled as a
+                #       custom header auth scheme.
+                return ir_types.BearerAuthScheme(
+                    token=ir_types.Name(
+                        original_name="token",
+                        camel_case=ir_types.SafeAndUnsafeString(
+                            safe_name="token",
+                            unsafe_name="token",
+                        ),
+                        pascal_case=ir_types.SafeAndUnsafeString(
+                            safe_name="Token",
+                            unsafe_name="Token",
+                        ),
+                        snake_case=ir_types.SafeAndUnsafeString(
+                            safe_name="token",
+                            unsafe_name="token",
+                        ),
+                        screaming_snake_case=ir_types.SafeAndUnsafeString(
+                            safe_name="TOKEN",
+                            unsafe_name="TOKEN",
+                        ),
+                    )
+                )
         return None
 
     def _has_basic_auth(self) -> bool:

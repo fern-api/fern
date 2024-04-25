@@ -4,10 +4,10 @@
 
 import * as environments from "../../../../../../environments";
 import * as core from "../../../../../../core";
-import * as SeedTrace from "../../../../..";
+import * as SeedTrace from "../../../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../../../serialization";
-import * as errors from "../../../../../../errors";
+import * as serializers from "../../../../../../serialization/index";
+import * as errors from "../../../../../../errors/index";
 
 export declare namespace Problem {
     interface Options {
@@ -27,6 +27,9 @@ export class Problem {
 
     /**
      * Returns lightweight versions of all problems
+     *
+     * @example
+     *     await seedTrace.v2.problem.getLightweightProblems()
      */
     public async getLightweightProblems(
         requestOptions?: Problem.RequestOptions
@@ -44,7 +47,7 @@ export class Problem {
                         ? await core.Supplier.get(this._options.xRandomHeader)
                         : undefined,
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -86,6 +89,9 @@ export class Problem {
 
     /**
      * Returns latest versions of all problems
+     *
+     * @example
+     *     await seedTrace.v2.problem.getProblems()
      */
     public async getProblems(requestOptions?: Problem.RequestOptions): Promise<SeedTrace.v2.ProblemInfoV2[]> {
         const _response = await core.fetcher({
@@ -101,7 +107,7 @@ export class Problem {
                         ? await core.Supplier.get(this._options.xRandomHeader)
                         : undefined,
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -143,6 +149,9 @@ export class Problem {
 
     /**
      * Returns latest version of a problem
+     *
+     * @example
+     *     await seedTrace.v2.problem.getLatestProblem("string")
      */
     public async getLatestProblem(
         problemId: SeedTrace.ProblemId,
@@ -161,7 +170,7 @@ export class Problem {
                         ? await core.Supplier.get(this._options.xRandomHeader)
                         : undefined,
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -203,6 +212,9 @@ export class Problem {
 
     /**
      * Returns requested version of a problem
+     *
+     * @example
+     *     await seedTrace.v2.problem.getProblemVersion("string", 1)
      */
     public async getProblemVersion(
         problemId: SeedTrace.ProblemId,
@@ -224,7 +236,7 @@ export class Problem {
                         ? await core.Supplier.get(this._options.xRandomHeader)
                         : undefined,
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -264,7 +276,7 @@ export class Problem {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

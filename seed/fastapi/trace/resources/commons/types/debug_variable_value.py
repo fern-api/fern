@@ -5,16 +5,14 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 from .binary_tree_node_and_tree_value import BinaryTreeNodeAndTreeValue
 from .doubly_linked_list_node_and_list_value import DoublyLinkedListNodeAndListValue
 from .generic_value import GenericValue as resources_commons_types_generic_value_GenericValue
 from .singly_linked_list_node_and_list_value import SinglyLinkedListNodeAndListValue
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -76,7 +74,7 @@ class _Factory:
         )
 
 
-class DebugVariableValue(pydantic.BaseModel):
+class DebugVariableValue(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(
@@ -151,7 +149,7 @@ class DebugVariableValue(pydantic.BaseModel):
                 )
             )
 
-    __root__: typing.Annotated[
+    __root__: typing_extensions.Annotated[
         typing.Union[
             _DebugVariableValue.IntegerValue,
             _DebugVariableValue.BooleanValue,
@@ -167,7 +165,7 @@ class DebugVariableValue(pydantic.BaseModel):
             _DebugVariableValue.NullValue,
             _DebugVariableValue.GenericValue,
         ],
-        pydantic.Field(discriminator="type"),
+        pydantic_v1.Field(discriminator="type"),
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -179,7 +177,7 @@ class DebugVariableValue(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
@@ -188,66 +186,66 @@ from .debug_map_value import DebugMapValue  # noqa: E402
 
 
 class _DebugVariableValue:
-    class IntegerValue(pydantic.BaseModel):
-        type: typing.Literal["integerValue"]
+    class IntegerValue(pydantic_v1.BaseModel):
+        type: typing.Literal["integerValue"] = "integerValue"
         value: int
 
-    class BooleanValue(pydantic.BaseModel):
-        type: typing.Literal["booleanValue"]
+    class BooleanValue(pydantic_v1.BaseModel):
+        type: typing.Literal["booleanValue"] = "booleanValue"
         value: bool
 
-    class DoubleValue(pydantic.BaseModel):
-        type: typing.Literal["doubleValue"]
+    class DoubleValue(pydantic_v1.BaseModel):
+        type: typing.Literal["doubleValue"] = "doubleValue"
         value: float
 
-    class StringValue(pydantic.BaseModel):
-        type: typing.Literal["stringValue"]
+    class StringValue(pydantic_v1.BaseModel):
+        type: typing.Literal["stringValue"] = "stringValue"
         value: str
 
-    class CharValue(pydantic.BaseModel):
-        type: typing.Literal["charValue"]
+    class CharValue(pydantic_v1.BaseModel):
+        type: typing.Literal["charValue"] = "charValue"
         value: str
 
     class MapValue(DebugMapValue):
-        type: typing.Literal["mapValue"]
+        type: typing.Literal["mapValue"] = "mapValue"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
-    class ListValue(pydantic.BaseModel):
-        type: typing.Literal["listValue"]
+    class ListValue(pydantic_v1.BaseModel):
+        type: typing.Literal["listValue"] = "listValue"
         value: typing.List[DebugVariableValue]
 
     class BinaryTreeNodeValue(BinaryTreeNodeAndTreeValue):
-        type: typing.Literal["binaryTreeNodeValue"]
+        type: typing.Literal["binaryTreeNodeValue"] = "binaryTreeNodeValue"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class SinglyLinkedListNodeValue(SinglyLinkedListNodeAndListValue):
-        type: typing.Literal["singlyLinkedListNodeValue"]
+        type: typing.Literal["singlyLinkedListNodeValue"] = "singlyLinkedListNodeValue"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class DoublyLinkedListNodeValue(DoublyLinkedListNodeAndListValue):
-        type: typing.Literal["doublyLinkedListNodeValue"]
+        type: typing.Literal["doublyLinkedListNodeValue"] = "doublyLinkedListNodeValue"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
-    class UndefinedValue(pydantic.BaseModel):
-        type: typing.Literal["undefinedValue"]
+    class UndefinedValue(pydantic_v1.BaseModel):
+        type: typing.Literal["undefinedValue"] = "undefinedValue"
 
-    class NullValue(pydantic.BaseModel):
-        type: typing.Literal["nullValue"]
+    class NullValue(pydantic_v1.BaseModel):
+        type: typing.Literal["nullValue"] = "nullValue"
 
     class GenericValue(resources_commons_types_generic_value_GenericValue):
-        type: typing.Literal["genericValue"]
+        type: typing.Literal["genericValue"] = "genericValue"
 
         class Config:
             allow_population_by_field_name = True

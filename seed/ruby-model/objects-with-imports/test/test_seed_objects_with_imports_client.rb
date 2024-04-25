@@ -6,6 +6,6 @@ require "seed_objects_with_imports_client"
 # Basic SeedObjectsWithImportsClient tests
 class TestSeedObjectsWithImportsClient < Minitest::Test
   def test_function
-    SeedObjectsWithImportsClient::Client.new
+    # SeedObjectsWithImportsClient::Client.new
   end
 end

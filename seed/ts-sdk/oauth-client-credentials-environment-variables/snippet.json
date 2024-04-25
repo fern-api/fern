@@ -1,0 +1,25 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedOauthClientCredentialsEnvironmentVariablesClient } from \"@fern/oauth-client-credentials-environment-variables\";\n\nconst seedOauthClientCredentialsEnvironmentVariables = new SeedOauthClientCredentialsEnvironmentVariablesClient({ token: \"YOUR_TOKEN\" });\nawait seedOauthClientCredentialsEnvironmentVariables.auth.getTokenWithClientCredentials({\n    clientId: \"string\",\n    clientSecret: \"string\",\n    audience: \"https://api.example.com\",\n    grantType: \"client_credentials\",\n    scope: \"string\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/token",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedOauthClientCredentialsEnvironmentVariablesClient } from \"@fern/oauth-client-credentials-environment-variables\";\n\nconst seedOauthClientCredentialsEnvironmentVariables = new SeedOauthClientCredentialsEnvironmentVariablesClient({ token: \"YOUR_TOKEN\" });\nawait seedOauthClientCredentialsEnvironmentVariables.auth.refreshToken({\n    clientId: \"string\",\n    clientSecret: \"string\",\n    refreshToken: \"string\",\n    audience: \"https://api.example.com\",\n    grantType: \"refresh_token\",\n    scope: \"string\"\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

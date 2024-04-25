@@ -1,5 +1,13 @@
-import { GeneratorContext } from "@fern-api/generator-commons";
-import { ClassReferenceFactory, Class_, GeneratedRubyFile, LocationGenerator, Module_ } from "@fern-api/ruby-codegen";
+import { AbstractGeneratorContext } from "@fern-api/generator-commons";
+import {
+    ClassReferenceFactory,
+    Class_,
+    ExampleGenerator,
+    GeneratedFile,
+    GeneratedRubyFile,
+    LocationGenerator,
+    Module_
+} from "@fern-api/ruby-codegen";
 import {
     HttpService,
     IntermediateRepresentation,
@@ -8,18 +16,19 @@ import {
     ServiceId,
     Subpackage,
     SubpackageId,
-    TypeDeclaration,
     TypeId
 } from "@fern-fern/ir-sdk/api";
 import {
     ClientClassPair,
+    generateDummyRootClient,
     generateEnvironmentConstants,
     generateRequestClients,
     generateRootPackage,
     generateRubyPathTemplate,
     generateService,
     generateSubpackage,
-    getDefaultEnvironmentUrl
+    getDefaultEnvironmentUrl,
+    getSubpackagePropertyNameFromIr
 } from "./AbstractionUtilities";
 import { FileUploadUtility } from "./utils/FileUploadUtility";
 import { HeadersGenerator } from "./utils/HeadersGenerator";
@@ -29,21 +38,21 @@ import { RootImportsFile } from "./utils/RootImportsFile";
 
 // TODO: This (as an abstract class) will probably be used across CLIs
 export class ClientsGenerator {
-    private types: Map<TypeId, TypeDeclaration>;
     private services: Map<ServiceId, HttpService>;
     private subpackages: Map<SubpackageId, Subpackage>;
-    private gc: GeneratorContext;
+    private gc: AbstractGeneratorContext;
     private irBasePath: string;
     private generatedClasses: Map<TypeId, Class_>;
     private flattenedProperties: Map<TypeId, ObjectProperty[]>;
+    private subpackagePaths: Map<SubpackageId, string[]>;
 
+    private apiName: string;
     private clientName: string;
     private gemName: string;
     private sdkVersion: string | undefined;
     private hasFileBasedDependencies: boolean;
     private intermediateRepresentation: IntermediateRepresentation;
     private crf: ClassReferenceFactory;
-    private headersGenerator: HeadersGenerator;
     private locationGenerator: LocationGenerator;
 
     // TODO: should this be an object instead of a string
@@ -52,54 +61,73 @@ export class ClientsGenerator {
     constructor(
         gemName: string,
         clientName: string,
-        generatorContext: GeneratorContext,
+        generatorContext: AbstractGeneratorContext,
         intermediateRepresentation: IntermediateRepresentation,
         sdkVersion: string | undefined,
         generatedClasses: Map<TypeId, Class_>,
         flattenedProperties: Map<TypeId, ObjectProperty[]>,
-        hasFileBasedDependencies: boolean
+        hasFileBasedDependencies: boolean,
+        locationGenerator: LocationGenerator | undefined,
+        classReferenceFactory: ClassReferenceFactory | undefined
     ) {
-        this.types = new Map();
-
         this.gc = generatorContext;
         this.sdkVersion = sdkVersion;
         this.intermediateRepresentation = intermediateRepresentation;
         this.clientName = clientName;
         this.gemName = gemName;
+        this.apiName = intermediateRepresentation.apiName.snakeCase.safeName;
         this.hasFileBasedDependencies = hasFileBasedDependencies;
+
+        // These should be gotten from the TypesGenerator
+        this.locationGenerator =
+            locationGenerator == null ? new LocationGenerator(this.gemName, this.clientName) : locationGenerator;
+        if (classReferenceFactory !== undefined) {
+            this.crf = classReferenceFactory;
+        } else {
+            this.gc.logger.warn("[Ruby] Client generator was not provided a ClassReferenceFactory, regenerating one.");
+            const types = new Map();
+            for (const type of Object.values(intermediateRepresentation.types)) {
+                types.set(type.name.typeId, type);
+            }
+            this.crf = new ClassReferenceFactory(types, this.locationGenerator);
+        }
 
         this.generatedClasses = generatedClasses;
         this.flattenedProperties = flattenedProperties;
 
-        // For convenience just get what's inheriting what ahead of time.
-        this.gc.logger.debug(`Found ${intermediateRepresentation.types.length} types to generate`);
-        for (const type of Object.values(intermediateRepresentation.types)) {
-            this.types.set(type.name.typeId, type);
-        }
-
         this.services = new Map(Object.entries(intermediateRepresentation.services));
         this.subpackages = new Map(Object.entries(intermediateRepresentation.subpackages));
-        this.locationGenerator = new LocationGenerator(this.gemName);
-        this.crf = new ClassReferenceFactory(this.types, this.locationGenerator);
-        this.headersGenerator = new HeadersGenerator(
-            this.intermediateRepresentation.headers,
-            this.crf,
-            this.intermediateRepresentation.auth
-        );
+        // Maps the subpackage by ID to it's subpackage path (e.g. the package route)
+        this.subpackagePaths = new Map<string, string[]>();
+        this.subpackages.forEach((subpackage, _) => {
+            subpackage.subpackages.forEach((subpackageId) => {
+                const currentPath = this.subpackagePaths.get(subpackageId) ?? [];
 
-        this.defaultEnvironment = getDefaultEnvironmentUrl(this.intermediateRepresentation.environments);
+                this.subpackagePaths.set(subpackageId, [
+                    getSubpackagePropertyNameFromIr(subpackage.name),
+                    ...currentPath
+                ]);
+            });
+        });
+
         this.irBasePath = generateRubyPathTemplate(
             this.intermediateRepresentation.pathParameters,
             this.intermediateRepresentation.basePath
         );
     }
 
-    public generateFiles(): GeneratedRubyFile[] {
-        const clientFiles: GeneratedRubyFile[] = [];
+    public generateFiles(): GeneratedFile[] {
+        const clientFiles: GeneratedFile[] = [];
 
         let environmentClass: Class_ | undefined;
         if (this.intermediateRepresentation.environments !== undefined) {
-            environmentClass = generateEnvironmentConstants(this.intermediateRepresentation.environments);
+            this.gc.logger.debug("[Ruby] Preparing environment files.");
+            this.defaultEnvironment = getDefaultEnvironmentUrl(this.intermediateRepresentation.environments);
+
+            environmentClass = generateEnvironmentConstants(
+                this.intermediateRepresentation.environments,
+                this.clientName
+            );
             const environmentsModule = Module_.wrapInModules(this.clientName, environmentClass);
             clientFiles.push(
                 new GeneratedRubyFile({
@@ -109,21 +137,37 @@ export class ClientsGenerator {
             );
         }
 
-        const requestOptionsClass = new RequestOptions({ headersGenerator: this.headersGenerator });
+        this.gc.logger.debug("[Ruby] Preparing authorization headers.");
+        const headersGenerator = new HeadersGenerator(
+            this.intermediateRepresentation.headers,
+            this.crf,
+            this.intermediateRepresentation.auth
+        );
+
+        this.gc.logger.debug("[Ruby] Preparing request options classes.");
+        const requestOptionsClass = new RequestOptions({
+            headersGenerator,
+            clientName: this.clientName
+        });
         const idempotencyRequestOptionsClass = new IdempotencyRequestOptions({
             crf: this.crf,
             idempotencyHeaders: this.intermediateRepresentation.idempotencyHeaders,
-            headersGenerator: this.headersGenerator
+            headersGenerator,
+            clientName: this.clientName
         });
+
+        this.gc.logger.debug("[Ruby] Preparing request clients.");
         const [syncClientClass, asyncClientClass] = generateRequestClients(
+            this.clientName,
             this.intermediateRepresentation.sdkConfig,
             this.gemName,
             this.sdkVersion,
-            this.headersGenerator,
+            headersGenerator,
             environmentClass?.classReference,
             this.intermediateRepresentation.environments?.environments.type === "multipleBaseUrls",
             this.defaultEnvironment,
-            this.hasFileBasedDependencies
+            this.hasFileBasedDependencies,
+            requestOptionsClass
         );
         const requestsModule = Module_.wrapInModules(this.clientName, [
             syncClientClass,
@@ -139,13 +183,22 @@ export class ClientsGenerator {
             })
         );
 
-        const fileUtilityClass = new FileUploadUtility();
+        this.gc.logger.debug("[Ruby] Preparing example snippets.");
+        const dummyRootClientDoNotUse = generateDummyRootClient(this.gemName, this.clientName, syncClientClass);
+        const eg = new ExampleGenerator({
+            rootClientClass: dummyRootClientDoNotUse,
+            crf: this.crf,
+            gemName: this.gemName,
+            apiName: this.apiName
+        });
+
+        const fileUtilityClass = new FileUploadUtility(this.clientName);
         if (this.hasFileBasedDependencies) {
             const fileUtilityModule = Module_.wrapInModules(this.clientName, fileUtilityClass);
             clientFiles.push(
                 new GeneratedRubyFile({
                     rootNode: fileUtilityModule,
-                    fullPath: `core/${fileUtilityClass.classReference.name}`
+                    fullPath: "core/file_utilities"
                 })
             );
         }
@@ -166,7 +219,8 @@ export class ClientsGenerator {
             crf: ClassReferenceFactory,
             irBasePath: string,
             generatedClasses: Map<TypeId, Class_>,
-            flattenedProperties: Map<TypeId, ObjectProperty[]>
+            flattenedProperties: Map<TypeId, ObjectProperty[]>,
+            subpackagePaths: Map<SubpackageId, string[]>
         ): ClientClassPair {
             if (subpackage.service === undefined) {
                 throw new Error("Calling getServiceClasses without a service defined within the subpackage.");
@@ -177,18 +231,21 @@ export class ClientsGenerator {
             }
 
             const serviceClasses = generateService(
+                clientName,
                 service,
                 subpackage,
                 syncClientClass.classReference,
                 asyncClientClass.classReference,
                 crf,
+                eg,
                 requestOptionsClass,
                 idempotencyRequestOptionsClass,
                 irBasePath,
                 generatedClasses,
                 flattenedProperties,
                 fileUtilityClass,
-                locationGenerator
+                locationGenerator,
+                subpackagePaths.get(packageId) ?? []
             );
             const serviceModule = Module_.wrapInModules(
                 clientName,
@@ -217,7 +274,8 @@ export class ClientsGenerator {
             crf: ClassReferenceFactory,
             irBasePath: string,
             generatedClasses: Map<TypeId, Class_>,
-            flattenedProperties: Map<TypeId, ObjectProperty[]>
+            flattenedProperties: Map<TypeId, ObjectProperty[]>,
+            subpackagePaths: Map<SubpackageId, string[]>
         ): ClientClassPair | undefined {
             if (subpackage.service !== undefined) {
                 return getServiceClasses(
@@ -228,7 +286,8 @@ export class ClientsGenerator {
                     crf,
                     irBasePath,
                     generatedClasses,
-                    flattenedProperties
+                    flattenedProperties,
+                    subpackagePaths
                 );
             } else {
                 // We create these subpackage files to support dot access for service clients,
@@ -253,7 +312,8 @@ export class ClientsGenerator {
                                     crf,
                                     irBasePath,
                                     generatedClasses,
-                                    flattenedProperties
+                                    flattenedProperties,
+                                    subpackagePaths
                                 );
                             }
                             return classPair;
@@ -261,6 +321,7 @@ export class ClientsGenerator {
                         .filter((cp) => cp !== undefined) as ClientClassPair[];
 
                     const subpackageClasses = generateSubpackage(
+                        clientName,
                         subpackageName,
                         subpackage,
                         syncClientClass.classReference,
@@ -288,6 +349,7 @@ export class ClientsGenerator {
             }
         }
 
+        this.gc.logger.debug("[Ruby] Generating files for subpackages.");
         Array.from(this.subpackages.entries()).forEach(([packageId, subpackage]) =>
             getSubpackageClasses(
                 subpackage.name,
@@ -299,11 +361,13 @@ export class ClientsGenerator {
                 this.crf,
                 this.irBasePath,
                 this.generatedClasses,
-                this.flattenedProperties
+                this.flattenedProperties,
+                this.subpackagePaths
             )
         );
 
         // 3. Generate main file, this is what people import while leveraging the gem.
+        this.gc.logger.debug("[Ruby] Generating files for root package.");
         const rootSubpackageClasses = this.intermediateRepresentation.rootPackage.subpackages
             .map((sp) => subpackageClassReferences.get(sp))
             .filter((cp) => cp !== undefined) as ClientClassPair[];
@@ -322,6 +386,7 @@ export class ClientsGenerator {
                 requestOptionsClass,
                 idempotencyRequestOptionsClass,
                 this.crf,
+                eg,
                 new Map(rootSubpackageClasses.map((sp) => [sp.subpackageName, sp.syncClientClass])),
                 new Map(rootSubpackageClasses.map((sp) => [sp.subpackageName, sp.asyncClientClass])),
                 this.irBasePath,
@@ -333,6 +398,11 @@ export class ClientsGenerator {
                 this.services.get(this.intermediateRepresentation.rootPackage.service ?? "")
             )
         );
+
+        this.gc.logger.debug("[Ruby] Generating snippets.json file.");
+        if (this.gc.config.output.snippetFilepath !== undefined) {
+            clientFiles.push(eg.generateSnippetsFile(this.gc.config.output.snippetFilepath));
+        }
 
         // TODO: Consider making Class_ + ClassReference and Function_ + Function invocation
         // follow a data model thats: ObjectDefinition, ObjectReference, ObjectInvocation(.withExample)

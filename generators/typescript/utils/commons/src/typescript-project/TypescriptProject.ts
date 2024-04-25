@@ -19,13 +19,14 @@ export declare namespace TypescriptProject {
 
 export abstract class TypescriptProject {
     protected static SRC_DIRECTORY = "src" as const;
+    protected static TEST_DIRECTORY = "tests" as const;
     protected static DIST_DIRECTORY = "dist" as const;
 
     protected volume = new Volume();
-    protected tsMorphProject: Project;
+    public tsMorphProject: Project;
+    public extraFiles: Record<string, string>;
     protected extraDependencies: Record<string, string>;
     protected extraDevDependencies: Record<string, string>;
-    protected extraFiles: Record<string, string>;
     protected extraScripts: Record<string, string>;
 
     constructor({
@@ -59,6 +60,7 @@ export abstract class TypescriptProject {
         return new PersistedTypescriptProject({
             directory: directoryOnDiskToWriteTo,
             srcDirectory: RelativeFilePath.of(TypescriptProject.SRC_DIRECTORY),
+            testDirectory: RelativeFilePath.of(TypescriptProject.TEST_DIRECTORY),
             distDirectory: RelativeFilePath.of(TypescriptProject.DIST_DIRECTORY),
             yarnBuildCommand: this.getYarnBuildCommand(),
             yarnFormatCommand: this.getYarnFormatCommand()
@@ -67,10 +69,7 @@ export abstract class TypescriptProject {
 
     private async writeSrcToVolume(): Promise<void> {
         for (const file of this.tsMorphProject.getSourceFiles()) {
-            await this.writeFileToVolume(
-                RelativeFilePath.of(path.join(TypescriptProject.SRC_DIRECTORY, file.getFilePath())),
-                file.getFullText()
-            );
+            await this.writeFileToVolume(RelativeFilePath.of(file.getFilePath().slice(1)), file.getFullText());
         }
     }
 

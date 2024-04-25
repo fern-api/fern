@@ -32,13 +32,13 @@ types:
   TabConfig:
     properties:
       display-name: string
-      icon: string
+      icon: optional<string>
       slug: optional<string>
 
   DocsInstances:
     properties:
       url: string
-      "custom-domain": optional<string>
+      "custom-domain": optional<CustomDomain>
       audiences:
         type: optional<AudiencesConfig>
         availability: in-development
@@ -52,6 +52,12 @@ types:
         docs: |
           If `edit-this-page` is set, Fern will add an "Edit this page" link to the bottom of each page that links to the given GitHub repository.
         availability: in-development
+
+  CustomDomain:
+    discriminated: false
+    union:
+      - string
+      - list<string>
 
   # this is a partial object in case we want to add more options in the future
   EditThisPageConfig:
@@ -119,6 +125,7 @@ types:
 
   VersionFileConfig:
     properties:
+      tabs: optional<map<TabId, TabConfig>>
       navigation: NavigationConfig
 
   NavigationConfig:
@@ -350,6 +357,8 @@ types:
       page: string
       path: string
       slug: optional<string>
+      icon: optional<string>
+      hidden: optional<boolean>
 
   SectionConfiguration:
     properties:
@@ -357,6 +366,9 @@ types:
       contents: list<NavigationItem>
       collapsed: optional<boolean>
       slug: optional<string>
+      icon: optional<string>
+      hidden: optional<boolean>
+      skip-slug: optional<boolean>
 
   ApiSectionConfiguration:
     properties:
@@ -369,33 +381,91 @@ types:
         type: optional<boolean>
         docs: Defaults to false
       snippets: optional<SnippetsConfiguration>
-  #     changelog:
-  #       type: optional<ChangelogConfiguration>
-  #       docs: |
-  #         Defaults to the changelog directory in the API workspace if present.
-  #         > fern/
-  #             changelog/
-  #               ...
-  #             definition/
-  #               ...
+      summary:
+        type: optional<string>
+        docs: |
+          Relative path to the markdown file. This summary is displayed at the top of the API section.
+      layout:
+        type: optional<ApiNavigationItems>
+        docs: |
+          Advanced usage: when specified, this object will be used to customize the order that your API endpoints are displayed in the docs site, including subpackages, and additional markdown pages (to be rendered in between API endpoints). If not specified, the order will be inferred from the OpenAPI Spec or Fern Definition.
+      icon: optional<string>
+      hidden: optional<boolean>
+      skip-slug: optional<boolean>
 
-  # ChangelogConfiguration:
-  #   discriminated: false
-  #   union:
-  #     - type: string
-  #       docs: Path to a custom folder which contains markdown files for the changelog.
+  ApiNavigationItem:
+    docs: |
+      Use the `layout` object to customize the order that your API endpoints
+      are displayed in the docs site.
+    discriminated: false
+    union:
+      - type: string
+        docs: |
+          This should be either an endpoint, websocket, webhook, or subpackage ID
+      - type: map<string, ApiNavigationItems>
+        docs: |
+          Keyed by subpackage ID, this object allows you to group endpoints and pages together.
+      - type: PageConfiguration
+        docs: |
+          This should be a markdown file that will be displayed in the API section.
+
+  ApiNavigationItems:
+    type: list<ApiNavigationItem>
+    examples:
+      - name: Ordering Groups
+        value:
+          - users # users endpoints will be displayed first
+          - roles
+          - permissions
+      - name: Ordering Endpoints
+        value:
+          - roles:
+              - get
+              - create
+              - update
+          - users:
+              - get
+              - create
+              - update
+          - permissions:
+              - get
+              - create
+              - update
+      - name: Ordering Groups and Pages
+        value:
+          - users
+          - roles:
+              - get
+              - create
+              - ./pages/inner-page.mdx
+              - update
+          - permissions
 
   LinkConfiguration:
     properties:
       link: string
       href: string
 
+  VersionedSnippetLanguageConfiguration:
+    properties:
+      version: string
+      package: string
+
+  SnippetLanguageConfiguration:
+    discriminated: false
+    docs: |
+      This snippets config object is meant to allow users to specify a specific package for the snippets,
+      and optionally a version for that package. If you pass in a string, that should be the name of the package.
+    union:
+      - string
+      - VersionedSnippetLanguageConfiguration
+
   SnippetsConfiguration:
     properties:
-      python: optional<string>
-      typescript: optional<string>
-      go: optional<string>
-      java: optional<string>
+      python: optional<SnippetLanguageConfiguration>
+      typescript: optional<SnippetLanguageConfiguration>
+      go: optional<SnippetLanguageConfiguration>
+      java: optional<SnippetLanguageConfiguration>
 
   ColorsConfiguration:
     properties:
@@ -405,12 +475,12 @@ types:
           The primary accent color is used for buttons, links, and other interactive elements. 
 
           @default: #818CF8
-      
+
       accentPrimary:
         type: optional<ColorConfig>
         name: accentPrimaryDeprecated
         availability: deprecated
-        docs: | 
+        docs: |
           Use `accent-primary` instead.
 
       background:

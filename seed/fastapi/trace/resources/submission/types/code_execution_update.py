@@ -5,7 +5,10 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 from .building_executor_response import BuildingExecutorResponse
 from .errored_response import ErroredResponse
 from .finished_response import FinishedResponse
@@ -17,11 +20,6 @@ from .recording_response_notification import RecordingResponseNotification
 from .running_response import RunningResponse
 from .stopped_response import StoppedResponse
 from .workspace_ran_response import WorkspaceRanResponse
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -83,7 +81,7 @@ class _Factory:
         )
 
 
-class CodeExecutionUpdate(pydantic.BaseModel):
+class CodeExecutionUpdate(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(
@@ -142,7 +140,7 @@ class CodeExecutionUpdate(pydantic.BaseModel):
         if self.__root__.type == "finished":
             return finished(FinishedResponse(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
 
-    __root__: typing.Annotated[
+    __root__: typing_extensions.Annotated[
         typing.Union[
             _CodeExecutionUpdate.BuildingExecutor,
             _CodeExecutionUpdate.Running,
@@ -156,7 +154,7 @@ class CodeExecutionUpdate(pydantic.BaseModel):
             _CodeExecutionUpdate.InvalidRequest,
             _CodeExecutionUpdate.Finished,
         ],
-        pydantic.Field(discriminator="type"),
+        pydantic_v1.Field(discriminator="type"),
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -168,83 +166,83 @@ class CodeExecutionUpdate(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _CodeExecutionUpdate:
     class BuildingExecutor(BuildingExecutorResponse):
-        type: typing.Literal["buildingExecutor"]
+        type: typing.Literal["buildingExecutor"] = "buildingExecutor"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class Running(RunningResponse):
-        type: typing.Literal["running"]
+        type: typing.Literal["running"] = "running"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class Errored(ErroredResponse):
-        type: typing.Literal["errored"]
+        type: typing.Literal["errored"] = "errored"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class Stopped(StoppedResponse):
-        type: typing.Literal["stopped"]
+        type: typing.Literal["stopped"] = "stopped"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class Graded(GradedResponse):
-        type: typing.Literal["graded"]
+        type: typing.Literal["graded"] = "graded"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class GradedV2(GradedResponseV2):
-        type: typing.Literal["gradedV2"]
+        type: typing.Literal["gradedV2"] = "gradedV2"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class WorkspaceRan(WorkspaceRanResponse):
-        type: typing.Literal["workspaceRan"]
+        type: typing.Literal["workspaceRan"] = "workspaceRan"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class Recording(RecordingResponseNotification):
-        type: typing.Literal["recording"]
+        type: typing.Literal["recording"] = "recording"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class Recorded(RecordedResponseNotification):
-        type: typing.Literal["recorded"]
+        type: typing.Literal["recorded"] = "recorded"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class InvalidRequest(InvalidRequestResponse):
-        type: typing.Literal["invalidRequest"]
+        type: typing.Literal["invalidRequest"] = "invalidRequest"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class Finished(FinishedResponse):
-        type: typing.Literal["finished"]
+        type: typing.Literal["finished"] = "finished"
 
         class Config:
             allow_population_by_field_name = True

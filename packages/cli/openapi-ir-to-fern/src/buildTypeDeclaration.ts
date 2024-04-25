@@ -128,6 +128,9 @@ export function buildObjectTypeDeclaration({
     const extendedSchemas: string[] = [];
     for (const allOf of schema.allOf) {
         const resolvedSchemaId = getSchemaIdOfResolvedType({ schema: allOf.schema, context });
+        if (resolvedSchemaId == null) {
+            continue;
+        }
         if (schemasToInline.has(allOf.schema) || schemasToInline.has(resolvedSchemaId)) {
             continue; // dont extend from schemas that need to be inlined
         }
@@ -207,6 +210,9 @@ function getAllParentSchemasToInline({
     context: OpenApiIrConverterContext;
 }): SchemaId[] {
     const schema = context.getSchema(schemaId);
+    if (schema == null) {
+        return [];
+    }
     if (schema.type === "reference") {
         return getAllParentSchemasToInline({ property, schemaId: schema.schema, context });
     }
@@ -235,6 +241,9 @@ function getProperties(
     allOf: ReferencedSchema[];
 } {
     const schema = context.getSchema(schemaId);
+    if (schema == null) {
+        return { properties: [], allOf: [] };
+    }
     if (schema.type === "object") {
         return { properties: schema.properties, allOf: schema.allOf };
     } else if (schema.type === "reference") {
@@ -334,9 +343,21 @@ export function buildEnumTypeDeclaration(schema: EnumSchema): ConvertedTypeDecla
     if (schema.description != null) {
         enumSchema.docs = schema.description;
     }
+    const uniqueEnumName = new Set<string>();
+    const uniqueEnumSchema: RawSchemas.EnumSchema = {
+        ...enumSchema,
+        enum: []
+    };
+    for (const enumValue of enumSchema.enum) {
+        const name = typeof enumValue === "string" ? enumValue : enumValue.name ?? enumValue.value;
+        if (!uniqueEnumName.has(name.toLowerCase())) {
+            uniqueEnumSchema.enum.push(enumValue);
+            uniqueEnumName.add(name.toLowerCase());
+        } // TODO: log a warning if the name is not unique
+    }
     return {
         name: schema.nameOverride ?? schema.generatedName,
-        schema: enumSchema
+        schema: uniqueEnumSchema
     };
 }
 
@@ -464,8 +485,11 @@ function getSchemaIdOfResolvedType({
 }: {
     schema: SchemaId;
     context: OpenApiIrConverterContext;
-}): SchemaId {
+}): SchemaId | undefined {
     const resolvedSchema = context.getSchema(schema);
+    if (resolvedSchema == null) {
+        return undefined;
+    }
     if (resolvedSchema.type === "reference") {
         return getSchemaIdOfResolvedType({ context, schema: resolvedSchema.schema });
     }

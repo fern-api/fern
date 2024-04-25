@@ -2,23 +2,31 @@ openapi: 3.0.3
 info:
   title: Test extension `x-fern-sdk-group-name` for schemas
   version: 1.0.0
-paths: 
-  /auth/user: 
-    get: 
+paths:
+  /auth/user:
+    get:
       description: This endpoint should be in `auth/user.yml`
       x-fern-sdk-group-name: ["auth", "user"]
       x-fern-sdk-method-name: ["get"]
       responses:
-        "200": 
+        "200":
           description: "Success"
           content:
-            application/json: 
-              schema: 
+            application/json:
+              schema:
                 $ref: "#/components/schemas/User"
 
 components:
   schemas:
-    User: 
+    UserId:
+      # Test nested group names
+      x-fern-sdk-group-name: ["ids", "user"]
+      type: string
+    PersonId:
+      # Test nested group names
+      x-fern-sdk-group-name: ["ids", "person"]
+      type: string
+    User:
       description: This user object should be in user.yml
       x-fern-sdk-group-name: user
       type: object
@@ -26,9 +34,9 @@ components:
         id:
           type: string
           format: uuid
-        associatedPersons: 
+        associatedPersons:
           type: array
-          items: 
+          items:
             $ref: '#/components/schemas/Person'
     Person:
       type: object

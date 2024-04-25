@@ -10,7 +10,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -60,6 +60,7 @@ exports[`open api parser aries parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CloseMenuByConnIdRequest",
@@ -115,7 +116,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -219,6 +220,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "FetchMenuByConnIdRequest",
@@ -274,7 +276,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -353,6 +355,7 @@ exports[`open api parser aries parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "PerformActionByConnIdRequest",
@@ -420,7 +423,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -470,6 +473,7 @@ exports[`open api parser aries parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "RequestMenuByConnIdRequest",
@@ -525,7 +529,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -549,39 +553,11 @@ exports[`open api parser aries parse open api 1`] = `
             "properties": {
               "menu": {
                 "properties": {
-                  "description": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "User preferences for window settings",
-                    },
-                  },
-                  "errormsg": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "Error: item not present",
-                    },
-                  },
                   "options": {
                     "type": "array",
                     "value": [
                       {
                         "properties": {
-                          "description": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Window display preferences",
-                            },
-                          },
-                          "disabled": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "boolean",
-                              "value": false,
-                            },
-                          },
                           "name": {
                             "type": "primitive",
                             "value": {
@@ -600,13 +576,6 @@ exports[`open api parser aries parse open api 1`] = `
                         "type": "object",
                       },
                     ],
-                  },
-                  "title": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "My Menu",
-                    },
                   },
                 },
                 "type": "object",
@@ -643,6 +612,7 @@ exports[`open api parser aries parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SendMenuToConnIdRequest",
@@ -710,7 +680,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -990,6 +960,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetMatchingConnectionsRequest",
@@ -1415,7 +1386,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -1592,6 +1563,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreateConnectionInvitationRequest",
@@ -1732,7 +1704,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -1972,6 +1944,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreateStaticConnectionRequest",
@@ -2021,7 +1994,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -2245,6 +2218,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ReceiveConnectionInvitationRequest",
@@ -2365,7 +2339,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -2516,6 +2490,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetConnectionRecordRequest",
@@ -2571,7 +2546,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -2621,6 +2596,7 @@ exports[`open api parser aries parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DeleteConnectionRecordRequest",
@@ -2676,7 +2652,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -2827,6 +2803,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "AcceptConnectionInvitationRequest",
@@ -2955,7 +2932,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -3106,6 +3083,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "AcceptConnectionRequestRequest",
@@ -3186,7 +3164,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -3226,6 +3204,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetConnectionEndpointRequest",
@@ -3281,7 +3260,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -3341,6 +3320,7 @@ exports[`open api parser aries parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SetInboundConnectionRequest",
@@ -3413,7 +3393,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -3438,6 +3418,7 @@ exports[`open api parser aries parse open api 1`] = `
             "properties": {},
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetConnectionMetadataRequest",
@@ -3518,7 +3499,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -3551,6 +3532,7 @@ exports[`open api parser aries parse open api 1`] = `
             "properties": {},
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SetConnectionMetadataRequest",
@@ -3618,7 +3600,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -3679,6 +3661,7 @@ exports[`open api parser aries parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SendMessageRequest",
@@ -3746,7 +3729,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -3790,6 +3773,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SendPingRequest",
@@ -3857,7 +3841,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -3918,6 +3902,7 @@ exports[`open api parser aries parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "StartConnectionIntroductionRequest",
@@ -4015,7 +4000,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -4248,6 +4233,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "PublishCredentialDefinitionRequest",
@@ -4344,7 +4330,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -4378,6 +4364,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetCreatedCredDefsRequest",
@@ -4560,7 +4547,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -4768,6 +4755,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetCredentialDefinitionRequest",
@@ -4823,7 +4811,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -5031,6 +5019,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "WriteCredentialDefinitionRequest",
@@ -5086,7 +5075,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -5130,6 +5119,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetCredentialMimeTypesRequest",
@@ -5185,7 +5175,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -5218,6 +5208,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetRevocationStatusRequest",
@@ -5322,7 +5313,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -5482,6 +5473,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetW3CCredentialRequest",
@@ -5537,7 +5529,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -5587,6 +5579,7 @@ exports[`open api parser aries parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DeleteW3CCredentialRequest",
@@ -5642,7 +5635,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -5721,6 +5714,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetCredentialRecordRequest",
@@ -5776,7 +5770,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -5826,6 +5820,7 @@ exports[`open api parser aries parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DeleteCredentialRecordRequest",
@@ -5881,7 +5876,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -6017,6 +6012,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetCredentialsRequest",
@@ -6127,7 +6123,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -6563,6 +6559,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetW3CCredentialsRequest",
@@ -6685,7 +6682,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -6836,6 +6833,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreateDidexRequestRequest",
@@ -7009,7 +7007,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -7266,6 +7264,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ReceiveDidexRequestRequest",
@@ -7410,7 +7409,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -7561,6 +7560,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "AcceptDidexInvitationRequest",
@@ -7665,7 +7665,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -7816,6 +7816,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "AcceptDidexRequestRequest",
@@ -7920,7 +7921,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -8057,6 +8058,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetV20FeaturesQueriesRequest",
@@ -8167,7 +8169,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -8389,6 +8391,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetV20FeatureRecordsRequest",
@@ -8451,7 +8454,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -8584,6 +8587,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetV10FeaturesQueryRequest",
@@ -8694,7 +8698,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -8946,6 +8950,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetV10FeatureRecordsRequest",
@@ -9008,7 +9013,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -9103,188 +9108,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "object",
               },
               "filter": {
-                "properties": {
-                  "ld_proof": {
-                    "properties": {
-                      "credential": {
-                        "properties": {
-                          "@context": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "type": "map",
-                                "value": [],
-                              },
-                            ],
-                          },
-                          "credentialSubject": {
-                            "type": "map",
-                            "value": [],
-                          },
-                          "expirationDate": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2010-01-01 19:23:24+00:00",
-                            },
-                          },
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "http://example.edu/credentials/1872",
-                            },
-                          },
-                          "issuanceDate": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2010-01-01 19:23:24+00:00",
-                            },
-                          },
-                          "issuer": {
-                            "type": "map",
-                            "value": [],
-                          },
-                          "proof": {
-                            "properties": {
-                              "challenge": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                },
-                              },
-                              "created": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "2021-12-31 23:59:59+00:00",
-                                },
-                              },
-                              "domain": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "example.com",
-                                },
-                              },
-                              "jws": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "eyJhbGciOiAiRWREUc2UsICJjcml0IjogWyJiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQ1Ch6YBKY7UBAjg6iBX5qBQ",
-                                },
-                              },
-                              "nonce": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "CF69iO3nfvqRsRBNElE8b4wO39SyJHPM7Gg1nExltW5vSfQA1lvDCR/zXX1To0/4NLo==",
-                                },
-                              },
-                              "proofPurpose": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "assertionMethod",
-                                },
-                              },
-                              "proofValue": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "sy1AahqbzJQ63n9RtekmwzqZeVj494VppdAVJBnMYrTwft6cLJJGeTSSxCCJ6HKnRtwE7jjDh6sB2z2AAiZY9BBnCD8wUVgwqH3qchGRCuC2RugA4eQ9fUrR4Yuycac3caiaaay",
-                                },
-                              },
-                              "type": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "Ed25519Signature2018",
-                                },
-                              },
-                              "verificationMethod": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                          "type": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "type",
-                                },
-                              },
-                            ],
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "options": {
-                        "properties": {
-                          "challenge": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                            },
-                          },
-                          "created": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2021-12-31 23:59:59+00:00",
-                            },
-                          },
-                          "credentialStatus": {
-                            "properties": {
-                              "type": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "CredentialStatusList2017",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                          "domain": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "example.com",
-                            },
-                          },
-                          "proofPurpose": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "assertionMethod",
-                            },
-                          },
-                          "proofType": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Ed25519Signature2018",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
-                },
+                "properties": {},
                 "type": "object",
               },
               "trace": {
@@ -10172,6 +9996,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreateCredentialRecordRequest",
@@ -10221,7 +10046,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -10323,188 +10148,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "object",
               },
               "filter": {
-                "properties": {
-                  "ld_proof": {
-                    "properties": {
-                      "credential": {
-                        "properties": {
-                          "@context": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "type": "map",
-                                "value": [],
-                              },
-                            ],
-                          },
-                          "credentialSubject": {
-                            "type": "map",
-                            "value": [],
-                          },
-                          "expirationDate": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2010-01-01 19:23:24+00:00",
-                            },
-                          },
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "http://example.edu/credentials/1872",
-                            },
-                          },
-                          "issuanceDate": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2010-01-01 19:23:24+00:00",
-                            },
-                          },
-                          "issuer": {
-                            "type": "map",
-                            "value": [],
-                          },
-                          "proof": {
-                            "properties": {
-                              "challenge": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                },
-                              },
-                              "created": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "2021-12-31 23:59:59+00:00",
-                                },
-                              },
-                              "domain": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "example.com",
-                                },
-                              },
-                              "jws": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "eyJhbGciOiAiRWREUc2UsICJjcml0IjogWyJiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQ1Ch6YBKY7UBAjg6iBX5qBQ",
-                                },
-                              },
-                              "nonce": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "CF69iO3nfvqRsRBNElE8b4wO39SyJHPM7Gg1nExltW5vSfQA1lvDCR/zXX1To0/4NLo==",
-                                },
-                              },
-                              "proofPurpose": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "assertionMethod",
-                                },
-                              },
-                              "proofValue": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "sy1AahqbzJQ63n9RtekmwzqZeVj494VppdAVJBnMYrTwft6cLJJGeTSSxCCJ6HKnRtwE7jjDh6sB2z2AAiZY9BBnCD8wUVgwqH3qchGRCuC2RugA4eQ9fUrR4Yuycac3caiaaay",
-                                },
-                              },
-                              "type": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "Ed25519Signature2018",
-                                },
-                              },
-                              "verificationMethod": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                          "type": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "type",
-                                },
-                              },
-                            ],
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "options": {
-                        "properties": {
-                          "challenge": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                            },
-                          },
-                          "created": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2021-12-31 23:59:59+00:00",
-                            },
-                          },
-                          "credentialStatus": {
-                            "properties": {
-                              "type": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "CredentialStatusList2017",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                          "domain": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "example.com",
-                            },
-                          },
-                          "proofPurpose": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "assertionMethod",
-                            },
-                          },
-                          "proofType": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Ed25519Signature2018",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
-                },
+                "properties": {},
                 "type": "object",
               },
               "trace": {
@@ -11392,6 +11036,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreateFreeCredentialOfferRequest",
@@ -11441,7 +11086,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -13381,6 +13026,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetMatchingCredExRecordsV2Request",
@@ -13665,7 +13311,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -14674,6 +14320,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetCredExRecordRequest",
@@ -14729,7 +14376,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -14779,6 +14426,7 @@ exports[`open api parser aries parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DeleteCredExRecordRequest",
@@ -14834,7 +14482,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -15854,6 +15502,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "IssueCredentialToHolderRequest",
@@ -15921,7 +15570,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -15982,6 +15631,7 @@ exports[`open api parser aries parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ReportCredExProblemRequest",
@@ -16049,7 +15699,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -17018,6 +16668,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SendCredentialOfferRequest",
@@ -17085,7 +16736,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -17992,6 +17643,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SendCredentialRequestRequest",
@@ -18059,7 +17711,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -19079,6 +18731,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "StoreReceivedCredentialRequest",
@@ -19146,7 +18799,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -19248,188 +18901,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "object",
               },
               "filter": {
-                "properties": {
-                  "ld_proof": {
-                    "properties": {
-                      "credential": {
-                        "properties": {
-                          "@context": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "type": "map",
-                                "value": [],
-                              },
-                            ],
-                          },
-                          "credentialSubject": {
-                            "type": "map",
-                            "value": [],
-                          },
-                          "expirationDate": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2010-01-01 19:23:24+00:00",
-                            },
-                          },
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "http://example.edu/credentials/1872",
-                            },
-                          },
-                          "issuanceDate": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2010-01-01 19:23:24+00:00",
-                            },
-                          },
-                          "issuer": {
-                            "type": "map",
-                            "value": [],
-                          },
-                          "proof": {
-                            "properties": {
-                              "challenge": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                },
-                              },
-                              "created": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "2021-12-31 23:59:59+00:00",
-                                },
-                              },
-                              "domain": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "example.com",
-                                },
-                              },
-                              "jws": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "eyJhbGciOiAiRWREUc2UsICJjcml0IjogWyJiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQ1Ch6YBKY7UBAjg6iBX5qBQ",
-                                },
-                              },
-                              "nonce": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "CF69iO3nfvqRsRBNElE8b4wO39SyJHPM7Gg1nExltW5vSfQA1lvDCR/zXX1To0/4NLo==",
-                                },
-                              },
-                              "proofPurpose": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "assertionMethod",
-                                },
-                              },
-                              "proofValue": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "sy1AahqbzJQ63n9RtekmwzqZeVj494VppdAVJBnMYrTwft6cLJJGeTSSxCCJ6HKnRtwE7jjDh6sB2z2AAiZY9BBnCD8wUVgwqH3qchGRCuC2RugA4eQ9fUrR4Yuycac3caiaaay",
-                                },
-                              },
-                              "type": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "Ed25519Signature2018",
-                                },
-                              },
-                              "verificationMethod": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                          "type": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "type",
-                                },
-                              },
-                            ],
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "options": {
-                        "properties": {
-                          "challenge": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                            },
-                          },
-                          "created": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2021-12-31 23:59:59+00:00",
-                            },
-                          },
-                          "credentialStatus": {
-                            "properties": {
-                              "type": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "CredentialStatusList2017",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                          "domain": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "example.com",
-                            },
-                          },
-                          "proofPurpose": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "assertionMethod",
-                            },
-                          },
-                          "proofType": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Ed25519Signature2018",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
-                },
+                "properties": {},
                 "type": "object",
               },
               "trace": {
@@ -20324,6 +19796,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SendFreeCredentialRequest",
@@ -20373,7 +19846,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -20482,188 +19955,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "object",
               },
               "filter": {
-                "properties": {
-                  "ld_proof": {
-                    "properties": {
-                      "credential": {
-                        "properties": {
-                          "@context": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "type": "map",
-                                "value": [],
-                              },
-                            ],
-                          },
-                          "credentialSubject": {
-                            "type": "map",
-                            "value": [],
-                          },
-                          "expirationDate": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2010-01-01 19:23:24+00:00",
-                            },
-                          },
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "http://example.edu/credentials/1872",
-                            },
-                          },
-                          "issuanceDate": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2010-01-01 19:23:24+00:00",
-                            },
-                          },
-                          "issuer": {
-                            "type": "map",
-                            "value": [],
-                          },
-                          "proof": {
-                            "properties": {
-                              "challenge": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                },
-                              },
-                              "created": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "2021-12-31 23:59:59+00:00",
-                                },
-                              },
-                              "domain": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "example.com",
-                                },
-                              },
-                              "jws": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "eyJhbGciOiAiRWREUc2UsICJjcml0IjogWyJiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQ1Ch6YBKY7UBAjg6iBX5qBQ",
-                                },
-                              },
-                              "nonce": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "CF69iO3nfvqRsRBNElE8b4wO39SyJHPM7Gg1nExltW5vSfQA1lvDCR/zXX1To0/4NLo==",
-                                },
-                              },
-                              "proofPurpose": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "assertionMethod",
-                                },
-                              },
-                              "proofValue": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "sy1AahqbzJQ63n9RtekmwzqZeVj494VppdAVJBnMYrTwft6cLJJGeTSSxCCJ6HKnRtwE7jjDh6sB2z2AAiZY9BBnCD8wUVgwqH3qchGRCuC2RugA4eQ9fUrR4Yuycac3caiaaay",
-                                },
-                              },
-                              "type": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "Ed25519Signature2018",
-                                },
-                              },
-                              "verificationMethod": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                          "type": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "type",
-                                },
-                              },
-                            ],
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "options": {
-                        "properties": {
-                          "challenge": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                            },
-                          },
-                          "created": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2021-12-31 23:59:59+00:00",
-                            },
-                          },
-                          "credentialStatus": {
-                            "properties": {
-                              "type": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "CredentialStatusList2017",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                          "domain": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "example.com",
-                            },
-                          },
-                          "proofPurpose": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "assertionMethod",
-                            },
-                          },
-                          "proofType": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Ed25519Signature2018",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
-                },
+                "properties": {},
                 "type": "object",
               },
               "trace": {
@@ -21551,6 +20843,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SendFreeCredentialOfferRequest",
@@ -21600,7 +20893,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -21702,188 +20995,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "object",
               },
               "filter": {
-                "properties": {
-                  "ld_proof": {
-                    "properties": {
-                      "credential": {
-                        "properties": {
-                          "@context": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "type": "map",
-                                "value": [],
-                              },
-                            ],
-                          },
-                          "credentialSubject": {
-                            "type": "map",
-                            "value": [],
-                          },
-                          "expirationDate": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2010-01-01 19:23:24+00:00",
-                            },
-                          },
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "http://example.edu/credentials/1872",
-                            },
-                          },
-                          "issuanceDate": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2010-01-01 19:23:24+00:00",
-                            },
-                          },
-                          "issuer": {
-                            "type": "map",
-                            "value": [],
-                          },
-                          "proof": {
-                            "properties": {
-                              "challenge": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                },
-                              },
-                              "created": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "2021-12-31 23:59:59+00:00",
-                                },
-                              },
-                              "domain": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "example.com",
-                                },
-                              },
-                              "jws": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "eyJhbGciOiAiRWREUc2UsICJjcml0IjogWyJiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQ1Ch6YBKY7UBAjg6iBX5qBQ",
-                                },
-                              },
-                              "nonce": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "CF69iO3nfvqRsRBNElE8b4wO39SyJHPM7Gg1nExltW5vSfQA1lvDCR/zXX1To0/4NLo==",
-                                },
-                              },
-                              "proofPurpose": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "assertionMethod",
-                                },
-                              },
-                              "proofValue": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "sy1AahqbzJQ63n9RtekmwzqZeVj494VppdAVJBnMYrTwft6cLJJGeTSSxCCJ6HKnRtwE7jjDh6sB2z2AAiZY9BBnCD8wUVgwqH3qchGRCuC2RugA4eQ9fUrR4Yuycac3caiaaay",
-                                },
-                              },
-                              "type": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "Ed25519Signature2018",
-                                },
-                              },
-                              "verificationMethod": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                          "type": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "type",
-                                },
-                              },
-                            ],
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "options": {
-                        "properties": {
-                          "challenge": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                            },
-                          },
-                          "created": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2021-12-31 23:59:59+00:00",
-                            },
-                          },
-                          "credentialStatus": {
-                            "properties": {
-                              "type": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "CredentialStatusList2017",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                          "domain": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "example.com",
-                            },
-                          },
-                          "proofPurpose": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "assertionMethod",
-                            },
-                          },
-                          "proofType": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Ed25519Signature2018",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
-                },
+                "properties": {},
                 "type": "object",
               },
               "trace": {
@@ -22778,6 +21890,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SendFreeCredentialProposalRequest",
@@ -22827,7 +21940,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -22878,20 +21991,6 @@ exports[`open api parser aries parse open api 1`] = `
                             "type": "map",
                             "value": [],
                           },
-                          "expirationDate": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2010-01-01 19:23:24+00:00",
-                            },
-                          },
-                          "id": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "http://example.edu/credentials/1872",
-                            },
-                          },
                           "issuanceDate": {
                             "type": "primitive",
                             "value": {
@@ -22902,74 +22001,6 @@ exports[`open api parser aries parse open api 1`] = `
                           "issuer": {
                             "type": "map",
                             "value": [],
-                          },
-                          "proof": {
-                            "properties": {
-                              "challenge": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                                },
-                              },
-                              "created": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "2021-12-31 23:59:59+00:00",
-                                },
-                              },
-                              "domain": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "example.com",
-                                },
-                              },
-                              "jws": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "eyJhbGciOiAiRWREUc2UsICJjcml0IjogWyJiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQ1Ch6YBKY7UBAjg6iBX5qBQ",
-                                },
-                              },
-                              "nonce": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "CF69iO3nfvqRsRBNElE8b4wO39SyJHPM7Gg1nExltW5vSfQA1lvDCR/zXX1To0/4NLo==",
-                                },
-                              },
-                              "proofPurpose": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "assertionMethod",
-                                },
-                              },
-                              "proofValue": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "sy1AahqbzJQ63n9RtekmwzqZeVj494VppdAVJBnMYrTwft6cLJJGeTSSxCCJ6HKnRtwE7jjDh6sB2z2AAiZY9BBnCD8wUVgwqH3qchGRCuC2RugA4eQ9fUrR4Yuycac3caiaaay",
-                                },
-                              },
-                              "type": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "Ed25519Signature2018",
-                                },
-                              },
-                              "verificationMethod": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL",
-                                },
-                              },
-                            },
-                            "type": "object",
                           },
                           "type": {
                             "type": "array",
@@ -22988,46 +22019,6 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                       "options": {
                         "properties": {
-                          "challenge": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                            },
-                          },
-                          "created": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "2021-12-31 23:59:59+00:00",
-                            },
-                          },
-                          "credentialStatus": {
-                            "properties": {
-                              "type": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "CredentialStatusList2017",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                          "domain": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "example.com",
-                            },
-                          },
-                          "proofPurpose": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "assertionMethod",
-                            },
-                          },
                           "proofType": {
                             "type": "primitive",
                             "value": {
@@ -23936,6 +22927,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SendFreeCredentialRequestRequest",
@@ -23985,7 +22977,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -24803,6 +23795,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreateCredentialRecordRequest",
@@ -24852,7 +23845,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -25642,6 +24635,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreateFreeCredentialOfferRequest",
@@ -25691,7 +24685,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -26999,6 +25993,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetMatchingCredExRecordsRequest",
@@ -27283,7 +26278,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -27976,6 +26971,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetCredExRecordRequest",
@@ -28031,7 +27027,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -28081,6 +27077,7 @@ exports[`open api parser aries parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DeleteCredExRecordRequest",
@@ -28136,7 +27133,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -28840,6 +27837,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "IssueCredentialToHolderRequest",
@@ -28907,7 +27905,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -28968,6 +27966,7 @@ exports[`open api parser aries parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ReportCredExProblemRequest",
@@ -29035,7 +28034,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -29731,6 +28730,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SendCredentialOfferRequest",
@@ -29798,7 +28798,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -30491,6 +29491,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SendCredentialRequestRequest",
@@ -30546,7 +29547,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -31250,6 +30251,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "StoreReceivedCredentialRequest",
@@ -31317,7 +30319,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -32142,6 +31144,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SendFreeCredentialRequest",
@@ -32191,7 +31194,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -32988,6 +31991,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SendFreeCredentialOfferRequest",
@@ -33037,7 +32041,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -33862,6 +32866,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SendFreeCredentialProposalRequest",
@@ -33911,7 +32916,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -33972,6 +32977,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SignRequest",
@@ -34021,7 +33027,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -34085,6 +33091,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "VerifyRequest",
@@ -34134,7 +33141,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -34167,6 +33174,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetPublishedDidEndpointRequest",
@@ -34279,7 +33287,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -34312,6 +33320,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetDidVerkeyRequest",
@@ -34367,7 +33376,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -34397,6 +33406,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetDidNymRoleRequest",
@@ -34452,7 +33462,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -34552,6 +33562,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetMultipleLedgerConfigRequest",
@@ -34589,7 +33600,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -34611,6 +33622,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetWriteLedgerRequest",
@@ -34648,7 +33660,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -34865,6 +33877,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "RegisterNymRequest",
@@ -35088,7 +34101,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -35127,6 +34140,7 @@ exports[`open api parser aries parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "RotatePublicDidKeypairRequest",
@@ -35164,7 +34178,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -35273,6 +34287,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetTaaRequest",
@@ -35310,7 +34325,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -35374,6 +34389,7 @@ exports[`open api parser aries parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "AcceptTaaRequest",
@@ -35423,7 +34439,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -35544,6 +34560,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetDefaultMediatorRequest",
@@ -35581,7 +34598,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -35702,6 +34719,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ClearDefaultMediatorRequest",
@@ -35739,7 +34757,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -35881,6 +34899,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetKeylistsRequest",
@@ -35988,7 +35007,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -36050,6 +35069,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SendKeylistQueryToMediatorRequest",
@@ -36162,7 +35182,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -36280,6 +35300,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SendKeylistUpdateToMediatorRequest",
@@ -36347,7 +35368,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -36521,6 +35542,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "RequestMediationForConnectionRequest",
@@ -36588,7 +35610,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -36830,6 +35852,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetMatchingMediationRecordsRequest",
@@ -37011,7 +36034,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -37143,6 +36166,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetMediationRecordRequest",
@@ -37198,7 +36222,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -37330,6 +36354,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DeleteMediationRecordRequest",
@@ -37385,7 +36410,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -37505,6 +36530,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DenyMediationRequestRequest",
@@ -37572,7 +36598,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -37638,6 +36664,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GrantMediationRequestRequest",
@@ -37693,7 +36720,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -37781,6 +36808,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "UpdateKeylistForConnIdRequest",
@@ -37848,7 +36876,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -37980,6 +37008,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SetDefaultMediatorRequest",
@@ -38035,7 +37064,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -38159,6 +37188,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreateWalletRequest",
@@ -38208,7 +37238,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -38266,6 +37296,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetWalletRecordRequest",
@@ -38321,7 +37352,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -38420,6 +37451,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "UpdateWalletRequest",
@@ -38487,7 +37519,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -38548,6 +37580,7 @@ exports[`open api parser aries parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DeleteWalletRequest",
@@ -38615,7 +37648,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -38659,6 +37692,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetAuthTokenRequest",
@@ -38726,7 +37760,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -38820,6 +37854,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetMatchingWalletsRequest",
@@ -38882,7 +37917,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -39445,6 +38480,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreateOobInvitationRequest",
@@ -39539,7 +38575,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -40423,6 +39459,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ReceiveOobInvitationRequest",
@@ -40565,7 +39602,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -40599,6 +39636,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetLoadedPluginsRequest",
@@ -40636,7 +39674,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -41390,6 +40428,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreateProofRequestRequest",
@@ -41439,7 +40478,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -42463,6 +41502,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetMatchingPresExRecordsV2Request",
@@ -42711,7 +41751,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -43262,6 +42302,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetPresExRecordRequest",
@@ -43317,7 +42358,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -43367,6 +42408,7 @@ exports[`open api parser aries parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DeletePresExRecordRequest",
@@ -43422,7 +42464,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -43549,6 +42591,7 @@ exports[`open api parser aries parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetPresExCredentialsV2Request",
@@ -43708,7 +42751,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -43769,6 +42812,7 @@ exports[`open api parser aries parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ReportPresExProblemRequest",
@@ -43836,7 +42880,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -44488,6 +43532,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SendProofPresentationRequest",
@@ -44555,7 +43600,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -45124,6 +44169,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SendProofPresentationRequestRequest",
@@ -45191,7 +44237,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -45742,6 +44788,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "VerifyReceivedPresentationRequest",
@@ -45797,7 +44844,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -46558,6 +45605,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SendPresentationProposalRequest",
@@ -46607,7 +45655,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -47368,6 +46416,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SendFreePresentationRequestRequest",
@@ -47417,7 +46466,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -48312,6 +47361,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreateFreeProofRequestRequest",
@@ -48361,7 +47411,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -49541,6 +48591,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetMatchingPresExRecordsRequest",
@@ -49801,7 +48852,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -50498,6 +49549,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetPresExRecordRequest",
@@ -50553,7 +49605,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -50603,6 +49655,7 @@ exports[`open api parser aries parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DeletePresExRecordRequest",
@@ -50658,7 +49711,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -50785,6 +49838,7 @@ exports[`open api parser aries parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetPresExCredentialsRequest",
@@ -50944,7 +49998,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -51005,6 +50059,7 @@ exports[`open api parser aries parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ReportPresExProblemRequest",
@@ -51072,7 +50127,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -51858,6 +50913,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SendProofPresentationRequest",
@@ -51925,7 +50981,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -52640,6 +51696,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SendProofPresentationRequestRequest",
@@ -52707,7 +51764,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -53404,6 +52461,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "VerifyReceivedPresentationRequest",
@@ -53459,7 +52517,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -54339,6 +53397,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SendPresentationProposalRequest",
@@ -54388,7 +53447,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -55290,6 +54349,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SendFreePresentationRequestRequest",
@@ -55339,7 +54399,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -55373,6 +54433,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetDidDocumentRequest",
@@ -55428,7 +54489,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -55666,6 +54727,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetActiveRegistryForCredDefIdRequest",
@@ -55721,7 +54783,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -55800,6 +54862,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ClearPendingRevocationsRequest",
@@ -55849,7 +54912,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -56094,6 +55157,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreateRevocationRegistryRequest",
@@ -56143,7 +55207,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -56226,6 +55290,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetCredentialRevocationRecordRequest",
@@ -56336,7 +55401,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -56594,6 +55659,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "PublishRevocationsRequest",
@@ -56643,7 +55709,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -56677,6 +55743,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetCreatedRegistriesRequest",
@@ -56820,7 +55887,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -56842,6 +55909,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DeleteTailsFileRequest",
@@ -56928,7 +55996,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -57166,6 +56234,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetRevocationRegistryRequest",
@@ -57221,7 +56290,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -57470,6 +56539,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "UpdateRevocationRegistryRequest",
@@ -57537,7 +56607,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -57902,6 +56972,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "PublishRevocationRegistryDefinitionRequest",
@@ -58004,7 +57075,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -58242,6 +57313,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "PublishRevocationRegistryEntryRequest",
@@ -58344,7 +57416,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -58380,6 +57452,7 @@ exports[`open api parser aries parse open api 1`] = `
             "properties": {},
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "UpdateRevocationEntryStateRequest",
@@ -58451,7 +57524,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -58484,6 +57557,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetIssuedCredentialsCountRequest",
@@ -58539,7 +57613,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -58706,6 +57780,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetIssuedCredentialDetailsRequest",
@@ -58761,7 +57836,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -58786,6 +57861,7 @@ exports[`open api parser aries parse open api 1`] = `
             "properties": {},
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetPublishedCredentialDetailsRequest",
@@ -58841,7 +57917,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -59087,6 +58163,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SetRevocationRegistryStateRequest",
@@ -59217,7 +58294,53 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
+      "examples": [],
+      "generatedRequestName": "DownloadTailsFileSparseRequest",
+      "headers": [],
+      "internal": null,
+      "method": "GET",
+      "operationId": "download_tails_file_sparse",
+      "path": "/revocation/registry/{rev_reg_id}/tails-file-less-deets",
+      "pathParameters": [
+        {
+          "description": "Revocation Registry identifier",
+          "name": "rev_reg_id",
+          "schema": {
+            "description": null,
+            "generatedName": "DownloadTailsFileSparseRequestRevRegId",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+          "variableReference": null,
+        },
+      ],
+      "queryParameters": [],
+      "request": null,
+      "requestNameOverride": null,
+      "response": {
+        "description": "tails file",
+        "type": "file",
+      },
+      "sdkName": null,
+      "server": [],
+      "summary": "Download tails file",
+      "tags": [
+        "revocation",
+      ],
+    },
+    {
+      "audiences": [],
+      "authed": true,
+      "availability": null,
+      "description": null,
+      "errors": {},
       "examples": [],
       "generatedRequestName": "DownloadTailsFileRequest",
       "headers": [],
@@ -59263,7 +58386,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -59313,6 +58436,7 @@ exports[`open api parser aries parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "UploadTailsFileRequest",
@@ -59368,7 +58492,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -59471,6 +58595,7 @@ exports[`open api parser aries parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "RevokeIssuedCredentialRequest",
@@ -59520,7 +58645,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -59817,6 +58942,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "PublishSchemaRequest",
@@ -59913,7 +59039,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -59947,6 +59073,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetMatchingCreatedSchemasRequest",
@@ -60081,7 +59208,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -60166,6 +59293,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetSchemaRequest",
@@ -60221,7 +59349,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -60306,6 +59434,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "WriteSchemaRecordToWalletRequest",
@@ -60361,7 +59490,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -60400,6 +59529,7 @@ exports[`open api parser aries parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ShutdownServerRequest",
@@ -60437,7 +59567,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -60466,6 +59596,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetStatusRequest",
@@ -60503,7 +59634,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -60517,6 +59648,7 @@ exports[`open api parser aries parse open api 1`] = `
             "properties": {},
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetConfigRequest",
@@ -60554,7 +59686,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -60576,6 +59708,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetLivelinessRequest",
@@ -60613,7 +59746,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -60635,6 +59768,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetReadinessRequest",
@@ -60672,7 +59806,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -60711,6 +59845,7 @@ exports[`open api parser aries parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ResetStatisticsRequest",
@@ -60748,7 +59883,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -60943,6 +60078,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ResendTransactionRequestRequest",
@@ -60998,7 +60134,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -61366,6 +60502,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetTransactionListRequest",
@@ -61403,7 +60540,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -61609,6 +60746,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreateTransactionRequestRequest",
@@ -61698,7 +60836,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -61749,6 +60887,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SetEndorserInfoForConnIdRequest",
@@ -61846,7 +60985,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -61880,6 +61019,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SetEndorserRoleForConnIdRequest",
@@ -61993,7 +61133,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -62188,6 +61328,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetTransactionRecordRequest",
@@ -62243,7 +61384,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -62438,6 +61579,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CancelTransactionRequestRequest",
@@ -62493,7 +61635,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -62688,6 +61830,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "EndorseTransactionRequest",
@@ -62768,7 +61911,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -62963,6 +62106,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "RefuseTransactionRequest",
@@ -63018,7 +62162,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -63213,6 +62357,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "PublishEndorsedTransactionRequest",
@@ -63268,7 +62413,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -63356,6 +62501,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetDidsRequest",
@@ -63589,7 +62735,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -63656,6 +62802,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreateLocalDidRequest",
@@ -63705,7 +62852,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -63755,6 +62902,7 @@ exports[`open api parser aries parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "RotateKeypairRequest",
@@ -63810,7 +62958,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -63859,6 +63007,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetPublicDidRequest",
@@ -63896,7 +63045,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -63956,6 +63105,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SetPublicDidRequest",
@@ -64081,7 +63231,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -64121,6 +63271,7 @@ exports[`open api parser aries parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetDidEndpointRequest",
@@ -64176,7 +63327,7 @@ exports[`open api parser aries parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -64237,6 +63388,7 @@ exports[`open api parser aries parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SetDidEndpointRequest",
@@ -64329,8 +63481,8 @@ exports[`open api parser aries parse open api 1`] = `
       ],
     },
   ],
-  "errors": {},
   "globalHeaders": [],
+  "groups": {},
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "ActionMenuModulesResult",

@@ -2,6 +2,10 @@ from __future__ import annotations
 
 from typing import Sequence, Union
 
+from fern_python.codegen.ast.nodes.expressions.function_invocation.function_invocation import (
+    FunctionInvocation,
+)
+
 from ...ast_node import AstNode, AstNodeMetadata, GenericTypeVar, NodeWriter
 from ...references import ClassReference, Module, Reference, ReferenceImport
 from ..expressions import Expression
@@ -53,6 +57,14 @@ class TypeHint(AstNode):
         return TypeHint(type=get_reference_to_built_in_primitive("float"))
 
     @staticmethod
+    def bytes_or_bytes_stream() -> TypeHint:
+        return TypeHint.union(
+            TypeHint.bytes(),
+            TypeHint.iterator(TypeHint.bytes()),
+            TypeHint.async_iterator(TypeHint.bytes()),
+        )
+
+    @staticmethod
     def bytes() -> TypeHint:
         return TypeHint(type=get_reference_to_built_in_primitive("bytes"))
 
@@ -66,6 +78,10 @@ class TypeHint(AstNode):
             type=get_reference_to_typing_extensions_import("NotRequired"),
             type_parameters=[TypeParameter(wrapped_type)],
         )
+
+    @staticmethod
+    def any_str() -> TypeHint:
+        return TypeHint(type=get_reference_to_typing_import("AnyStr"))
 
     @staticmethod
     def optional(wrapped_type: TypeHint) -> TypeHint:
@@ -140,6 +156,15 @@ class TypeHint(AstNode):
         )
 
     @staticmethod
+    def invoke_cast(type_casted_to: TypeHint, value_being_casted: Expression) -> Expression:
+        return Expression(
+            FunctionInvocation(
+                function_definition=get_reference_to_typing_import("cast"),
+                args=[Expression(type_casted_to), value_being_casted],
+            )
+        )
+
+    @staticmethod
     def callable(parameters: Sequence[TypeHint], return_type: TypeHint) -> TypeHint:
         return TypeHint(
             type=get_reference_to_typing_import("Callable"),
@@ -152,7 +177,7 @@ class TypeHint(AstNode):
     @staticmethod
     def annotated(type: TypeHint, annotation: Expression) -> TypeHint:
         return TypeHint(
-            type=get_reference_to_typing_import("Annotated"),
+            type=get_reference_to_typing_extensions_import("Annotated"),
             type_parameters=[TypeParameter(type), TypeParameter(annotation)],
         )
 

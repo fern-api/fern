@@ -355,7 +355,8 @@ exports[`ir {"name":"extended-examples"} 1`] = `
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [
                 "type_commons:Deployment",
@@ -956,7 +957,8 @@ exports[`ir {"name":"extended-examples"} 1`] = `
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [
                 "type_commons:AppId"
@@ -8981,7 +8983,8 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [
                 "type_nested:Product"
@@ -9095,7 +9098,8 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [],
@@ -10831,7 +10835,8 @@ exports[`ir {"name":"packages"} 1`] = `
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [
                 "type_:RootString",
@@ -11699,7 +11704,8 @@ exports[`ir {"name":"response-property"} 1`] = `
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [],
@@ -11806,7 +11812,8 @@ exports[`ir {"name":"response-property"} 1`] = `
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [],
@@ -12041,7 +12048,8 @@ exports[`ir {"name":"response-property"} 1`] = `
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [
                 "type_service:WithDocs",
@@ -13126,7 +13134,8 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [],
@@ -13232,7 +13241,8 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [],
@@ -14737,7 +14747,8 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [],
@@ -15003,7 +15014,8 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [
@@ -18139,7 +18151,8 @@ exports[`ir {"name":"simple"} 1`] = `
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [],
@@ -18246,7 +18259,8 @@ exports[`ir {"name":"simple"} 1`] = `
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [],
@@ -18567,7 +18581,8 @@ exports[`ir {"name":"simple"} 1`] = `
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [
                 "type_director:Age"
@@ -19719,7 +19734,8 @@ exports[`ir {"name":"simple"} 1`] = `
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [
                 "type_imdb:MovieId"
@@ -20254,7 +20270,8 @@ exports[`ir {"name":"simple"} 1`] = `
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [
@@ -20694,7 +20711,8 @@ exports[`ir {"name":"simple"} 1`] = `
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [
                 "type_director:Director",
@@ -22190,7 +22208,8 @@ exports[`ir {"name":"simple"} 1`] = `
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [],
             "examples": [],
@@ -22431,7 +22450,8 @@ exports[`ir {"name":"simple"} 1`] = `
                         "availability": null,
                         "docs": null
                     }
-                ]
+                ],
+                "extra-properties": false
             },
             "referencedTypes": [
                 "type_imdb:CreateMovieRequest",
@@ -31241,15 +31261,15 @@ exports[`ir {"name":"streaming"} 1`] = `
                     "sdkRequest": null,
                     "response": {
                         "type": "streaming",
-                        "dataEventType": {
+                        "value": {
                             "type": "json",
-                            "json": {
+                            "payload": {
                                 "_type": "primitive",
                                 "primitive": "STRING"
-                            }
-                        },
-                        "terminator": null,
-                        "docs": null
+                            },
+                            "terminator": null,
+                            "docs": null
+                        }
                     },
                     "errors": [],
                     "examples": [
@@ -31378,7 +31398,8 @@ exports[`ir {"name":"streaming"} 1`] = `
                                 },
                                 "docs": null
                             }
-                        ]
+                        ],
+                        "extra-properties": false
                     },
                     "sdkRequest": {
                         "shape": {
@@ -31444,15 +31465,15 @@ exports[`ir {"name":"streaming"} 1`] = `
                     },
                     "response": {
                         "type": "streaming",
-                        "dataEventType": {
+                        "value": {
                             "type": "json",
-                            "json": {
+                            "payload": {
                                 "_type": "primitive",
                                 "primitive": "STRING"
-                            }
-                        },
-                        "terminator": "[DONE]",
-                        "docs": null
+                            },
+                            "terminator": "[DONE]",
+                            "docs": null
+                        }
                     },
                     "errors": [],
                     "examples": [

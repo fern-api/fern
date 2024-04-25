@@ -4,9 +4,9 @@
 
 import * as core from "../../../../core";
 import * as fs from "fs";
-import * as SeedFileUpload from "../../..";
+import * as SeedFileUpload from "../../../index";
 import { default as FormData } from "form-data";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 import urlJoin from "url-join";
 
 export declare namespace Service {
@@ -66,7 +66,7 @@ export class Service {
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/file-upload",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -110,7 +110,7 @@ export class Service {
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/file-upload",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -182,7 +182,7 @@ export class Service {
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/file-upload",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,

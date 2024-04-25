@@ -5,15 +5,13 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ........core.datetime_utils import serialize_datetime
+from ........core.pydantic_utilities import pydantic_v1
 from .non_void_function_signature import NonVoidFunctionSignature
 from .void_function_signature import VoidFunctionSignature
 from .void_function_signature_that_takes_actual_result import VoidFunctionSignatureThatTakesActualResult
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -33,7 +31,7 @@ class _Factory:
         )
 
 
-class FunctionSignature(pydantic.BaseModel):
+class FunctionSignature(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(
@@ -58,9 +56,9 @@ class FunctionSignature(pydantic.BaseModel):
                 VoidFunctionSignatureThatTakesActualResult(**self.__root__.dict(exclude_unset=True, exclude={"type"}))
             )
 
-    __root__: typing.Annotated[
+    __root__: typing_extensions.Annotated[
         typing.Union[_FunctionSignature.Void, _FunctionSignature.NonVoid, _FunctionSignature.VoidThatTakesActualResult],
-        pydantic.Field(discriminator="type"),
+        pydantic_v1.Field(discriminator="type"),
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -72,27 +70,27 @@ class FunctionSignature(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _FunctionSignature:
     class Void(VoidFunctionSignature):
-        type: typing.Literal["void"]
+        type: typing.Literal["void"] = "void"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class NonVoid(NonVoidFunctionSignature):
-        type: typing.Literal["nonVoid"]
+        type: typing.Literal["nonVoid"] = "nonVoid"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class VoidThatTakesActualResult(VoidFunctionSignatureThatTakesActualResult):
-        type: typing.Literal["voidThatTakesActualResult"]
+        type: typing.Literal["voidThatTakesActualResult"] = "voidThatTakesActualResult"
 
         class Config:
             allow_population_by_field_name = True

@@ -8,4 +8,6 @@ export interface ObjectTypeDeclaration {
     /** A list of other types to inherit from */
     extends: FernIr.DeclaredTypeName[];
     properties: FernIr.ObjectProperty[];
+    /** Whether to allow extra properties on the object. */
+    extraProperties: boolean;
 }

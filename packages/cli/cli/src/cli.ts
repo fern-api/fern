@@ -1,6 +1,6 @@
 import {
-    generatorsYml,
     fernConfigJson,
+    generatorsYml,
     GENERATORS_CONFIGURATION_FILENAME,
     getFernDirectory,
     PROJECT_CONFIG_FILENAME
@@ -352,8 +352,12 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
                 return cliContext.failWithoutThrowing("Cannot specify both --api and --docs. Please choose one.");
-            } else if (argv.api != null) {
-                await generateAPIWorkspaces({
+            }
+            if (argv.local && argv.preview) {
+                return cliContext.failWithoutThrowing("The --local flag is incompatible with --preview.");
+            }
+            if (argv.api != null) {
+                return await generateAPIWorkspaces({
                     project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                         commandLineApiWorkspace: argv.api,
                         defaultToAllApiWorkspaces: false
@@ -363,16 +367,18 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     groupName: argv.group,
                     shouldLogS3Url: argv.printZipUrl,
                     keepDocker: argv.keepDocker,
-                    useLocalDocker: argv.local
+                    useLocalDocker: argv.local,
+                    preview: argv.preview
                 });
-            } else if (argv.docs != null) {
+            }
+            if (argv.docs != null) {
                 if (argv.group != null) {
                     cliContext.logger.warn("--group is ignored when generating docs");
                 }
                 if (argv.version != null) {
                     cliContext.logger.warn("--version is ignored when generating docs");
                 }
-                await generateDocsWorkspace({
+                return await generateDocsWorkspace({
                     project: await loadProjectAndRegisterWorkspacesWithContext(
                         cliContext,
                         {
@@ -385,21 +391,21 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     instance: argv.instance,
                     preview: argv.preview
                 });
-            } else {
-                // default to loading api workspace to preserve legacy behavior
-                await generateAPIWorkspaces({
-                    project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                        commandLineApiWorkspace: argv.api,
-                        defaultToAllApiWorkspaces: false
-                    }),
-                    cliContext,
-                    version: argv.version,
-                    groupName: argv.group,
-                    shouldLogS3Url: argv.printZipUrl,
-                    keepDocker: argv.keepDocker,
-                    useLocalDocker: argv.local
-                });
             }
+            // default to loading api workspace to preserve legacy behavior
+            return await generateAPIWorkspaces({
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: false
+                }),
+                cliContext,
+                version: argv.version,
+                groupName: argv.group,
+                shouldLogS3Url: argv.printZipUrl,
+                keepDocker: argv.keepDocker,
+                useLocalDocker: argv.local,
+                preview: argv.preview
+            });
         }
     );
 }

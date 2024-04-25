@@ -1,0 +1,42 @@
+[
+    {
+        "sdk": {
+            "package": "fern_reserved-keywords",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedNurseryApi\n\nclient = AsyncSeedNurseryApi(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.package.test(\n\t$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "for_=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "QUERY",
+                                    "path": "for",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

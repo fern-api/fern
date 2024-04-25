@@ -16,6 +16,8 @@ import { imageSize } from "image-size";
 import * as mime from "mime-types";
 import terminalLink from "terminal-link";
 import { promisify } from "util";
+import { convertIrToNavigation } from "./convertIrToNavigation";
+import { extractDatetimeFromChangelogTitle } from "./extractDatetimeFromChangelogTitle";
 
 export async function publishDocs({
     token,
@@ -224,7 +226,14 @@ async function constructRegisterDocsRequest({
         Object.entries(parsedDocsConfig.pages).map(([pageId, pageContent]) => {
             const frontmatter = matter(pageContent);
             const fullSlug = frontmatter.data.slug;
-            return [pageId, { fullSlug }];
+            return [
+                // the fullslug is "get" using the absolute path
+                // TODO: make this more robust
+                pageId.startsWith("/")
+                    ? AbsoluteFilePath.of(pageId)
+                    : convertFdrFilepathToAbsoluteFilepath(RelativeFilePath.of(pageId), parsedDocsConfig),
+                { fullSlug }
+            ];
         })
     );
     const convertedDocsConfiguration = await convertDocsConfiguration({
@@ -327,7 +336,7 @@ async function convertDocsConfiguration({
         version,
         fullSlugs
     });
-    const config: Omit<WithoutQuestionMarks<DocsV1Write.DocsConfig>, "logo" | "colors" | "typography" | "colorsV2"> = {
+    const config: ConvertedDocsConfiguration["config"] = {
         title: parsedDocsConfig.title,
         // deprecated, use colorsV3 instead of logoV2
         logoV2: undefined,
@@ -443,7 +452,8 @@ async function convertNavigationConfig({
                         return {
                             title: tabConfig.displayName,
                             icon: tabConfig.icon,
-                            items: tabbedItems.map((tabItem) => tabItem.item)
+                            items: tabbedItems.map((tabItem) => tabItem.item),
+                            urlSlugOverride: tabConfig.slug
                         };
                     })
                 )
@@ -456,6 +466,7 @@ async function convertNavigationConfig({
                         async (version): Promise<DocsV1Write.VersionedNavigationConfigData> => {
                             const convertedNavigation = await convertUnversionedNavigationConfig({
                                 navigationConfig: version.navigation,
+                                tabs: version.tabs,
                                 parsedDocsConfig,
                                 organization,
                                 fernWorkspaces,
@@ -865,9 +876,11 @@ async function convertNavigationItem({
             convertedItem = {
                 type: "page",
                 title: item.title,
+                icon: item.icon,
                 id: relative(dirname(parsedDocsConfig.absoluteFilepath), item.absolutePath),
                 urlSlugOverride: item.slug,
-                fullSlug: fullSlugs[item.absolutePath]?.fullSlug?.split("/")
+                fullSlug: fullSlugs[item.absolutePath]?.fullSlug?.split("/"),
+                hidden: item.hidden
             };
             break;
         }
@@ -891,7 +904,10 @@ async function convertNavigationItem({
                 title: item.title,
                 items: sectionItems.map((sectionItem) => sectionItem.item),
                 urlSlugOverride: item.slug,
-                collapsed: item.collapsed
+                collapsed: item.collapsed,
+                icon: item.icon,
+                hidden: item.hidden,
+                skipUrlSlug: item.skipUrlSlug
             };
             for (const sectionItem of sectionItems) {
                 pages = {
@@ -903,12 +919,13 @@ async function convertNavigationItem({
         }
         case "apiSection": {
             const workspace = getFernWorkspaceForApiSection({ apiSection: item, fernWorkspaces });
-            const apiDefinitionId = await registerApi({
+            const { id: apiDefinitionId, ir } = await registerApi({
                 organization,
                 workspace,
                 context,
                 token,
                 audiences: item.audiences,
+                // navigation: item.navigation,
                 snippetsConfig: convertDocsSnippetsConfigurationToFdr({
                     snippetsConfiguration: item.snippetsConfiguration ?? {
                         python: undefined,
@@ -918,30 +935,49 @@ async function convertNavigationItem({
                     }
                 })
             });
+            const changelogItems: DocsV1Write.ChangelogItem[] = [];
             if (workspace.changelog != null) {
                 for (const file of workspace.changelog.files) {
+                    const splitFilepath = file.absoluteFilepath.split("/");
+                    const filename = splitFilepath[splitFilepath.length - 1];
+                    if (filename == null) {
+                        continue;
+                    }
+                    const changelogDate = extractDatetimeFromChangelogTitle(filename);
+                    if (changelogDate == null) {
+                        continue;
+                    }
                     pages[file.absoluteFilepath] = {
                         markdown: file.contents
                     };
+                    changelogItems.push({
+                        date: changelogDate.toISOString(),
+                        pageId: file.absoluteFilepath
+                    });
                 }
             }
             convertedItem = {
                 type: "api",
                 title: item.title,
+                icon: item.icon,
                 api: apiDefinitionId,
+                skipUrlSlug: item.skipUrlSlug,
                 showErrors: item.showErrors,
                 changelog:
-                    workspace.changelog != null
+                    changelogItems.length > 0
                         ? {
                               urlSlug: "changelog",
-                              items: workspace.changelog.files.map((file) => {
-                                  return {
-                                      date: new Date().toISOString(),
-                                      pageId: file.absoluteFilepath
-                                  };
-                              })
+                              items: changelogItems
                           }
-                        : undefined
+                        : undefined,
+                hidden: item.hidden,
+                navigation: convertIrToNavigation(
+                    ir,
+                    item.summaryAbsolutePath,
+                    item.navigation,
+                    parsedDocsConfig.absoluteFilepath,
+                    fullSlugs
+                )
             };
             break;
         }
@@ -971,25 +1007,51 @@ function convertDocsSnippetsConfigurationToFdr({
         pythonSdk:
             snippetsConfiguration.python != null
                 ? {
-                      package: snippetsConfiguration.python
+                      package:
+                          typeof snippetsConfiguration.python === "string"
+                              ? snippetsConfiguration.python
+                              : snippetsConfiguration.python.package,
+                      version:
+                          typeof snippetsConfiguration.python === "string"
+                              ? undefined
+                              : snippetsConfiguration.python.version
                   }
                 : undefined,
         typescriptSdk:
             snippetsConfiguration.typescript != null
                 ? {
-                      package: snippetsConfiguration.typescript
+                      package:
+                          typeof snippetsConfiguration.typescript === "string"
+                              ? snippetsConfiguration.typescript
+                              : snippetsConfiguration.typescript.package,
+                      version:
+                          typeof snippetsConfiguration.typescript === "string"
+                              ? undefined
+                              : snippetsConfiguration.typescript.version
                   }
                 : undefined,
         goSdk:
             snippetsConfiguration.go != null
                 ? {
-                      githubRepo: snippetsConfiguration.go
+                      githubRepo:
+                          typeof snippetsConfiguration.go === "string"
+                              ? snippetsConfiguration.go
+                              : snippetsConfiguration.go.package,
+                      version:
+                          typeof snippetsConfiguration.go === "string" ? undefined : snippetsConfiguration.go.version
                   }
                 : undefined,
         javaSdk:
             snippetsConfiguration.java != null
                 ? {
-                      coordinate: snippetsConfiguration.java
+                      coordinate:
+                          typeof snippetsConfiguration.java === "string"
+                              ? snippetsConfiguration.java
+                              : snippetsConfiguration.java.package,
+                      version:
+                          typeof snippetsConfiguration.java === "string"
+                              ? undefined
+                              : snippetsConfiguration.java.version
                   }
                 : undefined
     };

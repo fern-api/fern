@@ -34,8 +34,10 @@ import { filterEndpointExample, filterExampleType } from "./filterExamples";
 import { formatDocs } from "./formatDocs";
 import { IdGenerator } from "./IdGenerator";
 import { PackageTreeGenerator } from "./PackageTreeGenerator";
+import { EndpointResolverImpl } from "./resolvers/EndpointResolver";
 import { ErrorResolverImpl } from "./resolvers/ErrorResolver";
 import { ExampleResolverImpl } from "./resolvers/ExampleResolver";
+import { PropertyResolverImpl } from "./resolvers/PropertyResolver";
 import { TypeResolverImpl } from "./resolvers/TypeResolver";
 import { VariableResolverImpl } from "./resolvers/VariableResolver";
 import { convertToFernFilepath } from "./utils/convertToFernFilepath";
@@ -73,6 +75,8 @@ export async function generateIntermediateRepresentation({
     );
 
     const typeResolver = new TypeResolverImpl(workspace);
+    const endpointResolver = new EndpointResolverImpl(workspace);
+    const propertyResolver = new PropertyResolverImpl(typeResolver, endpointResolver);
     const errorResolver = new ErrorResolverImpl(workspace);
     const exampleResolver = new ExampleResolverImpl(typeResolver);
     const variableResolver = new VariableResolverImpl();
@@ -81,9 +85,11 @@ export async function generateIntermediateRepresentation({
         apiName: casingsGenerator.generateName(workspace.name),
         apiDisplayName: workspace.definition.rootApiFile.contents["display-name"],
         apiDocs: await formatDocs(workspace.definition.rootApiFile.contents.docs),
-        auth: convertApiAuth({
+        auth: await convertApiAuth({
             rawApiFileSchema: workspace.definition.rootApiFile.contents,
-            file: rootApiFileContext
+            file: rootApiFileContext,
+            propertyResolver,
+            endpointResolver
         }),
         headers:
             workspace.definition.rootApiFile.contents.headers != null
@@ -222,6 +228,7 @@ export async function generateIntermediateRepresentation({
                     file,
                     errorResolver,
                     typeResolver,
+                    propertyResolver,
                     exampleResolver,
                     globalErrors,
                     variableResolver,

@@ -16,11 +16,13 @@ export const ObjectTypeDeclaration: core.serialization.ObjectSchema<
     properties: core.serialization.list(
         core.serialization.lazyObject(async () => (await import("../../..")).ObjectProperty)
     ),
+    extraProperties: core.serialization.property("extra-properties", core.serialization.boolean()),
 });
 
 export declare namespace ObjectTypeDeclaration {
     interface Raw {
         extends: serializers.DeclaredTypeName.Raw[];
         properties: serializers.ObjectProperty.Raw[];
+        "extra-properties": boolean;
     }
 }

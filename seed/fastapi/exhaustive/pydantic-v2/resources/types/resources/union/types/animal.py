@@ -6,6 +6,7 @@ import datetime as dt
 import typing
 
 import pydantic.v1 as pydantic
+import typing_extensions
 
 from ......core.datetime_utils import serialize_datetime
 from .cat import Cat as resources_types_resources_union_types_cat_Cat
@@ -46,7 +47,9 @@ class Animal(pydantic.BaseModel):
                 )
             )
 
-    __root__: typing.Annotated[typing.Union[_Animal.Dog, _Animal.Cat], pydantic.Field(discriminator="animal")]
+    __root__: typing_extensions.Annotated[
+        typing.Union[_Animal.Dog, _Animal.Cat], pydantic.Field(discriminator="animal")
+    ]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -63,14 +66,14 @@ class Animal(pydantic.BaseModel):
 
 class _Animal:
     class Dog(resources_types_resources_union_types_dog_Dog):
-        animal: typing.Literal["dog"]
+        animal: typing.Literal["dog"] = "dog"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class Cat(resources_types_resources_union_types_cat_Cat):
-        animal: typing.Literal["cat"]
+        animal: typing.Literal["cat"] = "cat"
 
         class Config:
             allow_population_by_field_name = True

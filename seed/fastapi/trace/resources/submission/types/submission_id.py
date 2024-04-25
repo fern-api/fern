@@ -7,14 +7,10 @@ import typing
 import uuid
 
 from ....core.datetime_utils import serialize_datetime
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ....core.pydantic_utilities import pydantic_v1
 
 
-class SubmissionId(pydantic.BaseModel):
+class SubmissionId(pydantic_v1.BaseModel):
     __root__: uuid.UUID
 
     def get_as_uuid(self) -> uuid.UUID:
@@ -33,5 +29,5 @@ class SubmissionId(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}

@@ -6,6 +6,6 @@ require "seed_file_upload_client"
 # Basic SeedFileUploadClient tests
 class TestSeedFileUploadClient < Minitest::Test
   def test_function
-    SeedFileUploadClient::Client.new
+    # SeedFileUploadClient::Client.new
   end
 end

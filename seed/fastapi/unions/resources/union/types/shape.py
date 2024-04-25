@@ -5,14 +5,12 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 from .circle import Circle as resources_union_types_circle_Circle
 from .square import Square as resources_union_types_square_Square
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -25,7 +23,7 @@ class _Factory:
         return Shape(__root__=_Shape.Square(**value.dict(exclude_unset=True), type="square"))
 
 
-class Shape(pydantic.BaseModel):
+class Shape(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(self) -> typing.Union[_Shape.Circle, _Shape.Square]:
@@ -45,7 +43,9 @@ class Shape(pydantic.BaseModel):
                 resources_union_types_square_Square(**self.__root__.dict(exclude_unset=True, exclude={"type"}))
             )
 
-    __root__: typing.Annotated[typing.Union[_Shape.Circle, _Shape.Square], pydantic.Field(discriminator="type")]
+    __root__: typing_extensions.Annotated[
+        typing.Union[_Shape.Circle, _Shape.Square], pydantic_v1.Field(discriminator="type")
+    ]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -56,20 +56,20 @@ class Shape(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _Shape:
     class Circle(resources_union_types_circle_Circle):
-        type: typing.Literal["circle"]
+        type: typing.Literal["circle"] = "circle"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class Square(resources_union_types_square_Square):
-        type: typing.Literal["square"]
+        type: typing.Literal["square"] = "square"
 
         class Config:
             allow_population_by_field_name = True

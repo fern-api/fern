@@ -1,4 +1,5 @@
 import {
+    ExampleEndpointCall,
     FileProperty,
     HttpEndpoint,
     HttpRequestBody,
@@ -7,7 +8,9 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import {
     Fetcher,
+    GetReferenceOpts,
     getTextOfTsNode,
+    ImportsManager,
     JavaScriptRuntime,
     PackageId,
     visitJavaScriptRuntime
@@ -33,12 +36,15 @@ export declare namespace GeneratedFileUploadEndpointRequest {
         requestBody: HttpRequestBody.FileUpload;
         generatedSdkClientClass: GeneratedSdkClientClassImpl;
         targetRuntime: JavaScriptRuntime;
+        retainOriginalCasing: boolean;
+        importsManager: ImportsManager;
     }
 }
 
 export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequest {
     private static FORM_DATA_VARIABLE_NAME = "_request";
 
+    private importsManager: ImportsManager;
     private ir: IntermediateRepresentation;
     private requestParameter: FileUploadRequestParameter | undefined;
     private queryParams: GeneratedQueryParams | undefined;
@@ -47,6 +53,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
     private requestBody: HttpRequestBody.FileUpload;
     private generatedSdkClientClass: GeneratedSdkClientClassImpl;
     private targetRuntime: JavaScriptRuntime;
+    private retainOriginalCasing: boolean;
 
     constructor({
         ir,
@@ -55,7 +62,9 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         endpoint,
         requestBody,
         generatedSdkClientClass,
-        targetRuntime
+        targetRuntime,
+        retainOriginalCasing,
+        importsManager
     }: GeneratedFileUploadEndpointRequest.Init) {
         this.ir = ir;
         this.service = service;
@@ -63,7 +72,8 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         this.requestBody = requestBody;
         this.generatedSdkClientClass = generatedSdkClientClass;
         this.targetRuntime = targetRuntime;
-
+        this.retainOriginalCasing = retainOriginalCasing;
+        this.importsManager = importsManager;
         if (
             requestBody.properties.some((property) => property.type === "bodyProperty") ||
             endpoint.queryParameters.length > 0
@@ -87,8 +97,58 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         }
     }
 
-    public getExampleEndpointParameters(): ts.Expression[] | undefined {
-        return undefined;
+    public getExampleEndpointParameters({
+        context,
+        example,
+        opts
+    }: {
+        context: SdkContext;
+        example: ExampleEndpointCall;
+        opts: GetReferenceOpts;
+    }): ts.Expression[] | undefined {
+        const exampleParameters = [...example.servicePathParameters, ...example.endpointPathParameters];
+        const result: ts.Expression[] = [];
+        for (const property of this.requestBody.properties) {
+            if (property.type === "file") {
+                result.push(
+                    ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(
+                            ts.factory.createIdentifier("fs"),
+                            ts.factory.createIdentifier("createReadStream")
+                        ),
+                        undefined,
+                        [ts.factory.createStringLiteral("/path/to/your/file")]
+                    )
+                );
+                context.externalDependencies.fs.ReadStream._getReferenceToType();
+            }
+        }
+        for (const pathParameter of getPathParametersForEndpointSignature(this.service, this.endpoint)) {
+            const exampleParameter = exampleParameters.find(
+                (param) => param.name.originalName === pathParameter.name.originalName
+            );
+            if (exampleParameter == null) {
+                result.push(ts.factory.createIdentifier("undefined"));
+            } else {
+                const generatedExample = context.type.getGeneratedExample(exampleParameter.value);
+                result.push(generatedExample.build(context, opts));
+            }
+        }
+        if (this.requestParameter != null) {
+            const requestParameterExample = this.requestParameter.generateExample({ context, example, opts });
+            if (
+                requestParameterExample != null &&
+                getTextOfTsNode(requestParameterExample) === "{}" &&
+                this.requestParameter.isOptional({ context })
+            ) {
+                // pass
+            } else if (requestParameterExample != null) {
+                result.push(requestParameterExample);
+            } else if (!this.requestParameter.isOptional({ context })) {
+                return undefined;
+            }
+        }
+        return result;
     }
 
     public getEndpointParameters(context: SdkContext): OptionalKind<ParameterDeclarationStructure>[] {
@@ -96,14 +156,20 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         for (const property of this.requestBody.properties) {
             if (property.type === "file") {
                 parameters.push({
-                    name: getParameterNameForFile(property),
-                    type: getTextOfTsNode(this.getFileParameterType(property, context))
+                    name: getParameterNameForFile({
+                        property: property.value,
+                        retainOriginalCasing: context.retainOriginalCasing
+                    }),
+                    type: getTextOfTsNode(this.getFileParameterType(property.value, context))
                 });
             }
         }
         for (const pathParameter of getPathParametersForEndpointSignature(this.service, this.endpoint)) {
             parameters.push({
-                name: getParameterNameForPathParameter(pathParameter),
+                name: getParameterNameForPathParameter({
+                    pathParameter,
+                    retainOriginalCasing: this.retainOriginalCasing
+                }),
                 type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode)
             });
         }

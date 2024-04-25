@@ -42,7 +42,7 @@ with all stable endpoints. You can find them here:
 
 Used to retrieve a deployment given its ID or name.
 ",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -127,6 +127,7 @@ Used to retrieve a deployment given its ID or name.
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DeploymentsRetrieveRequest",
@@ -184,7 +185,7 @@ Used to retrieve a deployment given its ID or name.
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Creates a new document index.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -428,6 +429,429 @@ Creates a new document index.",
             },
             "type": "object",
           },
+          "type": "full",
+        },
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": "Index Using a Sentence Transformers Model",
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "indexing_config": {
+                "type": "map",
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "chunking",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "chunker_name",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "sentence-chunker",
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "chunker_config",
+                            },
+                            "value": {
+                              "type": "map",
+                              "value": [
+                                {
+                                  "key": {
+                                    "type": "string",
+                                    "value": "character_limit",
+                                  },
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "int",
+                                      "value": 1000,
+                                    },
+                                  },
+                                },
+                                {
+                                  "key": {
+                                    "type": "string",
+                                    "value": "min_overlap_ratio",
+                                  },
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "double",
+                                      "value": 0.5,
+                                    },
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "vectorizer",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "model_name",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "sentence-transformers/multi-qa-mpnet-base-dot-v1",
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "config",
+                            },
+                            "value": {
+                              "type": "map",
+                              "value": [],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  },
+                ],
+              },
+              "label": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "My Document Index",
+                },
+              },
+              "name": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "my-document-index",
+                },
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "created": {
+                "type": "primitive",
+                "value": {
+                  "type": "datetime",
+                  "value": "2024-01-15T09:30:00Z",
+                },
+              },
+              "environment": {
+                "type": "enum",
+                "value": "DEVELOPMENT",
+              },
+              "id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+              "indexing_config": {
+                "type": "map",
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "indexing_config",
+                    },
+                    "value": {
+                      "type": "map",
+                      "value": [
+                        {
+                          "key": {
+                            "type": "string",
+                            "value": "key",
+                          },
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "value",
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+              "label": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "label",
+                },
+              },
+              "name": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "name",
+                },
+              },
+              "status": {
+                "type": "enum",
+                "value": "ACTIVE",
+              },
+            },
+            "type": "object",
+          },
+          "type": "full",
+        },
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": "Index Using OpenAI Model",
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "indexing_config": {
+                "type": "map",
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "chunking",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "chunker_name",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "sentence-chunker",
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "chunker_config",
+                            },
+                            "value": {
+                              "type": "map",
+                              "value": [
+                                {
+                                  "key": {
+                                    "type": "string",
+                                    "value": "character_limit",
+                                  },
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "int",
+                                      "value": 1000,
+                                    },
+                                  },
+                                },
+                                {
+                                  "key": {
+                                    "type": "string",
+                                    "value": "min_overlap_ratio",
+                                  },
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "double",
+                                      "value": 0.5,
+                                    },
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "vectorizer",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "model_name",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "text-embedding-ada-002",
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "config",
+                            },
+                            "value": {
+                              "type": "map",
+                              "value": [
+                                {
+                                  "key": {
+                                    "type": "string",
+                                    "value": "add_openai_api_key",
+                                  },
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "boolean",
+                                      "value": true,
+                                    },
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  },
+                ],
+              },
+              "label": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "My Document Index",
+                },
+              },
+              "name": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "my-document-index",
+                },
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "created": {
+                "type": "primitive",
+                "value": {
+                  "type": "datetime",
+                  "value": "2024-01-15T09:30:00Z",
+                },
+              },
+              "environment": {
+                "type": "enum",
+                "value": "DEVELOPMENT",
+              },
+              "id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+              "indexing_config": {
+                "type": "map",
+                "value": [
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "indexing_config",
+                    },
+                    "value": {
+                      "type": "map",
+                      "value": [
+                        {
+                          "key": {
+                            "type": "string",
+                            "value": "key",
+                          },
+                          "value": {
+                            "type": "primitive",
+                            "value": {
+                              "type": "string",
+                              "value": "value",
+                            },
+                          },
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+              "label": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "label",
+                },
+              },
+              "name": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "name",
+                },
+              },
+              "status": {
+                "type": "enum",
+                "value": "ACTIVE",
+              },
+            },
+            "type": "object",
+          },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DocumentIndexesCreateRequest",
@@ -481,7 +905,7 @@ Creates a new document index.",
 
 Used to list documents. Optionally filter on supported fields.
 ",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -609,6 +1033,7 @@ Used to list documents. Optionally filter on supported fields.
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "DocumentsListRequest",
@@ -741,7 +1166,7 @@ Used to list documents. Optionally filter on supported fields.
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Executes a deployed Workflow and streams back its results.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [],
       "generatedRequestName": "ExecuteWorkflowStreamRequest",
       "headers": [],
@@ -800,12 +1225,64 @@ Executes a deployed Workflow and streams back its results.",
 Generate a completion using a previously defined deployment.
 
 **Note:** Uses a base url of \`https://predict.vellum.ai\`.",
-      "errorStatusCode": [
-        400,
-        403,
-        404,
-        500,
-      ],
+      "errors": {
+        "400": {
+          "description": "",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "GenerateErrorResponse",
+            "type": "reference",
+          },
+        },
+        "403": {
+          "description": "",
+          "examples": [],
+          "generatedName": "ForbiddenError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "ForbiddenErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "GenerateErrorResponse",
+            "type": "reference",
+          },
+        },
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "GenerateErrorResponse",
+            "type": "reference",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "GenerateErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -896,6 +1373,7 @@ Generate a completion using a previously defined deployment.
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GenerateRequest",
@@ -955,12 +1433,64 @@ Generate a completion using a previously defined deployment.
 Generate a stream of completions using a previously defined deployment.
 
 **Note:** Uses a base url of \`https://predict.vellum.ai\`.",
-      "errorStatusCode": [
-        400,
-        403,
-        404,
-        500,
-      ],
+      "errors": {
+        "400": {
+          "description": "",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "GenerateErrorResponse",
+            "type": "reference",
+          },
+        },
+        "403": {
+          "description": "",
+          "examples": [],
+          "generatedName": "ForbiddenError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "ForbiddenErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "GenerateErrorResponse",
+            "type": "reference",
+          },
+        },
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "GenerateErrorResponse",
+            "type": "reference",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "GenerateErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [],
       "generatedRequestName": "GenerateStreamRequest",
       "headers": [],
@@ -1019,7 +1549,7 @@ Generate a stream of completions using a previously defined deployment.
 
 Used to retrieve a model version given its ID.
 ",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -1262,6 +1792,7 @@ Used to retrieve a model version given its ID.
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ModelVersionsRetrieveRequest",
@@ -1319,7 +1850,7 @@ Used to retrieve a model version given its ID.
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Compiles the prompt backing the model version using the provided input values.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -1372,6 +1903,7 @@ Compiles the prompt backing the model version using the provided input values.",
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ModelVersionCompilePromptRequest",
@@ -1444,9 +1976,22 @@ Registers a prompt within Vellum and creates associated Vellum entities. Intende
 partners, not directly by Vellum users.
 
 Under the hood, this endpoint creates a new sandbox, a new model version, and a new deployment.",
-      "errorStatusCode": [
-        409,
-      ],
+      "errors": {
+        "409": {
+          "description": "",
+          "examples": [],
+          "generatedName": "ConflictError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "ConflictErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "RegisterPromptErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -1684,6 +2229,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "RegisterPromptRequest",
@@ -1741,7 +2287,7 @@ is found, a new scenario will be appended to the end.
 
 Note that a full replacement of the scenario is performed, so any fields not provided will be removed
 or overwritten with default values.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -1909,6 +2455,182 @@ or overwritten with default values.",
             },
             "type": "object",
           },
+          "type": "full",
+        },
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": "Chat History Example",
+          "pathParameters": [
+            {
+              "name": "id",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "inputs": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "chat_history": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "role": {
+                                "type": "enum",
+                                "value": "USER",
+                              },
+                              "text": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "What's your favorite color?",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                          {
+                            "properties": {
+                              "role": {
+                                "type": "enum",
+                                "value": "ASSISTANT",
+                              },
+                              "text": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "AI's don't have a favorite color.... Yet.",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "key": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "$chat_history",
+                        },
+                      },
+                      "type": {
+                        "type": "enum",
+                        "value": "CHAT_HISTORY",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "label": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "Scenario 2",
+                },
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+              "inputs": {
+                "type": "array",
+                "value": [
+                  {
+                    "properties": {
+                      "chat_history": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "properties": {
+                              "role": {
+                                "type": "enum",
+                                "value": "SYSTEM",
+                              },
+                              "text": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "text",
+                                },
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                      },
+                      "key": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "key",
+                        },
+                      },
+                      "type": {
+                        "type": "enum",
+                        "value": "TEXT",
+                      },
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+              },
+              "label": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "label",
+                },
+              },
+              "metric_input_params": {
+                "properties": {
+                  "params": {
+                    "properties": {
+                      "target": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "target",
+                        },
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+          "type": "full",
         },
       ],
       "generatedRequestName": "UpsertSandboxScenarioRequest",
@@ -1978,7 +2700,7 @@ or overwritten with default values.",
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Deletes an existing scenario from a sandbox, keying off of the provided scenario id.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -2010,6 +2732,7 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
           "queryParameters": [],
           "request": null,
           "response": null,
+          "type": "full",
         },
       ],
       "generatedRequestName": "DeleteSandboxScenarioRequest",
@@ -2074,11 +2797,50 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
 Perform a search against a document index.
 
 **Note:** Uses a base url of \`https://predict.vellum.ai\`.",
-      "errorStatusCode": [
-        400,
-        404,
-        500,
-      ],
+      "errors": {
+        "400": {
+          "description": "",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "SearchErrorResponse",
+            "type": "reference",
+          },
+        },
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "SearchErrorResponse",
+            "type": "reference",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "SearchErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -2159,6 +2921,7 @@ Perform a search against a document index.
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SearchRequest",
@@ -2218,11 +2981,50 @@ Perform a search against a document index.
 Used to submit feedback regarding the quality of previously generated completions.
 
 **Note:** Uses a base url of \`https://predict.vellum.ai\`.",
-      "errorStatusCode": [
-        400,
-        404,
-        500,
-      ],
+      "errors": {
+        "400": {
+          "description": "",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "SubmitCompletionActualsErrorResponse",
+            "type": "reference",
+          },
+        },
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "SubmitCompletionActualsErrorResponse",
+            "type": "reference",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "SubmitCompletionActualsErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -2246,6 +3048,7 @@ Used to submit feedback regarding the quality of previously generated completion
             "type": "object",
           },
           "response": null,
+          "type": "full",
         },
       ],
       "generatedRequestName": "SubmitCompletionActualsRequest",
@@ -2297,7 +3100,7 @@ is found, a new test case will be appended to the end.
 
 Note that a full replacement of the test case is performed, so any fields not provided will be removed
 or overwritten with default values.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -2390,6 +3193,7 @@ or overwritten with default values.",
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "UpsertTestSuiteTestCaseRequest",
@@ -2459,7 +3263,7 @@ or overwritten with default values.",
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Deletes an existing test case for a test suite, keying off of the test case id.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -2491,6 +3295,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
           "queryParameters": [],
           "request": null,
           "response": null,
+          "type": "full",
         },
       ],
       "generatedRequestName": "DeleteTestSuiteTestCaseRequest",
@@ -2555,12 +3360,85 @@ Deletes an existing test case for a test suite, keying off of the test case id."
 Upload a document to be indexed and used for search.
 
 **Note:** Uses a base url of \`https://documents.vellum.ai\`.",
-      "errorStatusCode": [
-        400,
-        404,
-        500,
+      "errors": {
+        "400": {
+          "description": "",
+          "examples": [],
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "BadRequestErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "UploadDocumentErrorResponse",
+            "type": "reference",
+          },
+        },
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "UploadDocumentErrorResponse",
+            "type": "reference",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": "UploadDocumentErrorResponse",
+            "type": "reference",
+          },
+        },
+      },
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "label": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "label",
+                },
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "document_id": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "document_id",
+                },
+              },
+            },
+            "type": "object",
+          },
+          "type": "full",
+        },
       ],
-      "examples": [],
       "generatedRequestName": "DocumentsUploadRequest",
       "headers": [],
       "internal": null,
@@ -2583,24 +3461,31 @@ Upload a document to be indexed and used for search.
                 "generatedName": "DocumentsUploadRequestAddToIndexNames",
                 "groupName": null,
                 "nameOverride": null,
-                "type": "nullable",
+                "type": "optional",
                 "value": {
                   "description": "Optionally include the names of all indexes that you'd like this document to be included in",
                   "generatedName": "DocumentsUploadRequestAddToIndexNames",
                   "groupName": null,
                   "nameOverride": null,
-                  "type": "array",
+                  "type": "nullable",
                   "value": {
-                    "description": null,
-                    "generatedName": "DocumentsUploadRequestAddToIndexNamesItem",
+                    "description": "Optionally include the names of all indexes that you'd like this document to be included in",
+                    "generatedName": "DocumentsUploadRequestAddToIndexNames",
                     "groupName": null,
                     "nameOverride": null,
-                    "schema": {
-                      "maxLength": null,
-                      "minLength": 1,
-                      "type": "string",
+                    "type": "array",
+                    "value": {
+                      "description": null,
+                      "generatedName": "DocumentsUploadRequestAddToIndexNamesItem",
+                      "groupName": null,
+                      "nameOverride": null,
+                      "schema": {
+                        "maxLength": null,
+                        "minLength": 1,
+                        "type": "string",
+                      },
+                      "type": "primitive",
                     },
-                    "type": "primitive",
                   },
                 },
               },
@@ -2616,18 +3501,25 @@ Upload a document to be indexed and used for search.
                 "generatedName": "DocumentsUploadRequestExternalId",
                 "groupName": null,
                 "nameOverride": null,
-                "type": "nullable",
+                "type": "optional",
                 "value": {
                   "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
                   "generatedName": "DocumentsUploadRequestExternalId",
                   "groupName": null,
                   "nameOverride": null,
-                  "schema": {
-                    "maxLength": null,
-                    "minLength": 1,
-                    "type": "string",
+                  "type": "nullable",
+                  "value": {
+                    "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
+                    "generatedName": "DocumentsUploadRequestExternalId",
+                    "groupName": null,
+                    "nameOverride": null,
+                    "schema": {
+                      "maxLength": null,
+                      "minLength": 1,
+                      "type": "string",
+                    },
+                    "type": "primitive",
                   },
-                  "type": "primitive",
                 },
               },
             },
@@ -2670,24 +3562,31 @@ Upload a document to be indexed and used for search.
                 "generatedName": "DocumentsUploadRequestKeywords",
                 "groupName": null,
                 "nameOverride": null,
-                "type": "nullable",
+                "type": "optional",
                 "value": {
                   "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
                   "generatedName": "DocumentsUploadRequestKeywords",
                   "groupName": null,
                   "nameOverride": null,
-                  "type": "array",
+                  "type": "nullable",
                   "value": {
-                    "description": null,
-                    "generatedName": "DocumentsUploadRequestKeywordsItem",
+                    "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
+                    "generatedName": "DocumentsUploadRequestKeywords",
                     "groupName": null,
                     "nameOverride": null,
-                    "schema": {
-                      "maxLength": null,
-                      "minLength": 1,
-                      "type": "string",
+                    "type": "array",
+                    "value": {
+                      "description": null,
+                      "generatedName": "DocumentsUploadRequestKeywordsItem",
+                      "groupName": null,
+                      "nameOverride": null,
+                      "schema": {
+                        "maxLength": null,
+                        "minLength": 1,
+                        "type": "string",
+                      },
+                      "type": "primitive",
                     },
-                    "type": "primitive",
                   },
                 },
               },
@@ -2724,79 +3623,27 @@ Upload a document to be indexed and used for search.
       ],
     },
   ],
-  "errors": {
-    "400": {
-      "description": null,
-      "generatedName": "BadRequestError",
-      "nameOverride": null,
-      "schema": {
-        "generatedName": "BadRequestError",
-        "nameOverride": null,
-        "type": "unknown",
-      },
-    },
-    "403": {
-      "description": null,
-      "generatedName": "ForbiddenError",
-      "nameOverride": null,
-      "schema": {
-        "description": null,
-        "generatedName": "ForbiddenErrorBody",
-        "groupName": null,
-        "nameOverride": null,
-        "schema": "GenerateErrorResponse",
-        "type": "reference",
-      },
-    },
-    "404": {
-      "description": null,
-      "generatedName": "NotFoundError",
-      "nameOverride": null,
-      "schema": {
-        "generatedName": "NotFoundError",
-        "nameOverride": null,
-        "type": "unknown",
-      },
-    },
-    "409": {
-      "description": null,
-      "generatedName": "ConflictError",
-      "nameOverride": null,
-      "schema": {
-        "description": null,
-        "generatedName": "ConflictErrorBody",
-        "groupName": null,
-        "nameOverride": null,
-        "schema": "RegisterPromptErrorResponse",
-        "type": "reference",
-      },
-    },
-    "500": {
-      "description": null,
-      "generatedName": "InternalServerError",
-      "nameOverride": null,
-      "schema": {
-        "generatedName": "InternalServerError",
-        "nameOverride": null,
-        "type": "unknown",
-      },
-    },
-  },
   "globalHeaders": [],
+  "groups": {},
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "DeploymentRead",
     "DocumentIndexRead",
     "PaginatedSlimDocumentList",
     "WorkflowStreamEvent",
+    "GenerateErrorResponse",
     "GenerateResponse",
     "GenerateStreamResponse",
     "ModelVersionRead",
     "ModelVersionCompilePromptResponse",
+    "RegisterPromptErrorResponse",
     "RegisterPromptResponse",
     "SandboxScenario",
+    "SearchErrorResponse",
     "SearchResponse",
+    "SubmitCompletionActualsErrorResponse",
     "TestSuiteTestCase",
+    "UploadDocumentErrorResponse",
     "UploadDocumentResponse",
     "ChatMessageRole",
     "ConditionalNodeResultData",
@@ -2876,8 +3723,6 @@ Upload a document to be indexed and used for search.
     "WorkflowNodeResultData",
     "WorkflowEventError",
     "WorkflowResultEventOutputData",
-    "GenerateErrorResponse",
-    "RegisterPromptErrorResponse",
   ],
   "schemas": {
     "BlockTypeEnum": {

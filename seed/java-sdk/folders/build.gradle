@@ -41,3 +41,30 @@ test {
         showStandardStreams = true
     }
 }
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.fern'
+            artifactId = 'folders'
+            version = '0.0.1'
+            from components.java
+            pom {
+                scm {
+                    connection = 'scm:git:git://github.com/folders/fern.git'
+                    developerConnection = 'scm:git:git://github.com/folders/fern.git'
+                    url = 'https://github.com/folders/fern'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            url "$System.env.MAVEN_PUBLISH_REGISTRY_URL"
+            credentials {
+                username "$System.env.MAVEN_USERNAME"
+                password "$System.env.MAVEN_PASSWORD"
+            }
+        }
+    }
+}
+

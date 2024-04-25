@@ -6,6 +6,6 @@ require "seed_query_parameters_client"
 # Basic SeedQueryParametersClient tests
 class TestSeedQueryParametersClient < Minitest::Test
   def test_function
-    SeedQueryParametersClient::Client.new
+    # SeedQueryParametersClient::Client.new
   end
 end

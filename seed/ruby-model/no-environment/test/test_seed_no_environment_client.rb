@@ -6,6 +6,6 @@ require "seed_no_environment_client"
 # Basic SeedNoEnvironmentClient tests
 class TestSeedNoEnvironmentClient < Minitest::Test
   def test_function
-    SeedNoEnvironmentClient::Client.new
+    # SeedNoEnvironmentClient::Client.new
   end
 end

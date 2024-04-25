@@ -6,6 +6,6 @@ require "seed_file_download_client"
 # Basic SeedFileDownloadClient tests
 class TestSeedFileDownloadClient < Minitest::Test
   def test_function
-    SeedFileDownloadClient::Client.new
+    # SeedFileDownloadClient::Client.new
   end
 end

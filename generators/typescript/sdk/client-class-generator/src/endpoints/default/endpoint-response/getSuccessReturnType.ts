@@ -1,11 +1,11 @@
 import { assertNever } from "@fern-api/core-utils";
-import { HttpResponse } from "@fern-fern/ir-sdk/api";
+import { HttpResponse, PrimitiveType, TypeReference } from "@fern-fern/ir-sdk/api";
 import { JavaScriptRuntime, visitJavaScriptRuntime } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 
 export function getSuccessReturnType(
-    response: HttpResponse.Json | HttpResponse.FileDownload | HttpResponse.Streaming | undefined,
+    response: HttpResponse.Json | HttpResponse.FileDownload | HttpResponse.Streaming | HttpResponse.Text | undefined,
     context: SdkContext,
     opts: {
         includeContentHeadersOnResponse: boolean;
@@ -24,12 +24,18 @@ export function getSuccessReturnType(
         }
         case "json":
             return context.type.getReferenceToType(response.value.responseBodyType).typeNode;
+        case "text":
+            return context.type.getReferenceToType(TypeReference.primitive(PrimitiveType.String)).typeNode;
         case "streaming": {
-            if (response.dataEventType.type === "text") {
-                throw new Error("Cannot deserialize non-json stream data");
-            }
-            const dataEventType = context.type.getReferenceToType(response.dataEventType.json).typeNode;
-            return context.coreUtilities.streamUtils.Stream._getReferenceToType(dataEventType);
+            const dataEventType = response.value._visit({
+                json: (json) => context.type.getReferenceToType(json.payload),
+                sse: (sse) => context.type.getReferenceToType(sse.payload),
+                text: () => context.type.getReferenceToType(TypeReference.primitive(PrimitiveType.String)),
+                _other: ({ type }) => {
+                    throw new Error(`Encountered unknown data event type ${type}`);
+                }
+            });
+            return context.coreUtilities.streamUtils.Stream._getReferenceToType(dataEventType.typeNode);
         }
         default:
             assertNever(response);

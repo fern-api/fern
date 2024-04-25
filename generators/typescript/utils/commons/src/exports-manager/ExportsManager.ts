@@ -23,7 +23,11 @@ type PathToDirectory = string;
 export class ExportsManager {
     private exports: Record<PathToDirectory, Record<ModuleSpecifier, CombinedExportDeclarations>> = {};
 
-    public addExport(from: SourceFile | string, exportDeclaration: ExportDeclaration | undefined): void {
+    public addExport(
+        from: SourceFile | string,
+        exportDeclaration: ExportDeclaration | undefined,
+        addExportTypeModifier?: boolean
+    ): void {
         const fromPath = typeof from === "string" ? from : from.getFilePath();
         if (path.extname(fromPath).length === 0) {
             throw new Error("Cannot export from directory: " + fromPath);
@@ -37,17 +41,22 @@ export class ExportsManager {
                 from: pathToDirectory,
                 to: fromPath
             }),
-            exportDeclaration
+            exportDeclaration,
+            addExportTypeModifier
         });
     }
 
-    public addExportsForFilepath(filepath: ExportedFilePath): void {
-        this.addExportsForDirectories(filepath.directories);
-        this.addExport(convertExportedFilePathToFilePath(filepath), filepath.file?.exportDeclaration);
+    public addExportsForFilepath(filepath: ExportedFilePath, addExportTypeModifier?: boolean): void {
+        this.addExportsForDirectories(filepath.directories, addExportTypeModifier);
+        this.addExport(
+            convertExportedFilePathToFilePath(filepath),
+            filepath.file?.exportDeclaration,
+            addExportTypeModifier
+        );
     }
 
-    public addExportsForDirectories(directories: ExportedDirectory[]): void {
-        let directoryFilepath = "/";
+    public addExportsForDirectories(directories: ExportedDirectory[], addExportTypeModifier?: boolean): void {
+        let directoryFilepath = "/src";
         for (const part of directories) {
             const nextDirectoryPath = path.join(directoryFilepath, part.nameOnDisk);
             this.addExportDeclarationForDirectory({
@@ -56,7 +65,8 @@ export class ExportsManager {
                     from: directoryFilepath,
                     to: nextDirectoryPath
                 }),
-                exportDeclaration: part.exportDeclaration
+                exportDeclaration: part.exportDeclaration,
+                addExportTypeModifier
             });
 
             if (part.subExports != null) {
@@ -67,7 +77,8 @@ export class ExportsManager {
                             from: directoryFilepath,
                             to: path.join(nextDirectoryPath, relativeFilePath)
                         }),
-                        exportDeclaration
+                        exportDeclaration,
+                        addExportTypeModifier
                     });
                 }
             }
@@ -78,11 +89,13 @@ export class ExportsManager {
     private addExportDeclarationForDirectory({
         directory,
         moduleSpecifierToExport,
-        exportDeclaration
+        exportDeclaration,
+        addExportTypeModifier
     }: {
         directory: Directory | PathToDirectory;
         moduleSpecifierToExport: ModuleSpecifier;
         exportDeclaration: ExportDeclaration | undefined;
+        addExportTypeModifier: boolean | undefined;
     }): void {
         const pathToDirectory = typeof directory === "string" ? directory : directory.getPath();
         const exportsForDirectory = (this.exports[pathToDirectory] ??= {});
@@ -110,7 +123,11 @@ export class ExportsManager {
 
         if (exportDeclaration.namedExports != null) {
             for (const namedExport of exportDeclaration.namedExports) {
-                exportsForModuleSpecifier.namedExports.add(namedExport);
+                if (addExportTypeModifier) {
+                    exportsForModuleSpecifier.namedExports.add("type " + namedExport);
+                } else {
+                    exportsForModuleSpecifier.namedExports.add(namedExport);
+                }
             }
         }
     }

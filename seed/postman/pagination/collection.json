@@ -1,0 +1,213 @@
+{
+  "info": {
+    "name": "Pagination",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Users",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "List With Cursor Pagination",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/users?page=&per_page=&order=&starting_after=",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "",
+                  "description": "Defaults to first page"
+                },
+                {
+                  "key": "per_page",
+                  "value": "",
+                  "description": "Defaults to per page"
+                },
+                {
+                  "key": "order",
+                  "value": "",
+                  "description": null
+                },
+                {
+                  "key": "starting_after",
+                  "value": "",
+                  "description": "The cursor used for pagination in order to fetch\nthe next page of results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": []
+        },
+        {
+          "_type": "endpoint",
+          "name": "List With Offset Pagination",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/users?page=&per_page=&order=&starting_after=",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "",
+                  "description": "Defaults to first page"
+                },
+                {
+                  "key": "per_page",
+                  "value": "",
+                  "description": "Defaults to per page"
+                },
+                {
+                  "key": "order",
+                  "value": "",
+                  "description": null
+                },
+                {
+                  "key": "starting_after",
+                  "value": "",
+                  "description": "The cursor used for pagination in order to fetch\nthe next page of results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": []
+        },
+        {
+          "_type": "endpoint",
+          "name": "List With Extended Results",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/users?cursor=",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "cursor",
+                  "value": "",
+                  "description": null
+                }
+              ],
+              "variable": []
+            },
+            "header": [],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": []
+        },
+        {
+          "_type": "endpoint",
+          "name": "List Usernames",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/users?starting_after=",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "starting_after",
+                  "value": "",
+                  "description": "The cursor used for pagination in order to fetch\nthe next page of results."
+                }
+              ],
+              "variable": []
+            },
+            "header": [],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": []
+        },
+        {
+          "_type": "endpoint",
+          "name": "List With Global Config",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/users?offset=",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "offset",
+                  "value": "",
+                  "description": null
+                }
+              ],
+              "variable": []
+            },
+            "header": [],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

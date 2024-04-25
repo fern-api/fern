@@ -93,6 +93,6 @@ export declare namespace Fetcher {
         withCredentials: boolean;
         timeoutInSeconds: ts.Expression;
         maxRetries?: ts.Expression;
-        responseType?: "json" | "blob" | "streaming";
+        responseType?: "json" | "blob" | "streaming" | "text";
     }
 }

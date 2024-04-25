@@ -4,16 +4,12 @@ import datetime as dt
 import typing
 
 from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 from ...commons.resources.types.types.tag import Tag
 from .movie_id import MovieId
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class Movie(pydantic.BaseModel):
+class Movie(pydantic_v1.BaseModel):
     """
     from seed.examples import Movie
 
@@ -34,17 +30,17 @@ class Movie(pydantic.BaseModel):
     """
 
     id: MovieId
-    prequel: typing.Optional[MovieId]
+    prequel: typing.Optional[MovieId] = None
     title: str
-    from_: str = pydantic.Field(alias="from")
-    rating: float = pydantic.Field()
+    from_: str = pydantic_v1.Field(alias="from")
+    rating: float = pydantic_v1.Field()
     """
     The rating scale is one to five stars
     """
 
     type: typing.Literal["movie"]
     tag: Tag
-    book: typing.Optional[str]
+    book: typing.Optional[str] = None
     metadata: typing.Dict[str, typing.Any]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -58,5 +54,5 @@ class Movie(pydantic.BaseModel):
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}

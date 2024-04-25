@@ -5,6 +5,141 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.16.0-rc0] - 2024-04-24
+
+- Feature: The generator now registers snippet templates which can be used for dynamic
+  SDK code snippet generation.
+
+## [0.15.1-rc1] - 2024-04-24
+
+- Improvement: Earlier for inlined request exports, we were doing the following:
+
+```ts
+export { MyRequest } from "./MyRequest";
+```
+
+In an effort to make the generated code JSR compatible, the TS generator
+will now append the `type` explicitly for request exports. 
+
+```ts
+  export { type MyRequest } from "./MyRequest";
+```
+
+## [0.15.1-rc0] - 2024-04-22
+
+- Feature: plain text responses are now supported in the TypeScript generator.
+
+## [0.15.0-rc1] - 2024-04-22
+
+- Fix: Minor fixes to SSE processing. In particular, stream terminal characters are now
+  respected like `[DONE]` and JSON parsed data is sent to the deserialize function.
+
+## [0.15.0-rc0] - 2024-04-19
+
+- Feature: Bump to v38 of IR and support server-sent events where the events are sent
+  with a `data: ` prefix and terminated with a new line.
+
+## [0.14.1-rc5] - 2024-04-17
+
+- Fix: Code snippets are generated for file upload endpoints using `fs.readStream`. Previously,
+  generation for these endpoints was being skipped.
+
+- Fix: If integration tests are not enabled, simple jest tests with a `yarn test`
+  script will be created.
+
+- Improvement: In an effort to make the generated code JSR compatible, the generator now
+  directly imports from files instead of using directory imports.
+
+- Improvement: In an effort to make the generated code JSR compatible, we make sure all methods
+  are strongly typed with return signatures (in this case `_getAuthorizationHeader()`).
+
+- Fix: Generate code snippet for FileDownload endpoint
+
+- Fix: Import for `node-fetch` in `Fetcher.ts` uses a dynamic import instead of `require` which
+  so that the SDK works in ESM environments (that are using local file output). When the
+  `outputEsm` config flag is turned on, the dynamic import will be turned into an ESM specific import.
+
+- Fix: The test job in `ci.yml` works even if you have not configured Fern to
+  generate integration tests.
+
+  Without integration tests the test job will run `yarn && yarn test`. With the
+  integration tests, the test job will delegate to the fern cli `fern yarn test`.
+
+- Feature: Add `allowExtraFields` option to permit extra fields in the serialized request.
+
+  ```yaml
+  - name: fernapi/fern-typscript-node-sdk
+    version: 0.14.0-rc0
+    ...
+    config:
+      allowExtraFields: true
+  ```
+
+## [0.13.0] - 2024-04-09
+
+- Support V37 of the IR.
+
+## [0.13.0-rc0] - 2024-04-02
+
+- Feature: Add `retainOriginalCasing` option to preserve the naming convention expressed in the API.
+  For example, the following Fern definition will generate a type like so:
+
+```yaml
+types:
+  GetUsersRequest
+    properties:
+      group_id: string
+```
+
+**Before**
+
+```typescript
+export interface GetUsersRequest {
+  groupId: string;
+}
+
+export interface GetUsersRequest = core.serialization.object({
+ groupId: core.serialization.string("group_id")
+})
+
+export namespace GetUsersRequest {
+  interface Raw {
+    group_id: string
+  }
+}
+```
+
+**After**
+
+```typescript
+export interface GetUsersRequest {
+  group_id: string;
+}
+
+export interface GetUsersRequest = core.serialization.object({
+ group_id: core.serialization.string()
+})
+
+export namespace GetUsersRequest {
+  interface Raw {
+    group_id: string
+  }
+}
+```
+
+## [0.12.9] - 2024-03-22
+
+- Fix: The generator stopped working for remote code generation starting in `0.12.7`. This is now fixed.
+
+## [0.12.8] - 2024-03-22
+
+- Improvement: Enhance serde performance by reducing reliance on async behavior and lazy async dynamic imports.
+- Internal: Shared generator notification and config parsing logic.
+
+## [0.12.8-rc0] - 2024-03-18
+
+- Improvement: Enhance serde performance by reducing reliance on async behavior and lazy async dynamic imports.
+
 ## [0.12.7] - 2024-03-14
 
 - Improvement: the SDK will now leverage environment variable defaults, where specified, for authentication variables, such as bearer tokens, api keys, custom headers, etc.

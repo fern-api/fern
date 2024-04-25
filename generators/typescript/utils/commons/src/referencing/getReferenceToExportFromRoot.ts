@@ -51,7 +51,7 @@ export function getReferenceToExportFromRoot({
         const { recommendedImportName } = firstDirectory.exportDeclaration.defaultExport;
 
         addImport = () => {
-            importsManager.addImport(moduleSpecifier, { defaultImport: recommendedImportName });
+            importsManager.addImport(`${moduleSpecifier}/index`, { defaultImport: recommendedImportName });
         };
 
         prefix = ts.factory.createIdentifier(recommendedImportName);
@@ -70,7 +70,7 @@ export function getReferenceToExportFromRoot({
         });
 
         addImport = () => {
-            importsManager.addImport(moduleSpecifier, { namespaceImport });
+            importsManager.addImport(`${moduleSpecifier}/index`, { namespaceImport });
         };
 
         prefix = ts.factory.createIdentifier(namespaceImport);
@@ -113,7 +113,7 @@ export function getReferenceToExportFromRoot({
 
         const namedImport = firstDirectoryInsideNamespaceExport.exportDeclaration.namespaceExport;
         addImport = () => {
-            importsManager.addImport(moduleSpecifier, {
+            importsManager.addImport(`${moduleSpecifier}/index`, {
                 namedImports: [namedImport]
             });
         };

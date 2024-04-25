@@ -1,14 +1,14 @@
 import { Logger } from "@fern-api/logger";
-import { HttpError, SchemaId, StatusCode } from "@fern-api/openapi-ir-sdk";
+import { SchemaId } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
-import { SCHEMA_REFERENCE_PREFIX } from "../../schema/convertSchemas";
 import { SchemaParserContext } from "../../schema/SchemaParserContext";
 import { getReferenceOccurrences } from "../../schema/utils/getReferenceOccurrences";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject";
 
 export const PARAMETER_REFERENCE_PREFIX = "#/components/parameters/";
 export const RESPONSE_REFERENCE_PREFIX = "#/components/responses/";
+export const EXAMPLES_REFERENCE_PREFIX = "#/components/examples/";
 export const REQUEST_BODY_REFERENCE_PREFIX = "#/components/requestBodies/";
 
 export interface DiscriminatedUnionReference {
@@ -46,37 +46,39 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     }
 
     public resolveSchemaReference(schema: OpenAPIV3.ReferenceObject): OpenAPIV3.SchemaObject {
-        if (
-            this.document.components == null ||
-            this.document.components.schemas == null ||
-            !schema.$ref.startsWith(SCHEMA_REFERENCE_PREFIX)
-        ) {
-            throw new Error(`Failed to resolve ${schema.$ref}`);
+        // Step 1: Get keys
+        const keys = schema.$ref
+            .substring(2)
+            .split("/")
+            .map((key) => key.replace(/~1/g, "/"));
+
+        // Step 2: Index recursively into the document with all the keys
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        let resolvedSchema: any = this.document;
+        for (const key of keys) {
+            if (typeof resolvedSchema !== "object" || resolvedSchema == null) {
+                return {
+                    "x-fern-type": "unknown",
+                    additionalProperties: true
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                } as any as OpenAPIV3.SchemaObject;
+            }
+            resolvedSchema = resolvedSchema[key];
         }
-        const schemaKey = schema.$ref.substring(SCHEMA_REFERENCE_PREFIX.length);
-        const splitSchemaKey = schemaKey.split("/");
-        if (splitSchemaKey[0] == null) {
-            throw new Error(`${schema.$ref} is undefined`);
-        }
-        let resolvedSchema = this.document.components.schemas[splitSchemaKey[0]];
         if (resolvedSchema == null) {
-            throw new Error(`${splitSchemaKey[0]} is undefined`);
+            return {
+                "x-fern-type": "unknown",
+                additionalProperties: true
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            } as any as OpenAPIV3.SchemaObject;
         }
+
+        // Step 3: If the result is another reference object, make a recursive call
         if (isReferenceObject(resolvedSchema)) {
             resolvedSchema = this.resolveSchemaReference(resolvedSchema);
         }
 
-        if (splitSchemaKey[1] === "properties" && splitSchemaKey[2] != null) {
-            const resolvedProperty = resolvedSchema.properties?.[splitSchemaKey[2]];
-            if (resolvedProperty == null) {
-                throw new Error(`${schema.$ref} is undefiened. Property does not exist on object.`);
-            } else if (isReferenceObject(resolvedProperty)) {
-                resolvedSchema = this.resolveSchemaReference(resolvedProperty);
-            } else {
-                resolvedSchema = resolvedProperty;
-            }
-        }
-
+        // Step 4: If the result is a schema object, return it
         return resolvedSchema;
     }
 
@@ -137,6 +139,44 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         return resolvedResponse;
     }
 
+    public resolveExampleReference(example: OpenAPIV3.ReferenceObject): OpenAPIV3.ExampleObject {
+        if (
+            this.document.components == null ||
+            this.document.components.examples == null ||
+            !example.$ref.startsWith(EXAMPLES_REFERENCE_PREFIX)
+        ) {
+            throw new Error(`Failed to resolve ${example.$ref}`);
+        }
+        const parameterKey = example.$ref.substring(EXAMPLES_REFERENCE_PREFIX.length);
+        const resolvedExample = this.document.components.examples[parameterKey];
+        if (resolvedExample == null) {
+            throw new Error(`${example.$ref} is undefined`);
+        }
+        if (isReferenceObject(resolvedExample)) {
+            return this.resolveExampleReference(resolvedExample);
+        }
+        return resolvedExample;
+    }
+
+    public referenceExists(ref: string): boolean {
+        // Step 1: Get keys
+        const keys = ref
+            .substring(2)
+            .split("/")
+            .map((key) => key.replace(/~1/g, "/"));
+
+        // Step 2: Index recursively into the document with all the keys
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        let resolvedSchema: any = this.document;
+        for (const key of keys) {
+            if (typeof resolvedSchema !== "object" || resolvedSchema == null) {
+                return false;
+            }
+            resolvedSchema = resolvedSchema[key];
+        }
+        return true;
+    }
+
     public abstract markSchemaAsReferencedByNonRequest(schemaId: SchemaId): void;
 
     public abstract markSchemaAsReferencedByRequest(schemaId: SchemaId): void;
@@ -144,11 +184,6 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     public abstract getReferencedSchemas(): Set<SchemaId>;
 
     public abstract getDummy(): SchemaParserContext;
-
-    public abstract markSchemaForStatusCode(
-        statusCode: number,
-        schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject
-    ): void;
 
     public abstract markReferencedByDiscriminatedUnion(
         schema: OpenAPIV3.ReferenceObject,
@@ -159,8 +194,6 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     public abstract getReferencesFromDiscriminatedUnion(
         schema: OpenAPIV3.ReferenceObject
     ): DiscriminatedUnionReference | undefined;
-
-    public abstract getErrors(): Record<StatusCode, HttpError>;
 
     public abstract excludeSchema(schemaId: SchemaId): void;
 

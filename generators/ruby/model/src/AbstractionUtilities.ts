@@ -68,7 +68,7 @@ export function generateSerializableObjectFromTypeDeclaration(
     const properties = (propertyOverrides.get(typeId) ?? objectTypeDeclaration.properties).map(
         (property) =>
             new Property({
-                name: property.name.name.snakeCase.safeName,
+                name: Property.getNameFromIr(property.name.name),
                 type: classReferenceFactory.fromTypeReference(property.valueType),
                 documentation: property.docs,
                 wireValue: property.name.wireValue,
@@ -94,7 +94,7 @@ export function generateUnionFromTypeDeclaration(
     const properties = (propertyOverrides.get(typeId) ?? unionTypeDeclaration.baseProperties).map(
         (property) =>
             new Property({
-                name: property.name.name.snakeCase.safeName,
+                name: Property.getNameFromIr(property.name.name),
                 type: classReferenceFactory.fromTypeReference(property.valueType),
                 documentation: property.docs,
                 wireValue: property.name.wireValue,

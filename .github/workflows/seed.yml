@@ -26,6 +26,7 @@ jobs:
       java: ${{ steps.filter.outputs.java }}
       typescript: ${{ steps.filter.outputs.typescript }}
       go: ${{ steps.filter.outputs.go }}
+      csharp: ${{ steps.filter.outputs.csharp }}
     steps:
       - uses: actions/checkout@v2
       - uses: dorny/paths-filter@v2
@@ -36,13 +37,39 @@ jobs:
               - '.github/workflows/seed.yml'
               - 'packages/seed/**'
               - 'test-definitions/**'
-            ruby: 'generators/ruby/**'
-            openapi: 'generators/openapi/**'
-            python: 'generators/python/**'
-            postman: 'generators/postman/**'
-            java: 'generators/java/**'
-            typescript: 'generators/typescript/**'
-            go: 'generators/go/**'
+            ruby: 
+              - 'generators/ruby/**'
+              - seed/ruby-sdk/seed.yml
+              - seed/ruby-model/seed.yml
+            openapi: 
+              - 'generators/openapi/**'
+              - seed/openapi/seed.yml
+            python: 
+              - 'generators/python/**'
+              - seed/pydantic/seed.yml
+              - seed/python-sdk/seed.yml
+              - seed/fastapi/seed.yml
+            postman: 
+              - 'generators/postman/**'
+              - seed/postman/seed.yml
+            java: 
+              - 'generators/java/**'
+              - seed/java-sdk/seed.yml
+              - seed/java-model/seed.yml
+              - seed/java-spring/seed.yml
+            typescript: 
+              - 'generators/typescript/**'
+              - seed/ts-sdk/seed.yml
+              - seed/ts-express/seed.yml
+            go: 
+              - 'generators/go/**'
+              - seed/go-sdk/seed.yml
+              - seed/go-model/seed.yml
+              - seed/go-fiber/seed.yml
+            csharp: 
+              - 'generators/csharp/**'
+              - seed/csharp-sdk/seed.yml
+              - seed/csharp-model/seed.yml
 
   ruby-model:
     runs-on: ubuntu-latest
@@ -57,20 +84,17 @@ jobs:
           node-version: 18
           cache: "yarn"
 
-      - name: Install Seed
-        env:
-          FORCE_COLOR: "2"
-        run: npm install -g @fern-api/seed-cli
-
       - name: Yarn Install
         run: yarn install
 
       - name: Seed Test
+        env:
+          FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace ruby-model
+          yarn seed:local test --generator ruby-model
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code
+        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
 
   ruby-sdk:
     runs-on: ubuntu-latest
@@ -85,9 +109,6 @@ jobs:
           node-version: 18
           cache: "yarn"
 
-      - name: Install Seed
-        run: npm install -g @fern-api/seed-cli
-
       - name: Yarn Install
         run: yarn install
 
@@ -95,10 +116,10 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace ruby-sdk
+          yarn seed:local test --generator ruby-sdk
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code
+        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
 
   pydantic-model:
     runs-on: ubuntu-latest
@@ -127,10 +148,10 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace pydantic
+          yarn seed:local test --generator pydantic
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code
+        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
 
   python-sdk:
     runs-on: Seed
@@ -159,10 +180,10 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace python-sdk --parallel 10
+          yarn seed:local test --generator python-sdk --parallel 10
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code
+        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
 
   fastapi:
     runs-on: ubuntu-latest
@@ -191,10 +212,10 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace fastapi
+          yarn seed:local test --generator fastapi
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code
+        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
 
   openapi:
     runs-on: ubuntu-latest
@@ -216,10 +237,10 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace openapi
+          yarn seed:local test --generator openapi
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code
+        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
 
   postman:
     runs-on: ubuntu-latest
@@ -241,10 +262,10 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace postman
+          yarn seed:local test --generator postman
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code
+        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
 
   java-sdk:
     runs-on: Seed
@@ -266,10 +287,10 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace java-sdk --parallel 10
+          yarn seed:local test --generator java-sdk --parallel 10
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code
+        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
 
   java-model:
     runs-on: Seed
@@ -291,10 +312,10 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace java-model --parallel 10
+          yarn seed:local test --generator java-model --parallel 10
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code
+        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
 
   java-spring:
     runs-on: ubuntu-latest
@@ -316,10 +337,10 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace java-spring
+          yarn seed:local test --generator java-spring
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code
+        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
 
   typescript-sdk:
     runs-on: Seed
@@ -341,10 +362,10 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace ts-sdk
+          yarn seed:local test --generator ts-sdk
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code
+        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
 
   typescript-express:
     runs-on: ubuntu-latest
@@ -366,10 +387,10 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace ts-express  --parallel 1
+          yarn seed:local test --generator ts-express  --parallel 1
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code
+        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
 
   go-fiber:
     runs-on: ubuntu-latest
@@ -391,10 +412,10 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace go-fiber --parallel 16
+          yarn seed:local test --generator go-fiber --parallel 16
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code
+        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
 
   go-model:
     runs-on: ubuntu-latest
@@ -416,10 +437,10 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace go-model --parallel 16
+          yarn seed:local test --generator go-model --parallel 16
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code
+        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
 
   go-sdk:
     runs-on: ubuntu-latest
@@ -441,7 +462,57 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --workspace go-sdk --parallel 16
+          yarn seed:local test --generator go-sdk --parallel 16
 
       - name: Ensure no changes to git-tracked files
-        run: git --no-pager diff --exit-code
+        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
+
+  csharp-model:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Yarn Install
+        run: yarn install
+
+      - name: Seed Test
+        env:
+          FORCE_COLOR: "2"
+        run: |
+          yarn seed:local test --generator csharp-model --parallel 16
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
+
+  csharp-sdk:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.csharp == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Yarn Install
+        run: yarn install
+
+      - name: Seed Test
+        env:
+          FORCE_COLOR: "2"
+        run: |
+          yarn seed:local test --generator csharp-sdk --parallel 16
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"

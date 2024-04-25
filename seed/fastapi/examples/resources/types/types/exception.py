@@ -5,13 +5,11 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-from ....core.datetime_utils import serialize_datetime
-from .exception_info import ExceptionInfo
+import typing_extensions
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
+from .exception_info import ExceptionInfo
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -24,12 +22,11 @@ class _Factory:
         return Exception(__root__=_Exception.Timeout(type="timeout"))
 
 
-class Exception(pydantic.BaseModel):
+class Exception(pydantic_v1.BaseModel):
     """
     from seed.examples import Exception_Generic
 
     Exception_Generic(
-        type="generic",
         exception_type="Unavailable",
         exception_message="This component is unavailable!",
         exception_stacktrace="<logs>",
@@ -49,8 +46,8 @@ class Exception(pydantic.BaseModel):
         if self.__root__.type == "timeout":
             return timeout()
 
-    __root__: typing.Annotated[
-        typing.Union[_Exception.Generic, _Exception.Timeout], pydantic.Field(discriminator="type")
+    __root__: typing_extensions.Annotated[
+        typing.Union[_Exception.Generic, _Exception.Timeout], pydantic_v1.Field(discriminator="type")
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -62,20 +59,20 @@ class Exception(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _Exception:
     class Generic(ExceptionInfo):
-        type: typing.Literal["generic"]
+        type: typing.Literal["generic"] = "generic"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
-    class Timeout(pydantic.BaseModel):
-        type: typing.Literal["timeout"]
+    class Timeout(pydantic_v1.BaseModel):
+        type: typing.Literal["timeout"] = "timeout"
 
 
 Exception.update_forward_refs()

@@ -3,16 +3,18 @@
  */
 
 import * as core from "../../../../core";
-import * as serializers from "../../..";
-import * as SeedUnions from "../../../../api";
+import * as serializers from "../../../index";
+import * as SeedUnions from "../../../../api/index";
+import { Circle } from "./Circle";
+import { Square } from "./Square";
 
 const _Base = core.serialization.object({
     id: core.serialization.string(),
 });
 export const Shape: core.serialization.Schema<serializers.Shape.Raw, SeedUnions.Shape> = core.serialization
     .union("type", {
-        circle: core.serialization.lazyObject(async () => (await import("../../..")).Circle).extend(_Base),
-        square: core.serialization.lazyObject(async () => (await import("../../..")).Square).extend(_Base),
+        circle: Circle.extend(_Base),
+        square: Square.extend(_Base),
     })
     .transform<SeedUnions.Shape>({
         transform: (value) => value,
@@ -22,11 +24,11 @@ export const Shape: core.serialization.Schema<serializers.Shape.Raw, SeedUnions.
 export declare namespace Shape {
     type Raw = Shape.Circle | Shape.Square;
 
-    interface Circle extends _Base, serializers.Circle.Raw {
+    interface Circle extends _Base, Circle.Raw {
         type: "circle";
     }
 
-    interface Square extends _Base, serializers.Square.Raw {
+    interface Square extends _Base, Square.Raw {
         type: "square";
     }
 

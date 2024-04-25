@@ -2,6 +2,11 @@ import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../getExtension";
 import { FernOpenAPIExtension } from "./fernExtensions";
 
+export interface HeaderSecuritySchemeNames {
+    name?: string;
+    env?: string;
+    prefix?: string;
+}
 export interface SecuritySchemeNames {
     name?: string;
     env?: string;

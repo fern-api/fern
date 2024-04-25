@@ -9,7 +9,7 @@ from .void_function_definition_that_takes_actual_result import VoidFunctionDefin
 
 
 class AssertCorrectnessCheck_DeepEquality(DeepEqualityCorrectnessCheck):
-    type: typing.Literal["deepEquality"]
+    type: typing.Literal["deepEquality"] = "deepEquality"
 
     class Config:
         allow_population_by_field_name = True
@@ -17,7 +17,7 @@ class AssertCorrectnessCheck_DeepEquality(DeepEqualityCorrectnessCheck):
 
 
 class AssertCorrectnessCheck_Custom(VoidFunctionDefinitionThatTakesActualResult):
-    type: typing.Literal["custom"]
+    type: typing.Literal["custom"] = "custom"
 
     class Config:
         allow_population_by_field_name = True

@@ -112,6 +112,7 @@ export interface VersionedDocsNavigation {
 }
 
 export interface VersionInfo {
+    tabs?: Record<RelativeFilePath, TabConfig>;
     navigation: UntabbedDocsNavigation | TabbedDocsNavigation;
     version: string;
     availability: VersionAvailability | undefined;
@@ -137,25 +138,35 @@ export declare namespace DocsNavigationItem {
     export interface Page {
         type: "page";
         title: string;
+        icon: string | undefined;
         absolutePath: AbsoluteFilePath;
         slug: string | undefined;
+        hidden: boolean | undefined;
     }
 
     export interface Section {
         type: "section";
         title: string;
+        icon: string | undefined;
         contents: DocsNavigationItem[];
         collapsed: boolean | undefined;
         slug: string | undefined;
+        hidden: boolean | undefined;
+        skipUrlSlug: boolean | undefined;
     }
 
     export interface ApiSection {
         type: "apiSection";
         title: string;
+        icon: string | undefined;
         apiName: string | undefined;
         audiences: Audiences;
         showErrors: boolean;
         snippetsConfiguration: SnippetsConfiguration | undefined;
+        summaryAbsolutePath: AbsoluteFilePath | undefined;
+        navigation: ParsedApiNavigationItem[];
+        hidden: boolean | undefined;
+        skipUrlSlug: boolean | undefined;
     }
 
     export interface Link {
@@ -164,10 +175,34 @@ export declare namespace DocsNavigationItem {
         url: string;
     }
 
+    export interface VersionedSnippetLanguageConfiguration {
+        package: string;
+        version: string;
+    }
+
     export interface SnippetsConfiguration {
-        python: string | undefined;
-        typescript: string | undefined;
-        go: string | undefined;
-        java: string | undefined;
+        python: string | VersionedSnippetLanguageConfiguration | undefined;
+        typescript: string | VersionedSnippetLanguageConfiguration | undefined;
+        go: string | VersionedSnippetLanguageConfiguration | undefined;
+        java: string | VersionedSnippetLanguageConfiguration | undefined;
     }
 }
+
+export declare namespace ParsedApiNavigationItem {
+    export interface Subpackage {
+        type: "subpackage";
+        subpackageId: string;
+        summaryAbsolutePath: AbsoluteFilePath | undefined;
+        items: ParsedApiNavigationItem[];
+    }
+
+    export interface Item {
+        type: "item";
+        value: string; // this could be either an endpoint or subpackage.
+    }
+}
+
+export type ParsedApiNavigationItem =
+    | ParsedApiNavigationItem.Item
+    | ParsedApiNavigationItem.Subpackage
+    | DocsNavigationItem.Page;

@@ -5,14 +5,12 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 from .test_submission_state import TestSubmissionState
 from .workspace_submission_state import WorkspaceSubmissionState
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -27,7 +25,7 @@ class _Factory:
         )
 
 
-class SubmissionTypeState(pydantic.BaseModel):
+class SubmissionTypeState(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(self) -> typing.Union[_SubmissionTypeState.Test, _SubmissionTypeState.Workspace]:
@@ -43,8 +41,8 @@ class SubmissionTypeState(pydantic.BaseModel):
         if self.__root__.type == "workspace":
             return workspace(WorkspaceSubmissionState(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
 
-    __root__: typing.Annotated[
-        typing.Union[_SubmissionTypeState.Test, _SubmissionTypeState.Workspace], pydantic.Field(discriminator="type")
+    __root__: typing_extensions.Annotated[
+        typing.Union[_SubmissionTypeState.Test, _SubmissionTypeState.Workspace], pydantic_v1.Field(discriminator="type")
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -56,20 +54,20 @@ class SubmissionTypeState(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _SubmissionTypeState:
     class Test(TestSubmissionState):
-        type: typing.Literal["test"]
+        type: typing.Literal["test"] = "test"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class Workspace(WorkspaceSubmissionState):
-        type: typing.Literal["workspace"]
+        type: typing.Literal["workspace"] = "workspace"
 
         class Config:
             allow_population_by_field_name = True

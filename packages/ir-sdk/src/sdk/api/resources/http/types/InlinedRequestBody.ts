@@ -9,4 +9,6 @@ export interface InlinedRequestBody {
     extends: FernIr.DeclaredTypeName[];
     properties: FernIr.InlinedRequestBodyProperty[];
     contentType: string | undefined;
+    /** Whether to allow extra properties on the request. */
+    extraProperties: boolean;
 }

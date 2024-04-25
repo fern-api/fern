@@ -1,5 +1,8 @@
 import {
+    AdditionalPropertiesProperty,
+    AliasReference,
     Argument,
+    ArrayReference,
     AstNode,
     B64StringClassReference,
     BlockConfiguration,
@@ -7,12 +10,16 @@ import {
     ClassReferenceFactory,
     Class_,
     ConditionalStatement,
+    DateReference,
+    ExampleGenerator,
     Expression,
+    FieldsetProperty,
     FileClassReference,
     FunctionInvocation,
     Function_,
     GenericClassReference,
     HashInstance,
+    HashReference,
     JsonClassReference,
     Parameter,
     Property,
@@ -23,6 +30,7 @@ import {
 } from "@fern-api/ruby-codegen";
 import {
     BytesRequest,
+    ExampleEndpointCall,
     FileProperty,
     FileUploadRequest,
     HttpEndpoint,
@@ -39,10 +47,13 @@ import { RequestOptions } from "./RequestOptionsClass";
 import { isTypeOptional } from "./TypeUtilities";
 
 export class EndpointGenerator {
+    public endpointHasExamples: boolean;
+
     private endpoint: HttpEndpoint;
     private blockArg: string;
     private requestOptions: RequestOptions;
     private crf: ClassReferenceFactory;
+    private eg: ExampleGenerator;
     private requestOptionsVariable: Variable;
 
     private pathParametersAsProperties: Property[];
@@ -52,123 +63,162 @@ export class EndpointGenerator {
     private streamProcessingBlock: Parameter | undefined;
     private fileUploadUtility: FileUploadUtility;
 
+    public example: ExampleEndpointCall | undefined;
+
     constructor(
         endpoint: HttpEndpoint,
         requestOptionsVariable: Variable,
         requestOptions: RequestOptions | IdempotencyRequestOptions,
         crf: ClassReferenceFactory,
+        eg: ExampleGenerator,
         generatedClasses: Map<TypeId, Class_>,
         fileUploadUtility: FileUploadUtility
     ) {
         this.endpoint = endpoint;
+        this.example = endpoint.examples[0];
+        this.endpointHasExamples = this.example !== undefined;
+        this.eg = eg;
         this.blockArg = "req";
         this.requestOptions = requestOptions;
         this.crf = crf;
 
         this.requestOptionsVariable = requestOptionsVariable;
 
-        this.pathParametersAsProperties = this.endpoint.allPathParameters.map(
-            (pp) =>
-                new Property({
-                    name: pp.name.snakeCase.safeName,
-                    type: crf.fromTypeReference(pp.valueType),
-                    isOptional: isTypeOptional(pp.valueType),
-                    documentation: pp.docs
-                })
-        );
-        this.queryParametersAsProperties = this.endpoint.queryParameters.map(
-            (qp) =>
-                new Property({
-                    name: qp.name.name.snakeCase.safeName,
-                    wireValue: qp.name.wireValue,
-                    type: crf.fromTypeReference(qp.valueType),
-                    isOptional: isTypeOptional(qp.valueType),
-                    documentation: qp.docs
-                })
-        );
-        this.headersAsProperties = this.endpoint.headers.map(
-            (header) =>
-                new Property({
-                    name: header.name.name.snakeCase.safeName,
-                    wireValue: header.name.wireValue,
-                    type: crf.fromTypeReference(header.valueType),
-                    isOptional: isTypeOptional(header.valueType),
-                    documentation: header.docs
-                })
-        );
+        const pathParameterExamples = (this.example?.rootPathParameters ?? [])
+            .concat(this.example?.servicePathParameters ?? [])
+            .concat(this.example?.endpointPathParameters ?? []);
+        this.pathParametersAsProperties = this.endpoint.allPathParameters.map((pp) => {
+            const ppEx = this.eg.convertExampleTypeReference(
+                pathParameterExamples.find((param) => pp.name.originalName === param.name.originalName)?.value
+            );
+            return new Property({
+                name: pp.name.snakeCase.safeName,
+                type: crf.fromTypeReference(pp.valueType),
+                isOptional: isTypeOptional(pp.valueType),
+                documentation: pp.docs,
+                example: ppEx
+            });
+        });
+
+        this.queryParametersAsProperties = this.endpoint.queryParameters.map((qp) => {
+            const qpEx = this.eg.convertExampleTypeReference(
+                this.example?.queryParameters.find((param) => qp.name.wireValue === param.name.wireValue)?.value
+            );
+            return new Property({
+                name: qp.name.name.snakeCase.safeName,
+                wireValue: qp.name.wireValue,
+                type: crf.fromTypeReference(qp.valueType),
+                isOptional: isTypeOptional(qp.valueType),
+                documentation: qp.docs,
+                example: qpEx
+            });
+        });
+
+        const headerExamples = (this.example?.serviceHeaders ?? []).concat(this.example?.endpointHeaders ?? []);
+        this.headersAsProperties = this.endpoint.headers.map((header) => {
+            const headerEx = this.eg.convertExampleTypeReference(
+                headerExamples.find((he) => header.name.wireValue === he.name.wireValue)?.value
+            );
+            return new Property({
+                name: header.name.name.snakeCase.safeName,
+                wireValue: header.name.wireValue,
+                type: crf.fromTypeReference(header.valueType),
+                isOptional: isTypeOptional(header.valueType),
+                example: headerEx
+            });
+        });
 
         const defaultBodyParameterName = "body";
         this.bodyAsProperties =
-            this.endpoint.requestBody?._visit<Property[]>({
-                inlinedRequestBody: (irb: InlinedRequestBody) => {
-                    const properties: Property[] = irb.extends
-                        .flatMap((dtn) => generatedClasses.get(dtn.typeId)?.properties)
-                        .filter((p) => p !== undefined) as Property[];
-                    return [
-                        ...properties,
-                        ...irb.properties.map((prop) => {
-                            return new Property({
-                                name: prop.name.name.snakeCase.safeName,
-                                wireValue: prop.name.wireValue,
-                                type: crf.fromTypeReference(prop.valueType),
-                                isOptional: isTypeOptional(prop.valueType),
-                                documentation: prop instanceof Property ? prop.documentation : prop.docs
+            this.endpoint.requestBody
+                ?._visit<Property[]>({
+                    inlinedRequestBody: (irb: InlinedRequestBody) => {
+                        const properties: Property[] = irb.extends
+                            .flatMap((dtn) => generatedClasses.get(dtn.typeId)?.properties)
+                            .filter((p) => p !== undefined) as Property[];
+                        const exampleRequestProperties =
+                            this.example?.request?.type === "inlinedRequestBody"
+                                ? this.example.request.properties
+                                : undefined;
+                        return [
+                            ...properties,
+                            ...irb.properties.map((prop) => {
+                                const requestEx = this.eg.convertExampleTypeReference(
+                                    exampleRequestProperties?.find((erp) => prop.name.wireValue === erp.name.wireValue)
+                                        ?.value
+                                );
+                                return new Property({
+                                    name: prop.name.name.snakeCase.safeName,
+                                    wireValue: prop.name.wireValue,
+                                    type: crf.fromTypeReference(prop.valueType),
+                                    isOptional: isTypeOptional(prop.valueType),
+                                    documentation: prop instanceof Property ? prop.documentation : prop.docs,
+                                    example: requestEx
+                                });
+                            })
+                        ];
+                    },
+                    reference: (rbr: HttpRequestBodyReference) => {
+                        const requestEx = this.eg.convertExampleTypeReference(
+                            this.example?.request?.type === "reference" ? this.example.request : undefined
+                        );
+                        return [
+                            new Property({
+                                name:
+                                    this.endpoint.sdkRequest?.requestParameterName.snakeCase.safeName ??
+                                    defaultBodyParameterName,
+                                type: crf.fromTypeReference(rbr.requestBodyType),
+                                isOptional: isTypeOptional(rbr.requestBodyType),
+                                documentation: rbr.docs,
+                                example: requestEx
+                            })
+                        ];
+                    },
+                    fileUpload: (fur: FileUploadRequest) => {
+                        return fur.properties.map((prop) => {
+                            return prop._visit<Property>({
+                                file: (fp: FileProperty) =>
+                                    new Property({
+                                        name: fp.key.name.snakeCase.safeName,
+                                        isOptional: fp.isOptional,
+                                        wireValue: fp.key.wireValue,
+                                        type: [StringClassReference, FileClassReference],
+                                        example: "my_file.txt"
+                                    }),
+                                // TODO: add examples for fileUpload parameters
+                                bodyProperty: (irbp: InlinedRequestBodyProperty) =>
+                                    new Property({
+                                        name: irbp.name.name.snakeCase.safeName,
+                                        isOptional: isTypeOptional(irbp.valueType),
+                                        wireValue: irbp.name.wireValue,
+                                        type: crf.fromTypeReference(irbp.valueType),
+                                        documentation: irbp.docs
+                                    }),
+                                _other: () => {
+                                    throw new Error("Unknown file upload property type.");
+                                }
                             });
-                        })
-                    ];
-                },
-                reference: (rbr: HttpRequestBodyReference) => {
-                    return [
-                        new Property({
-                            name:
-                                this.endpoint.sdkRequest?.requestParameterName.snakeCase.safeName ??
-                                defaultBodyParameterName,
-                            type: crf.fromTypeReference(rbr.requestBodyType),
-                            isOptional: isTypeOptional(rbr.requestBodyType),
-                            documentation: rbr.docs
-                        })
-                    ];
-                },
-                fileUpload: (fur: FileUploadRequest) => {
-                    return fur.properties.map((prop) => {
-                        return prop._visit<Property>({
-                            file: (fp: FileProperty) =>
-                                new Property({
-                                    name: fp.key.name.snakeCase.safeName,
-                                    isOptional: fp.isOptional,
-                                    wireValue: fp.key.wireValue,
-                                    type: [StringClassReference, FileClassReference]
-                                }),
-                            bodyProperty: (irbp: InlinedRequestBodyProperty) =>
-                                new Property({
-                                    name: irbp.name.name.snakeCase.safeName,
-                                    isOptional: isTypeOptional(irbp.valueType),
-                                    wireValue: irbp.name.wireValue,
-                                    type: crf.fromTypeReference(irbp.valueType),
-                                    documentation: irbp.docs
-                                }),
-                            _other: () => {
-                                throw new Error("Unknown file upload property type.");
-                            }
                         });
-                    });
-                },
-                bytes: (br: BytesRequest) => {
-                    return [
-                        new Property({
-                            name:
-                                this.endpoint.sdkRequest?.requestParameterName.snakeCase.safeName ??
-                                defaultBodyParameterName,
-                            type: B64StringClassReference,
-                            isOptional: br.isOptional,
-                            documentation: "Base64 encoded bytes"
-                        })
-                    ];
-                },
-                _other: () => {
-                    throw new Error("Unknown request body type.");
-                }
-            }) ?? [];
+                    },
+                    bytes: (br: BytesRequest) => {
+                        return [
+                            new Property({
+                                name:
+                                    this.endpoint.sdkRequest?.requestParameterName.snakeCase.safeName ??
+                                    defaultBodyParameterName,
+                                type: [B64StringClassReference, FileClassReference],
+                                isOptional: br.isOptional,
+                                documentation: "Base64 encoded bytes, or an IO object (e.g. Faraday::UploadIO, etc.)"
+                            })
+                        ];
+                    },
+                    _other: () => {
+                        throw new Error("Unknown request body type.");
+                    }
+                })
+                .filter(
+                    (prop) => prop.name !== AdditionalPropertiesProperty.name && prop.name !== FieldsetProperty.name
+                ) ?? [];
 
         this.streamProcessingBlock = this.isStreamingResponse()
             ? new Parameter({
@@ -281,6 +331,22 @@ export class EndpointGenerator {
             })
         ];
     }
+
+    private getFaradayBodyForBytes(): AstNode[] {
+        const prop = this.bodyAsProperties[0];
+        if (prop === undefined) {
+            throw new Error("No body properties found.");
+        }
+
+        return [
+            new Expression({
+                leftSide: `${this.blockArg}.body`,
+                rightSide: prop.name,
+                isAssignment: true
+            })
+        ];
+    }
+
     public getFaradayBody(): AstNode[] | undefined {
         const additionalBodyProperty = this.requestOptions.getAdditionalBodyProperties(this.requestOptionsVariable);
         if (this.endpoint.requestBody !== undefined) {
@@ -316,7 +382,6 @@ export class EndpointGenerator {
                                     arguments_: [
                                         new Argument({
                                             value: prop.toVariable(VariableType.LOCAL),
-                                            type: FileClassReference,
                                             isNamed: true,
                                             name: "file_like"
                                         })
@@ -366,7 +431,7 @@ export class EndpointGenerator {
                             rightSide: `"${br.contentType ?? "application/octet-stream"}"`,
                             isAssignment: true
                         }),
-                        ...this.getFaradayBodyForReference(additionalBodyProperty)
+                        ...this.getFaradayBodyForBytes()
                     ];
                 },
                 _other: () => {
@@ -426,15 +491,14 @@ export class EndpointGenerator {
         if (body !== undefined) {
             expressions.push(...body);
         }
-        const url = shouldOverwriteUrl
-            ? new Expression({
-                  leftSide: `${this.blockArg}.url`,
-                  rightSide: `"#{${requestClientVariable.write({})}.default_environment[:${
-                      this.endpoint.baseUrl
-                  }]}/${path}"`,
-                  isAssignment: false
-              })
-            : undefined;
+        const getUrlParams = shouldOverwriteUrl
+            ? `environment: ${this.endpoint.baseUrl}, request_options: ${this.requestOptionsVariable.name}`
+            : `request_options: ${this.requestOptionsVariable.name}`;
+        const url = new Expression({
+            leftSide: `${this.blockArg}.url`,
+            rightSide: `"#{${requestClientVariable.write({})}.get_url(${getUrlParams})}/${path}"`,
+            isAssignment: false
+        });
         if (url !== undefined) {
             expressions.push(url);
         }
@@ -482,7 +546,45 @@ export class EndpointGenerator {
             json: (jr: JsonResponse) => {
                 const responseCr = this.crf.fromTypeReference(jr.responseBodyType);
                 return jr._visit<AstNode[]>({
-                    response: () => [responseCr.fromJson(responseVariableBody) ?? responseVariableBody],
+                    response: () => {
+                        const hasFromJson =
+                            responseCr.fromJson(responseVariableBody) !== undefined &&
+                            !(responseCr instanceof ArrayReference) &&
+                            !(responseCr instanceof HashReference) &&
+                            !(responseCr instanceof DateReference) &&
+                            !(
+                                responseCr instanceof AliasReference &&
+                                (responseCr.aliasOf instanceof ArrayReference ||
+                                    responseCr.aliasOf instanceof HashReference ||
+                                    responseCr.aliasOf instanceof DateReference)
+                            );
+                        if (hasFromJson) {
+                            return [responseCr.fromJson(responseVariableBody) ?? responseVariableBody];
+                        }
+
+                        const parsedJsonVariable = new Variable({
+                            name: "parsed_json",
+                            type: GenericClassReference,
+                            variableType: VariableType.LOCAL
+                        });
+                        return [
+                            new Expression({
+                                leftSide: parsedJsonVariable,
+                                rightSide: new FunctionInvocation({
+                                    onObject: JsonClassReference,
+                                    baseFunction: new Function_({ name: "parse", functionBody: [] }),
+                                    arguments_: [
+                                        new Argument({
+                                            value: responseVariableBody,
+                                            isNamed: false
+                                        })
+                                    ]
+                                }),
+                                isAssignment: true
+                            }),
+                            responseCr.fromJson(parsedJsonVariable) ?? parsedJsonVariable
+                        ];
+                    },
                     nestedPropertyAsResponse: (jrbwp: JsonResponseBodyWithProperty) => {
                         if (jrbwp.responseProperty !== undefined) {
                             // Turn to struct, then get the field, then reconvert to JSON (to_json)
@@ -491,7 +593,7 @@ export class EndpointGenerator {
                                 type: GenericClassReference,
                                 variableType: VariableType.LOCAL
                             });
-                            return [
+                            const parsingExpressions = [
                                 new Expression({
                                     leftSide: "parsed_json",
                                     rightSide: new FunctionInvocation({
@@ -500,16 +602,36 @@ export class EndpointGenerator {
                                         arguments_: [
                                             new Argument({
                                                 value: responseVariableBody,
-                                                type: GenericClassReference,
                                                 isNamed: false
                                             })
                                         ]
+                                    }),
+                                    isAssignment: true
+                                })
+                            ];
+                            const hasFromJson =
+                                responseCr.fromJson(nestedResponseValueVariable) !== undefined &&
+                                !(responseCr instanceof ArrayReference) &&
+                                !(responseCr instanceof HashReference) &&
+                                !(responseCr instanceof DateReference) &&
+                                !(
+                                    responseCr instanceof AliasReference &&
+                                    (responseCr.aliasOf instanceof ArrayReference ||
+                                        responseCr.aliasOf instanceof HashReference ||
+                                        responseCr.aliasOf instanceof DateReference)
+                                );
+
+                            if (hasFromJson) {
+                                parsingExpressions.push(
+                                    new Expression({
+                                        leftSide: nestedResponseValueVariable,
+                                        rightSide: `parsed_json["${jrbwp.responseProperty.name.wireValue}"].to_json`,
+                                        isAssignment: true
                                     })
-                                }),
-                                new Expression({
-                                    leftSide: nestedResponseValueVariable,
-                                    rightSide: `parsed_json["${jrbwp.responseProperty.name.wireValue}"].to_json`
-                                }),
+                                );
+                            }
+                            return [
+                                ...parsingExpressions,
                                 responseCr.fromJson(nestedResponseValueVariable) ?? nestedResponseValueVariable
                             ];
                         } else {

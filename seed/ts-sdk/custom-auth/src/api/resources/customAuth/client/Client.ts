@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedCustomAuth from "../../..";
+import * as SeedCustomAuth from "../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace CustomAuth {
     interface Options {
@@ -26,6 +26,9 @@ export class CustomAuth {
     /**
      * GET request with custom auth scheme
      * @throws {@link SeedCustomAuth.UnauthorizedRequest}
+     *
+     * @example
+     *     await seedCustomAuth.customAuth.getWithCustomAuth()
      */
     public async getWithCustomAuth(requestOptions?: CustomAuth.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({
@@ -33,7 +36,7 @@ export class CustomAuth {
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/custom-auth",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -90,6 +93,11 @@ export class CustomAuth {
      * POST request with custom auth scheme
      * @throws {@link SeedCustomAuth.UnauthorizedRequest}
      * @throws {@link SeedCustomAuth.BadRequest}
+     *
+     * @example
+     *     await seedCustomAuth.customAuth.postWithCustomAuth({
+     *         "key": "value"
+     *     })
      */
     public async postWithCustomAuth(request?: unknown, requestOptions?: CustomAuth.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({
@@ -97,7 +105,7 @@ export class CustomAuth {
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/custom-auth",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,

@@ -13,17 +13,19 @@ class BaseClientWrapper:
         *,
         username: typing.Union[str, typing.Callable[[], str]],
         password: typing.Union[str, typing.Callable[[], str]],
-        base_url: str
+        base_url: str,
+        timeout: typing.Optional[float] = None
     ):
         self._username = username
         self._password = password
         self._base_url = base_url
+        self._timeout = timeout
 
     def get_headers(self) -> typing.Dict[str, str]:
         headers: typing.Dict[str, str] = {
             "X-Fern-Language": "Python",
-            "X-Fern-SDK-Name": "seed",
-            "X-Fern-SDK-Version": "0.0.0",
+            "X-Fern-SDK-Name": "fern_basic-auth",
+            "X-Fern-SDK-Version": "0.0.1",
         }
         headers["Authorization"] = httpx.BasicAuth(self._get_username(), self._get_password())._auth_header
         return headers
@@ -43,6 +45,9 @@ class BaseClientWrapper:
     def get_base_url(self) -> str:
         return self._base_url
 
+    def get_timeout(self) -> typing.Optional[float]:
+        return self._timeout
+
 
 class SyncClientWrapper(BaseClientWrapper):
     def __init__(
@@ -51,9 +56,10 @@ class SyncClientWrapper(BaseClientWrapper):
         username: typing.Union[str, typing.Callable[[], str]],
         password: typing.Union[str, typing.Callable[[], str]],
         base_url: str,
+        timeout: typing.Optional[float] = None,
         httpx_client: httpx.Client
     ):
-        super().__init__(username=username, password=password, base_url=base_url)
+        super().__init__(username=username, password=password, base_url=base_url, timeout=timeout)
         self.httpx_client = HttpClient(httpx_client=httpx_client)
 
 
@@ -64,7 +70,8 @@ class AsyncClientWrapper(BaseClientWrapper):
         username: typing.Union[str, typing.Callable[[], str]],
         password: typing.Union[str, typing.Callable[[], str]],
         base_url: str,
+        timeout: typing.Optional[float] = None,
         httpx_client: httpx.AsyncClient
     ):
-        super().__init__(username=username, password=password, base_url=base_url)
+        super().__init__(username=username, password=password, base_url=base_url, timeout=timeout)
         self.httpx_client = AsyncHttpClient(httpx_client=httpx_client)

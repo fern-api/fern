@@ -4,25 +4,22 @@ from __future__ import annotations
 
 import typing
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from .....core.pydantic_utilities import pydantic_v1
 
 
-class Data_String(pydantic.BaseModel):
-    type: typing.Literal["string"]
+class Data_String(pydantic_v1.BaseModel):
+    type: typing.Literal["string"] = "string"
     value: str
 
 
-class Data_Base64(pydantic.BaseModel):
-    type: typing.Literal["base64"]
+class Data_Base64(pydantic_v1.BaseModel):
+    type: typing.Literal["base64"] = "base64"
     value: str
 
 
 """
 from seed.examples.resources.commons import Data_String
 
-Data_String(type="string", value="data")
+Data_String(value="data")
 """
 Data = typing.Union[Data_String, Data_Base64]

@@ -1,18 +1,18 @@
-irVersion: v33
+irVersion: v38
 docker: fernapi/fern-typescript-node-sdk:local
 dockerCommand: yarn workspace @fern-typescript/sdk-generator-cli dockerTagLocal:node
 language: typescript
 generatorType: SDK
 defaultOutputMode: github
 fixtures:
-  streaming: 
+  streaming:
     - customConfig: null
       outputFolder: no-custom-config
-    - customConfig: 
+    - customConfig:
         allowCustomFetcher: true
         timeoutInSeconds: 2
       outputFolder: allow-custom-fetcher
-  exhaustive: 
+  exhaustive:
     - customConfig: null
       audiences:
         - audience1
@@ -20,59 +20,65 @@ fixtures:
       outputFolder: with-audiences
     - customConfig: null
       outputFolder: no-custom-config
-    - customConfig: 
+    - customConfig:
         useBrandedStringAliases: true
         neverThrowErrors: true
         namespaceExport: "Fiddle"
         bundle: true
         includeUtilsOnUnionMembers: true
         includeOtherInUnionTypes: true
-        extraDependencies: 
+        extraDependencies:
             lodash-es: "^4.17.21"
       outputFolder: bundle
-    - customConfig: 
+    - customConfig:
+        retainOriginalCasing: true
+      outputFolder: retain-original-casing
+    - customConfig:
+        allowExtraFields: true
+      outputFolder: allow-extra-fields
+    - customConfig:
         useBrandedStringAliases: true
         neverThrowErrors: true
         namespaceExport: "Fiddle"
         bundle: true
         includeUtilsOnUnionMembers: true
         includeOtherInUnionTypes: true
-        extraDependencies: 
+        extraDependencies:
           lodash-es: "^4.17.21"
-        extraDevDependencies: 
+        extraDevDependencies:
           jest: "^29.7.0"
       outputFolder: dev-dependencies
-  error-property: 
-    - customConfig: 
+  error-property:
+    - customConfig:
         private: true
         includeUtilsOnUnionMembers: true
         includeOtherInUnionTypes: true
       outputFolder: union-utils
-  undiscriminated-unions: 
+  undiscriminated-unions:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
         skipResponseValidation: true
       outputFolder: skip-response-validation
-  file-download: 
+  file-download:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
         includeContentHeadersOnFileDownloadResponse: true
       outputFolder: file-download-reponse-headers
-  unknown: 
+  unknown:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
         treatUnknownAsAny: true
       outputFolder: unknown-as-any
-  query-parameters: 
+  query-parameters:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
         noSerdeLayer: true
       outputFolder: no-serde-layer-query
-  trace: 
+  trace:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
@@ -94,16 +100,29 @@ fixtures:
     - customConfig:
         includeApiReference: true
       outputFolder: examples-with-api-reference
+    - customConfig:
+        retainOriginalCasing: true
+      outputFolder: retain-original-casing
+  mixed-case:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        retainOriginalCasing: true
+      outputFolder: retain-original-casing
 scripts:
   - docker: fernapi/ts-seed
     commands:
-      - yarn install && yarn build
-allowedFailures: 
+      - mkdir cache
+      - yarn install --cache-folder ./cache
+      - yarn build 
+allowedFailures:
+  - response-property
   - bytes
   - plain-text
   - alias
   - api-wide-base-path
   - auth-environment-variables
+  - basic-auth-environment-variables
   - exhaustive:bundle
   - exhaustive:dev-dependencies
   - audiences

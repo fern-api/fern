@@ -32,8 +32,9 @@ class SdkGeneratorContext(ABC):
             type_declaration_referencer=TypeDeclarationReferencer(skip_resources_module=custom_config.improved_imports),
             generator_config=generator_config,
             project_module_path=project_module_path,
+            allow_skipping_validation=custom_config.pydantic_config.skip_validation,
         )
-        self.core_utilities = CoreUtilities()
+        self.core_utilities = CoreUtilities(allow_skipping_validation=custom_config.pydantic_config.skip_validation)
         self.custom_config = custom_config
 
     @abstractmethod
@@ -86,6 +87,10 @@ class SdkGeneratorContext(ABC):
 
     @abstractmethod
     def get_class_name_of_async_subpackage_service(self, subpackage_id: ir_types.SubpackageId) -> str:
+        ...
+
+    @abstractmethod
+    def get_filepath_for_generated_oauth_token_provider(self) -> Filepath:
         ...
 
     @abstractmethod

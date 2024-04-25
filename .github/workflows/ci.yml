@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - "packages/**"
+      # IR snapshot tests run on test definitions
+      - "test-definitions/**"
       # Add any generators that are written in TypeScript
       - "generators/openapi/**"
       - "generators/postman/**"
@@ -14,6 +16,8 @@ on:
   pull_request:
     paths:
       - "packages/**"
+      # IR snapshot tests run on test definitions
+      - "test-definitions/**"
       # Add any generators that are written in TypeScript
       - "generators/openapi/**"
       - "generators/postman/**"

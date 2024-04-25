@@ -10,7 +10,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -203,6 +203,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetAppsRequest",
@@ -247,10 +248,44 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        422,
-        500,
-      ],
+      "errors": {
+        "422": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -353,6 +388,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreateAppRequest",
@@ -524,11 +560,62 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-        422,
-        500,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "422": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -642,6 +729,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "UpdateAppRequest",
@@ -827,9 +915,26 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -928,6 +1033,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetAppInfoRequest",
@@ -979,10 +1085,44 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-        500,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -1004,6 +1144,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "queryParameters": [],
           "request": null,
           "response": null,
+          "type": "full",
         },
       ],
       "generatedRequestName": "DeleteAppRequest",
@@ -1043,9 +1184,26 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -1078,6 +1236,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "LoginAnonymousRequest",
@@ -1150,9 +1309,26 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -1196,6 +1372,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "LoginNicknameRequest",
@@ -1301,10 +1478,44 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        401,
-        404,
-      ],
+      "errors": {
+        "401": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnauthorizedErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -1348,6 +1559,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "LoginGoogleRequest",
@@ -1453,9 +1665,26 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -1567,6 +1796,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetBuildsRequest",
@@ -1625,9 +1855,26 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -1744,6 +1991,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetBuildInfoRequest",
@@ -1808,11 +2056,62 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-        422,
-        500,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "422": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -1919,6 +2218,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreateBuildRequest",
@@ -1970,10 +2270,44 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-        500,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [],
       "generatedRequestName": "RunBuildRequest",
       "headers": [],
@@ -2027,7 +2361,10 @@ exports[`open api parser hathora parse open api 1`] = `
         "type": "multipart",
       },
       "requestNameOverride": null,
-      "response": null,
+      "response": {
+        "description": "Ok",
+        "type": "file",
+      },
       "sdkName": null,
       "server": [],
       "summary": null,
@@ -2040,11 +2377,62 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-        422,
-        500,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "422": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -2076,6 +2464,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "queryParameters": [],
           "request": null,
           "response": null,
+          "type": "full",
         },
       ],
       "generatedRequestName": "DeleteBuildRequest",
@@ -2128,9 +2517,26 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -2256,6 +2662,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetDeploymentsRequest",
@@ -2314,9 +2721,26 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -2447,6 +2871,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetDeploymentInfoRequest",
@@ -2511,11 +2936,62 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-        422,
-        500,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "422": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -2696,6 +3172,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreateDeploymentRequest",
@@ -2772,7 +3249,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -2810,6 +3287,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetPingServiceEndpointsRequest",
@@ -2847,13 +3325,98 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": "Deprecated",
       "description": null,
-      "errorStatusCode": [
-        401,
-        404,
-        422,
-        429,
-        500,
-      ],
+      "errors": {
+        "401": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnauthorizedErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "422": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "429": {
+          "description": "",
+          "examples": [],
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "TooManyRequestsErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -2892,6 +3455,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "value": "string",
             },
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreatePrivateLobbyDeprecatedRequest",
@@ -3005,13 +3569,98 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": "Deprecated",
       "description": null,
-      "errorStatusCode": [
-        401,
-        404,
-        422,
-        429,
-        500,
-      ],
+      "errors": {
+        "401": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnauthorizedErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "422": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "429": {
+          "description": "",
+          "examples": [],
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "TooManyRequestsErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -3050,6 +3699,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "value": "string",
             },
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreatePublicLobbyDeprecatedRequest",
@@ -3163,10 +3813,44 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": "Deprecated",
       "description": null,
-      "errorStatusCode": [
-        401,
-        404,
-      ],
+      "errors": {
+        "401": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnauthorizedErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -3309,6 +3993,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListActivePublicLobbiesDeprecatedRequest",
@@ -3429,13 +4114,98 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": "Deprecated",
       "description": null,
-      "errorStatusCode": [
-        401,
-        404,
-        422,
-        429,
-        500,
-      ],
+      "errors": {
+        "401": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnauthorizedErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "422": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "429": {
+          "description": "",
+          "examples": [],
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "TooManyRequestsErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -3585,6 +4355,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreatePrivateLobbyRequest",
@@ -3734,13 +4505,98 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": "Deprecated",
       "description": null,
-      "errorStatusCode": [
-        401,
-        404,
-        422,
-        429,
-        500,
-      ],
+      "errors": {
+        "401": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnauthorizedErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "422": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "429": {
+          "description": "",
+          "examples": [],
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "TooManyRequestsErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -3890,6 +4746,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreatePublicLobbyRequest",
@@ -4039,13 +4896,98 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": "Deprecated",
       "description": null,
-      "errorStatusCode": [
-        401,
-        404,
-        422,
-        429,
-        500,
-      ],
+      "errors": {
+        "401": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnauthorizedErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "422": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "429": {
+          "description": "",
+          "examples": [],
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "TooManyRequestsErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -4195,6 +5137,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreateLocalLobbyRequest",
@@ -4344,13 +5287,98 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        401,
-        404,
-        422,
-        429,
-        500,
-      ],
+      "errors": {
+        "401": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnauthorizedErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "422": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "429": {
+          "description": "",
+          "examples": [],
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "TooManyRequestsErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -4504,6 +5532,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreateLobbyRequest",
@@ -4704,7 +5733,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -4836,6 +5865,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "ListActivePublicLobbiesRequest",
@@ -4915,9 +5945,26 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -5054,6 +6101,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetLobbyInfoRequest",
@@ -5118,10 +6166,44 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-        422,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "422": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -5266,6 +6348,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SetLobbyStateRequest",
@@ -5374,32 +6457,27 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [
-            {
-              "name": "appId",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "appId",
-                },
-              },
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
             },
-          ],
-          "queryParameters": [],
-          "request": null,
-          "response": null,
+            "type": "primitive",
+          },
         },
-      ],
+      },
+      "examples": [],
       "generatedRequestName": "GetLogsForAppRequest",
       "headers": [],
       "internal": null,
@@ -5489,7 +6567,10 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "request": null,
       "requestNameOverride": null,
-      "response": null,
+      "response": {
+        "description": "Ok",
+        "type": "file",
+      },
       "sdkName": null,
       "server": [],
       "summary": null,
@@ -5502,42 +6583,27 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
-      "examples": [
-        {
-          "codeSamples": [],
-          "description": null,
-          "headers": [],
-          "name": null,
-          "pathParameters": [
-            {
-              "name": "appId",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "appId",
-                },
-              },
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
             },
-            {
-              "name": "processId",
-              "value": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "processId",
-                },
-              },
-            },
-          ],
-          "queryParameters": [],
-          "request": null,
-          "response": null,
+            "type": "primitive",
+          },
         },
-      ],
+      },
+      "examples": [],
       "generatedRequestName": "GetLogsForProcessRequest",
       "headers": [],
       "internal": null,
@@ -5620,7 +6686,10 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "request": null,
       "requestNameOverride": null,
-      "response": null,
+      "response": {
+        "description": "Ok",
+        "type": "file",
+      },
       "sdkName": null,
       "server": [],
       "summary": null,
@@ -5633,7 +6702,26 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [],
       "generatedRequestName": "GetLogsForDeploymentRequest",
       "headers": [],
@@ -5733,10 +6821,44 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-        422,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "422": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -5868,6 +6990,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetMetricsRequest",
@@ -6026,9 +7149,26 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -6203,6 +7343,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetRunningProcessesRequest",
@@ -6282,9 +7423,26 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -6424,6 +7582,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetStoppedProcessesRequest",
@@ -6503,9 +7662,26 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -6650,6 +7826,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetProcessInfoRequest",
@@ -6714,10 +7891,44 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-        500,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -6753,6 +7964,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "value": "string",
             },
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CreateRoomRequest",
@@ -6833,9 +8045,26 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -6960,6 +8189,7 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetRoomInfoRequest",
@@ -7024,9 +8254,26 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -7118,6 +8365,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetActiveRoomsForProcessRequest",
@@ -7189,9 +8437,26 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -7283,6 +8548,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetInactiveRoomsForProcessRequest",
@@ -7354,10 +8620,44 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-        500,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -7389,6 +8689,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "queryParameters": [],
           "request": null,
           "response": null,
+          "type": "full",
         },
       ],
       "generatedRequestName": "DestroyRoomRequest",
@@ -7441,10 +8742,44 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-        500,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -7476,6 +8811,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "queryParameters": [],
           "request": null,
           "response": null,
+          "type": "full",
         },
       ],
       "generatedRequestName": "SuspendRoomRequest",
@@ -7528,11 +8864,62 @@ exports[`open api parser hathora parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": null,
-      "errorStatusCode": [
-        404,
-        422,
-        500,
-      ],
+      "errors": {
+        "404": {
+          "description": "",
+          "examples": [],
+          "generatedName": "NotFoundError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "NotFoundErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "422": {
+          "description": "",
+          "examples": [],
+          "generatedName": "UnprocessableEntityError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "UnprocessableEntityErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        "500": {
+          "description": "",
+          "examples": [],
+          "generatedName": "InternalServerError",
+          "nameOverride": null,
+          "schema": {
+            "description": null,
+            "generatedName": "InternalServerErrorBody",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "maxLength": null,
+              "minLength": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      },
       "examples": [],
       "generatedRequestName": "GetConnectionInfoRequest",
       "headers": [],
@@ -7592,94 +8979,8 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
     },
   ],
-  "errors": {
-    "401": {
-      "description": null,
-      "generatedName": "UnauthorizedError",
-      "nameOverride": null,
-      "schema": {
-        "description": null,
-        "generatedName": "UnauthorizedErrorBody",
-        "groupName": null,
-        "nameOverride": null,
-        "schema": {
-          "maxLength": null,
-          "minLength": null,
-          "type": "string",
-        },
-        "type": "primitive",
-      },
-    },
-    "404": {
-      "description": null,
-      "generatedName": "NotFoundError",
-      "nameOverride": null,
-      "schema": {
-        "description": null,
-        "generatedName": "NotFoundErrorBody",
-        "groupName": null,
-        "nameOverride": null,
-        "schema": {
-          "maxLength": null,
-          "minLength": null,
-          "type": "string",
-        },
-        "type": "primitive",
-      },
-    },
-    "422": {
-      "description": null,
-      "generatedName": "UnprocessableEntityError",
-      "nameOverride": null,
-      "schema": {
-        "description": null,
-        "generatedName": "UnprocessableEntityErrorBody",
-        "groupName": null,
-        "nameOverride": null,
-        "schema": {
-          "maxLength": null,
-          "minLength": null,
-          "type": "string",
-        },
-        "type": "primitive",
-      },
-    },
-    "429": {
-      "description": null,
-      "generatedName": "TooManyRequestsError",
-      "nameOverride": null,
-      "schema": {
-        "description": null,
-        "generatedName": "TooManyRequestsErrorBody",
-        "groupName": null,
-        "nameOverride": null,
-        "schema": {
-          "maxLength": null,
-          "minLength": null,
-          "type": "string",
-        },
-        "type": "primitive",
-      },
-    },
-    "500": {
-      "description": null,
-      "generatedName": "InternalServerError",
-      "nameOverride": null,
-      "schema": {
-        "description": null,
-        "generatedName": "InternalServerErrorBody",
-        "groupName": null,
-        "nameOverride": null,
-        "schema": {
-          "maxLength": null,
-          "minLength": null,
-          "type": "string",
-        },
-        "type": "primitive",
-      },
-    },
-  },
   "globalHeaders": [],
+  "groups": {},
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "ApplicationWithDeployment",

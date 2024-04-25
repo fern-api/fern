@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedApi from "../../..";
-import * as serializers from "../../../../serialization";
+import * as SeedApi from "../../../index";
+import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Imdb {
     interface Options {
@@ -25,6 +25,12 @@ export class Imdb {
 
     /**
      * Add a movie to the database
+     *
+     * @example
+     *     await seedApi.imdb.createMovie({
+     *         title: "string",
+     *         rating: 1.1
+     *     })
      */
     public async createMovie(
         request: SeedApi.CreateMovieRequest,
@@ -36,7 +42,7 @@ export class Imdb {
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/imdb",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -79,6 +85,9 @@ export class Imdb {
 
     /**
      * @throws {@link SeedApi.MovieDoesNotExistError}
+     *
+     * @example
+     *     await seedApi.imdb.getMovie("string")
      */
     public async getMovie(movieId: SeedApi.MovieId, requestOptions?: Imdb.RequestOptions): Promise<SeedApi.Movie> {
         const _response = await core.fetcher({
@@ -90,7 +99,7 @@ export class Imdb {
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/imdb",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -142,7 +151,7 @@ export class Imdb {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

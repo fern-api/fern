@@ -26,14 +26,14 @@
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck",
     "env:prod": "env-cmd -r .env-cmdrc.cjs -e prod",
-    "dist:cli": "yarn compile && node build.cjs",
+    "dist:cli": "yarn compile && node build.cjs && cp -R ../codegen/src/asIs dist",
     "publish:cli": "yarn dist:cli && cd dist && yarn npm publish",
     "dockerTagLatest": "yarn dist:cli && docker build -f ./Dockerfile -t fernapi/fern-csharp-model:latest ../../.."
   },
   "dependencies": {
-    "@fern-api/csharp-generator-cli": "workspace:*",
+    "@fern-api/csharp-codegen": "workspace:*",
+    "@fern-api/fs-utils": "workspace:*",
     "@fern-api/generator-commons": "workspace:*",
-    "@fern-fern/generator-exec-sdk": "0.0.619",
     "@fern-fern/ir-sdk": "0.0.3318",
     "zod": "^3.22.3"
   },

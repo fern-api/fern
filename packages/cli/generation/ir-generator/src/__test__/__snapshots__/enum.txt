@@ -617,6 +617,7 @@ exports[`generate IR 1`] = `
           "requestBody": {
             "contentType": null,
             "extends": [],
+            "extra-properties": false,
             "name": {
               "camelCase": {
                 "safeName": "sendEnumInlinedRequest",

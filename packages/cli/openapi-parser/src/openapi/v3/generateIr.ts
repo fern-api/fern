@@ -1,7 +1,10 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, isNonNullish } from "@fern-api/core-utils";
 import {
     Endpoint,
+    EndpointExample,
     EndpointWithExample,
+    ErrorExample,
+    HttpError,
     ObjectSchema,
     OpenApiIntermediateRepresentation,
     Schema,
@@ -11,9 +14,11 @@ import {
     Webhook
 } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
+import { mapValues } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../getExtension";
 import { convertSchema } from "../../schema/convertSchemas";
+import { convertToFullExample } from "../../schema/examples/convertToFullExample";
 import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "./AbstractOpenAPIV3ParserContext";
@@ -22,7 +27,9 @@ import { convertSecurityScheme } from "./converters/convertSecurityScheme";
 import { convertServer } from "./converters/convertServer";
 import { ERROR_NAMES } from "./converters/convertToHttpError";
 import { ExampleEndpointFactory } from "./converters/ExampleEndpointFactory";
+import { ConvertedOperation } from "./converters/operation/convertOperation";
 import { FernOpenAPIExtension } from "./extensions/fernExtensions";
+import { getFernGroups } from "./extensions/getFernGroups";
 import { getGlobalHeaders } from "./extensions/getGlobalHeaders";
 import { getVariableDefinitions } from "./extensions/getVariableDefinitions";
 import { hasIncompleteExample } from "./hasIncompleteExample";
@@ -32,11 +39,13 @@ import { runResolutions } from "./runResolutions";
 export function generateIr({
     openApi,
     taskContext,
-    disableExamples
+    disableExamples,
+    audiences
 }: {
     openApi: OpenAPIV3.Document;
     taskContext: TaskContext;
     disableExamples: boolean | undefined;
+    audiences: string[];
 }): OpenApiIntermediateRepresentation {
     openApi = runResolutions({ openapi: openApi });
 
@@ -70,10 +79,13 @@ export function generateIr({
             return;
         }
         taskContext.logger.debug(`Converting path ${path}`);
-        const pathWithoutTrailingSlash = path.replace(/\/$/, "");
-        const convertedOperations = convertPathItem(pathWithoutTrailingSlash, pathItem, openApi, context);
+        const convertedOperations = convertPathItem(path, pathItem, openApi, context);
 
         for (const operation of convertedOperations) {
+            const operationAudiences = getAudiences({ operation });
+            if (audiences.length > 0 && !audiences.some((audience) => operationAudiences.includes(audience))) {
+                continue;
+            }
             switch (operation.type) {
                 case "async":
                     endpointsWithExample.push(operation.sync);
@@ -122,17 +134,30 @@ export function generateIr({
             })
             .filter((entry) => entry.length > 0)
     );
-    const exampleEndpointFactory = new ExampleEndpointFactory(schemasWithExample, context.logger);
+
+    const schemasWithoutDiscriminants = maybeRemoveDiscriminantsFromSchemas(schemasWithExample, context);
+    const schemas: Record<string, Schema> = {};
+    for (const [key, schemaWithExample] of Object.entries(schemasWithoutDiscriminants)) {
+        const schema = convertSchemaWithExampleToSchema(schemaWithExample);
+        if (context.isSchemaExcluded(key)) {
+            continue;
+        }
+        schemas[key] = schema;
+        taskContext.logger.debug(`Converted schema ${key}`);
+    }
+
+    const exampleEndpointFactory = new ExampleEndpointFactory(schemasWithoutDiscriminants, context.logger);
     const endpoints = endpointsWithExample.map((endpointWithExample): Endpoint => {
         // if x-fern-examples is not present, generate an example
-        let examples = endpointWithExample.examples;
-        if (!disableExamples && (examples.length === 0 || examples.every(hasIncompleteExample))) {
+        const extensionExamples = endpointWithExample.examples;
+        let examples: EndpointExample[] = extensionExamples;
+        if (!disableExamples && (extensionExamples.length === 0 || extensionExamples.every(hasIncompleteExample))) {
             const endpointExample = exampleEndpointFactory.buildEndpointExample(endpointWithExample);
-            if (endpointExample != null) {
+            if (endpointExample.length > 0) {
                 examples = [
-                    endpointExample,
-                    // Remove incomplete examples
-                    ...endpointWithExample.examples.filter((example) => !hasIncompleteExample(example))
+                    ...endpointExample,
+                    // Remove incomplete examples (codesamples are included in generated examples)
+                    ...extensionExamples.filter((example) => !hasIncompleteExample(example))
                 ];
             }
         }
@@ -181,23 +206,43 @@ export function generateIr({
                     env: header.env
                 };
             }),
-            examples
+            examples,
+            errors: mapValues(endpointWithExample.errors, (error): HttpError => {
+                return {
+                    generatedName: error.generatedName,
+                    nameOverride: error.nameOverride,
+                    schema: convertSchemaWithExampleToSchema(error.schema),
+                    description: error.description,
+                    examples: error.fullExamples
+                        ?.map((example): ErrorExample | undefined => {
+                            const fullExample = convertToFullExample(example.value);
+
+                            if (fullExample == null) {
+                                return undefined;
+                            }
+
+                            return {
+                                name: example.name,
+                                description: example.description,
+                                example: fullExample
+                            };
+                        })
+                        .filter(isNonNullish)
+                };
+            })
         };
     });
 
-    const schemas: Record<string, Schema> = {};
-    for (const [key, schemaWithExample] of Object.entries(schemasWithExample)) {
-        const schema = convertSchemaWithExampleToSchema(schemaWithExample);
-        if (context.isSchemaExcluded(key)) {
-            continue;
-        }
-        schemas[key] = schema;
-        taskContext.logger.debug(`Converted schema ${key}`);
-    }
+    const groupInfo = getFernGroups({ document: openApi, context });
 
     const ir: OpenApiIntermediateRepresentation = {
         title: openApi.info.title,
         description: openApi.info.description,
+        groups: Object.fromEntries(
+            Object.entries(groupInfo ?? {}).map(([key, value]) => {
+                return [key, { summary: value.summary ?? undefined, description: value.description ?? undefined }];
+            })
+        ),
         servers: (openApi.servers ?? []).map((server) => convertServer(server)),
         tags: {
             tagsById: Object.fromEntries(
@@ -210,10 +255,9 @@ export function generateIr({
         endpoints,
         webhooks,
         channel: [],
-        schemas: maybeRemoveDiscriminantsFromSchemas(schemas, context),
+        schemas,
         securitySchemes,
         hasEndpointsMarkedInternal: endpoints.some((endpoint) => endpoint.internal),
-        errors: context.getErrors(),
         nonRequestReferencedSchemas: context.getReferencedSchemas(),
         variables,
         globalHeaders
@@ -223,10 +267,10 @@ export function generateIr({
 }
 
 function maybeRemoveDiscriminantsFromSchemas(
-    schemas: Record<string, Schema>,
+    schemas: Record<string, SchemaWithExample>,
     context: AbstractOpenAPIV3ParserContext
-): Record<string, Schema> {
-    const result: Record<string, Schema> = {};
+): Record<string, SchemaWithExample> {
+    const result: Record<string, SchemaWithExample> = {};
     for (const [schemaId, schema] of Object.entries(schemas)) {
         if (schema.type !== "object") {
             result[schemaId] = schema;
@@ -241,7 +285,7 @@ function maybeRemoveDiscriminantsFromSchemas(
             continue;
         }
 
-        const schemaWithoutDiscriminants: Schema.Object_ = {
+        const schemaWithoutDiscriminants: SchemaWithExample.Object_ = {
             ...schema,
             type: "object",
             properties: schema.properties.filter((objectProperty) => {
@@ -290,4 +334,24 @@ function getAllParentSchemaIds({
         }
     }
     return result;
+}
+
+function getAudiences({ operation }: { operation: ConvertedOperation }): string[] {
+    let endpointAudiences: string[] = [];
+    switch (operation.type) {
+        case "async":
+            endpointAudiences = operation.async.audiences;
+            break;
+        case "http":
+            endpointAudiences = operation.value.audiences;
+            break;
+        case "streaming":
+            endpointAudiences = operation.streaming.audiences;
+            break;
+        case "webhook":
+            break;
+        default:
+            assertNever(operation);
+    }
+    return endpointAudiences;
 }

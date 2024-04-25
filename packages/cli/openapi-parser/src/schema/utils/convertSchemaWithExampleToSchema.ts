@@ -102,6 +102,47 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
     }
 }
 
+export function convertSchemaWithExampleToOptionalSchema(schema: SchemaWithExample): Schema {
+    switch (schema.type) {
+        case "object":
+        case "array":
+        case "enum":
+        case "literal":
+        case "nullable":
+        case "primitive":
+        case "map":
+        case "reference":
+        case "unknown":
+            return Schema.optional({
+                generatedName: schema.generatedName,
+                nameOverride: schema.nameOverride,
+                description: schema.description,
+                value: convertSchemaWithExampleToSchema(schema),
+                groupName: schema.groupName
+            });
+        case "optional":
+            return Schema.optional({
+                generatedName: schema.generatedName,
+                nameOverride: schema.nameOverride,
+                description: schema.description,
+                value: convertSchemaWithExampleToSchema(schema.value),
+                groupName: schema.groupName
+            });
+        case "oneOf": {
+            const oneOfSchema = convertToOneOf(schema.value);
+            return Schema.optional({
+                generatedName: oneOfSchema.generatedName,
+                nameOverride: oneOfSchema.nameOverride,
+                description: oneOfSchema.description,
+                value: Schema.oneOf(convertToOneOf(schema.value)),
+                groupName: oneOfSchema.groupName
+            });
+        }
+        default:
+            assertNever(schema);
+    }
+}
+
 function convertToOneOf(oneOfSchema: OneOfSchemaWithExample): OneOfSchema {
     switch (oneOfSchema.type) {
         case "discriminated":

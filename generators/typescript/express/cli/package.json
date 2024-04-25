@@ -29,13 +29,13 @@
     "dockerTagVersion": "./docker/create_docker.sh"
   },
   "devDependencies": {
-    "@fern-fern/generator-exec-sdk": "0.0.619",
-    "@fern-fern/ir-sdk": "0.0.16",
+    "@fern-fern/generator-exec-sdk": "^0.0.763",
+    "@fern-fern/ir-sdk": "^38.0.0",
     "@fern-typescript/abstract-generator-cli": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/express-generator": "workspace:*",
-    "@ts-morph/common": "^0.21.0",
+    "@ts-morph/common": "^0.23.0",
     "@types/jest": "^29.0.3",
     "@types/lodash-es": "^4.17.9",
     "@types/node": "^18.7.18",
@@ -47,7 +47,6 @@
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
     "ts-loader": "^9.3.1",
-    "ts-node": "^10.9.1",
     "tsup": "^8.0.2",
     "typescript": "4.6.4",
     "zod": "^3.22.3"

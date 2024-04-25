@@ -1,0 +1,27 @@
+{
+    "irFilepath": "./ir.json",
+    "output": {
+        "mode": {
+            "repoUrl": "https://github.com/oauth-client-credentials-environment-variables/fern",
+            "version": "0.0.1",
+            "publishInfo": {
+                "registryUrl": "",
+                "coordinate": "com.fern:oauth-client-credentials-environment-variables",
+                "usernameEnvironmentVariable": "",
+                "passwordEnvironmentVariable": "",
+                "type": "maven"
+            },
+            "type": "github"
+        },
+        "path": "../"
+    },
+    "workspaceName": "oauth-client-credentials-environment-variables",
+    "organization": "seed",
+    "environment": {
+        "type": "local"
+    },
+    "dryRun": false,
+    "whitelabel": false,
+    "writeUnitTests": true,
+    "generateOauthClients": true
+}

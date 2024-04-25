@@ -1,6 +1,6 @@
 import { generatorsYml } from "@fern-api/configuration";
 import { noop } from "@fern-api/core-utils";
-import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
 import { InteractiveTaskContext } from "@fern-api/task-context";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
@@ -20,20 +20,24 @@ export declare namespace RemoteTaskHandler {
         taskId: FernFiddle.remoteGen.RemoteGenTaskId;
         interactiveTaskContext: InteractiveTaskContext;
         generatorInvocation: generatorsYml.GeneratorInvocation;
+        absolutePathToPreview: AbsoluteFilePath | undefined;
     }
     export interface Response {
         createdSnippets: boolean;
+        snippetsS3PreSignedReadUrl: string | undefined;
     }
 }
 
 export class RemoteTaskHandler {
     private context: InteractiveTaskContext;
     private generatorInvocation: generatorsYml.GeneratorInvocation;
+    private absolutePathToPreview: AbsoluteFilePath | undefined;
     private lengthOfLastLogs = 0;
 
-    constructor({ interactiveTaskContext, generatorInvocation }: RemoteTaskHandler.Init) {
+    constructor({ interactiveTaskContext, generatorInvocation, absolutePathToPreview }: RemoteTaskHandler.Init) {
         this.context = interactiveTaskContext;
         this.generatorInvocation = generatorInvocation;
+        this.absolutePathToPreview = absolutePathToPreview;
     }
 
     public async processUpdate(
@@ -53,15 +57,17 @@ export class RemoteTaskHandler {
             });
         });
 
-        this.context.setSubtitle(
-            coordinates.length > 0
-                ? coordinates
-                      .map((coordinate) => {
-                          return `◦ ${coordinate}`;
-                      })
-                      .join("\n")
-                : undefined
-        );
+        if (this.absolutePathToPreview == null) {
+            this.context.setSubtitle(
+                coordinates.length > 0
+                    ? coordinates
+                          .map((coordinate) => {
+                              return `◦ ${coordinate}`;
+                          })
+                          .join("\n")
+                    : undefined
+            );
+        }
 
         for (const newLog of remoteTask.logs.slice(this.lengthOfLastLogs)) {
             this.context.logger.log(convertLogLevel(newLog.level), newLog.message);
@@ -88,26 +94,41 @@ export class RemoteTaskHandler {
             finished: async (finishedStatus) => {
                 if (finishedStatus.s3PreSignedReadUrlV2 != null) {
                     logS3Url(finishedStatus.s3PreSignedReadUrlV2);
-                    if (this.generatorInvocation.absolutePathToLocalOutput != null) {
+                    const absolutePathToLocalOutput = this.getAbsolutePathToLocalOutput();
+                    if (absolutePathToLocalOutput != null) {
                         await downloadFilesForTask({
                             s3PreSignedReadUrl: finishedStatus.s3PreSignedReadUrlV2,
-                            absolutePathToLocalOutput: this.generatorInvocation.absolutePathToLocalOutput,
+                            absolutePathToLocalOutput,
                             context: this.context
                         });
                     }
                 }
-                for (const coordinate of coordinates) {
-                    this.context.logger.info(`Published ${coordinate}`);
+                if (this.absolutePathToPreview == null) {
+                    for (const coordinate of coordinates) {
+                        this.context.logger.info(`Published ${coordinate}`);
+                    }
                 }
                 this.#isFinished = true;
                 this.#createdSnippets = finishedStatus.createdSnippets != null ? finishedStatus.createdSnippets : false;
+                this.#snippetsS3PreSignedReadUrl = finishedStatus.snippetsS3PreSignedReadUrl;
             },
             _other: () => {
                 this.context.logger.warn("Received unknown update type: " + remoteTask.status.type);
             }
         });
 
-        return this.#isFinished ? { createdSnippets: this.#createdSnippets } : undefined;
+        return this.#isFinished
+            ? {
+                  createdSnippets: this.#createdSnippets,
+                  snippetsS3PreSignedReadUrl: this.#snippetsS3PreSignedReadUrl
+              }
+            : undefined;
+    }
+
+    private getAbsolutePathToLocalOutput(): AbsoluteFilePath | undefined {
+        return this.absolutePathToPreview != null
+            ? join(this.absolutePathToPreview, RelativeFilePath.of(path.basename(this.generatorInvocation.name)))
+            : this.generatorInvocation.absolutePathToLocalOutput;
     }
 
     #isFinished = false;
@@ -118,6 +139,11 @@ export class RemoteTaskHandler {
     #createdSnippets = false;
     public get createdSnippets(): boolean {
         return this.#createdSnippets;
+    }
+
+    #snippetsS3PreSignedReadUrl: string | undefined = undefined;
+    public get snippetsS3PreSignedReadUrl(): string | undefined {
+        return this.#snippetsS3PreSignedReadUrl;
     }
 }
 
@@ -131,27 +157,40 @@ async function downloadFilesForTask({
     context: InteractiveTaskContext;
 }) {
     try {
-        // initiate request
-        const request = await axios.get(s3PreSignedReadUrl, {
-            responseType: "stream"
+        await downloadZipForTask({
+            s3PreSignedReadUrl,
+            absolutePathToLocalOutput
         });
-
-        // pipe to zip
-        const tmpDir = await tmp.dir({ prefix: "fern", unsafeCleanup: true });
-        const outputZipPath = path.join(tmpDir.path, "output.zip");
-        await pipeline(request.data, createWriteStream(outputZipPath));
-
-        // decompress to user-specified location
-        if (await doesPathExist(absolutePathToLocalOutput)) {
-            await rm(absolutePathToLocalOutput, { recursive: true });
-        }
-        await mkdir(absolutePathToLocalOutput, { recursive: true });
-        await decompress(outputZipPath, absolutePathToLocalOutput);
 
         context.logger.info(chalk.green(`Downloaded to ${absolutePathToLocalOutput}`));
     } catch (e) {
         context.failAndThrow("Failed to download files", e);
     }
+}
+
+async function downloadZipForTask({
+    s3PreSignedReadUrl,
+    absolutePathToLocalOutput
+}: {
+    s3PreSignedReadUrl: string;
+    absolutePathToLocalOutput: AbsoluteFilePath;
+}): Promise<void> {
+    // initiate request
+    const request = await axios.get(s3PreSignedReadUrl, {
+        responseType: "stream"
+    });
+
+    // pipe to zip
+    const tmpDir = await tmp.dir({ prefix: "fern", unsafeCleanup: true });
+    const outputZipPath = path.join(tmpDir.path, "output.zip");
+    await pipeline(request.data, createWriteStream(outputZipPath));
+
+    // decompress to user-specified location
+    if (await doesPathExist(absolutePathToLocalOutput)) {
+        await rm(absolutePathToLocalOutput, { recursive: true });
+    }
+    await mkdir(absolutePathToLocalOutput, { recursive: true });
+    await decompress(outputZipPath, absolutePathToLocalOutput);
 }
 
 function convertLogLevel(logLevel: FernFiddle.LogLevel): LogLevel {

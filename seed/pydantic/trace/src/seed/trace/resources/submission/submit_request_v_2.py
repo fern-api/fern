@@ -4,24 +4,20 @@ import datetime as dt
 import typing
 
 from ...core.datetime_utils import serialize_datetime
+from ...core.pydantic_utilities import pydantic_v1
 from ..commons.language import Language
 from ..commons.problem_id import ProblemId
 from .submission_file_info import SubmissionFileInfo
 from .submission_id import SubmissionId
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class SubmitRequestV2(pydantic.BaseModel):
-    submission_id: SubmissionId = pydantic.Field(alias="submissionId")
+class SubmitRequestV2(pydantic_v1.BaseModel):
+    submission_id: SubmissionId = pydantic_v1.Field(alias="submissionId")
     language: Language
-    submission_files: typing.List[SubmissionFileInfo] = pydantic.Field(alias="submissionFiles")
-    problem_id: ProblemId = pydantic.Field(alias="problemId")
-    problem_version: typing.Optional[int] = pydantic.Field(alias="problemVersion")
-    user_id: typing.Optional[str] = pydantic.Field(alias="userId")
+    submission_files: typing.List[SubmissionFileInfo] = pydantic_v1.Field(alias="submissionFiles")
+    problem_id: ProblemId = pydantic_v1.Field(alias="problemId")
+    problem_version: typing.Optional[int] = pydantic_v1.Field(alias="problemVersion", default=None)
+    user_id: typing.Optional[str] = pydantic_v1.Field(alias="userId", default=None)
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -34,5 +30,5 @@ class SubmitRequestV2(pydantic.BaseModel):
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

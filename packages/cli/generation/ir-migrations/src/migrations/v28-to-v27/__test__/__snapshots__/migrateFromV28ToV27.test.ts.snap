@@ -151,6 +151,7 @@ exports[`migrateFromV28ToV27 snapshot 1`] = `
             "_visit": [Function],
             "contentType": undefined,
             "extends": [],
+            "extraProperties": false,
             "name": {
               "camelCase": {
                 "safeName": "getUnauthorizedUserRequest",
@@ -545,6 +546,7 @@ exports[`migrateFromV28ToV27 snapshot 1`] = `
       "shape": {
         "_visit": [Function],
         "extends": [],
+        "extraProperties": false,
         "properties": [
           {
             "availability": undefined,

@@ -1,0 +1,116 @@
+openapi: 3.0.1
+info:
+  title: api
+  version: ''
+paths: {}
+components:
+  schemas:
+    ImportingA:
+      title: ImportingA
+      type: object
+      properties:
+        a:
+          $ref: '#/components/schemas/A'
+          nullable: true
+    RootType:
+      title: RootType
+      type: object
+      properties:
+        s:
+          type: string
+      required:
+        - s
+    A:
+      title: A
+      type: object
+      properties: {}
+      allOf:
+        - $ref: '#/components/schemas/RootType'
+    ContainerValue:
+      title: ContainerValue
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - list
+            value:
+              type: array
+              items:
+                $ref: '#/components/schemas/FieldValue'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - optional
+            value:
+              $ref: '#/components/schemas/FieldValue'
+              nullable: true
+          required:
+            - type
+    PrimitiveValue:
+      title: PrimitiveValue
+      type: string
+      enum:
+        - STRING
+        - NUMBER
+    ObjectValue:
+      title: ObjectValue
+      type: object
+      properties: {}
+    FieldName:
+      title: FieldName
+      type: string
+    FieldValue:
+      title: FieldValue
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - primitive_value
+            value:
+              $ref: '#/components/schemas/PrimitiveValue'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - object_value
+            - $ref: '#/components/schemas/ObjectValue'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - container_value
+            value:
+              $ref: '#/components/schemas/ContainerValue'
+          required:
+            - type
+    ObjectFieldValue:
+      title: ObjectFieldValue
+      type: object
+      description: >-
+        This type allows us to test a circular reference with a union type (see
+        FieldValue).
+      properties:
+        name:
+          $ref: '#/components/schemas/FieldName'
+        value:
+          $ref: '#/components/schemas/FieldValue'
+      required:
+        - name
+        - value
+  securitySchemes: {}

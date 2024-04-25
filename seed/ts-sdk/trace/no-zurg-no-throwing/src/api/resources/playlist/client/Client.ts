@@ -4,7 +4,7 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as SeedTrace from "../../..";
+import * as SeedTrace from "../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Playlist {
@@ -25,6 +25,16 @@ export class Playlist {
 
     /**
      * Create a new playlist
+     *
+     * @example
+     *     await seedTrace.playlist.createPlaylist(1, {
+     *         datetime: new Date("2024-01-15T09:30:00.000Z"),
+     *         optionalDatetime: new Date("2024-01-15T09:30:00.000Z"),
+     *         body: {
+     *             name: "string",
+     *             problems: ["string"]
+     *         }
+     *     })
      */
     public async createPlaylist(
         serviceParam: number,
@@ -51,7 +61,7 @@ export class Playlist {
                         ? await core.Supplier.get(this._options.xRandomHeader)
                         : undefined,
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -77,6 +87,15 @@ export class Playlist {
 
     /**
      * Returns the user's playlists
+     *
+     * @example
+     *     await seedTrace.playlist.getPlaylists(1, {
+     *         limit: 1,
+     *         otherField: "string",
+     *         multiLineDocs: "string",
+     *         optionalMultipleField: "string",
+     *         multipleField: "string"
+     *     })
      */
     public async getPlaylists(
         serviceParam: number,
@@ -118,7 +137,7 @@ export class Playlist {
                         ? await core.Supplier.get(this._options.xRandomHeader)
                         : undefined,
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -143,6 +162,9 @@ export class Playlist {
 
     /**
      * Returns a playlist
+     *
+     * @example
+     *     await seedTrace.playlist.getPlaylist(1, "string")
      */
     public async getPlaylist(
         serviceParam: number,
@@ -162,7 +184,7 @@ export class Playlist {
                         ? await core.Supplier.get(this._options.xRandomHeader)
                         : undefined,
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -197,6 +219,12 @@ export class Playlist {
 
     /**
      * Updates a playlist
+     *
+     * @example
+     *     await seedTrace.playlist.updatePlaylist(1, "string", {
+     *         name: "string",
+     *         problems: ["string"]
+     *     })
      */
     public async updatePlaylist(
         serviceParam: number,
@@ -217,7 +245,7 @@ export class Playlist {
                         ? await core.Supplier.get(this._options.xRandomHeader)
                         : undefined,
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -252,6 +280,9 @@ export class Playlist {
 
     /**
      * Deletes a playlist
+     *
+     * @example
+     *     await seedTrace.playlist.deletePlaylist(1, "string")
      */
     public async deletePlaylist(
         serviceParam: number,
@@ -271,7 +302,7 @@ export class Playlist {
                         ? await core.Supplier.get(this._options.xRandomHeader)
                         : undefined,
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -293,7 +324,7 @@ export class Playlist {
         };
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

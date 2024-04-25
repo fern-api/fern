@@ -3,7 +3,7 @@ import {
     ClassReference,
     GenericClassReference,
     JsonClassReference,
-    OpenStructClassReference,
+    StringClassReference,
     VoidClassReference
 } from "../classes/ClassReference";
 import { Class_ } from "../classes/Class_";
@@ -11,6 +11,7 @@ import { Expression } from "../expressions/Expression";
 import { FunctionInvocation } from "../functions/FunctionInvocation";
 import { Function_ } from "../functions/Function_";
 import { Parameter } from "../Parameter";
+import { ConditionalStatement } from "./ConditionalStatement";
 import { RescueStatement } from "./RescueStatement";
 
 export declare namespace UndiscriminatedUnion {
@@ -31,7 +32,7 @@ export class UndiscriminatedUnion extends Class_ {
     }
 
     private static createFromJsonFunction(subclasses: ClassReference[], classReference: ClassReference): Function_ {
-        const jsonObjectParameter = new Parameter({ name: "json_object", type: JsonClassReference });
+        const jsonObjectParameter = new Parameter({ name: "json_object", type: StringClassReference });
         const functionBody = [
             new Expression({
                 leftSide: "struct",
@@ -41,36 +42,49 @@ export class UndiscriminatedUnion extends Class_ {
                     arguments_: [
                         new Argument({
                             value: jsonObjectParameter.name,
-                            type: GenericClassReference,
                             isNamed: false
                         }),
                         new Argument({
                             name: "object_class",
                             value: "OpenStruct",
-                            type: OpenStructClassReference,
                             isNamed: true
                         })
                     ]
                 }),
                 isAssignment: true
             }),
-            ...subclasses.map(
-                (sc) =>
-                    new RescueStatement({
-                        begin: [
-                            new Expression({
-                                rightSide: sc.validateRaw("struct"),
-                                isAssignment: false
-                            }),
-                            new Expression({
-                                leftSide: "return",
-                                rightSide: sc.fromJson(jsonObjectParameter.name) ?? jsonObjectParameter.name,
-                                isAssignment: false
-                            })
-                        ],
-                        rescue: [new Expression({ rightSide: "# noop", isAssignment: false })]
-                    })
-            ),
+            ...subclasses.map((sc) => {
+                return new RescueStatement({
+                    begin: [
+                        new Expression({
+                            rightSide: sc.validateRaw("struct"),
+                            isAssignment: false
+                        }),
+                        new ConditionalStatement({
+                            if_: {
+                                leftSide: new FunctionInvocation({
+                                    onObject: jsonObjectParameter.name,
+                                    baseFunction: new Function_({
+                                        name: "nil?",
+                                        functionBody: []
+                                    }),
+                                    optionalSafeCall: false
+                                }),
+                                operation: "!",
+                                expressions: [
+                                    new Expression({
+                                        leftSide: "return",
+                                        rightSide: sc.fromJson(jsonObjectParameter.name) ?? jsonObjectParameter.name,
+                                        isAssignment: false
+                                    })
+                                ]
+                            },
+                            else_: [new Expression({ leftSide: "return", rightSide: "nil", isAssignment: false })]
+                        })
+                    ],
+                    rescue: [new Expression({ rightSide: "# noop", isAssignment: false })]
+                });
+            }),
             new Expression({
                 leftSide: "return struct",
                 isAssignment: false

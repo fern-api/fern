@@ -9,7 +9,10 @@ export const OpenAPIExtension = {
     /* This extension is used for specifying examples */
     EXAMPLES: "x-examples",
     /* This extension is used for specifying tags on schemas*/
-    TAGS: "x-tags"
+    TAGS: "x-tags",
+    /* https://redocly.com/docs/api-reference-docs/specification-extensions/x-code-samples/ */
+    REDOCLY_CODE_SAMPLES_KEBAB: "x-code-samples",
+    REDOCLY_CODE_SAMPLES_CAMEL: "x-codeSamples"
 } as const;
 
 export type OpenAPIExtension = Values<typeof OpenAPIExtension>;

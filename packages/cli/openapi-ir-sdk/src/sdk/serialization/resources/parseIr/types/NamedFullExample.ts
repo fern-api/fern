@@ -9,13 +9,15 @@ import * as core from "../../../../core";
 export const NamedFullExample: core.serialization.ObjectSchema<
     serializers.NamedFullExample.Raw,
     FernOpenapiIr.NamedFullExample
-> = core.serialization.objectWithoutOptionalProperties({
-    name: core.serialization.string().optional(),
-    value: core.serialization.unknown(),
-});
+> = core.serialization
+    .objectWithoutOptionalProperties({
+        name: core.serialization.string().optional(),
+        value: core.serialization.unknown(),
+    })
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
 
 export declare namespace NamedFullExample {
-    interface Raw {
+    interface Raw extends serializers.WithDescription.Raw {
         name?: string | null;
         value?: unknown;
     }

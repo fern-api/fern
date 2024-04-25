@@ -1,7 +1,8 @@
+import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { Endpoint, EndpointAvailability, EndpointExample, Request, Schema, SchemaId } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { buildEndpointExample } from "./buildEndpointExample";
+import { buildEndpointExample, convertFullExample } from "./buildEndpointExample";
 import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefinition";
 import { buildHeader } from "./buildHeader";
 import { buildPathParameter } from "./buildPathParameter";
@@ -25,7 +26,7 @@ export function buildEndpoint({
     declarationFile: RelativeFilePath;
     endpoint: Endpoint;
 }): ConvertedEndpoint {
-    const { errors, nonRequestReferencedSchemas } = context.ir;
+    const { nonRequestReferencedSchemas } = context.ir;
 
     let schemaIdsToExclude: string[] = [];
 
@@ -141,7 +142,20 @@ export function buildEndpoint({
                 });
                 convertedEndpoint["response-stream"] = {
                     docs: jsonResponse.description ?? undefined,
-                    type: getTypeFromTypeReference(responseTypeReference)
+                    type: getTypeFromTypeReference(responseTypeReference),
+                    format: "json"
+                };
+            },
+            streamingSse: (jsonResponse) => {
+                const responseTypeReference = buildTypeReference({
+                    schema: jsonResponse.schema,
+                    context,
+                    fileContainingReference: declarationFile
+                });
+                convertedEndpoint["response-stream"] = {
+                    docs: jsonResponse.description ?? undefined,
+                    type: getTypeFromTypeReference(responseTypeReference),
+                    format: "sse"
                 };
             },
             file: (fileResponse) => {
@@ -185,17 +199,60 @@ export function buildEndpoint({
         convertedEndpoint.availability = "deprecated";
     }
 
-    endpoint.errorStatusCode.forEach((statusCode) => {
-        const errorName = errors[statusCode]?.generatedName;
-        if (errorName != null) {
-            if (convertedEndpoint.errors == null) {
-                convertedEndpoint.errors = [];
+    Object.entries(endpoint.errors).forEach(([statusCode, httpError]) => {
+        let errorName = httpError.generatedName;
+        const fileContainingReference = RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME);
+        if (context.builder.enableUniqueErrorsPerEndpoint) {
+            errorName = `${endpoint.generatedRequestName}${httpError.generatedName}`;
+            if (httpError.schema != null) {
+                if (httpError.schema.type !== "reference" && httpError.schema.type !== "oneOf") {
+                    httpError.schema.generatedName = `${endpoint.generatedRequestName}${httpError.schema.generatedName}`;
+                } else if (httpError.schema.type === "oneOf") {
+                    httpError.schema.value.generatedName = `${endpoint.generatedRequestName}${httpError.schema.value.generatedName}`;
+                }
             }
-            const prefix = context.builder.addImport({
-                file: declarationFile,
-                fileToImport: ERROR_DECLARATIONS_FILENAME
+            // fileContainingReference = declarationFile;
+        }
+
+        const errorDeclaration: RawSchemas.ErrorDeclarationSchema = {
+            "status-code": parseInt(statusCode)
+        };
+
+        if (httpError.schema != null) {
+            const typeReference = buildTypeReference({
+                schema: httpError.schema,
+                context,
+                fileContainingReference
             });
-            convertedEndpoint.errors.push(prefix != null ? `${prefix}.${errorName}` : errorName);
+            errorDeclaration.type = getTypeFromTypeReference(typeReference);
+            errorDeclaration.docs = httpError.description;
+        }
+
+        context.builder.addError(ERROR_DECLARATIONS_FILENAME, {
+            name: errorName,
+            schema: errorDeclaration
+        });
+
+        if (convertedEndpoint.errors == null) {
+            convertedEndpoint.errors = [];
+        }
+        const prefix = context.builder.addImport({
+            file: declarationFile,
+            fileToImport: ERROR_DECLARATIONS_FILENAME
+        });
+        convertedEndpoint.errors.push(prefix != null ? `${prefix}.${errorName}` : errorName);
+
+        const errorTypeReference = errorDeclaration.type;
+        if (errorTypeReference != null) {
+            httpError.examples?.forEach((example) => {
+                const convertedExample: RawSchemas.ExampleTypeSchema = {
+                    value: convertFullExample(example.example),
+                    name: example.name,
+                    docs: example.description
+                };
+
+                context.builder.addTypeExample(fileContainingReference, errorTypeReference, convertedExample);
+            });
         }
     });
 
@@ -270,7 +327,7 @@ function getRequest({
         // the request body is referenced if it is not an object or if other parts of the spec
         // refer to the same type
         if (
-            resolvedSchema.type !== "object" ||
+            resolvedSchema?.type !== "object" ||
             (maybeSchemaId != null && nonRequestReferencedSchemas.includes(maybeSchemaId))
         ) {
             const requestTypeReference = buildTypeReference({
@@ -393,7 +450,8 @@ function getRequest({
                 headers,
                 body: {
                     properties
-                }
+                },
+                "content-type": "multipart/form-data"
             }
         };
     }

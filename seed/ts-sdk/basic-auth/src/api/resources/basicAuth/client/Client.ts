@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedBasicAuth from "../../..";
+import * as SeedBasicAuth from "../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace BasicAuth {
     interface Options {
@@ -27,6 +27,9 @@ export class BasicAuth {
     /**
      * GET request with basic auth scheme
      * @throws {@link SeedBasicAuth.UnauthorizedRequest}
+     *
+     * @example
+     *     await seedBasicAuth.basicAuth.getWithBasicAuth()
      */
     public async getWithBasicAuth(requestOptions?: BasicAuth.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({
@@ -35,7 +38,7 @@ export class BasicAuth {
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/basic-auth",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -91,6 +94,11 @@ export class BasicAuth {
      * POST request with basic auth scheme
      * @throws {@link SeedBasicAuth.UnauthorizedRequest}
      * @throws {@link SeedBasicAuth.BadRequest}
+     *
+     * @example
+     *     await seedBasicAuth.basicAuth.postWithBasicAuth({
+     *         "key": "value"
+     *     })
      */
     public async postWithBasicAuth(request?: unknown, requestOptions?: BasicAuth.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({
@@ -99,7 +107,7 @@ export class BasicAuth {
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/basic-auth",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -154,7 +162,7 @@ export class BasicAuth {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         return core.BasicAuth.toAuthorizationHeader({
             username: await core.Supplier.get(this._options.username),
             password: await core.Supplier.get(this._options.password),

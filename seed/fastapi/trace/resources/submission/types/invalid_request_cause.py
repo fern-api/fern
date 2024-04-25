@@ -5,7 +5,10 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 from .custom_test_cases_unsupported import (
     CustomTestCasesUnsupported as resources_submission_types_custom_test_cases_unsupported_CustomTestCasesUnsupported,
 )
@@ -13,11 +16,6 @@ from .submission_id_not_found import (
     SubmissionIdNotFound as resources_submission_types_submission_id_not_found_SubmissionIdNotFound,
 )
 from .unexpected_language_error import UnexpectedLanguageError
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -49,7 +47,7 @@ class _Factory:
         )
 
 
-class InvalidRequestCause(pydantic.BaseModel):
+class InvalidRequestCause(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(
@@ -88,13 +86,13 @@ class InvalidRequestCause(pydantic.BaseModel):
                 UnexpectedLanguageError(**self.__root__.dict(exclude_unset=True, exclude={"type"}))
             )
 
-    __root__: typing.Annotated[
+    __root__: typing_extensions.Annotated[
         typing.Union[
             _InvalidRequestCause.SubmissionIdNotFound,
             _InvalidRequestCause.CustomTestCasesUnsupported,
             _InvalidRequestCause.UnexpectedLanguage,
         ],
-        pydantic.Field(discriminator="type"),
+        pydantic_v1.Field(discriminator="type"),
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -106,13 +104,13 @@ class InvalidRequestCause(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _InvalidRequestCause:
     class SubmissionIdNotFound(resources_submission_types_submission_id_not_found_SubmissionIdNotFound):
-        type: typing.Literal["submissionIdNotFound"]
+        type: typing.Literal["submissionIdNotFound"] = "submissionIdNotFound"
 
         class Config:
             allow_population_by_field_name = True
@@ -121,14 +119,14 @@ class _InvalidRequestCause:
     class CustomTestCasesUnsupported(
         resources_submission_types_custom_test_cases_unsupported_CustomTestCasesUnsupported
     ):
-        type: typing.Literal["customTestCasesUnsupported"]
+        type: typing.Literal["customTestCasesUnsupported"] = "customTestCasesUnsupported"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class UnexpectedLanguage(UnexpectedLanguageError):
-        type: typing.Literal["unexpectedLanguage"]
+        type: typing.Literal["unexpectedLanguage"] = "unexpectedLanguage"
 
         class Config:
             allow_population_by_field_name = True

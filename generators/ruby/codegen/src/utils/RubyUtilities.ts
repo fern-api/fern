@@ -13,17 +13,40 @@ import { GeneratedRubyFile } from "./GeneratedRubyFile";
 export const MINIMUM_RUBY_VERSION = "2.7";
 
 export function getGemName(organization: string, apiName: string, clientClassName?: string, gemName?: string): string {
-    return gemName ?? snakeCase(getClientName(organization, apiName, clientClassName));
+    return gemName != null ? snakeCase(gemName) : snakeCase(getClientName(organization, apiName, clientClassName));
 }
 
 export function getClientName(organization: string, apiName: string, clientClassName?: string): string {
     return clientClassName ?? upperFirst(camelCase(organization)) + upperFirst(camelCase(apiName)) + "Client";
 }
 
-export function getBreadcrumbsFromFilepath(fernFilepath: FernFilepath, includeFullPath?: boolean): string[] {
-    return (includeFullPath === true ? fernFilepath.allParts : fernFilepath.packagePath).map(
-        (pathPart) => pathPart.pascalCase.safeName
-    );
+export function getBreadcrumbsFromFilepath(
+    fernFilepath: FernFilepath,
+    clientName: string,
+    includeFullPath?: boolean
+): string[] {
+    return [
+        clientName,
+        ...(includeFullPath === true ? fernFilepath.allParts : fernFilepath.packagePath).map(
+            (pathPart) => pathPart.pascalCase.safeName
+        )
+    ];
+}
+
+export function generateBasicRakefile(): GeneratedFile {
+    const content = `# frozen_string_literal: true
+require "rake/testtask"
+require "rubocop/rake_task"
+
+task default: %i[test rubocop]
+
+Rake::TestTask.new do |t|
+    t.pattern = "./test/**/test_*.rb"
+end
+    
+RuboCop::RakeTask.new   
+`;
+    return new GeneratedFile("Rakefile", RelativeFilePath.of("."), content);
 }
 
 // These tests are so static + basic that I didn't go through the trouble of leveraging the AST
@@ -44,7 +67,7 @@ require "${gemName}"
 # Basic ${clientName} tests
 class Test${clientName} < Minitest::Test
   def test_function
-    ${clientName}::Client.new
+    # ${clientName}::Client.new
   end
 end`;
     const testFile = new GeneratedFile(`test_${gemName}.rb`, RelativeFilePath.of("test/"), testContent);
@@ -83,7 +106,7 @@ export function generateGemspec(
     });
     return new GeneratedRubyFile({
         rootNode: gemspec,
-        fullPath: `${gemName}`,
+        fullPath: gemName,
         fileExtension: "gemspec",
         isConfigurationFile: true
     });
@@ -158,6 +181,9 @@ jobs:
             with:
               ruby-version: 2.7
               bundler-cache: true
+
+          - name: Test gem
+            run: bundle install && bundle exec rake test
               
           - name: Build and Push Gem
             env:

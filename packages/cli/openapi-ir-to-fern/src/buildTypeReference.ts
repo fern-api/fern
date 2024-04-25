@@ -96,14 +96,17 @@ export function buildReferenceTypeReference({
     context: OpenApiIrConverterContext;
 }): RawSchemas.TypeReferenceWithDocsSchema {
     const resolvedSchema = context.getSchema(schema.schema);
+    if (resolvedSchema == null) {
+        return "unknown";
+    }
     const schemaName = getSchemaName(resolvedSchema) ?? schema.schema;
     const groupName = getGroupNameForSchema(resolvedSchema);
     const typeWithPrefix = getPrefixedType({
         context,
         fileContainingReference,
         declarationFile:
-            groupName != null
-                ? RelativeFilePath.of(`${camelCase(groupName)}.yml`)
+            groupName != null && groupName.length > 0
+                ? RelativeFilePath.of(`${groupName.map(camelCase).join("/")}.yml`)
                 : RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME),
         type: schemaName
     });

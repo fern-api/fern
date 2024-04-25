@@ -10,7 +10,9 @@ export const ExpressCustomConfigSchema = z.strictObject({
     // beta (not in docs)
     outputSourceFiles: z.optional(z.boolean()),
     includeUtilsOnUnionMembers: z.optional(z.boolean()),
-    includeOtherInUnionTypes: z.optional(z.boolean())
+    includeOtherInUnionTypes: z.optional(z.boolean()),
+    retainOriginalCasing: z.optional(z.boolean()),
+    allowExtraFields: z.optional(z.boolean())
 });
 
 export type ExpressCustomConfigSchema = z.infer<typeof ExpressCustomConfigSchema>;

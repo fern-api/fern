@@ -14,6 +14,11 @@ import { generateIr as generateIrFromV3 } from "./v3/generateIr";
 export interface Spec {
     absoluteFilepath: AbsoluteFilePath;
     absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
+    settings?: SpecImportSettings;
+}
+
+export interface SpecImportSettings {
+    audiences: string[];
 }
 
 export interface RawOpenAPIFile {
@@ -48,12 +53,14 @@ export async function parse({
         webhooks: [],
         channel: [],
         schemas: {},
-        errors: {},
         variables: {},
         nonRequestReferencedSchemas: new Set(),
         securitySchemes: {},
-        globalHeaders: []
+        globalHeaders: [],
+        groups: {}
     };
+
+    console.log("workspace.specs", JSON.stringify(workspace.specs));
 
     for (const spec of workspace.specs) {
         const contents = (await readFile(spec.absoluteFilepath)).toString();
@@ -67,14 +74,16 @@ export async function parse({
                 const openapiIr = generateIrFromV3({
                     openApi: openApiDocument,
                     taskContext,
-                    disableExamples: false
+                    disableExamples: false,
+                    audiences: spec.settings?.audiences ?? []
                 });
                 ir = merge(ir, openapiIr);
             } else if (isOpenApiV2(openApiDocument)) {
                 const openapiIr = await generateIrFromV2({
                     openApi: openApiDocument,
                     taskContext,
-                    disableExamples: false
+                    disableExamples: false,
+                    audiences: spec.settings?.audiences ?? []
                 });
                 ir = merge(ir, openapiIr);
             }
@@ -129,10 +138,6 @@ function merge(
             ...ir1.schemas,
             ...ir2.schemas
         },
-        errors: {
-            ...ir1.errors,
-            ...ir2.errors
-        },
         variables: {
             ...ir1.variables,
             ...ir2.variables
@@ -142,7 +147,11 @@ function merge(
             ...ir1.securitySchemes,
             ...ir2.securitySchemes
         },
-        globalHeaders: ir1.globalHeaders != null ? [...ir1.globalHeaders, ...(ir2.globalHeaders ?? [])] : undefined
+        globalHeaders: ir1.globalHeaders != null ? [...ir1.globalHeaders, ...(ir2.globalHeaders ?? [])] : undefined,
+        groups: {
+            ...ir1.groups,
+            ...ir2.groups
+        }
     };
 }
 

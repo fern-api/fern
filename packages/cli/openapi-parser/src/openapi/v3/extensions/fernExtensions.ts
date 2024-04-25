@@ -1,8 +1,10 @@
 import { Values } from "@fern-api/core-utils";
+import { TypedExtensionId } from "./id";
 
 export const FernOpenAPIExtension = {
-    SDK_METHOD_NAME: "x-fern-sdk-method-name",
-    SDK_GROUP_NAME: "x-fern-sdk-group-name",
+    SDK_METHOD_NAME: TypedExtensionId.of<string>("x-fern-sdk-method-name"),
+    SDK_GROUP_NAME: TypedExtensionId.of<string | string[]>("x-fern-sdk-group-name"),
+
     REQUEST_NAME_V1: "x-request-name",
     REQUEST_NAME_V2: "x-fern-request-name",
     TYPE_NAME: "x-fern-type-name",
@@ -10,6 +12,21 @@ export const FernOpenAPIExtension = {
 
     SERVER_NAME_V1: "x-name",
     SERVER_NAME_V2: "x-fern-server-name",
+
+    /**
+     * Should align with the OpenAPI spec's `x-fern-sdk-group-name` extension.
+     * This is a place where you can specify any display names related to the
+     * configured SDK group names. These display names and descriptions will
+     * come through in the docs.
+     *
+     * x-fern-groups:
+     *  group1:
+     *    display-name: Group 1
+     *    description: This is group 1
+     *    groups:
+     *      group2 # add child groups
+     */
+    GROUPS: TypedExtensionId.of<string | string[]>("x-fern-groups"),
 
     /**
      * Filepath that contains any OpenAPI overrides
@@ -43,6 +60,15 @@ export const FernOpenAPIExtension = {
      *     /path/to/my/endpoint:
      *       x-fern-streaming: true
      *
+     * Used to specify if an endpoint should be generated
+     * as a streaming endpoint with sever-sent0events.
+     *
+     * Example usage:
+     *   paths:
+     *     /path/to/my/endpoint:
+     *       x-fern-streaming:
+     *          format: sse
+     *
      * Alternatively, you can annotate the endpoint so that
      * it generates both a traditional unary endpoint,
      * as well as its streaming equivalent. The stream
@@ -54,6 +80,7 @@ export const FernOpenAPIExtension = {
      *   paths:
      *     /path/to/my/endpoint:
      *       x-fern-streaming:
+     *         format: sse # or json
      *         stream-condition: $request.stream
      *         response:
      *           $ref: ./path/to/response/type.yaml
@@ -71,9 +98,8 @@ export const FernOpenAPIExtension = {
      *   paths:
      *     /path/to/my/endpoint:
      *       x-fern-pagination:
-     *         type: "cursor"
-     *         page: $request.page
-     *         next: $response.next
+     *         cursor: $request.cursor
+     *         next_cursor: $response.next
      *         results: $response.results
      *
      * Alternatively, if the configuration shown above is
@@ -82,8 +108,7 @@ export const FernOpenAPIExtension = {
      *
      * Example usage:
      *   x-fern-pagination:
-     *     type: "offset"
-     *     page: $request.page
+     *     offset: $request.page_number
      *     results: $response.results
      *
      *   paths:

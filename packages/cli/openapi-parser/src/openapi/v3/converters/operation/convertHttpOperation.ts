@@ -6,8 +6,8 @@ import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserCon
 import { DummyOpenAPIV3ParserContext } from "../../DummyOpenAPIV3ParserContext";
 import { OpenAPIExtension } from "../../extensions/extensions";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
+import { getExamplesFromExtension } from "../../extensions/getExamplesFromExtension";
 import { getFernAvailability } from "../../extensions/getFernAvailability";
-import { getFernExamples } from "../../extensions/getFernExamples";
 import { OperationContext } from "../contexts";
 import { convertServer } from "../convertServer";
 import { convertParameters } from "../endpoint/convertParameters";
@@ -19,13 +19,13 @@ export function convertHttpOperation({
     context,
     responseStatusCode,
     suffix,
-    streamingResponse
+    streamFormat
 }: {
     operationContext: OperationContext;
     context: AbstractOpenAPIV3ParserContext;
     responseStatusCode?: number;
     suffix?: string;
-    streamingResponse?: boolean;
+    streamFormat: "sse" | "json" | undefined;
 }): EndpointWithExample {
     const { document, operation, path, method, baseBreadcrumbs, sdkMethodName } = operationContext;
 
@@ -81,7 +81,7 @@ export function convertHttpOperation({
 
     const convertedResponse = convertResponse({
         operationContext,
-        isStreaming: streamingResponse ?? false,
+        streamFormat,
         responses: operation.responses,
         context,
         responseBreadcrumbs,
@@ -89,7 +89,7 @@ export function convertHttpOperation({
     });
 
     const availability = getFernAvailability(operation);
-    const examples = [...getFernExamples(operation)];
+    const examples = [...getExamplesFromExtension(operationContext, operation, context)];
     // Validation on readme examples is wrong, but we're changing this data model so it's a wontfix for now
     // const readmeCodeSamples = getReadmeCodeSamples(operation);
     // if (readmeCodeSamples.length > 0) {
@@ -122,7 +122,7 @@ export function convertHttpOperation({
         generatedRequestName: getGeneratedTypeName(requestBreadcrumbs),
         request: convertedRequest,
         response: convertedResponse.value,
-        errorStatusCode: convertedResponse.errorStatusCodes,
+        errors: convertedResponse.errors,
         server: (operation.servers ?? []).map((server) => convertServer(server)),
         description: operation.description,
         authed: isEndpointAuthed(operation, document),

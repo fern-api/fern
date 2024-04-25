@@ -145,7 +145,6 @@ exports[`migrateFromV35ToV34 snapshot 1`] = `
               "unsafeName": "list_users",
             },
           },
-          "pagination": undefined,
           "path": {
             "head": "/users",
             "parts": [],
@@ -530,6 +529,7 @@ exports[`migrateFromV35ToV34 snapshot 1`] = `
       "shape": {
         "_visit": [Function],
         "extends": [],
+        "extraProperties": false,
         "properties": [
           {
             "availability": undefined,
@@ -748,6 +748,7 @@ exports[`migrateFromV35ToV34 snapshot 1`] = `
       "shape": {
         "_visit": [Function],
         "extends": [],
+        "extraProperties": false,
         "properties": [
           {
             "availability": undefined,

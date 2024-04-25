@@ -7,18 +7,27 @@ require "async/http/faraday"
 
 module SeedMultiUrlEnvironmentClient
   class RequestClient
-    attr_reader :headers, :default_environment, :conn
+    # @return [Hash{String => String}]
+    attr_reader :headers
+    # @return [Faraday]
+    attr_reader :conn
+    # @return [String]
+    attr_reader :base_url
+    # @return [String]
+    attr_reader :default_environment
 
-    # @param environment [Environment]
+    # @param environment [SeedMultiUrlEnvironmentClient::Environment]
+    # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param token [String]
-    # @return [RequestClient]
-    def initialize(token:, environment: Environment::PRODUCTION, max_retries: nil, timeout_in_seconds: nil)
+    # @return [SeedMultiUrlEnvironmentClient::RequestClient]
+    def initialize(token:, environment: Environment::PRODUCTION, base_url: nil, max_retries: nil,
+                   timeout_in_seconds: nil)
       @default_environment = environment
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "seed_multi_url_environment_client",
+        "X-Fern-SDK-Name": "fern_multi_url_environment",
         "X-Fern-SDK-Version": "0.0.1",
         "Authorization": "Bearer #{token}"
       }
@@ -29,21 +38,37 @@ module SeedMultiUrlEnvironmentClient
         faraday.options.timeout = timeout_in_seconds unless timeout_in_seconds.nil?
       end
     end
+
+    # @param request_options [SeedMultiUrlEnvironmentClient::RequestOptions]
+    # @param environment [String]
+    # @return [String]
+    def get_url(environment:, request_options: nil)
+      request_options&.base_url || @default_environment[environment] || @base_url
+    end
   end
 
   class AsyncRequestClient
-    attr_reader :headers, :default_environment, :conn
+    # @return [Hash{String => String}]
+    attr_reader :headers
+    # @return [Faraday]
+    attr_reader :conn
+    # @return [String]
+    attr_reader :base_url
+    # @return [String]
+    attr_reader :default_environment
 
-    # @param environment [Environment]
+    # @param environment [SeedMultiUrlEnvironmentClient::Environment]
+    # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param token [String]
-    # @return [AsyncRequestClient]
-    def initialize(token:, environment: Environment::PRODUCTION, max_retries: nil, timeout_in_seconds: nil)
+    # @return [SeedMultiUrlEnvironmentClient::AsyncRequestClient]
+    def initialize(token:, environment: Environment::PRODUCTION, base_url: nil, max_retries: nil,
+                   timeout_in_seconds: nil)
       @default_environment = environment
       @headers = {
         "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "seed_multi_url_environment_client",
+        "X-Fern-SDK-Name": "fern_multi_url_environment",
         "X-Fern-SDK-Version": "0.0.1",
         "Authorization": "Bearer #{token}"
       }
@@ -55,56 +80,79 @@ module SeedMultiUrlEnvironmentClient
         faraday.options.timeout = timeout_in_seconds unless timeout_in_seconds.nil?
       end
     end
+
+    # @param request_options [SeedMultiUrlEnvironmentClient::RequestOptions]
+    # @param environment [String]
+    # @return [String]
+    def get_url(environment:, request_options: nil)
+      request_options&.base_url || @default_environment[environment] || @base_url
+    end
   end
 
-  # Additional options for request-specific configuration when calling APIs via the SDK.
+  # Additional options for request-specific configuration when calling APIs via the
+  #  SDK.
   class RequestOptions
-    attr_reader :token, :additional_headers, :additional_query_parameters, :additional_body_parameters,
-                :timeout_in_seconds
+    # @return [String]
+    attr_reader :base_url
+    # @return [String]
+    attr_reader :token
+    # @return [Hash{String => Object}]
+    attr_reader :additional_headers
+    # @return [Hash{String => Object}]
+    attr_reader :additional_query_parameters
+    # @return [Hash{String => Object}]
+    attr_reader :additional_body_parameters
+    # @return [Long]
+    attr_reader :timeout_in_seconds
 
+    # @param base_url [String]
     # @param token [String]
     # @param additional_headers [Hash{String => Object}]
     # @param additional_query_parameters [Hash{String => Object}]
     # @param additional_body_parameters [Hash{String => Object}]
     # @param timeout_in_seconds [Long]
-    # @return [RequestOptions]
-    def initialize(token: nil, additional_headers: nil, additional_query_parameters: nil,
+    # @return [SeedMultiUrlEnvironmentClient::RequestOptions]
+    def initialize(base_url: nil, token: nil, additional_headers: nil, additional_query_parameters: nil,
                    additional_body_parameters: nil, timeout_in_seconds: nil)
-      # @type [String]
+      @base_url = base_url
       @token = token
-      # @type [Hash{String => Object}]
       @additional_headers = additional_headers
-      # @type [Hash{String => Object}]
       @additional_query_parameters = additional_query_parameters
-      # @type [Hash{String => Object}]
       @additional_body_parameters = additional_body_parameters
-      # @type [Long]
       @timeout_in_seconds = timeout_in_seconds
     end
   end
 
-  # Additional options for request-specific configuration when calling APIs via the SDK.
+  # Additional options for request-specific configuration when calling APIs via the
+  #  SDK.
   class IdempotencyRequestOptions
-    attr_reader :token, :additional_headers, :additional_query_parameters, :additional_body_parameters,
-                :timeout_in_seconds
+    # @return [String]
+    attr_reader :base_url
+    # @return [String]
+    attr_reader :token
+    # @return [Hash{String => Object}]
+    attr_reader :additional_headers
+    # @return [Hash{String => Object}]
+    attr_reader :additional_query_parameters
+    # @return [Hash{String => Object}]
+    attr_reader :additional_body_parameters
+    # @return [Long]
+    attr_reader :timeout_in_seconds
 
+    # @param base_url [String]
     # @param token [String]
     # @param additional_headers [Hash{String => Object}]
     # @param additional_query_parameters [Hash{String => Object}]
     # @param additional_body_parameters [Hash{String => Object}]
     # @param timeout_in_seconds [Long]
-    # @return [IdempotencyRequestOptions]
-    def initialize(token: nil, additional_headers: nil, additional_query_parameters: nil,
+    # @return [SeedMultiUrlEnvironmentClient::IdempotencyRequestOptions]
+    def initialize(base_url: nil, token: nil, additional_headers: nil, additional_query_parameters: nil,
                    additional_body_parameters: nil, timeout_in_seconds: nil)
-      # @type [String]
+      @base_url = base_url
       @token = token
-      # @type [Hash{String => Object}]
       @additional_headers = additional_headers
-      # @type [Hash{String => Object}]
       @additional_query_parameters = additional_query_parameters
-      # @type [Hash{String => Object}]
       @additional_body_parameters = additional_body_parameters
-      # @type [Long]
       @timeout_in_seconds = timeout_in_seconds
     end
   end

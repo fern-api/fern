@@ -1,6 +1,3 @@
 node_modules
 .DS_Store
 /dist
-/index.d.ts
-/index.js
-/errors

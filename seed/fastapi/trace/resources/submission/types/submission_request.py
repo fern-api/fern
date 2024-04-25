@@ -5,18 +5,16 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 from .initialize_problem_request import (
     InitializeProblemRequest as resources_submission_types_initialize_problem_request_InitializeProblemRequest,
 )
 from .stop_request import StopRequest
 from .submit_request_v_2 import SubmitRequestV2
 from .workspace_submit_request import WorkspaceSubmitRequest
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -50,7 +48,7 @@ class _Factory:
         return SubmissionRequest(__root__=_SubmissionRequest.Stop(**value.dict(exclude_unset=True), type="stop"))
 
 
-class SubmissionRequest(pydantic.BaseModel):
+class SubmissionRequest(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(
@@ -89,7 +87,7 @@ class SubmissionRequest(pydantic.BaseModel):
         if self.__root__.type == "stop":
             return stop(StopRequest(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
 
-    __root__: typing.Annotated[
+    __root__: typing_extensions.Annotated[
         typing.Union[
             _SubmissionRequest.InitializeProblemRequest,
             _SubmissionRequest.InitializeWorkspaceRequest,
@@ -97,7 +95,7 @@ class SubmissionRequest(pydantic.BaseModel):
             _SubmissionRequest.WorkspaceSubmit,
             _SubmissionRequest.Stop,
         ],
-        pydantic.Field(discriminator="type"),
+        pydantic_v1.Field(discriminator="type"),
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -109,37 +107,37 @@ class SubmissionRequest(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _SubmissionRequest:
     class InitializeProblemRequest(resources_submission_types_initialize_problem_request_InitializeProblemRequest):
-        type: typing.Literal["initializeProblemRequest"]
+        type: typing.Literal["initializeProblemRequest"] = "initializeProblemRequest"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
-    class InitializeWorkspaceRequest(pydantic.BaseModel):
-        type: typing.Literal["initializeWorkspaceRequest"]
+    class InitializeWorkspaceRequest(pydantic_v1.BaseModel):
+        type: typing.Literal["initializeWorkspaceRequest"] = "initializeWorkspaceRequest"
 
     class SubmitV2(SubmitRequestV2):
-        type: typing.Literal["submitV2"]
+        type: typing.Literal["submitV2"] = "submitV2"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class WorkspaceSubmit(WorkspaceSubmitRequest):
-        type: typing.Literal["workspaceSubmit"]
+        type: typing.Literal["workspaceSubmit"] = "workspaceSubmit"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class Stop(StopRequest):
-        type: typing.Literal["stop"]
+        type: typing.Literal["stop"] = "stop"
 
         class Config:
             allow_population_by_field_name = True

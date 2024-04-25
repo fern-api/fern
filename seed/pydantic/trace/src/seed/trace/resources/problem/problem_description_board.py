@@ -4,24 +4,21 @@ from __future__ import annotations
 
 import typing
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ...core.pydantic_utilities import pydantic_v1
 
 
-class ProblemDescriptionBoard_Html(pydantic.BaseModel):
-    type: typing.Literal["html"]
+class ProblemDescriptionBoard_Html(pydantic_v1.BaseModel):
+    type: typing.Literal["html"] = "html"
     value: str
 
 
-class ProblemDescriptionBoard_Variable(pydantic.BaseModel):
-    type: typing.Literal["variable"]
+class ProblemDescriptionBoard_Variable(pydantic_v1.BaseModel):
+    type: typing.Literal["variable"] = "variable"
     value: VariableValue
 
 
-class ProblemDescriptionBoard_TestCaseId(pydantic.BaseModel):
-    type: typing.Literal["testCaseId"]
+class ProblemDescriptionBoard_TestCaseId(pydantic_v1.BaseModel):
+    type: typing.Literal["testCaseId"] = "testCaseId"
     value: str
 
 

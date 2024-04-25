@@ -3,4 +3,4 @@
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 
 require "minitest/autorun"
-require "seed_basic_auth_client"
+require "fern_basic_auth"

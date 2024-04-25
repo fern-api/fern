@@ -155,6 +155,7 @@ exports[`migrateFromV29ToV28 snapshot 1`] = `
             "_visit": [Function],
             "contentType": undefined,
             "extends": [],
+            "extraProperties": false,
             "name": {
               "camelCase": {
                 "safeName": "getUnauthorizedUserRequest",
@@ -633,6 +634,7 @@ exports[`migrateFromV29ToV28 snapshot 1`] = `
       "shape": {
         "_visit": [Function],
         "extends": [],
+        "extraProperties": false,
         "properties": [
           {
             "availability": undefined,
@@ -878,6 +880,7 @@ exports[`migrateFromV29ToV28 snapshot 1`] = `
       "shape": {
         "_visit": [Function],
         "extends": [],
+        "extraProperties": false,
         "properties": [
           {
             "availability": undefined,
@@ -1088,6 +1091,7 @@ exports[`migrateFromV29ToV28 snapshot 1`] = `
       "shape": {
         "_visit": [Function],
         "extends": [],
+        "extraProperties": false,
         "properties": [
           {
             "availability": undefined,

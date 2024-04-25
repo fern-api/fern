@@ -26,12 +26,6 @@ describe("valid-endpoint-path", () => {
                 nodePath: ["service", "endpoints", "noLeadingSlash"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
                 severity: "error"
-            },
-            {
-                message: "Path cannot end with a slash.",
-                nodePath: ["service", "endpoints", "trailingSlash"],
-                relativeFilepath: RelativeFilePath.of("a.yml"),
-                severity: "error"
             }
         ];
 

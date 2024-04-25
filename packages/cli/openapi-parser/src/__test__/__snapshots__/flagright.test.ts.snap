@@ -30,11 +30,41 @@ Here are some of the most used payload fields explained (you can find the full p
 * \`destinationAmountDetails\` - Details of the amount being received at the destination
 * \`originPaymentDetails\` - Payment details (if any) used at the origin (ex: \`CARD\`, \`IBAN\`, \`WALLET\` etc). You can click on the dropdown next to the field in the schema below to view all supported payment types.
 * \`destinationPaymentDetails\` - Payment details (if any) used at the destination (ex: \`CARD\`, \`IBAN\`, \`WALLET\` etc). You can click on the dropdown next to the field in the schema below to view all supported payment types.",
-      "errorStatusCode": [
-        400,
-        401,
-        429,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": null,
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "BadRequestErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "401": {
+          "description": "Unauthorized",
+          "examples": null,
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "UnauthorizedErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "429": {
+          "description": "Too Many Requests",
+          "examples": null,
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "TooManyRequestsErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -372,6 +402,7 @@ Here are some of the most used payload fields explained (you can find the full p
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "PostConsumerTransactionRequest",
@@ -508,16 +539,36 @@ Here are some of the most used payload fields explained (you can find the full p
 \`/transactions\` endpoint allows you to operate on the [Transaction entity](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#transaction).
 
 Calling \`GET /transactions/{transactionId}\` will return the entire transaction payload and rule execution results for the transaction with the corresponding \`transactionId\`",
-      "errorStatusCode": [
-        401,
-        429,
-      ],
+      "errors": {
+        "401": {
+          "description": "Unauthorized",
+          "examples": null,
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "UnauthorizedErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "429": {
+          "description": "Too Many Requests",
+          "examples": null,
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "TooManyRequestsErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "example-1",
           "pathParameters": [
             {
               "name": "transactionId",
@@ -869,6 +920,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetConsumerTransactionRequest",
@@ -942,17 +994,47 @@ Each transaction event needs three mandatory fields:
 
 In order to make individual events retrievable, you also need to pass in a unique \`eventId\` to the request body.
 ",
-      "errorStatusCode": [
-        400,
-        401,
-        429,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": null,
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "BadRequestErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "401": {
+          "description": "Unauthorized",
+          "examples": null,
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "UnauthorizedErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "429": {
+          "description": "Too Many Requests",
+          "examples": null,
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "TooManyRequestsErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": "example-2",
+          "name": "example-1",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -1028,171 +1110,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "transactionState": {
                 "type": "enum",
                 "value": "SUCCESSFUL",
-              },
-              "updatedTransactionAttributes": {
-                "properties": {
-                  "destinationAmountDetails": {
-                    "properties": {
-                      "country": {
-                        "type": "enum",
-                        "value": "IN",
-                      },
-                      "transactionAmount": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 68351.34,
-                        },
-                      },
-                      "transactionCurrency": {
-                        "type": "enum",
-                        "value": "INR",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "deviceData": {
-                    "properties": {
-                      "appVersion": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "1.1.0",
-                        },
-                      },
-                      "batteryLevel": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 95,
-                        },
-                      },
-                      "deviceIdentifier": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "3c49f915d04485e34caba",
-                        },
-                      },
-                      "deviceLatitude": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 13.0033,
-                        },
-                      },
-                      "deviceLongitude": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 76.1004,
-                        },
-                      },
-                      "deviceMaker": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "ASUS",
-                        },
-                      },
-                      "deviceModel": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Zenphone M2 Pro Max",
-                        },
-                      },
-                      "deviceYear": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "2018",
-                        },
-                      },
-                      "ipAddress": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "10.23.191.2",
-                        },
-                      },
-                      "operatingSystem": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Android 11.2",
-                        },
-                      },
-                      "vpnUsed": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "boolean",
-                          "value": false,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "originAmountDetails": {
-                    "properties": {
-                      "country": {
-                        "type": "enum",
-                        "value": "DE",
-                      },
-                      "transactionAmount": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 800,
-                        },
-                      },
-                      "transactionCurrency": {
-                        "type": "enum",
-                        "value": "EUR",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "promotionCodeUsed": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "boolean",
-                      "value": true,
-                    },
-                  },
-                  "reference": {
-                    "type": "primitive",
-                    "value": {
-                      "type": "string",
-                      "value": "loan repayment",
-                    },
-                  },
-                  "tags": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "key": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "customKey",
-                            },
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "customValue",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                  },
-                },
-                "type": "object",
               },
             },
             "type": "object",
@@ -1546,6 +1463,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "PostTransactionEventRequest",
@@ -1605,11 +1523,41 @@ Each consumer User entity needs three mandatory fields:
 * \`userId\` - Unique identifier for the user
 * \`createdTimestamp\` - UNIX timestamp in *milliseconds* for when the User is created in your system
 ",
-      "errorStatusCode": [
-        400,
-        401,
-        429,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": null,
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "BadRequestErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "401": {
+          "description": "Unauthorized",
+          "examples": null,
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "UnauthorizedErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "429": {
+          "description": "Too Many Requests",
+          "examples": null,
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "TooManyRequestsErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -1782,32 +1730,6 @@ Each consumer User entity needs three mandatory fields:
                           "value": "passport",
                         },
                       },
-                      "nameOnDocument": {
-                        "properties": {
-                          "firstName": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Baran",
-                            },
-                          },
-                          "lastName": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Ozkan",
-                            },
-                          },
-                          "middleName": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Realblood",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
                       "tags": {
                         "type": "array",
                         "value": [
@@ -1860,107 +1782,6 @@ Each consumer User entity needs three mandatory fields:
                     "type": "object",
                   },
                 ],
-              },
-              "transactionLimits": {
-                "properties": {
-                  "maximumDailyTransactionLimit": {
-                    "properties": {
-                      "amountCurrency": {
-                        "type": "enum",
-                        "value": "GBP",
-                      },
-                      "amountValue": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 800,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "maximumMonthlyTransactionLimit": {
-                    "properties": {
-                      "amountCurrency": {
-                        "type": "enum",
-                        "value": "GBP",
-                      },
-                      "amountValue": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 800,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "maximumQuarterlyTransactionLimit": {
-                    "properties": {
-                      "amountCurrency": {
-                        "type": "enum",
-                        "value": "GBP",
-                      },
-                      "amountValue": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 800,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "maximumTransactionLimit": {
-                    "properties": {
-                      "amountCurrency": {
-                        "type": "enum",
-                        "value": "GBP",
-                      },
-                      "amountValue": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 800,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "maximumWeeklyTransactionLimit": {
-                    "properties": {
-                      "amountCurrency": {
-                        "type": "enum",
-                        "value": "GBP",
-                      },
-                      "amountValue": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 800,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "maximumYearlyTransactionLimit": {
-                    "properties": {
-                      "amountCurrency": {
-                        "type": "enum",
-                        "value": "GBP",
-                      },
-                      "amountValue": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 800,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                },
-                "type": "object",
               },
               "userDetails": {
                 "properties": {
@@ -2154,6 +1975,7 @@ Each consumer User entity needs three mandatory fields:
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "PostConsumerUserRequest",
@@ -2257,16 +2079,36 @@ Each consumer User entity needs three mandatory fields:
 \`/consumer/user\` endpoint allows you to operate on the [Consumer User entity](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#user).
 
 Calling \`GET /consumer/user/{userId}\` will return the entire user payload and rule execution results for the user with the corresponding \`userId\`",
-      "errorStatusCode": [
-        401,
-        429,
-      ],
+      "errors": {
+        "401": {
+          "description": "Unauthorized",
+          "examples": null,
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "UnauthorizedErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "429": {
+          "description": "Too Many Requests",
+          "examples": null,
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "TooManyRequestsErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "example-1",
           "pathParameters": [
             {
               "name": "userId",
@@ -2784,6 +2626,7 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetConsumerUserRequest",
@@ -2850,17 +2693,47 @@ Each consumer Business entity needs three mandatory fields:
 * \`userId\` - Unique identifier for the user
 * \`legalEntity\` - Details of the business legal entity (CompanyGeneralDetails, FinancialDetails etc) - only \`legalName\`in \`CompanyGeneralDetails\` is mandatory
 * \`createdTimestamp\` - UNIX timestamp in *milliseconds* for when the User is created in your system",
-      "errorStatusCode": [
-        400,
-        401,
-        429,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": null,
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "BadRequestErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "401": {
+          "description": "Unauthorized",
+          "examples": null,
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "UnauthorizedErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "429": {
+          "description": "Too Many Requests",
+          "examples": null,
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "TooManyRequestsErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "example-1",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -2871,877 +2744,6 @@ Each consumer Business entity needs three mandatory fields:
                   "type": "double",
                   "value": 1.1,
                 },
-              },
-              "directors": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "contactDetails": {
-                        "properties": {
-                          "addresses": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "properties": {
-                                  "addressLines": {
-                                    "type": "array",
-                                    "value": [
-                                      {
-                                        "type": "unknown",
-                                        "value": {
-                                          "type": "primitive",
-                                          "value": {
-                                            "type": "string",
-                                            "value": "Klara-Franke Str 20",
-                                          },
-                                        },
-                                      },
-                                    ],
-                                  },
-                                  "city": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "Berlin",
-                                    },
-                                  },
-                                  "country": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "Germany",
-                                    },
-                                  },
-                                  "postcode": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "10557",
-                                    },
-                                  },
-                                  "state": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "Berlin",
-                                    },
-                                  },
-                                  "tags": {
-                                    "type": "array",
-                                    "value": [
-                                      {
-                                        "properties": {
-                                          "key": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "customKey",
-                                            },
-                                          },
-                                          "value": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "customValue",
-                                            },
-                                          },
-                                        },
-                                        "type": "object",
-                                      },
-                                    ],
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            ],
-                          },
-                          "contactNumbers": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "+371 123132",
-                                },
-                              },
-                            ],
-                          },
-                          "emailIds": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "baran@flagright.com",
-                                },
-                              },
-                            ],
-                          },
-                          "websites": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "flagright.com",
-                                },
-                              },
-                            ],
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "generalDetails": {
-                        "properties": {
-                          "countryOfNationality": {
-                            "type": "enum",
-                            "value": "DE",
-                          },
-                          "countryOfResidence": {
-                            "type": "enum",
-                            "value": "US",
-                          },
-                          "dateOfBirth": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "1991-01-01",
-                            },
-                          },
-                          "name": {
-                            "properties": {
-                              "firstName": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "Baran",
-                                },
-                              },
-                              "lastName": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "Ozkan",
-                                },
-                              },
-                              "middleName": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "Realblood",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "legalDocuments": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "documentExpirationDate": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "double",
-                                  "value": 1839939034000,
-                                },
-                              },
-                              "documentIssuedCountry": {
-                                "type": "enum",
-                                "value": "DE",
-                              },
-                              "documentIssuedDate": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "double",
-                                  "value": 1639939034000,
-                                },
-                              },
-                              "documentNumber": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "Z9431P",
-                                },
-                              },
-                              "documentType": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "passport",
-                                },
-                              },
-                              "nameOnDocument": {
-                                "properties": {
-                                  "firstName": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "Baran",
-                                    },
-                                  },
-                                  "lastName": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "Ozkan",
-                                    },
-                                  },
-                                  "middleName": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "Realblood",
-                                    },
-                                  },
-                                },
-                                "type": "object",
-                              },
-                              "tags": {
-                                "type": "array",
-                                "value": [
-                                  {
-                                    "properties": {
-                                      "key": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "customerType",
-                                        },
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "wallet",
-                                        },
-                                      },
-                                    },
-                                    "type": "object",
-                                  },
-                                ],
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "tags": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "key": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "customKey",
-                                },
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "customValue",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "legalEntity": {
-                "properties": {
-                  "companyFinancialDetails": {
-                    "properties": {
-                      "expectedTransactionAmountPerMonth": {
-                        "properties": {
-                          "amountCurrency": {
-                            "type": "enum",
-                            "value": "GBP",
-                          },
-                          "amountValue": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 800,
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "expectedTurnoverPerMonth": {
-                        "properties": {
-                          "amountCurrency": {
-                            "type": "enum",
-                            "value": "USD",
-                          },
-                          "amountValue": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 8000,
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "tags": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "key": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "customKey",
-                                },
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "customValue",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "companyGeneralDetails": {
-                    "properties": {
-                      "businessIndustry": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Farming",
-                            },
-                          },
-                        ],
-                      },
-                      "legalName": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "Ozkan Hazelnut Export JSC",
-                        },
-                      },
-                      "mainProductsServicesSold": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Hazelnut",
-                            },
-                          },
-                        ],
-                      },
-                      "tags": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "key": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "customKey",
-                                },
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "customValue",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "companyRegistrationDetails": {
-                    "properties": {
-                      "registrationCountry": {
-                        "type": "enum",
-                        "value": "DE",
-                      },
-                      "registrationIdentifier": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "PSJ554342",
-                        },
-                      },
-                      "tags": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "key": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "customKey",
-                                },
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "customValue",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                    },
-                    "type": "object",
-                  },
-                },
-                "type": "object",
-              },
-              "shareHolders": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "contactDetails": {
-                        "properties": {
-                          "addresses": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "properties": {
-                                  "addressLines": {
-                                    "type": "array",
-                                    "value": [
-                                      {
-                                        "type": "unknown",
-                                        "value": {
-                                          "type": "primitive",
-                                          "value": {
-                                            "type": "string",
-                                            "value": "Klara-Franke Str 20",
-                                          },
-                                        },
-                                      },
-                                    ],
-                                  },
-                                  "city": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "Berlin",
-                                    },
-                                  },
-                                  "country": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "Germany",
-                                    },
-                                  },
-                                  "postcode": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "10557",
-                                    },
-                                  },
-                                  "state": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "Berlin",
-                                    },
-                                  },
-                                  "tags": {
-                                    "type": "array",
-                                    "value": [
-                                      {
-                                        "properties": {
-                                          "key": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "customKey",
-                                            },
-                                          },
-                                          "value": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "customValue",
-                                            },
-                                          },
-                                        },
-                                        "type": "object",
-                                      },
-                                    ],
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            ],
-                          },
-                          "contactNumbers": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "+371 123132",
-                                },
-                              },
-                            ],
-                          },
-                          "emailIds": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "baran@flagright.com",
-                                },
-                              },
-                            ],
-                          },
-                          "websites": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "flagright.com",
-                                },
-                              },
-                            ],
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "generalDetails": {
-                        "properties": {
-                          "countryOfNationality": {
-                            "type": "enum",
-                            "value": "DE",
-                          },
-                          "countryOfResidence": {
-                            "type": "enum",
-                            "value": "US",
-                          },
-                          "dateOfBirth": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "1991-01-01",
-                            },
-                          },
-                          "name": {
-                            "properties": {
-                              "firstName": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "Baran",
-                                },
-                              },
-                              "lastName": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "Ozkan",
-                                },
-                              },
-                              "middleName": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "Realblood",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "legalDocuments": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "documentExpirationDate": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "double",
-                                  "value": 1839939034000,
-                                },
-                              },
-                              "documentIssuedCountry": {
-                                "type": "enum",
-                                "value": "DE",
-                              },
-                              "documentIssuedDate": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "double",
-                                  "value": 1639939034000,
-                                },
-                              },
-                              "documentNumber": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "Z9431P",
-                                },
-                              },
-                              "documentType": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "passport",
-                                },
-                              },
-                              "nameOnDocument": {
-                                "properties": {
-                                  "firstName": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "Baran",
-                                    },
-                                  },
-                                  "lastName": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "Ozkan",
-                                    },
-                                  },
-                                  "middleName": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "Realblood",
-                                    },
-                                  },
-                                },
-                                "type": "object",
-                              },
-                              "tags": {
-                                "type": "array",
-                                "value": [
-                                  {
-                                    "properties": {
-                                      "key": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "customerType",
-                                        },
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "wallet",
-                                        },
-                                      },
-                                    },
-                                    "type": "object",
-                                  },
-                                ],
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "tags": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "key": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "customKey",
-                                },
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "customValue",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "tags": {
-                "type": "array",
-                "value": [
-                  {
-                    "properties": {
-                      "key": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "customKey",
-                        },
-                      },
-                      "value": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "string",
-                          "value": "customValue",
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-              },
-              "transactionLimits": {
-                "properties": {
-                  "maximumDailyTransactionLimit": {
-                    "properties": {
-                      "amountCurrency": {
-                        "type": "enum",
-                        "value": "GBP",
-                      },
-                      "amountValue": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 800,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "maximumMonthlyTransactionLimit": {
-                    "properties": {
-                      "amountCurrency": {
-                        "type": "enum",
-                        "value": "GBP",
-                      },
-                      "amountValue": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 800,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "maximumQuarterlyTransactionLimit": {
-                    "properties": {
-                      "amountCurrency": {
-                        "type": "enum",
-                        "value": "GBP",
-                      },
-                      "amountValue": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 800,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "maximumTransactionLimit": {
-                    "properties": {
-                      "amountCurrency": {
-                        "type": "enum",
-                        "value": "GBP",
-                      },
-                      "amountValue": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 800,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "maximumWeeklyTransactionLimit": {
-                    "properties": {
-                      "amountCurrency": {
-                        "type": "enum",
-                        "value": "GBP",
-                      },
-                      "amountValue": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 800,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "maximumYearlyTransactionLimit": {
-                    "properties": {
-                      "amountCurrency": {
-                        "type": "enum",
-                        "value": "GBP",
-                      },
-                      "amountValue": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                          "value": 800,
-                        },
-                      },
-                    },
-                    "type": "object",
-                  },
-                },
-                "type": "object",
               },
               "userId": {
                 "type": "primitive",
@@ -3889,6 +2891,7 @@ Each consumer Business entity needs three mandatory fields:
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "PostBusinessUserRequest",
@@ -3992,16 +2995,36 @@ Each consumer Business entity needs three mandatory fields:
 \`/business/user\` endpoint allows you to operate on the [Business User entity](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#user).
 
 Calling \`GET /business/user/{userId}\` will return the entire User payload and rule execution results for the User with the corresponding \`userId\`",
-      "errorStatusCode": [
-        401,
-        429,
-      ],
+      "errors": {
+        "401": {
+          "description": "Unauthorized",
+          "examples": null,
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "UnauthorizedErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "429": {
+          "description": "Too Many Requests",
+          "examples": null,
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "TooManyRequestsErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "example-2",
           "pathParameters": [
             {
               "name": "userId",
@@ -5210,6 +4233,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GetBusinessUserUserIdRequest",
@@ -5282,11 +4306,41 @@ Each user event needs three mandatory fields:
 
 In order to make individual events retrievable, you also need to pass in a unique \`eventId\` to the request body.
 ",
-      "errorStatusCode": [
-        400,
-        401,
-        429,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": null,
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "BadRequestErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "401": {
+          "description": "Unauthorized",
+          "examples": null,
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "UnauthorizedErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "429": {
+          "description": "Too Many Requests",
+          "examples": null,
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "TooManyRequestsErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -5303,346 +4357,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "type": "double",
                   "value": 1.1,
                 },
-              },
-              "updatedConsumerUserAttributes": {
-                "properties": {
-                  "contactDetails": {
-                    "properties": {
-                      "addresses": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "properties": {
-                              "addressLines": {
-                                "type": "array",
-                                "value": [
-                                  {
-                                    "type": "unknown",
-                                    "value": {
-                                      "type": "primitive",
-                                      "value": {
-                                        "type": "string",
-                                        "value": "Klara-Franke Str 20",
-                                      },
-                                    },
-                                  },
-                                ],
-                              },
-                              "city": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "Berlin",
-                                },
-                              },
-                              "country": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "Germany",
-                                },
-                              },
-                              "postcode": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "10557",
-                                },
-                              },
-                              "state": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "Berlin",
-                                },
-                              },
-                              "tags": {
-                                "type": "array",
-                                "value": [
-                                  {
-                                    "properties": {
-                                      "key": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "customKey",
-                                        },
-                                      },
-                                      "value": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "customValue",
-                                        },
-                                      },
-                                    },
-                                    "type": "object",
-                                  },
-                                ],
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                      },
-                      "contactNumbers": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "+37112345432",
-                            },
-                          },
-                        ],
-                      },
-                      "emailIds": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "baran@flagright.com",
-                            },
-                          },
-                        ],
-                      },
-                      "websites": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "flagright.com",
-                            },
-                          },
-                        ],
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "legalDocuments": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "documentExpirationDate": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 1839939034000,
-                            },
-                          },
-                          "documentIssuedCountry": {
-                            "type": "enum",
-                            "value": "DE",
-                          },
-                          "documentIssuedDate": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 1639939034000,
-                            },
-                          },
-                          "documentNumber": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Z9431P",
-                            },
-                          },
-                          "documentType": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "passport",
-                            },
-                          },
-                          "nameOnDocument": {
-                            "properties": {
-                              "firstName": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "Baran",
-                                },
-                              },
-                              "lastName": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "Ozkan",
-                                },
-                              },
-                              "middleName": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "Realblood",
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                          "tags": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "properties": {
-                                  "key": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "customerType",
-                                    },
-                                  },
-                                  "value": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "wallet",
-                                    },
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            ],
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                  },
-                  "tags": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "key": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "customKey",
-                            },
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "customValue",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                  },
-                  "transactionLimits": {
-                    "properties": {
-                      "maximumDailyTransactionLimit": {
-                        "properties": {
-                          "amountCurrency": {
-                            "type": "enum",
-                            "value": "GBP",
-                          },
-                          "amountValue": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 800,
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "maximumMonthlyTransactionLimit": {
-                        "properties": {
-                          "amountCurrency": {
-                            "type": "enum",
-                            "value": "GBP",
-                          },
-                          "amountValue": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 800,
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "maximumQuarterlyTransactionLimit": {
-                        "properties": {
-                          "amountCurrency": {
-                            "type": "enum",
-                            "value": "GBP",
-                          },
-                          "amountValue": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 800,
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "maximumTransactionLimit": {
-                        "properties": {
-                          "amountCurrency": {
-                            "type": "enum",
-                            "value": "GBP",
-                          },
-                          "amountValue": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 800,
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "maximumWeeklyTransactionLimit": {
-                        "properties": {
-                          "amountCurrency": {
-                            "type": "enum",
-                            "value": "GBP",
-                          },
-                          "amountValue": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 800,
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "maximumYearlyTransactionLimit": {
-                        "properties": {
-                          "amountCurrency": {
-                            "type": "enum",
-                            "value": "GBP",
-                          },
-                          "amountValue": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 800,
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
-                },
-                "type": "object",
               },
               "userId": {
                 "type": "primitive",
@@ -6274,6 +4988,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "PostUserEventRequest",
@@ -6340,11 +5055,41 @@ Each user event needs three mandatory fields:
 
 In order to make individual events retrievable, you also need to pass in a unique \`eventId\` to the request body.
 ",
-      "errorStatusCode": [
-        400,
-        401,
-        429,
-      ],
+      "errors": {
+        "400": {
+          "description": "Bad Request",
+          "examples": null,
+          "generatedName": "BadRequestError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "BadRequestErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "401": {
+          "description": "Unauthorized",
+          "examples": null,
+          "generatedName": "UnauthorizedError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "UnauthorizedErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+        "429": {
+          "description": "Too Many Requests",
+          "examples": null,
+          "generatedName": "TooManyRequestsError",
+          "nameOverride": null,
+          "schema": {
+            "generatedName": "TooManyRequestsErrorBody",
+            "nameOverride": null,
+            "type": "unknown",
+          },
+        },
+      },
       "examples": [
         {
           "codeSamples": [],
@@ -6361,976 +5106,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "type": "double",
                   "value": 1.1,
                 },
-              },
-              "updatedBusinessUserAttributes": {
-                "properties": {
-                  "directors": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "contactDetails": {
-                            "properties": {
-                              "addresses": {
-                                "type": "array",
-                                "value": [
-                                  {
-                                    "properties": {
-                                      "addressLines": {
-                                        "type": "array",
-                                        "value": [
-                                          {
-                                            "type": "unknown",
-                                            "value": {
-                                              "type": "primitive",
-                                              "value": {
-                                                "type": "string",
-                                                "value": "Klara-Franke Str 20",
-                                              },
-                                            },
-                                          },
-                                        ],
-                                      },
-                                      "city": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "Berlin",
-                                        },
-                                      },
-                                      "country": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "Germany",
-                                        },
-                                      },
-                                      "postcode": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "10557",
-                                        },
-                                      },
-                                      "state": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "Berlin",
-                                        },
-                                      },
-                                      "tags": {
-                                        "type": "array",
-                                        "value": [
-                                          {
-                                            "properties": {
-                                              "key": {
-                                                "type": "primitive",
-                                                "value": {
-                                                  "type": "string",
-                                                  "value": "customKey",
-                                                },
-                                              },
-                                              "value": {
-                                                "type": "primitive",
-                                                "value": {
-                                                  "type": "string",
-                                                  "value": "customValue",
-                                                },
-                                              },
-                                            },
-                                            "type": "object",
-                                          },
-                                        ],
-                                      },
-                                    },
-                                    "type": "object",
-                                  },
-                                ],
-                              },
-                              "contactNumbers": {
-                                "type": "array",
-                                "value": [
-                                  {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "+371 123132",
-                                    },
-                                  },
-                                ],
-                              },
-                              "emailIds": {
-                                "type": "array",
-                                "value": [
-                                  {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "baran@flagright.com",
-                                    },
-                                  },
-                                ],
-                              },
-                              "websites": {
-                                "type": "array",
-                                "value": [
-                                  {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "flagright.com",
-                                    },
-                                  },
-                                ],
-                              },
-                            },
-                            "type": "object",
-                          },
-                          "generalDetails": {
-                            "properties": {
-                              "countryOfNationality": {
-                                "type": "enum",
-                                "value": "DE",
-                              },
-                              "countryOfResidence": {
-                                "type": "enum",
-                                "value": "US",
-                              },
-                              "dateOfBirth": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "1991-01-01",
-                                },
-                              },
-                              "name": {
-                                "properties": {
-                                  "firstName": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "Baran",
-                                    },
-                                  },
-                                  "lastName": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "Ozkan",
-                                    },
-                                  },
-                                  "middleName": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "Realblood",
-                                    },
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            },
-                            "type": "object",
-                          },
-                          "legalDocuments": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "properties": {
-                                  "documentExpirationDate": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "double",
-                                      "value": 1839939034000,
-                                    },
-                                  },
-                                  "documentIssuedCountry": {
-                                    "type": "enum",
-                                    "value": "DE",
-                                  },
-                                  "documentIssuedDate": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "double",
-                                      "value": 1639939034000,
-                                    },
-                                  },
-                                  "documentNumber": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "Z9431P",
-                                    },
-                                  },
-                                  "documentType": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "passport",
-                                    },
-                                  },
-                                  "nameOnDocument": {
-                                    "properties": {
-                                      "firstName": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "Baran",
-                                        },
-                                      },
-                                      "lastName": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "Ozkan",
-                                        },
-                                      },
-                                      "middleName": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "Realblood",
-                                        },
-                                      },
-                                    },
-                                    "type": "object",
-                                  },
-                                  "tags": {
-                                    "type": "array",
-                                    "value": [
-                                      {
-                                        "properties": {
-                                          "key": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "customerType",
-                                            },
-                                          },
-                                          "value": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "wallet",
-                                            },
-                                          },
-                                        },
-                                        "type": "object",
-                                      },
-                                    ],
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            ],
-                          },
-                          "tags": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "properties": {
-                                  "key": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "customKey",
-                                    },
-                                  },
-                                  "value": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "customValue",
-                                    },
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            ],
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                  },
-                  "legalEntity": {
-                    "properties": {
-                      "companyFinancialDetails": {
-                        "properties": {
-                          "expectedTransactionAmountPerMonth": {
-                            "properties": {
-                              "amountCurrency": {
-                                "type": "enum",
-                                "value": "GBP",
-                              },
-                              "amountValue": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "double",
-                                  "value": 800,
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                          "expectedTurnoverPerMonth": {
-                            "properties": {
-                              "amountCurrency": {
-                                "type": "enum",
-                                "value": "USD",
-                              },
-                              "amountValue": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "double",
-                                  "value": 8000,
-                                },
-                              },
-                            },
-                            "type": "object",
-                          },
-                          "tags": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "properties": {
-                                  "key": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "customKey",
-                                    },
-                                  },
-                                  "value": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "customValue",
-                                    },
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            ],
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "companyGeneralDetails": {
-                        "properties": {
-                          "businessIndustry": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "Farming",
-                                },
-                              },
-                            ],
-                          },
-                          "legalName": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "Ozkan Hazelnut Export JSC",
-                            },
-                          },
-                          "mainProductsServicesSold": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "Hazelnut",
-                                },
-                              },
-                            ],
-                          },
-                          "tags": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "properties": {
-                                  "key": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "customKey",
-                                    },
-                                  },
-                                  "value": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "customValue",
-                                    },
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            ],
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "companyRegistrationDetails": {
-                        "properties": {
-                          "registrationCountry": {
-                            "type": "enum",
-                            "value": "DE",
-                          },
-                          "registrationIdentifier": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "PSJ554342",
-                            },
-                          },
-                          "tags": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "properties": {
-                                  "key": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "customKey",
-                                    },
-                                  },
-                                  "value": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "customValue",
-                                    },
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            ],
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "contactDetails": {
-                        "properties": {
-                          "addresses": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "properties": {
-                                  "addressLines": {
-                                    "type": "array",
-                                    "value": [
-                                      {
-                                        "type": "unknown",
-                                        "value": {
-                                          "type": "primitive",
-                                          "value": {
-                                            "type": "string",
-                                            "value": "Klara-Franke Str 20",
-                                          },
-                                        },
-                                      },
-                                    ],
-                                  },
-                                  "city": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "Berlin",
-                                    },
-                                  },
-                                  "country": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "Germany",
-                                    },
-                                  },
-                                  "postcode": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "10557",
-                                    },
-                                  },
-                                  "state": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "Berlin",
-                                    },
-                                  },
-                                  "tags": {
-                                    "type": "array",
-                                    "value": [
-                                      {
-                                        "properties": {
-                                          "key": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "customKey",
-                                            },
-                                          },
-                                          "value": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "customValue",
-                                            },
-                                          },
-                                        },
-                                        "type": "object",
-                                      },
-                                    ],
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            ],
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "reasonForAccountOpening": {
-                        "type": "array",
-                        "value": [
-                          {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "string",
-                            },
-                          },
-                        ],
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "shareHolders": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "contactDetails": {
-                            "properties": {
-                              "addresses": {
-                                "type": "array",
-                                "value": [
-                                  {
-                                    "properties": {
-                                      "addressLines": {
-                                        "type": "array",
-                                        "value": [
-                                          {
-                                            "type": "unknown",
-                                            "value": {
-                                              "type": "primitive",
-                                              "value": {
-                                                "type": "string",
-                                                "value": "Klara-Franke Str 20",
-                                              },
-                                            },
-                                          },
-                                        ],
-                                      },
-                                      "city": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "Berlin",
-                                        },
-                                      },
-                                      "country": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "Germany",
-                                        },
-                                      },
-                                      "postcode": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "10557",
-                                        },
-                                      },
-                                      "state": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "Berlin",
-                                        },
-                                      },
-                                      "tags": {
-                                        "type": "array",
-                                        "value": [
-                                          {
-                                            "properties": {
-                                              "key": {
-                                                "type": "primitive",
-                                                "value": {
-                                                  "type": "string",
-                                                  "value": "customKey",
-                                                },
-                                              },
-                                              "value": {
-                                                "type": "primitive",
-                                                "value": {
-                                                  "type": "string",
-                                                  "value": "customValue",
-                                                },
-                                              },
-                                            },
-                                            "type": "object",
-                                          },
-                                        ],
-                                      },
-                                    },
-                                    "type": "object",
-                                  },
-                                ],
-                              },
-                              "contactNumbers": {
-                                "type": "array",
-                                "value": [
-                                  {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "+371 123132",
-                                    },
-                                  },
-                                ],
-                              },
-                              "emailIds": {
-                                "type": "array",
-                                "value": [
-                                  {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "baran@flagright.com",
-                                    },
-                                  },
-                                ],
-                              },
-                              "websites": {
-                                "type": "array",
-                                "value": [
-                                  {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "flagright.com",
-                                    },
-                                  },
-                                ],
-                              },
-                            },
-                            "type": "object",
-                          },
-                          "generalDetails": {
-                            "properties": {
-                              "countryOfNationality": {
-                                "type": "enum",
-                                "value": "DE",
-                              },
-                              "countryOfResidence": {
-                                "type": "enum",
-                                "value": "US",
-                              },
-                              "dateOfBirth": {
-                                "type": "primitive",
-                                "value": {
-                                  "type": "string",
-                                  "value": "1991-01-01",
-                                },
-                              },
-                              "name": {
-                                "properties": {
-                                  "firstName": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "Baran",
-                                    },
-                                  },
-                                  "lastName": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "Ozkan",
-                                    },
-                                  },
-                                  "middleName": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "Realblood",
-                                    },
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            },
-                            "type": "object",
-                          },
-                          "legalDocuments": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "properties": {
-                                  "documentExpirationDate": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "double",
-                                      "value": 1839939034000,
-                                    },
-                                  },
-                                  "documentIssuedCountry": {
-                                    "type": "enum",
-                                    "value": "DE",
-                                  },
-                                  "documentIssuedDate": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "double",
-                                      "value": 1639939034000,
-                                    },
-                                  },
-                                  "documentNumber": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "Z9431P",
-                                    },
-                                  },
-                                  "documentType": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "passport",
-                                    },
-                                  },
-                                  "nameOnDocument": {
-                                    "properties": {
-                                      "firstName": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "Baran",
-                                        },
-                                      },
-                                      "lastName": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "Ozkan",
-                                        },
-                                      },
-                                      "middleName": {
-                                        "type": "primitive",
-                                        "value": {
-                                          "type": "string",
-                                          "value": "Realblood",
-                                        },
-                                      },
-                                    },
-                                    "type": "object",
-                                  },
-                                  "tags": {
-                                    "type": "array",
-                                    "value": [
-                                      {
-                                        "properties": {
-                                          "key": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "customerType",
-                                            },
-                                          },
-                                          "value": {
-                                            "type": "primitive",
-                                            "value": {
-                                              "type": "string",
-                                              "value": "wallet",
-                                            },
-                                          },
-                                        },
-                                        "type": "object",
-                                      },
-                                    ],
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            ],
-                          },
-                          "tags": {
-                            "type": "array",
-                            "value": [
-                              {
-                                "properties": {
-                                  "key": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "customKey",
-                                    },
-                                  },
-                                  "value": {
-                                    "type": "primitive",
-                                    "value": {
-                                      "type": "string",
-                                      "value": "customValue",
-                                    },
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            ],
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                  },
-                  "tags": {
-                    "type": "array",
-                    "value": [
-                      {
-                        "properties": {
-                          "key": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "customKey",
-                            },
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "customValue",
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                  },
-                  "transactionLimits": {
-                    "properties": {
-                      "maximumDailyTransactionLimit": {
-                        "properties": {
-                          "amountCurrency": {
-                            "type": "enum",
-                            "value": "GBP",
-                          },
-                          "amountValue": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 800,
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "maximumMonthlyTransactionLimit": {
-                        "properties": {
-                          "amountCurrency": {
-                            "type": "enum",
-                            "value": "GBP",
-                          },
-                          "amountValue": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 800,
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "maximumQuarterlyTransactionLimit": {
-                        "properties": {
-                          "amountCurrency": {
-                            "type": "enum",
-                            "value": "GBP",
-                          },
-                          "amountValue": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 800,
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "maximumTransactionLimit": {
-                        "properties": {
-                          "amountCurrency": {
-                            "type": "enum",
-                            "value": "GBP",
-                          },
-                          "amountValue": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 800,
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "maximumWeeklyTransactionLimit": {
-                        "properties": {
-                          "amountCurrency": {
-                            "type": "enum",
-                            "value": "GBP",
-                          },
-                          "amountValue": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 800,
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "maximumYearlyTransactionLimit": {
-                        "properties": {
-                          "amountCurrency": {
-                            "type": "enum",
-                            "value": "GBP",
-                          },
-                          "amountValue": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "double",
-                              "value": 800,
-                            },
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
-                },
-                "type": "object",
               },
               "userId": {
                 "type": "primitive",
@@ -8653,6 +6428,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "PostBusinessUserEventRequest",
@@ -8696,39 +6472,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "tags": [],
     },
   ],
-  "errors": {
-    "400": {
-      "description": null,
-      "generatedName": "BadRequestError",
-      "nameOverride": null,
-      "schema": {
-        "generatedName": "BadRequestErrorBody",
-        "nameOverride": null,
-        "type": "unknown",
-      },
-    },
-    "401": {
-      "description": null,
-      "generatedName": "UnauthorizedError",
-      "nameOverride": null,
-      "schema": {
-        "generatedName": "UnauthorizedErrorBody",
-        "nameOverride": null,
-        "type": "unknown",
-      },
-    },
-    "429": {
-      "description": null,
-      "generatedName": "TooManyRequestsError",
-      "nameOverride": null,
-      "schema": {
-        "generatedName": "TooManyRequestsErrorBody",
-        "nameOverride": null,
-        "type": "unknown",
-      },
-    },
-  },
   "globalHeaders": [],
+  "groups": {},
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "ExecutedRulesResult",

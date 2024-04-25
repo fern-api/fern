@@ -5,12 +5,10 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-from ....core.datetime_utils import serialize_datetime
+import typing_extensions
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -47,7 +45,7 @@ class _Factory:
         return VariableType(__root__=_VariableType.DoublyLinkedListType(type="doublyLinkedListType"))
 
 
-class VariableType(pydantic.BaseModel):
+class VariableType(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(
@@ -104,7 +102,7 @@ class VariableType(pydantic.BaseModel):
         if self.__root__.type == "doublyLinkedListType":
             return doubly_linked_list_type()
 
-    __root__: typing.Annotated[
+    __root__: typing_extensions.Annotated[
         typing.Union[
             _VariableType.IntegerType,
             _VariableType.DoubleType,
@@ -117,7 +115,7 @@ class VariableType(pydantic.BaseModel):
             _VariableType.SinglyLinkedListType,
             _VariableType.DoublyLinkedListType,
         ],
-        pydantic.Field(discriminator="type"),
+        pydantic_v1.Field(discriminator="type"),
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -129,7 +127,7 @@ class VariableType(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
@@ -138,43 +136,43 @@ from .map_type import MapType as resources_commons_types_map_type_MapType  # noq
 
 
 class _VariableType:
-    class IntegerType(pydantic.BaseModel):
-        type: typing.Literal["integerType"]
+    class IntegerType(pydantic_v1.BaseModel):
+        type: typing.Literal["integerType"] = "integerType"
 
-    class DoubleType(pydantic.BaseModel):
-        type: typing.Literal["doubleType"]
+    class DoubleType(pydantic_v1.BaseModel):
+        type: typing.Literal["doubleType"] = "doubleType"
 
-    class BooleanType(pydantic.BaseModel):
-        type: typing.Literal["booleanType"]
+    class BooleanType(pydantic_v1.BaseModel):
+        type: typing.Literal["booleanType"] = "booleanType"
 
-    class StringType(pydantic.BaseModel):
-        type: typing.Literal["stringType"]
+    class StringType(pydantic_v1.BaseModel):
+        type: typing.Literal["stringType"] = "stringType"
 
-    class CharType(pydantic.BaseModel):
-        type: typing.Literal["charType"]
+    class CharType(pydantic_v1.BaseModel):
+        type: typing.Literal["charType"] = "charType"
 
     class ListType(resources_commons_types_list_type_ListType):
-        type: typing.Literal["listType"]
+        type: typing.Literal["listType"] = "listType"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class MapType(resources_commons_types_map_type_MapType):
-        type: typing.Literal["mapType"]
+        type: typing.Literal["mapType"] = "mapType"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
-    class BinaryTreeType(pydantic.BaseModel):
-        type: typing.Literal["binaryTreeType"]
+    class BinaryTreeType(pydantic_v1.BaseModel):
+        type: typing.Literal["binaryTreeType"] = "binaryTreeType"
 
-    class SinglyLinkedListType(pydantic.BaseModel):
-        type: typing.Literal["singlyLinkedListType"]
+    class SinglyLinkedListType(pydantic_v1.BaseModel):
+        type: typing.Literal["singlyLinkedListType"] = "singlyLinkedListType"
 
-    class DoublyLinkedListType(pydantic.BaseModel):
-        type: typing.Literal["doublyLinkedListType"]
+    class DoublyLinkedListType(pydantic_v1.BaseModel):
+        type: typing.Literal["doublyLinkedListType"] = "doublyLinkedListType"
 
 
 _VariableType.ListType.update_forward_refs(

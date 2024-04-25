@@ -1,11 +1,9 @@
-import { HttpError, SchemaId, StatusCode } from "@fern-api/openapi-ir-sdk";
+import { SchemaId } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 import { SchemaParserContext } from "../../schema/SchemaParserContext";
 import { AbstractOpenAPIV3ParserContext, DiscriminatedUnionReference } from "./AbstractOpenAPIV3ParserContext";
-import { convertToError } from "./converters/convertToHttpError";
 import { DummyOpenAPIV3ParserContext } from "./DummyOpenAPIV3ParserContext";
-import { ErrorBodyCollector } from "./ErrorBodyCollector";
 
 export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
     private nonRequestReferencedSchemas: Set<SchemaId> = new Set();
@@ -14,7 +12,6 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
     private singleRequestReferencedSchemas: Set<SchemaId> = new Set();
 
     private discrminatedUnionReferences: Record<string, DiscriminatedUnionReference> = {};
-    private errorBodies: Record<number, ErrorBodyCollector> = {};
 
     private schemasToExclude: Set<SchemaId> = new Set();
 
@@ -50,19 +47,6 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
         return new Set([...this.nonRequestReferencedSchemas, ...this.twoOrMoreRequestsReferencedSchemas]);
     }
 
-    public markSchemaForStatusCode(
-        statusCode: number,
-        schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject
-    ): void {
-        if (this.errorBodies[statusCode] != null) {
-            this.errorBodies[statusCode]?.collect(schema);
-        } else {
-            const collector = new ErrorBodyCollector(this);
-            collector.collect(schema);
-            this.errorBodies[statusCode] = collector;
-        }
-    }
-
     public markReferencedByDiscriminatedUnion(
         schema: OpenAPIV3.ReferenceObject,
         discrminant: string,
@@ -84,22 +68,6 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
         schema: OpenAPIV3.ReferenceObject
     ): DiscriminatedUnionReference | undefined {
         return this.discrminatedUnionReferences[schema.$ref];
-    }
-
-    public getErrors(): Record<StatusCode, HttpError> {
-        const errors: Record<StatusCode, HttpError> = {};
-        Object.entries(this.errorBodies).forEach(([statusCode, errorBodyCollector]) => {
-            const parsedStatusCode = parseInt(statusCode);
-            const convertedError = convertToError({
-                statusCode: parsedStatusCode,
-                errorBodyCollector,
-                context: this
-            });
-            if (convertedError != null) {
-                errors[parsedStatusCode] = convertedError;
-            }
-        });
-        return errors;
     }
 
     public excludeSchema(schemaId: SchemaId): void {

@@ -3,10 +3,10 @@
  */
 
 import * as core from "../../../../core";
-import * as SeedErrorProperty from "../../..";
+import * as SeedErrorProperty from "../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
-import * as errors from "../../../../errors";
+import * as serializers from "../../../../serialization/index";
+import * as errors from "../../../../errors/index";
 
 export declare namespace PropertyBasedError {
     interface Options {
@@ -25,6 +25,9 @@ export class PropertyBasedError {
     /**
      * GET request that always throws an error
      * @throws {@link SeedErrorProperty.PropertyBasedErrorTest}
+     *
+     * @example
+     *     await seedErrorProperty.propertyBasedError.throwError()
      */
     public async throwError(requestOptions?: PropertyBasedError.RequestOptions): Promise<string> {
         const _response = await core.fetcher({
@@ -32,7 +35,7 @@ export class PropertyBasedError {
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/error-property",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,

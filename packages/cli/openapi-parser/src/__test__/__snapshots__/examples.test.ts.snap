@@ -10,13 +10,13 @@ exports[`examples examples parse open api 1`] = `
       "authed": false,
       "availability": null,
       "description": null,
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
           "description": null,
           "headers": [],
-          "name": null,
+          "name": "Example 1",
           "pathParameters": [],
           "queryParameters": [],
           "request": null,
@@ -131,6 +131,7 @@ exports[`examples examples parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SearchRequest",
@@ -169,8 +170,8 @@ exports[`examples examples parse open api 1`] = `
       "tags": [],
     },
   ],
-  "errors": {},
   "globalHeaders": [],
+  "groups": {},
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "PropertySearchResponse",

@@ -4,25 +4,21 @@ from __future__ import annotations
 
 import typing
 
+from .....core.pydantic_utilities import pydantic_v1
 from .metadata import Metadata
 from .tag import Tag
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
-
 
 class EventInfo_Metadata(Metadata):
-    type: typing.Literal["metadata"]
+    type: typing.Literal["metadata"] = "metadata"
 
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
 
 
-class EventInfo_Tag(pydantic.BaseModel):
-    type: typing.Literal["tag"]
+class EventInfo_Tag(pydantic_v1.BaseModel):
+    type: typing.Literal["tag"] = "tag"
     value: Tag
 
 
@@ -30,7 +26,6 @@ class EventInfo_Tag(pydantic.BaseModel):
 from seed.examples.resources.commons import EventInfo_Metadata
 
 EventInfo_Metadata(
-    type="metadata",
     id="metadata-alskjfg8",
     data={"one": "two"},
     json_string='{"one": "two"}',

@@ -33,7 +33,7 @@ export class TypeResolverImpl implements TypeResolver {
     public resolveTypeOrThrow({ type, file }: { type: string; file: FernFileContext }): ResolvedType {
         const resolvedType = this.resolveType({ type, file });
         if (resolvedType == null) {
-            throw new Error("Cannot resolve type: " + type);
+            throw new Error("Cannot resolve type: " + type + " in file " + file.relativeFilepath);
         }
         return resolvedType;
     }

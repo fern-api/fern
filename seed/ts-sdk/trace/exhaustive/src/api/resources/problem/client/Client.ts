@@ -4,8 +4,8 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as SeedTrace from "../../..";
-import * as serializers from "../../../../serialization";
+import * as SeedTrace from "../../../index";
+import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
 
 export declare namespace Problem {
@@ -26,6 +26,39 @@ export class Problem {
 
     /**
      * Creates a problem
+     *
+     * @example
+     *     await seedTrace.problem.createProblem({
+     *         problemName: "string",
+     *         problemDescription: {
+     *             boards: [SeedTrace.ProblemDescriptionBoard.html("string")]
+     *         },
+     *         files: {
+     *             [SeedTrace.Language.Java]: {
+     *                 solutionFile: {
+     *                     filename: "string",
+     *                     contents: "string"
+     *                 },
+     *                 readOnlyFiles: [{
+     *                         filename: "string",
+     *                         contents: "string"
+     *                     }]
+     *             }
+     *         },
+     *         inputParams: [{
+     *                 variableType: SeedTrace.VariableType.integerType(),
+     *                 name: "string"
+     *             }],
+     *         outputType: SeedTrace.VariableType.integerType(),
+     *         testcases: [{
+     *                 testCase: {
+     *                     id: "string",
+     *                     params: [SeedTrace.VariableValue.integerValue(1)]
+     *                 },
+     *                 expectedResult: SeedTrace.VariableValue.integerValue(1)
+     *             }],
+     *         methodName: "string"
+     *     })
      */
     public async createProblem(
         request: SeedTrace.CreateProblemRequest,
@@ -44,7 +77,7 @@ export class Problem {
                         ? await core.Supplier.get(this._options.xRandomHeader)
                         : undefined,
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -75,6 +108,39 @@ export class Problem {
 
     /**
      * Updates a problem
+     *
+     * @example
+     *     await seedTrace.problem.updateProblem(SeedTrace.ProblemId("string"), {
+     *         problemName: "string",
+     *         problemDescription: {
+     *             boards: [SeedTrace.ProblemDescriptionBoard.html("string")]
+     *         },
+     *         files: {
+     *             [SeedTrace.Language.Java]: {
+     *                 solutionFile: {
+     *                     filename: "string",
+     *                     contents: "string"
+     *                 },
+     *                 readOnlyFiles: [{
+     *                         filename: "string",
+     *                         contents: "string"
+     *                     }]
+     *             }
+     *         },
+     *         inputParams: [{
+     *                 variableType: SeedTrace.VariableType.integerType(),
+     *                 name: "string"
+     *             }],
+     *         outputType: SeedTrace.VariableType.integerType(),
+     *         testcases: [{
+     *                 testCase: {
+     *                     id: "string",
+     *                     params: [SeedTrace.VariableValue.integerValue(1)]
+     *                 },
+     *                 expectedResult: SeedTrace.VariableValue.integerValue(1)
+     *             }],
+     *         methodName: "string"
+     *     })
      */
     public async updateProblem(
         problemId: SeedTrace.ProblemId,
@@ -94,7 +160,7 @@ export class Problem {
                         ? await core.Supplier.get(this._options.xRandomHeader)
                         : undefined,
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -125,6 +191,9 @@ export class Problem {
 
     /**
      * Soft deletes a problem
+     *
+     * @example
+     *     await seedTrace.problem.deleteProblem(SeedTrace.ProblemId("string"))
      */
     public async deleteProblem(
         problemId: SeedTrace.ProblemId,
@@ -143,7 +212,7 @@ export class Problem {
                         ? await core.Supplier.get(this._options.xRandomHeader)
                         : undefined,
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -168,6 +237,16 @@ export class Problem {
 
     /**
      * Returns default starter files for problem
+     *
+     * @example
+     *     await seedTrace.problem.getDefaultStarterFiles({
+     *         inputParams: [{
+     *                 variableType: SeedTrace.VariableType.integerType(),
+     *                 name: "string"
+     *             }],
+     *         outputType: SeedTrace.VariableType.integerType(),
+     *         methodName: "string"
+     *     })
      */
     public async getDefaultStarterFiles(
         request: SeedTrace.GetDefaultStarterFilesRequest,
@@ -188,7 +267,7 @@ export class Problem {
                         ? await core.Supplier.get(this._options.xRandomHeader)
                         : undefined,
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -219,7 +298,7 @@ export class Problem {
         };
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

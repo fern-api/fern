@@ -4,33 +4,29 @@ from __future__ import annotations
 
 import typing
 
+from ...core.pydantic_utilities import pydantic_v1
 from .error_info import ErrorInfo
 from .graded_test_case_update import GradedTestCaseUpdate
 from .recorded_test_case_update import RecordedTestCaseUpdate
 from .running_submission_state import RunningSubmissionState
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class TestSubmissionUpdateInfo_Running(pydantic.BaseModel):
-    type: typing.Literal["running"]
+class TestSubmissionUpdateInfo_Running(pydantic_v1.BaseModel):
+    type: typing.Literal["running"] = "running"
     value: RunningSubmissionState
 
 
-class TestSubmissionUpdateInfo_Stopped(pydantic.BaseModel):
-    type: typing.Literal["stopped"]
+class TestSubmissionUpdateInfo_Stopped(pydantic_v1.BaseModel):
+    type: typing.Literal["stopped"] = "stopped"
 
 
-class TestSubmissionUpdateInfo_Errored(pydantic.BaseModel):
-    type: typing.Literal["errored"]
+class TestSubmissionUpdateInfo_Errored(pydantic_v1.BaseModel):
+    type: typing.Literal["errored"] = "errored"
     value: ErrorInfo
 
 
 class TestSubmissionUpdateInfo_GradedTestCase(GradedTestCaseUpdate):
-    type: typing.Literal["gradedTestCase"]
+    type: typing.Literal["gradedTestCase"] = "gradedTestCase"
 
     class Config:
         allow_population_by_field_name = True
@@ -38,15 +34,15 @@ class TestSubmissionUpdateInfo_GradedTestCase(GradedTestCaseUpdate):
 
 
 class TestSubmissionUpdateInfo_RecordedTestCase(RecordedTestCaseUpdate):
-    type: typing.Literal["recordedTestCase"]
+    type: typing.Literal["recordedTestCase"] = "recordedTestCase"
 
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
 
 
-class TestSubmissionUpdateInfo_Finished(pydantic.BaseModel):
-    type: typing.Literal["finished"]
+class TestSubmissionUpdateInfo_Finished(pydantic_v1.BaseModel):
+    type: typing.Literal["finished"] = "finished"
 
 
 TestSubmissionUpdateInfo = typing.Union[

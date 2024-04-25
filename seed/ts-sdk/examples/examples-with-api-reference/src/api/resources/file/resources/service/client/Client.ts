@@ -4,10 +4,10 @@
 
 import * as environments from "../../../../../../environments";
 import * as core from "../../../../../../core";
-import * as SeedExamples from "../../../../..";
+import * as SeedExamples from "../../../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../../../serialization";
-import * as errors from "../../../../../../errors";
+import * as serializers from "../../../../../../serialization/index";
+import * as errors from "../../../../../../errors/index";
 
 export declare namespace Service {
     interface Options {
@@ -32,6 +32,11 @@ export class Service {
      *     await seedExamples.file.service.getFile("file.txt", {
      *         xFileApiVersion: "0.0.2"
      *     })
+     *
+     * @example
+     *     await seedExamples.file.service.getFile("string", {
+     *         xFileApiVersion: "string"
+     *     })
      */
     public async getFile(
         filename: string,
@@ -45,7 +50,7 @@ export class Service {
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/examples",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -98,7 +103,7 @@ export class Service {
         }
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

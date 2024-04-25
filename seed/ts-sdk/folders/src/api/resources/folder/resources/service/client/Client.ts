@@ -4,9 +4,9 @@
 
 import * as core from "../../../../../../core";
 import urlJoin from "url-join";
-import * as errors from "../../../../../../errors";
-import * as SeedApi from "../../../../..";
-import * as serializers from "../../../../../../serialization";
+import * as errors from "../../../../../../errors/index";
+import * as SeedApi from "../../../../../index";
+import * as serializers from "../../../../../../serialization/index";
 
 export declare namespace Service {
     interface Options {
@@ -28,7 +28,7 @@ export class Service {
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/folders",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -65,6 +65,11 @@ export class Service {
 
     /**
      * @throws {@link SeedApi.folder.NotFoundError}
+     *
+     * @example
+     *     await seedApi.folder.service.unknownRequest({
+     *         "key": "value"
+     *     })
      */
     public async unknownRequest(request?: unknown, requestOptions?: Service.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
@@ -72,7 +77,7 @@ export class Service {
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/folders",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,

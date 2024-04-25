@@ -3,9 +3,9 @@
  */
 
 import * as core from "../../../../../../core";
-import * as Fiddle from "../../../../..";
+import * as Fiddle from "../../../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../../../serialization";
+import * as serializers from "../../../../../../serialization/index";
 
 export declare namespace Params {
     interface Options {
@@ -24,6 +24,9 @@ export class Params {
 
     /**
      * GET with path param
+     *
+     * @example
+     *     await fiddle.endpoints.params.getWithPath("string")
      */
     public async getWithPath(
         param: string,
@@ -35,7 +38,7 @@ export class Params {
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -64,6 +67,12 @@ export class Params {
 
     /**
      * GET with query param
+     *
+     * @example
+     *     await fiddle.endpoints.params.getWithQuery({
+     *         query: "string",
+     *         number: 1
+     *     })
      */
     public async getWithQuery(
         request: Fiddle.endpoints.GetWithQuery,
@@ -79,7 +88,7 @@ export class Params {
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -104,6 +113,12 @@ export class Params {
 
     /**
      * GET with multiple of same query param
+     *
+     * @example
+     *     await fiddle.endpoints.params.getWithAllowMultipleQuery({
+     *         query: "string",
+     *         numer: 1
+     *     })
      */
     public async getWithAllowMultipleQuery(
         request: Fiddle.endpoints.GetWithMultipleQuery,
@@ -129,7 +144,7 @@ export class Params {
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -154,6 +169,11 @@ export class Params {
 
     /**
      * GET with path and query params
+     *
+     * @example
+     *     await fiddle.endpoints.params.getWithPathAndQuery("string", {
+     *         query: "string"
+     *     })
      */
     public async getWithPathAndQuery(
         param: string,
@@ -169,7 +189,7 @@ export class Params {
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -194,6 +214,9 @@ export class Params {
 
     /**
      * PUT to update with path param
+     *
+     * @example
+     *     await fiddle.endpoints.params.modifyWithPath("string", "string")
      */
     public async modifyWithPath(
         param: string,
@@ -206,7 +229,7 @@ export class Params {
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -236,7 +259,7 @@ export class Params {
         };
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

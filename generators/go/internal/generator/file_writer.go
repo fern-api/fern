@@ -66,6 +66,7 @@ func newFileWriter(
 	scope.AddImport("mime/multipart")
 	scope.AddImport("net/http")
 	scope.AddImport("net/url")
+	scope.AddImport("os")
 	scope.AddImport("strconv")
 	scope.AddImport("strings")
 	scope.AddImport("testing")

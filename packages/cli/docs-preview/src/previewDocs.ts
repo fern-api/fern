@@ -94,7 +94,10 @@ class ReferencedAPICollector {
                 smartCasing: false,
                 disableExamples: false
             });
-            const apiDefinition = convertIrToFdrApi(ir, {});
+            const apiDefinition = convertIrToFdrApi({
+                ir,
+                snippetsConfig: {}
+            });
             const dbApiDefinition = convertAPIDefinitionToDb(
                 apiDefinition,
                 "",
@@ -309,7 +312,8 @@ async function convertUnversionedNavigationConfig({
                                         apiCollector
                                     })
                                 )
-                            )
+                            ),
+                            urlSlugOverride: tabConfig.slug
                         };
                     })
                 )

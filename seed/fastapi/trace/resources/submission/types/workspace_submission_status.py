@@ -5,15 +5,13 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 from .error_info import ErrorInfo
 from .running_submission_state import RunningSubmissionState
 from .workspace_run_details import WorkspaceRunDetails
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -39,7 +37,7 @@ class _Factory:
         )
 
 
-class WorkspaceSubmissionStatus(pydantic.BaseModel):
+class WorkspaceSubmissionStatus(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(
@@ -72,7 +70,7 @@ class WorkspaceSubmissionStatus(pydantic.BaseModel):
         if self.__root__.type == "traced":
             return traced(WorkspaceRunDetails(**self.__root__.dict(exclude_unset=True, exclude={"type"})))
 
-    __root__: typing.Annotated[
+    __root__: typing_extensions.Annotated[
         typing.Union[
             _WorkspaceSubmissionStatus.Stopped,
             _WorkspaceSubmissionStatus.Errored,
@@ -80,7 +78,7 @@ class WorkspaceSubmissionStatus(pydantic.BaseModel):
             _WorkspaceSubmissionStatus.Ran,
             _WorkspaceSubmissionStatus.Traced,
         ],
-        pydantic.Field(discriminator="type"),
+        pydantic_v1.Field(discriminator="type"),
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -92,31 +90,31 @@ class WorkspaceSubmissionStatus(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _WorkspaceSubmissionStatus:
-    class Stopped(pydantic.BaseModel):
-        type: typing.Literal["stopped"]
+    class Stopped(pydantic_v1.BaseModel):
+        type: typing.Literal["stopped"] = "stopped"
 
-    class Errored(pydantic.BaseModel):
-        type: typing.Literal["errored"]
+    class Errored(pydantic_v1.BaseModel):
+        type: typing.Literal["errored"] = "errored"
         value: ErrorInfo
 
-    class Running(pydantic.BaseModel):
-        type: typing.Literal["running"]
+    class Running(pydantic_v1.BaseModel):
+        type: typing.Literal["running"] = "running"
         value: RunningSubmissionState
 
     class Ran(WorkspaceRunDetails):
-        type: typing.Literal["ran"]
+        type: typing.Literal["ran"] = "ran"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class Traced(WorkspaceRunDetails):
-        type: typing.Literal["traced"]
+        type: typing.Literal["traced"] = "traced"
 
         class Config:
             allow_population_by_field_name = True

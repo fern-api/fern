@@ -11,6 +11,7 @@ export declare namespace SdkEndpointTypeSchemasGenerator {
         shouldGenerateErrors: boolean;
         skipResponseValidation: boolean;
         includeSerdeLayer: boolean;
+        allowExtraFields: boolean;
     }
 
     export namespace generateEndpointTypeSchemas {
@@ -28,19 +29,22 @@ export class SdkEndpointTypeSchemasGenerator {
     private shouldGenerateErrors: boolean;
     private skipResponseValidation: boolean;
     private includeSerdeLayer: boolean;
+    private allowExtraFields: boolean;
 
     constructor({
         errorResolver,
         intermediateRepresentation,
         shouldGenerateErrors,
         skipResponseValidation,
-        includeSerdeLayer
+        includeSerdeLayer,
+        allowExtraFields
     }: SdkEndpointTypeSchemasGenerator.Init) {
         this.errorResolver = errorResolver;
         this.intermediateRepresentation = intermediateRepresentation;
         this.shouldGenerateErrors = shouldGenerateErrors;
         this.skipResponseValidation = skipResponseValidation;
         this.includeSerdeLayer = includeSerdeLayer;
+        this.allowExtraFields = allowExtraFields;
     }
 
     public generateEndpointTypeSchemas({
@@ -56,7 +60,8 @@ export class SdkEndpointTypeSchemasGenerator {
             errorDiscriminationStrategy: this.intermediateRepresentation.errorDiscriminationStrategy,
             shouldGenerateErrors: this.shouldGenerateErrors,
             skipResponseValidation: this.skipResponseValidation,
-            includeSerdeLayer: this.includeSerdeLayer
+            includeSerdeLayer: this.includeSerdeLayer,
+            allowExtraFields: this.allowExtraFields
         });
     }
 }

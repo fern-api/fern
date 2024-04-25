@@ -5,14 +5,12 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 from ...commons.types.problem_id import ProblemId
 from .create_problem_error import CreateProblemError
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -25,7 +23,7 @@ class _Factory:
         return CreateProblemResponse(__root__=_CreateProblemResponse.Error(type="error", value=value))
 
 
-class CreateProblemResponse(pydantic.BaseModel):
+class CreateProblemResponse(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(self) -> typing.Union[_CreateProblemResponse.Success, _CreateProblemResponse.Error]:
@@ -39,8 +37,9 @@ class CreateProblemResponse(pydantic.BaseModel):
         if self.__root__.type == "error":
             return error(self.__root__.value)
 
-    __root__: typing.Annotated[
-        typing.Union[_CreateProblemResponse.Success, _CreateProblemResponse.Error], pydantic.Field(discriminator="type")
+    __root__: typing_extensions.Annotated[
+        typing.Union[_CreateProblemResponse.Success, _CreateProblemResponse.Error],
+        pydantic_v1.Field(discriminator="type"),
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -52,17 +51,17 @@ class CreateProblemResponse(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _CreateProblemResponse:
-    class Success(pydantic.BaseModel):
-        type: typing.Literal["success"]
+    class Success(pydantic_v1.BaseModel):
+        type: typing.Literal["success"] = "success"
         value: ProblemId
 
-    class Error(pydantic.BaseModel):
-        type: typing.Literal["error"]
+    class Error(pydantic_v1.BaseModel):
+        type: typing.Literal["error"] = "error"
         value: CreateProblemError
 
 

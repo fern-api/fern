@@ -5,6 +5,8 @@ package com.seed.idempotencyHeaders.core;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 public final class IdempotentRequestOptions {
     private final String token;
@@ -13,10 +15,29 @@ public final class IdempotentRequestOptions {
 
     private final String idempotencyExpiration;
 
-    private IdempotentRequestOptions(String token, String idempotencyKey, String idempotencyExpiration) {
+    private final Optional<Integer> timeout;
+
+    private final TimeUnit timeoutTimeUnit;
+
+    private IdempotentRequestOptions(
+            String token,
+            String idempotencyKey,
+            String idempotencyExpiration,
+            Optional<Integer> timeout,
+            TimeUnit timeoutTimeUnit) {
         this.token = token;
         this.idempotencyKey = idempotencyKey;
         this.idempotencyExpiration = idempotencyExpiration;
+        this.timeout = timeout;
+        this.timeoutTimeUnit = timeoutTimeUnit;
+    }
+
+    public Optional<Integer> getTimeout() {
+        return timeout;
+    }
+
+    public TimeUnit getTimeoutTimeUnit() {
+        return timeoutTimeUnit;
     }
 
     public Map<String, String> getHeaders() {
@@ -44,6 +65,10 @@ public final class IdempotentRequestOptions {
 
         private String idempotencyExpiration = null;
 
+        private Optional<Integer> timeout = null;
+
+        private TimeUnit timeoutTimeUnit = TimeUnit.SECONDS;
+
         public Builder token(String token) {
             this.token = token;
             return this;
@@ -59,8 +84,19 @@ public final class IdempotentRequestOptions {
             return this;
         }
 
+        public Builder timeout(Integer timeout) {
+            this.timeout = Optional.of(timeout);
+            return this;
+        }
+
+        public Builder timeout(Integer timeout, TimeUnit timeoutTimeUnit) {
+            this.timeout = Optional.of(timeout);
+            this.timeoutTimeUnit = timeoutTimeUnit;
+            return this;
+        }
+
         public IdempotentRequestOptions build() {
-            return new IdempotentRequestOptions(token, idempotencyKey, idempotencyExpiration);
+            return new IdempotentRequestOptions(token, idempotencyKey, idempotencyExpiration, timeout, timeoutTimeUnit);
         }
     }
 }

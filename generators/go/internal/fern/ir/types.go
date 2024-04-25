@@ -29,6 +29,7 @@ type AuthScheme struct {
 	Bearer *BearerAuthScheme
 	Basic  *BasicAuthScheme
 	Header *HeaderAuthScheme
+	Oauth  *OAuthScheme
 }
 
 func NewAuthSchemeFromBearer(value *BearerAuthScheme) *AuthScheme {
@@ -41,6 +42,10 @@ func NewAuthSchemeFromBasic(value *BasicAuthScheme) *AuthScheme {
 
 func NewAuthSchemeFromHeader(value *HeaderAuthScheme) *AuthScheme {
 	return &AuthScheme{Type: "header", Header: value}
+}
+
+func NewAuthSchemeFromOauth(value *OAuthScheme) *AuthScheme {
+	return &AuthScheme{Type: "oauth", Oauth: value}
 }
 
 func (a *AuthScheme) UnmarshalJSON(data []byte) error {
@@ -70,6 +75,12 @@ func (a *AuthScheme) UnmarshalJSON(data []byte) error {
 			return err
 		}
 		a.Header = value
+	case "oauth":
+		value := new(OAuthScheme)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		a.Oauth = value
 	}
 	return nil
 }
@@ -83,7 +94,7 @@ func (a AuthScheme) MarshalJSON() ([]byte, error) {
 			Type string `json:"_type"`
 			*BearerAuthScheme
 		}{
-			Type:             a.Type,
+			Type:             "bearer",
 			BearerAuthScheme: a.Bearer,
 		}
 		return json.Marshal(marshaler)
@@ -92,7 +103,7 @@ func (a AuthScheme) MarshalJSON() ([]byte, error) {
 			Type string `json:"_type"`
 			*BasicAuthScheme
 		}{
-			Type:            a.Type,
+			Type:            "basic",
 			BasicAuthScheme: a.Basic,
 		}
 		return json.Marshal(marshaler)
@@ -101,8 +112,17 @@ func (a AuthScheme) MarshalJSON() ([]byte, error) {
 			Type string `json:"_type"`
 			*HeaderAuthScheme
 		}{
-			Type:             a.Type,
+			Type:             "header",
 			HeaderAuthScheme: a.Header,
+		}
+		return json.Marshal(marshaler)
+	case "oauth":
+		var marshaler = struct {
+			Type string `json:"_type"`
+			*OAuthScheme
+		}{
+			Type:        "oauth",
+			OAuthScheme: a.Oauth,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -112,6 +132,7 @@ type AuthSchemeVisitor interface {
 	VisitBearer(*BearerAuthScheme) error
 	VisitBasic(*BasicAuthScheme) error
 	VisitHeader(*HeaderAuthScheme) error
+	VisitOauth(*OAuthScheme) error
 }
 
 func (a *AuthScheme) Accept(visitor AuthSchemeVisitor) error {
@@ -124,6 +145,8 @@ func (a *AuthScheme) Accept(visitor AuthSchemeVisitor) error {
 		return visitor.VisitBasic(a.Basic)
 	case "header":
 		return visitor.VisitHeader(a.Header)
+	case "oauth":
+		return visitor.VisitOauth(a.Oauth)
 	}
 }
 
@@ -196,6 +219,145 @@ func (h *HeaderAuthScheme) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", h)
+}
+
+// The properties to map to the corresponding OAuth token primitive.
+type OAuthAccessTokenProperties struct {
+	AccessToken  *ResponseProperty `json:"accessToken,omitempty" url:"accessToken,omitempty"`
+	ExpiresIn    *ResponseProperty `json:"expiresIn,omitempty" url:"expiresIn,omitempty"`
+	RefreshToken *ResponseProperty `json:"refreshToken,omitempty" url:"refreshToken,omitempty"`
+}
+
+func (o *OAuthAccessTokenProperties) String() string {
+	if value, err := core.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+type OAuthClientCredentials struct {
+	ClientIdEnvVar     *EnvironmentVariable  `json:"clientIdEnvVar,omitempty" url:"clientIdEnvVar,omitempty"`
+	ClientSecretEnvVar *EnvironmentVariable  `json:"clientSecretEnvVar,omitempty" url:"clientSecretEnvVar,omitempty"`
+	TokenPrefix        *string               `json:"tokenPrefix,omitempty" url:"tokenPrefix,omitempty"`
+	Scopes             []string              `json:"scopes,omitempty" url:"scopes,omitempty"`
+	TokenEndpoint      *OAuthTokenEndpoint   `json:"tokenEndpoint,omitempty" url:"tokenEndpoint,omitempty"`
+	RefreshEndpoint    *OAuthRefreshEndpoint `json:"refreshEndpoint,omitempty" url:"refreshEndpoint,omitempty"`
+}
+
+func (o *OAuthClientCredentials) String() string {
+	if value, err := core.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+type OAuthConfiguration struct {
+	Type              string
+	ClientCredentials *OAuthClientCredentials
+}
+
+func NewOAuthConfigurationFromClientCredentials(value *OAuthClientCredentials) *OAuthConfiguration {
+	return &OAuthConfiguration{Type: "clientCredentials", ClientCredentials: value}
+}
+
+func (o *OAuthConfiguration) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type string `json:"type"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	o.Type = unmarshaler.Type
+	switch unmarshaler.Type {
+	case "clientCredentials":
+		value := new(OAuthClientCredentials)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		o.ClientCredentials = value
+	}
+	return nil
+}
+
+func (o OAuthConfiguration) MarshalJSON() ([]byte, error) {
+	switch o.Type {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", o.Type, o)
+	case "clientCredentials":
+		var marshaler = struct {
+			Type string `json:"type"`
+			*OAuthClientCredentials
+		}{
+			Type:                   "clientCredentials",
+			OAuthClientCredentials: o.ClientCredentials,
+		}
+		return json.Marshal(marshaler)
+	}
+}
+
+type OAuthConfigurationVisitor interface {
+	VisitClientCredentials(*OAuthClientCredentials) error
+}
+
+func (o *OAuthConfiguration) Accept(visitor OAuthConfigurationVisitor) error {
+	switch o.Type {
+	default:
+		return fmt.Errorf("invalid type %s in %T", o.Type, o)
+	case "clientCredentials":
+		return visitor.VisitClientCredentials(o.ClientCredentials)
+	}
+}
+
+type OAuthRefreshEndpoint struct {
+	// The refrence to the refresh token endpoint (e.g. \_endpoint_auth.refreshToken).
+	EndpointReference  EndpointId                   `json:"endpointReference" url:"endpointReference"`
+	RequestProperties  *OAuthRefreshTokenProperties `json:"requestProperties,omitempty" url:"requestProperties,omitempty"`
+	ResponseProperties *OAuthAccessTokenProperties  `json:"responseProperties,omitempty" url:"responseProperties,omitempty"`
+}
+
+func (o *OAuthRefreshEndpoint) String() string {
+	if value, err := core.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+// The properties to map to the corresponding OAuth token primitive.
+type OAuthRefreshTokenProperties struct {
+	RefreshToken *RequestProperty `json:"refreshToken,omitempty" url:"refreshToken,omitempty"`
+}
+
+func (o *OAuthRefreshTokenProperties) String() string {
+	if value, err := core.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+// We currently assume the resultant token is leveraged as a bearer token, e.g. "Authorization Bearer"
+type OAuthScheme struct {
+	Docs          *string             `json:"docs,omitempty" url:"docs,omitempty"`
+	Configuration *OAuthConfiguration `json:"configuration,omitempty" url:"configuration,omitempty"`
+}
+
+func (o *OAuthScheme) String() string {
+	if value, err := core.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+type OAuthTokenEndpoint struct {
+	// The refrence to the access token endpoint (e.g. \_endpoint_auth.token).
+	EndpointReference  EndpointId                  `json:"endpointReference" url:"endpointReference"`
+	ResponseProperties *OAuthAccessTokenProperties `json:"responseProperties,omitempty" url:"responseProperties,omitempty"`
+}
+
+func (o *OAuthTokenEndpoint) String() string {
+	if value, err := core.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
 }
 
 type Availability struct {
@@ -433,7 +595,7 @@ func (e Environments) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*SingleBaseUrlEnvironments
 		}{
-			Type:                      e.Type,
+			Type:                      "singleBaseUrl",
 			SingleBaseUrlEnvironments: e.SingleBaseUrl,
 		}
 		return json.Marshal(marshaler)
@@ -442,7 +604,7 @@ func (e Environments) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*MultipleBaseUrlsEnvironments
 		}{
-			Type:                         e.Type,
+			Type:                         "multipleBaseUrls",
 			MultipleBaseUrlsEnvironments: e.MultipleBaseUrls,
 		}
 		return json.Marshal(marshaler)
@@ -604,7 +766,7 @@ func (e ErrorDeclarationDiscriminantValue) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*NameAndWireValue
 		}{
-			Type:             e.Type,
+			Type:             "property",
 			NameAndWireValue: e.Property,
 		}
 		return json.Marshal(marshaler)
@@ -613,7 +775,7 @@ func (e ErrorDeclarationDiscriminantValue) MarshalJSON() ([]byte, error) {
 			Type       string      `json:"type"`
 			StatusCode interface{} `json:"statusCode,omitempty"`
 		}{
-			Type:       e.Type,
+			Type:       "statusCode",
 			StatusCode: e.StatusCode,
 		}
 		return json.Marshal(marshaler)
@@ -646,6 +808,24 @@ func (b *BytesRequest) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", b)
+}
+
+// If set, the endpoint will be generated with auto-pagination features.
+//
+// The page must be defined as a query parameter included in the request,
+// whereas the next page and results are resolved from properties defined
+// on the response.
+type CursorPagination struct {
+	Page    *QueryParameter   `json:"page,omitempty" url:"page,omitempty"`
+	Next    *ResponseProperty `json:"next,omitempty" url:"next,omitempty"`
+	Results *ResponseProperty `json:"results,omitempty" url:"results,omitempty"`
+}
+
+func (c *CursorPagination) String() string {
+	if value, err := core.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
 }
 
 type DeclaredServiceName struct {
@@ -709,7 +889,7 @@ func (e ExampleCodeSample) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*ExampleCodeSampleLanguage
 		}{
-			Type:                      e.Type,
+			Type:                      "language",
 			ExampleCodeSampleLanguage: e.Language,
 		}
 		return json.Marshal(marshaler)
@@ -718,7 +898,7 @@ func (e ExampleCodeSample) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*ExampleCodeSampleSdk
 		}{
-			Type:                 e.Type,
+			Type:                 "sdk",
 			ExampleCodeSampleSdk: e.Sdk,
 		}
 		return json.Marshal(marshaler)
@@ -935,7 +1115,7 @@ func (e ExampleRequestBody) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*ExampleInlinedRequestBody
 		}{
-			Type:                      e.Type,
+			Type:                      "inlinedRequestBody",
 			ExampleInlinedRequestBody: e.InlinedRequestBody,
 		}
 		return json.Marshal(marshaler)
@@ -944,7 +1124,7 @@ func (e ExampleRequestBody) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*ExampleTypeReference
 		}{
-			Type:                 e.Type,
+			Type:                 "reference",
 			ExampleTypeReference: e.Reference,
 		}
 		return json.Marshal(marshaler)
@@ -1015,7 +1195,7 @@ func (e ExampleResponse) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*ExampleEndpointSuccessResponse
 		}{
-			Type:                           e.Type,
+			Type:                           "ok",
 			ExampleEndpointSuccessResponse: e.Ok,
 		}
 		return json.Marshal(marshaler)
@@ -1024,7 +1204,7 @@ func (e ExampleResponse) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*ExampleEndpointErrorResponse
 		}{
-			Type:                         e.Type,
+			Type:                         "error",
 			ExampleEndpointErrorResponse: e.Error,
 		}
 		return json.Marshal(marshaler)
@@ -1106,7 +1286,7 @@ func (f FileProperty) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*FilePropertySingle
 		}{
-			Type:               f.Type,
+			Type:               "file",
 			FilePropertySingle: f.File,
 		}
 		return json.Marshal(marshaler)
@@ -1115,7 +1295,7 @@ func (f FileProperty) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*FilePropertyArray
 		}{
-			Type:              f.Type,
+			Type:              "fileArray",
 			FilePropertyArray: f.FileArray,
 		}
 		return json.Marshal(marshaler)
@@ -1224,7 +1404,7 @@ func (f FileUploadRequestProperty) MarshalJSON() ([]byte, error) {
 			Type string        `json:"type"`
 			File *FileProperty `json:"value,omitempty"`
 		}{
-			Type: f.Type,
+			Type: "file",
 			File: f.File,
 		}
 		return json.Marshal(marshaler)
@@ -1233,7 +1413,7 @@ func (f FileUploadRequestProperty) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*InlinedRequestBodyProperty
 		}{
-			Type:                       f.Type,
+			Type:                       "bodyProperty",
 			InlinedRequestBodyProperty: f.BodyProperty,
 		}
 		return json.Marshal(marshaler)
@@ -1277,7 +1457,7 @@ type HttpEndpoint struct {
 	Auth              bool                   `json:"auth" url:"auth"`
 	Idempotent        bool                   `json:"idempotent" url:"idempotent"`
 	Pagination        *Pagination            `json:"pagination,omitempty" url:"pagination,omitempty"`
-	Examples          []*ExampleEndpointCall `json:"examples,omitempty" url:"examples,omitempty"`
+	Examples          []*HttpEndpointExample `json:"examples,omitempty" url:"examples,omitempty"`
 }
 
 func (h *HttpEndpoint) String() string {
@@ -1287,11 +1467,92 @@ func (h *HttpEndpoint) String() string {
 	return fmt.Sprintf("%#v", h)
 }
 
+type HttpEndpointExample struct {
+	ExampleType  string
+	UserProvided *ExampleEndpointCall
+	Generated    *ExampleEndpointCall
+}
+
+func NewHttpEndpointExampleFromUserProvided(value *ExampleEndpointCall) *HttpEndpointExample {
+	return &HttpEndpointExample{ExampleType: "userProvided", UserProvided: value}
+}
+
+func NewHttpEndpointExampleFromGenerated(value *ExampleEndpointCall) *HttpEndpointExample {
+	return &HttpEndpointExample{ExampleType: "generated", Generated: value}
+}
+
+func (h *HttpEndpointExample) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		ExampleType string `json:"exampleType"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	h.ExampleType = unmarshaler.ExampleType
+	switch unmarshaler.ExampleType {
+	case "userProvided":
+		value := new(ExampleEndpointCall)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		h.UserProvided = value
+	case "generated":
+		value := new(ExampleEndpointCall)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		h.Generated = value
+	}
+	return nil
+}
+
+func (h HttpEndpointExample) MarshalJSON() ([]byte, error) {
+	switch h.ExampleType {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", h.ExampleType, h)
+	case "userProvided":
+		var marshaler = struct {
+			ExampleType string `json:"exampleType"`
+			*ExampleEndpointCall
+		}{
+			ExampleType:         "userProvided",
+			ExampleEndpointCall: h.UserProvided,
+		}
+		return json.Marshal(marshaler)
+	case "generated":
+		var marshaler = struct {
+			ExampleType string `json:"exampleType"`
+			*ExampleEndpointCall
+		}{
+			ExampleType:         "generated",
+			ExampleEndpointCall: h.Generated,
+		}
+		return json.Marshal(marshaler)
+	}
+}
+
+type HttpEndpointExampleVisitor interface {
+	VisitUserProvided(*ExampleEndpointCall) error
+	VisitGenerated(*ExampleEndpointCall) error
+}
+
+func (h *HttpEndpointExample) Accept(visitor HttpEndpointExampleVisitor) error {
+	switch h.ExampleType {
+	default:
+		return fmt.Errorf("invalid type %s in %T", h.ExampleType, h)
+	case "userProvided":
+		return visitor.VisitUserProvided(h.UserProvided)
+	case "generated":
+		return visitor.VisitGenerated(h.Generated)
+	}
+}
+
 type HttpHeader struct {
 	Docs         *string           `json:"docs,omitempty" url:"docs,omitempty"`
 	Availability *Availability     `json:"availability,omitempty" url:"availability,omitempty"`
 	Name         *NameAndWireValue `json:"name,omitempty" url:"name,omitempty"`
 	ValueType    *TypeReference    `json:"valueType,omitempty" url:"valueType,omitempty"`
+	Env          *string           `json:"env,omitempty" url:"env,omitempty"`
 }
 
 func (h *HttpHeader) String() string {
@@ -1426,7 +1687,7 @@ func (h HttpRequestBody) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*InlinedRequestBody
 		}{
-			Type:               h.Type,
+			Type:               "inlinedRequestBody",
 			InlinedRequestBody: h.InlinedRequestBody,
 		}
 		return json.Marshal(marshaler)
@@ -1435,7 +1696,7 @@ func (h HttpRequestBody) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*HttpRequestBodyReference
 		}{
-			Type:                     h.Type,
+			Type:                     "reference",
 			HttpRequestBodyReference: h.Reference,
 		}
 		return json.Marshal(marshaler)
@@ -1444,7 +1705,7 @@ func (h HttpRequestBody) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*FileUploadRequest
 		}{
-			Type:              h.Type,
+			Type:              "fileUpload",
 			FileUploadRequest: h.FileUpload,
 		}
 		return json.Marshal(marshaler)
@@ -1453,7 +1714,7 @@ func (h HttpRequestBody) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*BytesRequest
 		}{
-			Type:         h.Type,
+			Type:         "bytes",
 			BytesRequest: h.Bytes,
 		}
 		return json.Marshal(marshaler)
@@ -1549,11 +1810,13 @@ func (h *HttpResponse) UnmarshalJSON(data []byte) error {
 		}
 		h.Text = value
 	case "streaming":
-		value := new(StreamingResponse)
-		if err := json.Unmarshal(data, &value); err != nil {
+		var valueUnmarshaler struct {
+			Streaming *StreamingResponse `json:"value,omitempty"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		h.Streaming = value
+		h.Streaming = valueUnmarshaler.Streaming
 	}
 	return nil
 }
@@ -1567,7 +1830,7 @@ func (h HttpResponse) MarshalJSON() ([]byte, error) {
 			Type string        `json:"type"`
 			Json *JsonResponse `json:"value,omitempty"`
 		}{
-			Type: h.Type,
+			Type: "json",
 			Json: h.Json,
 		}
 		return json.Marshal(marshaler)
@@ -1576,7 +1839,7 @@ func (h HttpResponse) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*FileDownloadResponse
 		}{
-			Type:                 h.Type,
+			Type:                 "fileDownload",
 			FileDownloadResponse: h.FileDownload,
 		}
 		return json.Marshal(marshaler)
@@ -1585,17 +1848,17 @@ func (h HttpResponse) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*TextResponse
 		}{
-			Type:         h.Type,
+			Type:         "text",
 			TextResponse: h.Text,
 		}
 		return json.Marshal(marshaler)
 	case "streaming":
 		var marshaler = struct {
-			Type string `json:"type"`
-			*StreamingResponse
+			Type      string             `json:"type"`
+			Streaming *StreamingResponse `json:"value,omitempty"`
 		}{
-			Type:              h.Type,
-			StreamingResponse: h.Streaming,
+			Type:      "streaming",
+			Streaming: h.Streaming,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -1645,6 +1908,8 @@ type InlinedRequestBody struct {
 	Extends     []*DeclaredTypeName           `json:"extends,omitempty" url:"extends,omitempty"`
 	Properties  []*InlinedRequestBodyProperty `json:"properties,omitempty" url:"properties,omitempty"`
 	ContentType *string                       `json:"contentType,omitempty" url:"contentType,omitempty"`
+	// Whether to allow extra properties on the request.
+	ExtraProperties bool `json:"extra-properties" url:"extra-properties"`
 }
 
 func (i *InlinedRequestBody) String() string {
@@ -1715,7 +1980,7 @@ func (j JsonResponse) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*JsonResponseBody
 		}{
-			Type:             j.Type,
+			Type:             "response",
 			JsonResponseBody: j.Response,
 		}
 		return json.Marshal(marshaler)
@@ -1724,7 +1989,7 @@ func (j JsonResponse) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*JsonResponseBodyWithProperty
 		}{
-			Type:                         j.Type,
+			Type:                         "nestedPropertyAsResponse",
 			JsonResponseBodyWithProperty: j.NestedPropertyAsResponse,
 		}
 		return json.Marshal(marshaler)
@@ -1777,22 +2042,114 @@ func (j *JsonResponseBodyWithProperty) String() string {
 	return fmt.Sprintf("%#v", j)
 }
 
-// If set, the endpoint will be generated with auto-pagination features.
-//
-// The page must be defined as a query parameter included in the request,
-// whereas the next page and results are resolved from properties defined
-// on the response.
-type Pagination struct {
-	Page    *QueryParameter `json:"page,omitempty" url:"page,omitempty"`
-	Next    *ObjectProperty `json:"next,omitempty" url:"next,omitempty"`
-	Results *ObjectProperty `json:"results,omitempty" url:"results,omitempty"`
+type JsonStreamChunk struct {
+	Docs       *string        `json:"docs,omitempty" url:"docs,omitempty"`
+	Payload    *TypeReference `json:"payload,omitempty" url:"payload,omitempty"`
+	Terminator *string        `json:"terminator,omitempty" url:"terminator,omitempty"`
 }
 
-func (p *Pagination) String() string {
-	if value, err := core.StringifyJSON(p); err == nil {
+func (j *JsonStreamChunk) String() string {
+	if value, err := core.StringifyJSON(j); err == nil {
 		return value
 	}
-	return fmt.Sprintf("%#v", p)
+	return fmt.Sprintf("%#v", j)
+}
+
+// The page must be defined as a query parameter included in the request,
+// whereas the results are resolved from properties defined on the response.
+//
+// The page index is auto-incremented between every additional page request.
+type OffsetPagination struct {
+	Page    *QueryParameter   `json:"page,omitempty" url:"page,omitempty"`
+	Results *ResponseProperty `json:"results,omitempty" url:"results,omitempty"`
+}
+
+func (o *OffsetPagination) String() string {
+	if value, err := core.StringifyJSON(o); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", o)
+}
+
+// If set, the endpoint will be generated with auto-pagination features.
+type Pagination struct {
+	Type   string
+	Cursor *CursorPagination
+	Offset *OffsetPagination
+}
+
+func NewPaginationFromCursor(value *CursorPagination) *Pagination {
+	return &Pagination{Type: "cursor", Cursor: value}
+}
+
+func NewPaginationFromOffset(value *OffsetPagination) *Pagination {
+	return &Pagination{Type: "offset", Offset: value}
+}
+
+func (p *Pagination) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type string `json:"type"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	p.Type = unmarshaler.Type
+	switch unmarshaler.Type {
+	case "cursor":
+		value := new(CursorPagination)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		p.Cursor = value
+	case "offset":
+		value := new(OffsetPagination)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		p.Offset = value
+	}
+	return nil
+}
+
+func (p Pagination) MarshalJSON() ([]byte, error) {
+	switch p.Type {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", p.Type, p)
+	case "cursor":
+		var marshaler = struct {
+			Type string `json:"type"`
+			*CursorPagination
+		}{
+			Type:             "cursor",
+			CursorPagination: p.Cursor,
+		}
+		return json.Marshal(marshaler)
+	case "offset":
+		var marshaler = struct {
+			Type string `json:"type"`
+			*OffsetPagination
+		}{
+			Type:             "offset",
+			OffsetPagination: p.Offset,
+		}
+		return json.Marshal(marshaler)
+	}
+}
+
+type PaginationVisitor interface {
+	VisitCursor(*CursorPagination) error
+	VisitOffset(*OffsetPagination) error
+}
+
+func (p *Pagination) Accept(visitor PaginationVisitor) error {
+	switch p.Type {
+	default:
+		return fmt.Errorf("invalid type %s in %T", p.Type, p)
+	case "cursor":
+		return visitor.VisitCursor(p.Cursor)
+	case "offset":
+		return visitor.VisitOffset(p.Offset)
+	}
 }
 
 type PathParameter struct {
@@ -1850,6 +2207,102 @@ func (q *QueryParameter) String() string {
 	return fmt.Sprintf("%#v", q)
 }
 
+// A property associated with an endpoint's request.
+type RequestProperty struct {
+	// If empty, the property is defined at the top-level.
+	// Otherwise, the property is defined on the nested object identified
+	// by the path.
+	PropertyPath []*Name               `json:"propertyPath,omitempty" url:"propertyPath,omitempty"`
+	Property     *RequestPropertyValue `json:"property,omitempty" url:"property,omitempty"`
+}
+
+func (r *RequestProperty) String() string {
+	if value, err := core.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+type RequestPropertyValue struct {
+	Type  string
+	Query *QueryParameter
+	Body  *ObjectProperty
+}
+
+func NewRequestPropertyValueFromQuery(value *QueryParameter) *RequestPropertyValue {
+	return &RequestPropertyValue{Type: "query", Query: value}
+}
+
+func NewRequestPropertyValueFromBody(value *ObjectProperty) *RequestPropertyValue {
+	return &RequestPropertyValue{Type: "body", Body: value}
+}
+
+func (r *RequestPropertyValue) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type string `json:"type"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	r.Type = unmarshaler.Type
+	switch unmarshaler.Type {
+	case "query":
+		value := new(QueryParameter)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		r.Query = value
+	case "body":
+		value := new(ObjectProperty)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		r.Body = value
+	}
+	return nil
+}
+
+func (r RequestPropertyValue) MarshalJSON() ([]byte, error) {
+	switch r.Type {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", r.Type, r)
+	case "query":
+		var marshaler = struct {
+			Type string `json:"type"`
+			*QueryParameter
+		}{
+			Type:           "query",
+			QueryParameter: r.Query,
+		}
+		return json.Marshal(marshaler)
+	case "body":
+		var marshaler = struct {
+			Type string `json:"type"`
+			*ObjectProperty
+		}{
+			Type:           "body",
+			ObjectProperty: r.Body,
+		}
+		return json.Marshal(marshaler)
+	}
+}
+
+type RequestPropertyValueVisitor interface {
+	VisitQuery(*QueryParameter) error
+	VisitBody(*ObjectProperty) error
+}
+
+func (r *RequestPropertyValue) Accept(visitor RequestPropertyValueVisitor) error {
+	switch r.Type {
+	default:
+		return fmt.Errorf("invalid type %s in %T", r.Type, r)
+	case "query":
+		return visitor.VisitQuery(r.Query)
+	case "body":
+		return visitor.VisitBody(r.Body)
+	}
+}
+
 type ResponseError struct {
 	Docs  *string            `json:"docs,omitempty" url:"docs,omitempty"`
 	Error *DeclaredErrorName `json:"error,omitempty" url:"error,omitempty"`
@@ -1863,6 +2316,22 @@ func (r *ResponseError) String() string {
 }
 
 type ResponseErrors = []*ResponseError
+
+// A property associated with a paginated endpoint's request or response.
+type ResponseProperty struct {
+	// If empty, the property is defined at the top-level.
+	// Otherwise, the property is defined on the nested object identified
+	// by the path.
+	PropertyPath []*Name         `json:"propertyPath,omitempty" url:"propertyPath,omitempty"`
+	Property     *ObjectProperty `json:"property,omitempty" url:"property,omitempty"`
+}
+
+func (r *ResponseProperty) String() string {
+	if value, err := core.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
 
 type SdkRequest struct {
 	RequestParameterName *Name            `json:"requestParameterName,omitempty" url:"requestParameterName,omitempty"`
@@ -1924,7 +2393,7 @@ func (s SdkRequestBodyType) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*HttpRequestBodyReference
 		}{
-			Type:                     s.Type,
+			Type:                     "typeReference",
 			HttpRequestBodyReference: s.TypeReference,
 		}
 		return json.Marshal(marshaler)
@@ -1933,7 +2402,7 @@ func (s SdkRequestBodyType) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*BytesRequest
 		}{
-			Type:         s.Type,
+			Type:         "bytes",
 			BytesRequest: s.Bytes,
 		}
 		return json.Marshal(marshaler)
@@ -2006,7 +2475,7 @@ func (s SdkRequestShape) MarshalJSON() ([]byte, error) {
 			Type            string              `json:"type"`
 			JustRequestBody *SdkRequestBodyType `json:"value,omitempty"`
 		}{
-			Type:            s.Type,
+			Type:            "justRequestBody",
 			JustRequestBody: s.JustRequestBody,
 		}
 		return json.Marshal(marshaler)
@@ -2015,7 +2484,7 @@ func (s SdkRequestShape) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*SdkRequestWrapper
 		}{
-			Type:              s.Type,
+			Type:              "wrapper",
 			SdkRequestWrapper: s.Wrapper,
 		}
 		return json.Marshal(marshaler)
@@ -2050,34 +2519,39 @@ func (s *SdkRequestWrapper) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
-type StreamingResponse struct {
-	Docs          *string                     `json:"docs,omitempty" url:"docs,omitempty"`
-	DataEventType *StreamingResponseChunkType `json:"dataEventType,omitempty" url:"dataEventType,omitempty"`
-	Terminator    *string                     `json:"terminator,omitempty" url:"terminator,omitempty"`
+type SseStreamChunk struct {
+	Docs       *string        `json:"docs,omitempty" url:"docs,omitempty"`
+	Payload    *TypeReference `json:"payload,omitempty" url:"payload,omitempty"`
+	Terminator *string        `json:"terminator,omitempty" url:"terminator,omitempty"`
 }
 
-func (s *StreamingResponse) String() string {
+func (s *SseStreamChunk) String() string {
 	if value, err := core.StringifyJSON(s); err == nil {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)
 }
 
-type StreamingResponseChunkType struct {
+type StreamingResponse struct {
 	Type string
-	Json *TypeReference
-	Text interface{}
+	Json *JsonStreamChunk
+	Text *TextStreamChunk
+	Sse  *SseStreamChunk
 }
 
-func NewStreamingResponseChunkTypeFromJson(value *TypeReference) *StreamingResponseChunkType {
-	return &StreamingResponseChunkType{Type: "json", Json: value}
+func NewStreamingResponseFromJson(value *JsonStreamChunk) *StreamingResponse {
+	return &StreamingResponse{Type: "json", Json: value}
 }
 
-func NewStreamingResponseChunkTypeFromText(value interface{}) *StreamingResponseChunkType {
-	return &StreamingResponseChunkType{Type: "text", Text: value}
+func NewStreamingResponseFromText(value *TextStreamChunk) *StreamingResponse {
+	return &StreamingResponse{Type: "text", Text: value}
 }
 
-func (s *StreamingResponseChunkType) UnmarshalJSON(data []byte) error {
+func NewStreamingResponseFromSse(value *SseStreamChunk) *StreamingResponse {
+	return &StreamingResponse{Type: "sse", Sse: value}
+}
+
+func (s *StreamingResponse) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
 	}
@@ -2087,54 +2561,68 @@ func (s *StreamingResponseChunkType) UnmarshalJSON(data []byte) error {
 	s.Type = unmarshaler.Type
 	switch unmarshaler.Type {
 	case "json":
-		var valueUnmarshaler struct {
-			Json *TypeReference `json:"json,omitempty"`
-		}
-		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+		value := new(JsonStreamChunk)
+		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
-		s.Json = valueUnmarshaler.Json
+		s.Json = value
 	case "text":
-		value := make(map[string]interface{})
+		value := new(TextStreamChunk)
 		if err := json.Unmarshal(data, &value); err != nil {
 			return err
 		}
 		s.Text = value
+	case "sse":
+		value := new(SseStreamChunk)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		s.Sse = value
 	}
 	return nil
 }
 
-func (s StreamingResponseChunkType) MarshalJSON() ([]byte, error) {
+func (s StreamingResponse) MarshalJSON() ([]byte, error) {
 	switch s.Type {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", s.Type, s)
 	case "json":
 		var marshaler = struct {
-			Type string         `json:"type"`
-			Json *TypeReference `json:"json,omitempty"`
+			Type string `json:"type"`
+			*JsonStreamChunk
 		}{
-			Type: s.Type,
-			Json: s.Json,
+			Type:            "json",
+			JsonStreamChunk: s.Json,
 		}
 		return json.Marshal(marshaler)
 	case "text":
 		var marshaler = struct {
-			Type string      `json:"type"`
-			Text interface{} `json:"text,omitempty"`
+			Type string `json:"type"`
+			*TextStreamChunk
 		}{
-			Type: s.Type,
-			Text: s.Text,
+			Type:            "text",
+			TextStreamChunk: s.Text,
+		}
+		return json.Marshal(marshaler)
+	case "sse":
+		var marshaler = struct {
+			Type string `json:"type"`
+			*SseStreamChunk
+		}{
+			Type:           "sse",
+			SseStreamChunk: s.Sse,
 		}
 		return json.Marshal(marshaler)
 	}
 }
 
-type StreamingResponseChunkTypeVisitor interface {
-	VisitJson(*TypeReference) error
-	VisitText(interface{}) error
+type StreamingResponseVisitor interface {
+	VisitJson(*JsonStreamChunk) error
+	VisitText(*TextStreamChunk) error
+	VisitSse(*SseStreamChunk) error
 }
 
-func (s *StreamingResponseChunkType) Accept(visitor StreamingResponseChunkTypeVisitor) error {
+func (s *StreamingResponse) Accept(visitor StreamingResponseVisitor) error {
 	switch s.Type {
 	default:
 		return fmt.Errorf("invalid type %s in %T", s.Type, s)
@@ -2142,6 +2630,8 @@ func (s *StreamingResponseChunkType) Accept(visitor StreamingResponseChunkTypeVi
 		return visitor.VisitJson(s.Json)
 	case "text":
 		return visitor.VisitText(s.Text)
+	case "sse":
+		return visitor.VisitSse(s.Sse)
 	}
 }
 
@@ -2190,6 +2680,17 @@ type TextResponse struct {
 }
 
 func (t *TextResponse) String() string {
+	if value, err := core.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
+}
+
+type TextStreamChunk struct {
+	Docs *string `json:"docs,omitempty" url:"docs,omitempty"`
+}
+
+func (t *TextStreamChunk) String() string {
 	if value, err := core.StringifyJSON(t); err == nil {
 		return value
 	}
@@ -2256,7 +2757,7 @@ func (e ErrorDiscriminationStrategy) MarshalJSON() ([]byte, error) {
 			Type       string      `json:"type"`
 			StatusCode interface{} `json:"statusCode,omitempty"`
 		}{
-			Type:       e.Type,
+			Type:       "statusCode",
 			StatusCode: e.StatusCode,
 		}
 		return json.Marshal(marshaler)
@@ -2265,7 +2766,7 @@ func (e ErrorDiscriminationStrategy) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*ErrorDiscriminationByPropertyStrategy
 		}{
-			Type:                                  e.Type,
+			Type:                                  "property",
 			ErrorDiscriminationByPropertyStrategy: e.Property,
 		}
 		return json.Marshal(marshaler)
@@ -2521,7 +3022,7 @@ func (c ContainerType) MarshalJSON() ([]byte, error) {
 			Type string         `json:"_type"`
 			List *TypeReference `json:"list,omitempty"`
 		}{
-			Type: c.Type,
+			Type: "list",
 			List: c.List,
 		}
 		return json.Marshal(marshaler)
@@ -2530,7 +3031,7 @@ func (c ContainerType) MarshalJSON() ([]byte, error) {
 			Type string `json:"_type"`
 			*MapType
 		}{
-			Type:    c.Type,
+			Type:    "map",
 			MapType: c.Map,
 		}
 		return json.Marshal(marshaler)
@@ -2539,7 +3040,7 @@ func (c ContainerType) MarshalJSON() ([]byte, error) {
 			Type     string         `json:"_type"`
 			Optional *TypeReference `json:"optional,omitempty"`
 		}{
-			Type:     c.Type,
+			Type:     "optional",
 			Optional: c.Optional,
 		}
 		return json.Marshal(marshaler)
@@ -2548,7 +3049,7 @@ func (c ContainerType) MarshalJSON() ([]byte, error) {
 			Type string         `json:"_type"`
 			Set  *TypeReference `json:"set,omitempty"`
 		}{
-			Type: c.Type,
+			Type: "set",
 			Set:  c.Set,
 		}
 		return json.Marshal(marshaler)
@@ -2557,7 +3058,7 @@ func (c ContainerType) MarshalJSON() ([]byte, error) {
 			Type    string   `json:"_type"`
 			Literal *Literal `json:"literal,omitempty"`
 		}{
-			Type:    c.Type,
+			Type:    "literal",
 			Literal: c.Literal,
 		}
 		return json.Marshal(marshaler)
@@ -2715,7 +3216,7 @@ func (e ExampleContainer) MarshalJSON() ([]byte, error) {
 			Type string                  `json:"type"`
 			List []*ExampleTypeReference `json:"list,omitempty"`
 		}{
-			Type: e.Type,
+			Type: "list",
 			List: e.List,
 		}
 		return json.Marshal(marshaler)
@@ -2724,7 +3225,7 @@ func (e ExampleContainer) MarshalJSON() ([]byte, error) {
 			Type string                  `json:"type"`
 			Set  []*ExampleTypeReference `json:"set,omitempty"`
 		}{
-			Type: e.Type,
+			Type: "set",
 			Set:  e.Set,
 		}
 		return json.Marshal(marshaler)
@@ -2733,7 +3234,7 @@ func (e ExampleContainer) MarshalJSON() ([]byte, error) {
 			Type     string                `json:"type"`
 			Optional *ExampleTypeReference `json:"optional,omitempty"`
 		}{
-			Type:     e.Type,
+			Type:     "optional",
 			Optional: e.Optional,
 		}
 		return json.Marshal(marshaler)
@@ -2742,7 +3243,7 @@ func (e ExampleContainer) MarshalJSON() ([]byte, error) {
 			Type string                 `json:"type"`
 			Map  []*ExampleKeyValuePair `json:"map,omitempty"`
 		}{
-			Type: e.Type,
+			Type: "map",
 			Map:  e.Map,
 		}
 		return json.Marshal(marshaler)
@@ -2974,7 +3475,7 @@ func (e ExamplePrimitive) MarshalJSON() ([]byte, error) {
 			Type    string `json:"type"`
 			Integer int    `json:"integer"`
 		}{
-			Type:    e.Type,
+			Type:    "integer",
 			Integer: e.Integer,
 		}
 		return json.Marshal(marshaler)
@@ -2983,7 +3484,7 @@ func (e ExamplePrimitive) MarshalJSON() ([]byte, error) {
 			Type   string  `json:"type"`
 			Double float64 `json:"double"`
 		}{
-			Type:   e.Type,
+			Type:   "double",
 			Double: e.Double,
 		}
 		return json.Marshal(marshaler)
@@ -2992,7 +3493,7 @@ func (e ExamplePrimitive) MarshalJSON() ([]byte, error) {
 			Type   string         `json:"type"`
 			String *EscapedString `json:"string,omitempty"`
 		}{
-			Type:   e.Type,
+			Type:   "string",
 			String: e.String,
 		}
 		return json.Marshal(marshaler)
@@ -3001,7 +3502,7 @@ func (e ExamplePrimitive) MarshalJSON() ([]byte, error) {
 			Type    string `json:"type"`
 			Boolean bool   `json:"boolean"`
 		}{
-			Type:    e.Type,
+			Type:    "boolean",
 			Boolean: e.Boolean,
 		}
 		return json.Marshal(marshaler)
@@ -3010,7 +3511,7 @@ func (e ExamplePrimitive) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			Long int64  `json:"long"`
 		}{
-			Type: e.Type,
+			Type: "long",
 			Long: e.Long,
 		}
 		return json.Marshal(marshaler)
@@ -3019,7 +3520,7 @@ func (e ExamplePrimitive) MarshalJSON() ([]byte, error) {
 			Type     string         `json:"type"`
 			Datetime *core.DateTime `json:"datetime"`
 		}{
-			Type:     e.Type,
+			Type:     "datetime",
 			Datetime: core.NewDateTime(e.Datetime),
 		}
 		return json.Marshal(marshaler)
@@ -3028,7 +3529,7 @@ func (e ExamplePrimitive) MarshalJSON() ([]byte, error) {
 			Type string     `json:"type"`
 			Date *core.Date `json:"date" format:"date"`
 		}{
-			Type: e.Type,
+			Type: "date",
 			Date: core.NewDate(e.Date),
 		}
 		return json.Marshal(marshaler)
@@ -3037,7 +3538,7 @@ func (e ExamplePrimitive) MarshalJSON() ([]byte, error) {
 			Type string    `json:"type"`
 			Uuid uuid.UUID `json:"uuid"`
 		}{
-			Type: e.Type,
+			Type: "uuid",
 			Uuid: e.Uuid,
 		}
 		return json.Marshal(marshaler)
@@ -3149,7 +3650,7 @@ func (e ExampleSingleUnionTypeProperties) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*ExampleObjectTypeWithTypeId
 		}{
-			Type:                        e.Type,
+			Type:                        "samePropertiesAsObject",
 			ExampleObjectTypeWithTypeId: e.SamePropertiesAsObject,
 		}
 		return json.Marshal(marshaler)
@@ -3158,7 +3659,7 @@ func (e ExampleSingleUnionTypeProperties) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*ExampleTypeReference
 		}{
-			Type:                 e.Type,
+			Type:                 "singleProperty",
 			ExampleTypeReference: e.SingleProperty,
 		}
 		return json.Marshal(marshaler)
@@ -3167,7 +3668,7 @@ func (e ExampleSingleUnionTypeProperties) MarshalJSON() ([]byte, error) {
 			Type         string      `json:"type"`
 			NoProperties interface{} `json:"noProperties,omitempty"`
 		}{
-			Type:         e.Type,
+			Type:         "noProperties",
 			NoProperties: e.NoProperties,
 		}
 		return json.Marshal(marshaler)
@@ -3295,7 +3796,7 @@ func (e ExampleTypeReferenceShape) MarshalJSON() ([]byte, error) {
 			Type      string            `json:"type"`
 			Primitive *ExamplePrimitive `json:"primitive,omitempty"`
 		}{
-			Type:      e.Type,
+			Type:      "primitive",
 			Primitive: e.Primitive,
 		}
 		return json.Marshal(marshaler)
@@ -3304,7 +3805,7 @@ func (e ExampleTypeReferenceShape) MarshalJSON() ([]byte, error) {
 			Type      string            `json:"type"`
 			Container *ExampleContainer `json:"container,omitempty"`
 		}{
-			Type:      e.Type,
+			Type:      "container",
 			Container: e.Container,
 		}
 		return json.Marshal(marshaler)
@@ -3313,7 +3814,7 @@ func (e ExampleTypeReferenceShape) MarshalJSON() ([]byte, error) {
 			Type    string      `json:"type"`
 			Unknown interface{} `json:"unknown,omitempty"`
 		}{
-			Type:    e.Type,
+			Type:    "unknown",
 			Unknown: e.Unknown,
 		}
 		return json.Marshal(marshaler)
@@ -3322,7 +3823,7 @@ func (e ExampleTypeReferenceShape) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*ExampleNamedType
 		}{
-			Type:             e.Type,
+			Type:             "named",
 			ExampleNamedType: e.Named,
 		}
 		return json.Marshal(marshaler)
@@ -3432,7 +3933,7 @@ func (e ExampleTypeShape) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*ExampleAliasType
 		}{
-			Type:             e.Type,
+			Type:             "alias",
 			ExampleAliasType: e.Alias,
 		}
 		return json.Marshal(marshaler)
@@ -3441,7 +3942,7 @@ func (e ExampleTypeShape) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*ExampleEnumType
 		}{
-			Type:            e.Type,
+			Type:            "enum",
 			ExampleEnumType: e.Enum,
 		}
 		return json.Marshal(marshaler)
@@ -3450,7 +3951,7 @@ func (e ExampleTypeShape) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*ExampleObjectType
 		}{
-			Type:              e.Type,
+			Type:              "object",
 			ExampleObjectType: e.Object,
 		}
 		return json.Marshal(marshaler)
@@ -3459,7 +3960,7 @@ func (e ExampleTypeShape) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*ExampleUnionType
 		}{
-			Type:             e.Type,
+			Type:             "union",
 			ExampleUnionType: e.Union,
 		}
 		return json.Marshal(marshaler)
@@ -3468,7 +3969,7 @@ func (e ExampleTypeShape) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*ExampleUndiscriminatedUnionType
 		}{
-			Type:                            e.Type,
+			Type:                            "undiscriminatedUnion",
 			ExampleUndiscriminatedUnionType: e.UndiscriminatedUnion,
 		}
 		return json.Marshal(marshaler)
@@ -3591,7 +4092,7 @@ func (l Literal) MarshalJSON() ([]byte, error) {
 			Type   string `json:"type"`
 			String string `json:"string"`
 		}{
-			Type:   l.Type,
+			Type:   "string",
 			String: l.String,
 		}
 		return json.Marshal(marshaler)
@@ -3600,7 +4101,7 @@ func (l Literal) MarshalJSON() ([]byte, error) {
 			Type    string `json:"type"`
 			Boolean bool   `json:"boolean"`
 		}{
-			Type:    l.Type,
+			Type:    "boolean",
 			Boolean: l.Boolean,
 		}
 		return json.Marshal(marshaler)
@@ -3653,6 +4154,8 @@ type ObjectTypeDeclaration struct {
 	// A list of other types to inherit from
 	Extends    []*DeclaredTypeName `json:"extends,omitempty" url:"extends,omitempty"`
 	Properties []*ObjectProperty   `json:"properties,omitempty" url:"properties,omitempty"`
+	// Whether to allow extra properties on the object.
+	ExtraProperties bool `json:"extra-properties" url:"extra-properties"`
 }
 
 func (o *ObjectTypeDeclaration) String() string {
@@ -3792,7 +4295,7 @@ func (r ResolvedTypeReference) MarshalJSON() ([]byte, error) {
 			Type      string         `json:"_type"`
 			Container *ContainerType `json:"container,omitempty"`
 		}{
-			Type:      r.Type,
+			Type:      "container",
 			Container: r.Container,
 		}
 		return json.Marshal(marshaler)
@@ -3801,7 +4304,7 @@ func (r ResolvedTypeReference) MarshalJSON() ([]byte, error) {
 			Type string `json:"_type"`
 			*ResolvedNamedType
 		}{
-			Type:              r.Type,
+			Type:              "named",
 			ResolvedNamedType: r.Named,
 		}
 		return json.Marshal(marshaler)
@@ -3810,7 +4313,7 @@ func (r ResolvedTypeReference) MarshalJSON() ([]byte, error) {
 			Type      string        `json:"_type"`
 			Primitive PrimitiveType `json:"primitive,omitempty"`
 		}{
-			Type:      r.Type,
+			Type:      "primitive",
 			Primitive: r.Primitive,
 		}
 		return json.Marshal(marshaler)
@@ -3819,7 +4322,7 @@ func (r ResolvedTypeReference) MarshalJSON() ([]byte, error) {
 			Type    string      `json:"_type"`
 			Unknown interface{} `json:"unknown,omitempty"`
 		}{
-			Type:    r.Type,
+			Type:    "unknown",
 			Unknown: r.Unknown,
 		}
 		return json.Marshal(marshaler)
@@ -3948,7 +4451,7 @@ func (s SingleUnionTypeProperties) MarshalJSON() ([]byte, error) {
 			PropertiesType string `json:"_type"`
 			*DeclaredTypeName
 		}{
-			PropertiesType:   s.PropertiesType,
+			PropertiesType:   "samePropertiesAsObject",
 			DeclaredTypeName: s.SamePropertiesAsObject,
 		}
 		return json.Marshal(marshaler)
@@ -3957,7 +4460,7 @@ func (s SingleUnionTypeProperties) MarshalJSON() ([]byte, error) {
 			PropertiesType string `json:"_type"`
 			*SingleUnionTypeProperty
 		}{
-			PropertiesType:          s.PropertiesType,
+			PropertiesType:          "singleProperty",
 			SingleUnionTypeProperty: s.SingleProperty,
 		}
 		return json.Marshal(marshaler)
@@ -3966,7 +4469,7 @@ func (s SingleUnionTypeProperties) MarshalJSON() ([]byte, error) {
 			PropertiesType string      `json:"_type"`
 			NoProperties   interface{} `json:"noProperties,omitempty"`
 		}{
-			PropertiesType: s.PropertiesType,
+			PropertiesType: "noProperties",
 			NoProperties:   s.NoProperties,
 		}
 		return json.Marshal(marshaler)
@@ -4085,7 +4588,7 @@ func (t Type) MarshalJSON() ([]byte, error) {
 			Type string `json:"_type"`
 			*AliasTypeDeclaration
 		}{
-			Type:                 t.Type,
+			Type:                 "alias",
 			AliasTypeDeclaration: t.Alias,
 		}
 		return json.Marshal(marshaler)
@@ -4094,7 +4597,7 @@ func (t Type) MarshalJSON() ([]byte, error) {
 			Type string `json:"_type"`
 			*EnumTypeDeclaration
 		}{
-			Type:                t.Type,
+			Type:                "enum",
 			EnumTypeDeclaration: t.Enum,
 		}
 		return json.Marshal(marshaler)
@@ -4103,7 +4606,7 @@ func (t Type) MarshalJSON() ([]byte, error) {
 			Type string `json:"_type"`
 			*ObjectTypeDeclaration
 		}{
-			Type:                  t.Type,
+			Type:                  "object",
 			ObjectTypeDeclaration: t.Object,
 		}
 		return json.Marshal(marshaler)
@@ -4112,7 +4615,7 @@ func (t Type) MarshalJSON() ([]byte, error) {
 			Type string `json:"_type"`
 			*UnionTypeDeclaration
 		}{
-			Type:                 t.Type,
+			Type:                 "union",
 			UnionTypeDeclaration: t.Union,
 		}
 		return json.Marshal(marshaler)
@@ -4121,7 +4624,7 @@ func (t Type) MarshalJSON() ([]byte, error) {
 			Type string `json:"_type"`
 			*UndiscriminatedUnionTypeDeclaration
 		}{
-			Type:                                t.Type,
+			Type:                                "undiscriminatedUnion",
 			UndiscriminatedUnionTypeDeclaration: t.UndiscriminatedUnion,
 		}
 		return json.Marshal(marshaler)
@@ -4245,7 +4748,7 @@ func (t TypeReference) MarshalJSON() ([]byte, error) {
 			Type      string         `json:"_type"`
 			Container *ContainerType `json:"container,omitempty"`
 		}{
-			Type:      t.Type,
+			Type:      "container",
 			Container: t.Container,
 		}
 		return json.Marshal(marshaler)
@@ -4254,7 +4757,7 @@ func (t TypeReference) MarshalJSON() ([]byte, error) {
 			Type string `json:"_type"`
 			*DeclaredTypeName
 		}{
-			Type:             t.Type,
+			Type:             "named",
 			DeclaredTypeName: t.Named,
 		}
 		return json.Marshal(marshaler)
@@ -4263,7 +4766,7 @@ func (t TypeReference) MarshalJSON() ([]byte, error) {
 			Type      string        `json:"_type"`
 			Primitive PrimitiveType `json:"primitive,omitempty"`
 		}{
-			Type:      t.Type,
+			Type:      "primitive",
 			Primitive: t.Primitive,
 		}
 		return json.Marshal(marshaler)
@@ -4272,7 +4775,7 @@ func (t TypeReference) MarshalJSON() ([]byte, error) {
 			Type    string      `json:"_type"`
 			Unknown interface{} `json:"unknown,omitempty"`
 		}{
-			Type:    t.Type,
+			Type:    "unknown",
 			Unknown: t.Unknown,
 		}
 		return json.Marshal(marshaler)
@@ -4472,7 +4975,7 @@ func (w WebhookPayload) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*InlinedWebhookPayload
 		}{
-			Type:                  w.Type,
+			Type:                  "inlinedPayload",
 			InlinedWebhookPayload: w.InlinedPayload,
 		}
 		return json.Marshal(marshaler)
@@ -4481,7 +4984,7 @@ func (w WebhookPayload) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*WebhookPayloadReference
 		}{
-			Type:                    w.Type,
+			Type:                    "reference",
 			WebhookPayloadReference: w.Reference,
 		}
 		return json.Marshal(marshaler)
@@ -4576,7 +5079,7 @@ func (e ExampleWebSocketMessageBody) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*ExampleInlinedRequestBody
 		}{
-			Type:                      e.Type,
+			Type:                      "inlinedBody",
 			ExampleInlinedRequestBody: e.InlinedBody,
 		}
 		return json.Marshal(marshaler)
@@ -4585,7 +5088,7 @@ func (e ExampleWebSocketMessageBody) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*ExampleTypeReference
 		}{
-			Type:                 e.Type,
+			Type:                 "reference",
 			ExampleTypeReference: e.Reference,
 		}
 		return json.Marshal(marshaler)
@@ -4737,7 +5240,7 @@ func (w WebSocketMessageBody) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*InlinedWebSocketMessageBody
 		}{
-			Type:                        w.Type,
+			Type:                        "inlinedBody",
 			InlinedWebSocketMessageBody: w.InlinedBody,
 		}
 		return json.Marshal(marshaler)
@@ -4746,7 +5249,7 @@ func (w WebSocketMessageBody) MarshalJSON() ([]byte, error) {
 			Type string `json:"type"`
 			*WebSocketMessageBodyReference
 		}{
-			Type:                          w.Type,
+			Type:                          "reference",
 			WebSocketMessageBodyReference: w.Reference,
 		}
 		return json.Marshal(marshaler)

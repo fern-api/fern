@@ -9,14 +9,14 @@ import * as core from "../../../../core";
 export const TabConfig: core.serialization.ObjectSchema<serializers.TabConfig.Raw, FernDocsConfig.TabConfig> =
     core.serialization.object({
         displayName: core.serialization.property("display-name", core.serialization.string()),
-        icon: core.serialization.string(),
+        icon: core.serialization.string().optional(),
         slug: core.serialization.string().optional(),
     });
 
 export declare namespace TabConfig {
     interface Raw {
         "display-name": string;
-        icon: string;
+        icon?: string | null;
         slug?: string | null;
     }
 }

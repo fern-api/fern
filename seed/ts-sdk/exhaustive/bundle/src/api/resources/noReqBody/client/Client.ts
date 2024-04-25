@@ -3,9 +3,9 @@
  */
 
 import * as core from "../../../../core";
-import * as Fiddle from "../../..";
+import * as Fiddle from "../../../index";
 import urlJoin from "url-join";
-import * as serializers from "../../../../serialization";
+import * as serializers from "../../../../serialization/index";
 
 export declare namespace NoReqBody {
     interface Options {
@@ -31,7 +31,7 @@ export class NoReqBody {
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -67,7 +67,7 @@ export class NoReqBody {
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -94,7 +94,7 @@ export class NoReqBody {
         };
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

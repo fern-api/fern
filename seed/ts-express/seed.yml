@@ -1,37 +1,49 @@
-irVersion: v31
+irVersion: v38
 docker: fernapi/fern-typescript-express:local
 dockerCommand: yarn workspace @fern-typescript/express-generator-cli dockerTagLocal
 language: typescript
 generatorType: Server
 defaultOutputMode: local_files
 fixtures:
-  trace: 
+  trace:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
         noSerdeLayer: true
       outputFolder: no-zurg-trace
-  imdb: 
+  imdb:
     - customConfig: null
       outputFolder: no-custom-config
-    - customConfig: 
+    - customConfig:
         outputSourceFiles: true
       outputFolder: output-source-files
   exhaustive:
     - customConfig: null
       outputFolder: no-custom-config
-    - customConfig: 
+    - customConfig:
+        retainOriginalCasing: true
+      outputFolder: retain-original-casing
+    - customConfig:
+        allowExtraFields: true
+      outputFolder: allow-extra-fields
+    - customConfig:
         doNotHandleUnrecognizedErrors: true
         includeUtilsOnUnionMembers: true
         includeOtherInUnionTypes: true
       outputFolder: union-utils
-allowedFailures: 
+  mixed-case:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        retainOriginalCasing: true
+      outputFolder: retain-original-casing
+allowedFailures:
   - bytes
   - enum
   - file-download
   - file-upload
   - plain-text
   - streaming
+  - server-sent-events
 
 
-  

@@ -18,7 +18,8 @@
     },
     "package-json": {
       "scripts": {
-        "dockerTagLatest": "yarn dist:cli && docker build -f ./Dockerfile -t fernapi/fern-csharp-model:latest ../../.."
+        "dockerTagLatest": "yarn dist:cli && docker build -f ./Dockerfile -t fernapi/fern-csharp-model:latest ../../..",
+        "dist:cli": "yarn compile && node build.cjs && cp -R ../codegen/src/asIs dist"
       }
     }
   },

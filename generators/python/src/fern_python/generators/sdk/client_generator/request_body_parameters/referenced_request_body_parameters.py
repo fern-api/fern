@@ -27,6 +27,7 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
                     self._request_body.request_body_type,
                     in_endpoint=True,
                 ),
+                raw_type=self._request_body.request_body_type,
             )
         ]
 

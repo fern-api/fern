@@ -40,7 +40,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ServiceService = void 0;
 const express_1 = __importDefault(require("express"));
-const errors = __importStar(require("../../../../errors"));
+const errors = __importStar(require("../../../../errors/index"));
 class ServiceService {
     constructor(methods, middleware = []) {
         this.methods = methods;
@@ -53,7 +53,7 @@ class ServiceService {
         return this;
     }
     toRouter() {
-        this.router.post("/:endpointParam", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
+        this.router.post("/:endpointParam/:resourceParam", (req, res, next) => __awaiter(this, void 0, void 0, function* () {
             try {
                 yield this.methods.post(req, {
                     send: () => __awaiter(this, void 0, void 0, function* () {

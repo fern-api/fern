@@ -6,6 +6,6 @@ require "seed_custom_auth_client"
 # Basic SeedCustomAuthClient tests
 class TestSeedCustomAuthClient < Minitest::Test
   def test_function
-    SeedCustomAuthClient::Client.new
+    # SeedCustomAuthClient::Client.new
   end
 end

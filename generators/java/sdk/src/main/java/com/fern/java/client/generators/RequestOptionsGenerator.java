@@ -57,16 +57,6 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                     Modifier.FINAL)
             .build();
 
-    private static final FieldSpec.Builder TIMEOUT_FIELD_BUILDER = FieldSpec.builder(
-                    ParameterizedTypeName.get(ClassName.get(Optional.class), TypeName.get(Integer.class)),
-                    "timeout",
-                    Modifier.PRIVATE);
-
-    private static final FieldSpec.Builder TIMEOUT_TIME_UNIT_FIELD_BUILDER = FieldSpec.builder(
-            ParameterizedTypeName.get(TimeUnit.class),
-            "timeoutTimeUnit",
-            Modifier.PRIVATE);
-
     private final List<HttpHeader> additionalHeaders;
     private final ClassName builderClassName;
 
@@ -116,10 +106,20 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
             fields.add(headerHandler.visitHeader(httpHeader));
         }
 
+        FieldSpec.Builder timeoutFieldBuilder = FieldSpec.builder(
+                ParameterizedTypeName.get(ClassName.get(Optional.class), TypeName.get(Integer.class)),
+                "timeout",
+                Modifier.PRIVATE);
+
+        FieldSpec.Builder timeoutTimeUnitFieldBuilder = FieldSpec.builder(
+                ParameterizedTypeName.get(TimeUnit.class),
+                "timeoutTimeUnit",
+                Modifier.PRIVATE);
+
         // Add in the other (static) fields for request options
         createRequestOptionField(
                 "getTimeout",
-                TIMEOUT_FIELD_BUILDER,
+                timeoutFieldBuilder,
                 "null",
                 requestOptionsTypeSpec,
                 builderTypeSpec,
@@ -127,15 +127,15 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
         );
         createRequestOptionField(
                 "getTimeoutTimeUnit",
-                TIMEOUT_TIME_UNIT_FIELD_BUILDER,
+                timeoutTimeUnitFieldBuilder,
                 "TimeUnit.SECONDS",
                 requestOptionsTypeSpec,
                 builderTypeSpec,
                 fields
         );
 
-        FieldSpec timeoutField = TIMEOUT_FIELD_BUILDER.build();
-        FieldSpec timeUnitField = TIMEOUT_TIME_UNIT_FIELD_BUILDER.build();
+        FieldSpec timeoutField = timeoutFieldBuilder.build();
+        FieldSpec timeUnitField = timeoutTimeUnitFieldBuilder.build();
         builderTypeSpec.addMethod(MethodSpec.methodBuilder(timeoutField.name)
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(Integer.class, timeoutField.name)

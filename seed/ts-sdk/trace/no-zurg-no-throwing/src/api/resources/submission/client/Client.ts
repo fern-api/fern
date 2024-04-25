@@ -4,7 +4,7 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as SeedTrace from "../../..";
+import * as SeedTrace from "../../../index";
 import urlJoin from "url-join";
 
 export declare namespace Submission {
@@ -28,6 +28,9 @@ export class Submission {
 
     /**
      * Returns sessionId and execution server URL for session. Spins up server.
+     *
+     * @example
+     *     await seedTrace.submission.createExecutionSession(SeedTrace.Language.Java)
      */
     public async createExecutionSession(
         language: SeedTrace.Language,
@@ -48,7 +51,7 @@ export class Submission {
                         ? await core.Supplier.get(this._options.xRandomHeader)
                         : undefined,
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -72,6 +75,9 @@ export class Submission {
 
     /**
      * Returns execution server URL for session. Returns empty if session isn't registered.
+     *
+     * @example
+     *     await seedTrace.submission.getExecutionSession("string")
      */
     public async getExecutionSession(
         sessionId: string,
@@ -92,7 +98,7 @@ export class Submission {
                         ? await core.Supplier.get(this._options.xRandomHeader)
                         : undefined,
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -116,6 +122,9 @@ export class Submission {
 
     /**
      * Stops execution session.
+     *
+     * @example
+     *     await seedTrace.submission.stopExecutionSession("string")
      */
     public async stopExecutionSession(
         sessionId: string,
@@ -134,7 +143,7 @@ export class Submission {
                         ? await core.Supplier.get(this._options.xRandomHeader)
                         : undefined,
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -177,7 +186,7 @@ export class Submission {
                         ? await core.Supplier.get(this._options.xRandomHeader)
                         : undefined,
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
@@ -199,7 +208,7 @@ export class Submission {
         };
     }
 
-    protected async _getAuthorizationHeader() {
+    protected async _getAuthorizationHeader(): Promise<string | undefined> {
         const bearer = await core.Supplier.get(this._options.token);
         if (bearer != null) {
             return `Bearer ${bearer}`;

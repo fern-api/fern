@@ -6,14 +6,11 @@ import datetime as dt
 import typing
 
 from ...core.datetime_utils import serialize_datetime
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ...core.pydantic_utilities import pydantic_v1
+from .foo import Foo
 
 
-class Base(pydantic.BaseModel):
+class Base(pydantic_v1.BaseModel):
     id: str
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -25,12 +22,12 @@ class Base(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}
 
 
 class UnionWithBaseProperties_Integer(Base):
-    type: typing.Literal["integer"]
+    type: typing.Literal["integer"] = "integer"
     value: int
 
     class Config:
@@ -39,7 +36,7 @@ class UnionWithBaseProperties_Integer(Base):
 
 
 class UnionWithBaseProperties_String(Base):
-    type: typing.Literal["string"]
+    type: typing.Literal["string"] = "string"
     value: str
 
     class Config:
@@ -47,4 +44,14 @@ class UnionWithBaseProperties_String(Base):
         populate_by_name = True
 
 
-UnionWithBaseProperties = typing.Union[UnionWithBaseProperties_Integer, UnionWithBaseProperties_String]
+class UnionWithBaseProperties_Foo(Foo, Base):
+    type: typing.Literal["foo"] = "foo"
+
+    class Config:
+        allow_population_by_field_name = True
+        populate_by_name = True
+
+
+UnionWithBaseProperties = typing.Union[
+    UnionWithBaseProperties_Integer, UnionWithBaseProperties_String, UnionWithBaseProperties_Foo
+]

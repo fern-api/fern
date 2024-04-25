@@ -5,26 +5,22 @@ import typing
 import uuid
 
 from ......core.datetime_utils import serialize_datetime
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ......core.pydantic_utilities import pydantic_v1
 
 
-class ObjectWithOptionalField(pydantic.BaseModel):
-    string: typing.Optional[str]
-    integer: typing.Optional[int]
-    long_: typing.Optional[int] = pydantic.Field(alias="long")
-    double: typing.Optional[float]
-    bool_: typing.Optional[bool] = pydantic.Field(alias="bool")
-    datetime: typing.Optional[dt.datetime]
-    date: typing.Optional[dt.date]
-    uuid_: typing.Optional[uuid.UUID] = pydantic.Field(alias="uuid")
-    base_64: typing.Optional[str] = pydantic.Field(alias="base64")
-    list_: typing.Optional[typing.List[str]] = pydantic.Field(alias="list")
-    set_: typing.Optional[typing.Set[str]] = pydantic.Field(alias="set")
-    map_: typing.Optional[typing.Dict[int, str]] = pydantic.Field(alias="map")
+class ObjectWithOptionalField(pydantic_v1.BaseModel):
+    string: typing.Optional[str] = None
+    integer: typing.Optional[int] = None
+    long_: typing.Optional[int] = pydantic_v1.Field(alias="long", default=None)
+    double: typing.Optional[float] = None
+    bool_: typing.Optional[bool] = pydantic_v1.Field(alias="bool", default=None)
+    datetime: typing.Optional[dt.datetime] = None
+    date: typing.Optional[dt.date] = None
+    uuid_: typing.Optional[uuid.UUID] = pydantic_v1.Field(alias="uuid", default=None)
+    base_64: typing.Optional[str] = pydantic_v1.Field(alias="base64", default=None)
+    list_: typing.Optional[typing.List[str]] = pydantic_v1.Field(alias="list", default=None)
+    set_: typing.Optional[typing.Set[str]] = pydantic_v1.Field(alias="set", default=None)
+    map_: typing.Optional[typing.Dict[int, str]] = pydantic_v1.Field(alias="map", default=None)
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -37,5 +33,5 @@ class ObjectWithOptionalField(pydantic.BaseModel):
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}

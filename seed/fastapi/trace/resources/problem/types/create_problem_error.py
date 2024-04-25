@@ -6,12 +6,8 @@ import datetime as dt
 import typing
 
 from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 from .generic_create_problem_error import GenericCreateProblemError
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -23,7 +19,7 @@ class _Factory:
         )
 
 
-class CreateProblemError(pydantic.BaseModel):
+class CreateProblemError(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(self) -> typing.Union[_CreateProblemError.Generic]:
@@ -44,13 +40,13 @@ class CreateProblemError(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _CreateProblemError:
     class Generic(GenericCreateProblemError):
-        error_type: typing.Literal["generic"] = pydantic.Field(alias="_type")
+        error_type: typing.Literal["generic"] = pydantic_v1.Field(alias="_type", default="generic")
 
         class Config:
             allow_population_by_field_name = True

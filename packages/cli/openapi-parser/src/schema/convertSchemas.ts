@@ -23,10 +23,12 @@ import { convertObject } from "./convertObject";
 import { convertUndiscriminatedOneOf } from "./convertUndiscriminatedOneOf";
 import { getExampleAsBoolean, getExampleAsNumber, getExamplesString } from "./examples/getExample";
 import { SchemaParserContext } from "./SchemaParserContext";
+import { getBreadcrumbsFromReference } from "./utils/getBreadcrumbsFromReference";
 import { getGeneratedTypeName } from "./utils/getSchemaName";
 import { isReferenceObject } from "./utils/isReferenceObject";
 
 export const SCHEMA_REFERENCE_PREFIX = "#/components/schemas/";
+export const SCHEMA_INLINE_REFERENCE_PREFIX = "#/components/responses/";
 
 export function convertSchema(
     schema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject,
@@ -37,12 +39,25 @@ export function convertSchema(
     propertiesToExclude: Set<string> = new Set()
 ): SchemaWithExample {
     if (isReferenceObject(schema)) {
-        if (!referencedAsRequest) {
-            context.markSchemaAsReferencedByNonRequest(getSchemaIdFromReference(schema));
-        } else {
-            context.markSchemaAsReferencedByRequest(getSchemaIdFromReference(schema));
+        const schemaId = getSchemaIdFromReference(schema);
+        if (schemaId != null) {
+            if (!referencedAsRequest) {
+                context.markSchemaAsReferencedByNonRequest(schemaId);
+            } else {
+                context.markSchemaAsReferencedByRequest(schemaId);
+            }
+            return convertReferenceObject(schema, wrapAsNullable, context, breadcrumbs);
         }
-        return convertReferenceObject(schema, wrapAsNullable, context, breadcrumbs);
+        // if the schema id is null, we should convert the entire schema and inline it
+        // in the OpenAPI IR
+        return convertSchemaObject(
+            context.resolveSchemaReference(schema),
+            wrapAsNullable,
+            context,
+            getBreadcrumbsFromReference(schema.$ref),
+            propertiesToExclude,
+            referencedAsRequest
+        );
     } else {
         return convertSchemaObject(
             schema,
@@ -100,21 +115,22 @@ export function convertSchemaObject(
     referencedAsRequest = false
 ): SchemaWithExample {
     const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME) ?? getTitleAsName(schema.title);
-    const groupName =
-        getExtension<string>(schema, FernOpenAPIExtension.SDK_GROUP_NAME) ??
+    const mixedGroupName =
+        getExtension(schema, FernOpenAPIExtension.SDK_GROUP_NAME) ??
         getExtension<string[]>(schema, OpenAPIExtension.TAGS)?.[0];
+    const groupName = typeof mixedGroupName === "string" ? [mixedGroupName] : mixedGroupName;
     const generatedName = getGeneratedTypeName(breadcrumbs);
     const description = schema.description;
 
     const examples = getExtension<Record<string, OpenAPIV3.ExampleObject>>(schema, OpenAPIExtension.EXAMPLES);
     const fullExamples: NamedFullExample[] = [];
     if (schema.example != null) {
-        fullExamples.push({ name: undefined, value: schema.example });
+        fullExamples.push({ name: undefined, value: schema.example, description: undefined });
     }
     if (examples != null && Object.keys(examples).length > 0) {
         fullExamples.push(
             ...Object.entries(examples).map(([name, value]) => {
-                return { name: value.summary ?? name, value: value.value };
+                return { name: value.summary ?? name, value: value.value, description: value.description };
             })
         );
     }
@@ -169,7 +185,8 @@ export function convertSchemaObject(
             enumValues: schema.enum,
             description,
             wrapAsNullable,
-            groupName
+            groupName,
+            context
         });
     }
 
@@ -368,7 +385,8 @@ export function convertSchemaObject(
             description,
             wrapAsNullable,
             context,
-            groupName
+            groupName,
+            example: schema.example
         });
     }
 
@@ -437,7 +455,8 @@ export function convertSchemaObject(
                     enumValues: maybeAllEnumValues,
                     description,
                     wrapAsNullable,
-                    groupName
+                    groupName,
+                    context
                 });
             }
 
@@ -595,7 +614,8 @@ export function convertSchemaObject(
                 example: undefined,
                 groupName
             }),
-            groupName
+            groupName,
+            example: schema.example
         });
     }
 
@@ -615,9 +635,9 @@ export function convertSchemaObject(
     );
 }
 
-export function getSchemaIdFromReference(ref: OpenAPIV3.ReferenceObject): string {
+export function getSchemaIdFromReference(ref: OpenAPIV3.ReferenceObject): string | undefined {
     if (!ref.$ref.startsWith(SCHEMA_REFERENCE_PREFIX)) {
-        throw new Error(`Cannot get schema id from reference: ${ref.$ref}`);
+        return undefined;
     }
     return ref.$ref.replace(SCHEMA_REFERENCE_PREFIX, "");
 }
@@ -627,11 +647,17 @@ export function convertToReferencedSchema(schema: OpenAPIV3.ReferenceObject, bre
     const generatedName = getGeneratedTypeName(breadcrumbs);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const description = (schema as any).description;
+
+    const schemaId = getSchemaIdFromReference(schema);
+    if (schemaId == null) {
+        throw new Error(`Invalid schema reference ${JSON.stringify(schema)}`);
+    }
+
     return Schema.reference({
         // TODO(dsinghvi): references may contain files
         generatedName,
         nameOverride,
-        schema: getSchemaIdFromReference(schema),
+        schema: schemaId,
         description: description ?? undefined,
         groupName: undefined
     });
@@ -656,7 +682,7 @@ function isListOfStrings(x: unknown): x is string[] {
 function maybeInjectDescriptionOrGroupName(
     schema: SchemaWithExample,
     description: string | undefined,
-    groupName: string | undefined
+    groupName: string[] | undefined
 ): SchemaWithExample {
     if (schema.type === "reference") {
         return SchemaWithExample.reference({
@@ -730,7 +756,7 @@ export function wrapLiteral({
     literal: LiteralSchemaValue;
     wrapAsNullable: boolean;
     description: string | undefined;
-    groupName: string | undefined;
+    groupName: string[] | undefined;
     nameOverride: string | undefined;
     generatedName: string;
 }): SchemaWithExample {
@@ -768,11 +794,12 @@ export function wrapPrimitive({
 }: {
     primitive: PrimitiveSchemaValueWithExample;
     wrapAsNullable: boolean;
-    groupName: string | undefined;
+    groupName: string[] | undefined;
     description: string | undefined;
     nameOverride: string | undefined;
     generatedName: string;
 }): SchemaWithExample {
+    groupName = typeof groupName === "string" ? [groupName] : groupName;
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
             nameOverride,

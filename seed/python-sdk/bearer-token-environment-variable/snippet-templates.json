@@ -1,0 +1,25 @@
+[
+    {
+        "sdk": {
+            "package": "fern_bearer-token-environment-variable",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/apiKey",
+            "method": "GET"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedBearerTokenEnvironmentVariable\n\nclient = AsyncSeedBearerTokenEnvironmentVariable(\n    api_key=\"YOUR_API_KEY\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.service.get_with_bearer_token(\n\t$FERN_INPUT\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

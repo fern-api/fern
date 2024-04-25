@@ -10,4 +10,6 @@ export interface ExpressCustomConfig {
     noSerdeLayer: boolean;
     outputEsm: boolean;
     outputSourceFiles: boolean;
+    retainOriginalCasing: boolean;
+    allowExtraFields: boolean;
 }

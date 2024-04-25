@@ -1,24 +1,38 @@
-import { AstNode } from "../core/AstNode";
-import { Writer } from "../core/Writer";
+import { AstNode } from "./core/AstNode";
+import { Writer } from "./core/Writer";
 import { Type } from "./Type";
 
 export declare namespace Parameter {
     interface Args {
-        /* The name of the method */
+        /* The name of the parameter */
         name: string;
-        /* The access of the method */
+        /* The type of the parameter */
         type: Type;
         /* Docs for the parameter */
-        docs: string | undefined;
+        docs?: string;
+        /* The initializer for the parameter */
+        initializer?: string;
     }
 }
 
 export class Parameter extends AstNode {
-    constructor(private readonly args: Parameter.Args) {
+    public readonly name: string;
+    public readonly docs: string | undefined;
+    public readonly initializer: string | undefined;
+    private type: Type;
+
+    constructor({ name, type, docs, initializer }: Parameter.Args) {
         super();
+        this.name = name;
+        this.type = type;
+        this.docs = docs;
     }
 
     public write(writer: Writer): void {
-        throw new Error("Method not implemented.");
+        this.type.write(writer);
+        writer.write(` ${this.name}`);
+        if (this.initializer != null) {
+            writer.write(` = ${this.initializer}`);
+        }
     }
 }

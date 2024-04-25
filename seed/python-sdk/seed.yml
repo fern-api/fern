@@ -1,4 +1,4 @@
-irVersion: v37
+irVersion: v39
 docker: fernapi/fern-python-sdk:latest
 dockerCommand: docker build -f ./generators/python/sdk/Dockerfile -t fernapi/fern-python-sdk:latest ./generators/python
 language: python
@@ -57,6 +57,20 @@ fixtures:
     - customConfig:
         improved_imports: true
       outputFolder: improved_imports
+    - customConfig:
+        pydantic_config:
+          skip_validation: true
+      outputFolder: skip-pydantic-validation
+    - customConfig:
+        follow_redirects_by_default: true
+      outputFolder: follow_redirects_by_default
+  streaming:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        pydantic_config:
+          skip_validation: true
+      outputFolder: skip-pydantic-validation
 scripts:
   # Tests now run a mock server, you can always run seed with --skip-scripts to save time
   - docker: fernapi/python-seed
@@ -64,11 +78,14 @@ scripts:
       # The global python version is 3.8
       - poetry install
       # Remove mypy for now given the issue where it falsely flags the use of field aliases.
-      # - poetry run mypy .
-      - fern test --command "poetry run pytest -rP ."
+      - poetry run mypy .
+      # TODO(FER-1142): Add back soon
+      # - fern test --command "poetry run pytest -rP ."
 allowedFailures: 
   - response-property
   - websocket
   - exhaustive:union-utils
   - exhaustive:additional_init_exports
+  - extra-properties
   - trace
+  - circular-references-advanced

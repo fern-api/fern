@@ -47,7 +47,7 @@ var __rest = (this && this.__rest) || function (s, e) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Animal = void 0;
-const SeedExhaustive = __importStar(require("../../../../../../api"));
+const SeedExhaustive = __importStar(require("../../../../../../api/index"));
 const core = __importStar(require("../../../../../../core"));
 exports.Animal = core.serialization
     .union("animal", {

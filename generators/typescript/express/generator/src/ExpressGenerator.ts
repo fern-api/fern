@@ -59,6 +59,8 @@ export declare namespace ExpressGenerator {
         treatUnknownAsAny: boolean;
         includeSerdeLayer: boolean;
         outputEsm: boolean;
+        retainOriginalCasing: boolean;
+        allowExtraFields: boolean;
     }
 }
 
@@ -180,6 +182,7 @@ export class ExpressGenerator {
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
             includeOtherInUnionTypes: config.includeOtherInUnionTypes,
             includeSerdeLayer: config.includeSerdeLayer,
+            retainOriginalCasing: config.retainOriginalCasing,
             noOptionalProperties: false
         });
         this.typeSchemaGenerator = new TypeSchemaGenerator({
@@ -192,7 +195,8 @@ export class ExpressGenerator {
             includeSerdeLayer: config.includeSerdeLayer
         });
         this.expressEndpointTypeSchemasGenerator = new ExpressEndpointTypeSchemasGenerator({
-            includeSerdeLayer: config.includeSerdeLayer
+            includeSerdeLayer: config.includeSerdeLayer,
+            allowExtraFields: config.allowExtraFields
         });
         this.expressServiceGenerator = new ExpressServiceGenerator({
             packageResolver: this.packageResolver,
@@ -208,7 +212,8 @@ export class ExpressGenerator {
         this.genericApiExpressErrorGenerator = new GenericAPIExpressErrorGenerator();
         this.expressErrorGenerator = new ExpressErrorGenerator();
         this.expressErrorSchemaGenerator = new ExpressErrorSchemaGenerator({
-            includeSerdeLayer: config.includeSerdeLayer
+            includeSerdeLayer: config.includeSerdeLayer,
+            allowExtraFields: config.allowExtraFields
         });
     }
 
@@ -238,7 +243,10 @@ export class ExpressGenerator {
             extraDependencies: {},
             extraDevDependencies: {},
             extraFiles: {},
-            extraScripts: {}
+            extraScripts: {},
+            resolutions: {
+                "@types/mime": "3.0.4"
+            }
         });
     }
 
@@ -477,7 +485,8 @@ export class ExpressGenerator {
             expressRegisterGenerator: this.expressRegisterGenerator,
             expressErrorSchemaDeclarationReferencer: this.expressErrorSchemaDeclarationReferencer,
             expressErrorSchemaGenerator: this.expressErrorSchemaGenerator,
-            includeSerdeLayer: this.config.includeSerdeLayer
+            includeSerdeLayer: this.config.includeSerdeLayer,
+            retainOriginalCasing: this.config.retainOriginalCasing
         });
     }
 }

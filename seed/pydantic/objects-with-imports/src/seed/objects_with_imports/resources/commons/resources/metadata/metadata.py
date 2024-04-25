@@ -4,14 +4,10 @@ import datetime as dt
 import typing
 
 from .....core.datetime_utils import serialize_datetime
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from .....core.pydantic_utilities import pydantic_v1
 
 
-class Metadata(pydantic.BaseModel):
+class Metadata(pydantic_v1.BaseModel):
     """
     from seed.objects_with_imports.resources.commons import Metadata
 
@@ -22,7 +18,7 @@ class Metadata(pydantic.BaseModel):
     """
 
     id: str
-    data: typing.Optional[typing.Dict[str, str]]
+    data: typing.Optional[typing.Dict[str, str]] = None
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -33,5 +29,5 @@ class Metadata(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

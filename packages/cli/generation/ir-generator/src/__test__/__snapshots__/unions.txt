@@ -1563,6 +1563,7 @@ exports[`generate IR 1`] = `
       "shape": {
         "_type": "object",
         "extends": [],
+        "extra-properties": false,
         "properties": [
           {
             "availability": null,
@@ -1670,6 +1671,7 @@ exports[`generate IR 1`] = `
       "shape": {
         "_type": "object",
         "extends": [],
+        "extra-properties": false,
         "properties": [
           {
             "availability": null,
@@ -2108,7 +2110,9 @@ exports[`generate IR 1`] = `
         },
         "typeId": "type_types:UnionWithBaseProperties",
       },
-      "referencedTypes": [],
+      "referencedTypes": [
+        "type_types:Foo",
+      ],
       "shape": {
         "_type": "union",
         "baseProperties": [
@@ -2273,6 +2277,97 @@ exports[`generate IR 1`] = `
                 "_type": "primitive",
                 "primitive": "STRING",
               },
+            },
+          },
+          {
+            "discriminantValue": {
+              "name": {
+                "camelCase": {
+                  "safeName": "foo",
+                  "unsafeName": "foo",
+                },
+                "originalName": "foo",
+                "pascalCase": {
+                  "safeName": "Foo",
+                  "unsafeName": "Foo",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "FOO",
+                  "unsafeName": "FOO",
+                },
+                "snakeCase": {
+                  "safeName": "foo",
+                  "unsafeName": "foo",
+                },
+              },
+              "wireValue": "foo",
+            },
+            "docs": null,
+            "shape": {
+              "_type": "samePropertiesAsObject",
+              "fernFilepath": {
+                "allParts": [
+                  {
+                    "camelCase": {
+                      "safeName": "types",
+                      "unsafeName": "types",
+                    },
+                    "originalName": "types",
+                    "pascalCase": {
+                      "safeName": "Types",
+                      "unsafeName": "Types",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "TYPES",
+                      "unsafeName": "TYPES",
+                    },
+                    "snakeCase": {
+                      "safeName": "types",
+                      "unsafeName": "types",
+                    },
+                  },
+                ],
+                "file": {
+                  "camelCase": {
+                    "safeName": "types",
+                    "unsafeName": "types",
+                  },
+                  "originalName": "types",
+                  "pascalCase": {
+                    "safeName": "Types",
+                    "unsafeName": "Types",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "TYPES",
+                    "unsafeName": "TYPES",
+                  },
+                  "snakeCase": {
+                    "safeName": "types",
+                    "unsafeName": "types",
+                  },
+                },
+                "packagePath": [],
+              },
+              "name": {
+                "camelCase": {
+                  "safeName": "foo",
+                  "unsafeName": "foo",
+                },
+                "originalName": "Foo",
+                "pascalCase": {
+                  "safeName": "Foo",
+                  "unsafeName": "Foo",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "FOO",
+                  "unsafeName": "FOO",
+                },
+                "snakeCase": {
+                  "safeName": "foo",
+                  "unsafeName": "foo",
+                },
+              },
+              "typeId": "type_types:Foo",
             },
           },
         ],
@@ -4079,6 +4174,7 @@ exports[`generate IR 1`] = `
       "shape": {
         "_type": "object",
         "extends": [],
+        "extra-properties": false,
         "properties": [
           {
             "availability": null,
@@ -4186,6 +4282,7 @@ exports[`generate IR 1`] = `
       "shape": {
         "_type": "object",
         "extends": [],
+        "extra-properties": false,
         "properties": [
           {
             "availability": null,
@@ -4609,6 +4706,7 @@ exports[`generate IR 1`] = `
       "shape": {
         "_type": "object",
         "extends": [],
+        "extra-properties": false,
         "properties": [
           {
             "availability": null,

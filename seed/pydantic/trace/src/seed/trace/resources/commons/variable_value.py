@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import typing
 
+from ...core.pydantic_utilities import pydantic_v1
 from .binary_tree_node_value import BinaryTreeNodeValue
 from .binary_tree_value import BinaryTreeValue
 from .doubly_linked_list_node_value import DoublyLinkedListNodeValue
@@ -12,52 +13,47 @@ from .node_id import NodeId
 from .singly_linked_list_node_value import SinglyLinkedListNodeValue
 from .singly_linked_list_value import SinglyLinkedListValue
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class VariableValue_IntegerValue(pydantic.BaseModel):
-    type: typing.Literal["integerValue"]
+class VariableValue_IntegerValue(pydantic_v1.BaseModel):
+    type: typing.Literal["integerValue"] = "integerValue"
     value: int
 
 
-class VariableValue_BooleanValue(pydantic.BaseModel):
-    type: typing.Literal["booleanValue"]
+class VariableValue_BooleanValue(pydantic_v1.BaseModel):
+    type: typing.Literal["booleanValue"] = "booleanValue"
     value: bool
 
 
-class VariableValue_DoubleValue(pydantic.BaseModel):
-    type: typing.Literal["doubleValue"]
+class VariableValue_DoubleValue(pydantic_v1.BaseModel):
+    type: typing.Literal["doubleValue"] = "doubleValue"
     value: float
 
 
-class VariableValue_StringValue(pydantic.BaseModel):
-    type: typing.Literal["stringValue"]
+class VariableValue_StringValue(pydantic_v1.BaseModel):
+    type: typing.Literal["stringValue"] = "stringValue"
     value: str
 
 
-class VariableValue_CharValue(pydantic.BaseModel):
-    type: typing.Literal["charValue"]
+class VariableValue_CharValue(pydantic_v1.BaseModel):
+    type: typing.Literal["charValue"] = "charValue"
     value: str
 
 
 class VariableValue_MapValue(MapValue):
-    type: typing.Literal["mapValue"]
+    type: typing.Literal["mapValue"] = "mapValue"
 
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
 
 
-class VariableValue_ListValue(pydantic.BaseModel):
-    type: typing.Literal["listValue"]
+class VariableValue_ListValue(pydantic_v1.BaseModel):
+    type: typing.Literal["listValue"] = "listValue"
     value: typing.List[VariableValue]
 
 
 class VariableValue_BinaryTreeValue(BinaryTreeValue):
-    type: typing.Literal["binaryTreeValue"]
+    type: typing.Literal["binaryTreeValue"] = "binaryTreeValue"
 
     class Config:
         allow_population_by_field_name = True
@@ -65,7 +61,7 @@ class VariableValue_BinaryTreeValue(BinaryTreeValue):
 
 
 class VariableValue_SinglyLinkedListValue(SinglyLinkedListValue):
-    type: typing.Literal["singlyLinkedListValue"]
+    type: typing.Literal["singlyLinkedListValue"] = "singlyLinkedListValue"
 
     class Config:
         allow_population_by_field_name = True
@@ -73,15 +69,15 @@ class VariableValue_SinglyLinkedListValue(SinglyLinkedListValue):
 
 
 class VariableValue_DoublyLinkedListValue(DoublyLinkedListValue):
-    type: typing.Literal["doublyLinkedListValue"]
+    type: typing.Literal["doublyLinkedListValue"] = "doublyLinkedListValue"
 
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
 
 
-class VariableValue_NullValue(pydantic.BaseModel):
-    type: typing.Literal["nullValue"]
+class VariableValue_NullValue(pydantic_v1.BaseModel):
+    type: typing.Literal["nullValue"] = "nullValue"
 
 
 VariableValue = typing.Union[

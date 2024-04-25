@@ -38,3 +38,30 @@ test {
         showStandardStreams = true
     }
 }
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'com.fern'
+            artifactId = 'multi-url-environment'
+            version = '0.0.1'
+            from components.java
+            pom {
+                scm {
+                    connection = 'scm:git:git://github.com/multi-url-environment/fern.git'
+                    developerConnection = 'scm:git:git://github.com/multi-url-environment/fern.git'
+                    url = 'https://github.com/multi-url-environment/fern'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            url "$System.env.MAVEN_PUBLISH_REGISTRY_URL"
+            credentials {
+                username "$System.env.MAVEN_USERNAME"
+                password "$System.env.MAVEN_PASSWORD"
+            }
+        }
+    }
+}
+

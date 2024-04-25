@@ -1,4 +1,3 @@
-import { ExitStatusUpdate, GeneratorConfig, GeneratorUpdate } from "@fern-fern/generator-exec-sdk/api";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { readFile, writeFile } from "fs/promises";
@@ -7,7 +6,13 @@ import merge from "lodash-es/merge";
 import path from "path";
 import { convertToOpenApi } from "./convertToOpenApi";
 import { getCustomConfig } from "./customConfig";
-import { GeneratorLoggingWrapper } from "./generatorLoggingWrapper";
+import {
+    GeneratorNotificationService,
+    GeneratorExecParsing,
+    GeneratorUpdate,
+    ExitStatusUpdate,
+    parseGeneratorConfig
+} from "@fern-api/generator-commons";
 
 const OPENAPI_JSON_FILENAME = "openapi.json";
 const OPENAPI_YML_FILENAME = "openapi.yml";
@@ -16,11 +21,11 @@ export type Mode = "stoplight" | "openapi";
 
 export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<void> {
     try {
-        const configStr = await readFile(pathToConfig);
-        const config = JSON.parse(configStr.toString()) as GeneratorConfig;
+        const config = await parseGeneratorConfig(pathToConfig);
+
         const customConfig = getCustomConfig(config);
 
-        const generatorLoggingClient = new GeneratorLoggingWrapper(config);
+        const generatorLoggingClient = new GeneratorNotificationService(config.environment);
 
         try {
             await generatorLoggingClient.sendUpdate(
@@ -30,6 +35,7 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
             );
 
             const ir = await loadIntermediateRepresentation(config.irFilepath);
+
             const openApiDefinition = convertToOpenApi({
                 apiName: config.workspaceName,
                 ir,
@@ -51,8 +57,6 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
             }
             await generatorLoggingClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.successful({})));
         } catch (e) {
-            // eslint-disable-next-line no-console
-            console.log("Encountered error", e);
             await generatorLoggingClient.sendUpdate(
                 GeneratorUpdate.exitStatusUpdate(
                     ExitStatusUpdate.error({
@@ -71,5 +75,6 @@ export async function writeOpenApi(mode: Mode, pathToConfig: string): Promise<vo
 async function loadIntermediateRepresentation(pathToFile: string): Promise<IntermediateRepresentation> {
     const irString = (await readFile(pathToFile)).toString();
     const irJson = JSON.parse(irString);
+
     return IrSerialization.IntermediateRepresentation.parseOrThrow(irJson);
 }

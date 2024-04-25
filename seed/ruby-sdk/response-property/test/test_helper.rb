@@ -3,4 +3,4 @@
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 
 require "minitest/autorun"
-require "seed_response_property_client"
+require "fern_response_property"

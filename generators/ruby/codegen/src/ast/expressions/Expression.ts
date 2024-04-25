@@ -6,7 +6,7 @@ export declare namespace Expression {
     export interface Init extends AstNode.Init {
         leftSide?: AstNode | string;
         rightSide?: AstNode | string;
-        isAssignment?: boolean;
+        isAssignment: boolean;
         operation?: string;
         yardoc?: Yardoc;
     }
@@ -18,7 +18,7 @@ export class Expression extends AstNode {
     public yardoc: Yardoc | undefined;
     public operation?: string;
 
-    constructor({ leftSide, rightSide, yardoc, operation, isAssignment = false, ...rest }: Expression.Init) {
+    constructor({ leftSide, rightSide, yardoc, operation, isAssignment, ...rest }: Expression.Init) {
         super(rest);
         this.leftSide = leftSide;
         this.rightSide = rightSide;

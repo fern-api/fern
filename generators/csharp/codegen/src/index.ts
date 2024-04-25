@@ -1,3 +1,7 @@
-export { Access } from "./core/Access";
-export { Writer } from "./core/Writer";
+export { AsIsFiles } from "./AsIs";
+export * as dependencies from "./ast/dependencies";
+export * from "./cli";
 export * as csharp from "./csharp";
+export { FileGenerator } from "./FileGenerator";
+export * from "./project";
+export { TestFileGenerator } from "./TestFileGenerator";

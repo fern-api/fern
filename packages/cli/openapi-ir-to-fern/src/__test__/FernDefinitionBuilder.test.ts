@@ -16,14 +16,15 @@ describe("Fern Definition Builder", () => {
                 endpoints: [],
                 webhooks: [],
                 schemas: {},
-                errors: {},
                 variables: {},
                 nonRequestReferencedSchemas: new Set(),
                 securitySchemes: {},
                 globalHeaders: [],
+                groups: {},
                 channel: []
             },
-            true
+            true,
+            false
         );
         builder.addEnvironment({
             name: "Production",

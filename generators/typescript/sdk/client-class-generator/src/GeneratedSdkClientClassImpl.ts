@@ -14,7 +14,14 @@ import {
     VariableDeclaration,
     VariableId
 } from "@fern-fern/ir-sdk/api";
-import { getTextOfTsNode, JavaScriptRuntime, maybeAddDocs, NpmPackage, PackageId } from "@fern-typescript/commons";
+import {
+    getTextOfTsNode,
+    ImportsManager,
+    JavaScriptRuntime,
+    maybeAddDocs,
+    NpmPackage,
+    PackageId
+} from "@fern-typescript/commons";
 import { GeneratedEndpointImplementation, GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, Scope, ts } from "ts-morph";
@@ -33,6 +40,7 @@ import { GeneratedWrappedService } from "./GeneratedWrappedService";
 
 export declare namespace GeneratedSdkClientClassImpl {
     export interface Init {
+        importsManager: ImportsManager;
         intermediateRepresentation: IntermediateRepresentation;
         packageId: PackageId;
         serviceClassName: string;
@@ -47,6 +55,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         targetRuntime: JavaScriptRuntime;
         includeContentHeadersOnFileDownloadResponse: boolean;
         includeSerdeLayer: boolean;
+        retainOriginalCasing: boolean;
     }
 }
 
@@ -76,6 +85,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private npmPackage: NpmPackage | undefined;
     private targetRuntime: JavaScriptRuntime;
     private packageId: PackageId;
+    private retainOriginalCasing: boolean;
+    private importsManager: ImportsManager;
 
     constructor({
         intermediateRepresentation,
@@ -91,7 +102,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         npmPackage,
         targetRuntime,
         includeContentHeadersOnFileDownloadResponse,
-        includeSerdeLayer
+        includeSerdeLayer,
+        retainOriginalCasing,
+        importsManager
     }: GeneratedSdkClientClassImpl.Init) {
         this.packageId = packageId;
         this.serviceClassName = serviceClassName;
@@ -101,6 +114,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.requireDefaultEnvironment = requireDefaultEnvironment;
         this.npmPackage = npmPackage;
         this.targetRuntime = targetRuntime;
+        this.retainOriginalCasing = retainOriginalCasing;
+        this.importsManager = importsManager;
 
         const package_ = packageResolver.resolvePackage(packageId);
         this.package_ = package_;
@@ -119,13 +134,15 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     }
                     if (requestBody?.type === "fileUpload") {
                         return new GeneratedFileUploadEndpointRequest({
+                            importsManager,
                             ir: this.intermediateRepresentation,
                             packageId,
                             service,
                             endpoint,
                             requestBody,
                             generatedSdkClientClass: this,
-                            targetRuntime: this.targetRuntime
+                            targetRuntime: this.targetRuntime,
+                            retainOriginalCasing: this.retainOriginalCasing
                         });
                     } else {
                         return new GeneratedDefaultEndpointRequest({
@@ -135,7 +152,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             service,
                             endpoint,
                             requestBody,
-                            generatedSdkClientClass: this
+                            generatedSdkClientClass: this,
+                            retainOriginalCasing: this.retainOriginalCasing
                         });
                     }
                 };
@@ -143,7 +161,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 const getGeneratedEndpointResponse = ({
                     response
                 }: {
-                    response: HttpResponse.Json | HttpResponse.FileDownload | HttpResponse.Streaming | undefined;
+                    response:
+                        | HttpResponse.Json
+                        | HttpResponse.FileDownload
+                        | HttpResponse.Text
+                        | HttpResponse.Streaming
+                        | undefined;
                 }) => {
                     if (neverThrowErrors) {
                         return new GeneratedNonThrowingEndpointResponse({
@@ -169,7 +192,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 const getDefaultEndpointImplementation = ({
                     response
                 }: {
-                    response: HttpResponse.Json | HttpResponse.FileDownload | undefined;
+                    response: HttpResponse.Json | HttpResponse.FileDownload | HttpResponse.Text | undefined;
                 }) => {
                     return new GeneratedDefaultEndpointImplementation({
                         endpoint,
@@ -178,7 +201,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         generatedSdkClientClass: this,
                         includeCredentialsOnCrossOriginRequests,
                         defaultTimeoutInSeconds,
-                        includeSerdeLayer
+                        includeSerdeLayer,
+                        retainOriginalCasing
                     });
                 };
 
@@ -197,7 +221,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             response: getGeneratedEndpointResponse({
                                 response: HttpResponse.fileDownload(fileDownload)
                             }),
-                            includeSerdeLayer
+                            includeSerdeLayer,
+                            retainOriginalCasing
                         }),
                     json: (jsonResponse) =>
                         getDefaultEndpointImplementation({
@@ -214,10 +239,13 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             }),
                             defaultTimeoutInSeconds,
                             request: getGeneratedEndpointRequest(),
-                            includeSerdeLayer
+                            includeSerdeLayer,
+                            retainOriginalCasing
                         }),
-                    text: () => {
-                        throw new Error("Text responses are unsupported");
+                    text: (textResponse) => {
+                        return getDefaultEndpointImplementation({
+                            response: HttpResponse.text(textResponse)
+                        });
                     },
                     _other: () => {
                         throw new Error("Unknown Response type: " + endpoint.response?.type);
@@ -396,11 +424,25 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         }
 
         if (this.shouldGenerateAuthorizationHeaderHelperMethod()) {
+            const returnsMaybeAuth =
+                !this.intermediateRepresentation.sdkConfig.isAuthMandatory || this.basicAuthScheme != null;
+            const returnType = returnsMaybeAuth
+                ? ts.factory.createTypeReferenceNode("Promise", [
+                      ts.factory.createUnionTypeNode([
+                          ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                          ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                      ])
+                  ])
+                : ts.factory.createTypeReferenceNode("Promise", [
+                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                  ]);
+
             serviceClass.addMethod({
                 scope: Scope.Protected,
                 isAsync: true,
                 name: GeneratedSdkClientClassImpl.AUTHORIZATION_HEADER_HELPER_METHOD_NAME,
-                statements: this.getAuthorizationHeaderStatements(context).map(getTextOfTsNode)
+                statements: this.getAuthorizationHeaderStatements(context).map(getTextOfTsNode),
+                returnType: getTextOfTsNode(returnType)
             });
         }
 
@@ -676,7 +718,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         for (const pathParameter of getNonVariablePathParameters(this.intermediateRepresentation.pathParameters)) {
             properties.push({
-                name: getParameterNameForPathParameter(pathParameter),
+                name: getParameterNameForPathParameter({
+                    pathParameter,
+                    retainOriginalCasing: this.retainOriginalCasing
+                }),
                 type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode)
             });
         }
@@ -1280,7 +1325,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     }
 
     public getReferenceToRootPathParameter(pathParameter: PathParameter): ts.Expression {
-        return this.getReferenceToOption(getParameterNameForPathParameter(pathParameter));
+        return this.getReferenceToOption(
+            getParameterNameForPathParameter({
+                pathParameter,
+                retainOriginalCasing: this.retainOriginalCasing
+            })
+        );
     }
 
     public getReferenceToVariable(variableId: VariableId): ts.Expression {

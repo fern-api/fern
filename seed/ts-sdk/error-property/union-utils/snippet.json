@@ -1,4 +1,15 @@
 {
-    "endpoints": [],
+    "endpoints": [
+        {
+            "id": {
+                "path": "/property-based-error",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedErrorPropertyClient } from \"@fern/error-property\";\n\nconst seedErrorProperty = new SeedErrorPropertyClient;\nawait seedErrorProperty.propertyBasedError.throwError();\n"
+            }
+        }
+    ],
     "types": {}
 }

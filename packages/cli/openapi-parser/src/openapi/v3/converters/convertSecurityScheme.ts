@@ -9,6 +9,7 @@ import { FernOpenAPIExtension } from "../extensions/fernExtensions";
 import { getBasicSecuritySchemeNames } from "../extensions/getBasicSecuritySchemeNames";
 import {
     getBasicSecuritySchemeNameAndEnvvar,
+    HeaderSecuritySchemeNames,
     SecuritySchemeNames
 } from "../extensions/getSecuritySchemeNameAndEnvvars";
 
@@ -24,10 +25,13 @@ export function convertSecurityScheme(
 function convertSecuritySchemeHelper(securityScheme: OpenAPIV3.SecuritySchemeObject): SecurityScheme | undefined {
     if (securityScheme.type === "apiKey" && securityScheme.in === "header") {
         const bearerFormat = getExtension<string>(securityScheme, OpenAPIExtension.BEARER_FORMAT);
-        const headerNames = getExtension<SecuritySchemeNames>(securityScheme, FernOpenAPIExtension.FERN_HEADER_AUTH);
+        const headerNames = getExtension<HeaderSecuritySchemeNames>(
+            securityScheme,
+            FernOpenAPIExtension.FERN_HEADER_AUTH
+        );
         return SecurityScheme.header({
             headerName: securityScheme.name,
-            prefix: bearerFormat != null ? "Bearer" : undefined,
+            prefix: bearerFormat != null ? "Bearer" : headerNames?.prefix,
             headerVariableName:
                 headerNames?.name ?? getExtension<string>(securityScheme, FernOpenAPIExtension.HEADER_VARIABLE_NAME),
             headerEnvVar: headerNames?.env
@@ -88,7 +92,8 @@ function getScopes(oauthSecurityScheme: OpenAPIV3.OAuth2SecurityScheme): EnumSch
             description: undefined,
             enumVarNames: undefined,
             wrapAsNullable: false,
-            groupName: undefined
+            groupName: undefined,
+            context: undefined
         });
         const schema = convertSchemaWithExampleToSchema(schemaWithExample);
         if (schema.type === "enum") {

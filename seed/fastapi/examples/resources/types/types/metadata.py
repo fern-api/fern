@@ -5,12 +5,10 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-from ....core.datetime_utils import serialize_datetime
+import typing_extensions
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -23,11 +21,11 @@ class _Factory:
         return Metadata(__root__=_Metadata.Markdown(type="markdown", value=value))
 
 
-class Metadata(pydantic.BaseModel):
+class Metadata(pydantic_v1.BaseModel):
     """
     from seed.examples import Metadata_Html
 
-    Metadata_Html(type="html", value="<head>...</head>")
+    Metadata_Html(value="<head>...</head>")
     """
 
     factory: typing.ClassVar[_Factory] = _Factory()
@@ -41,7 +39,9 @@ class Metadata(pydantic.BaseModel):
         if self.__root__.type == "markdown":
             return markdown(self.__root__.value)
 
-    __root__: typing.Annotated[typing.Union[_Metadata.Html, _Metadata.Markdown], pydantic.Field(discriminator="type")]
+    __root__: typing_extensions.Annotated[
+        typing.Union[_Metadata.Html, _Metadata.Markdown], pydantic_v1.Field(discriminator="type")
+    ]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -52,17 +52,17 @@ class Metadata(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _Metadata:
-    class Html(pydantic.BaseModel):
-        type: typing.Literal["html"]
+    class Html(pydantic_v1.BaseModel):
+        type: typing.Literal["html"] = "html"
         value: str
 
-    class Markdown(pydantic.BaseModel):
-        type: typing.Literal["markdown"]
+    class Markdown(pydantic_v1.BaseModel):
+        type: typing.Literal["markdown"] = "markdown"
         value: str
 
 

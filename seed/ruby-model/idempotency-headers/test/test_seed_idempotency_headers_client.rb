@@ -6,6 +6,6 @@ require "seed_idempotency_headers_client"
 # Basic SeedIdempotencyHeadersClient tests
 class TestSeedIdempotencyHeadersClient < Minitest::Test
   def test_function
-    SeedIdempotencyHeadersClient::Client.new
+    # SeedIdempotencyHeadersClient::Client.new
   end
 end

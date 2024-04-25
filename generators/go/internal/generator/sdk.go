@@ -382,13 +382,9 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 			}
 			valueTypeFormat := formatForValueType(header.ValueType, f.types)
 			value := valueTypeFormat.Prefix + "r." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
-			if valueTypeFormat.IsOptional {
-				f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != nil {")
-				f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("`, prefix, `%v",`, value, "))")
-				f.P("}")
-			} else {
-				f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("`, prefix, `%v",`, value, "))")
-			}
+			f.P("if r.", header.Name.Name.PascalCase.UnsafeName, " != ", valueTypeFormat.ZeroValue, " {")
+			f.P(`header.Set("`, header.Name.WireValue, `", fmt.Sprintf("`, prefix, `%v",`, value, "))")
+			f.P("}")
 		}
 	}
 	for _, header := range headers {
@@ -564,7 +560,8 @@ func (f *fileWriter) writeOptionStruct(
 }
 
 type GeneratedAuth struct {
-	Option ast.Expr // e.g. acmeclient.WithAuthToken("<YOUR_AUTH_TOKEN>")
+	Option          ast.Expr // e.g. acmeclient.WithAuthToken("<YOUR_AUTH_TOKEN>")
+	EnvironmentVars []string // e.g. ACME_API_KEY
 }
 
 // WriteIdempotentRequestOptions writes the idempotent request options available to the
@@ -653,7 +650,10 @@ func (f *fileWriter) WriteRequestOptions(
 	// Generate the auth functional options.
 	includeCustomAuthDocs := auth.Docs != nil && len(*auth.Docs) > 0
 
-	var option ast.Expr
+	var (
+		option          ast.Expr
+		environmentVars []string
+	)
 	for i, authScheme := range auth.Schemes {
 		if authScheme.Bearer != nil {
 			var (
@@ -671,6 +671,9 @@ func (f *fileWriter) WriteRequestOptions(
 						ast.NewBasicLit(`"<YOUR_AUTH_TOKEN>"`),
 					},
 				)
+				if authScheme.Bearer.TokenEnvVar != nil {
+					environmentVars = append(environmentVars, *authScheme.Bearer.TokenEnvVar)
+				}
 			}
 			f.P("// ", optionName, " sets the 'Authorization: Bearer <", camelCase, ">' request header.")
 			if includeCustomAuthDocs {
@@ -697,6 +700,10 @@ func (f *fileWriter) WriteRequestOptions(
 						ast.NewBasicLit(`"<YOUR_PASSWORD>"`),
 					},
 				)
+				if authScheme.Basic.UsernameEnvVar != nil && authScheme.Basic.PasswordEnvVar != nil {
+					environmentVars = append(environmentVars, *authScheme.Basic.UsernameEnvVar)
+					environmentVars = append(environmentVars, *authScheme.Basic.PasswordEnvVar)
+				}
 			}
 			f.P("// WithBasicAuth sets the 'Authorization: Basic <base64>' request header.")
 			if includeCustomAuthDocs {
@@ -734,6 +741,9 @@ func (f *fileWriter) WriteRequestOptions(
 						ast.NewBasicLit(fmt.Sprintf(`"<YOUR_%s>"`, pascalCase)),
 					},
 				)
+				if authScheme.Header.HeaderEnvVar != nil {
+					environmentVars = append(environmentVars, *authScheme.Header.HeaderEnvVar)
+				}
 			}
 			f.P("// ", optionName, " sets the ", param, " auth request header.")
 			if includeCustomAuthDocs {
@@ -781,7 +791,8 @@ func (f *fileWriter) WriteRequestOptions(
 		return nil, nil
 	}
 	return &GeneratedAuth{
-		Option: option,
+		Option:          option,
+		EnvironmentVars: environmentVars,
 	}, nil
 }
 
@@ -797,7 +808,9 @@ type GeneratedEndpoint struct {
 
 // WriteClient writes a client for interacting with the given service.
 func (f *fileWriter) WriteClient(
+	irAuth *ir.ApiAuth,
 	irEndpoints []*ir.HttpEndpoint,
+	headers []*ir.HttpHeader,
 	idempotencyHeaders []*ir.HttpHeader,
 	subpackages []*ir.Subpackage,
 	environmentsConfig *ir.EnvironmentsConfig,
@@ -843,6 +856,37 @@ func (f *fileWriter) WriteClient(
 	// Generate the client constructor.
 	f.P("func New", clientName, "(opts ...option.RequestOption) *", clientName, " {")
 	f.P("options := core.NewRequestOptions(opts...)")
+	for _, authScheme := range irAuth.Schemes {
+		if authScheme.Bearer != nil && authScheme.Bearer.TokenEnvVar != nil {
+			f.P("if options.", authScheme.Bearer.Token.PascalCase.UnsafeName, ` == "" {`)
+			f.P("options. ", authScheme.Bearer.Token.PascalCase.UnsafeName, ` = os.Getenv("`, *authScheme.Bearer.TokenEnvVar, `")`)
+			f.P("}")
+			continue
+		}
+		if authScheme.Basic != nil && authScheme.Basic.UsernameEnvVar != nil && authScheme.Basic.PasswordEnvVar != nil {
+			f.P("if options.", authScheme.Basic.Username.PascalCase.UnsafeName, ` == "" {`)
+			f.P("options. ", authScheme.Basic.Username.PascalCase.UnsafeName, ` = os.Getenv("`, *authScheme.Basic.UsernameEnvVar, `")`)
+			f.P("}")
+			f.P("if options.", authScheme.Basic.Password.PascalCase.UnsafeName, ` == "" {`)
+			f.P("options. ", authScheme.Basic.Password.PascalCase.UnsafeName, ` = os.Getenv("`, *authScheme.Basic.PasswordEnvVar, `")`)
+			f.P("}")
+			continue
+		}
+		if header := authScheme.Header; header != nil && header.HeaderEnvVar != nil {
+			f.P("if options.", header.Name.Name.PascalCase.UnsafeName, ` == "" {`)
+			f.P("options. ", header.Name.Name.PascalCase.UnsafeName, ` = os.Getenv("`, *header.HeaderEnvVar, `")`)
+			f.P("}")
+			continue
+		}
+	}
+	for _, header := range headers {
+		if header.Env != nil {
+			f.P("if options.", header.Name.Name.PascalCase.UnsafeName, ` == "" {`)
+			f.P("options. ", header.Name.Name.PascalCase.UnsafeName, ` = os.Getenv("`, *header.Env, `")`)
+			f.P("}")
+			continue
+		}
+	}
 	f.P("return &", clientName, "{")
 	f.P(`baseURL: options.BaseURL,`)
 	f.P("caller: core.NewCaller(")
@@ -1171,6 +1215,10 @@ func NewGeneratedClient(
 		if len(endpoint.Examples) == 0 {
 			continue
 		}
+		example := exampleEndpointCallFromEndpointExample(endpoint.Examples[0])
+		if example == nil {
+			continue
+		}
 		generatedEndpoints = append(
 			generatedEndpoints,
 			newGeneratedEndpoint(
@@ -1178,7 +1226,7 @@ func NewGeneratedClient(
 				fernFilepath,
 				rootClientInstantiation,
 				endpoint,
-				endpoint.Examples[0], // Generate a snippet for the first example.
+				example,
 			),
 		)
 	}
@@ -1186,6 +1234,26 @@ func NewGeneratedClient(
 		Instantiation: rootClientInstantiation,
 		Endpoints:     generatedEndpoints,
 	}, nil
+}
+
+type exampleEndpointCallVisitor struct {
+	value *ir.ExampleEndpointCall
+}
+
+func (e *exampleEndpointCallVisitor) VisitUserProvided(value *ir.ExampleEndpointCall) error {
+	e.value = value
+	return nil
+}
+
+func (e *exampleEndpointCallVisitor) VisitGenerated(value *ir.ExampleEndpointCall) error {
+	e.value = value
+	return nil
+}
+
+func exampleEndpointCallFromEndpointExample(example *ir.HttpEndpointExample) *ir.ExampleEndpointCall {
+	visitor := new(exampleEndpointCallVisitor)
+	example.Accept(visitor)
+	return visitor.value
 }
 
 func newGeneratedEndpoint(
@@ -1613,10 +1681,33 @@ func (f *fileWriter) endpointFromIR(
 	scope := f.scope.Child()
 
 	// Add path parameters and request body, if any.
-	signatureParameters := []*signatureParameter{{parameter: "ctx context.Context"}}
-	var pathParameterNames []string
+	pathParameterToScopedName := make(map[string]string, len(irEndpoint.AllPathParameters))
+	pathParamters := make(map[string]*ir.PathParameter, len(irEndpoint.AllPathParameters))
 	for _, pathParameter := range irEndpoint.AllPathParameters {
+		pathParamters[pathParameter.Name.OriginalName] = pathParameter
+	}
+
+	var pathParameterNames []string
+	for _, part := range irEndpoint.FullPath.Parts {
+		if part.PathParameter == "" {
+			continue
+		}
+		pathParameter, ok := pathParamters[part.PathParameter]
+		if !ok {
+			return nil, fmt.Errorf("internal error: path parameter %s not found in endpoint %s", part.PathParameter, irEndpoint.Name.OriginalName)
+		}
 		pathParameterName := scope.Add(pathParameter.Name.CamelCase.SafeName)
+		pathParameterNames = append(pathParameterNames, pathParameterName)
+		pathParameterToScopedName[part.PathParameter] = pathParameterName
+	}
+
+	// Preserve the order of path parameters specified in the API in the function signature.
+	signatureParameters := []*signatureParameter{{parameter: "ctx context.Context"}}
+	for _, pathParameter := range irEndpoint.AllPathParameters {
+		pathParameterName, ok := pathParameterToScopedName[pathParameter.Name.OriginalName]
+		if !ok {
+			return nil, fmt.Errorf("internal error: path parameter %s not found in endpoint %s", pathParameter.Name.OriginalName, irEndpoint.Name.OriginalName)
+		}
 		parameterType := typeReferenceToGoType(pathParameter.ValueType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
 		signatureParameters = append(
 			signatureParameters,
@@ -1625,7 +1716,6 @@ func (f *fileWriter) endpointFromIR(
 				parameter: fmt.Sprintf("%s %s", pathParameterName, parameterType),
 			},
 		)
-		pathParameterNames = append(pathParameterNames, pathParameterName)
 	}
 
 	// Add the file parameter(s) after the path parameters, if any.
@@ -1789,12 +1879,15 @@ func (f *fileWriter) endpointFromIR(
 			successfulReturnValues = "response.String(), nil"
 			errorReturnValues = `"", err`
 		case "streaming":
-			if terminator := irEndpoint.Response.Streaming.Terminator; terminator != nil {
-				streamDelimiter = *terminator
+			if irEndpoint.Response.Streaming.Json == nil && irEndpoint.Response.Streaming.Text == nil {
+				return nil, fmt.Errorf("unsupported streaming response type: %s", irEndpoint.Response.Streaming.Type)
 			}
-			typeReference := typeReferenceFromStreamingResponseChunkType(irEndpoint.Response.Streaming.DataEventType)
-			if typeReference == nil {
-				return nil, fmt.Errorf("unsupported streaming response type: %s", irEndpoint.Response.Streaming.DataEventType.Type)
+			if irEndpoint.Response.Streaming.Json != nil && irEndpoint.Response.Streaming.Json.Terminator != nil {
+				streamDelimiter = *irEndpoint.Response.Streaming.Json.Terminator
+			}
+			typeReference, err := typeReferenceFromStreamingResponse(irEndpoint.Response.Streaming)
+			if err != nil {
+				return nil, err
 			}
 			responseType = strings.TrimPrefix(typeReferenceToGoType(typeReference, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false), "*")
 			responseParameterName = "response"
@@ -2070,6 +2163,10 @@ func (f *fileWriter) WriteRequestType(
 	for _, literal := range literals {
 		f.P(literal.Name.Name.CamelCase.SafeName, " ", literalToGoType(literal.Value))
 	}
+	if requestBody.extraProperties {
+		f.P()
+		f.P("ExtraProperties map[string]interface{} `json:\"-\" url:\"-\"`")
+	}
 	f.P("}")
 	f.P()
 	// Implement the getter methods.
@@ -2096,7 +2193,7 @@ func (f *fileWriter) WriteRequestType(
 		}
 	}
 
-	if len(literals) == 0 && len(requestBody.dates) == 0 && len(referenceType) == 0 {
+	if len(literals) == 0 && len(requestBody.dates) == 0 && len(referenceType) == 0 && !requestBody.extraProperties {
 		// If the request doesn't specify any literals or a reference type,
 		// we don't need to customize the [de]serialization logic at all.
 		return nil
@@ -2130,6 +2227,10 @@ func (f *fileWriter) WriteRequestType(
 	for _, literal := range literals {
 		f.P(receiver, ".", literal.Name.Name.CamelCase.SafeName, " = ", literalToValue(literal.Value))
 	}
+	if requestBody.extraProperties {
+		f.P()
+		writeExtractExtraProperties(f, literals, receiver)
+	}
 	f.P("return nil")
 	f.P("}")
 	f.P()
@@ -2162,7 +2263,11 @@ func (f *fileWriter) WriteRequestType(
 			f.P(literal.Name.Name.PascalCase.UnsafeName, ": ", literalToValue(literal.Value), ",")
 		}
 		f.P("}")
-		f.P("return json.Marshal(marshaler)")
+		if requestBody.extraProperties {
+			f.P("return core.MarshalJSONWithExtraProperties(marshaler, ", receiver, ".ExtraProperties)")
+		} else {
+			f.P("return json.Marshal(marshaler)")
+		}
 	}
 	f.P("}")
 	f.P()
@@ -2356,8 +2461,9 @@ func (e *environmentsURLVisitor) VisitMultipleBaseUrls(url *ir.MultipleBaseUrlsE
 }
 
 type requestBody struct {
-	dates    []*date
-	literals []*literal
+	dates           []*date
+	literals        []*literal
+	extraProperties bool
 }
 
 func requestBodyToFieldDeclaration(
@@ -2380,14 +2486,16 @@ func requestBodyToFieldDeclaration(
 		return nil, err
 	}
 	return &requestBody{
-		dates:    visitor.dates,
-		literals: visitor.literals,
+		dates:           visitor.dates,
+		literals:        visitor.literals,
+		extraProperties: visitor.extraProperties,
 	}, nil
 }
 
 type requestBodyVisitor struct {
-	dates    []*date
-	literals []*literal
+	dates           []*date
+	literals        []*literal
+	extraProperties bool
 
 	bodyField      string
 	baseImportPath string
@@ -2411,6 +2519,7 @@ func (r *requestBodyVisitor) VisitInlinedRequestBody(inlinedRequestBody *ir.Inli
 	objectProperties := typeVisitor.visitObjectProperties(objectTypeDeclaration, true /* includeTags */, r.includeGenericOptionals)
 	r.dates = objectProperties.dates
 	r.literals = objectProperties.literals
+	r.extraProperties = objectTypeDeclaration.ExtraProperties
 	return nil
 }
 
@@ -2474,8 +2583,9 @@ func inlinedRequestBodyToObjectTypeDeclaration(inlinedRequestBody *ir.InlinedReq
 		}
 	}
 	return &ir.ObjectTypeDeclaration{
-		Extends:    inlinedRequestBody.Extends,
-		Properties: properties,
+		Extends:         inlinedRequestBody.Extends,
+		Properties:      properties,
+		ExtraProperties: inlinedRequestBody.ExtraProperties,
 	}
 }
 
@@ -2578,19 +2688,19 @@ func typeReferenceFromJsonResponse(
 	return nil
 }
 
-func typeReferenceFromStreamingResponseChunkType(
-	chunkType *ir.StreamingResponseChunkType,
-) *ir.TypeReference {
-	if chunkType == nil {
-		return nil
+func typeReferenceFromStreamingResponse(
+	streamingResponse *ir.StreamingResponse,
+) (*ir.TypeReference, error) {
+	if streamingResponse == nil {
+		return nil, nil
 	}
-	switch chunkType.Type {
+	switch streamingResponse.Type {
 	case "json":
-		return chunkType.Json
+		return streamingResponse.Json.Payload, nil
 	case "text":
-		return ir.NewTypeReferenceFromPrimitive(ir.PrimitiveTypeString)
+		return ir.NewTypeReferenceFromPrimitive(ir.PrimitiveTypeString), nil
 	}
-	return nil
+	return nil, fmt.Errorf("unsupported streaming response type: %s", streamingResponse.Type)
 }
 
 // needsRequestParameter returns true if the endpoint needs a request parameter in its

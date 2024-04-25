@@ -4,25 +4,22 @@ from __future__ import annotations
 
 import typing
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ...core.pydantic_utilities import pydantic_v1
 
 
-class Test_And(pydantic.BaseModel):
-    type: typing.Literal["and"]
+class Test_And(pydantic_v1.BaseModel):
+    type: typing.Literal["and"] = "and"
     value: bool
 
 
-class Test_Or(pydantic.BaseModel):
-    type: typing.Literal["or"]
+class Test_Or(pydantic_v1.BaseModel):
+    type: typing.Literal["or"] = "or"
     value: bool
 
 
 """
 from seed.examples import Test_And
 
-Test_And(type="and", value=True)
+Test_And(value=True)
 """
 Test = typing.Union[Test_And, Test_Or]

@@ -13,6 +13,7 @@ export const MapSchemaWithExample: core.serialization.ObjectSchema<
     .objectWithoutOptionalProperties({
         key: core.serialization.lazyObject(async () => (await import("../../..")).PrimitiveSchemaWithExample),
         value: core.serialization.lazy(async () => (await import("../../..")).SchemaWithExample),
+        example: core.serialization.unknown().optional(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSdkGroupName))
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithName))
@@ -22,5 +23,6 @@ export declare namespace MapSchemaWithExample {
     interface Raw extends serializers.WithSdkGroupName.Raw, serializers.WithName.Raw, serializers.WithDescription.Raw {
         key: serializers.PrimitiveSchemaWithExample.Raw;
         value: serializers.SchemaWithExample.Raw;
+        example?: unknown | null;
     }
 }

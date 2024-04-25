@@ -330,13 +330,8 @@ class EndpointFunctionGenerator:
                 context=self._context, endpoint=endpoint, is_async=is_async
             )
 
-            timeout_default = (
-                "None"
-                if self._context.custom_config.timeout_in_seconds == "infinity"
-                else f"{self._context.custom_config.timeout_in_seconds}"
-            )
             timeout = AST.Expression(
-                f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('timeout_in_seconds') if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None and {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('timeout_in_seconds') is not None else {timeout_default}"
+                f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('timeout_in_seconds') if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None and {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.get('timeout_in_seconds') is not None else self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.GET_TIMEOUT_METHOD_NAME}()"
             )
             files = (
                 request_body_parameters.get_files()
@@ -622,9 +617,11 @@ class EndpointFunctionGenerator:
             return AST.TypeHint.iterator(streaming_data_event_type_hint)
 
     def _get_streaming_response_data_type(self, streaming_response: ir_types.StreamingResponse) -> AST.TypeHint:
-        union = streaming_response.data_event_type.get_as_union()
+        union = streaming_response.get_as_union()
         if union.type == "json":
-            return self._context.pydantic_generator_context.get_type_hint_for_type_reference(union.json_)
+            return self._context.pydantic_generator_context.get_type_hint_for_type_reference(union.payload)
+        if union.type == "sse":
+            return self._context.pydantic_generator_context.get_type_hint_for_type_reference(union.payload)
         if union.type == "text":
             return AST.TypeHint.str_()
         raise RuntimeError(f"{union.type} streaming response is unsupported")
@@ -711,7 +708,14 @@ class EndpointFunctionGenerator:
             elif literal_header_value is not None and type(literal_header_value) is bool:
                 headers.append((header.name.wire_value, AST.Expression(f'"{str(literal_header_value).lower()}"')))
             else:
-                headers.append((header.name.wire_value, AST.Expression(f"str({get_parameter_name(header.name.name)})")))
+                headers.append(
+                    (
+                        header.name.wire_value,
+                        AST.Expression(
+                            f"str({get_parameter_name(header.name.name)}) if {get_parameter_name(header.name.name)} is not None else None"
+                        ),
+                    )
+                )
 
         def write_headers_dict_default(writer: AST.NodeWriter) -> None:
             writer.write("{")
@@ -853,8 +857,8 @@ class EndpointFunctionGenerator:
 
         return type_reference.visit(
             container=lambda container: container.visit(
-                list=lambda x: False,
-                set=lambda x: False,
+                list_=lambda x: False,
+                set_=lambda x: False,
                 optional=lambda item_type: allow_optional
                 and self._does_type_reference_match_primitives(
                     item_type,
@@ -862,7 +866,7 @@ class EndpointFunctionGenerator:
                     allow_optional=True,
                     allow_enum=allow_enum,
                 ),
-                map=lambda x: False,
+                map_=lambda x: False,
                 literal=lambda literal: literal.visit(
                     boolean=lambda x: ir_types.PrimitiveType.BOOLEAN in expected,
                     string=lambda x: ir_types.PrimitiveType.STRING in expected,

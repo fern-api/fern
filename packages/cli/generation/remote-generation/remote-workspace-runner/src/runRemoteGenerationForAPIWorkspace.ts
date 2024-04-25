@@ -1,8 +1,10 @@
 import { FernToken } from "@fern-api/auth";
 import { generatorsYml } from "@fern-api/configuration";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
+import { downloadSnippetsForTask } from "./downloadSnippetsForTask";
 import { runRemoteGenerationForGenerator } from "./runRemoteGenerationForGenerator";
 
 export interface RemoteGenerationForAPIWorkspaceResponse {
@@ -17,7 +19,8 @@ export async function runRemoteGenerationForAPIWorkspace({
     version,
     shouldLogS3Url,
     token,
-    whitelabel
+    whitelabel,
+    absolutePathToPreview
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -27,6 +30,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     shouldLogS3Url: boolean;
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
+    absolutePathToPreview: AbsoluteFilePath | undefined;
 }): Promise<RemoteGenerationForAPIWorkspaceResponse | null> {
     if (generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
@@ -48,10 +52,23 @@ export async function runRemoteGenerationForAPIWorkspace({
                     audiences: generatorGroup.audiences,
                     shouldLogS3Url,
                     token,
-                    whitelabel
+                    whitelabel,
+                    irVersionOverride: generatorInvocation.irVersionOverride,
+                    absolutePathToPreview
                 });
                 if (remoteTaskHandlerResponse != null && remoteTaskHandlerResponse.createdSnippets) {
                     snippetsProducedBy.push(generatorInvocation);
+
+                    if (
+                        generatorInvocation.absolutePathToLocalSnippets != null &&
+                        remoteTaskHandlerResponse.snippetsS3PreSignedReadUrl != null
+                    ) {
+                        await downloadSnippetsForTask({
+                            snippetsS3PreSignedReadUrl: remoteTaskHandlerResponse.snippetsS3PreSignedReadUrl,
+                            absolutePathToLocalSnippetJSON: generatorInvocation.absolutePathToLocalSnippets,
+                            context: interactiveTaskContext
+                        });
+                    }
                 }
             })
         )

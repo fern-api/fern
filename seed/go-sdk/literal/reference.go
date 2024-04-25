@@ -37,6 +37,7 @@ func (s *SendRequest) UnmarshalJSON(data []byte) error {
 	*s = SendRequest(unmarshaler.embed)
 	s.prompt = "You are a helpful assistant"
 	s.stream = false
+
 	s._rawJSON = json.RawMessage(data)
 	return nil
 }

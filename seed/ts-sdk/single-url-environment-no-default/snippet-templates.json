@@ -1,0 +1,25 @@
+[
+    {
+        "sdk": {
+            "package": "@fern/single-url-environment-no-default",
+            "version": "0.0.1",
+            "type": "typescript"
+        },
+        "endpointId": {
+            "path": "/dummy",
+            "method": "GET"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "const seedSingleUrlEnvironmentNoDefault = new SeedSingleUrlEnvironmentNoDefaultClient({ token: \"YOUR_TOKEN\" });\n",
+            "functionInvocation": {
+                "imports": [],
+                "templateString": "await seedSingleUrlEnvironmentNoDefault.dummy.getDummy()",
+                "isOptional": false,
+                "inputDelimiter": ",\n\t",
+                "templateInputs": [],
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

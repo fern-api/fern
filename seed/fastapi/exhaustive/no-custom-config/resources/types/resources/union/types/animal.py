@@ -5,14 +5,12 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
+import typing_extensions
+
 from ......core.datetime_utils import serialize_datetime
+from ......core.pydantic_utilities import pydantic_v1
 from .cat import Cat as resources_types_resources_union_types_cat_Cat
 from .dog import Dog as resources_types_resources_union_types_dog_Dog
-
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -25,7 +23,7 @@ class _Factory:
         return Animal(__root__=_Animal.Cat(**value.dict(exclude_unset=True), animal="cat"))
 
 
-class Animal(pydantic.BaseModel):
+class Animal(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(self) -> typing.Union[_Animal.Dog, _Animal.Cat]:
@@ -49,7 +47,9 @@ class Animal(pydantic.BaseModel):
                 )
             )
 
-    __root__: typing.Annotated[typing.Union[_Animal.Dog, _Animal.Cat], pydantic.Field(discriminator="animal")]
+    __root__: typing_extensions.Annotated[
+        typing.Union[_Animal.Dog, _Animal.Cat], pydantic_v1.Field(discriminator="animal")
+    ]
 
     def json(self, **kwargs: typing.Any) -> str:
         kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
@@ -60,20 +60,20 @@ class Animal(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _Animal:
     class Dog(resources_types_resources_union_types_dog_Dog):
-        animal: typing.Literal["dog"]
+        animal: typing.Literal["dog"] = "dog"
 
         class Config:
             allow_population_by_field_name = True
             populate_by_name = True
 
     class Cat(resources_types_resources_union_types_cat_Cat):
-        animal: typing.Literal["cat"]
+        animal: typing.Literal["cat"] = "cat"
 
         class Config:
             allow_population_by_field_name = True

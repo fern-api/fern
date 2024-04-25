@@ -10,7 +10,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Get details for a linked account.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -103,6 +103,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "AccountDetailsRetrieveRequest",
@@ -159,7 +160,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns the account token for the end user with the provided public token.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -277,6 +278,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "AccountTokenRetrieveRequest",
@@ -332,7 +334,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a list of models and actions available for an account.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -503,6 +505,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "AvailableActionsRetrieveRequest",
@@ -559,7 +562,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a list of \`BankInfo\` objects.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -625,6 +628,65 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "string",
                           "value": "a3617eb4-dfe3-426f-921e-a65fc1661e10",
                         },
+                      },
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
                       },
                       "id": {
                         "type": "primitive",
@@ -693,6 +755,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "BankInfoListRequest",
@@ -1162,7 +1225,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a \`BankInfo\` object with the given \`id\`.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -1227,25 +1290,55 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "field_mappings",
+                      "value": "organization_defined_targets",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
                               "type": "string",
-                              "value": "value",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
                             },
                           },
-                        },
-                      ],
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "linked_account_defined_targets",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
+                            },
+                          },
+                        ],
+                      },
                     },
                   },
                 ],
@@ -1312,6 +1405,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "BankInfoRetrieveRequest",
@@ -1478,7 +1572,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a list of \`Benefit\` objects.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -1555,6 +1649,65 @@ exports[`open api parser merge parse open api 1`] = `
                           "value": "2021-10-15 00:23:25.309761+00:00",
                         },
                       },
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "id": {
                         "type": "primitive",
                         "value": {
@@ -1622,6 +1775,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "BenefitsListRequest",
@@ -1928,7 +2082,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a \`Benefit\` object with the given \`id\`.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -2003,25 +2157,55 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "field_mappings",
+                      "value": "organization_defined_targets",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
                               "type": "string",
-                              "value": "value",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
                             },
                           },
-                        },
-                      ],
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "linked_account_defined_targets",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
+                            },
+                          },
+                        ],
+                      },
                     },
                   },
                 ],
@@ -2088,6 +2272,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "BenefitsRetrieveRequest",
@@ -2208,7 +2393,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a list of \`Company\` objects.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -2256,6 +2441,65 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "string",
                           "value": "Waystar Royco",
                         },
+                      },
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
                       },
                       "id": {
                         "type": "primitive",
@@ -2317,6 +2561,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CompaniesListRequest",
@@ -2576,7 +2821,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a \`Company\` object with the given \`id\`.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -2635,25 +2880,55 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "field_mappings",
+                      "value": "organization_defined_targets",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
                               "type": "string",
-                              "value": "value",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
                             },
                           },
-                        },
-                      ],
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "linked_account_defined_targets",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
+                            },
+                          },
+                        ],
+                      },
                     },
                   },
                 ],
@@ -2713,6 +2988,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "CompaniesRetrieveRequest",
@@ -2810,7 +3086,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Delete a linked account.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -2832,6 +3108,7 @@ exports[`open api parser merge parse open api 1`] = `
           "queryParameters": [],
           "request": null,
           "response": null,
+          "type": "full",
         },
       ],
       "generatedRequestName": "DeleteAccountCreateRequest",
@@ -2876,7 +3153,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a list of \`EmployeePayrollRun\` objects.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -2987,6 +3264,65 @@ exports[`open api parser merge parse open api 1`] = `
                           "value": "2020-11-09T00:00:00Z",
                         },
                       },
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "gross_pay": {
                         "type": "primitive",
                         "value": {
@@ -3092,6 +3428,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "EmployeePayrollRunsListRequest",
@@ -3544,7 +3881,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns an \`EmployeePayrollRun\` object with the given \`id\`.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -3610,6 +3947,65 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "string",
                           "value": "35347df1-95e7-46e2-93cc-66f1191edca5",
                         },
+                      },
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
                       },
                       "id": {
                         "type": "primitive",
@@ -3687,6 +4083,65 @@ exports[`open api parser merge parse open api 1`] = `
                           "value": "35347df1-95e7-46e2-93cc-66f1191edca5",
                         },
                       },
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "id": {
                         "type": "primitive",
                         "value": {
@@ -3761,25 +4216,55 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "field_mappings",
+                      "value": "organization_defined_targets",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
                               "type": "string",
-                              "value": "value",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
                             },
                           },
-                        },
-                      ],
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "linked_account_defined_targets",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
+                            },
+                          },
+                        ],
+                      },
                     },
                   },
                 ],
@@ -3883,6 +4368,65 @@ exports[`open api parser merge parse open api 1`] = `
                           "value": true,
                         },
                       },
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "id": {
                         "type": "primitive",
                         "value": {
@@ -3943,6 +4487,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "EmployeePayrollRunsRetrieveRequest",
@@ -4097,7 +4642,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a list of \`Employee\` objects.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -4181,6 +4726,65 @@ exports[`open api parser merge parse open api 1`] = `
                       "ethnicity": {
                         "type": "enum",
                         "value": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
+                      },
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
                       },
                       "first_name": {
                         "type": "primitive",
@@ -4355,6 +4959,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "EmployeesListRequest",
@@ -8532,7 +9137,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Creates an \`Employee\` object with the given values.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -8748,25 +9353,55 @@ exports[`open api parser merge parse open api 1`] = `
                       {
                         "key": {
                           "type": "string",
-                          "value": "field_mappings",
+                          "value": "organization_defined_targets",
                         },
                         "value": {
-                          "type": "map",
-                          "value": [
-                            {
-                              "key": {
-                                "type": "string",
-                                "value": "key",
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
+                          "type": "unknown",
+                          "value": {
+                            "type": "map",
+                            "value": [
+                              {
+                                "key": {
                                   "type": "string",
-                                  "value": "value",
+                                  "value": "custom_key",
+                                },
+                                "value": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "custom_value",
+                                  },
                                 },
                               },
-                            },
-                          ],
+                            ],
+                          },
+                        },
+                      },
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "linked_account_defined_targets",
+                        },
+                        "value": {
+                          "type": "unknown",
+                          "value": {
+                            "type": "map",
+                            "value": [
+                              {
+                                "key": {
+                                  "type": "string",
+                                  "value": "custom_key",
+                                },
+                                "value": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "custom_value",
+                                  },
+                                },
+                              },
+                            ],
+                          },
                         },
                       },
                     ],
@@ -8997,6 +9632,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "EmployeesCreateRequest",
@@ -9110,7 +9746,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns an \`Employee\` object with the given \`id\`.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -9234,25 +9870,55 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "field_mappings",
+                      "value": "organization_defined_targets",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
                               "type": "string",
-                              "value": "value",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
                             },
                           },
-                        },
-                      ],
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "linked_account_defined_targets",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
+                            },
+                          },
+                        ],
+                      },
                     },
                   },
                 ],
@@ -9437,6 +10103,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "EmployeesRetrieveRequest",
@@ -13039,7 +13706,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Ignores a specific row based on the \`model_id\` in the url. These records will have their properties set to null, and will not be updated in future syncs. The "reason" and "message" fields in the request body will be stored for audit purposes.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -13072,13 +13739,6 @@ exports[`open api parser merge parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
-              "message": {
-                "type": "primitive",
-                "value": {
-                  "type": "string",
-                  "value": "deletion request by user id 51903790-7dfe-4053-8d63-5a10cc4ffd39",
-                },
-              },
               "reason": {
                 "type": "enum",
                 "value": "GENERAL_CUSTOMER_REQUEST",
@@ -13087,6 +13747,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "object",
           },
           "response": null,
+          "type": "full",
         },
       ],
       "generatedRequestName": "EmployeesIgnoreCreateRequest",
@@ -13161,7 +13822,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns metadata for \`Employee\` POSTs.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -13278,6 +13939,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "EmployeesMetaPostRetrieveRequest",
@@ -13334,7 +13996,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a list of \`Employment\` objects.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -13393,6 +14055,65 @@ exports[`open api parser merge parse open api 1`] = `
                       "employment_type": {
                         "type": "enum",
                         "value": "FULL_TIME",
+                      },
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
                       },
                       "flsa_status": {
                         "type": "enum",
@@ -13484,6 +14205,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "EmploymentsListRequest",
@@ -14271,7 +14993,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns an \`Employment\` object with the given \`id\`.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -14329,25 +15051,55 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "field_mappings",
+                      "value": "organization_defined_targets",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
                               "type": "string",
-                              "value": "value",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
                             },
                           },
-                        },
-                      ],
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "linked_account_defined_targets",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
+                            },
+                          },
+                        ],
+                      },
                     },
                   },
                 ],
@@ -14437,6 +15189,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "EmploymentsRetrieveRequest",
@@ -14993,7 +15746,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Create a remote key.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -15033,6 +15786,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GenerateKeyCreateRequest",
@@ -15082,7 +15836,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a list of \`Group\` objects.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -15124,6 +15878,65 @@ exports[`open api parser merge parse open api 1`] = `
                 "value": [
                   {
                     "properties": {
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "id": {
                         "type": "primitive",
                         "value": {
@@ -15195,6 +16008,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GroupsListRequest",
@@ -15524,7 +16338,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a \`Group\` object with the given \`id\`.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -15564,25 +16378,55 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "field_mappings",
+                      "value": "organization_defined_targets",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
                               "type": "string",
-                              "value": "value",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
                             },
                           },
-                        },
-                      ],
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "linked_account_defined_targets",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
+                            },
+                          },
+                        ],
+                      },
                     },
                   },
                 ],
@@ -15653,6 +16497,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "GroupsRetrieveRequest",
@@ -15796,7 +16641,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Gets issues.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -15886,6 +16731,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "IssuesListRequest",
@@ -16250,7 +17096,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Get a specific issue.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -16356,6 +17202,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "IssuesRetrieveRequest",
@@ -16411,7 +17258,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Creates a link token to be used when linking a new end user.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -16481,6 +17328,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "LinkTokenCreateRequest",
@@ -16530,7 +17378,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "List linked accounts for your organization.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -16721,6 +17569,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "LinkedAccountsListRequest",
@@ -17156,7 +18005,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a list of \`Location\` objects.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -17208,6 +18057,65 @@ exports[`open api parser merge parse open api 1`] = `
                       "country": {
                         "type": "enum",
                         "value": "AF",
+                      },
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
                       },
                       "id": {
                         "type": "primitive",
@@ -17308,6 +18216,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "LocationsListRequest",
@@ -17613,7 +18522,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a \`Location\` object with the given \`id\`.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -17664,25 +18573,55 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "field_mappings",
+                      "value": "organization_defined_targets",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
                               "type": "string",
-                              "value": "value",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
                             },
                           },
-                        },
-                      ],
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "linked_account_defined_targets",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
+                            },
+                          },
+                        ],
+                      },
                     },
                   },
                 ],
@@ -17781,6 +18720,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "LocationsRetrieveRequest",
@@ -17924,7 +18864,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Pull data from an endpoint not currently supported by Merge.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -17968,25 +18908,33 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "headers",
+                      "value": "EXTRA-HEADER",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "Authorization",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "<redacted>",
+                        },
+                      },
                     },
                   },
                 ],
@@ -18029,25 +18977,17 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "response_headers",
+                      "value": "X-Page-Token",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
-                              "type": "string",
-                              "value": "value",
-                            },
-                          },
+                      "type": "unknown",
+                      "value": {
+                        "type": "primitive",
+                        "value": {
+                          "type": "string",
+                          "value": "value",
                         },
-                      ],
+                      },
                     },
                   },
                 ],
@@ -18066,6 +19006,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "PassthroughCreateRequest",
@@ -18134,7 +19075,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a list of \`PayGroup\` objects.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -18176,6 +19117,65 @@ exports[`open api parser merge parse open api 1`] = `
                 "value": [
                   {
                     "properties": {
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "id": {
                         "type": "primitive",
                         "value": {
@@ -18236,6 +19236,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "PayGroupsListRequest",
@@ -18495,7 +19496,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a \`PayGroup\` object with the given \`id\`.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -18535,25 +19536,55 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "field_mappings",
+                      "value": "organization_defined_targets",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
                               "type": "string",
-                              "value": "value",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
                             },
                           },
-                        },
-                      ],
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "linked_account_defined_targets",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
+                            },
+                          },
+                        ],
+                      },
                     },
                   },
                 ],
@@ -18613,6 +19644,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "PayGroupsRetrieveRequest",
@@ -18710,7 +19742,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a list of \`PayrollRun\` objects.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -18765,6 +19797,65 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "datetime",
                           "value": "2020-11-15T00:00:00Z",
                         },
+                      },
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
                       },
                       "id": {
                         "type": "primitive",
@@ -18834,6 +19925,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "PayrollRunsListRequest",
@@ -19382,7 +20474,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a \`PayrollRun\` object with the given \`id\`.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -19436,25 +20528,55 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "field_mappings",
+                      "value": "organization_defined_targets",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
                               "type": "string",
-                              "value": "value",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
                             },
                           },
-                        },
-                      ],
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "linked_account_defined_targets",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
+                            },
+                          },
+                        ],
+                      },
                     },
                   },
                 ],
@@ -19522,6 +20644,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "PayrollRunsRetrieveRequest",
@@ -19733,7 +20856,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Exchange remote keys.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -19773,6 +20896,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "RegenerateKeyCreateRequest",
@@ -19822,7 +20946,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Get a linked account's selective syncs.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -19839,7 +20963,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
-          "name": null,
+          "name": "Employees that started on or after January 1st, 2022",
           "pathParameters": [],
           "queryParameters": [],
           "request": null,
@@ -19908,6 +21032,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SelectiveSyncConfigurationsListRequest",
@@ -19971,7 +21096,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Replace a linked account's selective syncs.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -20075,6 +21200,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SelectiveSyncConfigurationsUpdateRequest",
@@ -20150,7 +21276,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Get metadata for the conditions available to a linked account.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -20167,7 +21293,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
-          "name": null,
+          "name": "Employees that started on or after January 1st, 2022",
           "pathParameters": [],
           "queryParameters": [],
           "request": null,
@@ -20282,6 +21408,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SelectiveSyncMetaListRequest",
@@ -20409,7 +21536,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Get syncing status. Possible values: \`DISABLED\`, \`DONE\`, \`FAILED\`, \`PARTIALLY_SYNCED\`, \`PAUSED\`, \`SYNCING\`",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -20502,6 +21629,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SyncStatusListRequest",
@@ -20605,7 +21733,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Force re-sync of all models. This is available for all organizations via the dashboard. Force re-sync is also available programmatically via API for monthly, quarterly, and highest sync frequency customers on the Core, Professional, or Enterprise plans. Doing so will consume a sync credit for the relevant linked account.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -20679,6 +21807,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "SyncStatusResyncCreateRequest",
@@ -20742,7 +21871,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a list of \`Team\` objects.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -20784,6 +21913,65 @@ exports[`open api parser merge parse open api 1`] = `
                 "value": [
                   {
                     "properties": {
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "id": {
                         "type": "primitive",
                         "value": {
@@ -20851,6 +22039,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "TeamsListRequest",
@@ -21157,7 +22346,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a \`Team\` object with the given \`id\`.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -21197,25 +22386,55 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "field_mappings",
+                      "value": "organization_defined_targets",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
                               "type": "string",
-                              "value": "value",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
                             },
                           },
-                        },
-                      ],
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "linked_account_defined_targets",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
+                            },
+                          },
+                        ],
+                      },
                     },
                   },
                 ],
@@ -21282,6 +22501,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "TeamsRetrieveRequest",
@@ -21402,7 +22622,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a list of \`TimeOff\` objects.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -21479,6 +22699,65 @@ exports[`open api parser merge parse open api 1`] = `
                           "value": "2020-11-17T00:00:00Z",
                         },
                       },
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "id": {
                         "type": "primitive",
                         "value": {
@@ -21551,6 +22830,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "TimeOffListRequest",
@@ -22312,7 +23592,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Creates a \`TimeOff\` object with the given values.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -22479,25 +23759,55 @@ exports[`open api parser merge parse open api 1`] = `
                       {
                         "key": {
                           "type": "string",
-                          "value": "field_mappings",
+                          "value": "organization_defined_targets",
                         },
                         "value": {
-                          "type": "map",
-                          "value": [
-                            {
-                              "key": {
-                                "type": "string",
-                                "value": "key",
-                              },
-                              "value": {
-                                "type": "primitive",
-                                "value": {
+                          "type": "unknown",
+                          "value": {
+                            "type": "map",
+                            "value": [
+                              {
+                                "key": {
                                   "type": "string",
-                                  "value": "value",
+                                  "value": "custom_key",
+                                },
+                                "value": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "custom_value",
+                                  },
                                 },
                               },
-                            },
-                          ],
+                            ],
+                          },
+                        },
+                      },
+                      {
+                        "key": {
+                          "type": "string",
+                          "value": "linked_account_defined_targets",
+                        },
+                        "value": {
+                          "type": "unknown",
+                          "value": {
+                            "type": "map",
+                            "value": [
+                              {
+                                "key": {
+                                  "type": "string",
+                                  "value": "custom_key",
+                                },
+                                "value": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "custom_value",
+                                  },
+                                },
+                              },
+                            ],
+                          },
                         },
                       },
                     ],
@@ -22615,6 +23925,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "TimeOffCreateRequest",
@@ -22728,7 +24039,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a list of \`TimeOffBalance\` objects.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -22783,6 +24094,65 @@ exports[`open api parser merge parse open api 1`] = `
                           "type": "string",
                           "value": "d2f972d0-2526-434b-9409-4c3b468e08f0",
                         },
+                      },
+                      "field_mappings": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "organization_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "linked_account_defined_targets",
+                            },
+                            "value": {
+                              "type": "unknown",
+                              "value": {
+                                "type": "map",
+                                "value": [
+                                  {
+                                    "key": {
+                                      "type": "string",
+                                      "value": "custom_key",
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "custom_value",
+                                      },
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          },
+                        ],
                       },
                       "id": {
                         "type": "primitive",
@@ -22848,6 +24218,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "TimeOffBalancesListRequest",
@@ -23300,7 +24671,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a \`TimeOffBalance\` object with the given \`id\`.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -23354,25 +24725,55 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "field_mappings",
+                      "value": "organization_defined_targets",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
                               "type": "string",
-                              "value": "value",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
                             },
                           },
-                        },
-                      ],
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "linked_account_defined_targets",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
+                            },
+                          },
+                        ],
+                      },
                     },
                   },
                 ],
@@ -23436,6 +24837,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "TimeOffBalancesRetrieveRequest",
@@ -23602,7 +25004,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a \`TimeOff\` object with the given \`id\`.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -23677,25 +25079,55 @@ exports[`open api parser merge parse open api 1`] = `
                   {
                     "key": {
                       "type": "string",
-                      "value": "field_mappings",
+                      "value": "organization_defined_targets",
                     },
                     "value": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "key",
-                          },
-                          "value": {
-                            "type": "primitive",
-                            "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
                               "type": "string",
-                              "value": "value",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
                             },
                           },
-                        },
-                      ],
+                        ],
+                      },
+                    },
+                  },
+                  {
+                    "key": {
+                      "type": "string",
+                      "value": "linked_account_defined_targets",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "value": {
+                        "type": "map",
+                        "value": [
+                          {
+                            "key": {
+                              "type": "string",
+                              "value": "custom_key",
+                            },
+                            "value": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "custom_value",
+                              },
+                            },
+                          },
+                        ],
+                      },
                     },
                   },
                 ],
@@ -23767,6 +25199,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "TimeOffRetrieveRequest",
@@ -24131,7 +25564,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns metadata for \`TimeOff\` POSTs.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -24248,6 +25681,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "TimeOffMetaPostRetrieveRequest",
@@ -24304,7 +25738,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Returns a list of \`WebhookReceiver\` objects.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -24356,6 +25790,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             ],
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "WebhookReceiversListRequest",
@@ -24419,7 +25854,7 @@ exports[`open api parser merge parse open api 1`] = `
       "authed": true,
       "availability": null,
       "description": "Creates a \`WebhookReceiver\` object with the given values.",
-      "errorStatusCode": [],
+      "errors": {},
       "examples": [
         {
           "codeSamples": [],
@@ -24484,6 +25919,7 @@ exports[`open api parser merge parse open api 1`] = `
             },
             "type": "object",
           },
+          "type": "full",
         },
       ],
       "generatedRequestName": "WebhookReceiversCreateRequest",
@@ -24548,8 +25984,8 @@ exports[`open api parser merge parse open api 1`] = `
       ],
     },
   ],
-  "errors": {},
   "globalHeaders": [],
+  "groups": {},
   "hasEndpointsMarkedInternal": false,
   "nonRequestReferencedSchemas": [
     "AccountDetails",

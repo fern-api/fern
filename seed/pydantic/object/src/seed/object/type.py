@@ -5,15 +5,11 @@ import typing
 import uuid
 
 from .core.datetime_utils import serialize_datetime
+from .core.pydantic_utilities import pydantic_v1
 from .name import Name
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class Type(pydantic.BaseModel):
+class Type(pydantic_v1.BaseModel):
     """
     Exercises all of the built-in types.
     ---
@@ -73,7 +69,7 @@ class Type(pydantic.BaseModel):
     ten: typing.List[int]
     eleven: typing.Set[float]
     twelve: typing.Dict[str, bool]
-    thirteen: typing.Optional[int]
+    thirteen: typing.Optional[int] = None
     fourteen: typing.Any
     fifteen: typing.List[typing.List[int]]
     sixteen: typing.List[typing.Dict[str, int]]
@@ -90,5 +86,5 @@ class Type(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.allow
+        extra = pydantic_v1.Extra.allow
         json_encoders = {dt.datetime: serialize_datetime}

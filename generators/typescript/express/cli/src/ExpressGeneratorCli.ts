@@ -21,7 +21,9 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
             treatUnknownAsAny: parsed?.treatUnknownAsAny ?? false,
             noSerdeLayer,
             outputEsm: parsed?.outputEsm ?? false,
-            outputSourceFiles: parsed?.outputSourceFiles ?? false
+            outputSourceFiles: parsed?.outputSourceFiles ?? false,
+            retainOriginalCasing: parsed?.retainOriginalCasing ?? false,
+            allowExtraFields: parsed?.allowExtraFields ?? false
         };
     }
 
@@ -53,7 +55,9 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
                 includeOtherInUnionTypes: customConfig.includeOtherInUnionTypes,
                 treatUnknownAsAny: customConfig.treatUnknownAsAny,
                 includeSerdeLayer: !customConfig.noSerdeLayer,
-                outputEsm: customConfig.outputEsm
+                outputEsm: customConfig.outputEsm,
+                retainOriginalCasing: customConfig.retainOriginalCasing,
+                allowExtraFields: customConfig.allowExtraFields
             }
         });
 

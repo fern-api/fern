@@ -12,7 +12,13 @@ import {
     SupportedSdkLanguage
 } from "@fern-api/ir-sdk";
 import { FernWorkspace } from "@fern-api/workspace-loader";
-import { isInlineRequestBody, RawSchemas, visitExampleCodeSampleSchema } from "@fern-api/yaml-schema";
+import {
+    isInlineRequestBody,
+    parseBytesRequest,
+    parseRawFileType,
+    RawSchemas,
+    visitExampleCodeSampleSchema
+} from "@fern-api/yaml-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
@@ -24,7 +30,8 @@ import {
     getOriginalTypeDeclarationForPropertyFromExtensions
 } from "../type-declarations/convertExampleType";
 import { getPropertyName } from "../type-declarations/convertObjectTypeDeclaration";
-import { getHeaderName, getQueryParameterName, resolvePathParameterOrThrow } from "./convertHttpService";
+import { getHeaderName, resolvePathParameterOrThrow } from "./convertHttpService";
+import { getQueryParameterName } from "./convertQueryParameter";
 
 export function convertExampleEndpointCall({
     service,
@@ -342,6 +349,11 @@ function convertExampleRequestBody({
     if (requestType == null) {
         return undefined;
     }
+    // (HACK: Skip bytes request example creation)
+    if (typeof requestType === "string" && parseBytesRequest(requestType) != null) {
+        return undefined;
+    }
+
     if (!isInlineRequestBody(requestType)) {
         return ExampleRequestBody.reference(
             convertTypeReferenceExample({
@@ -367,6 +379,14 @@ function convertExampleRequestBody({
     const exampleProperties: ExampleInlinedRequestBodyProperty[] = [];
     for (const [wireKey, propertyExample] of Object.entries(example.request)) {
         const inlinedRequestPropertyDeclaration = requestType.properties?.[wireKey];
+        const inilnedRequestPropertyType =
+            typeof inlinedRequestPropertyDeclaration === "string"
+                ? inlinedRequestPropertyDeclaration
+                : inlinedRequestPropertyDeclaration?.type;
+        if (inilnedRequestPropertyType != null && parseRawFileType(inilnedRequestPropertyType) != null) {
+            // HACK skip file properties
+            continue;
+        }
         if (inlinedRequestPropertyDeclaration != null) {
             exampleProperties.push({
                 name: file.casingsGenerator.generateNameAndWireValue({

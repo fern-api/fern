@@ -4,7 +4,7 @@
 
 import * as core from "../../../../core";
 import urlJoin from "url-join";
-import * as errors from "../../../../errors";
+import * as errors from "../../../../errors/index";
 
 export declare namespace Service {
     interface Options {
@@ -23,18 +23,19 @@ export class Service {
 
     public async post(
         serviceParam: string,
+        resourceParam: string,
         endpointParam: number,
         requestOptions?: Service.RequestOptions
     ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/test/${this._options.pathParam}/${serviceParam}/${endpointParam}`
+                `/test/${this._options.pathParam}/${serviceParam}/${endpointParam}/${resourceParam}`
             ),
             method: "POST",
             headers: {
                 "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Name": "@fern/api-wide-base-path",
                 "X-Fern-SDK-Version": "0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,

@@ -1,0 +1,203 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "API Documentation",
+    "version": "1.0"
+  },
+  "paths": {
+    "/v1/speech/{voice_id}": {
+      "post": {
+        "tags": [],
+        "summary": "speech",
+        "description": "speech",
+        "operationId": "speech_operation",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Voice Id"
+            },
+            "example": "1234",
+            "name": "voice_id",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "title": "An optional query param",
+              "default": 0
+            },
+            "name": "some_query_param",
+            "in": "query"
+          },
+          {
+            "description": "Your API key.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "an-api-key",
+              "description": "Your API key."
+            },
+            "name": "an-api-key",
+            "in": "header"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/SpeechBody"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "audio/mpeg": {}
+            }
+          }
+        }
+      }
+    },
+    "/v1/speech/{voice_id}/stream": {
+      "post": {
+        "tags": [],
+        "summary": "speech_stream",
+        "description": "speech_stream",
+        "operationId": "speech_stream_operation",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Voice Id"
+            },
+            "example": "1234",
+            "name": "voice_id",
+            "in": "path"
+          },
+          {
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "title": "An optional query param",
+              "default": 0
+            },
+            "name": "some_query_param",
+            "in": "query"
+          },
+          {
+            "description": "Your API key.",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "title": "an-api-key",
+              "description": "Your API key."
+            },
+            "name": "an-api-key",
+            "in": "header"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/SpeechBodyStream"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          }
+        }
+      }
+    },
+    "tags": []
+  },
+  "components": {
+    "schemas": {
+      "SpeechBody": {
+        "properties": {
+          "audio": {
+            "type": "string",
+            "format": "binary",
+            "title": "Audio",
+            "description": "The audio file."
+          },
+          "model_id": {
+            "type": "string",
+            "title": "Model Id",
+            "default": "model-1"
+          },
+          "voice_settings": {
+            "type": "string",
+            "title": "Voice Settings",
+            "description": "Voice settings."
+          }
+        },
+        "type": "object",
+        "required": [
+          "audio"
+        ],
+        "title": "SpeechBody"
+      },
+      "SpeechBodyStream": {
+        "properties": {
+          "audio": {
+            "type": "string",
+            "format": "binary",
+            "title": "Audio",
+            "description": "The audio file."
+          },
+          "model_id": {
+            "type": "string",
+            "title": "Model Id",
+            "default": "model-1"
+          },
+          "voice_settings": {
+            "type": "string",
+            "title": "Voice Settings",
+            "description": "Voice settings."
+          },
+          "my_enum": {
+            "type": "string",
+            "enum": [
+              "default",
+              "converting"
+            ],
+            "title": "my_enum"
+          },
+          "my_ref": {
+            "$ref": "#/components/schemas/request-model"
+          }
+        },
+        "type": "object",
+        "required": [
+          "audio"
+        ],
+        "title": "SpeechBodyStream"
+      },
+      "request-model": {
+        "properties": {
+          "voice_id": {
+            "type": "string",
+            "title": "Voice Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "voice_id"
+        ],
+        "title": "request-model"
+      }
+    }
+  }
+}

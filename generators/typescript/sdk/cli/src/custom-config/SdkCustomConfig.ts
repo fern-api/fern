@@ -23,4 +23,6 @@ export interface SdkCustomConfig {
     noOptionalProperties: boolean;
     includeApiReference: boolean | undefined;
     tolerateRepublish: boolean;
+    retainOriginalCasing: boolean | undefined;
+    allowExtraFields: boolean | undefined;
 }

@@ -1,0 +1,42 @@
+[
+    {
+        "sdk": {
+            "package": "fern_bytes",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/upload-content",
+            "method": "POST"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": "from seed.client import AsyncSeedBytes\n\nclient = AsyncSeedBytes(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n",
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "await client.service.upload(\n\t$FERN_INPUT\n)",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "request=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "BODY",
+                                    "path": null,
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        }
+    }
+]

@@ -21,7 +21,15 @@ export function convertAuth(auth: Ir.auth.ApiAuth): APIV1Write.ApiAuth | undefin
                 return {
                     type: "header",
                     headerWireValue: scheme.name.wireValue,
-                    nameOverride: scheme.name.name.originalName
+                    nameOverride: scheme.name.name.originalName,
+                    prefix: scheme.prefix
+                };
+            case "oauth":
+                // TODO: Add support oauth for FDR. For now, we just map
+                //       it to the default bearer auth.
+                return {
+                    type: "bearerAuth",
+                    tokenName: "token"
                 };
             default:
                 assertNever(scheme);

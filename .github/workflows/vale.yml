@@ -1,0 +1,23 @@
+name: reviewdog
+on: 
+  pull_request:
+    paths:
+      - 'fern/docs/pages/**'
+
+jobs:
+  vale:
+    name: runner / vale
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Retrieve changed files
+        id: files
+        uses: masesgroup/retrieve-changed-files@v2
+        with:
+          format: 'json'
+
+      - name: Run Vale
+        uses: errata-ai/vale-action@reviewdog
+        with:
+          files: ${{ steps.files.outputs.added_modified }}

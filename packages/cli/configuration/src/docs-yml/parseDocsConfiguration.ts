@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, isPlainObject } from "@fern-api/core-utils";
 import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
@@ -14,6 +14,7 @@ import {
     FontConfig,
     ImageReference,
     JavascriptConfig,
+    ParsedApiNavigationItem,
     ParsedDocsConfiguration,
     TabbedDocsNavigation,
     TypographyConfig,
@@ -338,6 +339,7 @@ async function getNavigationConfiguration({
                 context
             });
             versionedNavbars.push({
+                tabs: result.tabs,
                 version: version.displayName,
                 navigation,
                 availability: version.availability,
@@ -521,32 +523,50 @@ async function convertNavigationItem({
                 absolutePath: absolutePathToConfig,
                 rawUnresolvedFilepath: rawConfig.path
             }),
-            slug: rawConfig.slug ?? undefined
+            slug: rawConfig.slug,
+            icon: rawConfig.icon,
+            hidden: rawConfig.hidden
         };
     }
     if (isRawSectionConfig(rawConfig)) {
         return {
             type: "section",
             title: rawConfig.section,
+            icon: rawConfig.icon,
             contents: await Promise.all(
                 rawConfig.contents.map((item) =>
                     convertNavigationItem({ rawConfig: item, absolutePathToFernFolder, absolutePathToConfig, context })
                 )
             ),
             slug: rawConfig.slug ?? undefined,
-            collapsed: rawConfig.collapsed ?? undefined
+            collapsed: rawConfig.collapsed ?? undefined,
+            hidden: rawConfig.hidden ?? undefined,
+            skipUrlSlug: rawConfig.skipSlug ?? false
         };
     }
     if (isRawApiSectionConfig(rawConfig)) {
         return {
             type: "apiSection",
             title: rawConfig.api,
+            icon: rawConfig.icon,
             apiName: rawConfig.apiName ?? undefined,
             audiences:
                 rawConfig.audiences != null ? { type: "select", audiences: rawConfig.audiences } : { type: "all" },
             showErrors: rawConfig.displayErrors ?? false,
             snippetsConfiguration:
-                rawConfig.snippets != null ? convertSnippetsConfiguration({ rawConfig: rawConfig.snippets }) : undefined
+                rawConfig.snippets != null
+                    ? convertSnippetsConfiguration({ rawConfig: rawConfig.snippets })
+                    : undefined,
+            navigation: rawConfig.layout?.flatMap((item) => parseApiNavigationItem(item, absolutePathToConfig)) ?? [],
+            summaryAbsolutePath:
+                rawConfig.summary != null
+                    ? resolveFilepath({
+                          absolutePath: absolutePathToConfig,
+                          rawUnresolvedFilepath: rawConfig.summary
+                      })
+                    : undefined,
+            hidden: rawConfig.hidden ?? undefined,
+            skipUrlSlug: rawConfig.skipSlug ?? false
         };
     }
     if (isRawLinkConfig(rawConfig)) {
@@ -557,6 +577,41 @@ async function convertNavigationItem({
         };
     }
     assertNever(rawConfig);
+}
+
+function parseApiNavigationItem(
+    item: RawDocs.ApiNavigationItem,
+    absolutePathToConfig: AbsoluteFilePath
+): ParsedApiNavigationItem[] {
+    if (typeof item === "string") {
+        return [{ type: "item", value: item }];
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if (isRawPageConfig(item)) {
+        return [
+            {
+                type: "page",
+                title: item.page,
+                absolutePath: resolveFilepath({
+                    absolutePath: absolutePathToConfig,
+                    rawUnresolvedFilepath: item.path
+                }),
+                slug: item.slug,
+                icon: item.icon,
+                hidden: item.hidden
+            }
+        ];
+    }
+
+    return Object.entries(item).map(([key, values]): ParsedApiNavigationItem.Subpackage => {
+        return {
+            type: "subpackage",
+            subpackageId: key,
+            summaryAbsolutePath: undefined, // TODO: implement subpackage summary page
+            items: values.flatMap((value) => parseApiNavigationItem(value, absolutePathToConfig))
+        };
+    });
 }
 
 function convertSnippetsConfiguration({
@@ -572,9 +627,8 @@ function convertSnippetsConfiguration({
     };
 }
 
-function isRawPageConfig(item: RawDocs.NavigationItem): item is RawDocs.PageConfiguration {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (item as RawDocs.PageConfiguration).page != null;
+function isRawPageConfig(item: unknown): item is RawDocs.PageConfiguration {
+    return isPlainObject(item) && typeof item.page === "string" && typeof item.path === "string";
 }
 
 function isRawSectionConfig(item: RawDocs.NavigationItem): item is RawDocs.SectionConfiguration {

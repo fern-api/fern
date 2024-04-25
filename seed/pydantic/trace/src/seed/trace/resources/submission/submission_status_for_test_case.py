@@ -4,31 +4,27 @@ from __future__ import annotations
 
 import typing
 
+from ...core.pydantic_utilities import pydantic_v1
 from .test_case_grade import TestCaseGrade
 from .test_case_result_with_stdout import TestCaseResultWithStdout
 from .traced_test_case import TracedTestCase
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
-
 
 class SubmissionStatusForTestCase_Graded(TestCaseResultWithStdout):
-    type: typing.Literal["graded"]
+    type: typing.Literal["graded"] = "graded"
 
     class Config:
         allow_population_by_field_name = True
         populate_by_name = True
 
 
-class SubmissionStatusForTestCase_GradedV2(pydantic.BaseModel):
-    type: typing.Literal["gradedV2"]
+class SubmissionStatusForTestCase_GradedV2(pydantic_v1.BaseModel):
+    type: typing.Literal["gradedV2"] = "gradedV2"
     value: TestCaseGrade
 
 
 class SubmissionStatusForTestCase_Traced(TracedTestCase):
-    type: typing.Literal["traced"]
+    type: typing.Literal["traced"] = "traced"
 
     class Config:
         allow_population_by_field_name = True

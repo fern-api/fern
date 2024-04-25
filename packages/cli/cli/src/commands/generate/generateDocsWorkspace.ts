@@ -48,7 +48,7 @@ export async function generateDocsWorkspace({
             project.apiWorkspaces.map(async (workspace) => {
                 return workspace.type === "fern"
                     ? workspace
-                    : await convertOpenApiWorkspaceToFernWorkspace(workspace, context);
+                    : await convertOpenApiWorkspaceToFernWorkspace(workspace, context, true);
             })
         );
 

@@ -4,22 +4,18 @@ from __future__ import annotations
 
 import typing
 
+from ...core.pydantic_utilities import pydantic_v1
 from ..commons.problem_id import ProblemId
 from .create_problem_error import CreateProblemError
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
 
-
-class CreateProblemResponse_Success(pydantic.BaseModel):
-    type: typing.Literal["success"]
+class CreateProblemResponse_Success(pydantic_v1.BaseModel):
+    type: typing.Literal["success"] = "success"
     value: ProblemId
 
 
-class CreateProblemResponse_Error(pydantic.BaseModel):
-    type: typing.Literal["error"]
+class CreateProblemResponse_Error(pydantic_v1.BaseModel):
+    type: typing.Literal["error"] = "error"
     value: CreateProblemError
 
 

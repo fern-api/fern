@@ -1,17 +1,16 @@
 import { BLOCK_END } from "../../utils/RubyConstants";
 import { AstNode } from "../core/AstNode";
-import { Expression } from "../expressions/Expression";
 import { Import } from "../Import";
 
 export declare namespace RescueStatement {
     export interface Init extends AstNode.Init {
-        begin: Expression[];
-        rescue: Expression[];
+        begin: AstNode[];
+        rescue: AstNode[];
     }
 }
 export class RescueStatement extends AstNode {
-    public begin: Expression[];
-    public rescue: Expression[];
+    public begin: AstNode[];
+    public rescue: AstNode[];
 
     constructor({ begin, rescue, ...rest }: RescueStatement.Init) {
         super(rest);

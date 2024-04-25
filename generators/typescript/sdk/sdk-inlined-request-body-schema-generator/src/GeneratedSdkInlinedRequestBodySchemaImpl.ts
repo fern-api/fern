@@ -1,6 +1,6 @@
 import { HttpEndpoint, InlinedRequestBody, InlinedRequestBodyProperty } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratedSchema } from "@fern-typescript/abstract-schema-generator";
-import { getTextOfTsNode, PackageId, Reference, Zurg } from "@fern-typescript/commons";
+import { getSchemaOptions, getTextOfTsNode, PackageId, Reference, Zurg } from "@fern-typescript/commons";
 import { GeneratedSdkInlinedRequestBodySchema, SdkContext } from "@fern-typescript/contexts";
 import { ModuleDeclaration, ts } from "ts-morph";
 
@@ -10,6 +10,7 @@ export declare namespace GeneratedSdkInlinedRequestBodySchemaImpl {
         endpoint: HttpEndpoint;
         inlinedRequestBody: InlinedRequestBody;
         includeSerdeLayer: boolean;
+        allowExtraFields: boolean;
     }
 }
 
@@ -21,12 +22,14 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
     private endpoint: HttpEndpoint;
     private inlinedRequestBody: InlinedRequestBody;
     private includeSerdeLayer: boolean;
+    private allowExtraFields: boolean;
 
     constructor({
         packageId,
         endpoint,
         inlinedRequestBody,
         includeSerdeLayer,
+        allowExtraFields,
         ...superInit
     }: GeneratedSdkInlinedRequestBodySchemaImpl.Init) {
         super(superInit);
@@ -34,6 +37,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
         this.endpoint = endpoint;
         this.inlinedRequestBody = inlinedRequestBody;
         this.includeSerdeLayer = includeSerdeLayer;
+        this.allowExtraFields = allowExtraFields;
     }
 
     public writeToFile(context: SdkContext): void {
@@ -45,11 +49,9 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
             return referenceToParsedRequest;
         }
         return this.getReferenceToZurgSchema(context).jsonOrThrow(referenceToParsedRequest, {
-            unrecognizedObjectKeys: "strip",
-            allowUnrecognizedEnumValues: false,
-            allowUnrecognizedUnionMembers: false,
-            skipValidation: false,
-            breadcrumbsPrefix: []
+            ...getSchemaOptions({
+                allowExtraFields: this.allowExtraFields
+            })
         });
     }
 

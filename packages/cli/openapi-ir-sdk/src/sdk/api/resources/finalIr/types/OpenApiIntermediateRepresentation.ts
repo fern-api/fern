@@ -8,13 +8,14 @@ export interface OpenApiIntermediateRepresentation {
     title: string | undefined;
     description: string | undefined;
     servers: FernOpenapiIr.Server[];
+    /** Top level group information populated through `x-fern-groups`. */
+    groups: Record<string, FernOpenapiIr.SdkGroupInfo>;
     tags: FernOpenapiIr.Tags;
     hasEndpointsMarkedInternal: boolean;
     endpoints: FernOpenapiIr.Endpoint[];
     webhooks: FernOpenapiIr.Webhook[];
     channel: FernOpenapiIr.WebsocketChannel[];
     schemas: Record<FernOpenapiIr.SchemaId, FernOpenapiIr.Schema>;
-    errors: Record<FernOpenapiIr.StatusCode, FernOpenapiIr.HttpError>;
     variables: Record<string, FernOpenapiIr.PrimitiveSchema>;
     /** Whether the schema is directly referenced from a response, parameters, or other schemas */
     nonRequestReferencedSchemas: Set<FernOpenapiIr.SchemaId>;

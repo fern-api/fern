@@ -1,6 +1,8 @@
 import { BLOCK_END } from "../../utils/RubyConstants";
+import { Argument } from "../Argument";
 import { AstNode } from "../core/AstNode";
 import { Expression } from "../expressions/Expression";
+import { FunctionInvocation } from "../functions/FunctionInvocation";
 import { Function_ } from "../functions/Function_";
 import { Import } from "../Import";
 import { Property } from "../Property";
@@ -11,11 +13,14 @@ export declare namespace Class_ {
     export interface Init extends AstNode.Init {
         classReference: ClassReference;
         properties?: Property[];
+        protectedProperties?: Property[];
         functions?: Function_[];
         expressions?: Expression[];
         includeInitializer?: boolean;
+        initializerAdditionalExpressions?: Expression[];
         initializerOverride?: Function_;
         children?: AstNode | AstNode[];
+        shouldOmitOptionalFieldsInInitializer?: boolean;
     }
 }
 
@@ -27,6 +32,7 @@ export class Class_ extends AstNode {
     public classReference: ClassReference;
 
     public properties: Property[];
+    public protectedProperties: Property[];
     public functions: Function_[];
     public expressions: Expression[];
 
@@ -34,35 +40,44 @@ export class Class_ extends AstNode {
 
     public children: AstNode[];
 
+    private yardoc: Yardoc | undefined;
+
     constructor({
         classReference,
         initializerOverride,
         children,
         properties = [],
+        protectedProperties = [],
         functions = [],
         expressions = [],
         includeInitializer = true,
+        shouldOmitOptionalFieldsInInitializer = false,
+        initializerAdditionalExpressions = [],
         ...rest
     }: Class_.Init) {
         super(rest);
         this.classReference = classReference;
 
-        this.properties = properties;
+        this.properties = [...properties, ...protectedProperties];
+        this.protectedProperties = protectedProperties;
 
         if (includeInitializer) {
             this.initializer = new Function_({
                 name: "initialize",
-                parameters: properties.map((prop) => prop.toParameter({})),
+                parameters: properties.map((prop) =>
+                    prop.toParameter({ shouldOmitOptional: shouldOmitOptionalFieldsInInitializer })
+                ),
                 returnValue: classReference,
-                functionBody: properties.map((prop) => {
-                    const yardoc = new Yardoc({ reference: { name: "typeReference", type: prop } });
-                    return new Expression({
-                        leftSide: prop.toVariable(),
-                        rightSide: prop.name,
-                        isAssignment: true,
-                        yardoc
-                    });
-                }),
+                functionBody: [
+                    ...properties.map((prop) => {
+                        return new Expression({
+                            leftSide: prop.toVariable(),
+                            rightSide: prop.name,
+                            isAssignment: true
+                        });
+                    }),
+                    ...initializerAdditionalExpressions
+                ],
                 invocationName: "new"
             });
             functions = [this.initializer, ...functions];
@@ -73,24 +88,41 @@ export class Class_ extends AstNode {
         this.functions = functions;
         this.expressions = expressions;
         this.children = children instanceof AstNode ? [children] : children ?? [];
+
+        this.yardoc =
+            this.documentation != null
+                ? new Yardoc({ reference: { name: "universal", documentation: this.documentation } })
+                : undefined;
     }
 
     public writeInternal(startingTabSpaces: number): void {
-        this.documentation?.forEach((doc) =>
-            this.addText({ stringContent: doc, templateString: "# %s", startingTabSpaces })
-        );
+        this.addText({ stringContent: this.yardoc?.write({ startingTabSpaces }) });
         this.addText({ stringContent: this.classReference.name, templateString: "class %s", startingTabSpaces });
-        const classVariableAccessors =
-            this.properties.length > 0
-                ? `attr_reader ${this.properties.map((prop) => prop.write({})).join(", ")}`
+
+        for (const prop of this.properties) {
+            const yardoc = new Yardoc({ reference: { name: "typeReference", type: prop } });
+            this.addText({ stringContent: yardoc.write({ startingTabSpaces }) });
+            this.addText({
+                stringContent: prop.write({}),
+                startingTabSpaces: this.tabSizeSpaces + startingTabSpaces,
+                templateString: "attr_reader %s"
+            });
+        }
+        const protectedClassVariableAccessors =
+            this.protectedProperties.length > 0
+                ? `protected ${this.protectedProperties.map((prop) => prop.write({})).join(", ")}`
                 : undefined;
         this.addText({
-            stringContent: classVariableAccessors,
+            stringContent: protectedClassVariableAccessors,
             startingTabSpaces: this.tabSizeSpaces + startingTabSpaces
         });
+
+        this.addNewLine();
         this.expressions.map((exp) =>
             this.addText({ stringContent: exp.write({ startingTabSpaces: this.tabSizeSpaces + startingTabSpaces }) })
         );
+        this.addNewLine();
+
         this.functions.map((fun) =>
             this.addText({ stringContent: fun.write({ startingTabSpaces: this.tabSizeSpaces + startingTabSpaces }) })
         );
@@ -108,5 +140,18 @@ export class Class_ extends AstNode {
         this.children.forEach((child) => (imports = new Set([...imports, ...child.getImports()])));
         // Do not import self
         return new Set([...imports].filter((i) => i !== this.classReference.import_));
+    }
+
+    public generateSnippet(): string | AstNode | undefined {
+        return new FunctionInvocation({
+            baseFunction: this.initializer,
+            onObject: this.classReference.qualifiedName,
+            arguments_: this.initializer?.parameters
+                .map((param) => {
+                    const parameterValue = param.example;
+                    return parameterValue != null ? param.toArgument(parameterValue) : undefined;
+                })
+                .filter((arg): arg is Argument => arg != null)
+        });
     }
 }

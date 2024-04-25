@@ -5,12 +5,10 @@ from __future__ import annotations
 import datetime as dt
 import typing
 
-from ....core.datetime_utils import serialize_datetime
+import typing_extensions
 
-try:
-    import pydantic.v1 as pydantic  # type: ignore
-except ImportError:
-    import pydantic  # type: ignore
+from ....core.datetime_utils import serialize_datetime
+from ....core.pydantic_utilities import pydantic_v1
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -23,7 +21,7 @@ class _Factory:
         return UnionWithPrimitive(__root__=_UnionWithPrimitive.String(type="string", value=value))
 
 
-class UnionWithPrimitive(pydantic.BaseModel):
+class UnionWithPrimitive(pydantic_v1.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(self) -> typing.Union[_UnionWithPrimitive.Integer, _UnionWithPrimitive.String]:
@@ -35,8 +33,8 @@ class UnionWithPrimitive(pydantic.BaseModel):
         if self.__root__.type == "string":
             return string(self.__root__.value)
 
-    __root__: typing.Annotated[
-        typing.Union[_UnionWithPrimitive.Integer, _UnionWithPrimitive.String], pydantic.Field(discriminator="type")
+    __root__: typing_extensions.Annotated[
+        typing.Union[_UnionWithPrimitive.Integer, _UnionWithPrimitive.String], pydantic_v1.Field(discriminator="type")
     ]
 
     def json(self, **kwargs: typing.Any) -> str:
@@ -48,17 +46,17 @@ class UnionWithPrimitive(pydantic.BaseModel):
         return super().dict(**kwargs_with_defaults)
 
     class Config:
-        extra = pydantic.Extra.forbid
+        extra = pydantic_v1.Extra.forbid
         json_encoders = {dt.datetime: serialize_datetime}
 
 
 class _UnionWithPrimitive:
-    class Integer(pydantic.BaseModel):
-        type: typing.Literal["integer"]
+    class Integer(pydantic_v1.BaseModel):
+        type: typing.Literal["integer"] = "integer"
         value: int
 
-    class String(pydantic.BaseModel):
-        type: typing.Literal["string"]
+    class String(pydantic_v1.BaseModel):
+        type: typing.Literal["string"] = "string"
         value: str
 
 
