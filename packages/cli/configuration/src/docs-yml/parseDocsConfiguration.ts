@@ -646,7 +646,7 @@ function isRawLinkConfig(item: RawDocs.NavigationItem): item is RawDocs.LinkConf
     return (item as RawDocs.LinkConfiguration).link != null;
 }
 
-function convertImageReference({
+export function convertImageReference({
     rawImageReference,
     absoluteFilepathToDocsConfig
 }: {
