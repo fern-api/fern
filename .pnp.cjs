@@ -7421,7 +7421,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["jest", "virtual:816fb67d993b0978271f762d4ccbec7209ef2546c234ca6e241662d44336c8e32c1c3c07189cfe14b67974a4840e1ed140408a7403bf9deb68c1953445072efe#npm:29.7.0"],\
             ["lodash-es", "npm:4.17.21"],\
             ["mdast-util-from-markdown", "npm:2.0.0"],\
-            ["mdast-util-to-markdown", "npm:2.1.0"],\
             ["mime-types", "npm:2.1.35"],\
             ["organize-imports-cli", "npm:0.10.0"],\
             ["prettier", "npm:2.7.1"],\
@@ -21446,15 +21445,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["unist-util-is", "npm:5.2.1"]\
           ],\
           "linkType": "HARD"\
-        }],\
-        ["npm:4.1.0", {\
-          "packageLocation": "./.yarn/cache/mdast-util-phrasing-npm-4.1.0-30939ebbcd-3a97533e8a.zip/node_modules/mdast-util-phrasing/",\
-          "packageDependencies": [\
-            ["mdast-util-phrasing", "npm:4.1.0"],\
-            ["@types/mdast", "npm:4.0.3"],\
-            ["unist-util-is", "npm:6.0.0"]\
-          ],\
-          "linkType": "HARD"\
         }]\
       ]],\
       ["mdast-util-to-hast", [\
@@ -21486,21 +21476,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["mdast-util-to-string", "npm:3.2.0"],\
             ["micromark-util-decode-string", "npm:1.1.0"],\
             ["unist-util-visit", "npm:4.1.2"],\
-            ["zwitch", "npm:2.0.4"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
-        ["npm:2.1.0", {\
-          "packageLocation": "./.yarn/cache/mdast-util-to-markdown-npm-2.1.0-450939723c-3a2cf3957e.zip/node_modules/mdast-util-to-markdown/",\
-          "packageDependencies": [\
-            ["mdast-util-to-markdown", "npm:2.1.0"],\
-            ["@types/mdast", "npm:4.0.3"],\
-            ["@types/unist", "npm:3.0.2"],\
-            ["longest-streak", "npm:3.1.0"],\
-            ["mdast-util-phrasing", "npm:4.1.0"],\
-            ["mdast-util-to-string", "npm:4.0.0"],\
-            ["micromark-util-decode-string", "npm:2.0.0"],\
-            ["unist-util-visit", "npm:5.0.0"],\
             ["zwitch", "npm:2.0.4"]\
           ],\
           "linkType": "HARD"\
