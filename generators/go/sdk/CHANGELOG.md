@@ -7,6 +7,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## Unreleased -->
 
+## [0.20.2 - 2024-04-26]
+
+- Improvement: Enhance extra property serialization performance.
+- Improvement: Generate additional extra property tests into the SDK.
+- Fix: Resolve an non-deterministic key ordering issue for snippets of
+  type `unknown`.
+- Fix: Resolve an issue with discriminated union serialization. This
+  only occurs when the union varaint requires its own custom JSON
+  serialization strategy _and_ the union variant contains the same
+  properties as another object.
+
+  For example, consider the following union definition:
+
+  ```yaml
+  Circle:
+    properties:
+      created_at: datetime
+
+  Square:
+    properties:
+      created_at: datetime
+
+  Shape:
+    union:
+      circle: Circle
+      square: Square
+  ```
+
+  The generated `json.Marshaler` method now looks like the following, where
+  the discriminant is added directly to the serialized JSON object:
+
+  ```go
+  func (s Shape) MarshalJSON() ([]byte, error) {
+    if s.Circle != nil {
+      return core.MarshalJSONWithExtraProperty(s.Circle, "type", "circle")
+    }
+    if s.Square != nil {
+      return core.MarshalJSONWithExtraProperty(s.Square, "type", "square")
+    }
+    return nil, fmt.Errorf("type %T does not define a non-empty union type", s)
+  }
+  ```
+
 ## [0.20.1 - 2024-04-25]
 
 - Fix: The `omitempty` struct tag is now only used for nil-able types. It was

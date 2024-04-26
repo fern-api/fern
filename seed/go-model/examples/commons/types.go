@@ -138,14 +138,7 @@ func (e EventInfo) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "metadata":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*Metadata
-		}{
-			Type:     "metadata",
-			Metadata: e.Metadata,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(e.Metadata, "type", "metadata")
 	case "tag":
 		var marshaler = struct {
 			Type string `json:"type"`

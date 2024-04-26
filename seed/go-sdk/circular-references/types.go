@@ -247,14 +247,7 @@ func (f FieldValue) MarshalJSON() ([]byte, error) {
 		}
 		return json.Marshal(marshaler)
 	case "object_value":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*ObjectValue
-		}{
-			Type:        "object_value",
-			ObjectValue: f.ObjectValue,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(f.ObjectValue, "type", "object_value")
 	case "container_value":
 		var marshaler = struct {
 			Type           string          `json:"type"`

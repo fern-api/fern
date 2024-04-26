@@ -13,10 +13,10 @@ import (
 )
 
 var (
-	//go:embed sdk/core/extra_properties.go
+	//go:embed model/core/extra_properties.go
 	extraPropertiesFile string
 
-	//go:embed sdk/core/extra_properties_test.go
+	//go:embed model/core/extra_properties_test.go
 	extraPropertiesTestFile string
 
 	//go:embed model/core/stringer.go
@@ -455,6 +455,23 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		} else {
 			t.writer.P("if ", unionTypeValue, " != ", zeroValue, " {")
 		}
+
+		if unionType.Shape.PropertiesType == "samePropertiesAsObject" {
+			t.writer.P(
+				"return core.MarshalJSONWithExtraProperty(",
+				receiver,
+				".",
+				unionType.DiscriminantValue.Name.PascalCase.UnsafeName+", ",
+				fmt.Sprintf("%q", union.Discriminant.WireValue)+", ",
+				fmt.Sprintf("%q", unionType.DiscriminantValue.WireValue)+")",
+			)
+			if t.unionVersion == UnionVersionV1 {
+				// Close the if condition, if present.
+				t.writer.P("}")
+			}
+			continue
+		}
+
 		t.writer.P("var marshaler = struct {")
 		t.writer.P(discriminantName, " string `json:\"", union.Discriminant.WireValue, "\"`")
 		// Include all of the extended and base properties.
@@ -476,10 +493,11 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		case "singleProperty":
 			t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", singleUnionProperty.valueMarshalerGoType, jsonTagForType(unionType.Shape.SingleProperty.Name.WireValue, unionType.Shape.SingleProperty.Type, t.writer.types))
 		case "samePropertiesAsObject":
-			t.writer.P(typeName)
 		case "noProperties":
 			// For no properties, we always include the omitempty tag.
 			t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", typeName, " `json:\"", unionType.DiscriminantValue.WireValue, ",omitempty\"`")
+		default:
+			return fmt.Errorf("%q unions are not supported yet", unionType.Shape.PropertiesType)
 		}
 		// Set all of the values in the marshaler.
 		t.writer.P("}{")
@@ -495,11 +513,6 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, ": ", literalToValue(literal), ",")
 		} else {
 			marshalerFieldName := unionType.DiscriminantValue.Name.PascalCase.UnsafeName
-			if unionType.Shape.PropertiesType == "samePropertiesAsObject" {
-				// If the object is embedded, the field name is equivalent to
-				// the object's name, without any leading pointers.
-				marshalerFieldName = typeNameToFieldName(typeName)
-			}
 			marshalerFieldValue := fmt.Sprintf("%s.%s", receiver, unionType.DiscriminantValue.Name.PascalCase.UnsafeName)
 			if constructor := singleUnionProperty.valueMarshalerConstructor; constructor != "" {
 				marshalerFieldValue = fmt.Sprintf("%s(%s)", constructor, marshalerFieldValue)
@@ -1436,9 +1449,6 @@ func tagFormatForType(
 			return "%s:%q"
 		}
 	}
-	// TODO: Only optional types should include the omitempty tag.
-	//
-	// Ref: https://github.com/fern-api/fern/issues/2738
 	return `%s:"%s,omitempty"`
 }
 

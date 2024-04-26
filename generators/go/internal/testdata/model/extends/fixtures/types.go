@@ -95,18 +95,7 @@ func (n NestedUnion) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", n.Type, n)
 	case "one":
-		var marshaler = struct {
-			Type string `json:"type"`
-			Docs string `json:"docs" url:"docs"`
-			Raw  string `json:"raw" url:"raw"`
-			*ExampleType
-		}{
-			Type:        "one",
-			Docs:        n.Docs,
-			Raw:         n.Raw,
-			ExampleType: n.One,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(n.One, "type", "one")
 	}
 }
 
@@ -159,16 +148,7 @@ func (u Union) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "one":
-		var marshaler = struct {
-			Type string `json:"type"`
-			Docs string `json:"docs" url:"docs"`
-			*ExampleType
-		}{
-			Type:        "one",
-			Docs:        u.Docs,
-			ExampleType: u.One,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(u.One, "type", "one")
 	}
 }
 
