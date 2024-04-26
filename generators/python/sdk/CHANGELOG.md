@@ -5,12 +5,38 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.1-rc0] - 2024-04-26
+
+- Fix: Discriminated union variants that are objects now have inlined properties instead of
+  extending a base type.
+
+  ```python
+
+  Circle_Shape(pydantic_v1.BaseModel):
+    type: typing.Literal["circle"]
+    radius: integer
+
+  Square_Shape(pydantic_v1.BaseModel):
+    type: typing.Literal["circle"]
+    side: integer
+  ```
+
+  instead of
+
+  ```python
+  Circle_Shape(Circle):
+    type: typing.Literal["circle"]
+
+  Square_Shape(Square):
+    type: typing.Literal["circle"]
+  ```
+
 ## [1.4.0-rc3] - 2024-04-24
 
 - Fix: Set `mypy` dev depenency in generated `pyproject.toml` to `1.9.0`.
-       This prevents upstream `mypy` bugs from affecting user builds. Note that
-       this is only a dev dependency, so it does not affect the behavior of the
-       SDK.
+  This prevents upstream `mypy` bugs from affecting user builds. Note that
+  this is only a dev dependency, so it does not affect the behavior of the
+  SDK.
 - Fix: Temporarily disable unit test generation.
 - Improvement: Use named parameters for all `httpx` request params.
 
