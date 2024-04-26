@@ -593,3 +593,108 @@ description: >-
   },
 ]
 `;
+
+exports[`multimedia-file should replace all images with full path 2`] = `
+"### This is a markdown file
+
+![Image](my/docs/folder/image.png)
+
+<video controls>
+  <source src="my/docs/folder/video.mp4" type="video/mp4" />
+  Your browser does not support the video tag.
+</video>
+
+<Frame>
+
+![Image](../something/image.png)
+
+</Frame>
+
+<img src="my/another/Image.jpeg" />
+
+# embed of pdf
+
+<embed src="my/docs/folder/file.pdf" width="800px" height="2100px" />
+
+# code block
+
+\`\`\`tsx
+console.log(<img src="do/not/change/me.png">)
+\`\`\`
+"
+`;
+
+exports[`multimedia-file should replace all images with full path 3`] = `
+[
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "![Image](./image.png)
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "![Image](my/docs/folder/image.png)
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "  <source src="./video.mp4" type="video/mp4" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "  <source src="my/docs/folder/video.mp4" type="video/mp4" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "![Image](../../../../something/image.png)
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "![Image](../something/image.png)
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<img src="../../another/Image.jpeg" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<img src="my/another/Image.jpeg" />
+",
+  },
+  {
+    "added": undefined,
+    "count": 1,
+    "removed": true,
+    "value": "<embed src="./file.pdf" width="800px" height="2100px" />
+",
+  },
+  {
+    "added": true,
+    "count": 1,
+    "removed": undefined,
+    "value": "<embed src="my/docs/folder/file.pdf" width="800px" height="2100px" />
+",
+  },
+]
+`;

@@ -22,6 +22,16 @@ describe("parseImagePaths", () => {
             '"This is a test page with an image ![image](my/docs/folder/path/to/image.png)"'
         );
     });
+
+    it("should relativize image path that extends beyond the current directory", () => {
+        const page = "This is a test page with an image ![image](../../../../path/to/image.png)";
+        const result = parseImagePaths(MDX_PATH, page);
+        expect(result.filepaths).toEqual(["../path/to/image.png"]);
+        expect(result.markdown.trim()).toMatchInlineSnapshot(
+            '"This is a test page with an image ![image](../path/to/image.png)"'
+        );
+    });
+
     it("should return an array of image paths with multiple images", () => {
         const page =
             "This is a test page with an image ![image1](path/to/image1.png) and another image ![image2](path/to/image2.png)";
@@ -336,6 +346,28 @@ describe("bland", () => {
               "tutorials/pathwaylog_finetune.png",
               "tutorials/finetuned.png",
               "tutorials/finetune.png",
+            ]
+        `);
+        expect(result.markdown).toMatchSnapshot();
+        expect(diffLines(page, result.markdown).filter((page) => !!page.added || !!page.removed)).toMatchSnapshot();
+    });
+});
+
+describe("multimedia-file", () => {
+    it("should replace all images with full path", () => {
+        // ensure that the relative path is expected to not start with "./"
+        expect(relative(AbsoluteFilePath.of("/a/b/c/d"), AbsoluteFilePath.of("/a/b/e/f/g"))).toBe("../../e/f/g");
+        expect(relative(AbsoluteFilePath.of("/a/b/c/d"), AbsoluteFilePath.of("/a/b/c/d/e/f/g"))).toBe("e/f/g");
+
+        const page = fs.readFileSync(resolve(__dirname, "fixtures/multimedia-file.mdx"), "utf-8");
+        const result = parseImagePaths(MDX_PATH, page);
+        expect(result.filepaths).toMatchInlineSnapshot(`
+            [
+              "my/docs/folder/image.png",
+              "my/docs/folder/video.mp4",
+              "../something/image.png",
+              "my/another/Image.jpeg",
+              "my/docs/folder/file.pdf",
             ]
         `);
         expect(result.markdown).toMatchSnapshot();
