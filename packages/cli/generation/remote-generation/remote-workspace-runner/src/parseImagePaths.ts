@@ -45,7 +45,7 @@ export function parseImagePaths(
         const original = replacedContent.slice(start + offset, start + offset + length);
         let replaced = original;
         if (node.type === "image") {
-            const src = node.url as string;
+            const src = trimAnchor(node.url);
             if (typeof src === "string") {
                 const resolvedPath = resolvePath(src);
                 if (resolvedPath == null) {
@@ -62,8 +62,10 @@ export function parseImagePaths(
 
             let match;
             while ((match = srcRegex.exec(node.value)) != null) {
-                const [matchedSnippet, pathToImage] = match;
+                const matchedSnippet = match[0];
+                let pathToImage = match[1];
                 if (matchedSnippet != null && pathToImage != null) {
+                    pathToImage = trimAnchor(pathToImage);
                     const resolvedPath = resolvePath(pathToImage);
                     if (resolvedPath == null) {
                         return;
@@ -110,7 +112,7 @@ export function replaceImagePaths(markdown: string, fileIdsMap: Map<RelativeFile
             if (typeof src === "string") {
                 const fileId = fileIdsMap.get(RelativeFilePath.of(src));
                 if (fileId != null) {
-                    replaced = replaced.replace(src, fileId);
+                    replaced = replaced.replace(src, `file:${fileId}`);
                 }
             }
         }
@@ -120,11 +122,13 @@ export function replaceImagePaths(markdown: string, fileIdsMap: Map<RelativeFile
 
             let match;
             while ((match = srcRegex.exec(node.value)) != null) {
-                const [matchedSnippet, pathToImage] = match;
+                const matchedSnippet = match[0];
+                let pathToImage = match[1];
                 if (matchedSnippet != null && pathToImage != null) {
+                    pathToImage = trimAnchor(pathToImage);
                     const fileId = fileIdsMap.get(RelativeFilePath.of(pathToImage));
                     if (fileId != null) {
-                        replaced = replaced.replaceAll(pathToImage, fileId);
+                        replaced = replaced.replaceAll(pathToImage, `file:${fileId}`);
                     }
                 }
             }
@@ -162,4 +166,8 @@ function getPosition(
     }
 
     return { start, length };
+}
+
+function trimAnchor(text: string) {
+    return text.replace(/#.*$/, "");
 }

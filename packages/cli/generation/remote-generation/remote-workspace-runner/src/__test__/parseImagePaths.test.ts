@@ -303,6 +303,24 @@ describe("parseImagePaths", () => {
             "\"This is a test page with an image <img src={path + '/image.png'} /> <img src={'abc' + 'def.png'} />\""
         );
     });
+
+    it("should ignore anchors when replacing image paths", () => {
+        const page = "This is a test page with an image ![image](path/to/image.png#anchor)";
+        const result = parseImagePaths(MDX_PATH, page);
+        expect(result.filepaths).toEqual(["my/docs/folder/path/to/image.png"]);
+        expect(result.markdown.trim()).toMatchInlineSnapshot(
+            '"This is a test page with an image ![image](my/docs/folder/path/to/image.png#anchor)"'
+        );
+    });
+
+    it("should ignore anchors in html image tags", () => {
+        const page = "This is a test page with an image <img src='path/to/image.png#anchor' />";
+        const result = parseImagePaths(MDX_PATH, page);
+        expect(result.filepaths).toEqual(["my/docs/folder/path/to/image.png"]);
+        expect(result.markdown.trim()).toMatchInlineSnapshot(
+            "\"This is a test page with an image <img src='my/docs/folder/path/to/image.png#anchor' />\""
+        );
+    });
 });
 
 describe("replaceImagePaths", () => {
@@ -311,7 +329,27 @@ describe("replaceImagePaths", () => {
         const fileIds = new Map([[RelativeFilePath.of("path/to/image.png"), "fileID"]]);
         const result = replaceImagePaths(page, fileIds);
         expect(result).toMatchInlineSnapshot(`
-            "This is a test page with an image ![image](fileID)
+            "This is a test page with an image ![image](file:fileID)
+            "
+        `);
+    });
+
+    it("should ignore anchors when replacing image paths", () => {
+        const page = "This is a test page with an image ![image](path/to/image.png#anchor)";
+        const fileIds = new Map([[RelativeFilePath.of("path/to/image.png"), "fileID"]]);
+        const result = replaceImagePaths(page, fileIds);
+        expect(result).toMatchInlineSnapshot(`
+            "This is a test page with an image ![image](path/to/image.png#anchor)
+            "
+        `);
+    });
+
+    it("should ignore anchors when replacing image paths in img tag", () => {
+        const page = "This is a test page with an image <img src='path/to/image.png#anchor' />";
+        const fileIds = new Map([[RelativeFilePath.of("path/to/image.png"), "fileID"]]);
+        const result = replaceImagePaths(page, fileIds);
+        expect(result).toMatchInlineSnapshot(`
+            "This is a test page with an image <img src='file:fileID#anchor' />
             "
         `);
     });
