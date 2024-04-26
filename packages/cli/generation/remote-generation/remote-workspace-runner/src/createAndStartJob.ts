@@ -162,7 +162,7 @@ async function createJob({
                 return context.failAndThrow("API name is invalid: " + workspace.name);
             },
             illegalApiVersionError: () => {
-                return context.failAndThrow("API name is invalid: " + version);
+                return context.failAndThrow("API version is invalid: " + version);
             },
             cannotPublishToNpmScope: ({ validScope, invalidScope }) => {
                 return context.failAndThrow(
