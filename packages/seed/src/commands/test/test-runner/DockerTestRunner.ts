@@ -72,6 +72,7 @@ export class DockerTestRunner extends TestRunner {
             });
         } catch (e) {
             throw e;
+<<<<<<< HEAD
         } finally {
             await writeInputs({
                 absolutePathToOutput: outputDir,
@@ -88,10 +89,8 @@ export class DockerTestRunner extends TestRunner {
                 workspaceName: fernWorkspace.name,
                 context: taskContext
             });
+=======
+>>>>>>> f2c6168a1 ((internal, feat): add  mode to seed for running the generators directly from source)
         }
-    }
-
-    private getParsedDockerName(): ParsedDockerName {
-        return parseDockerOrThrow(this.generator.workspaceConfig.docker);
     }
 }

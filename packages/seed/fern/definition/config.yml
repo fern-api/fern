@@ -26,8 +26,12 @@ types:
   
   LocalBuildInfo: 
     properties: 
-      buildCommand: 
+      workingDirectory: 
         type: string
+        docs: | 
+          The working directory for the generator. 
+      buildCommand: 
+        type: list<string>
         docs: | 
           The command to build the generator locally. 
           `yarn workspace @fern-api/openapi-generator build` for example. 

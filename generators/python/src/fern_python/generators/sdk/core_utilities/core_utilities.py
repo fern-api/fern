@@ -118,7 +118,7 @@ class CoreUtilities:
     ) -> None:
         source = (
             os.path.join(os.path.dirname(__file__), "../../../../../core_utilities/sdk")
-            if "PYTEST_CURRENT_TEST" in os.environ
+            if "DOCKER" not in os.environ
             else "/assets/core_utilities"
         )
         SourceFileFactory.add_source_file_from_disk(

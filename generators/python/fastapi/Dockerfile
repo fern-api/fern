@@ -8,6 +8,7 @@ COPY poetry.lock ./poetry.lock
 COPY ./core_utilities/fastapi /assets/core_utilities
 COPY ./src ./src
 
+ENV DOCKER=true
 
 RUN pip3 install poetry &&\
   poetry config virtualenvs.create false &&\

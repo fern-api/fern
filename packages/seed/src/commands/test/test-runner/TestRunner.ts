@@ -4,11 +4,13 @@ import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { cp, mkdir, writeFile } from "fs/promises";
 import path from "path";
+import { writeInputs } from "../../../commands/rewrite-inputs/rewriteInputsForWorkspace";
 import { FixtureConfigurations, OutputMode } from "../../../config/api";
 import { GeneratorWorkspace } from "../../../loadGeneratorWorkspaces";
 import { Semaphore } from "../../../Semaphore";
 import { Stopwatch } from "../../../Stopwatch";
 import { convertGeneratorWorkspaceToFernWorkspace } from "../../../utils/convertSeedWorkspaceToFernWorkspace";
+import { ParsedDockerName, parseDockerOrThrow } from "../../../utils/parseDockerOrThrow";
 import { ScriptRunner } from "../ScriptRunner";
 import { TaskContextFactory } from "../TaskContextFactory";
 
@@ -123,6 +125,13 @@ export abstract class TestRunner {
                       RelativeFilePath.of(fixture),
                       RelativeFilePath.of(configuration.outputFolder)
                   );
+        const language = this.generator.workspaceConfig.language;
+        const outputVersion = configuration?.outputVersion;
+        const customConfig = configuration?.customConfig;
+        const publishConfig = configuration?.publishConfig;
+        const outputMode = configuration?.outputMode ?? this.generator.workspaceConfig.defaultOutputMode;
+        const irVersion = this.generator.workspaceConfig.irVersion;
+        const publishMetadata = configuration?.publishMetadata ?? undefined;
         const fernWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
             absolutePathToAPIDefinition,
             taskContext,
@@ -151,19 +160,19 @@ export abstract class TestRunner {
                     absolutePathToFernDefinition: absolutePathToAPIDefinition,
                     fernWorkspace,
                     absolutePathToWorkspace: this.generator.absolutePathToWorkspace,
-                    irVersion: this.generator.workspaceConfig.irVersion,
-                    outputVersion: configuration?.outputVersion,
-                    language: this.generator.workspaceConfig.language,
+                    irVersion,
+                    outputVersion,
+                    language,
                     selectAudiences: configuration?.audiences,
                     fixture,
-                    customConfig: configuration?.customConfig,
-                    publishConfig: configuration?.publishConfig ?? undefined,
+                    customConfig,
+                    publishConfig,
                     taskContext,
                     outputDir,
-                    outputMode: configuration?.outputMode ?? this.generator.workspaceConfig.defaultOutputMode,
+                    outputMode,
                     outputFolder,
                     keepDocker: this.keepDocker,
-                    publishMetadata: configuration?.publishMetadata ?? undefined
+                    publishMetadata
                 });
                 generationStopwatch.stop();
                 metrics.generationTime = generationStopwatch.duration();
@@ -181,6 +190,22 @@ export abstract class TestRunner {
                     outputFolder,
                     metrics
                 };
+            } finally {
+                writeInputs({
+                    absolutePathToOutput: outputDir,
+                    fernWorkspace,
+                    taskContext,
+                    docker: this.getParsedDockerName(),
+                    language,
+                    customConfig,
+                    publishConfig,
+                    outputMode,
+                    fixtureName: fixture,
+                    irVersion,
+                    publishMetadata,
+                    workspaceName: fernWorkspace.name,
+                    context: taskContext
+                });
             }
 
             if (this.skipScripts) {
@@ -224,6 +249,10 @@ export abstract class TestRunner {
      *
      */
     public abstract runGenerator({}: TestRunner.DoRunArgs): Promise<void>;
+
+    protected getParsedDockerName(): ParsedDockerName {
+        return parseDockerOrThrow(this.generator.workspaceConfig.docker);
+    }
 }
 
 // Copy Fern definition to output directory
