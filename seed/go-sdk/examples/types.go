@@ -215,14 +215,7 @@ func (e Exception) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", e.Type, e)
 	case "generic":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*ExceptionInfo
-		}{
-			Type:          "generic",
-			ExceptionInfo: e.Generic,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(e.Generic, "type", "generic")
 	case "timeout":
 		var marshaler = struct {
 			Type    string      `json:"type"`

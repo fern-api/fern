@@ -127,14 +127,7 @@ func (u Union) MarshalJSON() ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
 	case "fooAlias":
-		var marshaler = struct {
-			Type string `json:"type"`
-			*Foo
-		}{
-			Type: "fooAlias",
-			Foo:  u.FooAlias,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(u.FooAlias, "type", "fooAlias")
 	case "barAlias":
 		var marshaler = struct {
 			Type     string   `json:"type"`

@@ -213,16 +213,7 @@ func (u UnionWithBaseProperties) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	}
 	if u.Foo != nil {
-		var marshaler = struct {
-			Type string `json:"type"`
-			Id   string `json:"id"`
-			*Foo
-		}{
-			Type: "foo",
-			Id:   u.Id,
-			Foo:  u.Foo,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(u.Foo, "type", "foo")
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
 }
@@ -660,14 +651,7 @@ func (u *UnionWithUnknown) UnmarshalJSON(data []byte) error {
 
 func (u UnionWithUnknown) MarshalJSON() ([]byte, error) {
 	if u.Foo != nil {
-		var marshaler = struct {
-			Type string `json:"type"`
-			*Foo
-		}{
-			Type: "foo",
-			Foo:  u.Foo,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(u.Foo, "type", "foo")
 	}
 	if u.Unknown != nil {
 		var marshaler = struct {
@@ -731,24 +715,10 @@ func (u *UnionWithoutKey) UnmarshalJSON(data []byte) error {
 
 func (u UnionWithoutKey) MarshalJSON() ([]byte, error) {
 	if u.Foo != nil {
-		var marshaler = struct {
-			Type string `json:"type"`
-			*Foo
-		}{
-			Type: "foo",
-			Foo:  u.Foo,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(u.Foo, "type", "foo")
 	}
 	if u.Bar != nil {
-		var marshaler = struct {
-			Type string `json:"type"`
-			*Bar
-		}{
-			Type: "bar",
-			Bar:  u.Bar,
-		}
-		return json.Marshal(marshaler)
+		return core.MarshalJSONWithExtraProperty(u.Bar, "type", "bar")
 	}
 	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
 }
