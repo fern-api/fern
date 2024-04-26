@@ -1,5 +1,5 @@
 {
-    "irFilepath": "./ir.json",
+    "irFilepath": "/fern/ir.json",
     "output": {
         "mode": {
             "repoUrl": "https://github.com/auth-environment-variables/fern",
@@ -12,7 +12,8 @@
             },
             "type": "github"
         },
-        "path": "../"
+        "path": "/fern/output",
+        "snippetFilepath": "/fern/snippet.json"
     },
     "workspaceName": "auth-environment-variables",
     "organization": "seed",

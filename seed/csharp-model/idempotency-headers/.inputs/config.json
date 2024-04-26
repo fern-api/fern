@@ -1,12 +1,13 @@
 {
-    "irFilepath": "./ir.json",
+    "irFilepath": "/fern/ir.json",
     "output": {
         "mode": {
             "repoUrl": "https://github.com/idempotency-headers/fern",
             "version": "0.0.1",
             "type": "github"
         },
-        "path": "../"
+        "path": "/fern/output",
+        "snippetFilepath": "/fern/snippet.json"
     },
     "workspaceName": "idempotency-headers",
     "organization": "seed",

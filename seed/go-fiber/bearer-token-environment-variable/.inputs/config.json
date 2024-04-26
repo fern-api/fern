@@ -1,12 +1,13 @@
 {
-    "irFilepath": "./ir.json",
+    "irFilepath": "/fern/ir.json",
     "output": {
         "mode": {
             "repoUrl": "https://github.com/bearer-token-environment-variable/fern",
             "version": "0.0.1",
             "type": "github"
         },
-        "path": "../"
+        "path": "/fern/output",
+        "snippetFilepath": "/fern/snippet.json"
     },
     "workspaceName": "bearer-token-environment-variable",
     "organization": "seed",

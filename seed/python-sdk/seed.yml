@@ -7,7 +7,7 @@ defaultOutputMode: github
 local: 
   workingDirectory: generators/python
   buildCommand: 
-    - poetry install
+    - echo built
   runCommand: poetry run python -m src.fern_python.generators.sdk.cli
 fixtures:
   examples: 

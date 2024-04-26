@@ -1,10 +1,10 @@
 {
-    "irFilepath": "./ir.json",
+    "irFilepath": "/fern/ir.json",
     "output": {
         "mode": {
             "type": "downloadFiles"
         },
-        "path": "../"
+        "path": "/fern/output"
     },
     "workspaceName": "literal",
     "organization": "seed",

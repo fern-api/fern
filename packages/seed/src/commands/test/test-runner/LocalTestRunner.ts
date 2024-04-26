@@ -1,3 +1,4 @@
+import { SNIPPET_JSON_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, moveFolder, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -84,7 +85,8 @@ export class LocalTestRunner extends TestRunner {
             irFilepath: join(outputDir, RelativeFilePath.of(INPUTS_DIRECTORY_NAME), RelativeFilePath.of("ir.json")),
             output: {
                 ...generatorConfig.output,
-                path: localOutputDir
+                path: localOutputDir,
+                snippetFilepath: join(localOutputDir, RelativeFilePath.of(SNIPPET_JSON_FILENAME))
             }
         };
     }

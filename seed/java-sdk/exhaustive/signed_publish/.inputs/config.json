@@ -1,5 +1,5 @@
 {
-    "irFilepath": "./ir.json",
+    "irFilepath": "/fern/ir.json",
     "output": {
         "mode": {
             "repoUrl": "https://github.com/exhaustive/fern",
@@ -18,13 +18,14 @@
             },
             "type": "github"
         },
-        "path": "../",
+        "path": "/fern/output",
         "publishingMetadata": {
             "packageDescription": "My very good and lengthy description",
             "publisherEmail": "me@gmail.com",
             "publisherName": "Fern",
             "referenceUrl": "https://buildwithfern.com"
-        }
+        },
+        "snippetFilepath": "/fern/snippet.json"
     },
     "workspaceName": "exhaustive",
     "organization": "seed",

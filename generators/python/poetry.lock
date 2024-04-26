@@ -213,18 +213,28 @@ url = "https://pypi.buildwithfern.com"
 reference = "fern-prod"
 
 [[package]]
+<<<<<<< HEAD
 name = "fern-fern-ir-v39"
 version = "0.0.3473"
+=======
+name = "fern-fern-ir-v38"
+version = "38.1.2"
+>>>>>>> 7a50893ca (fix)
 description = ""
 optional = false
-python-versions = ">=3.8,<4.0"
+python-versions = ">=3.7,<4.0"
 files = [
+<<<<<<< HEAD
     {file = "fern_fern_ir_v39-0.0.3473-py3-none-any.whl", hash = "sha256:bb588b20b612b7efe7a1368ac491f25f1510aa60ffebebbc8a8d2da0930f415b"},
     {file = "fern_fern_ir_v39-0.0.3473.tar.gz", hash = "sha256:ef3a63831082cea903af84341fd4223d65a6d228c639e1d125feedc4df50782b"},
+=======
+    {file = "fern_fern_ir_v38-38.1.2-py3-none-any.whl", hash = "sha256:6dcad9f42b63597806694725aff5169b99b452143f0e88a721d6cefe7b021b03"},
+    {file = "fern_fern_ir_v38-38.1.2.tar.gz", hash = "sha256:6877629c8087e3916196654d08cc96b7f849ca610e8e75fe13c9185d1fecb8ff"},
+>>>>>>> 7a50893ca (fix)
 ]
 
 [package.dependencies]
-pydantic = ">=1.9.2"
+pydantic = ">=1.9.2,<2.0.0"
 
 [package.source]
 type = "legacy"
@@ -960,4 +970,8 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
+<<<<<<< HEAD
 content-hash = "ced96bc93334ad99c4cd8ec7d6975ee3530013976e09ce58d18a461fca94f8c7"
+=======
+content-hash = "ad57c9d3a4ea43640f0dbca65ade56609e798cc68c75c8f8ccf2ab237dc8ead6"
+>>>>>>> 7a50893ca (fix)

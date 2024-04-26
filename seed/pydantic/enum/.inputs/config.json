@@ -1,5 +1,5 @@
 {
-    "irFilepath": "./ir.json",
+    "irFilepath": "/fern/ir.json",
     "output": {
         "mode": {
             "repoUrl": "https://github.com/enum/fern",
@@ -13,7 +13,8 @@
             },
             "type": "github"
         },
-        "path": "../"
+        "path": "/fern/output",
+        "snippetFilepath": "/fern/snippet.json"
     },
     "workspaceName": "enum",
     "organization": "seed",
