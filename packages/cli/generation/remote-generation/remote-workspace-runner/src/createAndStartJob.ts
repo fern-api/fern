@@ -161,6 +161,9 @@ async function createJob({
             illegalApiNameError: () => {
                 return context.failAndThrow("API name is invalid: " + workspace.name);
             },
+            illegalApiVersionError: () => {
+                return context.failAndThrow("API name is invalid: " + version);
+            },
             cannotPublishToNpmScope: ({ validScope, invalidScope }) => {
                 return context.failAndThrow(
                     `You do not have permission to publish to ${invalidScope} (expected ${validScope})`
