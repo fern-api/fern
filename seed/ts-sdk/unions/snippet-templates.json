@@ -85,15 +85,15 @@
                                         "members": {
                                             "circle": {
                                                 "imports": [],
-                                                "templateString": "{ \n\t\ttype : \"circle\", \n\t\t$FERN_INPUT\n\t}",
+                                                "templateString": "{ \n\t\t\ttype : \"circle\", \n\t\t\t$FERN_INPUT\n\t\t}",
                                                 "isOptional": true,
                                                 "templateInputs": [
                                                     {
                                                         "value": {
                                                             "imports": [],
-                                                            "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
+                                                            "templateString": "{\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
                                                             "isOptional": true,
-                                                            "inputDelimiter": ",\n\t\t\t",
+                                                            "inputDelimiter": ",\n\t\t\t\t",
                                                             "templateInputs": [
                                                                 {
                                                                     "value": {
@@ -121,15 +121,15 @@
                                             },
                                             "square": {
                                                 "imports": [],
-                                                "templateString": "{ \n\t\ttype : \"square\", \n\t\t$FERN_INPUT\n\t}",
+                                                "templateString": "{ \n\t\t\ttype : \"square\", \n\t\t\t$FERN_INPUT\n\t\t}",
                                                 "isOptional": true,
                                                 "templateInputs": [
                                                     {
                                                         "value": {
                                                             "imports": [],
-                                                            "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
+                                                            "templateString": "{\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
                                                             "isOptional": true,
-                                                            "inputDelimiter": ",\n\t\t\t",
+                                                            "inputDelimiter": ",\n\t\t\t\t",
                                                             "templateInputs": [
                                                                 {
                                                                     "value": {
