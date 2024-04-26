@@ -1,3 +1,4 @@
+/* eslint-disable jest/expect-expect */
 import { AbsoluteFilePath, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { diffLines } from "diff";
 import fs from "fs";
@@ -355,60 +356,37 @@ describe("replaceImagePaths", () => {
     });
 });
 
+function testMdxFixture(filename: string) {
+    const page = fs.readFileSync(resolve(__dirname, `fixtures/${filename}`), "utf-8");
+    const result = parseImagePaths(MDX_PATH, page);
+    expect(result.filepaths).toMatchSnapshot();
+    // expect(result.markdown).toMatchSnapshot();
+    expect(diffLines(page, result.markdown).filter((page) => !!page.added || !!page.removed)).toMatchSnapshot();
+    const replaced = replaceImagePaths(
+        result.markdown,
+        new Map(result.filepaths.map((path) => [RelativeFilePath.of(path), "123e4567-e89b-12d3-a456-426655440000"]))
+    );
+    expect(diffLines(page, replaced).filter((page) => !!page.added || !!page.removed)).toMatchSnapshot();
+}
+
 describe("bland", () => {
     it("should replace all images with full path", () => {
         // ensure that the relative path is expected to not start with "./"
         expect(relative(AbsoluteFilePath.of("/a/b/c/d"), AbsoluteFilePath.of("/a/b/e/f/g"))).toBe("../../e/f/g");
         expect(relative(AbsoluteFilePath.of("/a/b/c/d"), AbsoluteFilePath.of("/a/b/c/d/e/f/g"))).toBe("e/f/g");
 
-        const page = fs.readFileSync(resolve(__dirname, "fixtures/bland.mdx"), "utf-8");
-        const result = parseImagePaths(MDX_PATH, page);
-        expect(result.filepaths).toMatchInlineSnapshot(`
-            [
-              "tutorials/node.png",
-              "tutorials/new_pathway.png",
-              "tutorials/final_pathway.png",
-              "tutorials/pathway_label.png",
-              "tutorials/condition_eg.png",
-              "tutorials/global_node.png",
-              "tutorials/global_eg.png",
-              "tutorials/default_node.png",
-              "tutorials/transfer_node.png",
-              "tutorials/end_node.png",
-              "tutorials/kb_node.png",
-              "tutorials/webhook_node.png",
-              "tutorials/add_global_prompt.png",
-              "tutorials/live_call_logs.png",
-              "tutorials/pathway_chat.png",
-              "tutorials/extract_variables.png",
-              "tutorials/pathwaylog_finetune.png",
-              "tutorials/finetuned.png",
-              "tutorials/finetune.png",
-            ]
-        `);
-        expect(result.markdown).toMatchSnapshot();
-        expect(diffLines(page, result.markdown).filter((page) => !!page.added || !!page.removed)).toMatchSnapshot();
+        testMdxFixture("bland.mdx");
     });
 });
 
 describe("multimedia-file", () => {
     it("should replace all images with full path", () => {
-        // ensure that the relative path is expected to not start with "./"
-        expect(relative(AbsoluteFilePath.of("/a/b/c/d"), AbsoluteFilePath.of("/a/b/e/f/g"))).toBe("../../e/f/g");
-        expect(relative(AbsoluteFilePath.of("/a/b/c/d"), AbsoluteFilePath.of("/a/b/c/d/e/f/g"))).toBe("e/f/g");
+        testMdxFixture("multimedia-file.mdx");
+    });
+});
 
-        const page = fs.readFileSync(resolve(__dirname, "fixtures/multimedia-file.mdx"), "utf-8");
-        const result = parseImagePaths(MDX_PATH, page);
-        expect(result.filepaths).toMatchInlineSnapshot(`
-            [
-              "my/docs/folder/image.png",
-              "my/docs/folder/video.mp4",
-              "../something/image.png",
-              "my/another/Image.jpeg",
-              "my/docs/folder/file.pdf",
-            ]
-        `);
-        expect(result.markdown).toMatchSnapshot();
-        expect(diffLines(page, result.markdown).filter((page) => !!page.added || !!page.removed)).toMatchSnapshot();
+describe("zep", () => {
+    it("should replace all images with full path", () => {
+        testMdxFixture("zep.mdx");
     });
 });
