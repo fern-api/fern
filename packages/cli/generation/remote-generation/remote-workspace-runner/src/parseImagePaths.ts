@@ -93,8 +93,8 @@ function isExternalUrl(url: string): boolean {
  * In the frontend, the fileIDs are then used to securely fetch the images.
  */
 export function replaceImagePaths(markdown: string, fileIdsMap: Map<RelativeFilePath, string>): string {
-    const matter = grayMatter(markdown);
-    let { content } = matter;
+    const { content, data } = grayMatter(markdown);
+    let replacedContent = content;
 
     const tree = fromMarkdown(content);
 
@@ -104,8 +104,8 @@ export function replaceImagePaths(markdown: string, fileIdsMap: Map<RelativeFile
         if (node.position == null) {
             return;
         }
-        const { start, length } = getPosition(markdown, node.position);
-        const original = markdown.slice(start + offset, start + offset + length);
+        const { start, length } = getPosition(content, node.position);
+        const original = replacedContent.slice(start + offset, start + offset + length);
         let replaced = original;
         if (node.type === "image") {
             const src = node.url as string;
@@ -134,11 +134,12 @@ export function replaceImagePaths(markdown: string, fileIdsMap: Map<RelativeFile
             }
         }
 
-        content = content.slice(0, start + offset) + replaced + content.slice(start + offset + length);
+        replacedContent =
+            replacedContent.slice(0, start + offset) + replaced + replacedContent.slice(start + offset + length);
         offset += replaced.length - length;
     });
 
-    return grayMatter.stringify(content, matter.data);
+    return grayMatter.stringify(replacedContent, data);
 }
 
 function getPosition(

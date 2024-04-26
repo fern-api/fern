@@ -1,0 +1,145 @@
+---
+title: SDK Installation
+subtitle: Zep provides SDKs for Python and TypeScript.
+slug: sdks
+---
+
+### Python
+
+To install the Zep Python SDK with Zep Cloud support, you'll need to install a release candidate version.
+
+<Tabs>
+
+<Tab title="pip">
+
+```Bash
+pip install --pre zep-python
+```
+
+</Tab>
+<Tab title="poetry">
+
+```Bash
+poetry add zep-python@^2.0.0rc
+```
+
+</Tab>
+</Tabs>
+
+### TypeScript
+
+To install the Zep JavaScript SDK with Zep Cloud support, please install a pre-release version tagged with `@next`.
+
+<Tabs>
+
+<Tab title="npm">
+
+```Bash
+npm install @getzep/zep-js@next
+```
+
+</Tab>
+<Tab title="yarn">
+
+```Bash
+yarn add @getzep/zep-js@next
+```
+
+</Tab>
+<Tab title="pnpm">
+
+```Bash
+pnpm install @getzep/zep-js@next
+```
+
+</Tab>
+</Tabs>
+
+## Initialize Client
+
+<Tabs group="code_block">
+<Tab title="Python" group-key="python">
+
+```python
+import os
+from zep_python import ZepClient
+
+API_KEY = os.environ.get('ZEP_API_KEY')
+
+zep = ZepClient(api_key=API_KEY)
+```
+
+</Tab>
+<Tab title="Typescript" group-key="ts">
+
+```typescript
+import { ZepClient } from "@getzep/zep-js";
+
+API_KEY = process.env.ZEP_API_KEY;
+
+const zep = await ZepClient.init(API_KEY);
+```
+
+</Tab>
+<Tab title="Go (Coming soon)" group-key="go">
+</Tab>
+</Tabs>
+
+<Note>**API Keys are project-specific.** You can generate a new API key from [Project Settings](projects.mdx).</Note>
+
+<Info>
+    **The Python SDK Supports Async Use**
+
+All methods are available as both sync and async, with the async methods prefixed with `a`.
+
+    For example, zep-python
+
+has both `zep_client.memory.add_memory` and `zep_client.memory.aadd_memory` methods.
+
+</Info>
+
+## LangChain
+
+<Tabs group="code_block">
+<Tab title="Python" group-key="python">
+
+The pre-release version of the `zep-python` SDK includes `ZepChatMessageHistory` and `ZepVectorStore` classes.
+
+These are designed to work seamlessly with [LangChain's Python Expression Language](https://python.langchain.com/docs/expression_language/).
+
+> To integrate these classes into your application, ensure the `langchain_core` package is installed. For installation guidance, please consult the [LangChain documentation](https://python.langchain.com/docs/get_started/installation#langchain-core).
+
+Import the classes as shown below:
+
+```python
+from zep_python.langchain import ZepChatMessageHistory, ZepVectorStore
+```
+
+</Tab>
+<Tab title="Typescript" group-key="ts">
+
+The pre-release version of the `zep-js` SDK includes `ZepChatMessageHistory` and `ZepVectorStore` classes
+
+These are designed to work seamlessly with [LangChain's JavaScript Expression Language](https://js.langchain.com/docs/expression_language/).
+
+To utilize these classes in your application, ensure that the `langchain` package is installed:
+
+```bash
+npm install langchain
+```
+
+To import these classes, use the following syntax:
+
+```typescript
+import { ZepChatMessageHistory, ZepVectorStore } from "@getzep/zep-js/langchain";
+```
+
+</Tab>
+
+<Tab title="Go (Coming soon)" group-key="go">
+</Tab>
+</Tabs>
+
+## LlamaIndex
+
+Stay tuned! We are in the process of updating our LlamaIndex integration to be compatible with the latest Zep API.
