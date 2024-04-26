@@ -30,5 +30,5 @@ class ContainerValue_Optional(pydantic_v1.BaseModel):
 ContainerValue = typing.Union[ContainerValue_List, ContainerValue_Optional]
 from .field_value import FieldValue  # noqa: E402
 
-ContainerValue_List.update_forward_refs(ContainerValue=ContainerValue, FieldValue=FieldValue)
-ContainerValue_Optional.update_forward_refs(ContainerValue=ContainerValue, FieldValue=FieldValue)
+ContainerValue_List.update_forward_refs(FieldValue=FieldValue)
+ContainerValue_Optional.update_forward_refs(FieldValue=FieldValue)
