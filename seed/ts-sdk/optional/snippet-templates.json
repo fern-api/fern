@@ -28,8 +28,8 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "{\n\t\t$FERN_INPUT\n\t}",
-                                        "delimiter": ",\n\t\t",
+                                        "containerTemplateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "delimiter": ",\n\t\t\t",
                                         "keyValueSeparator": ": ",
                                         "keyTemplate": {
                                             "imports": [],

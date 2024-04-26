@@ -28,8 +28,8 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "[\n\t\t$FERN_INPUT\n\t]",
-                                        "delimiter": ",\n\t\t",
+                                        "containerTemplateString": "[\n\t\t\t$FERN_INPUT\n\t\t]",
+                                        "delimiter": ",\n\t\t\t",
                                         "innerTemplate": {
                                             "imports": [],
                                             "templateString": "\"$FERN_INPUT\"",
@@ -90,13 +90,13 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "[\n\t\t$FERN_INPUT\n\t]",
-                                        "delimiter": ",\n\t\t",
+                                        "containerTemplateString": "[\n\t\t\t$FERN_INPUT\n\t\t]",
+                                        "delimiter": ",\n\t\t\t",
                                         "innerTemplate": {
                                             "imports": [],
-                                            "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
+                                            "templateString": "{\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
                                             "isOptional": true,
-                                            "inputDelimiter": ",\n\t\t\t",
+                                            "inputDelimiter": ",\n\t\t\t\t",
                                             "templateInputs": [
                                                 {
                                                     "value": {
@@ -165,8 +165,8 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "new Set([\n\t\t$FERN_INPUT\n\t])",
-                                        "delimiter": ",\n\t\t",
+                                        "containerTemplateString": "new Set([\n\t\t\t$FERN_INPUT\n\t\t])",
+                                        "delimiter": ",\n\t\t\t",
                                         "innerTemplate": {
                                             "imports": [],
                                             "templateString": "\"$FERN_INPUT\"",
@@ -227,13 +227,13 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "new Set([\n\t\t$FERN_INPUT\n\t])",
-                                        "delimiter": ",\n\t\t",
+                                        "containerTemplateString": "new Set([\n\t\t\t$FERN_INPUT\n\t\t])",
+                                        "delimiter": ",\n\t\t\t",
                                         "innerTemplate": {
                                             "imports": [],
-                                            "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
+                                            "templateString": "{\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
                                             "isOptional": true,
-                                            "inputDelimiter": ",\n\t\t\t",
+                                            "inputDelimiter": ",\n\t\t\t\t",
                                             "templateInputs": [
                                                 {
                                                     "value": {
@@ -302,8 +302,8 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "{\n\t\t$FERN_INPUT\n\t}",
-                                        "delimiter": ",\n\t\t",
+                                        "containerTemplateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "delimiter": ",\n\t\t\t",
                                         "keyValueSeparator": ": ",
                                         "keyTemplate": {
                                             "imports": [],
@@ -377,8 +377,8 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "{\n\t\t$FERN_INPUT\n\t}",
-                                        "delimiter": ",\n\t\t",
+                                        "containerTemplateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
+                                        "delimiter": ",\n\t\t\t",
                                         "keyValueSeparator": ": ",
                                         "keyTemplate": {
                                             "imports": [],
@@ -394,9 +394,9 @@
                                         },
                                         "valueTemplate": {
                                             "imports": [],
-                                            "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
+                                            "templateString": "{\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
                                             "isOptional": true,
-                                            "inputDelimiter": ",\n\t\t\t",
+                                            "inputDelimiter": ",\n\t\t\t\t",
                                             "templateInputs": [
                                                 {
                                                     "value": {
@@ -464,9 +464,9 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                                        "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
                                         "isOptional": true,
-                                        "inputDelimiter": ",\n\t\t",
+                                        "inputDelimiter": ",\n\t\t\t",
                                         "templateInputs": [
                                             {
                                                 "value": {
@@ -635,9 +635,9 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                                        "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
                                         "isOptional": true,
-                                        "inputDelimiter": ",\n\t\t",
+                                        "inputDelimiter": ",\n\t\t\t",
                                         "templateInputs": [
                                             {
                                                 "value": {
@@ -727,9 +727,9 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                                        "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
                                         "isOptional": true,
-                                        "inputDelimiter": ",\n\t\t",
+                                        "inputDelimiter": ",\n\t\t\t",
                                         "templateInputs": [
                                             {
                                                 "value": {
@@ -819,9 +819,9 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                                        "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
                                         "isOptional": true,
-                                        "inputDelimiter": ",\n\t\t",
+                                        "inputDelimiter": ",\n\t\t\t",
                                         "templateInputs": [
                                             {
                                                 "value": {
@@ -971,8 +971,8 @@
                                                 "value": {
                                                     "imports": [],
                                                     "isOptional": true,
-                                                    "containerTemplateString": "list: [\n\t\t\t$FERN_INPUT\n\t\t]",
-                                                    "delimiter": ",\n\t\t\t",
+                                                    "containerTemplateString": "list: [\n\t\t\t\t$FERN_INPUT\n\t\t\t]",
+                                                    "delimiter": ",\n\t\t\t\t",
                                                     "innerTemplate": {
                                                         "imports": [],
                                                         "templateString": "\"$FERN_INPUT\"",
@@ -998,8 +998,8 @@
                                                 "value": {
                                                     "imports": [],
                                                     "isOptional": true,
-                                                    "containerTemplateString": "set: new Set([\n\t\t\t$FERN_INPUT\n\t\t])",
-                                                    "delimiter": ",\n\t\t\t",
+                                                    "containerTemplateString": "set: new Set([\n\t\t\t\t$FERN_INPUT\n\t\t\t])",
+                                                    "delimiter": ",\n\t\t\t\t",
                                                     "innerTemplate": {
                                                         "imports": [],
                                                         "templateString": "\"$FERN_INPUT\"",
@@ -1025,8 +1025,8 @@
                                                 "value": {
                                                     "imports": [],
                                                     "isOptional": true,
-                                                    "containerTemplateString": "map: {\n\t\t\t$FERN_INPUT\n\t\t}",
-                                                    "delimiter": ",\n\t\t\t",
+                                                    "containerTemplateString": "map: {\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
+                                                    "delimiter": ",\n\t\t\t\t",
                                                     "keyValueSeparator": ": ",
                                                     "keyTemplate": {
                                                         "imports": [],
@@ -1157,9 +1157,9 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                                        "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
                                         "isOptional": true,
-                                        "inputDelimiter": ",\n\t\t",
+                                        "inputDelimiter": ",\n\t\t\t",
                                         "templateInputs": [
                                             {
                                                 "value": {
@@ -1309,8 +1309,8 @@
                                                 "value": {
                                                     "imports": [],
                                                     "isOptional": true,
-                                                    "containerTemplateString": "list: [\n\t\t\t$FERN_INPUT\n\t\t]",
-                                                    "delimiter": ",\n\t\t\t",
+                                                    "containerTemplateString": "list: [\n\t\t\t\t$FERN_INPUT\n\t\t\t]",
+                                                    "delimiter": ",\n\t\t\t\t",
                                                     "innerTemplate": {
                                                         "imports": [],
                                                         "templateString": "\"$FERN_INPUT\"",
@@ -1336,8 +1336,8 @@
                                                 "value": {
                                                     "imports": [],
                                                     "isOptional": true,
-                                                    "containerTemplateString": "set: new Set([\n\t\t\t$FERN_INPUT\n\t\t])",
-                                                    "delimiter": ",\n\t\t\t",
+                                                    "containerTemplateString": "set: new Set([\n\t\t\t\t$FERN_INPUT\n\t\t\t])",
+                                                    "delimiter": ",\n\t\t\t\t",
                                                     "innerTemplate": {
                                                         "imports": [],
                                                         "templateString": "\"$FERN_INPUT\"",
@@ -1363,8 +1363,8 @@
                                                 "value": {
                                                     "imports": [],
                                                     "isOptional": true,
-                                                    "containerTemplateString": "map: {\n\t\t\t$FERN_INPUT\n\t\t}",
-                                                    "delimiter": ",\n\t\t\t",
+                                                    "containerTemplateString": "map: {\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
+                                                    "delimiter": ",\n\t\t\t\t",
                                                     "keyValueSeparator": ": ",
                                                     "keyTemplate": {
                                                         "imports": [],
@@ -1443,9 +1443,9 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                                        "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
                                         "isOptional": true,
-                                        "inputDelimiter": ",\n\t\t",
+                                        "inputDelimiter": ",\n\t\t\t",
                                         "templateInputs": [
                                             {
                                                 "value": {
@@ -1507,16 +1507,16 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                                        "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
                                         "isOptional": true,
-                                        "inputDelimiter": ",\n\t\t",
+                                        "inputDelimiter": ",\n\t\t\t",
                                         "templateInputs": [
                                             {
                                                 "value": {
                                                     "imports": [],
                                                     "isOptional": true,
-                                                    "containerTemplateString": "map: {\n\t\t\t$FERN_INPUT\n\t\t}",
-                                                    "delimiter": ",\n\t\t\t",
+                                                    "containerTemplateString": "map: {\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
+                                                    "delimiter": ",\n\t\t\t\t",
                                                     "keyValueSeparator": ": ",
                                                     "keyTemplate": {
                                                         "imports": [],
@@ -1533,8 +1533,8 @@
                                                     "valueTemplate": {
                                                         "imports": [],
                                                         "isOptional": true,
-                                                        "containerTemplateString": "{\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
-                                                        "delimiter": ",\n\t\t\t\t",
+                                                        "containerTemplateString": "{\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t}",
+                                                        "delimiter": ",\n\t\t\t\t\t",
                                                         "keyValueSeparator": ": ",
                                                         "keyTemplate": {
                                                             "imports": [],
@@ -1619,9 +1619,9 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                                        "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
                                         "isOptional": true,
-                                        "inputDelimiter": ",\n\t\t",
+                                        "inputDelimiter": ",\n\t\t\t",
                                         "templateInputs": [
                                             {
                                                 "value": {
@@ -1642,9 +1642,9 @@
                                             {
                                                 "value": {
                                                     "imports": [],
-                                                    "templateString": "nestedObject: {\n\t\t\t$FERN_INPUT\n\t\t}",
+                                                    "templateString": "nestedObject: {\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
                                                     "isOptional": true,
-                                                    "inputDelimiter": ",\n\t\t\t",
+                                                    "inputDelimiter": ",\n\t\t\t\t",
                                                     "templateInputs": [
                                                         {
                                                             "value": {
@@ -1794,8 +1794,8 @@
                                                             "value": {
                                                                 "imports": [],
                                                                 "isOptional": true,
-                                                                "containerTemplateString": "list: [\n\t\t\t\t$FERN_INPUT\n\t\t\t]",
-                                                                "delimiter": ",\n\t\t\t\t",
+                                                                "containerTemplateString": "list: [\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t]",
+                                                                "delimiter": ",\n\t\t\t\t\t",
                                                                 "innerTemplate": {
                                                                     "imports": [],
                                                                     "templateString": "\"$FERN_INPUT\"",
@@ -1821,8 +1821,8 @@
                                                             "value": {
                                                                 "imports": [],
                                                                 "isOptional": true,
-                                                                "containerTemplateString": "set: new Set([\n\t\t\t\t$FERN_INPUT\n\t\t\t])",
-                                                                "delimiter": ",\n\t\t\t\t",
+                                                                "containerTemplateString": "set: new Set([\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t])",
+                                                                "delimiter": ",\n\t\t\t\t\t",
                                                                 "innerTemplate": {
                                                                     "imports": [],
                                                                     "templateString": "\"$FERN_INPUT\"",
@@ -1848,8 +1848,8 @@
                                                             "value": {
                                                                 "imports": [],
                                                                 "isOptional": true,
-                                                                "containerTemplateString": "map: {\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
-                                                                "delimiter": ",\n\t\t\t\t",
+                                                                "containerTemplateString": "map: {\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t}",
+                                                                "delimiter": ",\n\t\t\t\t\t",
                                                                 "keyValueSeparator": ": ",
                                                                 "keyTemplate": {
                                                                     "imports": [],
@@ -1933,9 +1933,9 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "{\n\t\t$FERN_INPUT\n\t}",
+                                        "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
                                         "isOptional": true,
-                                        "inputDelimiter": ",\n\t\t",
+                                        "inputDelimiter": ",\n\t\t\t",
                                         "templateInputs": [
                                             {
                                                 "value": {
@@ -1956,9 +1956,9 @@
                                             {
                                                 "value": {
                                                     "imports": [],
-                                                    "templateString": "nestedObject: {\n\t\t\t$FERN_INPUT\n\t\t}",
+                                                    "templateString": "nestedObject: {\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
                                                     "isOptional": true,
-                                                    "inputDelimiter": ",\n\t\t\t",
+                                                    "inputDelimiter": ",\n\t\t\t\t",
                                                     "templateInputs": [
                                                         {
                                                             "value": {
@@ -2108,8 +2108,8 @@
                                                             "value": {
                                                                 "imports": [],
                                                                 "isOptional": true,
-                                                                "containerTemplateString": "list: [\n\t\t\t\t$FERN_INPUT\n\t\t\t]",
-                                                                "delimiter": ",\n\t\t\t\t",
+                                                                "containerTemplateString": "list: [\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t]",
+                                                                "delimiter": ",\n\t\t\t\t\t",
                                                                 "innerTemplate": {
                                                                     "imports": [],
                                                                     "templateString": "\"$FERN_INPUT\"",
@@ -2135,8 +2135,8 @@
                                                             "value": {
                                                                 "imports": [],
                                                                 "isOptional": true,
-                                                                "containerTemplateString": "set: new Set([\n\t\t\t\t$FERN_INPUT\n\t\t\t])",
-                                                                "delimiter": ",\n\t\t\t\t",
+                                                                "containerTemplateString": "set: new Set([\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t])",
+                                                                "delimiter": ",\n\t\t\t\t\t",
                                                                 "innerTemplate": {
                                                                     "imports": [],
                                                                     "templateString": "\"$FERN_INPUT\"",
@@ -2162,8 +2162,8 @@
                                                             "value": {
                                                                 "imports": [],
                                                                 "isOptional": true,
-                                                                "containerTemplateString": "map: {\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
-                                                                "delimiter": ",\n\t\t\t\t",
+                                                                "containerTemplateString": "map: {\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t}",
+                                                                "delimiter": ",\n\t\t\t\t\t",
                                                                 "keyValueSeparator": ": ",
                                                                 "keyTemplate": {
                                                                     "imports": [],
@@ -2248,13 +2248,13 @@
                                     "value": {
                                         "imports": [],
                                         "isOptional": true,
-                                        "containerTemplateString": "[\n\t\t$FERN_INPUT\n\t]",
-                                        "delimiter": ",\n\t\t",
+                                        "containerTemplateString": "[\n\t\t\t$FERN_INPUT\n\t\t]",
+                                        "delimiter": ",\n\t\t\t",
                                         "innerTemplate": {
                                             "imports": [],
-                                            "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
+                                            "templateString": "{\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
                                             "isOptional": true,
-                                            "inputDelimiter": ",\n\t\t\t",
+                                            "inputDelimiter": ",\n\t\t\t\t",
                                             "templateInputs": [
                                                 {
                                                     "value": {
@@ -2275,9 +2275,9 @@
                                                 {
                                                     "value": {
                                                         "imports": [],
-                                                        "templateString": "nestedObject: {\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
+                                                        "templateString": "nestedObject: {\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t}",
                                                         "isOptional": true,
-                                                        "inputDelimiter": ",\n\t\t\t\t",
+                                                        "inputDelimiter": ",\n\t\t\t\t\t",
                                                         "templateInputs": [
                                                             {
                                                                 "value": {
@@ -2427,8 +2427,8 @@
                                                                 "value": {
                                                                     "imports": [],
                                                                     "isOptional": true,
-                                                                    "containerTemplateString": "list: [\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t]",
-                                                                    "delimiter": ",\n\t\t\t\t\t",
+                                                                    "containerTemplateString": "list: [\n\t\t\t\t\t\t$FERN_INPUT\n\t\t\t\t\t]",
+                                                                    "delimiter": ",\n\t\t\t\t\t\t",
                                                                     "innerTemplate": {
                                                                         "imports": [],
                                                                         "templateString": "\"$FERN_INPUT\"",
@@ -2454,8 +2454,8 @@
                                                                 "value": {
                                                                     "imports": [],
                                                                     "isOptional": true,
-                                                                    "containerTemplateString": "set: new Set([\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t])",
-                                                                    "delimiter": ",\n\t\t\t\t\t",
+                                                                    "containerTemplateString": "set: new Set([\n\t\t\t\t\t\t$FERN_INPUT\n\t\t\t\t\t])",
+                                                                    "delimiter": ",\n\t\t\t\t\t\t",
                                                                     "innerTemplate": {
                                                                         "imports": [],
                                                                         "templateString": "\"$FERN_INPUT\"",
@@ -2481,8 +2481,8 @@
                                                                 "value": {
                                                                     "imports": [],
                                                                     "isOptional": true,
-                                                                    "containerTemplateString": "map: {\n\t\t\t\t\t$FERN_INPUT\n\t\t\t\t}",
-                                                                    "delimiter": ",\n\t\t\t\t\t",
+                                                                    "containerTemplateString": "map: {\n\t\t\t\t\t\t$FERN_INPUT\n\t\t\t\t\t}",
+                                                                    "delimiter": ",\n\t\t\t\t\t\t",
                                                                     "keyValueSeparator": ": ",
                                                                     "keyTemplate": {
                                                                         "imports": [],
@@ -3384,15 +3384,15 @@
                                         "members": {
                                             "dog": {
                                                 "imports": [],
-                                                "templateString": "{ \n\t\tanimal : \"dog\", \n\t\t$FERN_INPUT\n\t}",
+                                                "templateString": "{ \n\t\t\tanimal : \"dog\", \n\t\t\t$FERN_INPUT\n\t\t}",
                                                 "isOptional": true,
                                                 "templateInputs": [
                                                     {
                                                         "value": {
                                                             "imports": [],
-                                                            "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
+                                                            "templateString": "{\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
                                                             "isOptional": true,
-                                                            "inputDelimiter": ",\n\t\t\t",
+                                                            "inputDelimiter": ",\n\t\t\t\t",
                                                             "templateInputs": [
                                                                 {
                                                                     "value": {
@@ -3436,15 +3436,15 @@
                                             },
                                             "cat": {
                                                 "imports": [],
-                                                "templateString": "{ \n\t\tanimal : \"cat\", \n\t\t$FERN_INPUT\n\t}",
+                                                "templateString": "{ \n\t\t\tanimal : \"cat\", \n\t\t\t$FERN_INPUT\n\t\t}",
                                                 "isOptional": true,
                                                 "templateInputs": [
                                                     {
                                                         "value": {
                                                             "imports": [],
-                                                            "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
+                                                            "templateString": "{\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
                                                             "isOptional": true,
-                                                            "inputDelimiter": ",\n\t\t\t",
+                                                            "inputDelimiter": ",\n\t\t\t\t",
                                                             "templateInputs": [
                                                                 {
                                                                     "value": {
@@ -3566,9 +3566,9 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "nestedObject: {\n\t\t$FERN_INPUT\n\t}",
+                                        "templateString": "nestedObject: {\n\t\t\t$FERN_INPUT\n\t\t}",
                                         "isOptional": true,
-                                        "inputDelimiter": ",\n\t\t",
+                                        "inputDelimiter": ",\n\t\t\t",
                                         "templateInputs": [
                                             {
                                                 "value": {
@@ -3718,8 +3718,8 @@
                                                 "value": {
                                                     "imports": [],
                                                     "isOptional": true,
-                                                    "containerTemplateString": "list: [\n\t\t\t$FERN_INPUT\n\t\t]",
-                                                    "delimiter": ",\n\t\t\t",
+                                                    "containerTemplateString": "list: [\n\t\t\t\t$FERN_INPUT\n\t\t\t]",
+                                                    "delimiter": ",\n\t\t\t\t",
                                                     "innerTemplate": {
                                                         "imports": [],
                                                         "templateString": "\"$FERN_INPUT\"",
@@ -3745,8 +3745,8 @@
                                                 "value": {
                                                     "imports": [],
                                                     "isOptional": true,
-                                                    "containerTemplateString": "set: new Set([\n\t\t\t$FERN_INPUT\n\t\t])",
-                                                    "delimiter": ",\n\t\t\t",
+                                                    "containerTemplateString": "set: new Set([\n\t\t\t\t$FERN_INPUT\n\t\t\t])",
+                                                    "delimiter": ",\n\t\t\t\t",
                                                     "innerTemplate": {
                                                         "imports": [],
                                                         "templateString": "\"$FERN_INPUT\"",
@@ -3772,8 +3772,8 @@
                                                 "value": {
                                                     "imports": [],
                                                     "isOptional": true,
-                                                    "containerTemplateString": "map: {\n\t\t\t$FERN_INPUT\n\t\t}",
-                                                    "delimiter": ",\n\t\t\t",
+                                                    "containerTemplateString": "map: {\n\t\t\t\t$FERN_INPUT\n\t\t\t}",
+                                                    "delimiter": ",\n\t\t\t\t",
                                                     "keyValueSeparator": ": ",
                                                     "keyTemplate": {
                                                         "imports": [],
