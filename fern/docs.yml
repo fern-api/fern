@@ -64,7 +64,7 @@ navigation:
           - page: Endpoints
             path: ./pages/api-definition/fern-definition/endpoints.mdx
           - page: Webhooks
-            path: ./pages/api-definition/fern-definition/parameters.mdx
+            path: ./pages/api-definition/fern-definition/webhooks.mdx
           - page: Errors
             path: ./pages/api-definition/fern-definition/errors.mdx
           - page: Imports
