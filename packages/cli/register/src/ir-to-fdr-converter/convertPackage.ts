@@ -412,8 +412,14 @@ function convertResponse(irResponse: Ir.http.HttpResponse): APIV1Write.HttpRespo
                     type: "stream",
                     shape: { type: "reference", value: convertTypeReference(streamingResponse.payload) }
                 };
+                // TODO(dsinghvi): update FDR with SSE.
+            } else if (streamingResponse.type === "sse") {
+                return {
+                    type: "stream",
+                    shape: { type: "reference", value: convertTypeReference(streamingResponse.payload) }
+                };
             }
-            // TODO(dsinghvi): update FDR with SSE.
+
             return undefined;
         },
         _other: () => {
