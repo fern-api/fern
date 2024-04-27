@@ -367,7 +367,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --generator ts-sdk
+          yarn seed:local test --generator ts-sdk --local --parallel 10
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -392,7 +392,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --generator ts-express  --parallel 1
+          yarn seed:local test --generator ts-express  --local --parallel 10
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
