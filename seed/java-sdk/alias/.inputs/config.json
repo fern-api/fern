@@ -2,24 +2,27 @@
     "irFilepath": "/fern/ir.json",
     "output": {
         "mode": {
+            "type": "github",
             "repoUrl": "https://github.com/alias/fern",
             "version": "0.0.1",
             "publishInfo": {
+                "type": "maven",
                 "registryUrl": "",
                 "coordinate": "com.fern:alias",
                 "usernameEnvironmentVariable": "",
                 "passwordEnvironmentVariable": "",
-                "type": "maven"
-            },
-            "type": "github"
+                "signature": null
+            }
         },
         "path": "/fern/output",
+        "publishingMetadata": null,
         "snippetFilepath": "/fern/snippet.json"
     },
+    "publish": null,
     "workspaceName": "alias",
     "organization": "seed",
     "environment": {
-        "type": "local"
+        "_type": "local"
     },
     "dryRun": false,
     "whitelabel": false,

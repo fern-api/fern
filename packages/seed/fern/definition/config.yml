@@ -40,19 +40,10 @@ types:
         docs: | 
           The command to run the generator locally. 
           `node generators/openapi/dist/cli.cjs` for example.
-  
-  DockerBuildInfo: 
-    properties: 
-      buildCommand: 
-        type: string
+      env: 
+        type: optional<map<string, string>>
         docs: | 
-          The command to build the generator locally. 
-          `yarn workspace @fern-api/openapi-generator build` for example. 
-      runCommand:
-        type: string
-        docs: | 
-          The command to run the generator locally. 
-          `node generators/openapi/dist/cli.cjs` for example.
+          Environment variables to set when running the generator locally.
 
   DockerCommand: 
     discriminated: false

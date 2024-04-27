@@ -2,26 +2,28 @@
     "irFilepath": "/fern/ir.json",
     "output": {
         "mode": {
+            "type": "github",
             "repoUrl": "https://github.com/exhaustive/fern",
             "version": "0.0.1",
             "publishInfo": {
+                "type": "npm",
                 "registryUrl": "",
                 "packageName": "@fern/exhaustive",
-                "tokenEnvironmentVariable": "",
-                "type": "npm"
-            },
-            "type": "github"
+                "tokenEnvironmentVariable": ""
+            }
         },
         "path": "/fern/output",
+        "publishingMetadata": null,
         "snippetFilepath": "/fern/snippet.json"
     },
+    "publish": null,
     "customConfig": {
         "allowExtraFields": true
     },
     "workspaceName": "exhaustive",
     "organization": "seed",
     "environment": {
-        "type": "local"
+        "_type": "local"
     },
     "dryRun": false,
     "whitelabel": false,

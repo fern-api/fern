@@ -126,15 +126,24 @@ export class LocalTaskHandler {
         const [firstLocalOutputItem, ...remaininglocalOutputItems] = await readdir(
             this.absolutePathToTmpOutputDirectory
         );
+        console.log(firstLocalOutputItem, remaininglocalOutputItems);
         if (firstLocalOutputItem == null) {
             return;
         }
         this.context.logger.debug(`Copying generated files to ${outputPath}`);
-        if (firstLocalOutputItem.endsWith(".zip") && remaininglocalOutputItems.length === 0) {
+        if (firstLocalOutputItem.endsWith(".zip")) {
+            console.log(`Decompressing to ${outputPath}`);
             await decompress(
                 join(this.absolutePathToTmpOutputDirectory, RelativeFilePath.of(firstLocalOutputItem)),
                 outputPath
             );
+            for (const localOutputItem of remaininglocalOutputItems) {
+                await cp(
+                    join(this.absolutePathToTmpOutputDirectory, RelativeFilePath.of(localOutputItem)),
+                    join(outputPath, RelativeFilePath.of(localOutputItem)),
+                    { recursive: true }
+                );
+            }
         } else {
             await cp(this.absolutePathToTmpOutputDirectory, outputPath, { recursive: true });
         }

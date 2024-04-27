@@ -2,24 +2,27 @@
     "irFilepath": "/fern/ir.json",
     "output": {
         "mode": {
+            "type": "github",
             "repoUrl": "https://github.com/bearer-token-environment-variable/fern",
             "version": "0.0.1",
             "publishInfo": {
+                "type": "maven",
                 "registryUrl": "",
                 "coordinate": "com.fern:bearer-token-environment-variable",
                 "usernameEnvironmentVariable": "",
                 "passwordEnvironmentVariable": "",
-                "type": "maven"
-            },
-            "type": "github"
+                "signature": null
+            }
         },
         "path": "/fern/output",
+        "publishingMetadata": null,
         "snippetFilepath": "/fern/snippet.json"
     },
+    "publish": null,
     "workspaceName": "bearer-token-environment-variable",
     "organization": "seed",
     "environment": {
-        "type": "local"
+        "_type": "local"
     },
     "dryRun": false,
     "whitelabel": false,

@@ -2,23 +2,25 @@
     "irFilepath": "/fern/ir.json",
     "output": {
         "mode": {
+            "type": "github",
             "repoUrl": "https://github.com/basic-auth/fern",
             "version": "0.0.1",
             "publishInfo": {
+                "type": "rubygems",
                 "registryUrl": "",
                 "packageName": "fern_basic-auth",
-                "apiKeyEnvironmentVariable": "",
-                "type": "rubygems"
-            },
-            "type": "github"
+                "apiKeyEnvironmentVariable": ""
+            }
         },
         "path": "/fern/output",
+        "publishingMetadata": null,
         "snippetFilepath": "/fern/snippet.json"
     },
+    "publish": null,
     "workspaceName": "basic-auth",
     "organization": "seed",
     "environment": {
-        "type": "local"
+        "_type": "local"
     },
     "dryRun": false,
     "whitelabel": false,

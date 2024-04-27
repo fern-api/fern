@@ -7,7 +7,7 @@ export class StreamingUtilsImpl extends CoreUtility implements StreamUtils {
     public readonly MANIFEST = {
         name: "stream-utils",
         repoInfoForTesting: {
-            path: RelativeFilePath.of("packages/core-utilities/fetcher/src/stream")
+            path: RelativeFilePath.of("generators/typescript/utils/core-utilities/fetcher/src/stream")
         },
         originalPathOnDocker: AbsoluteFilePath.of("/assets/fetcher/stream"),
         pathInCoreUtilities: [{ nameOnDisk: "streaming-fetcher", exportDeclaration: { exportAll: true } }],

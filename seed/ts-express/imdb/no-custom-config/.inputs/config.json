@@ -4,13 +4,15 @@
         "mode": {
             "type": "downloadFiles"
         },
-        "path": "/fern/output"
+        "path": "/fern/output",
+        "publishingMetadata": null
     },
+    "publish": null,
     "customConfig": null,
     "workspaceName": "api",
     "organization": "seed",
     "environment": {
-        "type": "local"
+        "_type": "local"
     },
     "dryRun": false,
     "whitelabel": false,

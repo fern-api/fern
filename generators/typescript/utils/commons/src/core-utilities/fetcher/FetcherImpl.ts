@@ -8,7 +8,7 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
     public readonly MANIFEST = {
         name: "fetcher",
         repoInfoForTesting: {
-            path: RelativeFilePath.of("packages/core-utilities/fetcher/src/fetcher")
+            path: RelativeFilePath.of("generators/typescript/utils/core-utilities/fetcher/src/fetcher")
         },
         originalPathOnDocker: AbsoluteFilePath.of("/assets/fetcher/fetcher"),
         pathInCoreUtilities: [{ nameOnDisk: "fetcher", exportDeclaration: { exportAll: true } }],

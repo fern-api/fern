@@ -3,6 +3,7 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { getGeneratorConfig, getIntermediateRepresentation } from "@fern-api/local-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
+import * as serializers from "@fern-fern/generator-exec-sdk/serialization";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 import { OutputMode } from "../../config/api";
@@ -152,17 +153,12 @@ export async function writeInputs({
         workspaceName,
         outputVersion: undefined,
         organization: DUMMY_ORGANIZATION,
-<<<<<<< HEAD
-        absolutePathToSnippet: undefined,
         absolutePathToSnippetTemplates: undefined,
         writeUnitTests: true,
-        generateOauthClients: true
-=======
+        generateOauthClients: true,
         absolutePathToSnippet: AbsoluteFilePath.of(
             join(absolutePathToOutput, RelativeFilePath.of(SNIPPET_JSON_FILENAME))
-        ),
-        writeUnitTests: true
->>>>>>> 7a50893ca (fix)
+        )
     }).config;
     const absolutePathToInputsDirectory = AbsoluteFilePath.of(
         join(absolutePathToOutput, RelativeFilePath.of(INPUTS_DIRECTORY_NAME))
@@ -173,9 +169,10 @@ export async function writeInputs({
         join(absolutePathToInputsDirectory, RelativeFilePath.of(INPUT_IR_FILENAME)),
         JSON.stringify(ir, undefined, 4)
     );
+    const rawConfig = await serializers.GeneratorConfig.jsonOrThrow(config);
     await writeFile(
         join(absolutePathToInputsDirectory, RelativeFilePath.of(INPUT_CONFIG_FILENAME)),
-        JSON.stringify(config, undefined, 4)
+        JSON.stringify(rawConfig, undefined, 4)
     );
 
     context.logger.info(`Wrote inputs to ${absolutePathToInputsDirectory}`);

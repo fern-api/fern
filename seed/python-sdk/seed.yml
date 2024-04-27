@@ -4,11 +4,6 @@ dockerCommand: docker build -f ./generators/python/sdk/Dockerfile -t fernapi/fer
 language: python
 generatorType: sdk
 defaultOutputMode: github
-local: 
-  workingDirectory: generators/python
-  buildCommand: 
-    - echo built
-  runCommand: poetry run python -m src.fern_python.generators.sdk.cli
 fixtures:
   examples: 
     - customConfig: null

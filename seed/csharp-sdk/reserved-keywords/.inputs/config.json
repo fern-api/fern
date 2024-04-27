@@ -2,24 +2,27 @@
     "irFilepath": "/fern/ir.json",
     "output": {
         "mode": {
+            "type": "github",
             "repoUrl": "https://github.com/reserved-keywords/fern",
             "version": "0.0.1",
             "publishInfo": {
+                "type": "maven",
                 "registryUrl": "",
                 "coordinate": "com.fern:reserved-keywords",
                 "usernameEnvironmentVariable": "",
                 "passwordEnvironmentVariable": "",
-                "type": "maven"
-            },
-            "type": "github"
+                "signature": null
+            }
         },
         "path": "/fern/output",
+        "publishingMetadata": null,
         "snippetFilepath": "/fern/snippet.json"
     },
+    "publish": null,
     "workspaceName": "nursery-api",
     "organization": "seed",
     "environment": {
-        "type": "local"
+        "_type": "local"
     },
     "dryRun": false,
     "whitelabel": false,

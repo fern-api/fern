@@ -15,4 +15,6 @@ export interface LocalBuildInfo {
      * `node generators/openapi/dist/cli.cjs` for example.
      */
     runCommand: string;
+    /** Environment variables to set when running the generator locally. */
+    env?: Record<string, string>;
 }

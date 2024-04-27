@@ -183,6 +183,7 @@ export abstract class TestRunner {
                 });
                 taskContext.logger.info("Successfully wrote .mock directory...");
             } catch (error) {
+                taskContext.logger.error(`Generation failed: ${(error as Error)?.message ?? "Unknown error"}`);
                 return {
                     type: "failure",
                     cause: "generation",

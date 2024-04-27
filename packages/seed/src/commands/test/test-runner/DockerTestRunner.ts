@@ -6,7 +6,6 @@ import { writeInputs } from "../../../commands/rewrite-inputs/rewriteInputsForWo
 import { runScript } from "../../../runScript";
 import { ALL_AUDIENCES, DUMMY_ORGANIZATION } from "../../../utils/constants";
 import { getGeneratorInvocation } from "../../../utils/getGeneratorInvocation";
-import { ParsedDockerName, parseDockerOrThrow } from "../../../utils/parseDockerOrThrow";
 import { TestRunner } from "./TestRunner";
 
 export class DockerTestRunner extends TestRunner {
@@ -72,7 +71,6 @@ export class DockerTestRunner extends TestRunner {
             });
         } catch (e) {
             throw e;
-<<<<<<< HEAD
         } finally {
             await writeInputs({
                 absolutePathToOutput: outputDir,
@@ -89,8 +87,6 @@ export class DockerTestRunner extends TestRunner {
                 workspaceName: fernWorkspace.name,
                 context: taskContext
             });
-=======
->>>>>>> f2c6168a1 ((internal, feat): add  mode to seed for running the generators directly from source)
         }
     }
 }

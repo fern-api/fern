@@ -1,8 +1,9 @@
-import { SNIPPET_JSON_FILENAME } from "@fern-api/configuration";
-import { AbsoluteFilePath, join, moveFolder, RelativeFilePath } from "@fern-api/fs-utils";
+import { SNIPPET_JSON_FILENAME, SNIPPET_TEMPLATES_JSON_FILENAME } from "@fern-api/configuration";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { LocalTaskHandler } from "@fern-api/local-workspace-runner/src/LocalTaskHandler";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { readFile, rm, writeFile } from "fs/promises";
+import { readFile, writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
 import { LocalBuildInfo } from "../../../config/api";
@@ -45,17 +46,32 @@ export class LocalTestRunner extends TestRunner {
             commands: [`${localConfig.runCommand} ${localGeneratorConfigFile.path}`],
             doNotPipeOutput: false,
             logger: taskContext.logger,
-            workingDir: workingDir
+            workingDir: workingDir,
+            env: localConfig.env ?? {}
         });
         if (result.exitCode !== 0) {
             taskContext.logger.info(`Failed to generate files for ${this.generator.workspaceName}.`);
         } else {
-            taskContext.logger.info(`Wrote generated files to ${localOutputDirectory.path}`);
-            await rm(outputDir, { recursive: true, force: true });
-            await moveFolder({
-                src: AbsoluteFilePath.of(localOutputDirectory.path),
-                dest: outputDir
+            const localTaskHandler: LocalTaskHandler = new LocalTaskHandler({
+                context: taskContext,
+                absolutePathToLocalOutput: outputDir,
+                absolutePathToTmpOutputDirectory: AbsoluteFilePath.of(localOutputDirectory.path),
+                absolutePathToLocalSnippetJSON:
+                    generatorConfig.output.snippetFilepath != null
+                        ? AbsoluteFilePath.of(generatorConfig.output.snippetFilepath)
+                        : undefined,
+                absolutePathToLocalSnippetTemplateJSON: join(
+                    outputDir,
+                    RelativeFilePath.of(SNIPPET_TEMPLATES_JSON_FILENAME)
+                ),
+                absolutePathToTmpSnippetJSON: join(outputDir, RelativeFilePath.of(SNIPPET_JSON_FILENAME)),
+                absolutePathToTmpSnippetTemplatesJSON:
+                    generatorConfig.output.snippetTemplateFilepath != null
+                        ? AbsoluteFilePath.of(generatorConfig.output.snippetTemplateFilepath)
+                        : undefined
             });
+            await localTaskHandler.copyGeneratedFiles();
+            taskContext.logger.info(`Wrote generated files to ${outputDir}`);
         }
     }
 
