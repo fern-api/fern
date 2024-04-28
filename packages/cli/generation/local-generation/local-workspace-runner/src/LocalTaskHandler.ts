@@ -51,14 +51,22 @@ export class LocalTaskHandler {
         } else {
             await this.copyGeneratedFilesNoFernIgnore();
         }
-        if (this.absolutePathToTmpSnippetJSON != null && this.absolutePathToLocalSnippetJSON != null) {
+        if (
+            this.absolutePathToTmpSnippetJSON != null &&
+            this.absolutePathToLocalSnippetJSON != null &&
+            (await doesPathExist(this.absolutePathToTmpSnippetJSON))
+        ) {
             await this.copySnippetJSON({
                 absolutePathToTmpSnippetJSON: this.absolutePathToTmpSnippetJSON,
                 absolutePathToLocalSnippetJSON: this.absolutePathToLocalSnippetJSON
             });
         }
 
-        if (this.absolutePathToTmpSnippetTemplatesJSON != null && this.absolutePathToLocalSnippetTemplateJSON != null) {
+        if (
+            this.absolutePathToTmpSnippetTemplatesJSON != null &&
+            this.absolutePathToLocalSnippetTemplateJSON != null &&
+            (await doesPathExist(this.absolutePathToTmpSnippetTemplatesJSON))
+        ) {
             await this.copySnippetJSON({
                 absolutePathToTmpSnippetJSON: this.absolutePathToTmpSnippetTemplatesJSON,
                 absolutePathToLocalSnippetJSON: this.absolutePathToLocalSnippetTemplateJSON
