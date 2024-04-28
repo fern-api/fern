@@ -60,7 +60,7 @@ export class CoreUtilitiesManager {
                 );
                 await cp(
                     process.env.NODE_ENV === "test"
-                        ? path.join(__dirname, "../../../..", utility.repoInfoForTesting.path)
+                        ? path.join(__dirname, "../../../../..", utility.repoInfoForTesting.path)
                         : utility.originalPathOnDocker,
                     toPath,
                     { recursive: true }

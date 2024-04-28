@@ -7,7 +7,7 @@ export class CallbackQueueImpl extends CoreUtility implements CallbackQueue {
     public readonly MANIFEST = {
         name: "callback-queue",
         repoInfoForTesting: {
-            path: RelativeFilePath.of("packages/core-utilities/callback-queue/src"),
+            path: RelativeFilePath.of("generators/typescript/utils/core-utilities/callback-queue/src"),
             ignoreGlob: "**/__test__"
         },
         originalPathOnDocker: AbsoluteFilePath.of("/assets/callback-queue"),

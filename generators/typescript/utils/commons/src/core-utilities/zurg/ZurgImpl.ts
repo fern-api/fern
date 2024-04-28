@@ -9,7 +9,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
     public readonly MANIFEST = {
         name: "zurg",
         repoInfoForTesting: {
-            path: RelativeFilePath.of("packages/core-utilities/zurg/src"),
+            path: RelativeFilePath.of("generators/typescript/utils/core-utilities/zurg/src"),
             ignoreGlob: "**/__test__"
         },
         originalPathOnDocker: AbsoluteFilePath.of("/assets/zurg"),

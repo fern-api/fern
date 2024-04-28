@@ -1,24 +1,27 @@
 {
-    "irFilepath": "./ir.json",
+    "irFilepath": "/fern/ir.json",
     "output": {
         "mode": {
+            "type": "github",
             "repoUrl": "https://github.com/single-url-environment-default/fern",
             "version": "0.0.1",
             "publishInfo": {
+                "type": "pypi",
                 "registryUrl": "",
                 "packageName": "fern_single-url-environment-default",
                 "usernameEnvironmentVariable": "",
-                "passwordEnvironmentVariable": "",
-                "type": "pypi"
-            },
-            "type": "github"
+                "passwordEnvironmentVariable": ""
+            }
         },
-        "path": "../"
+        "path": "/fern/output",
+        "publishingMetadata": null,
+        "snippetFilepath": "/fern/snippet.json"
     },
+    "publish": null,
     "workspaceName": "single-url-environment-default",
     "organization": "seed",
     "environment": {
-        "type": "local"
+        "_type": "local"
     },
     "dryRun": false,
     "whitelabel": false,

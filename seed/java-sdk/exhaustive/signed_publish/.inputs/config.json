@@ -1,10 +1,12 @@
 {
-    "irFilepath": "./ir.json",
+    "irFilepath": "/fern/ir.json",
     "output": {
         "mode": {
+            "type": "github",
             "repoUrl": "https://github.com/exhaustive/fern",
             "version": "0.0.1",
             "publishInfo": {
+                "type": "maven",
                 "registryUrl": "definitelyMavenCentral",
                 "coordinate": "com.fern:exhaustive",
                 "usernameEnvironmentVariable": "",
@@ -13,23 +15,23 @@
                     "keyIdEnvironmentVariable": "test_kid",
                     "passwordEnvironmentVariable": "test_password",
                     "secretKeyEnvironmentVariable": "test_secretkey"
-                },
-                "type": "maven"
-            },
-            "type": "github"
+                }
+            }
         },
-        "path": "../",
+        "path": "/fern/output",
         "publishingMetadata": {
-            "packageDescription": "My very good and lengthy description",
-            "publisherEmail": "me@gmail.com",
-            "publisherName": "Fern",
-            "referenceUrl": "https://buildwithfern.com"
-        }
+            "package_description": "My very good and lengthy description",
+            "publisher_email": "me@gmail.com",
+            "publisher_name": "Fern",
+            "reference_url": "https://buildwithfern.com"
+        },
+        "snippetFilepath": "/fern/snippet.json"
     },
+    "publish": null,
     "workspaceName": "exhaustive",
     "organization": "seed",
     "environment": {
-        "type": "local"
+        "_type": "local"
     },
     "dryRun": false,
     "whitelabel": false,

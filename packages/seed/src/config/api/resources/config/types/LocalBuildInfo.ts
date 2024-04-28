@@ -3,14 +3,18 @@
  */
 
 export interface LocalBuildInfo {
+    /** The working directory for the generator. */
+    workingDirectory: string;
     /**
      * The command to build the generator locally.
      * `yarn workspace @fern-api/openapi-generator build` for example.
      */
-    buildCommand: string;
+    buildCommand: string[];
     /**
      * The command to run the generator locally.
      * `node generators/openapi/dist/cli.cjs` for example.
      */
     runCommand: string;
+    /** Environment variables to set when running the generator locally. */
+    env?: Record<string, string>;
 }

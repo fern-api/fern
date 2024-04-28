@@ -1,24 +1,27 @@
 {
-    "irFilepath": "./ir.json",
+    "irFilepath": "/fern/ir.json",
     "output": {
         "mode": {
+            "type": "github",
             "repoUrl": "https://github.com/circular-references-advanced/fern",
             "version": "0.0.1",
             "publishInfo": {
+                "type": "pypi",
                 "registryUrl": "",
                 "packageName": "fern_circular-references-advanced",
                 "usernameEnvironmentVariable": "",
-                "passwordEnvironmentVariable": "",
-                "type": "pypi"
-            },
-            "type": "github"
+                "passwordEnvironmentVariable": ""
+            }
         },
-        "path": "../"
+        "path": "/fern/output",
+        "publishingMetadata": null,
+        "snippetFilepath": "/fern/snippet.json"
     },
+    "publish": null,
     "workspaceName": "api",
     "organization": "seed",
     "environment": {
-        "type": "local"
+        "_type": "local"
     },
     "dryRun": false,
     "whitelabel": false,

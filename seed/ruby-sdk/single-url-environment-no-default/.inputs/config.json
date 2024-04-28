@@ -1,23 +1,26 @@
 {
-    "irFilepath": "./ir.json",
+    "irFilepath": "/fern/ir.json",
     "output": {
         "mode": {
+            "type": "github",
             "repoUrl": "https://github.com/single-url-environment-no-default/fern",
             "version": "0.0.1",
             "publishInfo": {
+                "type": "rubygems",
                 "registryUrl": "",
                 "packageName": "fern_single-url-environment-no-default",
-                "apiKeyEnvironmentVariable": "",
-                "type": "rubygems"
-            },
-            "type": "github"
+                "apiKeyEnvironmentVariable": ""
+            }
         },
-        "path": "../"
+        "path": "/fern/output",
+        "publishingMetadata": null,
+        "snippetFilepath": "/fern/snippet.json"
     },
+    "publish": null,
     "workspaceName": "single-url-environment-no-default",
     "organization": "seed",
     "environment": {
-        "type": "local"
+        "_type": "local"
     },
     "dryRun": false,
     "whitelabel": false,
