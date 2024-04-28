@@ -154,24 +154,38 @@ class SnippetTemplateFactory:
         indentation_level: int = 0,
     ) -> Union[Template, None]:
         child_indentation_level = indentation_level + 1
-        return container.visit(
-            list_=lambda innerTr: Template.factory.iterable(
-                IterableTemplate(
-                    imports=[],
-                    is_optional=True,
-                    container_template_string=f"{name}=[\n{self.TAB_CHAR * child_indentation_level}{self.TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}]"
-                    if name is not None
-                    else f"[\n{self.TAB_CHAR * child_indentation_level}{self.TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}]",
-                    delimiter=f",\n{self.TAB_CHAR * child_indentation_level}",
-                    inner_template=self.get_type_reference_template(
-                        innerTr, None, "RELATIVE", None, None, child_indentation_level
-                    ),
-                    template_input=PayloadInput(
-                        location=location, path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs)
-                    ),
+
+        container_union = container.get_as_union()
+        if container_union.type == "list":
+            innerTr = container_union.list
+            inner_template = self.get_type_reference_template(
+                innerTr, None, "RELATIVE", None, None, child_indentation_level
+            )
+            return (
+                Template.factory.iterable(
+                    IterableTemplate(
+                        imports=[],
+                        is_optional=True,
+                        container_template_string=f"{name}=[\n{self.TAB_CHAR * child_indentation_level}{self.TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}]"
+                        if name is not None
+                        else f"[\n{self.TAB_CHAR * child_indentation_level}{self.TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}]",
+                        delimiter=f",\n{self.TAB_CHAR * child_indentation_level}",
+                        inner_template=inner_template,
+                        template_input=PayloadInput(
+                            location=location, path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs)
+                        ),
+                    )
                 )
-            ),
-            set_=lambda innerTr: Template.factory.iterable(
+                if inner_template is not None
+                else None
+            )
+
+        if container_union.type == "set":
+            innerTr = container_union.set
+            inner_template = self.get_type_reference_template(
+                innerTr, None, "RELATIVE", None, None, child_indentation_level
+            )
+            Template.factory.iterable(
                 IterableTemplate(
                     imports=[],
                     is_optional=True,
@@ -179,39 +193,48 @@ class SnippetTemplateFactory:
                     if name is not None
                     else f"{{\n{self.TAB_CHAR * child_indentation_level}{self.TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}}}",
                     delimiter=f",\n{self.TAB_CHAR * child_indentation_level}",
-                    inner_template=self.get_type_reference_template(
-                        innerTr, None, "RELATIVE", None, None, child_indentation_level
-                    ),
+                    inner_template=inner_template,
                     template_input=PayloadInput(
                         location=location, path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs)
                     ),
                 )
-            ),
-            map_=lambda kvTr: Template.factory.dict(
-                DictTemplate(
-                    imports=[],
-                    is_optional=True,
-                    container_template_string=f"{name}={{\n{self.TAB_CHAR * child_indentation_level}{self.TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}}}"
-                    if name is not None
-                    else f"{{\n{self.TAB_CHAR * child_indentation_level}{self.TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}}}",
-                    delimiter=f",\n{self.TAB_CHAR * child_indentation_level}",
-                    key_value_separator=": ",
-                    key_template=self.get_type_reference_template(
-                        kvTr.key_type, None, "RELATIVE", None, None, child_indentation_level
-                    ),
-                    value_template=self.get_type_reference_template(
-                        kvTr.value_type, None, "RELATIVE", None, None, child_indentation_level
-                    ),
-                    template_input=PayloadInput(
-                        location=location, path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs)
-                    ),
+            ) if inner_template is not None else None
+
+        if container_union.type == "map":
+            key_template = self.get_type_reference_template(
+                container_union.key_type, None, "RELATIVE", None, None, child_indentation_level
+            )
+            value_template = self.get_type_reference_template(
+                container_union.value_type, None, "RELATIVE", None, None, child_indentation_level
+            )
+            return (
+                Template.factory.dict(
+                    DictTemplate(
+                        imports=[],
+                        is_optional=True,
+                        container_template_string=f"{name}={{\n{self.TAB_CHAR * child_indentation_level}{self.TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}}}"
+                        if name is not None
+                        else f"{{\n{self.TAB_CHAR * child_indentation_level}{self.TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}}}",
+                        delimiter=f",\n{self.TAB_CHAR * child_indentation_level}",
+                        key_value_separator=": ",
+                        key_template=key_template,
+                        value_template=value_template,
+                        template_input=PayloadInput(
+                            location=location, path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs)
+                        ),
+                    )
                 )
-            ),
-            optional=lambda value: self.get_type_reference_template(
+                if key_template is not None and value_template is not None
+                else None
+            )
+
+        if container_union.type == "optional":
+            value = container_union.optional
+            return self.get_type_reference_template(
                 value, name, location, wire_or_original_name, name_breadcrumbs, indentation_level
-            ),
-            literal=lambda _: None,
-        )
+            )
+
+        return None
 
     def _convert_enum_value_to_str(
         self, type_name: ir_types.DeclaredTypeName, enum_value: ir_types.NameAndWireValue
