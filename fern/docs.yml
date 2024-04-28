@@ -185,15 +185,9 @@ navigation:
         contents: 
           - page: Overview
             path: ./pages/docs/introduction/overview.mdx
-      - section: Quickstarts
-        slug: quickstarts
-        contents:
-          - page: Use OpenAPI
-            slug: openapi
-            path: ./pages/fern-docs/docs-quickstarts/docs-quickstart-openapi.mdx
-          - page: Use a Fern Definition
-            slug: ferndef
-            path: ./pages/fern-docs/docs-quickstarts/docs-quickstart-ferndef.mdx
+          - page: Quickstart
+            slug: quickstart
+            path: ./pages/docs/introduction/quickstart.mdx
       - section: Configuration
         slug: config
         contents:
@@ -214,7 +208,6 @@ navigation:
                 path: ./pages/fern-docs/config/branding/logo-and-favicon.mdx
               - page: Custom domain
                 path: ./pages/fern-docs/config/branding/custom-domain.mdx
-
       - section: Write content
         slug: content
         contents:
@@ -225,7 +218,6 @@ navigation:
             path: ./pages/fern-docs/content/front-matter.mdx
           - page: Code snippets
             path: ./pages/fern-docs/content/code-snippets.mdx
-
       - section: API references
         contents:
           - page: Generate API reference
