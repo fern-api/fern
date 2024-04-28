@@ -169,13 +169,8 @@ jobs:
       - name: Yarn Install
         run: yarn install
 
-      - name: Install poetry
-        run: pipx install poetry
-      
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.9.14'
-          cache: 'poetry'
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
 
       - name: Install Dependencies
         working-directory: ./generators/python
@@ -185,7 +180,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --generator python-sdk --local --parallel 10
+          yarn seed:local test --generator python-sdk --parallel 10
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
