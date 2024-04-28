@@ -52,6 +52,10 @@ class EndpointGenerator:
                     bytes=lambda request: raise_bytes_unsupported(),
                 )
             )
+            endpoint.request_body.visit(
+                inlined_request_body="",
+                r
+            )
         for path_parameter in service.path_parameters:
             self._parameters.append(PathEndpointParameter(context=context, path_parameter=path_parameter))
         for path_parameter in endpoint.path_parameters:
