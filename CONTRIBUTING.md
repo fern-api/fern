@@ -140,7 +140,7 @@ that depends on a lower IR version can continue to be run from our CLI.
 In the `ir-migrations` package, introduce a new migration.
 You can copy the latest migration as a starting point.
 
-## Generator Testing (Seed)
+## Generator Testing (Seed CLI)
 
 To test our generators we have built a CLI tool called seed. 
 
@@ -179,4 +179,18 @@ specific API that you are looking to generate:
 ```sh
 yarn seed test --generator ts-sdk --path /Users/jdoe/fern/apis/imdb
 ```
+
+### Running generators from source
+
+By default, seed will build the docker container for the generator and execute the docker. Building a docker 
+adds extra time to your iteration cycle so we also have a mode to run the generators directly from source. All you 
+have to do is use the `--local` flag. 
+
+For example, to run the TypeScript SDK generator from source, you can: 
+```sh
+yarn seed test --generator ts-sdk --fixture imdb --local
+```
+
+The local flag will only work if the generator has configured the `local` configuration in its seed.yml. 
+See [here](https://github.com/fern-api/fern/blob/bf3c28f1c08447e37949ba938f90228c575194d2/seed/ts-sdk/seed.yml#L7-L14). 
 
