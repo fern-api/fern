@@ -118,7 +118,6 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         });
         const typescriptProject = await sdkGenerator.generate();
         const persistedTypescriptProject = await typescriptProject.persist();
-        console.log("Copying core utilities....")
         await sdkGenerator.copyCoreUtilities({
             pathToSrc: persistedTypescriptProject.getSrcDirectory()
         });

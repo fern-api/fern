@@ -134,13 +134,11 @@ export class LocalTaskHandler {
         const [firstLocalOutputItem, ...remaininglocalOutputItems] = await readdir(
             this.absolutePathToTmpOutputDirectory
         );
-        console.log(firstLocalOutputItem, remaininglocalOutputItems);
         if (firstLocalOutputItem == null) {
             return;
         }
         this.context.logger.debug(`Copying generated files to ${outputPath}`);
         if (firstLocalOutputItem.endsWith(".zip")) {
-            console.log(`Decompressing to ${outputPath}`);
             await decompress(
                 join(this.absolutePathToTmpOutputDirectory, RelativeFilePath.of(firstLocalOutputItem)),
                 outputPath
