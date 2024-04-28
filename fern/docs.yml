@@ -181,8 +181,10 @@ navigation:
       #       icon: 
   - tab: docs
     layout:
-      - page: Overview
-        path: ./pages/fern-docs/docs-overview.mdx
+      - section: Introduction
+        contents: 
+          - page: Overview
+            path: ./pages/docs/introduction/overview.mdx
       - section: Quickstarts
         slug: quickstarts
         contents:
