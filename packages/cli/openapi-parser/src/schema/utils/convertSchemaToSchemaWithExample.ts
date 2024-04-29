@@ -192,8 +192,8 @@ function convertToPrimitiveSchemaValue(primitiveSchema: PrimitiveSchemaValue): P
             return PrimitiveSchemaValueWithExample.string({
                 maxLength: primitiveSchema.maxLength,
                 minLength: primitiveSchema.minLength,
-                example: undefined, 
-                format: undefined,
+                example: undefined,
+                format: undefined
             });
         case "base64":
             return PrimitiveSchemaValueWithExample.base64({
