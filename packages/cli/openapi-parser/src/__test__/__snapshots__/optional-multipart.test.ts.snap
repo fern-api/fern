@@ -92,7 +92,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
         "name": "SpeechBody",
         "properties": [
           {
-            "description": null,
+            "description": "The audio file.",
             "key": "audio",
             "schema": {
               "isArray": false,
@@ -107,9 +107,9 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "type": "json",
               "value": {
                 "description": null,
-                "generatedName": "SpeechOperationRequestModelId",
+                "generatedName": "speechOperationRequestModelId",
                 "groupName": null,
-                "nameOverride": null,
+                "nameOverride": "SpeechBody",
                 "type": "optional",
                 "value": {
                   "description": null,
@@ -132,10 +132,10 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
             "schema": {
               "type": "json",
               "value": {
-                "description": "Voice settings.",
-                "generatedName": "SpeechOperationRequestVoiceSettings",
+                "description": null,
+                "generatedName": "speechOperationRequestVoiceSettings",
                 "groupName": null,
-                "nameOverride": null,
+                "nameOverride": "SpeechBody",
                 "type": "optional",
                 "value": {
                   "description": "Voice settings.",
@@ -278,7 +278,7 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
         "name": "SpeechBodyStream",
         "properties": [
           {
-            "description": null,
+            "description": "The audio file.",
             "key": "audio",
             "schema": {
               "isArray": false,
@@ -293,9 +293,9 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "type": "json",
               "value": {
                 "description": null,
-                "generatedName": "SpeechStreamOperationRequestModelId",
+                "generatedName": "speechStreamOperationRequestModelId",
                 "groupName": null,
-                "nameOverride": null,
+                "nameOverride": "SpeechBodyStream",
                 "type": "optional",
                 "value": {
                   "description": null,
@@ -318,10 +318,10 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
             "schema": {
               "type": "json",
               "value": {
-                "description": "Voice settings.",
-                "generatedName": "SpeechStreamOperationRequestVoiceSettings",
+                "description": null,
+                "generatedName": "speechStreamOperationRequestVoiceSettings",
                 "groupName": null,
-                "nameOverride": null,
+                "nameOverride": "SpeechBodyStream",
                 "type": "optional",
                 "value": {
                   "description": "Voice settings.",
@@ -345,9 +345,9 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "type": "json",
               "value": {
                 "description": null,
-                "generatedName": "SpeechStreamOperationRequestMyEnum",
+                "generatedName": "speechStreamOperationRequestMyEnum",
                 "groupName": null,
-                "nameOverride": null,
+                "nameOverride": "SpeechBodyStream",
                 "type": "optional",
                 "value": {
                   "description": null,
@@ -392,9 +392,9 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "type": "json",
               "value": {
                 "description": null,
-                "generatedName": "SpeechStreamOperationRequestMyRef",
+                "generatedName": "speechStreamOperationRequestMyRef",
                 "groupName": null,
-                "nameOverride": null,
+                "nameOverride": "SpeechBodyStream",
                 "type": "optional",
                 "value": {
                   "description": null,

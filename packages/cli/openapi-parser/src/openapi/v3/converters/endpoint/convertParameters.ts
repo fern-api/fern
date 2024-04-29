@@ -60,7 +60,8 @@ export function convertParameters({
                       schema: PrimitiveSchemaValueWithExample.string({
                           minLength: undefined,
                           maxLength: undefined,
-                          example: getExamplesString(resolvedParameter.example)
+                          example: getExamplesString(resolvedParameter.example),
+                          format: undefined
                       }),
                       description: undefined,
                       groupName: undefined
@@ -74,7 +75,8 @@ export function convertParameters({
                           schema: PrimitiveSchemaValueWithExample.string({
                               minLength: undefined,
                               maxLength: undefined,
-                              example: getExamplesString(resolvedParameter.example)
+                              example: getExamplesString(resolvedParameter.example),
+                              format: undefined
                           }),
                           description: undefined,
                           groupName: undefined

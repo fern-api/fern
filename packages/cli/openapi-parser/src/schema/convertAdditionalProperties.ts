@@ -43,7 +43,8 @@ export function convertAdditionalProperties({
                 schema: PrimitiveSchemaValueWithExample.string({
                     minLength: undefined,
                     maxLength: undefined,
-                    example: undefined
+                    example: undefined, 
+                    format: undefined,
                 }),
                 groupName: undefined
             },
@@ -70,7 +71,8 @@ export function convertAdditionalProperties({
             schema: PrimitiveSchemaValueWithExample.string({
                 minLength: undefined,
                 maxLength: undefined,
-                example: undefined
+                example: undefined, 
+                format: undefined,
             }),
             groupName: undefined
         },

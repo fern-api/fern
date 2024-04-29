@@ -3457,8 +3457,8 @@ Upload a document to be indexed and used for search.
             "schema": {
               "type": "json",
               "value": {
-                "description": "Optionally include the names of all indexes that you'd like this document to be included in",
-                "generatedName": "DocumentsUploadRequestAddToIndexNames",
+                "description": null,
+                "generatedName": "documentsUploadRequestAddToIndexNames",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
@@ -3497,8 +3497,8 @@ Upload a document to be indexed and used for search.
             "schema": {
               "type": "json",
               "value": {
-                "description": "Optionally include an external ID for this document. This is useful if you want to re-upload the same document later when its contents change and would like it to be re-indexed.",
-                "generatedName": "DocumentsUploadRequestExternalId",
+                "description": null,
+                "generatedName": "documentsUploadRequestExternalId",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",
@@ -3544,7 +3544,7 @@ Upload a document to be indexed and used for search.
             },
           },
           {
-            "description": null,
+            "description": "The file contents of the document.",
             "key": "contents",
             "schema": {
               "isArray": false,
@@ -3558,8 +3558,8 @@ Upload a document to be indexed and used for search.
             "schema": {
               "type": "json",
               "value": {
-                "description": "Optionally include a list of keywords that'll be associated with this document. Used when performing keyword searches.",
-                "generatedName": "DocumentsUploadRequestKeywords",
+                "description": null,
+                "generatedName": "documentsUploadRequestKeywords",
                 "groupName": null,
                 "nameOverride": null,
                 "type": "optional",

@@ -126,7 +126,8 @@ export function getSchemaFromFernType({
                         schema: PrimitiveSchemaValueWithExample.string({
                             maxLength: undefined,
                             minLength: undefined,
-                            example: undefined
+                            example: undefined,
+                            format: undefined
                         })
                     });
                 default:
