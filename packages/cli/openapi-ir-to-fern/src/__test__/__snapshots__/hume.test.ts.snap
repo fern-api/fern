@@ -89,17 +89,9 @@ exports[`open api parser hume docs 1`] = `
           "request": {
             "name": "ListJobsRequest",
             "query-parameters": {
-              "direction": {
-                "docs": "The sort direction.",
-                "type": "optional<Direction>",
-              },
               "limit": {
                 "docs": "The maximum number of jobs to include in the response.",
                 "type": "optional<integer>",
-              },
-              "sort_by": {
-                "docs": "The job timestamp to sort by.",
-                "type": "optional<SortBy>",
               },
               "status": {
                 "allow-multiple": true,
@@ -109,10 +101,6 @@ exports[`open api parser hume docs 1`] = `
               "timestamp_ms": {
                 "docs": "Defaults to the current date and time. See \`when\`.",
                 "type": "optional<integer>",
-              },
-              "when": {
-                "docs": "Include only jobs that were created before or after \`timestamp_ms\`.",
-                "type": "optional<When>",
               },
             },
           },
@@ -144,12 +132,12 @@ exports[`open api parser hume docs 1`] = `
                   "docs": "If provided, a \`POST\` request will be made to the URL with the generated predictions on completion or the error message on failure.",
                   "type": "optional<string>",
                 },
-                "models": "optional<Models>",
+                "models": "optional<BaseRequestModels>",
                 "notify": {
                   "docs": "Whether to send an email notification to the user upon job failure.",
                   "type": "optional<boolean>",
                 },
-                "transcription": "optional<Transcription>",
+                "transcription": "optional<BaseRequestTranscription>",
                 "urls": {
                   "docs": "URLs to the media files to be processed. Each must be a valid public URL to a media file (see recommended input filetypes) or an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`) of media files.
 
@@ -170,6 +158,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       },
     },
     "types": {
+      "BaseRequestModels": {
+        "docs": undefined,
+        "extends": [
+          "Models",
+        ],
+        "properties": {},
+      },
+      "BaseRequestTranscription": {
+        "docs": undefined,
+        "extends": [
+          "Transcription",
+        ],
+        "properties": {},
+      },
       "Bcp47Tag": {
         "enum": [
           "zh",
@@ -342,8 +344,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "Face": {
         "docs": undefined,
         "properties": {
-          "descriptions": "optional<Empty>",
-          "facs": "optional<Empty>",
+          "descriptions": "optional<FaceDescriptions>",
+          "facs": "optional<FaceFacs>",
           "fps_pred": {
             "docs": "Number of frames per second to process. Other frames will be omitted from the response. Set to \`0\` to process every frame.",
             "type": "optional<double>",
@@ -365,6 +367,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "type": "optional<boolean>",
           },
         },
+      },
+      "FaceDescriptions": {
+        "docs": undefined,
+        "extends": [
+          "Empty",
+        ],
+        "properties": {},
+      },
+      "FaceFacs": {
+        "docs": undefined,
+        "extends": [
+          "Empty",
+        ],
+        "properties": {},
       },
       "FacePrediction": {
         "docs": undefined,
@@ -565,14 +581,21 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "Language": {
         "docs": undefined,
         "properties": {
-          "granularity": "optional<Granularity>",
+          "granularity": "optional<LanguageGranularity>",
           "identify_speakers": {
             "docs": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
             "type": "optional<boolean>",
           },
-          "sentiment": "optional<Empty>",
-          "toxicity": "optional<Empty>",
+          "sentiment": "optional<LanguageSentiment>",
+          "toxicity": "optional<LanguageToxicity>",
         },
+      },
+      "LanguageGranularity": {
+        "docs": undefined,
+        "extends": [
+          "Granularity",
+        ],
+        "properties": {},
       },
       "LanguagePrediction": {
         "docs": undefined,
@@ -607,27 +630,125 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
       },
+      "LanguageSentiment": {
+        "docs": undefined,
+        "extends": [
+          "Empty",
+        ],
+        "properties": {},
+      },
+      "LanguageToxicity": {
+        "docs": undefined,
+        "extends": [
+          "Empty",
+        ],
+        "properties": {},
+      },
       "Models": {
         "docs": undefined,
         "properties": {
-          "burst": "optional<Empty>",
-          "face": "optional<Face>",
-          "facemesh": "optional<Empty>",
-          "language": "optional<Language>",
-          "ner": "optional<Ner>",
-          "prosody": "optional<Prosody>",
+          "burst": "optional<ModelsBurst>",
+          "face": "optional<ModelsFace>",
+          "facemesh": "optional<ModelsFacemesh>",
+          "language": "optional<ModelsLanguage>",
+          "ner": "optional<ModelsNer>",
+          "prosody": "optional<ModelsProsody>",
         },
+      },
+      "ModelsBurst": {
+        "docs": undefined,
+        "extends": [
+          "Empty",
+        ],
+        "properties": {},
+      },
+      "ModelsFace": {
+        "docs": undefined,
+        "extends": [
+          "Face",
+        ],
+        "properties": {},
+      },
+      "ModelsFacemesh": {
+        "docs": undefined,
+        "extends": [
+          "Empty",
+        ],
+        "properties": {},
+      },
+      "ModelsLanguage": {
+        "docs": undefined,
+        "extends": [
+          "Language",
+        ],
+        "properties": {},
+      },
+      "ModelsNer": {
+        "docs": undefined,
+        "extends": [
+          "Ner",
+        ],
+        "properties": {},
       },
       "ModelsPredictions": {
         "docs": undefined,
         "properties": {
-          "burst": "optional<PredictionsOptionalNullBurstPrediction>",
-          "face": "optional<PredictionsOptionalNullFacePrediction>",
-          "facemesh": "optional<PredictionsOptionalNullFacemeshPrediction>",
-          "language": "optional<PredictionsOptionalTranscriptionMetadataLanguagePrediction>",
-          "ner": "optional<PredictionsOptionalTranscriptionMetadataNerPrediction>",
-          "prosody": "optional<PredictionsOptionalTranscriptionMetadataProsodyPrediction>",
+          "burst": "optional<ModelsPredictionsBurst>",
+          "face": "optional<ModelsPredictionsFace>",
+          "facemesh": "optional<ModelsPredictionsFacemesh>",
+          "language": "optional<ModelsPredictionsLanguage>",
+          "ner": "optional<ModelsPredictionsNer>",
+          "prosody": "optional<ModelsPredictionsProsody>",
         },
+      },
+      "ModelsPredictionsBurst": {
+        "docs": undefined,
+        "extends": [
+          "PredictionsOptionalNullBurstPrediction",
+        ],
+        "properties": {},
+      },
+      "ModelsPredictionsFace": {
+        "docs": undefined,
+        "extends": [
+          "PredictionsOptionalNullFacePrediction",
+        ],
+        "properties": {},
+      },
+      "ModelsPredictionsFacemesh": {
+        "docs": undefined,
+        "extends": [
+          "PredictionsOptionalNullFacemeshPrediction",
+        ],
+        "properties": {},
+      },
+      "ModelsPredictionsLanguage": {
+        "docs": undefined,
+        "extends": [
+          "PredictionsOptionalTranscriptionMetadataLanguagePrediction",
+        ],
+        "properties": {},
+      },
+      "ModelsPredictionsNer": {
+        "docs": undefined,
+        "extends": [
+          "PredictionsOptionalTranscriptionMetadataNerPrediction",
+        ],
+        "properties": {},
+      },
+      "ModelsPredictionsProsody": {
+        "docs": undefined,
+        "extends": [
+          "PredictionsOptionalTranscriptionMetadataProsodyPrediction",
+        ],
+        "properties": {},
+      },
+      "ModelsProsody": {
+        "docs": undefined,
+        "extends": [
+          "Prosody",
+        ],
+        "properties": {},
       },
       "Ner": {
         "docs": undefined,
@@ -749,13 +870,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "Prosody": {
         "docs": "NOTE: the \`granularity\` field is ignored if transcription is not enabled or if the \`window\` field has been set.",
         "properties": {
-          "granularity": "optional<Granularity>",
+          "granularity": "optional<ProsodyGranularity>",
           "identify_speakers": {
             "docs": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
             "type": "optional<boolean>",
           },
-          "window": "optional<Window>",
+          "window": "optional<ProsodyWindow>",
         },
+      },
+      "ProsodyGranularity": {
+        "docs": undefined,
+        "extends": [
+          "Granularity",
+        ],
+        "properties": {},
       },
       "ProsodyPrediction": {
         "docs": undefined,
@@ -779,6 +907,13 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "time": "TimeInterval",
         },
       },
+      "ProsodyWindow": {
+        "docs": undefined,
+        "extends": [
+          "Window",
+        ],
+        "properties": {},
+      },
       "Queued": {
         "docs": undefined,
         "properties": {
@@ -796,12 +931,12 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "type": "optional<string>",
           },
           "files": "list<File>",
-          "models": "optional<Models>",
+          "models": "optional<RequestModels>",
           "notify": {
             "docs": "Whether to send an email notification to the user upon job completion/failure.",
             "type": "optional<boolean>",
           },
-          "transcription": "optional<Transcription>",
+          "transcription": "optional<RequestTranscription>",
           "urls": {
             "docs": "URLs to the media files to be processed. Each must be a valid public URL to a media file (see recommended input filetypes) or an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`) of media files.
 
@@ -809,6 +944,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "type": "optional<list<string>>",
           },
         },
+      },
+      "RequestModels": {
+        "docs": undefined,
+        "extends": [
+          "Models",
+        ],
+        "properties": {},
+      },
+      "RequestTranscription": {
+        "docs": undefined,
+        "extends": [
+          "Transcription",
+        ],
+        "properties": {},
       },
       "Results": {
         "docs": undefined,
@@ -947,8 +1096,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "Transcription": {
         "docs": undefined,
         "properties": {
-          "language": "optional<Bcp47Tag>",
+          "language": "optional<TranscriptionLanguage>",
         },
+      },
+      "TranscriptionLanguage": {
+        "docs": undefined,
+        "extends": [
+          "Bcp47Tag",
+        ],
+        "properties": {},
       },
       "TranscriptionMetadata": {
         "docs": "Transcription metadata for your media file.",
@@ -957,8 +1113,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "docs": "Value between \`0.0\` and \`1.0\` indicating our transcription model’s relative confidence in the transcription of your media file.",
             "type": "double",
           },
-          "detected_language": "optional<Bcp47Tag>",
+          "detected_language": "optional<TranscriptionMetadataDetectedLanguage>",
         },
+      },
+      "TranscriptionMetadataDetectedLanguage": {
+        "docs": undefined,
+        "extends": [
+          "Bcp47Tag",
+        ],
+        "properties": {},
       },
       "Url": {
         "docs": undefined,
@@ -1101,17 +1264,9 @@ exports[`open api parser hume simple 1`] = `
           "request": {
             "name": "ListJobsRequest",
             "query-parameters": {
-              "direction": {
-                "docs": "The sort direction.",
-                "type": "optional<Direction>",
-              },
               "limit": {
                 "docs": "The maximum number of jobs to include in the response.",
                 "type": "optional<integer>",
-              },
-              "sort_by": {
-                "docs": "The job timestamp to sort by.",
-                "type": "optional<SortBy>",
               },
               "status": {
                 "allow-multiple": true,
@@ -1121,10 +1276,6 @@ exports[`open api parser hume simple 1`] = `
               "timestamp_ms": {
                 "docs": "Defaults to the current date and time. See \`when\`.",
                 "type": "optional<integer>",
-              },
-              "when": {
-                "docs": "Include only jobs that were created before or after \`timestamp_ms\`.",
-                "type": "optional<When>",
               },
             },
           },
@@ -1156,12 +1307,12 @@ exports[`open api parser hume simple 1`] = `
                   "docs": "If provided, a \`POST\` request will be made to the URL with the generated predictions on completion or the error message on failure.",
                   "type": "optional<string>",
                 },
-                "models": "optional<Models>",
+                "models": "optional<BaseRequestModels>",
                 "notify": {
                   "docs": "Whether to send an email notification to the user upon job failure.",
                   "type": "optional<boolean>",
                 },
-                "transcription": "optional<Transcription>",
+                "transcription": "optional<BaseRequestTranscription>",
                 "urls": {
                   "docs": "URLs to the media files to be processed. Each must be a valid public URL to a media file (see recommended input filetypes) or an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`) of media files.
 
@@ -1182,6 +1333,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       },
     },
     "types": {
+      "BaseRequestModels": {
+        "docs": undefined,
+        "extends": [
+          "Models",
+        ],
+        "properties": {},
+      },
+      "BaseRequestTranscription": {
+        "docs": undefined,
+        "extends": [
+          "Transcription",
+        ],
+        "properties": {},
+      },
       "Bcp47Tag": {
         "enum": [
           "zh",
@@ -1354,8 +1519,8 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "Face": {
         "docs": undefined,
         "properties": {
-          "descriptions": "optional<Empty>",
-          "facs": "optional<Empty>",
+          "descriptions": "optional<FaceDescriptions>",
+          "facs": "optional<FaceFacs>",
           "fps_pred": {
             "docs": "Number of frames per second to process. Other frames will be omitted from the response. Set to \`0\` to process every frame.",
             "type": "optional<double>",
@@ -1377,6 +1542,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "type": "optional<boolean>",
           },
         },
+      },
+      "FaceDescriptions": {
+        "docs": undefined,
+        "extends": [
+          "Empty",
+        ],
+        "properties": {},
+      },
+      "FaceFacs": {
+        "docs": undefined,
+        "extends": [
+          "Empty",
+        ],
+        "properties": {},
       },
       "FacePrediction": {
         "docs": undefined,
@@ -1577,14 +1756,21 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "Language": {
         "docs": undefined,
         "properties": {
-          "granularity": "optional<Granularity>",
+          "granularity": "optional<LanguageGranularity>",
           "identify_speakers": {
             "docs": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
             "type": "optional<boolean>",
           },
-          "sentiment": "optional<Empty>",
-          "toxicity": "optional<Empty>",
+          "sentiment": "optional<LanguageSentiment>",
+          "toxicity": "optional<LanguageToxicity>",
         },
+      },
+      "LanguageGranularity": {
+        "docs": undefined,
+        "extends": [
+          "Granularity",
+        ],
+        "properties": {},
       },
       "LanguagePrediction": {
         "docs": undefined,
@@ -1619,27 +1805,125 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
       },
+      "LanguageSentiment": {
+        "docs": undefined,
+        "extends": [
+          "Empty",
+        ],
+        "properties": {},
+      },
+      "LanguageToxicity": {
+        "docs": undefined,
+        "extends": [
+          "Empty",
+        ],
+        "properties": {},
+      },
       "Models": {
         "docs": undefined,
         "properties": {
-          "burst": "optional<Empty>",
-          "face": "optional<Face>",
-          "facemesh": "optional<Empty>",
-          "language": "optional<Language>",
-          "ner": "optional<Ner>",
-          "prosody": "optional<Prosody>",
+          "burst": "optional<ModelsBurst>",
+          "face": "optional<ModelsFace>",
+          "facemesh": "optional<ModelsFacemesh>",
+          "language": "optional<ModelsLanguage>",
+          "ner": "optional<ModelsNer>",
+          "prosody": "optional<ModelsProsody>",
         },
+      },
+      "ModelsBurst": {
+        "docs": undefined,
+        "extends": [
+          "Empty",
+        ],
+        "properties": {},
+      },
+      "ModelsFace": {
+        "docs": undefined,
+        "extends": [
+          "Face",
+        ],
+        "properties": {},
+      },
+      "ModelsFacemesh": {
+        "docs": undefined,
+        "extends": [
+          "Empty",
+        ],
+        "properties": {},
+      },
+      "ModelsLanguage": {
+        "docs": undefined,
+        "extends": [
+          "Language",
+        ],
+        "properties": {},
+      },
+      "ModelsNer": {
+        "docs": undefined,
+        "extends": [
+          "Ner",
+        ],
+        "properties": {},
       },
       "ModelsPredictions": {
         "docs": undefined,
         "properties": {
-          "burst": "optional<PredictionsOptionalNullBurstPrediction>",
-          "face": "optional<PredictionsOptionalNullFacePrediction>",
-          "facemesh": "optional<PredictionsOptionalNullFacemeshPrediction>",
-          "language": "optional<PredictionsOptionalTranscriptionMetadataLanguagePrediction>",
-          "ner": "optional<PredictionsOptionalTranscriptionMetadataNerPrediction>",
-          "prosody": "optional<PredictionsOptionalTranscriptionMetadataProsodyPrediction>",
+          "burst": "optional<ModelsPredictionsBurst>",
+          "face": "optional<ModelsPredictionsFace>",
+          "facemesh": "optional<ModelsPredictionsFacemesh>",
+          "language": "optional<ModelsPredictionsLanguage>",
+          "ner": "optional<ModelsPredictionsNer>",
+          "prosody": "optional<ModelsPredictionsProsody>",
         },
+      },
+      "ModelsPredictionsBurst": {
+        "docs": undefined,
+        "extends": [
+          "PredictionsOptionalNullBurstPrediction",
+        ],
+        "properties": {},
+      },
+      "ModelsPredictionsFace": {
+        "docs": undefined,
+        "extends": [
+          "PredictionsOptionalNullFacePrediction",
+        ],
+        "properties": {},
+      },
+      "ModelsPredictionsFacemesh": {
+        "docs": undefined,
+        "extends": [
+          "PredictionsOptionalNullFacemeshPrediction",
+        ],
+        "properties": {},
+      },
+      "ModelsPredictionsLanguage": {
+        "docs": undefined,
+        "extends": [
+          "PredictionsOptionalTranscriptionMetadataLanguagePrediction",
+        ],
+        "properties": {},
+      },
+      "ModelsPredictionsNer": {
+        "docs": undefined,
+        "extends": [
+          "PredictionsOptionalTranscriptionMetadataNerPrediction",
+        ],
+        "properties": {},
+      },
+      "ModelsPredictionsProsody": {
+        "docs": undefined,
+        "extends": [
+          "PredictionsOptionalTranscriptionMetadataProsodyPrediction",
+        ],
+        "properties": {},
+      },
+      "ModelsProsody": {
+        "docs": undefined,
+        "extends": [
+          "Prosody",
+        ],
+        "properties": {},
       },
       "Ner": {
         "docs": undefined,
@@ -1761,13 +2045,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "Prosody": {
         "docs": "NOTE: the \`granularity\` field is ignored if transcription is not enabled or if the \`window\` field has been set.",
         "properties": {
-          "granularity": "optional<Granularity>",
+          "granularity": "optional<ProsodyGranularity>",
           "identify_speakers": {
             "docs": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
             "type": "optional<boolean>",
           },
-          "window": "optional<Window>",
+          "window": "optional<ProsodyWindow>",
         },
+      },
+      "ProsodyGranularity": {
+        "docs": undefined,
+        "extends": [
+          "Granularity",
+        ],
+        "properties": {},
       },
       "ProsodyPrediction": {
         "docs": undefined,
@@ -1791,6 +2082,13 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           "time": "TimeInterval",
         },
       },
+      "ProsodyWindow": {
+        "docs": undefined,
+        "extends": [
+          "Window",
+        ],
+        "properties": {},
+      },
       "Queued": {
         "docs": undefined,
         "properties": {
@@ -1808,12 +2106,12 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "type": "optional<string>",
           },
           "files": "list<File>",
-          "models": "optional<Models>",
+          "models": "optional<RequestModels>",
           "notify": {
             "docs": "Whether to send an email notification to the user upon job completion/failure.",
             "type": "optional<boolean>",
           },
-          "transcription": "optional<Transcription>",
+          "transcription": "optional<RequestTranscription>",
           "urls": {
             "docs": "URLs to the media files to be processed. Each must be a valid public URL to a media file (see recommended input filetypes) or an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`) of media files.
 
@@ -1821,6 +2119,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "type": "optional<list<string>>",
           },
         },
+      },
+      "RequestModels": {
+        "docs": undefined,
+        "extends": [
+          "Models",
+        ],
+        "properties": {},
+      },
+      "RequestTranscription": {
+        "docs": undefined,
+        "extends": [
+          "Transcription",
+        ],
+        "properties": {},
       },
       "Results": {
         "docs": undefined,
@@ -1959,8 +2271,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "Transcription": {
         "docs": undefined,
         "properties": {
-          "language": "optional<Bcp47Tag>",
+          "language": "optional<TranscriptionLanguage>",
         },
+      },
+      "TranscriptionLanguage": {
+        "docs": undefined,
+        "extends": [
+          "Bcp47Tag",
+        ],
+        "properties": {},
       },
       "TranscriptionMetadata": {
         "docs": "Transcription metadata for your media file.",
@@ -1969,8 +2288,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "docs": "Value between \`0.0\` and \`1.0\` indicating our transcription model’s relative confidence in the transcription of your media file.",
             "type": "double",
           },
-          "detected_language": "optional<Bcp47Tag>",
+          "detected_language": "optional<TranscriptionMetadataDetectedLanguage>",
         },
+      },
+      "TranscriptionMetadataDetectedLanguage": {
+        "docs": undefined,
+        "extends": [
+          "Bcp47Tag",
+        ],
+        "properties": {},
       },
       "Url": {
         "docs": undefined,

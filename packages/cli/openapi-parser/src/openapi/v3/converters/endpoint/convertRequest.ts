@@ -1,14 +1,8 @@
-import { MultipartSchema, RequestWithExample } from "@fern-api/openapi-ir-sdk";
+import { MultipartRequestProperty, MultipartSchema, RequestWithExample } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
-import { getExtension } from "../../../../getExtension";
 import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../../../../schema/convertSchemas";
-import {
-    convertSchemaWithExampleToOptionalSchema,
-    convertSchemaWithExampleToSchema
-} from "../../../../schema/utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
-import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
 import { getApplicationJsonSchemaMediaObject } from "./getApplicationJsonSchema";
 
 export const APPLICATION_JSON_CONTENT = "application/json";
@@ -81,6 +75,78 @@ export function convertRequest({
                   id: undefined,
                   schema: multipartSchema
               };
+        const convertedMultipartSchema = convertSchema(
+            resolvedMultipartSchema.schema,
+            false,
+            context,
+            requestBreadcrumbs
+        );
+        const properties: MultipartRequestProperty[] = [];
+        if (convertedMultipartSchema.type === "object") {
+            for (const property of convertedMultipartSchema.properties) {
+                if (
+                    property.schema.type === "primitive" &&
+                    property.schema.schema.type === "string" &&
+                    property.schema.schema.format === "binary"
+                ) {
+                    properties.push({
+                        key: property.key,
+                        schema: MultipartSchema.file({ isOptional: false, isArray: false }),
+                        description: property.schema.description
+                    });
+                    continue;
+                }
+
+                if (
+                    property.schema.type === "optional" &&
+                    property.schema.value.type === "primitive" &&
+                    property.schema.value.schema.type === "string" &&
+                    property.schema.value.schema.format === "binary"
+                ) {
+                    properties.push({
+                        key: property.key,
+                        schema: MultipartSchema.file({ isOptional: true, isArray: false }),
+                        description: property.schema.description
+                    });
+                    continue;
+                }
+
+                if (
+                    property.schema.type === "array" &&
+                    property.schema.value.type === "primitive" &&
+                    property.schema.value.schema.type === "string" &&
+                    property.schema.value.schema.format === "binary"
+                ) {
+                    properties.push({
+                        key: property.key,
+                        schema: MultipartSchema.file({ isOptional: false, isArray: true }),
+                        description: property.schema.description
+                    });
+                    continue;
+                }
+
+                if (
+                    property.schema.type === "optional" &&
+                    property.schema.value.type === "array" &&
+                    property.schema.value.value.type === "primitive" &&
+                    property.schema.value.value.schema.type === "string" &&
+                    property.schema.value.value.schema.format === "binary"
+                ) {
+                    properties.push({
+                        key: property.key,
+                        schema: MultipartSchema.file({ isOptional: true, isArray: true }),
+                        description: property.schema.description
+                    });
+                    continue;
+                }
+
+                properties.push({
+                    key: property.key,
+                    schema: MultipartSchema.json(property.schema),
+                    description: undefined
+                });
+            }
+        }
 
         return RequestWithExample.multipart({
             name:
@@ -88,35 +154,7 @@ export function convertRequest({
                     ? resolvedMultipartSchema.id
                     : undefined,
             description: undefined,
-            properties: Object.entries(resolvedMultipartSchema.schema.properties ?? {}).map(([key, definition]) => {
-                const required: string[] | undefined = resolvedMultipartSchema.schema.required;
-                const isRequired = required !== undefined && required.includes(key);
-                if (
-                    !isReferenceObject(definition) &&
-                    ((definition.type === "string" && definition.format === "binary") ||
-                        (definition.type === "array" &&
-                            !isReferenceObject(definition.items) &&
-                            definition.items.type === "string" &&
-                            definition.items.format === "binary"))
-                ) {
-                    return {
-                        key,
-                        schema: MultipartSchema.file({ isOptional: !isRequired, isArray: definition.type === "array" }),
-                        description: undefined
-                    };
-                }
-                const schemaWithExample = convertSchema(definition, false, context, [...requestBreadcrumbs, key]);
-                const audiences = getExtension<string[]>(definition, FernOpenAPIExtension.AUDIENCES) ?? [];
-                const schema = isRequired
-                    ? convertSchemaWithExampleToSchema(schemaWithExample)
-                    : convertSchemaWithExampleToOptionalSchema(schemaWithExample);
-                return {
-                    key,
-                    audiences,
-                    schema: MultipartSchema.json(schema),
-                    description: undefined
-                };
-            })
+            properties
         });
     }
 

@@ -156,7 +156,8 @@ export function convertSchemaObject(
                 primitive: PrimitiveSchemaValueWithExample.string({
                     minLength: undefined,
                     maxLength: undefined,
-                    example: getExamplesString(schema)
+                    example: getExamplesString(schema),
+                    format: schema.format
                 }),
                 groupName,
                 wrapAsNullable,
@@ -353,7 +354,8 @@ export function convertSchemaObject(
             primitive: PrimitiveSchemaValueWithExample.string({
                 maxLength: schema.maxLength,
                 minLength: schema.minLength,
-                example: getExamplesString(schema)
+                example: getExamplesString(schema),
+                format: schema.format
             }),
             groupName,
             wrapAsNullable,
@@ -557,19 +559,27 @@ export function convertSchemaObject(
 
     // handle objects
     if (schema.allOf != null || schema.properties != null) {
-        // convert a singular allOf as a reference or inlined schema
-        if (schema.allOf != null) {
-            const maybeSingularAllOf = getSingularAllOf({ properties: schema.properties ?? {}, allOf: schema.allOf });
-            if (maybeSingularAllOf != null) {
-                const convertedSchema = convertSchema(
-                    maybeSingularAllOf,
-                    wrapAsNullable,
-                    context,
-                    breadcrumbs,
-                    referencedAsRequest
-                );
-                return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);
+        const filteredAllOfs: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[] = [];
+        for (const allOf of schema.allOf ?? []) {
+            if (isReferenceObject(allOf)) {
+                filteredAllOfs.push(allOf);
+            } else if (Object.keys(allOf).length > 0) {
+                filteredAllOfs.push(allOf);
             }
+        }
+        if (
+            (schema.properties == null || schema.properties.length === 0) &&
+            filteredAllOfs.length === 1 &&
+            filteredAllOfs[0] != null
+        ) {
+            const convertedSchema = convertSchema(
+                filteredAllOfs[0],
+                wrapAsNullable,
+                context,
+                breadcrumbs,
+                referencedAsRequest
+            );
+            return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);
         }
 
         // otherwise convert as an object
@@ -581,7 +591,7 @@ export function convertSchemaObject(
             description,
             required: schema.required,
             wrapAsNullable,
-            allOf: schema.allOf ?? [],
+            allOf: filteredAllOfs,
             context,
             propertiesToExclude,
             groupName,
@@ -603,7 +613,8 @@ export function convertSchemaObject(
                 schema: PrimitiveSchemaValueWithExample.string({
                     minLength: undefined,
                     maxLength: undefined,
-                    example: undefined
+                    example: undefined,
+                    format: schema.format
                 }),
                 groupName
             },
@@ -712,27 +723,6 @@ function maybeInjectDescriptionOrGroupName(
         });
     }
     return schema;
-}
-
-function getSingularAllOf({
-    properties,
-    allOf
-}: {
-    properties: Record<string, OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject>;
-    allOf: (OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject)[];
-}): OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined {
-    if (hasNoProperties({ properties }) && allOf.length === 1 && allOf[0] != null) {
-        return allOf[0];
-    } else if (hasNoProperties({ properties }) && allOf.length === 2 && allOf[0] != null && allOf[1] != null) {
-        const allOfZero = allOf[0];
-        const allOfOne = allOf[1];
-        if (isAllOfElementEmpty(allOfZero)) {
-            return allOfOne;
-        } else if (isAllOfElementEmpty(allOfOne)) {
-            return allOfZero;
-        }
-    }
-    return undefined;
 }
 
 // make sure these const sare sorted alphabetically

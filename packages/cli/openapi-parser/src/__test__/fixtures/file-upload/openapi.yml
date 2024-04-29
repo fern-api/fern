@@ -33,4 +33,11 @@ paths:
                     type: string
                     format: binary
                   description: An optional list of files to upload
+                maybe_files_allof_list:
+                  allOf:
+                    - {}
+                    - type: array
+                      items:
+                        type: string
+                        format: binary
               required: [file, file_list]
