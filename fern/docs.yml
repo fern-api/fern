@@ -23,7 +23,7 @@ tabs:
   sdks:
     display-name: SDKs
     slug: sdks
-  api: 
+  api:
     display-name: API Reference
     slug: api
 
@@ -37,7 +37,7 @@ navigation:
   - tab: api-definition
     layout:
       - section: Introduction
-        contents: 
+        contents:
           - page: What is an API Definition?
             path: ./pages/api-definition/introduction/what-is-an-api-definition.mdx
       - section: OpenAPI
@@ -84,11 +84,11 @@ navigation:
   - tab: sdks
     layout:
       - section: Introduction
-        contents: 
+        contents:
           - page: Overview
             path: ./pages/sdks/introduction/overview.mdx
       - section: Getting Started
-        contents: 
+        contents:
           - page: Generate your first SDK
             path: ./pages/sdks/getting-started/generate-your-first-sdk.mdx
       - section: Features
@@ -178,11 +178,11 @@ navigation:
       #     - page: Update SDKs with Fern's GitHub Bot
       #       path: ./pages/fern-sdks/guides/github-bot.mdx
       #       slug: github-bot
-      #       icon: 
+      #       icon:
   - tab: docs
     layout:
       - section: Introduction
-        contents: 
+        contents:
           - page: Overview
             path: ./pages/docs/introduction/overview.mdx
           - page: Quickstart
@@ -229,6 +229,10 @@ navigation:
             path: ./pages/fern-docs/config/sdk-snippets.mdx
           - page: Endpoint errors
             path: ./pages/fern-docs/config/endpoint-errors.mdx
+          - page: Reorder API Reference pages
+            path: ./pages/fern-docs/content/reorder-api-ref.mdx
+          - page: Write markdown in API Reference
+            path: ./pages/fern-docs/content/api-ref-content.mdx
 
       - section: Components
         slug: components
@@ -253,7 +257,7 @@ navigation:
           - page: Tabs
             path: ./pages/fern-docs/components/tabs.mdx
   - tab: api
-    layout: 
+    layout:
       - api: API Reference
         api-name: public-api
         # audiences:
