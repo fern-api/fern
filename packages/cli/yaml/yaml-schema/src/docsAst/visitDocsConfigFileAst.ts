@@ -202,16 +202,18 @@ async function visitNavigation({
     if (navigationConfigIsTabbed(navigation)) {
         await Promise.all(
             navigation.map(async (tab, tabIdx) => {
-                await Promise.all(
-                    tab.layout.map(async (item, itemIdx) => {
-                        await visitNavigationItem({
-                            navigationItem: item,
-                            visitor,
-                            nodePath: [...nodePath, `${tabIdx}`, "layout", `${itemIdx}`],
-                            absoluteFilepathToConfiguration
-                        });
-                    })
-                );
+                if (tab.layout != null) {
+                    await Promise.all(
+                        tab.layout.map(async (item, itemIdx) => {
+                            await visitNavigationItem({
+                                navigationItem: item,
+                                visitor,
+                                nodePath: [...nodePath, `${tabIdx}`, "layout", `${itemIdx}`],
+                                absoluteFilepathToConfiguration
+                            });
+                        })
+                    );
+                }
             })
         );
     } else {
