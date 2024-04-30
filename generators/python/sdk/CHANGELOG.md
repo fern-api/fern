@@ -5,6 +5,44 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.0-rc0] - 2024-04-30
+- Feat: The generator now supports inlining top-level request parameters instead of requiring users create a request object.
+
+  Config:
+  ```yaml
+  generators:
+    - name: fernapi/fern-python-sdk
+      config:
+        inline_request_params: true
+  ```
+
+  Code change:
+    Before:
+      ```python
+      def get_and_return_with_optional_field(
+          self,
+          *,
+          request: ObjectWithOptionalField,
+          request_options: typing.Optional[RequestOptions] = None
+      ) -> ObjectWithOptionalField:
+        ...
+      ```
+
+    After:
+      ```python
+      def get_and_return_with_optional_field(
+          self,
+          *,
+          string: typing.Optional[str] = OMIT,
+          integer: typing.Optional[int] = OMIT,
+          long: typing.Optional[int] = OMIT,
+          double: typing.Optional[float] = OMIT,
+          bool: typing.Optional[bool] = OMIT,
+          request_options: typing.Optional[RequestOptions] = None,
+      ) -> ObjectWithOptionalField:
+        ...
+      ```
+
 ## [1.4.0-rc3] - 2024-04-24
 
 - Fix: Set `mypy` dev depenency in generated `pyproject.toml` to `1.9.0`.

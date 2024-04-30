@@ -7,6 +7,11 @@ from fern_python.codegen import AST
 from ...context.sdk_generator_context import SdkGeneratorContext
 from ..constants import DEFAULT_BODY_PARAMETER_VALUE
 from .abstract_request_body_parameters import AbstractRequestBodyParameters
+from .flattened_request_body_parameter_utils import (
+    are_any_properties_optional_in_inlined_request,
+    get_json_body_for_inlined_request,
+    get_pre_fetch_statements_for_inlined_request,
+)
 
 
 class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
@@ -21,6 +26,9 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
         self._endpoint = endpoint
         self._request_body = request_body
         self._context = context
+        self._are_any_properties_optional = are_any_properties_optional_in_inlined_request(
+            context, self._get_all_properties_for_inlined_request_body()
+        )
 
     def get_parameters(self) -> List[AST.NamedFunctionParameter]:
         parameters: List[AST.NamedFunctionParameter] = []
@@ -71,87 +79,20 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
         return property.name.name.snake_case.unsafe_name
 
     def get_json_body(self) -> Optional[AST.Expression]:
-        if self._are_any_properties_optional():
-            return AST.Expression(InlinedRequestBodyParameters._REQUEST_VARIABLE_NAME)
-
-        def write(writer: AST.NodeWriter) -> None:
-            writer.write_line("{")
-            with writer.indent():
-                for property in self._get_all_properties_for_inlined_request_body():
-                    property_name = self._get_property_name(property)
-                    possible_literal_value = self._context.get_literal_value(property.value_type)
-                    if possible_literal_value is not None and type(possible_literal_value) is str:
-                        writer.write_line(f'"{property.name.wire_value}": "{possible_literal_value}",')
-                    elif possible_literal_value is not None and type(possible_literal_value) is bool:
-                        writer.write_line(f'"{property.name.wire_value}": {possible_literal_value},')
-                    else:
-                        writer.write_line(f'"{property.name.wire_value}": {property_name},')
-            writer.write_line("}")
-
-        return AST.Expression(AST.CodeWriter(write))
-
-    def _are_any_properties_optional(self) -> bool:
-        return any(
-            self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                body_property.value_type,
-                in_endpoint=True,
-            ).is_optional
-            for body_property in self._get_all_properties_for_inlined_request_body()
+        return get_json_body_for_inlined_request(
+            self._context, self._get_all_properties_for_inlined_request_body(), self._are_any_properties_optional
         )
 
     def get_files(self) -> Optional[AST.Expression]:
         return None
 
     def get_pre_fetch_statements(self) -> Optional[AST.CodeWriter]:
-        if not self._are_any_properties_optional():
-            return None
-
-        optional_properties: List[ir_types.InlinedRequestBodyProperty] = []
-        required_properties: List[ir_types.InlinedRequestBodyProperty] = []
-        for body_property in self._get_all_properties_for_inlined_request_body():
-            type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                body_property.value_type,
-                in_endpoint=True,
-            )
-            if type_hint.is_optional:
-                optional_properties.append(body_property)
-            else:
-                required_properties.append(body_property)
-
-        def write(writer: AST.NodeWriter) -> None:
-            writer.write(f"{InlinedRequestBodyParameters._REQUEST_VARIABLE_NAME}: ")
-            writer.write_node(AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.any()))
-            writer.write(" = ")
-            if len(required_properties) == 0:
-                writer.write_line("{}")
-            else:
-                writer.write_line("{")
-                with writer.indent():
-                    for required_property in required_properties:
-                        literal_value = self._context.get_literal_value(reference=required_property.value_type)
-                        if literal_value is not None and type(literal_value) is str:
-                            writer.write_line(f'"{required_property.name.wire_value}": "{literal_value}",')
-                        elif literal_value is not None and type(literal_value) is bool:
-                            writer.write_line(f'"{required_property.name.wire_value}": {literal_value},')
-                        else:
-                            writer.write_line(
-                                f'"{required_property.name.wire_value}": {self._get_property_name(required_property)},'
-                            )
-                writer.write_line("}")
-
-            for optional_property in optional_properties:
-                writer.write_line(
-                    f"if {self._get_property_name(optional_property)} is not {DEFAULT_BODY_PARAMETER_VALUE}:"
-                )
-                with writer.indent():
-                    writer.write_line(
-                        f'{InlinedRequestBodyParameters._REQUEST_VARIABLE_NAME}["{optional_property.name.wire_value}"] = {self._get_property_name(optional_property)}'
-                    )
-
-        return AST.CodeWriter(write)
+        return get_pre_fetch_statements_for_inlined_request(
+            self._context, self._get_all_properties_for_inlined_request_body(), self._are_any_properties_optional
+        )
 
     def is_default_body_parameter_used(self) -> bool:
-        return self._are_any_properties_optional()
+        return self._are_any_properties_optional
 
     def get_content(self) -> Optional[AST.Expression]:
         return None
