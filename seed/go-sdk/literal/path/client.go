@@ -4,7 +4,6 @@ package path
 
 import (
 	context "context"
-	fmt "fmt"
 	fern "github.com/literal/fern"
 	core "github.com/literal/fern/core"
 	option "github.com/literal/fern/option"
@@ -45,7 +44,7 @@ func (c *Client) Send(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"path/%v", id)
+	endpointURL := core.EncodeURL(baseURL+"/path/%v", id)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

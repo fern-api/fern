@@ -43,7 +43,7 @@ func (c *Client) SendOptionalBody(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "send-optional-body"
+	endpointURL := baseURL + "/send-optional-body"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

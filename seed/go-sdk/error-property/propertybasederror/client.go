@@ -48,7 +48,7 @@ func (c *Client) ThrowError(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "property-based-error"
+	endpointURL := baseURL + "/property-based-error"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

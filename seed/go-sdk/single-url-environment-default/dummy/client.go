@@ -42,7 +42,7 @@ func (c *Client) GetDummy(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "dummy"
+	endpointURL := baseURL + "/dummy"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

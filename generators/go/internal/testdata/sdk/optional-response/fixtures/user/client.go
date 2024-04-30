@@ -4,7 +4,6 @@ package user
 
 import (
 	context "context"
-	fmt "fmt"
 	fixtures "github.com/fern-api/fern-go/internal/testdata/sdk/optional-response/fixtures"
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/optional-response/fixtures/core"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/optional-response/fixtures/option"
@@ -45,7 +44,7 @@ func (c *Client) GetName(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/name", userId)
+	endpointURL := core.EncodeURL(baseURL+"/users/%v/name", userId)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -81,7 +80,7 @@ func (c *Client) GetUser(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v", userId)
+	endpointURL := core.EncodeURL(baseURL+"/users/%v", userId)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

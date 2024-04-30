@@ -48,7 +48,7 @@ func (c *Client) GetName(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/get-name", userId)
+	endpointURL := core.EncodeURL(baseURL+"/users/%v/get-name", userId)
 
 	queryParams, err := core.QueryValues(request)
 	if err != nil {

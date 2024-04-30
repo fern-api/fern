@@ -45,7 +45,7 @@ func (c *Client) GetMovie(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"movie/%v", movieId)
+	endpointURL := core.EncodeURL(baseURL+"/movie/%v", movieId)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -80,7 +80,7 @@ func (c *Client) CreateMovie(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "movie"
+	endpointURL := baseURL + "/movie"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -116,7 +116,7 @@ func (c *Client) GetMetadata(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "metadata"
+	endpointURL := baseURL + "/metadata"
 
 	queryParams, err := core.QueryValues(request)
 	if err != nil {

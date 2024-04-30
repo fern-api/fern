@@ -44,7 +44,7 @@ func (c *Client) GetPresignedUrl(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "s3/presigned-url"
+	endpointURL := baseURL + "/s3/presigned-url"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

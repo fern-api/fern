@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## Unreleased -->
 
+## [0.21.1 - 2024-04-29]
+
+- Fix: The Go generator now escapes path parameters that would previously create invalid URLs (e.g. "\\example").
+- Improvement: Refactor endpoint URL mapping with `core.EncodeURL`. All generated endpoints with path parameters
+  now see use cases like the following:
+
+  ```go
+  endpointURL := core.EncodeURL(baseURL+"/organizations/%v", orgID)
+  ```
+
 ## [0.21.0 - 2024-04-29]
 
 - Feature: Add support for cursor and offset pagination.

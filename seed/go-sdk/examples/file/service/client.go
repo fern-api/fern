@@ -7,7 +7,6 @@ import (
 	context "context"
 	json "encoding/json"
 	errors "errors"
-	fmt "fmt"
 	fern "github.com/examples/fern"
 	core "github.com/examples/fern/core"
 	file "github.com/examples/fern/file"
@@ -53,7 +52,7 @@ func (c *Client) GetFile(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := fmt.Sprintf(baseURL+"/"+"file/%v", filename)
+	endpointURL := core.EncodeURL(baseURL+"/file/%v", filename)
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

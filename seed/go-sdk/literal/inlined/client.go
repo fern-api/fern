@@ -44,7 +44,7 @@ func (c *Client) Send(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "inlined"
+	endpointURL := baseURL + "/inlined"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

@@ -45,7 +45,7 @@ func (c *Client) CreateConfig(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "config"
+	endpointURL := baseURL + "/config"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
@@ -80,7 +80,7 @@ func (c *Client) GetConfig(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL + "/" + "config"
+	endpointURL := baseURL + "/config"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
