@@ -7,6 +7,7 @@ import * as FernSeedConfig from "../../..";
 export interface SeedWorkspaceConfiguration {
     irVersion: string;
     language?: FernSeedConfig.Language;
+    defaultCustomConfig?: Record<string, unknown>;
     defaultOutputMode: FernSeedConfig.OutputMode;
     generatorType: FernSeedConfig.GeneratorType;
     docker: string;
