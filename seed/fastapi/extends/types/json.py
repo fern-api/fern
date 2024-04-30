@@ -10,6 +10,8 @@ from .docs import Docs
 
 class Json(Docs):
     """
+    Examples
+    --------
     from seed.extends import Json
 
     Json(

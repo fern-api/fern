@@ -26,9 +26,17 @@ class CustomAuthClient:
         """
         GET request with custom auth scheme
 
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        bool
+
+        Examples
+        --------
         from seed.client import SeedCustomAuth
 
         client = SeedCustomAuth(
@@ -75,11 +83,19 @@ class CustomAuthClient:
         """
         POST request with custom auth scheme
 
-        Parameters:
-            - request: typing.Any.
+        Parameters
+        ----------
+        request : typing.Any
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        bool
+
+        Examples
+        --------
         from seed.client import SeedCustomAuth
 
         client = SeedCustomAuth(
@@ -139,9 +155,17 @@ class AsyncCustomAuthClient:
         """
         GET request with custom auth scheme
 
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        bool
+
+        Examples
+        --------
         from seed.client import AsyncSeedCustomAuth
 
         client = AsyncSeedCustomAuth(
@@ -188,11 +212,19 @@ class AsyncCustomAuthClient:
         """
         POST request with custom auth scheme
 
-        Parameters:
-            - request: typing.Any.
+        Parameters
+        ----------
+        request : typing.Any
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        bool
+
+        Examples
+        --------
         from seed.client import AsyncSeedCustomAuth
 
         client = AsyncSeedCustomAuth(

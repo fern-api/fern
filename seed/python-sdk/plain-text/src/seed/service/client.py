@@ -17,9 +17,17 @@ class ServiceClient:
 
     def get_text(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
         from seed.client import SeedPlainText
 
         client = SeedPlainText(
@@ -65,9 +73,17 @@ class AsyncServiceClient:
 
     async def get_text(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
         from seed.client import AsyncSeedPlainText
 
         client = AsyncSeedPlainText(

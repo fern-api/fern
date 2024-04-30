@@ -18,9 +18,17 @@ class DummyClient:
 
     def get_dummy(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
         from seed.client import SeedNoEnvironment
 
         client = SeedNoEnvironment(
@@ -64,9 +72,17 @@ class AsyncDummyClient:
 
     async def get_dummy(self, *, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
-        Parameters:
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        Parameters
+        ----------
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
         from seed.client import AsyncSeedNoEnvironment
 
         client = AsyncSeedNoEnvironment(

@@ -22,11 +22,19 @@ class UnionClient:
 
     def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Shape:
         """
-        Parameters:
-            - id: str.
+        Parameters
+        ----------
+        id : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Shape
+
+        Examples
+        --------
         from seed.client import SeedUnions
 
         client = SeedUnions(
@@ -66,11 +74,19 @@ class UnionClient:
 
     def update(self, *, request: Shape, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
-        Parameters:
-            - request: Shape.
+        Parameters
+        ----------
+        request : Shape
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        bool
+
+        Examples
+        --------
         from seed import Shape_Circle
         from seed.client import SeedUnions
 
@@ -125,11 +141,19 @@ class AsyncUnionClient:
 
     async def get(self, id: str, *, request_options: typing.Optional[RequestOptions] = None) -> Shape:
         """
-        Parameters:
-            - id: str.
+        Parameters
+        ----------
+        id : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Shape
+
+        Examples
+        --------
         from seed.client import AsyncSeedUnions
 
         client = AsyncSeedUnions(
@@ -169,11 +193,19 @@ class AsyncUnionClient:
 
     async def update(self, *, request: Shape, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
-        Parameters:
-            - request: Shape.
+        Parameters
+        ----------
+        request : Shape
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        bool
+
+        Examples
+        --------
         from seed import Shape_Circle
         from seed.client import AsyncSeedUnions
 

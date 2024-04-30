@@ -13,7 +13,9 @@ from .type import Type
 class Object(pydantic_v1.BaseModel):
     """
     Object is an alias for a type.
-    ---
+
+    Examples
+    --------
     from seed.alias import Type
 
     Type(

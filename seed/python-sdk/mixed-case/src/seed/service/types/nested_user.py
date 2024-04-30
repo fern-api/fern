@@ -10,6 +10,8 @@ from .user import User
 
 class NestedUser(pydantic_v1.BaseModel):
     """
+    Examples
+    --------
     from seed import NestedUser, User
 
     NestedUser(

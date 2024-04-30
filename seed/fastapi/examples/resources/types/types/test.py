@@ -23,6 +23,8 @@ class _Factory:
 
 class Test(pydantic_v1.BaseModel):
     """
+    Examples
+    --------
     from seed.examples import Test_And
 
     Test_And(value=True)

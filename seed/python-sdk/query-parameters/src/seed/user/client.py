@@ -31,41 +31,49 @@ class UserClient:
         bytes: str,
         user: User,
         key_value: typing.Dict[str, str],
-        optional_string: typing.Optional[str] = None,
         nested_user: NestedUser,
-        optional_user: typing.Optional[User] = None,
         exclude_user: typing.Union[User, typing.Sequence[User]],
         filter: typing.Union[str, typing.Sequence[str]],
+        optional_string: typing.Optional[str] = None,
+        optional_user: typing.Optional[User] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> User:
         """
-        Parameters:
-            - limit: int.
+        Parameters
+        ----------
+        limit : int
 
-            - id: uuid.UUID.
+        id : uuid.UUID
 
-            - date: dt.date.
+        date : dt.date
 
-            - deadline: dt.datetime.
+        deadline : dt.datetime
 
-            - bytes: str.
+        bytes : str
 
-            - user: User.
+        user : User
 
-            - key_value: typing.Dict[str, str].
+        key_value : typing.Dict[str, str]
 
-            - optional_string: typing.Optional[str].
+        nested_user : NestedUser
 
-            - nested_user: NestedUser.
+        exclude_user : typing.Union[User, typing.Sequence[User]]
 
-            - optional_user: typing.Optional[User].
+        filter : typing.Union[str, typing.Sequence[str]]
 
-            - exclude_user: typing.Union[User, typing.Sequence[User]].
+        optional_string : typing.Optional[str]
 
-            - filter: typing.Union[str, typing.Sequence[str]].
+        optional_user : typing.Optional[User]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        User
+
+        Examples
+        --------
         import datetime
         import uuid
 
@@ -174,41 +182,49 @@ class AsyncUserClient:
         bytes: str,
         user: User,
         key_value: typing.Dict[str, str],
-        optional_string: typing.Optional[str] = None,
         nested_user: NestedUser,
-        optional_user: typing.Optional[User] = None,
         exclude_user: typing.Union[User, typing.Sequence[User]],
         filter: typing.Union[str, typing.Sequence[str]],
+        optional_string: typing.Optional[str] = None,
+        optional_user: typing.Optional[User] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> User:
         """
-        Parameters:
-            - limit: int.
+        Parameters
+        ----------
+        limit : int
 
-            - id: uuid.UUID.
+        id : uuid.UUID
 
-            - date: dt.date.
+        date : dt.date
 
-            - deadline: dt.datetime.
+        deadline : dt.datetime
 
-            - bytes: str.
+        bytes : str
 
-            - user: User.
+        user : User
 
-            - key_value: typing.Dict[str, str].
+        key_value : typing.Dict[str, str]
 
-            - optional_string: typing.Optional[str].
+        nested_user : NestedUser
 
-            - nested_user: NestedUser.
+        exclude_user : typing.Union[User, typing.Sequence[User]]
 
-            - optional_user: typing.Optional[User].
+        filter : typing.Union[str, typing.Sequence[str]]
 
-            - exclude_user: typing.Union[User, typing.Sequence[User]].
+        optional_string : typing.Optional[str]
 
-            - filter: typing.Union[str, typing.Sequence[str]].
+        optional_user : typing.Optional[User]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        User
+
+        Examples
+        --------
         import datetime
         import uuid
 

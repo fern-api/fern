@@ -12,7 +12,9 @@ from .name import Name
 class Type(pydantic_v1.BaseModel):
     """
     Exercises all of the built-in types.
-    ---
+
+    Examples
+    --------
     import datetime
     import uuid
 

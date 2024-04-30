@@ -10,6 +10,8 @@ from .json import Json
 
 class NestedType(Json):
     """
+    Examples
+    --------
     from seed.extends import NestedType
 
     NestedType(

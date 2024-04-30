@@ -10,6 +10,8 @@ from ..resources.commons.resources.metadata.types.metadata import Metadata
 
 class Node(pydantic_v1.BaseModel):
     """
+    Examples
+    --------
     from seed.objects_with_imports import Node
     from seed.objects_with_imports.resources.commons import Metadata
 

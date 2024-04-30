@@ -19,11 +19,19 @@ class QueryClient:
 
     def send(self, *, query: str, request_options: typing.Optional[RequestOptions] = None) -> SendResponse:
         """
-        Parameters:
-            - query: str.
+        Parameters
+        ----------
+        query : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SendResponse
+
+        Examples
+        --------
         from seed.client import SeedLiteral
 
         client = SeedLiteral(
@@ -82,11 +90,19 @@ class AsyncQueryClient:
 
     async def send(self, *, query: str, request_options: typing.Optional[RequestOptions] = None) -> SendResponse:
         """
-        Parameters:
-            - query: str.
+        Parameters
+        ----------
+        query : str
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SendResponse
+
+        Examples
+        --------
         from seed.client import AsyncSeedLiteral
 
         client = AsyncSeedLiteral(

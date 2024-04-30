@@ -28,11 +28,19 @@ class ObjectClient:
         self, *, request: ObjectWithOptionalField, request_options: typing.Optional[RequestOptions] = None
     ) -> ObjectWithOptionalField:
         """
-        Parameters:
-            - request: ObjectWithOptionalField.
+        Parameters
+        ----------
+        request : ObjectWithOptionalField
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithOptionalField
+
+        Examples
+        --------
         import datetime
         import uuid
 
@@ -106,11 +114,19 @@ class ObjectClient:
         self, *, request: ObjectWithRequiredField, request_options: typing.Optional[RequestOptions] = None
     ) -> ObjectWithRequiredField:
         """
-        Parameters:
-            - request: ObjectWithRequiredField.
+        Parameters
+        ----------
+        request : ObjectWithRequiredField
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithRequiredField
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
         from seed.types import ObjectWithRequiredField
 
@@ -164,11 +180,19 @@ class ObjectClient:
         self, *, request: ObjectWithMapOfMap, request_options: typing.Optional[RequestOptions] = None
     ) -> ObjectWithMapOfMap:
         """
-        Parameters:
-            - request: ObjectWithMapOfMap.
+        Parameters
+        ----------
+        request : ObjectWithMapOfMap
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithMapOfMap
+
+        Examples
+        --------
         from seed.client import SeedExhaustive
         from seed.types import ObjectWithMapOfMap
 
@@ -222,11 +246,19 @@ class ObjectClient:
         self, *, request: NestedObjectWithOptionalField, request_options: typing.Optional[RequestOptions] = None
     ) -> NestedObjectWithOptionalField:
         """
-        Parameters:
-            - request: NestedObjectWithOptionalField.
+        Parameters
+        ----------
+        request : NestedObjectWithOptionalField
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        NestedObjectWithOptionalField
+
+        Examples
+        --------
         import datetime
         import uuid
 
@@ -303,11 +335,19 @@ class ObjectClient:
         self, *, request: NestedObjectWithRequiredField, request_options: typing.Optional[RequestOptions] = None
     ) -> NestedObjectWithRequiredField:
         """
-        Parameters:
-            - request: NestedObjectWithRequiredField.
+        Parameters
+        ----------
+        request : NestedObjectWithRequiredField
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        NestedObjectWithRequiredField
+
+        Examples
+        --------
         import datetime
         import uuid
 
@@ -387,11 +427,19 @@ class ObjectClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> NestedObjectWithRequiredField:
         """
-        Parameters:
-            - request: typing.Sequence[NestedObjectWithRequiredField].
+        Parameters
+        ----------
+        request : typing.Sequence[NestedObjectWithRequiredField]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        NestedObjectWithRequiredField
+
+        Examples
+        --------
         import datetime
         import uuid
 
@@ -475,11 +523,19 @@ class AsyncObjectClient:
         self, *, request: ObjectWithOptionalField, request_options: typing.Optional[RequestOptions] = None
     ) -> ObjectWithOptionalField:
         """
-        Parameters:
-            - request: ObjectWithOptionalField.
+        Parameters
+        ----------
+        request : ObjectWithOptionalField
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithOptionalField
+
+        Examples
+        --------
         import datetime
         import uuid
 
@@ -553,11 +609,19 @@ class AsyncObjectClient:
         self, *, request: ObjectWithRequiredField, request_options: typing.Optional[RequestOptions] = None
     ) -> ObjectWithRequiredField:
         """
-        Parameters:
-            - request: ObjectWithRequiredField.
+        Parameters
+        ----------
+        request : ObjectWithRequiredField
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithRequiredField
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
         from seed.types import ObjectWithRequiredField
 
@@ -611,11 +675,19 @@ class AsyncObjectClient:
         self, *, request: ObjectWithMapOfMap, request_options: typing.Optional[RequestOptions] = None
     ) -> ObjectWithMapOfMap:
         """
-        Parameters:
-            - request: ObjectWithMapOfMap.
+        Parameters
+        ----------
+        request : ObjectWithMapOfMap
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        ObjectWithMapOfMap
+
+        Examples
+        --------
         from seed.client import AsyncSeedExhaustive
         from seed.types import ObjectWithMapOfMap
 
@@ -669,11 +741,19 @@ class AsyncObjectClient:
         self, *, request: NestedObjectWithOptionalField, request_options: typing.Optional[RequestOptions] = None
     ) -> NestedObjectWithOptionalField:
         """
-        Parameters:
-            - request: NestedObjectWithOptionalField.
+        Parameters
+        ----------
+        request : NestedObjectWithOptionalField
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        NestedObjectWithOptionalField
+
+        Examples
+        --------
         import datetime
         import uuid
 
@@ -750,11 +830,19 @@ class AsyncObjectClient:
         self, *, request: NestedObjectWithRequiredField, request_options: typing.Optional[RequestOptions] = None
     ) -> NestedObjectWithRequiredField:
         """
-        Parameters:
-            - request: NestedObjectWithRequiredField.
+        Parameters
+        ----------
+        request : NestedObjectWithRequiredField
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        NestedObjectWithRequiredField
+
+        Examples
+        --------
         import datetime
         import uuid
 
@@ -834,11 +922,19 @@ class AsyncObjectClient:
         request_options: typing.Optional[RequestOptions] = None,
     ) -> NestedObjectWithRequiredField:
         """
-        Parameters:
-            - request: typing.Sequence[NestedObjectWithRequiredField].
+        Parameters
+        ----------
+        request : typing.Sequence[NestedObjectWithRequiredField]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        NestedObjectWithRequiredField
+
+        Examples
+        --------
         import datetime
         import uuid
 

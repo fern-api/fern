@@ -25,11 +25,19 @@ class DummyClient:
         self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.Iterator[StreamResponse]:
         """
-        Parameters:
-            - num_events: int.
+        Parameters
+        ----------
+        num_events : int
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.Iterator[StreamResponse]
+
+        Examples
+        --------
         from seed.client import SeedStreaming
 
         client = SeedStreaming(
@@ -87,11 +95,19 @@ class AsyncDummyClient:
         self, *, num_events: int, request_options: typing.Optional[RequestOptions] = None
     ) -> typing.AsyncIterator[StreamResponse]:
         """
-        Parameters:
-            - num_events: int.
+        Parameters
+        ----------
+        num_events : int
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Yields
+        ------
+        typing.AsyncIterator[StreamResponse]
+
+        Examples
+        --------
         from seed.client import AsyncSeedStreaming
 
         client = AsyncSeedStreaming(

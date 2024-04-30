@@ -21,23 +21,31 @@ class QueryParamClient:
         self,
         *,
         operand: Operand,
-        maybe_operand: typing.Optional[Operand] = None,
         operand_or_color: ColorOrOperand,
+        maybe_operand: typing.Optional[Operand] = None,
         maybe_operand_or_color: typing.Optional[ColorOrOperand] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Parameters:
-            - operand: Operand.
+        Parameters
+        ----------
+        operand : Operand
 
-            - maybe_operand: typing.Optional[Operand].
+        operand_or_color : ColorOrOperand
 
-            - operand_or_color: ColorOrOperand.
+        maybe_operand : typing.Optional[Operand]
 
-            - maybe_operand_or_color: typing.Optional[ColorOrOperand].
+        maybe_operand_or_color : typing.Optional[ColorOrOperand]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedEnum
 
         client = SeedEnum(
@@ -95,23 +103,31 @@ class QueryParamClient:
         self,
         *,
         operand: typing.Union[Operand, typing.Sequence[Operand]],
-        maybe_operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]] = None,
         operand_or_color: typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]],
+        maybe_operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]] = None,
         maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Parameters:
-            - operand: typing.Union[Operand, typing.Sequence[Operand]].
+        Parameters
+        ----------
+        operand : typing.Union[Operand, typing.Sequence[Operand]]
 
-            - maybe_operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]].
+        operand_or_color : typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]
 
-            - operand_or_color: typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]].
+        maybe_operand : typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]]
 
-            - maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]].
+        maybe_operand_or_color : typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import SeedEnum
 
         client = SeedEnum(
@@ -176,23 +192,31 @@ class AsyncQueryParamClient:
         self,
         *,
         operand: Operand,
-        maybe_operand: typing.Optional[Operand] = None,
         operand_or_color: ColorOrOperand,
+        maybe_operand: typing.Optional[Operand] = None,
         maybe_operand_or_color: typing.Optional[ColorOrOperand] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Parameters:
-            - operand: Operand.
+        Parameters
+        ----------
+        operand : Operand
 
-            - maybe_operand: typing.Optional[Operand].
+        operand_or_color : ColorOrOperand
 
-            - operand_or_color: ColorOrOperand.
+        maybe_operand : typing.Optional[Operand]
 
-            - maybe_operand_or_color: typing.Optional[ColorOrOperand].
+        maybe_operand_or_color : typing.Optional[ColorOrOperand]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedEnum
 
         client = AsyncSeedEnum(
@@ -250,23 +274,31 @@ class AsyncQueryParamClient:
         self,
         *,
         operand: typing.Union[Operand, typing.Sequence[Operand]],
-        maybe_operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]] = None,
         operand_or_color: typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]],
+        maybe_operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]] = None,
         maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
-        Parameters:
-            - operand: typing.Union[Operand, typing.Sequence[Operand]].
+        Parameters
+        ----------
+        operand : typing.Union[Operand, typing.Sequence[Operand]]
 
-            - maybe_operand: typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]].
+        operand_or_color : typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]
 
-            - operand_or_color: typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]].
+        maybe_operand : typing.Optional[typing.Union[Operand, typing.Sequence[Operand]]]
 
-            - maybe_operand_or_color: typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]].
+        maybe_operand_or_color : typing.Optional[typing.Union[ColorOrOperand, typing.Sequence[ColorOrOperand]]]
 
-            - request_options: typing.Optional[RequestOptions]. Request-specific configuration.
-        ---
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        None
+
+        Examples
+        --------
         from seed.client import AsyncSeedEnum
 
         client = AsyncSeedEnum(
