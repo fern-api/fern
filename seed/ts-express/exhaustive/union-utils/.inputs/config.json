@@ -9,6 +9,7 @@
     },
     "publish": null,
     "customConfig": {
+        "outputSourceFiles": true,
         "doNotHandleUnrecognizedErrors": true,
         "includeUtilsOnUnionMembers": true,
         "includeOtherInUnionTypes": true

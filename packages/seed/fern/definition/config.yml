@@ -5,6 +5,7 @@ types:
     properties:
       irVersion: string
       language: optional<Language>
+      defaultCustomConfig: optional<map<string, unknown>>
       defaultOutputMode: OutputMode
       generatorType: GeneratorType
       docker: string

@@ -127,7 +127,10 @@ export abstract class TestRunner {
                   );
         const language = this.generator.workspaceConfig.language;
         const outputVersion = configuration?.outputVersion;
-        const customConfig = configuration?.customConfig;
+        const customConfig = {
+            ...this.generator.workspaceConfig.defaultCustomConfig,
+            ...(configuration?.customConfig as Record<string, unknown>)
+        };
         const publishConfig = configuration?.publishConfig;
         const outputMode = configuration?.outputMode ?? this.generator.workspaceConfig.defaultOutputMode;
         const irVersion = this.generator.workspaceConfig.irVersion;
