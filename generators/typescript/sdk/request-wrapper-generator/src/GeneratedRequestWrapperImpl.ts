@@ -12,7 +12,7 @@ import {
     QueryParameter,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { getTextOfTsNode, maybeAddDocs, PackageId } from "@fern-typescript/commons";
+import { getExampleEndpointCalls, getTextOfTsNode, maybeAddDocs, PackageId } from "@fern-typescript/commons";
 import {
     GeneratedRequestWrapper,
     GeneratedRequestWrapperExample,
@@ -152,7 +152,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     private getDocs(context: SdkContext): string | undefined {
         const groups: string[] = [];
 
-        for (const example of this.endpoint.examples) {
+        for (const example of getExampleEndpointCalls(this.endpoint.examples)) {
             const generatedExample = this.generateExample(example);
             const exampleStr = "@example\n" + getTextOfTsNode(generatedExample.build(context, { isForComment: true }));
             groups.push(exampleStr.replaceAll("\n", `\n${EXAMPLE_PREFIX}`));

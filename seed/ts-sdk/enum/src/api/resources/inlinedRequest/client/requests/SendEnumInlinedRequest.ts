@@ -10,12 +10,6 @@ import * as SeedEnum from "../../../../index";
  *         operand: SeedEnum.Operand.GreaterThan,
  *         operandOrColor: SeedEnum.Color.Red
  *     }
- *
- * @example
- *     {
- *         operand: SeedEnum.Operand.GreaterThan,
- *         operandOrColor: SeedEnum.Color.Red
- *     }
  */
 export interface SendEnumInlinedRequest {
     operand: SeedEnum.Operand;
