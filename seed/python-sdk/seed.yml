@@ -64,6 +64,9 @@ fixtures:
     - customConfig:
         follow_redirects_by_default: true
       outputFolder: follow_redirects_by_default
+    - customConfig:
+        inline_request_params: true
+      outputFolder: inline_request_params
   streaming:
     - customConfig: null
       outputFolder: no-custom-config
