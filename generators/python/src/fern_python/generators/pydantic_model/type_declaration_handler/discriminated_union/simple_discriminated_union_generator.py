@@ -57,13 +57,10 @@ class SimpleDiscriminatedUnionGenerator(AbstractTypeGenerator):
             shape = single_union_type.shape.get_as_union()
             if shape.properties_type == "samePropertiesAsObject":
                 type_ids = list(
-                        map(
-                            lambda p: p.value_type, self._context.get_all_properties_including_extensions(shape.type_id)
-                        )
-                    )
-                
-                property_references += type_ids
+                    map(lambda p: p.value_type, self._context.get_all_properties_including_extensions(shape.type_id))
+                )
 
+                property_references += type_ids
 
         property_type_ids = set()
         for tr in property_references:
