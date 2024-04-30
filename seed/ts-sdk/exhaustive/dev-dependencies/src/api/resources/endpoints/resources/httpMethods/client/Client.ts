@@ -27,7 +27,7 @@ export class HttpMethods {
         requestOptions?: HttpMethods.RequestOptions
     ): Promise<core.APIResponse<string, Fiddle.endpoints.httpMethods.testGet.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${id}`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${encodeURIComponent(id)}`),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -105,7 +105,7 @@ export class HttpMethods {
         requestOptions?: HttpMethods.RequestOptions
     ): Promise<core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.endpoints.httpMethods.testPut.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${id}`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${encodeURIComponent(id)}`),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -146,7 +146,7 @@ export class HttpMethods {
         requestOptions?: HttpMethods.RequestOptions
     ): Promise<core.APIResponse<Fiddle.types.ObjectWithOptionalField, Fiddle.endpoints.httpMethods.testPatch.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${id}`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${encodeURIComponent(id)}`),
             method: "PATCH",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -186,7 +186,7 @@ export class HttpMethods {
         requestOptions?: HttpMethods.RequestOptions
     ): Promise<core.APIResponse<boolean, Fiddle.endpoints.httpMethods.testDelete.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${id}`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `/http-methods/${encodeURIComponent(id)}`),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),

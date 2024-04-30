@@ -33,7 +33,9 @@ export class Admin {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-submission-status/${await serializers.SubmissionId.jsonOrThrow(submissionId)}`
+                `/admin/store-test-submission-status/${encodeURIComponent(
+                    await serializers.SubmissionId.jsonOrThrow(submissionId)
+                )}`
             ),
             method: "POST",
             headers: {
@@ -87,7 +89,9 @@ export class Admin {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-submission-status-v2/${await serializers.SubmissionId.jsonOrThrow(submissionId)}`
+                `/admin/store-test-submission-status-v2/${encodeURIComponent(
+                    await serializers.SubmissionId.jsonOrThrow(submissionId)
+                )}`
             ),
             method: "POST",
             headers: {
@@ -141,7 +145,9 @@ export class Admin {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-submission-status/${await serializers.SubmissionId.jsonOrThrow(submissionId)}`
+                `/admin/store-workspace-submission-status/${encodeURIComponent(
+                    await serializers.SubmissionId.jsonOrThrow(submissionId)
+                )}`
             ),
             method: "POST",
             headers: {
@@ -195,8 +201,8 @@ export class Admin {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-submission-status-v2/${await serializers.SubmissionId.jsonOrThrow(
-                    submissionId
+                `/admin/store-workspace-submission-status-v2/${encodeURIComponent(
+                    await serializers.SubmissionId.jsonOrThrow(submissionId)
                 )}`
             ),
             method: "POST",
@@ -252,9 +258,9 @@ export class Admin {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-trace/submission/${await serializers.SubmissionId.jsonOrThrow(
-                    submissionId
-                )}/testCase/${testCaseId}`
+                `/admin/store-test-trace/submission/${encodeURIComponent(
+                    await serializers.SubmissionId.jsonOrThrow(submissionId)
+                )}/testCase/${encodeURIComponent(testCaseId)}`
             ),
             method: "POST",
             headers: {
@@ -311,9 +317,9 @@ export class Admin {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-test-trace-v2/submission/${await serializers.SubmissionId.jsonOrThrow(
-                    submissionId
-                )}/testCase/${await serializers.v2.TestCaseId.jsonOrThrow(testCaseId)}`
+                `/admin/store-test-trace-v2/submission/${encodeURIComponent(
+                    await serializers.SubmissionId.jsonOrThrow(submissionId)
+                )}/testCase/${encodeURIComponent(await serializers.v2.TestCaseId.jsonOrThrow(testCaseId))}`
             ),
             method: "POST",
             headers: {
@@ -369,7 +375,9 @@ export class Admin {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-trace/submission/${await serializers.SubmissionId.jsonOrThrow(submissionId)}`
+                `/admin/store-workspace-trace/submission/${encodeURIComponent(
+                    await serializers.SubmissionId.jsonOrThrow(submissionId)
+                )}`
             ),
             method: "POST",
             headers: {
@@ -425,7 +433,9 @@ export class Admin {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/admin/store-workspace-trace-v2/submission/${await serializers.SubmissionId.jsonOrThrow(submissionId)}`
+                `/admin/store-workspace-trace-v2/submission/${encodeURIComponent(
+                    await serializers.SubmissionId.jsonOrThrow(submissionId)
+                )}`
             ),
             method: "POST",
             headers: {

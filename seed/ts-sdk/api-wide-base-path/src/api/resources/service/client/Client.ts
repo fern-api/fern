@@ -30,7 +30,9 @@ export class Service {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
-                `/test/${this._options.pathParam}/${serviceParam}/${endpointParam}/${resourceParam}`
+                `/test/${encodeURIComponent(this._options.pathParam)}/${encodeURIComponent(
+                    serviceParam
+                )}/${encodeURIComponent(endpointParam)}/${encodeURIComponent(resourceParam)}`
             ),
             method: "POST",
             headers: {

@@ -262,7 +262,7 @@ export class Service {
 
     public async getException(notificationId: string, requestOptions?: Service.RequestOptions): Promise<TestSdk.Exception> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), \`/file/notification/\${notificationId}\`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), \`/file/notification/\${encodeURIComponent(notificationId)}\`),
             method: "GET",
             headers: {
                 "Authorization": await this._getAuthorizationHeader(),
@@ -358,7 +358,7 @@ export class Service {
     public async getFile(filename: string, request: TestSdk.file.GetFileRequest, requestOptions?: Service.RequestOptions): Promise<TestSdk.File_> {
         const { xFileApiVersion } = request;
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), \`/file/\${filename}\`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), \`/file/\${encodeURIComponent(filename)}\`),
             method: "GET",
             headers: {
                 "Authorization": await this._getAuthorizationHeader(),
@@ -536,7 +536,7 @@ export class Service {
      */
     public async check(id: string, requestOptions?: Service.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), \`/check/\${id}\`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), \`/check/\${encodeURIComponent(id)}\`),
             method: "GET",
             headers: {
                 "Authorization": await this._getAuthorizationHeader(),
@@ -678,7 +678,7 @@ export class Service {
 
     public async getMovie(movieId: TestSdk.MovieId, requestOptions?: Service.RequestOptions): Promise<TestSdk.Movie> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), \`/movie/\${await serializers.MovieId.jsonOrThrow(movieId)}\`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), \`/movie/\${encodeURIComponent(await serializers.MovieId.jsonOrThrow(movieId))}\`),
             method: "GET",
             headers: {
                 "Authorization": await this._getAuthorizationHeader(),

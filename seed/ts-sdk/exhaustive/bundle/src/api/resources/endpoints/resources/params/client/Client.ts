@@ -33,7 +33,10 @@ export class Params {
         requestOptions?: Params.RequestOptions
     ): Promise<core.APIResponse<string, Fiddle.endpoints.params.getWithPath.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/params/path/${param}`),
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/params/path/${encodeURIComponent(param)}`
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -184,7 +187,10 @@ export class Params {
         const _queryParams: Record<string, string | string[] | object | object[]> = {};
         _queryParams["query"] = query;
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/params/path-query/${param}`),
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/params/path-query/${encodeURIComponent(param)}`
+            ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
@@ -224,7 +230,10 @@ export class Params {
         requestOptions?: Params.RequestOptions
     ): Promise<core.APIResponse<string, Fiddle.endpoints.params.modifyWithPath.Error>> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/params/path/${param}`),
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/params/path/${encodeURIComponent(param)}`
+            ),
             method: "PUT",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),

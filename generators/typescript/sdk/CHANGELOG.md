@@ -22,6 +22,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     }
   ```
 
+- Fix: The SDK generator now escapes path parameters that would previously create invalid
+  URLs (e.g. "\\example"). Method implementations will now have references to
+  `encodeURIComponent` like the following:
+
+  ```ts
+  const _response = await core.fetcher({
+    url: urlJoin(
+      (await core.Supplier.get(this._options.environment)) ?? environments.AcmeEnvironment.Prod,
+      `/users/${encodeURIComponent(userId)}`
+    ),
+    ...
+  });
+  ```
+
 ## [0.16.0-rc6] - 2024-04-30
 
 - Fix: snippet templates now move file upload parameters to unnamed args

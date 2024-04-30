@@ -27,7 +27,10 @@ export class Service {
         requestOptions?: Service.RequestOptions
     ): Promise<SeedMixedCase.Resource> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/resource/${resourceId}`),
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/resource/${encodeURIComponent(resourceId)}`
+            ),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",

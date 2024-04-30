@@ -31,7 +31,7 @@ export class Service {
      */
     public async check(id: string, requestOptions?: Service.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/check/${id}`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `/check/${encodeURIComponent(id)}`),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),

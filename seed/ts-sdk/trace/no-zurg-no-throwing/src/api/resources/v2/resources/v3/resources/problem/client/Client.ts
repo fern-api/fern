@@ -129,7 +129,7 @@ export class Problem {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${problemId}`
+                `/problems-v2/problem-info/${encodeURIComponent(problemId)}`
             ),
             method: "GET",
             headers: {
@@ -175,7 +175,9 @@ export class Problem {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${problemId}/version/${problemVersion}`
+                `/problems-v2/problem-info/${encodeURIComponent(problemId)}/version/${encodeURIComponent(
+                    problemVersion
+                )}`
             ),
             method: "GET",
             headers: {

@@ -24,7 +24,7 @@ export class Union {
 
     public async get(id: string, requestOptions?: Union.RequestOptions): Promise<SeedUnions.Shape> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/${id}`),
+            url: urlJoin(await core.Supplier.get(this._options.environment), `/${encodeURIComponent(id)}`),
             method: "GET",
             headers: {
                 "X-Fern-Language": "JavaScript",

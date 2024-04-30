@@ -83,7 +83,10 @@ export class Payment {
 
     public async delete(paymentId: string, requestOptions?: Payment.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), `/payment/${paymentId}`),
+            url: urlJoin(
+                await core.Supplier.get(this._options.environment),
+                `/payment/${encodeURIComponent(paymentId)}`
+            ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
