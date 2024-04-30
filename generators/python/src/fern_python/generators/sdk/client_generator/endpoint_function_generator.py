@@ -1037,8 +1037,7 @@ class EndpointFunctionSnippetGenerator:
         return snippets
 
     def _get_snippet_for_request_reference_default(
-        self,
-        example_type_reference: ir_types.ExampleTypeReference
+        self, example_type_reference: ir_types.ExampleTypeReference
     ) -> List[AST.Expression]:
         request_value = self.snippet_writer.get_snippet_for_example_type_reference(
             example_type_reference=example_type_reference,
@@ -1053,8 +1052,7 @@ class EndpointFunctionSnippetGenerator:
         return []
 
     def _get_snippet_for_request_reference_flattened(
-        self,
-        example_object: ir_types.ExampleObjectType
+        self, example_object: ir_types.ExampleObjectType
     ) -> List[AST.Expression]:
         return self.snippet_writer.get_snippet_for_object_properties(example_object)
 
@@ -1066,7 +1064,7 @@ class EndpointFunctionSnippetGenerator:
             if example_type_reference.shape.get_as_union().type == "named":
                 inner_shape = example_type_reference.shape.get_as_union().shape
                 if inner_shape.get_as_union().type == "alias":
-                    return self._get_snippet_for_request_reference(example_type_reference, should_inline_request_parameters)
+                    return self._get_snippet_for_request_reference(example_type_reference)
                 if inner_shape.get_as_union().type == "object":
                     return self._get_snippet_for_request_reference_flattened(inner_shape.get_as_union())
             return self._get_snippet_for_request_reference_default(example_type_reference)

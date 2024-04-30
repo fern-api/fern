@@ -8,7 +8,6 @@ from ...context.sdk_generator_context import SdkGeneratorContext
 from ..constants import DEFAULT_BODY_PARAMETER_VALUE
 from .abstract_request_body_parameters import AbstractRequestBodyParameters
 from .flattened_request_body_parameter_utils import (
-    are_any_properties_optional_in_inlined_request,
     get_json_body_for_inlined_request,
     get_pre_fetch_statements_for_inlined_request,
 )
@@ -26,7 +25,9 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
         self._context = context
         self._type_id = self._get_type_id_from_type_reference(self._request_body.request_body_type)
 
-        self.should_inline_request_parameters = context.custom_config.inline_request_params and self._type_id is not None
+        self.should_inline_request_parameters = (
+            context.custom_config.inline_request_params and self._type_id is not None
+        )
         self._are_any_properties_optional = self.should_inline_request_parameters
 
     def _get_type_id_from_type_reference(self, type_reference: ir_types.TypeReference) -> Optional[ir_types.TypeId]:
@@ -36,7 +37,7 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
             primitive=lambda _: None,
             unknown=lambda: None,
         )
-    
+
     def _get_type_id_from_type(self, type_id: ir_types.TypeId) -> Optional[ir_types.TypeId]:
         declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(type_id)
         return declaration.shape.visit(
@@ -48,7 +49,7 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
         )
 
     def get_parameters(self) -> List[AST.NamedFunctionParameter]:
-        if self.should_inline_request_parameters and self._type_id is not None:
+        if self.should_inline_request_parameters:
             return self._get_inlined_request_parameters()
         else:
             return self._get_default_referenced_parameters()
@@ -84,14 +85,20 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
         return property.name.name.snake_case.unsafe_name
 
     def _get_all_properties_for_inlined_request_body(self) -> List[ir_types.InlinedRequestBodyProperty]:
-        object_properties = self._context.pydantic_generator_context.get_all_properties_including_extensions(self._type_id)
+        if self._type_id is None:
+            raise RuntimeError("Request body type is not defined, this should never happen.")
+        object_properties = self._context.pydantic_generator_context.get_all_properties_including_extensions(
+            self._type_id
+        )
         inlined_properties = []
         for prop in object_properties:
-            inlined_properties.append(ir_types.InlinedRequestBodyProperty(
-                name=prop.name,
-                value_type=prop.value_type,
-                docs=prop.docs,
-            ))
+            inlined_properties.append(
+                ir_types.InlinedRequestBodyProperty(
+                    name=prop.name,
+                    value_type=prop.value_type,
+                    docs=prop.docs,
+                )
+            )
         return inlined_properties
 
     def _get_default_referenced_parameters(self) -> List[AST.NamedFunctionParameter]:
